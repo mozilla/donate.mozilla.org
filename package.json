@@ -1,0 +1,44 @@
+{
+  "name": "donate.mozilla.org",
+  "version": "0.0.1",
+  "description": "Mozilla's Donation Forms",
+  "main": "server.js",
+  "scripts": {
+    "start": "npm-run-all --parallel server watch:css",
+    "build": "npm run build:css",
+    "build:css": "npm run watch:css -- --no-watch",
+    "postinstall": "node scripts/build",
+    "watch:css": "autoless less public/css --autoprefix '> 1%, last 2 versions'  --source-map",
+    "server": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mozilla/donate.mozilla.org.git"
+  },
+  "keywords": [
+    "donations",
+    "forms",
+    "mozilla"
+  ],
+  "author": "Mozilla",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/mozilla/donate.mozilla.org/issues"
+  },
+  "homepage": "https://github.com/mozilla/donate.mozilla.org#readme",
+  "dependencies": {
+    "autoless": "^0.1.7",
+    "cross-spawn": "^0.4.0",
+    "good": "^6.1.4",
+    "good-console": "^5.0.2",
+    "habitat": "^3.1.2",
+    "hapi": "^8.6.1",
+    "npm-run-all": "^1.2.5"
+  },
+  "devDependencies": {
+    "babel-core": "^5.5.6",
+    "babel-loader": "^5.1.4",
+    "node-libs-browser": "^0.5.2",
+    "webpack": "^1.9.10"
+  }
+}

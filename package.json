@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npm-run-all --parallel server watch:css",
     "build": "npm run build:css",
+    "build:production": "npm run build:css",
     "build:css": "npm run watch:css -- --no-watch",
     "postinstall": "node scripts/build",
     "watch:css": "autoless less public/css --autoprefix '> 1%, last 2 versions'  --source-map",

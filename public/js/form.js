@@ -1,5 +1,4 @@
 var
-  $bsdForm = $("form#contribution"),
   $theForm = $("#donation-form-sequential"),
   win = window,
   AMOUNT_SET_PARAM = "preset",
@@ -86,7 +85,6 @@ $(win).on('load', function() {
 // ***********************************************
 // UI related
 // ***********************************************
-$bsdForm.hide();
 $(".cc-additional-info").hide();
 $(".hint-msg").hide();
 
@@ -187,8 +185,6 @@ function generateStateDropdown() {
 
 
 function generateCountryDropdown() {
-  var cloned = $bsdForm.find("select[name='country']").clone();
-  $theForm.find("select[name='country']").html(cloned.html());
   $theForm.find("select[name='country'] option:selected").removeAttr("selected");
   $theForm.find("select[name='country'] option:first-child").html("Country");
   $theForm.find("select[name='country']").val("US").addClass("normalTextColor");
@@ -213,47 +209,6 @@ $theForm.find('select[name="state_cd"]').change(function() {
     $(this).removeClass("normalTextColor");
   }
 });
-
-
-// ***********************************************
-// Extract BSD form meta and insert to our form
-// ***********************************************
-function insertFormMetaDOM() {
-  // the following is an array of all the meta form field names that came with the BSD generated form
-  // API doc here: https://github.com/bluestatedigital/bsd-developer-docs/blob/master/bsd-donate-api/README.md
-  var bsdFormMetaName = [
-    "slug",
-    "submission_key",
-    "http_referer",
-    "event_attendee_id",
-    "outreach_page_id",
-    "stg_signup_id",
-    "mailing_link_id",
-    "mailing_recipient_id",
-    "match_campaign_id",
-    "match_is_pledge",
-    "pledge_is_convert",
-    "contributor_key",
-    "quick_donate_populated",
-    "device_fingerprint",
-    "default_country",
-    "cc_number_ack",
-    "ach_account_number_ack",
-    "k-ris-sid",
-  ];
-
-  $.each(bsdFormMetaName, function(index, value) {
-    $theForm.prepend($bsdForm.find("[name='" + value + "']").clone());
-  });
-
-}
-insertFormMetaDOM();
-
-
-// ***********************************************
-// Remove the BSD generated form from DOM
-// ***********************************************
-$bsdForm.remove();
 
 // ***********************************************
 // Update Donate button to make it show the selected donation amount

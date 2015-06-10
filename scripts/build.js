@@ -1,11 +1,13 @@
 var spawn = require('cross-spawn');
+var Habitat = require('habitat');
 
-var buildCommand;
+Habitat.load();
 
-if ( process.env.NPM_CONFIG_PRODUCTION === 'true' ) {
+var env = new Habitat();
+var buildCommand = 'build:dev';
+
+if (env.get("NPM_CONFIG_PRODUCTION")) {
   buildCommand = 'build:production';
-} else {
-  buildCommand = 'build';
 }
 
 var npm = spawn('npm', ['run', buildCommand]);

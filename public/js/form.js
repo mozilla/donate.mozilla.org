@@ -474,6 +474,7 @@ $theForm.parsley().subscribe('parsley:form:validated', function(formInstance) {
     Stripe.card.createToken($theForm, function(status, response) {
       if (response.error) {
         // handle all error cases?
+        console.log(response.error);
       } else {
         var token = response['id'];
         $theForm.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");

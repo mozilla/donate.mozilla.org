@@ -10,15 +10,52 @@ server.connection({
   port: process.env.PORT
 });
 
-server.route({
-  method: 'GET',
-  path: '/{param*}',
-  handler: {
-    directory: {
-      path: Path.join(__dirname, 'public')
+var stripeKeys = {
+  publishableKey: 'pk_test_BZ0QTIwe7BVAk1ZDxOgWZ9Z6',
+  // This is just a test key right now, nothing secret about it.
+  secretKey: 'sk_test_HbsdaR1Bn5I84vdezKa9VcvA'
+}
+
+var stripe = require('stripe')(stripeKeys.secretKey);
+
+server.route([
+  {
+    method: 'GET',
+    path: '/{params*}',
+    handler: {
+      directory: {
+        path: Path.join(__dirname, 'public')
+      }
+    }
+  },{
+    method: 'POST',
+    path: '/stripe',
+    handler: function(request, reply) {
+      // obtain StripeToken
+      var transaction = request.payload;
+
+      var stripeToken = transaction.stripeToken;
+      // create charge
+
+      var charge = {
+        // stripe works in cents
+        amount: transaction.amount_other * 100,
+        currency: 'USD',
+        card: stripeToken
+      };
+      stripe.charges.create(charge,
+        function(err, charge) {
+          if (err) {
+            console.log(err);
+          } else {
+            reply(charge);
+            console.log('Successful charge sent to Stripe!');
+          }
+        }       
+      );
     }
   }
-});
+]);
 
 server.register({
   register: Good,

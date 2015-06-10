@@ -1,7 +1,3 @@
-.bsd-contribution-98 {
-  display: none;
-}
-
 *:before,
 *:after,
 * {
@@ -20,10 +16,6 @@ body {
   line-height: 20px;
   color: #333;
   margin: 0;
-  background: -webkit-gradient(linear, left top, left bottom, from(#D7D3C8), to(#F6F4EC));
-  background: -webkit-linear-gradient(to bottom, #D7D3C8, #F6F4EC);
-  background: -moz-linear-gradient(to bottom, #D7D3C8, #F6F4EC);
-  background: -o-linear-gradient(to bottom, #D7D3C8, #F6F4EC);
   background: linear-gradient(to bottom, #D7D3C8, #F6F4EC);
 }
 
@@ -154,6 +146,8 @@ input[type="submit"] {
   margin: 0 auto;
   width: 420px;
   overflow-x: hidden;
+  padding: 30px;
+  background: #fff;
 }
 
 .container {
@@ -211,14 +205,6 @@ input[type="submit"] {
   text-align: right;
 }
 
-#form-wrapper {
-  width: 420px;
-  /*margin: 0 auto 100px auto;*/
-  margin: 0 auto 0 auto;
-  padding: 30px;
-  background: #fff;
-}
-
 .other_ways_to_give {
   max-width: 420px;
   margin: 20px auto;
@@ -274,12 +260,12 @@ input[type="submit"] {
   float: left;
 }
 
-#mozilla-wordmark {
+.mozilla-wordmark {
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
-#mozilla-wordmark img {
+.mozilla-wordmark img {
   max-width: 150px;
 }
 
@@ -742,14 +728,13 @@ select.parsley-error:focus {
 
 @media screen and (max-width: 600px) {
   .container,
-  .sequential-container,
-  #form-wrapper {
+  .sequential-container {
     width: 100%;
   }
 }
 
 @media screen and (max-width: 480px) {
-  #form-wrapper {
+  .sequential-container {
     padding: 10px;
   }
   input#amount-other + label + input[type="number"],
@@ -783,36 +768,6 @@ select.parsley-error:focus {
   font-size: 20px;
   border-radius: 2px;
   box-shadow: 3px 3px 16px #eee;
-}
-
-#facebook, #twitter {
-  text-align: center;
-}
-
-#facebook a, #twitter a {
-  color: #ffffff;
-  display: block;
-  padding: 20px;
-}
-
-#facebook, #twitter {
-  transition: background-color 200ms ease;
-}
-
-#facebook {
-  background-color: #4E7AC0;
-}
-
-#facebook:hover {
-  background-color: #406db4;
-}
-
-#twitter {
-  background-color: #5ECDF3;
-}
-
-#twitter:hover {
-  background-color: #46c6f1;
 }
 
 .currency-display {

@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
+*~
 .env
 npm-debug*
 public/css/index.css

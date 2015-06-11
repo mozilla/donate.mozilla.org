@@ -7,6 +7,7 @@
 
 html {
   height: auto;
+  background: #FFFFFF;
 }
 
 body {
@@ -142,7 +143,7 @@ input[type="submit"] {
   -moz-user-select: none;
 }
 
-.sequential-container {
+.container {
   margin: 0 auto;
   width: 420px;
   overflow-x: hidden;
@@ -151,8 +152,6 @@ input[type="submit"] {
 }
 
 .container {
-  margin: 0 auto;
-  width: 700px;
 }
 
 .wrap {
@@ -261,8 +260,12 @@ input[type="submit"] {
 }
 
 .mozilla-wordmark {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px auto;
+  width: 700px;
+}
+.footer {
+  margin: 0 auto;
+  width: 700px;
 }
 
 .mozilla-wordmark img {
@@ -281,6 +284,10 @@ input[type="submit"] {
 .btn:hover {
   background: #0095DD;
   color: #fff;
+}
+
+#mozilla-eoy-donation {
+  overflow: hidden;
 }
 
 #donate-btn {
@@ -689,8 +696,15 @@ form#contribution input {
 /* Parsley.js / Validation Styling */
 .parsley-errors-list,
 #one-line-error {
-  display: none;
   font-size: 12px;
+  margin: 0;
+}
+
+form#signup {
+  font-size: 16px;
+  .input {
+    margin-bottom: 35px;
+  }
 }
 
 #amount-error-msg .parsley-errors-list,
@@ -728,13 +742,13 @@ select.parsley-error:focus {
 
 @media screen and (max-width: 600px) {
   .container,
-  .sequential-container {
+  .mozilla-wordmark {
     width: 100%;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .sequential-container {
+  .container {
     padding: 10px;
   }
   input#amount-other + label + input[type="number"],
@@ -763,7 +777,7 @@ select.parsley-error:focus {
   border: 0 transparent solid;
   color: #ffffff;
   display: block;
-  padding: 8px 20px;
+  padding: 11px 20px;
   font-weight: 400;
   font-size: 20px;
   border-radius: 2px;
@@ -787,9 +801,26 @@ select.parsley-error:focus {
   transition: height 400ms;
 }
 
-#donation-form-sequential #one-line-error {
-  position: absolute;
-  bottom: 0;
+#donation-form-sequential {
+
+  #one-line-error {
+    display: none;
+  }
+  #page-2,
+  #page-3 {
+    .parsley-errors-list {
+      display: none;
+    }
+    #privacy-policy {
+      .parsley-errors-list {
+        display: block;
+      }
+    }
+  }
+  #one-line-error {
+    position: absolute;
+    bottom: 0;
+  }
 }
 
 #donation-form-sequential h2 {

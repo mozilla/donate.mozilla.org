@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+- '0.12'
+- iojs
+sudo: false
+cache:
+  directories:
+  - node_modules
+deploy:
+  provider: heroku
+  api_key:
+    secure: lS46yEaLntFhqwfJvO/F9h2GohKtf9AfiMhCcUIizCie4nGvze8FtTyY6VuPZdv8QI/cOC3G8bZTxE4mwXtSLyajeEJ20X/mqJ2SXnbScKbu75RB4sWhQMsMUVDcp4fdigE8GzMhco/jPMDq7VhYKLOy7HuUJOs/F442XjZcJTb2w6BhfRaGl2XAV29f1hZZ0DodL24AREEM4koaWGkvZ7aDeYv2K9iK405AwmiGrNJuUDfqWET1HqrKCz2Q2HvSlgZeiVa0HisW1dK1B3f3ZiRC5zVoH5vQB9jab+PqoetunygqX+evFwemP+fIzTk96+IOr5PrNPvK3PDmbRESM74Ah3IJcUmWh2YvqhJXMhvBZeSZ4KTIcQQLFdz4epgVB6MKBCsTuL1fqzzObYyzU/fVJ/DOdylh8hq4pVKDp/4xrBWE4mBHJCtS2bq2ntEbSCLziOEBpNgL8dYUmUnzE4qa0Bu7GJymtkQSswSunQSnejZKODYDO4Imx8yt/q33JiQ4rBgoP7uz0xAI1ShFW0FjiFvLsqj/Mu7W8yTgzwmKsFVhWcF3sMciLC73fISP3/xhjgmYJ4InAhR4lN4roihb1wcS+NfLp2EE4ytC7D8q1iuMJFyHZnJTL/CAT5ZIYgcOlCSu2sh5XMKbHikmPs0OjX6exeHHlaecc9SUQ+E=
+  app: donate.mozilla.org
+  on:
+    repo: mozilla/donate.mozilla.org

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>donate.mozilla.org  |  Thank you for your donation</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-35433268-5']);
+    _gaq.push(["_setDomainName", location.hostname.split(".").slice(-2).join(".")]);
+    _gaq.push(["_setAllowAnchor", true]);
+    _gaq.push(['_setAllowLinker', true]);
+    _gaq.push(['_setSiteSpeedSampleRate', 20]);
+  </script>
+<link rel="stylesheet" href="//s.bsd.net/page/static/FWORK-43512/skins/default/signup/frontend.css" type="text/css">
+  <script src="//s.bsd.net/bsdaction/default/page/-/js/analytics/ga_integration-min.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/ga.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic">
+  <link href="https://sendto.mozilla.org/page/-/donation_form/css/font-awesome.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://sendto.mozilla.org/page/-/donation_form/img/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body>
+  <div id="mozilla-eoy-donation">
+    <div class="mozilla-wordmark">
+      <img src="https://ddz69tinzt56n.cloudfront.net/images/Mozilla-wordmark.png">
+    </div>
+
+    <div>
+      <div id="header-copy">
+        <div class="row">
+          <h1>From all of us at Mozilla</h1>
+
+          <h2><em>Thank you</em> for your donation.</h2>
+        </div>
+      </div>
+
+      <div class="form-wrapper container">
+        <div class="wrap">
+          <div class="row">
+            <h2>Sign up for email updates</h2>
+
+            <h5>
+              Don&rsquo;t miss important news about the work your donation makes possible.
+            </h5>
+
+          </div>
+        </div>
+
+
+        <div class="wrap">
+          <div class="row">
+            <form name="signup" class="bsd-signup-154" action="/page/s/EOYFR2014-donor" method="post" id="signup">
+              <div class="input">
+                <input required type="email" class="text" size="48" id="email" name="email" placeholder="youremail@example.com">
+                  <i class="fa fa-envelope field-icon"></i>
+                </input>
+              </div>
+              <div class="input">
+                <input required id="opt_in" name="opt_in" type="checkbox" value="1">
+                  <label for="opt_in"> <label class="field" for="opt_in">I'm okay with you handling this info as you explain in your <a href="https://www.mozilla.org/en-US/privacy/">privacy policy</a>.</label></label>
+                </input>
+              </div>
+              <input name="submit-btn" value="Sign up now" type="submit">
+            </form>
+          </div>
+        </div>
+
+        <script src="https://sendto.mozilla.org/page/-/donation_form/js/jquery-2.1.1.min.js"></script>
+        <script src="https://sendto.mozilla.org/page/-/donation_form/js/parsley.min.js"></script>
+        <script>
+          var
+              $opt_in = $('label[for="opt_in"]'),
+              $email = $('#email'),
+              donator_email = donator_email || undefined,
+              donator_name = donator_name || undefined;
+
+          $opt_in.find('label').prepend('<span class="required">* ');
+
+          $email
+              .attr('aria-label', 'Email Address');
+
+          if (donator_email !== undefined) {
+            $email.val(donator_email).attr('value',donator_email);
+          }
+
+          if (donator_name !== undefined) {
+            $('#header-copy').find('h2').html('<em>Thank you, ' + donator_name);
+          }
+
+          $('#signup').parsley().subscribe("parsley:form:validate", function (formInstance) {
+            if (!formInstance.isValid()) {
+              formInstance.submitEvent.preventDefault();
+            }
+          });
+        </script>
+      </div>
+      <footer>
+        <div class="footer">
+          <div class="row">
+            <div class="half">
+              <img src="https://ddz69tinzt56n.cloudfront.net/images/Mozilla-wordmark.png">
+              <p class="license">Portions of this content are &copy;1998&ndash;2014
+                by
+                individual mozilla.org contributors. Content available under a
+                <a href="https://www.mozilla.org/foundation/licensing/website-content/" target=\"_blank\">Creative
+                Commons license</a>.
+              </p>
+            </div>
+            <div class="quarter">
+              <ul>
+                <li><a href="https://www.mozilla.org/mission/" target=\"_blank\">Mission</a></li>
+                <li><a href="https://www.mozilla.org/about/" target=\"_blank\">About</a></li>
+                <li><a href="https://www.mozilla.org/contact/spaces/" target=\"_blank\">Contact</a>
+                </li>
+                <li><a href="https://www.mozilla.org/privacy/" target=\"_blank\">Privacy Policy</a>
+                </li>
+                <li><a href="https://www.mozilla.org/about/legal/" target=\"_blank\">Legal Notices</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

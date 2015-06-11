@@ -14,7 +14,10 @@
   </script>
   <script src="//s.bsd.net/bsdaction/default/page/-/js/analytics/ga_integration-min.js"></script>
   <script src="https://js.stripe.com/v1/"></script>
-  <script src="js/stripe.js"></script>
+  <script>
+    Stripe.setPublishableKey('pk_test_BZ0QTIwe7BVAk1ZDxOgWZ9Z6');
+  </script>
+  <script src="js/analytics.js"></script>
   <script src="js/ga.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic"/>
   <link href="https://sendto.mozilla.org/page/-/donation_form/css/font-awesome.min.css" rel="stylesheet"/>
@@ -24,11 +27,11 @@
 </head>
 <body>
   <div id="mozilla-eoy-donation">
-    <div class="container mozilla-wordmark">
+    <div class="mozilla-wordmark">
       <img src="https://ddz69tinzt56n.cloudfront.net/images/Mozilla-wordmark.png">
     </div>
     <div>
-      <div class="sequential-container">
+      <div class="form-wrapper container">
         <form id="donation-form-sequential" action="/stripe" method="post" data-parsley-excluded="input[type=button], input[type=submit], input[type=reset], input[type=hidden], [disabled]">
           <ol class="progress">
             <li data-position="#page-1" class="active">
@@ -807,7 +810,7 @@
     <script src="js/form.js"></script>
   </div>
   <footer>
-    <div class="container">
+    <div class="footer">
       <div class="row">
         <div class="half">
           <img src="https://ddz69tinzt56n.cloudfront.net/images/Mozilla-wordmark.png">

@@ -13,14 +13,6 @@ $> cp sample.env .env
 
 ## To run
 
-### On production mode
-
 ```
 $> npm start
-```
-
-### On development mode
-
-```
-$> npm run dev
 ```

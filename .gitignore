@@ -3,5 +3,4 @@ node_modules/
 *~
 .env
 npm-debug*
-public/css/index.css
-public/css/index.css.map
+public/css/*

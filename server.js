@@ -3,6 +3,8 @@ var Path = require('path');
 
 var Hapi = require('hapi');
 var Good = require('good');
+var Handlebars = require('handlebars');
+var fs = require('fs');
 
 var server = new Hapi.Server();
 server.connection({
@@ -18,15 +20,43 @@ var stripeKeys = {
 
 var stripe = require('stripe')(stripeKeys.secretKey);
 
+function render(page, reply) {
+  fs.readFile('pages/index.html', 'utf-8', function(error, indexSource) {
+    fs.readFile('pages/' + page, 'utf-8', function(error, pageSource) {
+      var indexTemplate = Handlebars.compile(indexSource);
+      var source = indexTemplate({
+        body: pageSource
+      });
+      reply(source);
+    });
+  });
+}
+
+function thankYouHandlerfunction(request, reply) {
+  render('thank-you.html', reply);
+}
+
+function sequentialHandler(request, reply) {
+  render('sequential.html', reply);
+}
+
 server.route([
   {
     method: 'GET',
-    path: '/{params*}',
+    path: '/public/{params*}',
     handler: {
       directory: {
         path: Path.join(__dirname, 'public')
       }
     }
+  },{
+    method: 'GET',
+    path: '/thank-you',
+    handler: thankYouHandlerfunction
+  },{
+    method: 'GET',
+    path: '/',
+    handler: sequentialHandler
   },{
     method: 'POST',
     path: '/stripe',

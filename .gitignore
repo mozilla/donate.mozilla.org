@@ -4,3 +4,4 @@ node_modules/
 .env
 npm-debug*
 public/css/*
+public/build/*

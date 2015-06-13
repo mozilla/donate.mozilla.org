@@ -3,6 +3,8 @@ var Path = require('path');
 
 var Hapi = require('hapi');
 var Good = require('good');
+var React = require('react');
+require('node-jsx').install();
 
 var server = new Hapi.Server();
 server.connection({
@@ -20,12 +22,30 @@ var stripe = require('stripe')(stripeKeys.secretKey);
 
 server.route([
   {
+     method: 'GET',
+     path: '/public/{params*}',
+     handler: {
+       directory: {
+         path: Path.join(__dirname, 'public')
+       }
+     }
+  }, {
     method: 'GET',
-    path: '/{params*}',
-    handler: {
-      directory: {
-        path: Path.join(__dirname, 'public')
+    path: '/{page*}',
+    handler: function(request, reply) {
+      var Index = React.createFactory(require('./pages/index.jsx'));
+      var Page;
+      try {
+        Page = React.createFactory(require('./pages/' + request.params.page + '.jsx'));
+      } catch (ex) {
+        // Meep?
+        console.log(ex);
+        return reply(404);
       }
+
+      reply(React.renderToString(Index({
+        markup: React.renderToString(Page())
+      })));
     }
   },{
     method: 'POST',

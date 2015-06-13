@@ -4,11 +4,13 @@
   "description": "Mozilla's Donation Forms",
   "main": "server.js",
   "scripts": {
-    "start": "npm-run-all --parallel server watch:css",
+    "start": "npm-run-all --parallel server watch:js watch:css",
     "build:dev": "npm run build:css",
     "build:production": "npm run build:css",
+    "build:js": "webpack --progress --profile --colors",
     "build:css": "npm run watch:css -- --no-watch",
     "postinstall": "node scripts/build",
+    "watch:js": "npm run build:js -- --watch",
     "watch:css": "mkdirp public/css && autoless less public/css --autoprefix '> 1%, last 2 versions'  --source-map",
     "server": "node server.js"
   },
@@ -36,9 +38,14 @@
     "good-console": "^5.0.2",
     "habitat": "^3.1.2",
     "hapi": "^8.6.1",
+    "json-loader": "0.5.1",
+    "jsx-loader": "0.13.2",
     "mkdirp": "^0.5.1",
+    "node-jsx": "^0.13.3",
     "node-libs-browser": "^0.5.2",
     "npm-run-all": "^1.2.5",
+    "react": "^0.13.3",
+    "react-router": "^0.13.3",
     "stripe": "~2.2.0",
     "webpack": "^1.9.10"
   }

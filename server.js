@@ -5,6 +5,8 @@ var Hapi = require('hapi');
 var Good = require('good');
 var React = require('react');
 require('node-jsx').install();
+var Router = require('react-router');
+var routes = require('./routes.jsx');
 
 var server = new Hapi.Server();
 server.connection({
@@ -17,6 +19,8 @@ var stripeKeys = {
   // This is just a test key right now, nothing secret about it.
   secretKey: 'sk_test_HbsdaR1Bn5I84vdezKa9VcvA'
 }
+
+
 
 var stripe = require('stripe')(stripeKeys.secretKey);
 
@@ -33,19 +37,14 @@ server.route([
     method: 'GET',
     path: '/{page*}',
     handler: function(request, reply) {
-      var Index = React.createFactory(require('./pages/index.jsx'));
-      var Page;
-      try {
-        Page = React.createFactory(require('./pages/' + request.params.page + '.jsx'));
-      } catch (ex) {
-        // Meep?
-        console.log(ex);
-        return reply(404);
-      }
-
-      reply(React.renderToString(Index({
-        markup: React.renderToString(Page())
-      })));
+      var router = Router.create({location: request.params.page, routes: routes});
+      router.run(function(Handler, state) {
+        var Index = React.createFactory(require('./pages/index.jsx'));
+        var Page = React.createFactory(Handler);
+        reply(React.renderToString(Index({
+          markup: React.renderToString(Page())
+        })));
+      });
     }
   },{
     method: 'POST',

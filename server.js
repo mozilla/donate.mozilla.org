@@ -3,6 +3,10 @@ var Path = require('path');
 
 var Hapi = require('hapi');
 var Good = require('good');
+var React = require('react');
+require('node-jsx').install();
+var Router = require('react-router');
+var routes = require('./routes.jsx');
 
 var server = new Hapi.Server();
 server.connection({
@@ -16,16 +20,31 @@ var stripeKeys = {
   secretKey: 'sk_test_HbsdaR1Bn5I84vdezKa9VcvA'
 }
 
+
+
 var stripe = require('stripe')(stripeKeys.secretKey);
 
 server.route([
   {
+     method: 'GET',
+     path: '/public/{params*}',
+     handler: {
+       directory: {
+         path: Path.join(__dirname, 'public')
+       }
+     }
+  }, {
     method: 'GET',
-    path: '/{params*}',
-    handler: {
-      directory: {
-        path: Path.join(__dirname, 'public')
-      }
+    path: '/{page*}',
+    handler: function(request, reply) {
+      var router = Router.create({location: request.params.page, routes: routes});
+      router.run(function(Handler, state) {
+        var Index = React.createFactory(require('./pages/index.jsx'));
+        var Page = React.createFactory(Handler);
+        reply(React.renderToString(Index({
+          markup: React.renderToString(Page())
+        })));
+      });
     }
   },{
     method: 'POST',

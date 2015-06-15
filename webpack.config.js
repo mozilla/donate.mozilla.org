@@ -1,5 +1,4 @@
 var path = require('path');
-//var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: "./client.jsx",
@@ -14,19 +13,8 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.jsx$/, loaders: ['jsx-loader'] },
-      { test: /\.json$/, loaders: ['json-loader'] }/*,
-      {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
-      },
-      {
-        test: /\.(otf|eot|svg|ttf|woff|woff2)(\?.+)?$/,
-        loader: 'url-loader?limit=8192'
-      }*/
+      { test: /\.json$/, loaders: ['json-loader'] }
     ]
-  }/*,
-  plugins: [
-    new ExtractTextPlugin('bundle.css')
-  ]*/
+  }
 };
 

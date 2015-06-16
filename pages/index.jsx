@@ -22,7 +22,7 @@ var Index = React.createClass({
         </head>
         <body>
           <div id="my-app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
-          <script src="/build/main.js"></script>
+          <script src="/main.js"></script>
         </body>
       </html>
     );

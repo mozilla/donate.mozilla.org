@@ -16,8 +16,6 @@ var stripeKeys = {
   secretKey: 'sk_test_HbsdaR1Bn5I84vdezKa9VcvA'
 }
 
-
-
 var stripe = require('stripe')(stripeKeys.secretKey);
 
 server.route([

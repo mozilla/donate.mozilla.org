@@ -5,3 +5,7 @@ node_modules/
 npm-debug*
 public/css/*
 public/build/*
+
+public/*.hot-update.js*
+public/index.html
+public/*/index.html

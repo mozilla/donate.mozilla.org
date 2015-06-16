@@ -4,6 +4,7 @@ var Header = require('../components/header.jsx');
 
 var Sequential = React.createClass({
   componentDidMount: function() {
+
     var
       $theForm = $("#donation-form-sequential"),
       win = window,
@@ -599,7 +600,7 @@ var Sequential = React.createClass({
                   </div>
                   <div className="row" id="payment-type-row">
                     <div className="half">
-                      <input type="radio" name="payment-type" value="cc" id="payment-cc" data-parsley-group="page-2" data-parsley-multiple="payment-type" data-parsley-group="payment-type" data-parsley-errors-container="#payment-type-error-msg"  data-parsley-required/>
+                      <input type="radio" name="payment-type" value="cc" id="payment-cc" data-parsley-group="page-2" data-parsley-multiple="payment-type" data-parsley-errors-container="#payment-type-error-msg"  data-parsley-required/>
                       <label htmlFor="payment-cc">
                         <div className="row payment-logos credit-card-logos">
                           <p>&nbsp;</p>
@@ -608,7 +609,7 @@ var Sequential = React.createClass({
                       </label>
                     </div>
                     <div className="half">
-                      <input type="radio" name="payment-type" value="paypal" id="payment-paypal" data-parsley-group="page-2" data-parsley-multiple="payment-type" data-parsley-group="payment-type" data-parsley-errors-container="#payment-type-error-msg"  data-parsley-required/>
+                      <input type="radio" name="payment-type" value="paypal" id="payment-paypal" data-parsley-group="page-2" data-parsley-multiple="payment-type" data-parsley-errors-container="#payment-type-error-msg"  data-parsley-required/>
                       <label htmlFor="payment-paypal">
                         <div className="row payment-logos paypal-logo">
                           <p>&nbsp;</p>

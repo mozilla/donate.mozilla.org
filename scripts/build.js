@@ -4,10 +4,10 @@ var Habitat = require('habitat');
 Habitat.load();
 
 var env = new Habitat();
-var buildCommand = 'build:dev';
+var buildCommand = 'start:dev';
 
 if (env.get("NPM_CONFIG_PRODUCTION")) {
-  buildCommand = 'build:production';
+  buildCommand = 'start:prod';
 }
 
 var npm = spawn('npm', ['run', buildCommand]);

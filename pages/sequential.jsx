@@ -2,7 +2,7 @@ var React = require('react');
 var Footer = require('../components/footer.jsx');
 var Header = require('../components/header.jsx');
 
-var ThankYou = React.createClass({
+var Sequential = React.createClass({
   componentDidMount: function() {
     var
       $theForm = $("#donation-form-sequential"),
@@ -498,9 +498,9 @@ var ThankYou = React.createClass({
 
             function submitSuccess(data, textStatus, XHR) {
               if (win.location.assign) {
-                win.location.assign("http://localhost:2015/givenow-seq/thank-you.html");
+                win.location.assign("/thank-you");
               } else {
-                win.location = "http://localhost:2015/givenow-seq/thank-you.html";
+                win.location = "/thank-you";
               }
             }
 
@@ -1303,4 +1303,4 @@ var ThankYou = React.createClass({
   }
 });
 
-module.exports = ThankYou;
+module.exports = Sequential;

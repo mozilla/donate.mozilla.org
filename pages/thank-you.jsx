@@ -58,18 +58,20 @@ var ThankYou = React.createClass({
 
               <div className="wrap">
                 <div className="row">
-                  <form name="signup" className="bsd-signup-154" action="/page/s/EOYFR2014-donor" method="post" id="signup">
+                  <form action="https://sendto.mozilla.org/page/signup/EOYFR2014-donor" method="post">
                     <div className="input">
-                      <input required type="email" className="text" size="48" id="email" name="email" placeholder="youremail@example.com">
+                      <input className="text" size="48" id="email" name="email" type="email" placeholder="youremail@example.com">
                         <i className="fa fa-envelope field-icon"></i>
                       </input>
                     </div>
                     <div className="input">
                       <input required id="opt_in" name="opt_in" type="checkbox" value="1">
-                        <label for="opt_in"> <label className="field" for="opt_in">I'm okay with you handling this info as you explain in your <a href="https://www.mozilla.org/en-US/privacy/">privacy policy</a>.</label></label>
+                        <label htmlFor="opt_in"> <label className="field" htmlFor="opt_in">I'm okay with you handling this info as you explain in your <a href="https://www.mozilla.org/en-US/privacy/">privacy policy</a>.</label></label>
                       </input>
                     </div>
-                    <input name="submit-btn" value="Sign up now" type="submit"/>
+                    <input name="submit-btn" value="Submit Form" type="submit"/>
+                    <input name="redirect_url" value="" type="hidden"/>
+                    <input id="_guid" name="_guid" value="" type="hidden"/>
                   </form>
                 </div>
               </div>

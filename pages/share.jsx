@@ -3,13 +3,6 @@ var Footer = require('../components/footer.jsx');
 var Header = require('../components/header.jsx');
 
 var ThankYou = React.createClass({
-  componentDidMount: function() {
-
-
-
-
-
-  },
   render: function() {
     return (
       <div className="share-page">

@@ -9,10 +9,11 @@ var webpack = require('webpack');
 require('babel/register');
 
 var path = require('path');
-var React = require('react')
-var wrapper = require('./pages/index.jsx')
-var Sequential = require('./pages/sequential.jsx')
-var ThankYou = require('./pages/thank-you.jsx')
+var React = require('react');
+var wrapper = require('./pages/index.jsx');
+var Sequential = require('./pages/sequential.jsx');
+var ThankYou = require('./pages/thank-you.jsx');
+var currencyArray = "usd, php, pln, rub, sek, thb, twd".split(", ");
 
 var getConfig = require('hjs-webpack')
 
@@ -27,20 +28,29 @@ module.exports = getConfig({
   port: env.get('WEBPACK_DEV_PORT'),
   isDev: !env.get('NPM_CONFIG_PRODUCTION'),
   html: function (data) {
-    var pageWrapper = React.createFactory(wrapper)
-    var SequentialPageHtmlString = React.createFactory(Sequential)
-    var ThankYouPageHtmlString = React.createFactory(ThankYou)
+    var pageWrapper = React.createFactory(wrapper);
+    var SequentialPageHtmlString = React.createFactory(Sequential);
+    var ThankYouPageHtmlString = React.createFactory(ThankYou);
 
     var sq = React.renderToStaticMarkup(pageWrapper({
       markup: React.renderToStaticMarkup(SequentialPageHtmlString())
-    }))
+    }));
     var ty = React.renderToStaticMarkup(pageWrapper({
       markup: React.renderToStaticMarkup(ThankYouPageHtmlString())
-    }))
+    }));
 
-    return {
+    var returnObject = {
       'index.html': sq,
       'thank-you/index.html': ty
-    }
+    };
+
+    currencyArray.forEach(function(value) {
+      var page = React.createFactory(require('./pages/paypal-donate-' + value + '.jsx'))
+      returnObject['paypal-donate-' + value + '/index.html'] = React.renderToStaticMarkup(pageWrapper({
+        markup: React.renderToStaticMarkup(page())
+      }))
+    });
+
+    return returnObject;
   }
 })

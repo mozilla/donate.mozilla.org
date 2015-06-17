@@ -13,7 +13,7 @@ var React = require('react');
 var wrapper = require('./pages/index.jsx');
 var Sequential = require('./pages/sequential.jsx');
 var ThankYou = require('./pages/thank-you.jsx');
-var currencyArray = "usd, php, pln, rub, sek, thb, twd".split(", ");
+var currencies = require('./currencies.js');
 
 var getConfig = require('hjs-webpack')
 
@@ -44,10 +44,11 @@ module.exports = getConfig({
       'thank-you/index.html': ty
     };
 
-    currencyArray.forEach(function(value) {
-      var page = React.createFactory(require('./pages/paypal-donate-' + value + '.jsx'))
-      returnObject['paypal-donate-' + value + '/index.html'] = React.renderToStaticMarkup(pageWrapper({
-        markup: React.renderToStaticMarkup(page())
+    currencies.forEach(function(value) {
+      var currencyName = value.currency.toLowerCase();
+      var page = React.createFactory(require('./pages/paypal-donate.jsx'))
+      returnObject['paypal-donate-' + currencyName + '/index.html'] = React.renderToStaticMarkup(pageWrapper({
+        markup: React.renderToStaticMarkup(page(value))
       }))
     });
 

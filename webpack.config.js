@@ -44,8 +44,9 @@ module.exports = getConfig({
       'thank-you/index.html': ty
     };
 
-    currencies.forEach(function(value) {
-      var currencyName = value.currency.toLowerCase();
+    Object.keys(currencies).forEach(function(key) {
+      var currencyName = key;
+      var value = currencies[key];
       var page = React.createFactory(require('./pages/paypal-donate.jsx'))
       returnObject['paypal-donate-' + currencyName + '/index.html'] = React.renderToStaticMarkup(pageWrapper({
         markup: React.renderToStaticMarkup(page(value))

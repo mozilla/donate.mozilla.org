@@ -2,6 +2,7 @@ var React = require('react');
 
 var simplePaypal = React.createClass({
   componentDidMount: function() {
+    var currencySymbol = this.props.currencySymbol;
     // ***********************************************
     // Update Donate button to make it show the selected donation amount
     // ***********************************************
@@ -10,7 +11,7 @@ var simplePaypal = React.createClass({
     $theForm.find('[name="donation_amount_other"]').val("");
 
     function updateDonateButtonText(amountSelected) {
-      var buttonText = amountSelected ? "Donate " + this.props.currencySymbol + "{ amount } now".replace("{ amount }", amountSelected) : "Donate now";
+      var buttonText = amountSelected ? "Donate " + currencySymbol + "{ amount } now".replace("{ amount }", amountSelected) : "Donate now";
       $("#donate-btn").text(buttonText);
       $('#paypal-one-time').find('[name="amount"]').attr('value', amountSelected);
       $('#paypal-recurring').find('[name="a3"]').attr('value', amountSelected);
@@ -82,17 +83,17 @@ var simplePaypal = React.createClass({
                 <div className="full">
                   <div id="amount-other-container">
                     <input type="radio" name="donation_amount" value="other" id="amount-other"/>
-                    <label for="amount-other" className="large-label-size">{this.props.currency}</label>
+                    <label htmlFor="amount-other" className="large-label-size">{this.props.currency}</label>
                     <input x-moz-errormessage="Please select a value that is no less than 2." type="number" name="donation_amount_other" min={this.props.minAmount} placeholder="Amount" className="medium-label-size" required/>
                   </div>
                 </div>
               </div>
               <div className="row" id="recurring-option-row">
                 <div className="half">
-                  <input type="radio" name="recurring_acknowledge" defaultChecked="checked" value="0" required id="one-time-payment"/><label for="one-time-payment" className="medium-label-size">One-time</label>
+                  <input type="radio" name="recurring_acknowledge" defaultChecked="checked" value="0" required id="one-time-payment"/><label htmlFor="one-time-payment" className="medium-label-size">One-time</label>
                 </div>
                 <div className="half">
-                  <input type="radio" name="recurring_acknowledge" value="1" required id="monthly-payment"/><label for="monthly-payment" className="medium-label-size">Monthly</label>
+                  <input type="radio" name="recurring_acknowledge" value="1" required id="monthly-payment"/><label htmlFor="monthly-payment" className="medium-label-size">Monthly</label>
                 </div>
               </div>
               <div className="row">

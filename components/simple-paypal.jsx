@@ -10,7 +10,7 @@ var simplePaypal = React.createClass({
     $theForm.find('[name="donation_amount_other"]').val("");
 
     function updateDonateButtonText(amountSelected) {
-      var buttonText = amountSelected ? "Donate ${ amount } now".replace("{ amount }", amountSelected) : "Donate now";
+      var buttonText = amountSelected ? "Donate " + this.props.currencySymbol + "{ amount } now".replace("{ amount }", amountSelected) : "Donate now";
       $("#donate-btn").text(buttonText);
       $('#paypal-one-time').find('[name="amount"]').attr('value', amountSelected);
       $('#paypal-recurring').find('[name="a3"]').attr('value', amountSelected);
@@ -82,8 +82,8 @@ var simplePaypal = React.createClass({
                 <div className="full">
                   <div id="amount-other-container">
                     <input type="radio" name="donation_amount" value="other" id="amount-other"/>
-                    <label for="amount-other" className="large-label-size">USD</label>
-                    <input x-moz-errormessage="Please select a value that is no less than 2." type="number" name="donation_amount_other" min="2" placeholder="Amount" className="medium-label-size" required/>
+                    <label for="amount-other" className="large-label-size">{this.props.currency}</label>
+                    <input x-moz-errormessage="Please select a value that is no less than 2." type="number" name="donation_amount_other" min={this.props.minAmount} placeholder="Amount" className="medium-label-size" required/>
                   </div>
                 </div>
               </div>
@@ -115,7 +115,7 @@ var simplePaypal = React.createClass({
         <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" id="paypal-one-time">
           <input type="hidden" name="cmd" value="_donations"/>
           <input type="hidden" name="business" value="44ZHAVWJHTK2N"/>
-          <input type="hidden" name="lc" value="US"/>
+          <input type="hidden" name="lc" value={this.props.paypalLocal}/>
           <input type="hidden" name="item_name" value="Mozilla Foundation"/>
           <input type="hidden" name="no_note" value="1"/>
           <input type="hidden" name="no_shipping" value="1"/>
@@ -123,20 +123,20 @@ var simplePaypal = React.createClass({
           {/* Donation Amount */}
           <input type="hidden" name="amount" value="0"/>
           <input type="hidden" name="return" value="https://sendto.mozilla.org/page/s/EOYFR2014-donor"/>
-          <input type="hidden" name="currency_code" value="USD"/>
+          <input type="hidden" name="currency_code" value={this.props.currency}/>
         </form>
 
         <form action="https://www.paypal.com/cgi-bin/webscr" method="post" id="paypal-recurring">
           <input type="hidden" name="cmd" value="_xclick-subscriptions"/>
           <input type="hidden" name="business" value="44ZHAVWJHTK2N"/>
-          <input type="hidden" name="lc" value="US"/>
+          <input type="hidden" name="lc" value={this.props.paypalLocal}/>
           <input type="hidden" name="item_name" value="Mozilla Foundation Recurring Donation"/>
           <input type="hidden" name="no_note" value="1"/>
           <input type="hidden" name="no_shipping" value="2"/>
           <input type="hidden" name="return" value="https://sendto.mozilla.org/page/s/EOYFR2014-donor"/>
           <input type="hidden" name="src" value="1"/>
           <input type="hidden" name="p3" value="1"/>
-          <input type="hidden" name="currency_code" value="USD"/>
+          <input type="hidden" name="currency_code" value={this.props.currency}/>
           <input type="hidden" name="t3" value="M"/>
           <input name="srt" type="hidden" value="0"/>
           <input type="hidden" name="a3" value="0"/>

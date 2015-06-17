@@ -6,14 +6,15 @@ var SimplePaypal = require('../components/simple-paypal.jsx');
 var simplePaypal = React.createClass({
   render: function() {
     return (
-      <div>
-        <div className="mozilla-eoy-donation">
-          <Header/>
-          <div>
-            <SimplePaypal/>
-            <Footer/>
-          </div>
-        </div>
+      <div className="mozilla-eoy-donation">
+        <Header/>
+        <SimplePaypal
+          currency={this.props.currency}
+          minAmount={this.props.minAmount}
+          currencySymbol={this.props.currencySymbol}
+          paypalLocal={this.props.paypalLocal}
+        />
+        <Footer/>
       </div>
     );
   }

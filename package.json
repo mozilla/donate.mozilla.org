@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node scripts/build",
     "start:prod": "node server.js",
-    "start:dev": "npm-run-all --parallel watch:js server webpackserver watch:css",
+    "start:dev": "npm-run-all --parallel watch:js server watch:css",
     "postinstall": "npm-run-all build:js build:css",
     "build:js": "webpack",
     "build:css": "npm run watch:css -- --no-watch",

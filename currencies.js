@@ -1,4 +1,4 @@
-module.exports = {
+var currencies = {
   "usd": {
     currency: "USD",
     minAmount: "2",
@@ -138,3 +138,10 @@ module.exports = {
     paypalLocal: 'US'
   }
 };
+
+module.exports = {
+  paths: Object.keys(currencies).map(function(key) {
+    return '/paypal-donate-' + key;
+  }),
+  currencies: currencies
+}

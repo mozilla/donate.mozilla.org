@@ -1,7 +1,7 @@
 var SimpleHtmlPrecompiler = require('./plugins/simple-html-precompiler.js');
 var path = require('path');
 var React = require('react');
-require('node-jsx').install();
+require('babel/register');
 var Router = require('react-router');
 var routes = require('./routes.jsx');
 var currencies = require('./currencies.js');

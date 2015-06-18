@@ -1,4 +1,3 @@
-
 {
   "name": "donate.mozilla.org",
   "version": "0.0.1",
@@ -33,6 +32,7 @@
   "homepage": "https://github.com/mozilla/donate.mozilla.org#readme",
   "dependencies": {
     "autoless": "^0.1.7",
+    "babel": "^5.5.8",
     "babel-core": "^5.5.6",
     "babel-loader": "^5.1.4",
     "cross-spawn": "^0.4.0",

@@ -21,9 +21,13 @@ module.exports = {
     path: path.join('public')
   },
 
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
+
   module: {
     loaders: [
-      { test: /\.jsx$/, loaders: ['jsx-loader'] },
+      { test: /\.jsx$/, loaders: ['babel-loader'] },
       { test: /\.json$/, loaders: ['json-loader'] }
     ]
   },

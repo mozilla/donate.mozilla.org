@@ -1,6 +1,6 @@
 import React from 'react';
 import Route from 'react-router';
-import { currencies } from './currencies.js';
+import { currencies } from '../scripts/currencies.js';
 
 import { routes } from './routes.jsx';
 

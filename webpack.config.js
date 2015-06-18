@@ -4,11 +4,11 @@ var React = require('react');
 require('babel/register');
 var Router = require('react-router');
 
-var routes = require('./routes.jsx');
-var currencies = require('./currencies.js').currencies;
+var routes = require('./components/routes.jsx');
+var currencies = require('./scripts/currencies.js').currencies;
 
 module.exports = {
-  entry: "./client.jsx",
+  entry: "./components/client.jsx",
 
   output: {
     filename: '[name].js',

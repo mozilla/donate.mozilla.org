@@ -1,8 +1,8 @@
-var React = require('react'),
-    Router = require('react-router');
-var currencies = require('./currencies.js').currencies;
+import React from 'react';
+import Route from 'react-router';
+import { currencies } from './currencies.js';
 
-var routes = require("./routes.jsx").routes;
+import { routes } from './routes.jsx';
 
 Router.run(routes, Router.HistoryLocation, function (Handler, state) {
   React.render(<Handler {...currencies[state.params.currency]}/>, document.querySelector("#my-app"));

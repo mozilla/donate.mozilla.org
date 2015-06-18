@@ -1,6 +1,7 @@
 var React = require('react');
 var Footer = require('../components/footer.jsx');
 var Header = require('../components/header.jsx');
+var Link = require('../components/link.jsx');
 
 var Sequential = React.createClass({
   componentDidMount: function() {
@@ -1254,7 +1255,7 @@ var Sequential = React.createClass({
             </div>
             <div className="row">
               <p className="other_ways_to_give">
-                <small>Other ways to give: <a target="_blank" href="https://sendto.mozilla.org/page/content/give-bitcoin/">Bitcoin</a> | <a target="_blank" href="https://wiki.mozilla.org/Ways_to_Give#Check_.28via_postal_service.29">Check</a></small>
+                <small>Other ways to give: <Link to="give-bitcoin">Bitcoin</Link> | <a target="_blank" href="https://wiki.mozilla.org/Ways_to_Give#Check_.28via_postal_service.29">Check</a></small>
               </p>
               <p className="need-help">
                 <small>Problems donating? <a href="https://wiki.mozilla.org/Donate" target="_blank">Visit our FAQ</a> for answers to most common questions. Still have problems? <a href="mailto:donate@mozilla.org">Send us an email</a>.</small>

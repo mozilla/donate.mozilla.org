@@ -12,7 +12,6 @@
     "build:css": "npm run watch:css -- --no-watch",
     "watch:js": "webpack -w -h",
     "watch:css": "mkdirp public/css && autoless less public/css --autoprefix '> 1%, last 2 versions'  --source-map",
-    "webpackserver": "webpack-dev-server --content-base public",
     "server": "node server.js"
   },
   "repository": {
@@ -47,9 +46,5 @@
     "simple-html-precompiler": "^1.0.1",
     "stripe": "~2.2.0",
     "webpack": "^1.9.10"
-  },
-  "devDependencies": {
-    "react-hot-loader": "^1.2.7",
-    "webpack-dev-server": "^1.9.0"
   }
 }

@@ -13,5 +13,10 @@ module.exports = {
     name: "share",
     path: "/share/?",
     handler: require('../pages/share.jsx')
+  },
+  "/give-bitcoin": {
+    name: "give-bitcoin",
+    path: "/give-bitcoin/?",
+    handler: require('../pages/give-bitcoin.jsx')
   }
 };

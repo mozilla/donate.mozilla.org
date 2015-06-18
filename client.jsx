@@ -1,6 +1,6 @@
 var React = require('react'),
     Router = require('react-router');
-var currencies = require('./currencies.js');
+var currencies = require('./currencies.js').currencies;
 
 var routes = require("./routes.jsx");
 

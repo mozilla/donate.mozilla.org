@@ -1,4 +1,4 @@
-var SimpleHtmlPrecompiler = require('./plugins/simple-html-precompiler.js');
+var SimpleHtmlPrecompiler = require('simple-html-precompiler');
 var path = require('path');
 var React = require('react');
 require('babel/register');

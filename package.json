@@ -44,6 +44,7 @@
     "npm-run-all": "^1.2.5",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
+    "simple-html-precompiler": "^1.0.1",
     "stripe": "~2.2.0",
     "webpack": "^1.9.10"
   },

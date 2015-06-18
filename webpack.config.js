@@ -8,7 +8,7 @@ var routes = require('./components/routes.jsx');
 var currencies = require('./scripts/currencies.js').currencies;
 
 module.exports = {
-  entry: "./client.jsx",
+  entry: "./components/client.jsx",
 
   output: {
     filename: '[name].js',

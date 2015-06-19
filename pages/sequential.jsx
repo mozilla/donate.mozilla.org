@@ -1,9 +1,11 @@
-var React = require('react');
-var Footer = require('../components/footer.jsx');
-var Header = require('../components/header.jsx');
-var Link = require('../components/link.jsx');
+import React from 'react';
+import Footer from '../components/footer.jsx';
+import Header from '../components/header.jsx';
+import Link from '../components/link.jsx';
+import ReactIntl from 'react-intl';
 
 var Sequential = React.createClass({
+  mixins: [require('react-intl').IntlMixin],
   componentDidMount: function() {
 
     var
@@ -541,7 +543,7 @@ var Sequential = React.createClass({
                 <fieldset id="page-1" className="sequence-page">
                   <div className="row">
                     <div className="full">
-                      <h2>Donate now</h2>
+                      <h2>{this.getIntlMessage("ty.From_all_of_us_at_Mozilla")}/></h2>
                       <p className="currency-display"></p>
                     </div>
                   </div>

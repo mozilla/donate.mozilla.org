@@ -1,6 +1,7 @@
-var React = require('react');
-var Footer = require('../components/footer.jsx');
-var Header = require('../components/header.jsx');
+import React  from 'react';
+import Footer from '../components/footer.jsx';
+import Header from '../components/header.jsx';
+import L10nMsg from '../components/localized-msg.jsx';
 
 var ThankYou = React.createClass({
   render: function() {

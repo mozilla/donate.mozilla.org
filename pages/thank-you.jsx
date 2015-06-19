@@ -1,8 +1,9 @@
-var React = require('react');
-var Footer = require('../components/footer.jsx');
-var Header = require('../components/header.jsx');
+import React from 'react';
+import Footer from '../components/footer.jsx';
+import Header from '../components/header.jsx';
 
 var ThankYou = React.createClass({
+  mixins: [require('react-intl').IntlMixin],
   componentDidMount: function() {
     var
         $opt_in = $('label[for="opt_in"]'),
@@ -37,9 +38,9 @@ var ThankYou = React.createClass({
           <div>
             <div id="header-copy">
               <div className="row">
-                <h1>From all of us at Mozilla</h1>
+                <h1>{ this.getIntlMessage("ty.From_all_of_us_at_Mozilla") }/></h1>
 
-                <h2><em>Thank you</em> for your donation.</h2>
+                <h2>{ this.getIntlMessage("ty.Thank_you_for_your_donation") }/></h2>
               </div>
             </div>
 

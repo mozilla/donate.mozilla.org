@@ -232,7 +232,7 @@ var Sequential = React.createClass({
       if (amountSelected && locale === "US") {
         buttonText = "Donate $" + amountSelected + " now";
       } else {
-        buttonText = "Donate now";
+        buttonText = this.getIntlMessage("sequential.donate_now");
       }
       $("#donate-btn").text(buttonText);
       $('#paypal-one-time').find('[name="amount"]').attr('value', amountSelected);
@@ -543,7 +543,7 @@ var Sequential = React.createClass({
                 <fieldset id="page-1" className="sequence-page">
                   <div className="row">
                     <div className="full">
-                      <h2>{this.getIntlMessage("ty.From_all_of_us_at_Mozilla")}/></h2>
+                      <h2>{this.getIntlMessage("sequential.donate_now")}</h2>
                       <p className="currency-display"></p>
                     </div>
                   </div>
@@ -1233,7 +1233,7 @@ var Sequential = React.createClass({
                     <div className="row">
                       <div className="full">
                         <button type="submit" className="btn large-label-size" id="donate-btn">
-                        Donate now
+                        this.getIntlMessage("sequential.donate_now")
                         </button>
                       </div>
                     </div>

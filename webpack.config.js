@@ -28,7 +28,7 @@ module.exports = {
 
   plugins: [
     new SimpleHtmlPrecompiler(routes.paths, function(outputPath, callback) {
-      Router.run(routes.routes, outputPath, function (Handler, state) {console.log(outputPath)
+      Router.run(routes.routes, outputPath, function (Handler, state) {
         var values = {};
         var Index = React.createFactory(require('./pages/index.jsx'));
         var Page = React.createFactory(Handler);

@@ -3,7 +3,6 @@ var path = require('path');
 var React = require('react');
 require('babel/register');
 var Router = require('react-router');
-
 var routes = require('./components/routes.jsx');
 var currencies = require('./scripts/currencies.js').currencies;
 
@@ -30,14 +29,20 @@ module.exports = {
   plugins: [
     new SimpleHtmlPrecompiler(routes.paths, function(outputPath, callback) {
       Router.run(routes.routes, outputPath, function (Handler, state) {
+        var values = {};
         var Index = React.createFactory(require('./pages/index.jsx'));
         var Page = React.createFactory(Handler);
-        var values = {};
         if (currencies[state.params.currency]) {
           values = currencies[state.params.currency];
         }
-        callback(React.renderToString(Index({
-          markup: React.renderToString(Page(values))
+
+        if(state.params.locale) {
+          values = Object.assign({messages: require(path.join(__dirname, 'locales/' + state.params.locale +'.json'))}, values);
+        } else {
+          values = Object.assign({messages: require(path.join(__dirname, 'locales/en.json'))}, values);
+        }
+        callback(React.renderToStaticMarkup(Index({
+          markup: React.renderToStaticMarkup(Page(values))
         })));
       });
     })

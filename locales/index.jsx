@@ -6,12 +6,6 @@ function getLocales(arr) {
 	});
 }
 
-function getPathsLocale(arr) {
-	return arr.map(function(key) {
-		return '/sequential-' + key;
-	});
-}
-
 if (global.window) {
 	locales = getLocales(require.context('./', true, /\.json$/).keys());
 } else {
@@ -20,7 +14,4 @@ if (global.window) {
 	locales = getLocales(req.context('./', true, /\.json$/).keys());
 }
 
-module.exports = {
-	locales: locales,
-	paths: getPathsLocale(locales)
-};
+module.exports = locales;

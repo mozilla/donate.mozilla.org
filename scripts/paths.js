@@ -1,22 +1,26 @@
-module.exports = {
-  "/thank-you": {
-    name: "thank-you",
-    path: "/thank-you/?",
-    handler: require('../pages/thank-you.jsx')
-  },
-  "/": {
-    name: "sequential",
-    path: "/?",
-    handler: require('../pages/sequential.jsx')
-  },
-  "/share": {
-    name: "share",
-    path: "/share/?",
-    handler: require('../pages/share.jsx')
-  },
-  "/give-bitcoin": {
-    name: "give-bitcoin",
-    path: "/give-bitcoin/?",
-    handler: require('../pages/give-bitcoin.jsx')
-  }
-};
+import currencies from './currencies.js';
+import locales from "../locales";
+import pages from "./pages.js";
+
+function getLocalePaths(arr) {
+  var returnArray = [];
+  returnArray = returnArray.concat(arr.map(function(key) {
+    return '/sequential-' + key;
+  }));
+  returnArray = returnArray.concat(arr.map(function(key) {
+    return '/thank-you-' + key;
+  }));
+  return returnArray;
+}
+
+function getCurrenciesPaths(arr) {
+	return arr.map(function(key) {
+		return '/paypal-donate-' + key;
+	});
+}
+
+var paths = Object.keys(pages);
+paths = paths.concat(getLocalePaths(locales));
+paths = paths.concat(getCurrenciesPaths(Object.keys(currencies)));
+
+module.exports = paths;

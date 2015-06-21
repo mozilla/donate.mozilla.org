@@ -2,25 +2,18 @@ import currencies from './currencies.js';
 import locales from "../locales";
 import pages from "./pages.js";
 
-function getLocalePaths(arr) {
+function createPaths(first, arr) {
   var returnArray = [];
-  returnArray = returnArray.concat(arr.map(function(key) {
-    return '/sequential-' + key;
-  }));
-  returnArray = returnArray.concat(arr.map(function(key) {
-    return '/thank-you-' + key;
-  }));
+  first.forEach(function(item) {
+    returnArray = returnArray.concat(arr.map(function(key) {
+      return item + key;
+    }));
+  });
   return returnArray;
 }
 
-function getCurrenciesPaths(arr) {
-	return arr.map(function(key) {
-		return '/paypal-donate-' + key;
-	});
-}
-
 var paths = Object.keys(pages);
-paths = paths.concat(getLocalePaths(locales));
-paths = paths.concat(getCurrenciesPaths(Object.keys(currencies)));
+paths = paths.concat(createPaths(['/sequential-', '/thank-you-'], locales));
+paths = paths.concat(createPaths(['/paypal-donate-'], Object.keys(currencies)));
 
 module.exports = paths;

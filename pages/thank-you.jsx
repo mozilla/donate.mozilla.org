@@ -61,12 +61,12 @@ var ThankYou = React.createClass({
                 <div className="row">
                   <form id="signup" action="https://sendto.mozilla.org/page/signup/EOYFR2014-donor" method="post">
                     <div className="input">
-                      <input className="text" size="48" id="email" name="email" type="email" placeholder="youremail@example.com">
+                      <input data-parsley-required className="text" size="48" id="email" name="email" type="email" placeholder="youremail@example.com">
                         <i className="fa fa-envelope field-icon"></i>
                       </input>
                     </div>
                     <div className="input">
-                      <input required id="opt_in" name="opt_in" type="checkbox" value="1">
+                      <input data-parsley-required id="opt_in" name="opt_in" type="checkbox" value="1">
                         <label htmlFor="opt_in"> <label className="field" htmlFor="opt_in">I'm okay with you handling this info as you explain in your <a href="https://www.mozilla.org/en-US/privacy/">privacy policy</a>.</label></label>
                       </input>
                     </div>

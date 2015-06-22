@@ -603,7 +603,7 @@ var Sequential = React.createClass({
                   </div>
                   <div className="row" id="payment-type-row">
                     <div className="half">
-                      <input type="radio" name="payment-type" value="cc" id="payment-cc" data-parsley-group="page-2" data-parsley-multiple="payment-type" data-parsley-errors-container="#payment-type-error-msg"  data-parsley-required/>
+                      <input type="radio" name="payment-type" value="cc" id="payment-cc" data-parsley-group="page-2" data-parsley-multiple="payment-type" data-parsley-errors-container="#payment-type-error-msg" data-parsley-required/>
                       <label htmlFor="payment-cc">
                         <div className="row payment-logos credit-card-logos">
                           <p>&nbsp;</p>
@@ -612,7 +612,7 @@ var Sequential = React.createClass({
                       </label>
                     </div>
                     <div className="half">
-                      <input type="radio" name="payment-type" value="paypal" id="payment-paypal" data-parsley-group="page-2" data-parsley-multiple="payment-type" data-parsley-errors-container="#payment-type-error-msg"  data-parsley-required/>
+                      <input type="radio" name="payment-type" value="paypal" id="payment-paypal" data-parsley-group="page-2" data-parsley-multiple="payment-type" data-parsley-errors-container="#payment-type-error-msg" data-parsley-required/>
                       <label htmlFor="payment-paypal">
                         <div className="row payment-logos paypal-logo">
                           <p>&nbsp;</p>
@@ -627,7 +627,7 @@ var Sequential = React.createClass({
                       <div className="full">
                         <div className="field-container">
                           <i className="fa fa-credit-card field-icon"></i>
-                          <input type="tel" name="cc_number" data-stripe="number" placeholder="Credit card number" maxLength="16" data-parsley-group="page-2" data-parsley-visa-mc-card-num=""  data-parsley-required/>
+                          <input type="tel" name="cc_number" data-stripe="number" placeholder="Credit card number" maxLength="16" data-parsley-group="page-2" autoComplete="off" data-parsley-visa-mc-card-num="" data-parsley-required/>
                         </div>
                       </div>
                     </div>
@@ -635,15 +635,15 @@ var Sequential = React.createClass({
                       <div className="half">
                         <div className="field-container">
                           <i className="fa fa-calendar-o field-icon"></i>
-                          <input aria-label="Credit Card Expiration Month" data-stripe="exp-month" type="tel" placeholder="MM" pattern="\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits"  data-parsley-required name="cc_expir_month"/>
+                          <input aria-label="Credit Card Expiration Month" data-stripe="exp-month" type="tel" placeholder="MM" pattern="\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_month" autoComplete="off"/>
                           /
-                          <input aria-label="Credit Card Expiration Year" type="tel" data-stripe="exp-year" placeholder="YY" pattern="\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits"  data-parsley-required name="cc_expir_year"/>
+                          <input aria-label="Credit Card Expiration Year" type="tel" data-stripe="exp-year" placeholder="YY" pattern="\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_year" autoComplete="off"/>
                         </div>
                       </div>
                       <div className="half">
                         <div className="field-container">
                           <i className="fa fa-lock field-icon"></i>
-                          <input type="tel" name="cc_cvv" maxLength="4" data-stripe="cvc" placeholder="CVC" data-parsley-group="page-2" data-parsley-type="digits"  data-parsley-required/><i className="fa fa-question-circle hint"></i>
+                          <input type="tel" name="cc_cvv" maxLength="4" data-stripe="cvc" placeholder="CVC" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required autoComplete="off"/><i className="fa fa-question-circle hint"></i>
                         </div>
                       </div>
                       <div className="full">
@@ -678,12 +678,12 @@ var Sequential = React.createClass({
                       <div className="half">
                         <div className="field-container">
                           <i className="fa fa-user field-icon"></i>
-                          <input type="text" autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" name="firstname" placeholder="First name" data-parsley-group="page-3"  data-parsley-required/>
+                          <input type="text" autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" name="firstname" placeholder="First name" data-parsley-group="page-3" data-parsley-required/>
                         </div>
                       </div>
                       <div className="half">
                         <div className="field-container">
-                          <input type="text" autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" name="lastname" placeholder="Last name" data-parsley-group="page-3" className="less-indented"  data-parsley-required/>
+                          <input type="text" autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" name="lastname" placeholder="Last name" data-parsley-group="page-3" className="less-indented" data-parsley-required/>
                         </div>
                       </div>
                     </div>
@@ -694,7 +694,7 @@ var Sequential = React.createClass({
                         <div className="full">
                           <div className="field-container">
                             <i className="fa fa-map-marker field-icon"></i>
-                            <select name="country"data-parsley-group="page-3" value="US"  data-parsley-required >
+                            <select name="country"data-parsley-group="page-3" value="US" data-parsley-required >
                               <option value=""></option>
                               <option value="AF">Afghanistan</option>
                               <option value="AL">Albania</option>
@@ -931,15 +931,15 @@ var Sequential = React.createClass({
                       </div>
                       <div className="row">
                         <div className="full">
-                          <input type="text" name="addr1" placeholder="Address" data-parsley-group="page-3"  data-parsley-required/>
+                          <input type="text" name="addr1" placeholder="Address" data-parsley-group="page-3" data-parsley-required/>
                         </div>
                       </div>
                       <div className="row">
                         <div className="half">
-                          <input type="text" name="city" placeholder="City" data-parsley-group="page-3"  data-parsley-required/>
+                          <input type="text" name="city" placeholder="City" data-parsley-group="page-3" data-parsley-required/>
                         </div>
                         <div className="half">
-                          <input type="text" name="zip" placeholder="Zip/Postal code" className="less-indented" data-parsley-group="page-3"  data-parsley-required/>
+                          <input type="text" name="zip" placeholder="Zip/Postal code" className="less-indented" data-parsley-group="page-3" data-parsley-required/>
                         </div>
                       </div>
                       <div className="row">
@@ -1203,7 +1203,7 @@ var Sequential = React.createClass({
                         <div className="full">
                           <div className="field-container">
                             <i className="fa fa-envelope field-icon"></i>
-                            <input type="email" name="email" placeholder="Email" data-parsley-group="page-3"  data-parsley-required/><i className="fa fa-question-circle hint"></i>
+                            <input type="email" name="email" placeholder="Email" data-parsley-group="page-3" data-parsley-required/><i className="fa fa-question-circle hint"></i>
                             <div className="hint-msg small">
                               We&rsquo;ll email you a receipt for your donation. We won&rsquo;t send you other email without your permission.
                             </div>
@@ -1218,7 +1218,7 @@ var Sequential = React.createClass({
                   <div id="privacy-policy">
                     <div className="row cc-additional-info">
                       <div className="full">
-                        <input type="checkbox" name="legal_confirm" id="legalConfirm" data-parsley-group="page-3" data-parsley-errors-container="#privacy-error-msg" data-parsley-error-message="To submit this form you must agree with our privacy policy."  data-parsley-required/><label htmlFor="legalConfirm">I&rsquo;m okay with you handling this info as you explain in your <a href="https://www.mozilla.org/privacy/" target="_blank">privacy policy</a>.</label>
+                        <input type="checkbox" name="legal_confirm" id="legalConfirm" data-parsley-group="page-3" data-parsley-errors-container="#privacy-error-msg" data-parsley-error-message="To submit this form you must agree with our privacy policy." data-parsley-required/><label htmlFor="legalConfirm">I&rsquo;m okay with you handling this info as you explain in your <a href="https://www.mozilla.org/privacy/" target="_blank">privacy policy</a>.</label>
                       </div>
                     </div>
                     <div className="row cc-additional-info error-msg-row">

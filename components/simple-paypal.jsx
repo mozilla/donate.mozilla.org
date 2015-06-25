@@ -1,43 +1,67 @@
 var React = require('react');
+import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+
+var PaypalInput = React.createClass({
+  render: function() {
+    return (
+      <input
+        onChange={this.props.donateOnChange}
+        onKeyDown={this.props.donateKeyDown}
+        type="number" name="donation_amount_other" min={this.props.minAmount} placeholder={this.props.placeholder} className="medium-label-size" required value={this.props.value}/>
+    );
+  }
+});
+
+var PaypalButton = React.createClass({
+  render: function() {
+    var message = this.props.defaultMessage;
+    if (this.props.value) {
+      message = this.props.message
+                  .replace("{currency_symbol}", this.props.currencySymbol)
+                  .replace("{amount}", this.props.value);
+    }
+    return (
+      <button type="submit" className="btn large-label-size" id="donate-btn">
+        {message}
+      </button>
+    );
+  }
+});
 
 var simplePaypal = React.createClass({
+  mixins: [IntlMixin],
+  getInitialState: function() {
+    var value = "";
+
+    return {
+      value: ""
+    };
+  },
+  donateOnChange: function(event) {
+    this.setState({
+      value: event.target.value
+    });
+  },
+  donateKeyDown: function(event) {
+    var functionKeys = [46, 8, 9, 27, 13, 110, 190, 37, 39]; // backspace, delete, tab, escape, enter . left, and right
+    var numberKeys = [ 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105 ]; // numbers
+    var allowed = functionKeys.concat(numberKeys);
+    if (allowed.indexOf(event.keyCode) === -1) {
+      event.preventDefault();
+    }
+  },
   componentDidMount: function() {
-    var currencySymbol = this.props.currencySymbol;
     // ***********************************************
     // Update Donate button to make it show the selected donation amount
     // ***********************************************
     var $theForm = $('#primary-form');
 
-    $theForm.find('[name="donation_amount_other"]').val("");
-
-    function updateDonateButtonText(amountSelected) {
-      var buttonText = amountSelected ? "Donate " + currencySymbol + "{ amount } now".replace("{ amount }", amountSelected) : "Donate now";
-      $("#donate-btn").text(buttonText);
-      $('#paypal-one-time').find('[name="amount"]').attr('value', amountSelected);
-      $('#paypal-recurring').find('[name="a3"]').attr('value', amountSelected);
-    }
-
-    function updateDonateButtonTextEvent(event) {
-      var amountSelected = $(this).val();
-      updateDonateButtonText(amountSelected);
-    }
-
     // check if a pre-selected amount is passed via the URL
     if (window.location.hash.match(/#amount-\d+?/)) {
-      var preSelected = window.location.hash.substring(8);
-      $theForm.find('[name="donation_amount_other"]').val(preSelected);
-      updateDonateButtonText(preSelected);
+      this.setState({
+        value: window.location.hash.substring(8)
+      });
     }
-
-    $theForm.find('[name="donation_amount_other"]').keyup(updateDonateButtonTextEvent);
-    $theForm.find('[name="donation_amount_other"]').keydown(function (event) {
-      var functionKeys = [46, 8, 9, 27, 13, 110, 190]; // backspace, delete, tab, escape, enter and .
-      var numberKeys = [ 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105 ]; // numbers
-      var allowed = functionKeys.concat(numberKeys);
-      if (allowed.indexOf(event.keyCode) === -1) {
-        event.preventDefault();
-      }
-    });
 
     $('input#amount-other + label + input[type="number"]').focus(function () {
       $(this).prevAll('input[type="radio"]').click();
@@ -61,20 +85,25 @@ var simplePaypal = React.createClass({
     return (
       <div className="simple-paypal">
         <div id="header-copy">
-          <h1>Donate now</h1>
+          <h1>
+            {this.getIntlMessage("simplePaypal.donate_now")}
+          </h1>
         </div>
         <div id="form-wrapper" className="container">
           <div className="wrap">
             <div className="row">
               <img src="https://sendto.mozilla.org/page/-/paypal_logo@2x.png" alt="PayPal Logo" width="140" height="58"/>
 
-              <p id="secure-label"><i className="fa fa-lock"></i>Secure</p>
+              <p id="secure-label">
+                <i className="fa fa-lock"></i>
+                {this.getIntlMessage("simplePaypal.secure")}
+              </p>
             </div>
 
             <div className="row">
               <div className="full">
                 <h4>
-                  Select your donation amount
+                  {this.getIntlMessage("simplePaypal.select_donation")}
                 </h4>
               </div>
             </div>
@@ -83,24 +112,41 @@ var simplePaypal = React.createClass({
                 <div className="full">
                   <div id="amount-other-container">
                     <input type="radio" name="donation_amount" value="other" id="amount-other"/>
-                    <label htmlFor="amount-other" className="large-label-size">{this.props.currency}</label>
-                    <input x-moz-errormessage="Please select a value that is no less than 2." type="number" name="donation_amount_other" min={this.props.minAmount} placeholder="Amount" className="medium-label-size" required/>
+                    <label htmlFor="amount-other" className="large-label-size">
+                      {this.props.currency}
+                    </label>
+                    <PaypalInput
+                      donateOnChange={this.donateOnChange}
+                      donateKeyDown={this.donateKeyDown}
+                      minAmount={this.props.minAmount}
+                      placeholder={this.getIntlMessage("simplePaypal.amount")}
+                      value={this.state.value}
+                    />
                   </div>
                 </div>
               </div>
               <div className="row" id="recurring-option-row">
                 <div className="half">
-                  <input type="radio" name="recurring_acknowledge" defaultChecked="checked" value="0" required id="one-time-payment"/><label htmlFor="one-time-payment" className="medium-label-size">One-time</label>
+                  <input type="radio" name="recurring_acknowledge" defaultChecked="checked" value="0" required id="one-time-payment"/>
+                  <label htmlFor="one-time-payment" className="medium-label-size">
+                    {this.getIntlMessage("simplePaypal.one-time")}
+                  </label>
                 </div>
                 <div className="half">
-                  <input type="radio" name="recurring_acknowledge" value="1" required id="monthly-payment"/><label htmlFor="monthly-payment" className="medium-label-size">Monthly</label>
+                  <input type="radio" name="recurring_acknowledge" value="1" required id="monthly-payment"/>
+                  <label htmlFor="monthly-payment" className="medium-label-size">
+                    {this.getIntlMessage("simplePaypal.monthly")}
+                  </label>
                 </div>
               </div>
               <div className="row">
                 <div className="full">
-                  <button type="submit" className="btn large-label-size" id="donate-btn">
-                    Donate now
-                  </button>
+                  <PaypalButton
+                    value={this.state.value}
+                    defaultMessage={this.getIntlMessage("simplePaypal.donate_now")}
+                    message={this.getIntlMessage("simplePaypal.donate_now_amount")}
+                    currencySymbol={this.props.currencySymbol}
+                  />
                 </div>
               </div>
             </form>
@@ -109,7 +155,9 @@ var simplePaypal = React.createClass({
 
         <div className="row">
           <p className="donation-notice">
-            <small>Contributions go to the Mozilla Foundation, a 501(c)(3) organization, to be used in its discretion for its charitable purposes. They are tax-deductible in the U.S. to the fullest extent permitted by law.</small>
+            <small>
+              {this.getIntlMessage("simplePaypal.contributions")}
+            </small>
           </p>
         </div>
 
@@ -122,7 +170,7 @@ var simplePaypal = React.createClass({
           <input type="hidden" name="no_shipping" value="1"/>
           <input type="hidden" name="rm" value="1"/>
           {/* Donation Amount */}
-          <input type="hidden" name="amount" value="0"/>
+          <input type="hidden" name="amount" value={this.state.value || 0}/>
           <input type="hidden" name="return" value="https://sendto.mozilla.org/page/s/EOYFR2014-donor"/>
           <input type="hidden" name="currency_code" value={this.props.currency}/>
         </form>
@@ -140,7 +188,7 @@ var simplePaypal = React.createClass({
           <input type="hidden" name="currency_code" value={this.props.currency}/>
           <input type="hidden" name="t3" value="M"/>
           <input name="srt" type="hidden" value="0"/>
-          <input type="hidden" name="a3" value="0"/>
+          <input type="hidden" name="a3" value={this.state.value || 0}/>
 
         </form>
       </div>

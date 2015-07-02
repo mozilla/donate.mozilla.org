@@ -1,8 +1,7 @@
 import React from 'react';
 import Router from 'react-router';
-import { currencies } from '../scripts/currencies.js';
-import { routes } from './routes.jsx';
-import {locales} from '../locales';
+import currencies from '../scripts/currencies.js';
+import routes from './routes.jsx';
 
 Router.run(routes, Router.HistoryLocation, function (Handler, state) {
   var values = {};

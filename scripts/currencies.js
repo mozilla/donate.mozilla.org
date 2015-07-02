@@ -139,9 +139,4 @@ var currencies = {
   }
 };
 
-module.exports = {
-  paths: Object.keys(currencies).map(function(key) {
-    return '/paypal-donate-' + key;
-  }),
-  currencies: currencies
-}
+module.exports = currencies;

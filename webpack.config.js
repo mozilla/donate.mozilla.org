@@ -4,7 +4,8 @@ var React = require('react');
 require('babel/register');
 var Router = require('react-router');
 var routes = require('./components/routes.jsx');
-var currencies = require('./scripts/currencies.js').currencies;
+var paths = require('./scripts/paths.js');
+var currencies = require('./scripts/currencies.js');
 
 module.exports = {
   entry: "./components/client.jsx",
@@ -27,8 +28,8 @@ module.exports = {
   },
 
   plugins: [
-    new SimpleHtmlPrecompiler(routes.paths, function(outputPath, callback) {
-      Router.run(routes.routes, outputPath, function (Handler, state) {
+    new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
+      Router.run(routes, outputPath, function (Handler, state) {
         var values = {};
         var Index = React.createFactory(require('./pages/index.jsx'));
         var Page = React.createFactory(Handler);

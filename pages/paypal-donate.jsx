@@ -1,7 +1,7 @@
-var React = require('react');
-var Footer = require('../components/footer.jsx');
-var Header = require('../components/header.jsx');
-var SimplePaypal = require('../components/simple-paypal.jsx');
+import React from 'react';
+import Footer from '../components/footer.jsx';
+import Header from '../components/header.jsx';
+import SimplePaypal from '../components/simple-paypal.jsx';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
 
 var simplePaypal = React.createClass({

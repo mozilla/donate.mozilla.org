@@ -1,4 +1,4 @@
-var React = require('react');
+import React from 'react';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
 
 var PaypalInput = React.createClass({
@@ -31,8 +31,6 @@ var PaypalButton = React.createClass({
 var simplePaypal = React.createClass({
   mixins: [IntlMixin],
   getInitialState: function() {
-    var value = "";
-
     return {
       value: ""
     };

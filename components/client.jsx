@@ -5,9 +5,10 @@ import routes from './routes.jsx';
 
 Router.run(routes, Router.HistoryLocation, function (Handler, state) {
   var values = {};
-  if(state.params.currencies) {
+  if(state.params.currency) {
     values = currencies[state.params.currency];
   }
+
   if(state.params.locale) {
     values = Object.assign(values, {messages: require('../locales/' + state.params.locale +'.json')});
   } else {

@@ -6,6 +6,22 @@ import {IntlMixin} from 'react-intl';
 
 var Sequential = React.createClass({
   mixins: [IntlMixin],
+  getInitialState: function() {
+    return {
+      country: "US",
+      province: ""
+    }
+  },
+  onCountryChange: function(event) {
+    this.setState({
+      country: event.target.value
+    });
+  },
+  onProvinceChange: function(event) {
+    this.setState({
+      province: event.target.value
+    });
+  },
   componentDidMount: function() {
 
     var
@@ -291,8 +307,9 @@ var Sequential = React.createClass({
       $("[data-position='" + page + "'] .page-breadcrumb").text("");
 
       $(page).removeClass('hidden');
+      $(page).prop('disabled', false);
       win.setTimeout(function() {
-        $(page).removeClass('page-hidden-incomplete').removeClass('page-hidden-complete').prop('disabled', false);
+        $(page).removeClass('page-hidden-incomplete').removeClass('page-hidden-complete');
       }, 100);
 
       calculateHeight();
@@ -599,7 +616,7 @@ var Sequential = React.createClass({
                   <div className="row" id="payment-type-row">
                     <div className="half">
                       <input type="radio" name="payment-type" value="cc" id="payment-cc" data-parsley-group="page-2" data-parsley-multiple="payment-type" data-parsley-errors-container="#payment-type-error-msg" data-parsley-required/>
-                      <label htmlFor="payment-cc">
+                      <label id="payment-cc-label" htmlFor="payment-cc">
                         <div className="row payment-logos credit-card-logos">
                           <p>&nbsp;</p>
                         </div>
@@ -689,7 +706,7 @@ var Sequential = React.createClass({
                         <div className="full">
                           <div className="field-container">
                             <i className="fa fa-map-marker field-icon"></i>
-                            <select name="country"data-parsley-group="page-3" value="US" data-parsley-required >
+                            <select onChange={this.onCountryChange} name="country"data-parsley-group="page-3" value={this.state.country} data-parsley-required >
                               <option value=""></option>
                               <option value="AF">Afghanistan</option>
                               <option value="AL">Albania</option>
@@ -939,7 +956,7 @@ var Sequential = React.createClass({
                       </div>
                       <div className="row">
                         <div className="full">
-                          <select id="wsstate_cd" value="" name="state_cd" autoComplete="billing region" className="">
+                          <select onChange={this.onProvinceChange} id="wsstate_cd" value={this.state.province} name="state_cd" autoComplete="billing region" className="">
                             <option value="">State/Province</option>
                           </select>
                           <select className="states-select" data-country="none">

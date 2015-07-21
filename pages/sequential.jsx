@@ -135,21 +135,16 @@ var Sequential = React.createClass({
       }
     }
 
-    $("#payment-type-row label").click(function() {
+    $("#payment-cc").change(showCreditCardForm);
+    $("#payment-paypal").change(function() {
       // reset
       $(".cc-additional-info").hide();
-      // toggle corresponding section
-      var paymentType = $(this).attr("for");
-      if (paymentType == "payment-cc") {
-        showCreditCardForm();
+      calculateHeight();
+      $("#one-line-error").hide();
+      if ($('[name="recurring_acknowledge"]:checked').val() === '0') {
+        $('#paypal-one-time').submit();
       } else {
-        calculateHeight();
-        $("#one-line-error").hide();
-        if ($('[name="recurring_acknowledge"]:checked').val() === '0') {
-          $('#paypal-one-time').submit();
-        } else {
-          $('#paypal-recurring').submit();
-        }
+        $('#paypal-recurring').submit();
       }
     });
 
@@ -523,7 +518,7 @@ var Sequential = React.createClass({
   render: function() {
     return (
       <div>
-        <div className="mozilla-eoy-donation">
+        <div className="sequential-page mozilla-eoy-donation">
           <Header/>
           <div>
             <div className="form-wrapper container">

@@ -3,6 +3,7 @@ var Path = require('path');
 
 var Hapi = require('hapi');
 var Good = require('good');
+var httpRequest = require( "request" );
 
 var server = new Hapi.Server();
 server.connection({
@@ -53,6 +54,24 @@ server.route([
           }
         }
       );
+    }
+  }, {
+    method: 'POST',
+    path: '/paypal-ipn',
+    handler: function(request, reply) {
+      // Let PayPal know we received it.
+      reply();
+      var transaction = request.payload;
+      transaction.cmd = "_notify-validate";
+      httpRequest({
+        url: "https://www.sandbox.paypal.com/cgi-bin/webscr",
+        method: "POST",
+        form: transaction
+      }, function(err, httpResponse, body) {
+        if (err) {
+          return console.error('donation failed:', err);
+        }
+      });
     }
   }
 ]);

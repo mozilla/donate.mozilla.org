@@ -1285,38 +1285,18 @@ var Sequential = React.createClass({
               </p>
             </div>
           </div>
-          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" id="paypal-one-time">
-            <input type="hidden" name="cmd" value="_donations"/>
-            <input type="hidden" name="business" value="44ZHAVWJHTK2N"/>
+          <form action="/paypal-one-time" method="post" target="_top" id="paypal-one-time">
             <input type="hidden" name="lc" value="US"/>
-            <input type="hidden" name="item_name" value="Mozilla Foundation"/>
-            <input type="hidden" name="no_note" value="1"/>
-            <input type="hidden" name="no_shipping" value="1"/>
-            <input type="hidden" name="rm" value="1"/>
-            <input type="hidden" name="custom" value="20140923 eoy14 sequential"/>
+            <input type="hidden" name="currency_code" value="USD"/>
             {/* Donation Amount */}
             <input type="hidden" name="amount" value="3"/>
-            <input type="hidden" name="return" value="https://sendto.mozilla.org/page/s/EOYFR2014-donor"/>
-            <input type="hidden" name="currency_code" value="USD"/>
-            <input type="hidden" name="bn" value="PP-DonationsBF:maker-party-donate-button.png:NonHosted"/>
           </form>
-          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" id="paypal-recurring">
-            <input type="hidden" name="cmd" value="_xclick-subscriptions"/>
-            <input type="hidden" name="business" value="44ZHAVWJHTK2N"/>
+          <form action="/paypal-recurring" method="post" id="paypal-recurring">
             <input type="hidden" name="lc" value="US"/>
-            <input type="hidden" name="item_name" value="Mozilla Foundation Recurring Donation"/>
-            <input type="hidden" name="no_note" value="1"/>
-            <input type="hidden" name="no_shipping" value="2"/>
             <input type="hidden" name="custom" value="20140923 eoy14 sequential"/>
-            <input type="hidden" name="return" value="https://sendto.mozilla.org/page/s/EOYFR2014-donor"/>
-            <input type="hidden" name="src" value="1"/>
-            <input type="hidden" name="p3" value="1"/>
             <input type="hidden" name="currency_code" value="USD"/>
-            <input type="hidden" name="bn" value="PP-SubscriptionsBF:maker-party-donate-button.png:NonHosted"/>
-            <input type="hidden" name="t3" value="M"/>
-            <input name="srt" type="hidden" value="0"/>
             {/* Donation Amount */}
-            <input type="hidden" name="a3" value="3"/>
+            <input type="hidden" name="amount" value="3"/>
           </form>
         </div>
         <Footer/>

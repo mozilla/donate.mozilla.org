@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node scripts/build",
     "start:prod": "node server.js",
-    "start:dev": "npm-run-all --parallel watch:js server watch:css",
-    "postinstall": "npm-run-all build:js build:css",
+    "start:dev": "npm-run-all --parallel build:l10njson watch:js server watch:css",
+    "postinstall": "npm-run-all build:*",
+    "build:l10njson": "yamlconvert intl-config.json",
     "build:js": "webpack",
     "build:css": "npm run watch:css -- --no-watch",
     "watch:js": "webpack -w -h",
@@ -47,6 +48,7 @@
     "react-router": "^0.13.3",
     "simple-html-precompiler": "^1.0.1",
     "stripe": "~2.2.0",
-    "webpack": "^1.9.10"
+    "webpack": "^1.9.10",
+    "yaml-intl-xml-json-converter": "0.0.7"
   }
 }

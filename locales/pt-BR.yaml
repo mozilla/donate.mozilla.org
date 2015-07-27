@@ -1,0 +1,13 @@
+---
+pt-BR:
+  secure: Secure
+  amount: Amount
+  error_amount: Please select a value that is no less than {currency_symbol}{min_amount}.
+  donate_now_amount: Donate {currency_symbol}{amount} now
+  one-time: One-time
+  monthly: Monthly
+  contributions: Contributions go to the Mozilla Foundation, a 501(c)(3) organization, to be used in its discretion for its charitable purposes. They are tax-deductible in the U.S. to the fullest extent permitted by law.
+  select_donation: Select your donation amount
+  donate_now: Donate now
+  From_all_of_us_at_Mozilla: From all of us at Mozilla
+  Thank_you_for_your_donation: <em>Thank you</em> for your donation

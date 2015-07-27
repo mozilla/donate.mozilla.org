@@ -39,11 +39,11 @@ var ThankYou = React.createClass({
           <div>
             <div id="header-copy">
               <div className="row">
-                <h1>{ this.getIntlMessage("ty.From_all_of_us_at_Mozilla") }</h1>
+                <h1>{ this.getIntlMessage("From_all_of_us_at_Mozilla") }</h1>
 
                 <h2>
                   <FormattedHTMLMessage
-                    message={ this.getIntlMessage("ty.Thank_you_for_your_donation") }
+                    message={ this.getIntlMessage("Thank_you_for_your_donation") }
                   />
                 </h2>
               </div>

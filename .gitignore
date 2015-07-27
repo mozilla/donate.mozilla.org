@@ -10,3 +10,4 @@ public/*.hot-update.js*
 public/index.html
 public/*/index.html
 public/main.js
+locales/*.json

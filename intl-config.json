@@ -1,0 +1,6 @@
+{
+	"supportedLocales": ["en-US", "de", "fr", "pt-BR", "es"],
+	"dest": "locales",
+	"src": "locales",
+	"type": "json"
+}

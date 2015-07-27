@@ -3,6 +3,7 @@ var Path = require('path');
 
 var Hapi = require('hapi');
 var Good = require('good');
+var httpRequest = require( "request" );
 
 var server = new Hapi.Server();
 server.connection({
@@ -53,6 +54,22 @@ server.route([
           }
         }
       );
+    }
+  }, {
+    method: 'POST',
+    path: '/signup',
+    handler: function(request, reply) {
+      var transaction = request.payload;
+      httpRequest({
+        url:'https://sendto.mozilla.org/page/signup/EOYFR2014-donor',
+        method: "POST",
+        form: transaction
+      }, function(err, httpResponse, body) {
+        if (err) {
+          return console.error('signup failed:', err);
+        }
+        reply.redirect("/share");
+      });
     }
   }
 ]);

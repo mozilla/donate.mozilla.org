@@ -84,7 +84,7 @@ var simplePaypal = React.createClass({
       <div className="simple-paypal">
         <div id="header-copy">
           <h1>
-            {this.getIntlMessage("simplePaypal.donate_now")}
+            {this.getIntlMessage("donate_now")}
           </h1>
         </div>
         <div id="form-wrapper" className="container">
@@ -94,14 +94,14 @@ var simplePaypal = React.createClass({
 
               <p id="secure-label">
                 <i className="fa fa-lock"></i>
-                {this.getIntlMessage("simplePaypal.secure")}
+                {this.getIntlMessage("secure")}
               </p>
             </div>
 
             <div className="row">
               <div className="full">
                 <h4>
-                  {this.getIntlMessage("simplePaypal.select_donation")}
+                  {this.getIntlMessage("select_donation")}
                 </h4>
               </div>
             </div>
@@ -117,7 +117,7 @@ var simplePaypal = React.createClass({
                       donateOnChange={this.donateOnChange}
                       donateKeyDown={this.donateKeyDown}
                       minAmount={this.props.minAmount}
-                      placeholder={this.getIntlMessage("simplePaypal.amount")}
+                      placeholder={this.getIntlMessage("amount")}
                       value={this.state.value}
                     />
                   </div>
@@ -127,13 +127,13 @@ var simplePaypal = React.createClass({
                 <div className="half">
                   <input type="radio" name="recurring_acknowledge" defaultChecked="checked" value="0" required id="one-time-payment"/>
                   <label htmlFor="one-time-payment" className="medium-label-size">
-                    {this.getIntlMessage("simplePaypal.one-time")}
+                    {this.getIntlMessage("one-time")}
                   </label>
                 </div>
                 <div className="half">
                   <input type="radio" name="recurring_acknowledge" value="1" required id="monthly-payment"/>
                   <label htmlFor="monthly-payment" className="medium-label-size">
-                    {this.getIntlMessage("simplePaypal.monthly")}
+                    {this.getIntlMessage("monthly")}
                   </label>
                 </div>
               </div>
@@ -141,8 +141,8 @@ var simplePaypal = React.createClass({
                 <div className="full">
                   <PaypalButton
                     value={this.state.value}
-                    defaultMessage={this.getIntlMessage("simplePaypal.donate_now")}
-                    message={this.getIntlMessage("simplePaypal.donate_now_amount")}
+                    defaultMessage={this.getIntlMessage("donate_now")}
+                    message={this.getIntlMessage("donate_now_amount")}
                     currencySymbol={this.props.currencySymbol}
                   />
                 </div>
@@ -154,7 +154,7 @@ var simplePaypal = React.createClass({
         <div className="row">
           <p className="donation-notice">
             <small>
-              {this.getIntlMessage("simplePaypal.contributions")}
+              {this.getIntlMessage("contributions")}
             </small>
           </p>
         </div>

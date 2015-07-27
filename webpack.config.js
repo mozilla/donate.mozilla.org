@@ -22,6 +22,7 @@ module.exports = {
 
   module: {
     loaders: [
+      { test: /\.js$/, loaders:  ['babel-loader'], exclude: ['node_modules'] },
       { test: /\.jsx$/, loaders: ['babel-loader'] },
       { test: /\.json$/, loaders: ['json-loader'] }
     ]
@@ -40,7 +41,7 @@ module.exports = {
         if(state.params.locale) {
           values = Object.assign({messages: require(path.join(__dirname, 'locales/' + state.params.locale +'.json'))}, values);
         } else {
-          values = Object.assign({messages: require(path.join(__dirname, 'locales/en.json'))}, values);
+          values = Object.assign({messages: require(path.join(__dirname, 'locales/en-US.json'))}, values);
         }
         callback(React.renderToStaticMarkup(Index({
           markup: React.renderToStaticMarkup(Page(values))

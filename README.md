@@ -72,3 +72,14 @@ en-US:
 
 You have to make sure you match your language code in your YAML file and the name of the file with what you include in your config file for the converting part otherwise it will fail.
 
+## Tests
+
+#### Selenium
+
+For now these commands need to be run in seperate consoles.
+
+```
+$> npm start
+
+$> npm test:selenium
+```

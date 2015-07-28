@@ -13,7 +13,8 @@
     "build:css": "npm run watch:css -- --no-watch",
     "watch:js": "webpack -w -h",
     "watch:css": "mkdirp public/css && autoless less public/css --autoprefix '> 1%, last 2 versions'  --source-map",
-    "server": "node server.js"
+    "server": "node server.js",
+    "test:selenium": "node tests/selenium/server.js"
   },
   "repository": {
     "type": "git",
@@ -47,6 +48,7 @@
     "react-intl": "^1.2.0",
     "react-router": "^0.13.3",
     "request": "^2.60.0",
+    "selenium-webdriver": "^2.46.1",
     "simple-html-precompiler": "^1.0.1",
     "stripe": "~2.2.0",
     "webpack": "^1.9.10",

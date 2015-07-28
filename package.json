@@ -46,6 +46,7 @@
     "react": "^0.13.3",
     "react-intl": "^1.2.0",
     "react-router": "^0.13.3",
+    "request": "^2.60.0",
     "simple-html-precompiler": "^1.0.1",
     "stripe": "~2.2.0",
     "webpack": "^1.9.10",

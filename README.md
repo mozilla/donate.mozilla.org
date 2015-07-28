@@ -23,14 +23,14 @@ In this project we're using [React-Intl](https://github.com/yahoo/react-intl) to
 
 #### Localize a component or page
 
-To localize a component or page you have to always include IntlMixin in your class mixins for example:
+To localize a component or page you have to include `IntlMixin` in your class `mixins`, for example:
 
 ``` typescript
 var React = require('react');
 var IntlMixin = require('react-intl').IntlMixin;
 
 var Example = React.createClass({
-	mixins: [IntlMixin]
+  mixins: [IntlMixin],
   render: function() {
     return (
       <div>
@@ -42,11 +42,10 @@ var Example = React.createClass({
 });
 ```
 
-Once you added the mixin it will expose `getIntlMessage` method for your component to get the localized message for the given key name.
+Once you add the mixin it will expose `getIntlMessage` method to your component to get the localized message for the given key.
 
 #### Adding locale
-
-Since we are using YAML for our translation, but React-Intl expect JSON which will require an extra build step to convert from YAML to JSON.
+Because we are using YAML for our translation and React-Intl expects JSON, we need an extra build step to convert YAML to JSON.
 We are using [yaml-intl-xml-json-converter](https://www.npmjs.com/package/yaml-intl-xml-json-converter) to convert from YAML to JSON.
 
 ##### config for for YAML to JSON conversion

@@ -13,7 +13,7 @@ function createPaths(first, arr) {
 }
 
 var paths = Object.keys(pages);
-paths = paths.concat(createPaths(['/sequential-', '/thank-you-'], locales));
+paths = paths.concat(createPaths(['/donate-', '/thank-you-'], locales));
 paths = paths.concat(createPaths(['/paypal-donate-'], Object.keys(currencies)));
 
 module.exports = paths;

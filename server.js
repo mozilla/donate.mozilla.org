@@ -3,7 +3,7 @@ var Path = require('path');
 
 var Hapi = require('hapi');
 var Good = require('good');
-var httpRequest = require( "request" );
+var httpRequest = require('request');
 
 var server = new Hapi.Server();
 server.connection({
@@ -15,7 +15,7 @@ var stripeKeys = {
   publishableKey: 'pk_test_BZ0QTIwe7BVAk1ZDxOgWZ9Z6',
   // This is just a test key right now, nothing secret about it.
   secretKey: 'sk_test_HbsdaR1Bn5I84vdezKa9VcvA'
-}
+};
 
 var stripe = require('stripe')(stripeKeys.secretKey);
 

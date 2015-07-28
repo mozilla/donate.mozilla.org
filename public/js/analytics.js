@@ -1,8 +1,8 @@
 (function() {
   var queryString = decodeURIComponent(window.location.search);
-  var tx = null;
+  var tx = null; // transaction id
   var amt = null;
-  var cc = null;
+  var cc = null; // currency code
   var product_name = null;
 
   // Search for PayPal Params
@@ -26,27 +26,39 @@
     product_name = 'Bitcoin Donation';
   }
 
+  // Todo: add Stripe parameters
+
   if (tx && amt && cc) {
+
+    // Optimizely conversion tracking
     window.optimizely = window.optimizely || [];
     window.optimizely.push(['trackEvent', 'donation', {
       'revenue': amt * 100
     }]);
-    _gaq.push(['_set', 'currencyCode', cc]); // Set to user currency
-    _gaq.push(['_addTrans',
-      tx, // transaction ID - required
-      'Donations', // affiliation or store name
-      amt, // total - required eg '10.50'
-      '0', // tax
-      '0' // shipping
-    ]);
-    _gaq.push(['_addItem',
-      tx, // transaction ID - required
-      product_name, // SKU/code - required
-      product_name, // product name
-      product_name, // category or variation
-      amt, // unit price - required e.g. '10.50'
-      '1' // quantity - required
-    ]);
-    _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
+
+    // We're using univeral analytics ecommerce tracking
+    // https://developers.google.com/analytics/devguides/collection/analyticsjs/ecommerce
+    ga('require', 'ecommerce');
+
+    ga('ecommerce:addTransaction', {
+      'id': tx,
+      'affiliation': 'Donations',
+      'revenue': amt,
+      'shipping': '0',
+      'tax': '0',
+      'currency': cc
+    });
+
+    ga('ecommerce:addItem', {
+      'id': tx,
+      'name': product_name,
+      'sku': product_name,
+      'category': product_name, // to-do: make this one-off or monthly
+      'price': amt,
+      'quantity': '1'
+    });
+
+    //submit transaction to the Analytics servers
+    ga('ecommerce:send');
   }
 })();

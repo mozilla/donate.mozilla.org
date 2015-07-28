@@ -12,3 +12,4 @@ deploy:
   app: donate-mozilla
   on:
     repo: mozilla/donate.mozilla.org
+  cache: false

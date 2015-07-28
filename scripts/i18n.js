@@ -25,6 +25,6 @@ module.exports = {
     locale = locale[1] ? `${locale[0]}-${locale[1].toUpperCase()}` : lang;
     var strings = messages[locale] ? messages[locale] : messages['en-US'];
 
-    return assign(messages['en-US'], strings);
+    return {locales: [locale], messages: assign(messages['en-US'], strings)};
   }
 }

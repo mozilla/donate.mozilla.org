@@ -2,10 +2,10 @@ import React from 'react';
 import Footer from '../components/footer.jsx';
 import Header from '../components/header.jsx';
 import Link from '../components/link.jsx';
-import ReactIntl from 'react-intl';
+import {IntlMixin} from 'react-intl';
 
 var Sequential = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  mixins: [IntlMixin],
   componentDidMount: function() {
 
     var
@@ -1233,7 +1233,7 @@ var Sequential = React.createClass({
                     <div className="row">
                       <div className="full">
                         <button type="submit" className="btn large-label-size" id="donate-btn">
-                        this.getIntlMessage("donate_now")
+                        {this.getIntlMessage("donate_now")}
                         </button>
                       </div>
                     </div>

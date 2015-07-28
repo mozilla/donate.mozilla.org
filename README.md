@@ -16,3 +16,60 @@ $> cp sample.env .env
 ```
 $> npm start
 ```
+
+## Localization
+
+In this project we're using [React-Intl](https://github.com/yahoo/react-intl) to localize our application and YAML for translation.
+
+#### Localize a component or page
+
+To localize a component or page you have to always include IntlMixin in your class mixins for example:
+
+``` typescript
+var React = require('react');
+var IntlMixin = require('react-intl').IntlMixin;
+
+var Example = React.createClass({
+	mixins: [IntlMixin]
+  render: function() {
+    return (
+      <div>
+      	<h1>{this.getIntlMessage('key_name_here')}
+      </div>
+    );
+  }
+
+});
+```
+
+Once you added the mixin it will expose `getIntlMessage` method for your component to get the localized message for the given key name.
+
+#### Adding locale
+
+Since we are using YAML for our translation, but React-Intl expect JSON which will require an extra build step to convert from YAML to JSON.
+We are using [yaml-intl-xml-json-converter](https://www.npmjs.com/package/yaml-intl-xml-json-converter) to convert from YAML to JSON.
+
+##### config for for YAML to JSON conversion
+
+`intl-config.json`
+``` json
+{
+	"supportedLocales": ["en-US", "de", "fr", "pt-BR", "es"],
+	"dest": "locales",
+	"src": "locales",
+	"type": "json"
+}
+```
+
+##### YAML template
+
+`en-US.yaml`
+``` yaml
+---
+en-US:
+  first: This is your first message
+  second: This is your second message
+```
+
+You have to make sure you match your language code in your YAML file and the name of the file with what you include in your config file for the converting part otherwise it will fail.
+

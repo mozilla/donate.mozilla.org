@@ -3,12 +3,9 @@ var Path = require('path');
 
 var Hapi = require('hapi');
 var Good = require('good');
-<<<<<<< HEAD
+
 var httpRequest = require('request');
-=======
-var httpRequest = require( "request" );
 var querystring = require("querystring");
->>>>>>> 9a8f2af... paypal express checkout
 
 var server = new Hapi.Server();
 server.connection({
@@ -114,7 +111,8 @@ server.route([
           if (err) {
             return console.error('donation failed:', err);
           }
-          reply.redirect('/thank-you/' + request.url.search);
+          var bodyData = querystring.parse(body);
+          reply.redirect('/thank-you/?tx=' + bodyData.PAYMENTINFO_0_TRANSACTIONID + '&amt=' + data.PAYMENTREQUEST_0_AMT + '&cc=' + data.CURRENCYCODE);
         });
       });
     }
@@ -154,13 +152,17 @@ server.route([
             BILLINGPERIOD: "Month",
             BILLINGFREQUENCY: "12",
             AMT: data.AMT,
+            INITAMT: data.AMT,
             CURRENCYCODE: data.CURRENCYCODE
           }
         }, function(err, httpResponse, body) {
           if (err) {
             return console.error('donation failed:', err);
           }
-          reply.redirect('/thank-you/' + request.url.search);
+          var bodyData = querystring.parse(body);
+          // The below TRANSACTIONID is undefined.
+          // I'm not sure how to get this yet for recurring payments.
+          reply.redirect('/thank-you/?tx=' + bodyData.PAYMENTINFO_0_TRANSACTIONID + '&amt=' + data.AMT + '&cc=' + data.CURRENCYCODE);
         });
       });
     }
@@ -215,6 +217,7 @@ server.route([
           PAYMENTREQUEST_0_DESC: "Mozilla Foundation Recurring Donation",
           PAYMENTREQUEST_0_CURRENCYCODE: transaction.currency_code,
           L_BILLINGAGREEMENTDESCRIPTION0: "Mozilla Foundation Recurring Donation",
+          L_BILLINGTYPE0: "RecurringPayments",
           LOCALECODE: transaction.lc,
           NOSHIPPING: "1",
           ALLOWNOTE: "0",

@@ -4,6 +4,8 @@ import Header from '../components/header.jsx';
 import Link from '../components/link.jsx';
 import {IntlMixin} from 'react-intl';
 
+var ga = require('react-ga');
+
 var Sequential = React.createClass({
   mixins: [IntlMixin],
   getInitialState: function() {
@@ -321,6 +323,10 @@ var Sequential = React.createClass({
       $(".progress li.active").prevAll("li").css({
         cursor: "pointer"
       });
+
+      // These are virtual pageviews, so we track them manually in GA
+      var currentPage = window.location.pathname;
+      ga.pageview(currentPage + page);
     }
 
     $theForm.on('click', '[data-button-type="next"]', function(e) {

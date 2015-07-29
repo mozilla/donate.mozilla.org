@@ -45,6 +45,7 @@
     "mkdirp": "^0.5.1",
     "npm-run-all": "^1.2.5",
     "react": "^0.13.3",
+    "react-ga": "^1.0.14",
     "react-intl": "^1.2.0",
     "react-router": "^0.13.3",
     "request": "^2.60.0",

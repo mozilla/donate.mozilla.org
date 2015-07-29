@@ -71,7 +71,7 @@ server.route([
           return console.error('signup failed:', err);
         }
         reply.redirect("/share");
-      );
+      });
     }
   }, {
     method: 'GET',

@@ -16,7 +16,7 @@ var Index = React.createClass({
           <script src="/js/ga.js"></script>
           <script src="/js/analytics.js"></script>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic"/>
-          <link href="https://sendto.mozilla.org/page/-/donation_form/css/font-awesome.min.css" rel="stylesheet"/>
+          <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
           <link rel="icon" href="https://sendto.mozilla.org/page/-/donation_form/img/favicon.ico" type="image/x-icon"/>
           <link rel="stylesheet" href="/css/index.css"/>
         </head>

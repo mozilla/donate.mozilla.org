@@ -17,7 +17,6 @@ $> cp sample.env .env
 $> npm start
 ```
 
-<<<<<<< HEAD
 ## Localization
 
 In this project we're using [React-Intl](https://github.com/yahoo/react-intl) to localize our application and YAML for translation.

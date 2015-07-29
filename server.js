@@ -3,7 +3,6 @@ var Path = require('path');
 
 var Hapi = require('hapi');
 var Good = require('good');
-
 var httpRequest = require('request');
 var querystring = require("querystring");
 
@@ -35,7 +34,7 @@ server.route([
     path: '/stripe',
     handler: function(request, reply) {
       // obtain StripeToken
-      var transaction = request.payload;
+      var transaction = request.payload || {};
 
       var stripeToken = transaction.stripeToken;
       // create charge
@@ -61,7 +60,7 @@ server.route([
     method: 'POST',
     path: '/signup',
     handler: function(request, reply) {
-      var transaction = request.payload;
+      var transaction = request.payload || {};
       httpRequest({
         url:'https://sendto.mozilla.org/page/signup/EOYFR2014-donor',
         method: "POST",
@@ -170,7 +169,7 @@ server.route([
     method: 'POST',
     path: '/paypal-one-time',
     handler: function(request, reply) {
-      var transaction = request.payload;
+      var transaction = request.payload || {};
       httpRequest({
         url:'https://api-3t.sandbox.paypal.com/nvp',
         method: "POST",
@@ -202,7 +201,7 @@ server.route([
     method: 'POST',
     path: '/paypal-recurring',
     handler: function(request, reply) {
-      var transaction = request.payload;
+      var transaction = request.payload || {};
       httpRequest({
         url:'https://api-3t.sandbox.paypal.com/nvp',
         method: "POST",

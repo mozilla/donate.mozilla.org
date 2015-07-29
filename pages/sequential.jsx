@@ -653,9 +653,9 @@ var Sequential = React.createClass({
                       <div className="half">
                         <div className="field-container">
                           <i className="fa fa-calendar-o field-icon"></i>
-                          <input aria-label="Credit Card Expiration Month" data-stripe="exp-month" type="tel" placeholder="MM" pattern="\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_month" autoComplete="off"/>
+                          <input aria-label="Credit Card Expiration Month" data-stripe="exp-month" type="tel" placeholder="MM" pattern="\\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_month" autoComplete="off"/>
                           /
-                          <input aria-label="Credit Card Expiration Year" type="tel" data-stripe="exp-year" placeholder="YY" pattern="\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_year" autoComplete="off"/>
+                          <input aria-label="Credit Card Expiration Year" type="tel" data-stripe="exp-year" placeholder="YY" pattern="\\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_year" autoComplete="off"/>
                         </div>
                       </div>
                       <div className="half">

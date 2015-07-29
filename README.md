@@ -91,3 +91,13 @@ We use [Stripe](https://stripe.com) for our non paypal credit card payments.
 Stripe provides a handful of [test credit cards](https://stripe.com/docs/testing#cards).
 
 Example: 4242424242424242 works as a test Visa card number.
+
+## Making a test paypal donation
+
+Local development of the form is by default setup to use a paypal sandbox account.
+
+A test account is also provided and the credentials are:
+
+Username: send-donation@test.com
+
+Password: testtest

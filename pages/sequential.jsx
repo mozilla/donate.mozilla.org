@@ -1291,6 +1291,9 @@ var Sequential = React.createClass({
                 <small><FormattedHTMLMessage message={ this.getIntlMessage("problems_donating") } />
                   </small>
               </p>
+              <p className="stripe-notice">
+                <small><FormattedHTMLMessage message={ this.getIntlMessage("stripe_notice") } /></small>
+              </p>
               <p className="donation-notice">
                 <small>{this.getIntlMessage('donation_notice')}</small>
               </p>

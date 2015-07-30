@@ -234,23 +234,38 @@ server.route([
   }
 ]);
 
-server.register({
-  register: Good,
-  options: {
-    reporters: [{
-      reporter: require('good-console'),
-      events: {
-        response: '*',
-        log: '*'
+module.exports = {
+  start: function(done) {
+    server.register({
+      register: Good,
+      options: {
+        reporters: [{
+          reporter: require('good-console'),
+          events: {
+            response: '*',
+            log: '*'
+          }
+        }]
       }
-    }]
-  }
-}, function (err) {
-  if (err) {
-    throw err;
-  }
+    }, function (err) {
+      if (err) {
+        throw err;
+      }
 
-  server.start(function () {
-    server.log('info', 'Server running at: ' + server.info.uri);
-  });
-});
+      server.start(function () {
+        server.log('info', 'Running server at: ' + server.info.uri);
+        if (done) {
+          done();
+        }
+      });
+    });
+  },
+  stop: function(done) {
+    server.stop(function() {
+      server.log('info', 'Stopped server at: ' + server.info.uri);
+      if (done) {
+        done();
+      }
+    });
+  }
+};

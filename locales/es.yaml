@@ -12,8 +12,8 @@ es:
   first_name: Nombre
   last_name: Apellido
   address: Dirección
-  city:: Ciudad
-  postal_code:: Zip/código postal
+  city: Ciudad
+  postal_code: Zip/código postal
   state_province: Estado/Provincia
   credit_card_number: Número de la tarjeta de crédito
   MM: MM
@@ -24,9 +24,9 @@ es:
   credit_card_expiration_year: Año de expiración de la tarjeta de crédito
   email_info: Te enviaremos un recibo de tu donación. No te enviaremos ningún otro correo sin tu permiso.
   pp_acknowledge: Para enviar este formulario debes acetar nuestra política de privacidad
-  privacy_policy: No tengo problemas con que ustedes manejen esta información tal como lo explicaron en su  <a href=\"https://www.mozilla.org/privacy/\" target=\"_blank\">política de privacidad</a>
+  privacy_policy: No tengo problemas con que ustedes manejen esta información tal como lo explicaron en su  <a href="https://www.mozilla.org/privacy/" target="_blank">política de privacidad</a>
   please_complete: Ups, por favor confirma los campos destacados con rojo
-  problems_donating: ¿Problemas donando? <a href=\"https://wiki.mozilla.org/Donate\" target=\"_blank\">Visita nuestro FAQ</a> para respuestas a las preguntas más frecuentes ¿Todavía tienes problemas? <a href=\"mailto:donate@mozilla.org\">Envíanos un correo</a>.
+  problems_donating: ¿Problemas donando? <a href="https://wiki.mozilla.org/Donate" target="_blank">Visita nuestro FAQ</a> para respuestas a las preguntas más frecuentes ¿Todavía tienes problemas? <a href="mailto:donate@mozilla.org">Envíanos un correo</a>.
   donate_now: Donar ahora
   donation_notice: Las donaciones van a la Fundación Mozilla, una organización 501(c)(3), para ser usadas a su discreción para sus propósitos caritativos. Ellos son deducibles de impuestos en los EE.UU. en la máxima medida permitida por la ley.
   amount: Monto
@@ -56,3 +56,4 @@ es:
   continue: continuar
   error_amount: Por favor, seleccione un valor que no sea menor que {{ min_amount }}.
   donate_now_amount: Donar {{ currency_symbol }}{ amount } ahora
+

@@ -42,6 +42,16 @@ var Example = React.createClass({
 });
 ```
 
+If the strings include HTML, use the `FormattedHTMLMessage` element:
+
+``` typescript
+import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+
+<FormattedHTMLMessage
+  message={ this.getIntlMessage("key_name_here") }
+/>
+```
+
 Once you add the mixin it will expose `getIntlMessage` method to your component to get the localized message for the given key.
 
 #### Adding locale

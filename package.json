@@ -14,7 +14,8 @@
     "watch:js": "webpack -w -h",
     "watch:css": "mkdirp public/css && autoless less public/css --autoprefix '> 1%, last 2 versions'  --source-map",
     "server": "node start.js",
-    "test": "node tests/start.js",
+    "test": "npm-run-all --parallel test:server test:depcheck",
+    "test:server": "node tests/start.js",
     "test:selenium": "node tests/selenium/start.js",
     "test:depcheck": "dependency-check ./package.json"
   },

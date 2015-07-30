@@ -62,7 +62,7 @@ server.route([
     handler: function(request, reply) {
       var transaction = request.payload || {};
       httpRequest({
-        url:'https://sendto.mozilla.org/page/signup/EOYFR2014-donor',
+        url: 'http://donate-mozilla.herokuapp.com/thank-you/',
         method: "POST",
         form: transaction
       }, function(err, httpResponse, body) {

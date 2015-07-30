@@ -10,14 +10,14 @@ var Index = React.createClass({
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <title>donate.mozilla.org | Give to Mozilla Today</title>
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-          <script src="https://sendto.mozilla.org/page/-/donation_form/js/parsley.min.js"></script>
+          <script src="/js/parsley.min.js"></script>
           <script src="https://js.stripe.com/v1/"></script>
           <script src="/js/stripe.js"></script>
           <script src="/js/ga.js"></script>
           <script src="/js/analytics.js"></script>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic"/>
           <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
-          <link rel="icon" href="https://sendto.mozilla.org/page/-/donation_form/img/favicon.ico" type="image/x-icon"/>
+          <link rel="icon" href="/images/favicon.ico" type="image/x-icon"/>
           <link rel="stylesheet" href="/css/index.css"/>
         </head>
         <body>

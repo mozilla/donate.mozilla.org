@@ -15,7 +15,7 @@ var giveBitcoin = React.createClass({
           <div className="wrap">
             <div className="row">
               <a href="https://www.coinbase.com/checkouts/a9b87242f4430d841e140fdc90b81df2">
-                <img src="https://sendto.mozilla.org/page/-/eoy2014/bitcoin_donation_large.png" alt="Donate Bitcoins"/>
+                <img src="/images/bitcoin_donation_large.png" alt="Donate Bitcoins"/>
               </a>
             </div>
           </div>

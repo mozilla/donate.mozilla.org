@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from '../components/footer.jsx';
 import Header from '../components/header.jsx';
-import Form from '../components/form.jsx';
+import Signup from '../components/signup.jsx';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
 
 var ThankYou = React.createClass({
@@ -23,7 +23,7 @@ var ThankYou = React.createClass({
                 </h2>
               </div>
             </div>
-            {this.props.params && !this.props.params.locale ? <Form/> : '' }
+            {this.props.params && !this.props.params.locale ? <Signup/> : '' }
             <Footer/>
           </div>
         </div>

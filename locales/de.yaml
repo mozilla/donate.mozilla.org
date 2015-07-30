@@ -1,12 +1,58 @@
 ---
 de:
-  secure: Secure
-  amount: Amount
-  donate_now_amount: "Donate {currency_symbol}{amount} now"
-  one-time: One-time
-  monthly: Monthly
-  contributions: Contributions go to the Mozilla Foundation, a 501(c)(3) organization, to be used in its discretion for its charitable purposes. They are tax-deductible in the U.S. to the fullest extent permitted by law.
-  select_donation: Select your donation amount
-  donate_now: Spenden Sie heute
-  From_all_of_us_at_Mozilla: From all of us at Mozilla
-  Thank_you_for_your_donation: <em>Thank you</em> for your donation
+  one_time: Einmalig
+  from_all_of_us_at_mozilla: Von uns allen bei Mozilla
+  thank_you_for_your_donation: <em>Vielen Dank</em> für Ihre Spende
+  monthly: Monatlich
+  please_select_an_amount: Bitte wählen Sie einen Betrag
+  other_amount: Anderer Betrag
+  secure: Sicher
+  credit_card: Kreditkarte
+  this_is_required: Dies ist erforderlich
+  first_name: Vorname
+  last_name: Nachname
+  address: Adresse
+  city: Stadt
+  postal_code: Postleitzahl
+  state_province: Staat/Provinz
+  credit_card_number: Kreditkartennummer
+  MM: MM
+  YY: JJ
+  CVC: CVC
+  cvc_info: Die CVC-Nummer befindet sich auf der Rückseite Ihrer Karte.
+  credit_card_expiration_month: Monat des Ablaufs
+  credit_card_expiration_year: Jahr des Ablaufs
+  email_info: Wir werden Ihnen eine Quittung für die Spende per E-Mail senden. Wir senden Ihnen keine weiteren E-Mails ohne Ihre Erlaubnis.
+  pp_acknowledge: Um dieses Formular abzuschicken, müssen Sie unsere Datenschutz-Bestimmungen akzeptieren.
+  privacy_policy: Ich akzeptiere den Umgang mit diesen Informationen durch Sie, wie er in Ihren <a href=\"https://www.mozilla.org/privacy/\" target=\"_blank\">Datenschutz-Bestimmungen</a> erklärt wird
+  please_complete: Ups, bitte füllen Sie alle in rot hervorgehobenen Felder aus.
+  problems_donating: Probleme beim Spenden? <a href=\"https://wiki.mozilla.org/Donate\" target=\"_blank\">Besuche unsere FAQ</a> für Antworten für die häufigsten Fragen. Hast du immer noch Probleme? <a href=\"mailto:donate@mozilla.org\">Sende uns eine E-Mail</a>
+  donate_now: Jetzt spenden
+  donation_notice: Die Spenden gehen an die Mozilla Foundation, eine 501(c)(3)-Organisation, und werden nach eigenem Ermessen für wohltätige Zwecke verwendet. Sie sind in den USA, soweit es gesetzlich zulässig ist, im vollsten Umfang steuerlich absetzbar.
+  amount: Betrag
+  email: E-Mail-Adresse
+  payment: Zahlung
+  country: Land
+  none: Keine
+  donation_min_error: Spenden müssen mindestens 2 USD betragen
+  submitting: Senden...
+  something_went_wrong_with_your_transaction_please_try_again_later: Bei Ihrer Transaktion hat etwas nicht funktioniert. Bitte versuchen Sie es später noch einmal.
+  try_again_later: Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.
+  gone_wrong_try_another: Etwas scheint nicht funktioniert zu haben. Bitte überprüfen Sie Ihre Kartendaten oder benutzen Sie eine andere Karte.
+  expired_card: Leider ist Ihre Karte abgelaufen. Bitte überprüfen Sie Ihre Kartendaten oder versuchen es mit einer anderen Karte.
+  invalid_CVC: Ungültige Kartenprüfnummer
+  invalid_number: Ungültige Kreditkartennummer
+  invalid_zip: Ungültige Postleitzahl
+  fraud_card: Es tut uns leid, aber Ihre Transaktion hat eine Sicherheitswarnung zum Schutz vor Betrug ausgelöst. Bitte versuchen Sie es mit einer anderen Karte.
+  declined_card: Leider ist Ihre Karte abgelehnt worden. Bitte überprüfen Sie Ihre Kartendaten oder versuchen es mit einer anderen Karte.
+  transaction_try_another: Bei Ihrer Transaktion ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Kartendaten oder benutzen Sie eine andere Karte.
+  dupe_donation: Wir scheinen Ihre Spende bereits empfangen zu haben – bitte laden Sie die Seite neu, falls Sie noch einmal spenden möchten.
+  select_your_amount: Bitte wählen Sie den Betrag
+  next: Weiter
+  personal: Persönlich
+  other_amount_format_error: Bitte geben Sie eine Zahl mit bis zu 2 Nachkommastellen ein
+  donate_today: Jetzt spenden
+  select_donation: Wählen Sie Ihren Spendenbetrag
+  continue: Weiter
+  error_amount: Wählen Sie bitte einen Wert nicht kleiner als {{ min_amount }}.
+  donate_now_amount: Jetzt spenden {{ currency_symbol }}{ amount }

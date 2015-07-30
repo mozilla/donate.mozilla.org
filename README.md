@@ -118,12 +118,8 @@ You have to make sure you match your language code in your YAML file and the nam
 
 #### Selenium
 
-For now these commands need to be run in seperate consoles.
-
 ```
-$> npm start
-
-$> npm test:selenium
+$> npm run test:selenium
 ```
 
 ## Making a test stripe donation

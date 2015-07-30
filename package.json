@@ -2,10 +2,10 @@
   "name": "donate.mozilla.org",
   "version": "0.0.1",
   "description": "Mozilla's Donation Forms",
-  "main": "server.js",
+  "main": "start.js",
   "scripts": {
     "start": "node scripts/build",
-    "start:prod": "node server.js",
+    "start:prod": "node start.js",
     "start:dev": "npm-run-all --parallel build:l10njson watch:js server watch:css",
     "postinstall": "npm-run-all build:*",
     "build:l10njson": "yamlconvert intl-config.json",
@@ -13,8 +13,10 @@
     "build:css": "npm run watch:css -- --no-watch",
     "watch:js": "webpack -w -h",
     "watch:css": "mkdirp public/css && autoless less public/css --autoprefix '> 1%, last 2 versions'  --source-map",
-    "server": "node server.js",
-    "test:selenium": "node tests/selenium/server.js",
+    "server": "node start.js",
+    "test": "npm-run-all --parallel test:server test:depcheck",
+    "test:server": "node tests/start.js",
+    "test:selenium": "node tests/selenium/start.js",
     "test:depcheck": "dependency-check ./package.json"
   },
   "repository": {

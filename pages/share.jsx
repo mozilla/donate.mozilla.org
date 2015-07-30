@@ -17,14 +17,14 @@ var ThankYou = React.createClass({
               <h2>Share</h2>
               <div className="row">
                 <div className="half" id="facebook">
-                  <a href="http://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsendto.mozilla.org%2Fpage%2Fcontribute%2Fgivenow-1page">
+                  <a href="http://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdonate.mozilla.org">
                     <i className="fa fa-facebook fa-5x"></i>
 
                     <p>facebook</p>
                   </a>
                 </div>
                 <div className="half" id="twitter">
-                  <a href="http://twitter.com/share?url=https%3A%2F%2Fsendto.mozilla.org%2Fpage%2Fcontribute%2Fgivenow-1page&amp;text=I%20donated%20to%20%40mozilla%20today%20because%20I%20%23lovetheweb.%20Join%20me%20and%20help%20build%20%2B%20protect%20the%20Web%20forever%3A">
+                  <a href="http://twitter.com/share?url=https%3A%2F%2Fdonate.mozilla.org&amp;text=I%20donated%20to%20%40mozilla%20today%20because%20I%20%23lovetheweb.%20Join%20me%20and%20help%20build%20%2B%20protect%20the%20Web%20forever%3A">
                     <i className="fa fa-twitter fa-5x"></i>
 
                     <p>twitter</p>

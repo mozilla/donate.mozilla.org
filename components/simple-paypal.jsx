@@ -90,7 +90,7 @@ var simplePaypal = React.createClass({
         <div id="form-wrapper" className="container">
           <div className="wrap">
             <div className="row">
-              <img src="https://sendto.mozilla.org/page/-/paypal_logo@2x.png" alt="PayPal Logo" width="140" height="58"/>
+              <img src="/images/paypal_logo@2x.png" alt="PayPal Logo" width="140" height="58"/>
 
               <p id="secure-label">
                 <i className="fa fa-lock"></i>
@@ -169,7 +169,7 @@ var simplePaypal = React.createClass({
           <input type="hidden" name="rm" value="1"/>
           {/* Donation Amount */}
           <input type="hidden" name="amount" value={this.state.value || 0}/>
-          <input type="hidden" name="return" value="https://sendto.mozilla.org/page/s/EOYFR2014-donor"/>
+          <input type="hidden" name="return" value="//donate-mozilla.herokuapp.com/thank-you/"/>
           <input type="hidden" name="currency_code" value={this.props.currency}/>
         </form>
 
@@ -180,7 +180,7 @@ var simplePaypal = React.createClass({
           <input type="hidden" name="item_name" value="Mozilla Foundation Recurring Donation"/>
           <input type="hidden" name="no_note" value="1"/>
           <input type="hidden" name="no_shipping" value="2"/>
-          <input type="hidden" name="return" value="https://sendto.mozilla.org/page/s/EOYFR2014-donor"/>
+          <input type="hidden" name="return" value="//donate-mozilla.herokuapp.com/thank-you/"/>
           <input type="hidden" name="src" value="1"/>
           <input type="hidden" name="p3" value="1"/>
           <input type="hidden" name="currency_code" value={this.props.currency}/>

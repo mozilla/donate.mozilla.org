@@ -12,8 +12,8 @@ pt-BR:
   first_name: Nome
   last_name: Sobrenome
   address: Endereço
-  city:: Cidade
-  postal_code:: Código Postal
+  city: Cidade
+  postal_code: Código Postal
   state_province: Estado/Provincia
   credit_card_number: Número do cartão de crédito
   MM: MM
@@ -24,9 +24,9 @@ pt-BR:
   credit_card_expiration_year: Ano de vencimento do seu cartão de crédito
   email_info: Nós iremos enviar o recibo de sua doação por e-mail. Não enviaremos outros e-mails sem sua permissão.
   pp_acknowledge: Para enviar esse formulário, você deve concordar com a nossa política de privacidade
-  privacy_policy: Tudo bem você lidar com essas informações como explicado na  <a href=\"https://www.mozilla.org/privacy/\" target=\"_blank\"> política de privacidade.</a>
+  privacy_policy: Tudo bem você lidar com essas informações como explicado na  <a href="https://www.mozilla.org/privacy/" target="_blank"> política de privacidade.</a>
   please_complete: Oops, por favor complete os campos destacados em vermelho.
-  problems_donating: Problemas com a doação? <a href=\"https://wiki.mozilla.org/Donate\" target=\"_blank\">Visite nossa FAQ</a> Para obter as respostas das perguntas mais frequentes. Continua com problemas ? <a href=\"mailto:donate@mozilla.org\">Nós envie um e-mail </a>.
+  problems_donating: Problemas com a doação? <a href="https://wiki.mozilla.org/Donate" target="_blank">Visite nossa FAQ</a> Para obter as respostas das perguntas mais frequentes. Continua com problemas ? <a href="mailto:donate@mozilla.org">Nós envie um e-mail </a>.
   donate_now: Doe agora
   donation_notice: Contribuições vão para a Fundação Mozilla, uma organização 501 (c) (3), para ser usado a seu critério para os seus fins de caridade. Elas são dedutíveis de imposto nos EUA em toda a extensão permitida por lei.
   amount: Valor
@@ -56,3 +56,4 @@ pt-BR:
   continue: continue
   error_amount: Por favor selecione um valor não inferior a {{ min_amount }}.
   donate_now_amount: Doe {{ currency_symbol }}{ amount } agora
+  other_ways_to_give:

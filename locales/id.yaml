@@ -12,8 +12,8 @@ id:
   first_name: Nama depan
   last_name: Nama belakang
   address: Alamat
-  city:: Kota
-  postal_code:: ZIP/Kode Pos
+  city: Kota
+  postal_code: ZIP/Kode Pos
   state_province: Negara Bagian/Provinsi
   credit_card_number: Nomor kartu kredit
   MM: BB
@@ -24,9 +24,9 @@ id:
   credit_card_expiration_year: Tahun Kedaluwarsa Kartu Kredit
   email_info: Kami akan mengirimi Anda surel yang disertai tanda terima donasi. Kami tidak akan mengirim surel lainnya tanpa izin Anda.
   pp_acknowledge: Untuk mengirimkan formulir ini Anda harus setuju dengan kebijakan privasi kami
-  privacy_policy: Saya setuju dengan cara penanganan informasi ini sebagaimana dijelaskan dalam <a href=\"https://www.mozilla.org/privacy/\" target=\"_blank\">kebijakan privasi</a>
+  privacy_policy: Saya setuju dengan cara penanganan informasi ini sebagaimana dijelaskan dalam <a href="https://www.mozilla.org/privacy/" target="_blank">kebijakan privasi</a>
   please_complete: Ups, harap isi bagian yang disorot dengan warna merah
-  problems_donating: Ada masalah saat menyumbang? <a href=\"https://wiki.mozilla.org/Donate\" target=\"_blank\">Kunjungi Tanya Jawab kami</a> untuk jawaban atas pertanyaan yang paling umum. Masih mengalami masalah? <a href=\"mailto:donate@mozilla.org\">Kirimi kami surel</a>.
+  problems_donating: Ada masalah saat menyumbang? <a href="https://wiki.mozilla.org/Donate" target="_blank">Kunjungi Tanya Jawab kami</a> untuk jawaban atas pertanyaan yang paling umum. Masih mengalami masalah? <a href="mailto:donate@mozilla.org">Kirimi kami surel</a>.
   donate_now: Sumbang sekarang
   donation_notice: Sumbangan akan disalurkan ke Mozilla Foundation, organisasi 501(c)(3), untuk digunakan atas kebijakannya sendiri demi amal. Sumbangan dapat mengurangi pajak di Amerika Serikat selama dizinkan oleh undang-undang.
   amount: Nilai
@@ -56,3 +56,4 @@ id:
   continue: Lanjutkan
   error_amount: Donasi minimum sebesar ${{ min_amount }}.
   donate_now_amount: Sumbang sekarang
+  other_ways_to_give:

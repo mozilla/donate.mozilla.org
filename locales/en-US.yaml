@@ -24,9 +24,9 @@ en-US:
   credit_card_expiration_year: Credit Card Expiration Year
   email_info: We&rsquo;ll email you a receipt for your donation. We won&rsquo;t send you other email without your permission.
   pp_acknowledge: To submit this form you must agree with our privacy policy
-  privacy_policy: I&rsquo;m okay with you handling this info as you explain in your <a href=\"https://www.mozilla.org/privacy/\" target=\"_blank\">privacy policy</a>
+  privacy_policy: I&rsquo;m okay with you handling this info as you explain in your <a href="https://www.mozilla.org/privacy/" target="_blank">privacy policy</a>
   please_complete: Oops, please complete fields highlighted in red
-  problems_donating: Problems donating? <a href=\"https://wiki.mozilla.org/Donate\" target=\"_blank\">Visit our FAQ</a> for answers to most common questions. Still have problems? <a href=\"mailto:donate@mozilla.org\">Send us an email</a>.
+  problems_donating: Problems donating? <a href="https://wiki.mozilla.org/Donate" target="_blank">Visit our FAQ</a> for answers to most common questions. Still have problems? <a href="mailto:donate@mozilla.org">Send us an email</a>.
   donate_now: Donate now
   donation_notice: Contributions go to the Mozilla Foundation, a 501(c)(3) organization, to be used in its discretion for its charitable purposes. They are tax-deductible in the U.S. to the fullest extent permitted by law.
   amount: Amount
@@ -56,3 +56,4 @@ en-US:
   continue: continue
   error_amount: Please select a value that is no less than {{ min_amount }}.
   donate_now_amount: Donate {{ currency_symbol }}{ amount } now
+  other_ways_to_give: "Other ways to give: <Link to='give-bitcoin'>Bitcoin</Link> | <a target='_blank' href='https://wiki.mozilla.org/Ways_to_Give#Check_.28via_postal_service.29'>Check</a>"

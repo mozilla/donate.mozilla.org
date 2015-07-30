@@ -24,9 +24,9 @@ de:
   credit_card_expiration_year: Jahr des Ablaufs
   email_info: Wir werden Ihnen eine Quittung für die Spende per E-Mail senden. Wir senden Ihnen keine weiteren E-Mails ohne Ihre Erlaubnis.
   pp_acknowledge: Um dieses Formular abzuschicken, müssen Sie unsere Datenschutz-Bestimmungen akzeptieren.
-  privacy_policy: Ich akzeptiere den Umgang mit diesen Informationen durch Sie, wie er in Ihren <a href=\"https://www.mozilla.org/privacy/\" target=\"_blank\">Datenschutz-Bestimmungen</a> erklärt wird
+  privacy_policy: Ich akzeptiere den Umgang mit diesen Informationen durch Sie, wie er in Ihren <a href="https://www.mozilla.org/privacy/" target="_blank">Datenschutz-Bestimmungen</a> erklärt wird
   please_complete: Ups, bitte füllen Sie alle in rot hervorgehobenen Felder aus.
-  problems_donating: Probleme beim Spenden? <a href=\"https://wiki.mozilla.org/Donate\" target=\"_blank\">Besuche unsere FAQ</a> für Antworten für die häufigsten Fragen. Hast du immer noch Probleme? <a href=\"mailto:donate@mozilla.org\">Sende uns eine E-Mail</a>
+  problems_donating: Probleme beim Spenden? <a href="https://wiki.mozilla.org/Donate" target="_blank">Besuche unsere FAQ</a> für Antworten für die häufigsten Fragen. Hast du immer noch Probleme? <a href="mailto:donate@mozilla.org">Sende uns eine E-Mail</a>
   donate_now: Jetzt spenden
   donation_notice: Die Spenden gehen an die Mozilla Foundation, eine 501(c)(3)-Organisation, und werden nach eigenem Ermessen für wohltätige Zwecke verwendet. Sie sind in den USA, soweit es gesetzlich zulässig ist, im vollsten Umfang steuerlich absetzbar.
   amount: Betrag
@@ -56,3 +56,4 @@ de:
   continue: Weiter
   error_amount: Wählen Sie bitte einen Wert nicht kleiner als {{ min_amount }}.
   donate_now_amount: Jetzt spenden {{ currency_symbol }}{ amount }
+  other_ways_to_give:

@@ -24,9 +24,9 @@ fr:
   credit_card_expiration_year: Année d'expiration de la carte de crédit
   email_info: Nous vous enverrons par courrier électronique un reçu pour votre don. Nous ne vous enverrons aucun autre courrier électronique sans votre permission.
   pp_acknowledge: Pour valider ce formulaire, vous devez accepter notre politique de confidentialité.
-  privacy_policy: J'accepte que vous utilisiez ces informations tel qu'expliqué dans votre <a href=\"https://www.mozilla.org/privacy/\" target=\"_blank\">politique de confidentialité</a>
+  privacy_policy: J'accepte que vous utilisiez ces informations tel qu'expliqué dans votre <a href="https://www.mozilla.org/privacy/" target="_blank">politique de confidentialité</a>
   please_complete: Oups, veuillez remplir les champs en rouge
-  problems_donating: Des problèmes pour faire un don ? <a href=\"https://wiki.mozilla.org/Donate\" target=\"_blank\">Visitez notre FAQ</a> pour trouver les réponses aux questions ls plus courantes. Pas trouvé la réponse ? <a href=\"mailto:donate@mozilla.org\">Envoyez-nous un courrier électronique</a>.
+  problems_donating: Des problèmes pour faire un don ? <a href="https://wiki.mozilla.org/Donate" target="_blank">Visitez notre FAQ</a> pour trouver les réponses aux questions ls plus courantes. Pas trouvé la réponse ? <a href="mailto:donate@mozilla.org">Envoyez-nous un courrier électronique</a>.
   donate_now: Faire un don
   donation_notice: Les dons seront reversés à la Mozilla Foundation, une organisation 501(c)(3) et seront utilisés à des fins caritatives. Ils sont déductibles des impôts aux États-Unis dans la mesure autorisée par la loi.
   amount: Montant
@@ -56,3 +56,4 @@ fr:
   continue: continuer
   error_amount: Veuillez sélectionner une valeur supérieure à {{ min_amount }}.
   donate_now_amount: Faites un don {{ currency_symbol }}{ amount }
+  other_ways_to_give:

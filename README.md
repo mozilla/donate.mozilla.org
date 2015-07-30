@@ -72,6 +72,38 @@ en-US:
 
 You have to make sure you match your language code in your YAML file and the name of the file with what you include in your config file for the converting part otherwise it will fail.
 
+### I18N Methods
+
+`i18n.js` file exposes different methods to help with localization. These are the list of available methods when you required the module.
+
+``` js
+{
+  intlData,
+  defaultLang: 'en-US',
+  currentLanguage: locale,
+  isSupportedLanguage: function(lang),
+  intlDataFor: function(lang)
+}
+```
+
+1. `intlData`
+  This object consist of two properties. `locales` and `messages`. We use this object to pass it to React-Router in order for `getIntlMessage` to work properly.
+
+2. `defaultLang`
+  This will return default language of the application.
+
+3. `currentLanguage`
+  This will return current language of the client that visiting our site.
+
+4. `isSupportedLanguage`
+  This method expect a valid language code, and it's used to validate if we support that given language or not.
+  The return value is boolean.
+
+5. `intlDataFor`
+  This method expect a valid language code, and it will return `intlData` for the given language.
+
+
+
 ## Tests
 
 #### Selenium

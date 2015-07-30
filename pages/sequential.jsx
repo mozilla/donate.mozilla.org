@@ -614,7 +614,7 @@ var Sequential = React.createClass({
                     </div>
                   </div>
                   <a href="#page-2" data-button-type="next" data-page="1" className="button">
-                  Next
+                  {this.getIntlMessage('next')}
                   </a>
                 </fieldset>
                 {/* = Amount Section Ends ====================  */}

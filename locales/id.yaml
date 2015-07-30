@@ -56,4 +56,4 @@ id:
   continue: Lanjutkan
   error_amount: Donasi minimum sebesar ${{ min_amount }}.
   donate_now_amount: Sumbang sekarang
-  other_ways_to_give:
+

@@ -56,4 +56,4 @@ pt-BR:
   continue: continue
   error_amount: Por favor selecione um valor não inferior a {{ min_amount }}.
   donate_now_amount: Doe {{ currency_symbol }}{ amount } agora
-  other_ways_to_give:
+

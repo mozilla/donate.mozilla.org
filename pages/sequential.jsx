@@ -1282,7 +1282,10 @@ var Sequential = React.createClass({
             </div>
             <div className="row">
               <p className="other_ways_to_give">
-                <small>{this.getIntlMessage('other_ways_to_give')}</small>
+                <small>
+                  Other ways to give: <Link to='give-bitcoin'>Bitcoin</Link> |
+                  <a target='_blank' href='https://wiki.mozilla.org/Ways_to_Give#Check_.28via_postal_service.29'>Check</a>
+                </small>
               </p>
               <p className="need-help">
                 <small><FormattedHTMLMessage message={ this.getIntlMessage("problems_donating") } />

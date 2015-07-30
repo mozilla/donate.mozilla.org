@@ -56,4 +56,3 @@ en-US:
   continue: continue
   error_amount: Please select a value that is no less than {{ min_amount }}.
   donate_now_amount: Donate {{ currency_symbol }}{ amount } now
-  other_ways_to_give: "Other ways to give: <Link to='give-bitcoin'>Bitcoin</Link> | <a target='_blank' href='https://wiki.mozilla.org/Ways_to_Give#Check_.28via_postal_service.29'>Check</a>"

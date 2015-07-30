@@ -127,7 +127,7 @@ var simplePaypal = React.createClass({
                 <div className="half">
                   <input type="radio" name="recurring_acknowledge" defaultChecked="checked" value="0" required id="one-time-payment"/>
                   <label htmlFor="one-time-payment" className="medium-label-size">
-                    {this.getIntlMessage("one-time")}
+                    {this.getIntlMessage("one_time")}
                   </label>
                 </div>
                 <div className="half">
@@ -154,7 +154,7 @@ var simplePaypal = React.createClass({
         <div className="row">
           <p className="donation-notice">
             <small>
-              {this.getIntlMessage("contributions")}
+              {this.getIntlMessage("donation_notice")}
             </small>
           </p>
         </div>

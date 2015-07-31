@@ -526,7 +526,7 @@ var Sequential = React.createClass({
               // Todo: need to work out how we identify this status?
               var donationFrequency = 'one-time';
 
-              var params = '?payment=Stripe&amount=' + amount + '&currency=' + currency + '&id=' +transactionId + '&frequency=' +donationFrequency;
+              var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' +donationFrequency;
               var thankYouURL = '/thank-you/' + params;
 
               if (win.location.assign) {

@@ -42,7 +42,7 @@ server.route([
       if (transaction.recurring_acknowledge === '0') {
         var charge = {
           // stripe works in cents
-          amount: transaction.amount_other * 100,
+          amount: transaction.amount * 100,
           currency: 'USD',
           card: stripeToken
         };

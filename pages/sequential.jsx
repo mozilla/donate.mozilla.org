@@ -512,6 +512,7 @@ var Sequential = React.createClass({
               stripeToken: response['id'],
               amount: formData.amount_other,
               email: formData.email,
+              recurring_acknowledge: formData.recurring_acknowledge,
               metadata: {
                 firstname: formData.firstname,
                 lastname: formData.lastname,

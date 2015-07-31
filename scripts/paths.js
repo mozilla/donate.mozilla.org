@@ -1,6 +1,6 @@
-import currencies from './scripts/currencies.js';
-import locales from './locales';
-import pages from './scripts/pages.js';
+import currencies from '../data/currencies.js';
+import locales from '../locales';
+import pages from '../data/pages.js';
 
 function createPaths(first, arr) {
   var returnArray = [];

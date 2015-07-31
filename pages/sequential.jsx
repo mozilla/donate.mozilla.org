@@ -527,7 +527,7 @@ var Sequential = React.createClass({
               var donationFrequency = 'one-time';
 
               var params = '?payment=Stripe&amount=' + amount + '&currency=' + currency + '&id=' +transactionId + '&frequency=' +donationFrequency;
-              var thankYouURL = '/thank-you' + params;
+              var thankYouURL = '/thank-you/' + params;
 
               if (win.location.assign) {
                 win.location.assign(thankYouURL);

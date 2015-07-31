@@ -4,6 +4,7 @@
   var amt = null;
   var cc = null; // currency code
   var product_name = null;
+  var product_category = 'one-time'; // to-do detect this below
 
   // Search for PayPal Params
   var pp_tx_re = /tx=(\w+)/;
@@ -15,6 +16,7 @@
     cc = queryString.match(pp_cc_re)[1];
     product_name = 'PayPal Donation';
   }
+
   // Search for Coinbase Params
   var cb_tx_re = /order\[transaction\]\[id\]=(\w+)/;
   var cb_amt_re = /order\[total_native\]\[cents\]=([\w\.]+)/;
@@ -26,9 +28,26 @@
     product_name = 'Bitcoin Donation';
   }
 
-  // Todo: add Stripe parameters
+  // Search for Stripe Params
+  var str_tx_re = /str_id=(\w+)/;
+  var str_amt_re = /str_amount=([\w\.]+)/;
+  var str_cc_re = /str_currency=(\w+)/;
+  if (str_tx_re.test(queryString) && str_amt_re.test(queryString) && str_cc_re.test(queryString)) {
+    tx = queryString.match(str_tx_re)[1];
+    amt = queryString.match(str_amt_re)[1] / 100; // Stripe amount in cents;
+    cc = queryString.match(str_cc_re)[1];
+    product_name = 'Stripe Donation';
+  }
 
   if (tx && amt && cc) {
+
+    // Filter out impact of major gifts on conversion analysis
+    // otherwise transactions can skew the average too far
+    if (cc === 'USD' && amt > 1000) {
+      amt = 1000;
+    }
+
+    // Todo: add optimizely exchange rates
 
     // Optimizely conversion tracking
     window.optimizely = window.optimizely || [];
@@ -53,7 +72,7 @@
       'id': tx,
       'name': product_name,
       'sku': product_name,
-      'category': product_name, // to-do: make this one-off or monthly
+      'category': product_category,
       'price': amt,
       'quantity': '1'
     });

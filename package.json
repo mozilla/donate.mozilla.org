@@ -6,10 +6,11 @@
   "scripts": {
     "start": "node scripts/build",
     "start:prod": "node start.js",
-    "start:dev": "npm-run-all --parallel build:l10njson watch:js server watch:css",
+    "start:dev": "npm-run-all --parallel build:l10njson build:exchangerates watch:js server watch:css",
     "postinstall": "npm-run-all build:*",
     "build:l10njson": "yamlconvert intl-config.json",
     "build:js": "webpack",
+    "build:exchangerates": "node scripts/exchangerates.js",
     "build:css": "npm run watch:css -- --no-watch",
     "watch:js": "webpack -w -h",
     "watch:css": "mkdirp public/css && autoless less public/css --autoprefix '> 1%, last 2 versions'  --source-map",

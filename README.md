@@ -139,3 +139,19 @@ A test account is also provided and the credentials are:
 Username: send-donation@test.com
 
 Password: testtest
+
+## Exhange rates
+
+On our donation thank you page, we record donation amounts using the Optimizely conversion tracking tag so we can see which variations of A/B tests we run result in the most donations.
+
+The Optimizely tracking requires we record the donation amount in USD, but many of our transactions happen in other currencies.
+
+We need to convert these donation amounts into USD dollars. To do this, we periodically fetch an updated set of exchange rate data from openexhangerates.org. We store this as a static file on our server as we want to reduce the number of requests to 3rd party services during page load for our end users (this is good for maintaining control over page load times).
+
+Ideally, we keep these rates up to date, but this is not a business critial data source, so in case of downtime or problems fetching the data, we also store a reasonable snap-shot in `/public/exchangerates/rates-backup.json`.
+
+The build script for the website checks if we have a recent snapshot, and if not creates one. If you are working as a developer on the project, you will need to get an API key from https://openexchangerates.org/signup - the 'Free Forever' plan should be sufficient for development.
+
+
+
+

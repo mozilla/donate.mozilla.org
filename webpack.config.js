@@ -4,7 +4,7 @@ var React = require('react');
 require('babel/register');
 var Router = require('react-router');
 var routes = require('./components/routes.jsx');
-var paths = require('./scripts/paths.js');
+var paths = require('./paths.js');
 var currencies = require('./scripts/currencies.js');
 var englishStrings = require(path.join(__dirname, 'locales/en-US.json'));
 

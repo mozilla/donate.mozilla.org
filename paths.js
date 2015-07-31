@@ -1,5 +1,5 @@
 import currencies from './currencies.js';
-import {locales} from '../locales';
+import locales from '../locales';
 import pages from './pages.js';
 
 function createPaths(first, arr) {

@@ -19,9 +19,13 @@ var Footer = React.createClass({
                 <li><a href="https://www.mozilla.org/about/" target="_blank">About</a></li>
                 <li><a href="https://www.mozilla.org/contact/spaces/" target="_blank">Contact</a>
                 </li>
-                <li><a href="https://www.mozilla.org/privacy/" target="_blank">Privacy Policy</a>
+                <li><a href="https://stripe.com/privacy/" target="_blank">Stripe Privacy Policy</a>
                 </li>
-                <li><a href="https://www.mozilla.org/about/legal/" target="_blank">Legal Notices</a>
+                <li><a href="https://stripe.com/terms/" target="_blank">Stripe Legal Notices</a>
+                </li>
+                <li><a href="https://www.mozilla.org/privacy/" target="_blank">Mozilla Privacy Policy</a>
+                </li>
+                <li><a href="https://www.mozilla.org/about/legal/" target="_blank">Mozilla Legal Notices</a>
                 </li>
               </ul>
             </div>

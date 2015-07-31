@@ -41,6 +41,12 @@
 
   if (tx && amt && cc) {
 
+    // Filter out impact of major gifts on conversion analysis
+    // otherwise transactions can skew the average too far
+    if (cc === 'USD' && amt > 1000) {
+      amt = 1000;
+    }
+
     // Todo: add optimizely exchange rates
 
     // Optimizely conversion tracking

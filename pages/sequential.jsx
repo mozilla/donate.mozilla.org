@@ -506,10 +506,26 @@ var Sequential = React.createClass({
             console.log(response.error);
           } else {
             var token = response['id'];
-            $theForm.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+            var formData = {};
+            $theForm.serializeArray().map(function(x){formData[x.name] = x.value;});
+            var transaction = {
+              stripeToken: response['id'],
+              amount: formData.amount_other,
+              email: formData.email,
+              recurring_acknowledge: formData.recurring_acknowledge,
+              metadata: {
+                firstname: formData.firstname,
+                lastname: formData.lastname,
+                country: formData.country,
+                address: formData.addr1,
+                city: formData.city,
+                zip: formData.zip,
+                state: formData.state_cd
+              }
+            };
             var submitDonation = $.ajax('/stripe', {
               type: 'POST',
-              data: $theForm.serializeArray(),
+              data: transaction,
               statusCode: {
                 400: submission400s,
                 500: function(XHR, textStatus, error) {

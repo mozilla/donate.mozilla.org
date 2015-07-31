@@ -39,22 +39,50 @@ server.route([
       var stripeToken = transaction.stripeToken;
       // create charge
 
-      var charge = {
-        // stripe works in cents
-        amount: transaction.amount_other * 100,
-        currency: 'USD',
-        card: stripeToken
-      };
-      stripe.charges.create(charge,
-        function(err, charge) {
+      if (transaction.recurring_acknowledge === '0') {
+        var charge = {
+          // stripe works in cents
+          amount: transaction.amount * 100,
+          currency: 'USD',
+          card: stripeToken
+        };
+        stripe.charges.create(charge,
+          function(err, charge) {
+            if (err) {
+              console.log(err);
+            } else {
+              reply(charge);
+              console.log('Successful charge sent to Stripe!');
+            }
+          }
+        );
+      } else {
+        stripe.customers.create({
+          email: transaction.email,
+          metadata: transaction.metadata
+        }, function(err, customer) {
           if (err) {
             console.log(err);
           } else {
-            reply(charge);
-            console.log('Successful charge sent to Stripe!');
+            var amt = parseFloat(transaction.amount, 10);
+            var subscription = {
+              plan: "base",
+              quantity: amt / 0.01,
+              source: transaction.stripeToken
+            };
+            stripe.customers.createSubscription(customer.id, subscription,
+              function(err, subscription) {
+                if (err) {
+                  console.log(err);
+                } else {
+                  reply(subscription);
+                  console.log('Successful subscription created!');
+                }
+              }
+            );
           }
-        }
-      );
+        });
+      }
     }
   }, {
     method: 'POST',

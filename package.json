@@ -56,7 +56,7 @@
     "request": "^2.60.0",
     "selenium-webdriver": "^2.46.1",
     "simple-html-precompiler": "^1.0.1",
-    "stripe": "~2.2.0",
+    "stripe": "2.4.0",
     "webpack": "^1.9.10",
     "yaml-intl-xml-json-converter": "0.0.7"
   }

@@ -68,12 +68,6 @@
 
   if (tx && amt && cc) {
 
-    console.log(tx);
-    console.log(amt);
-    console.log(cc);
-    console.log(product_name);
-    console.log(product_category);
-
     // Filter out impact of major gifts on conversion analysis
     // otherwise transactions can skew the average too far
     if (cc === 'USD' && amt > 1000) {

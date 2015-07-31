@@ -1230,7 +1230,7 @@ var Sequential = React.createClass({
                             <i className="fa fa-envelope field-icon"></i>
                             <input type="email" name="email" placeholder={this.getIntlMessage('email')} data-parsley-group="page-3" data-parsley-required/><i className="fa fa-question-circle hint"></i>
                             <div className="hint-msg small">
-                              {this.getIntlMessage('email_info')}
+                              <FormattedHTMLMessage message={ this.getIntlMessage("email_info") } />
                             </div>
                           </div>
                         </div>

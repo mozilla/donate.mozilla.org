@@ -29,7 +29,7 @@ en-US:
   problems_donating: Problems donating? <a href="https://wiki.mozilla.org/Donate" target="_blank">Visit our FAQ</a> for answers to most common questions. Still have problems? <a href="mailto:donate@mozilla.org">Send us an email</a>.
   donate_now: Donate now
   donation_notice: Contributions go to the Mozilla Foundation, a 501(c)(3) organization, to be used in its discretion for its charitable purposes. They are tax-deductible in the U.S. to the fullest extent permitted by law.
-  stripe_notice: We use Stripe for credit card processing. For more information see their <a href="https://stripe.com/terms/" target="_blank">Stripe Legal Notices</a> and <a href="https://stripe.com/privacy/" target="_blank">Stripe Privacy Policy</a>.
+  stripe_notice: We use Stripe for credit card processing. For more information see their <a href="https://stripe.com/terms/" target="_blank">Privacy & Terms</a>.
   amount: Amount
   email: Email
   payment: Payment

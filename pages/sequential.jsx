@@ -1230,7 +1230,7 @@ var Sequential = React.createClass({
                             <i className="fa fa-envelope field-icon"></i>
                             <input type="email" name="email" placeholder={this.getIntlMessage('email')} data-parsley-group="page-3" data-parsley-required/><i className="fa fa-question-circle hint"></i>
                             <div className="hint-msg small">
-                              {this.getIntlMessage('email_info')}
+                              <FormattedHTMLMessage message={ this.getIntlMessage("email_info") } />
                             </div>
                           </div>
                         </div>
@@ -1243,7 +1243,9 @@ var Sequential = React.createClass({
                   <div id="privacy-policy">
                     <div className="row cc-additional-info">
                       <div className="full">
-                        <input type="checkbox" name="legal_confirm" id="legalConfirm" data-parsley-group="page-3" data-parsley-errors-container="#privacy-error-msg" data-parsley-error-message={this.getIntlMessage('pp_acknowledge')} data-parsley-required/><label htmlFor="legalConfirm">{this.getIntlMessage('privacy_policy')}.</label>
+                        <input type="checkbox" name="legal_confirm" id="legalConfirm" data-parsley-group="page-3" data-parsley-errors-container="#privacy-error-msg" data-parsley-error-message={this.getIntlMessage('pp_acknowledge')} data-parsley-required/><label htmlFor="legalConfirm">
+                        <FormattedHTMLMessage message={ this.getIntlMessage("privacy_policy") } />
+                        </label>
                       </div>
                     </div>
                     <div className="row cc-additional-info error-msg-row">

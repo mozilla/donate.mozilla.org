@@ -144,6 +144,7 @@ var Sequential = React.createClass({
 
     function showCreditCardForm() {
       $(".cc-additional-info").slideDown(100);
+      $(".stripe-notice").show();
       win.setTimeout(function() {
         calculateHeight();
         $('[name="cc_number"]').focus();
@@ -1282,7 +1283,7 @@ var Sequential = React.createClass({
                 <input type="hidden" name="amount_other" value=""/>
               </form>
             </div>
-            <div className="row">
+            <div className="row disclaimers">
               <p className="other_ways_to_give">
                 <small>
                   Other ways to give: <Link to='give-bitcoin'>Bitcoin</Link> |
@@ -1293,11 +1294,11 @@ var Sequential = React.createClass({
                 <small><FormattedHTMLMessage message={ this.getIntlMessage("problems_donating") } />
                   </small>
               </p>
-              <p className="stripe-notice">
-                <small><FormattedHTMLMessage message={ this.getIntlMessage("stripe_notice") } /></small>
-              </p>
               <p className="donation-notice">
                 <small>{this.getIntlMessage('donation_notice')}</small>
+              </p>
+              <p className="stripe-notice">
+                <small><FormattedHTMLMessage message={ this.getIntlMessage("stripe_notice") } /></small>
               </p>
             </div>
           </div>

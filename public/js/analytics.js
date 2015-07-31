@@ -4,7 +4,7 @@
   var amt = null;
   var cc = null; // currency code
   var product_name = null;
-  var product_category = 'one-time'; // to-do detech this below
+  var product_category = 'one-time'; // to-do detect this below
 
   // Search for PayPal Params
   var pp_tx_re = /tx=(\w+)/;

@@ -250,7 +250,7 @@ var Sequential = React.createClass({
       }
       $("#donate-btn").text(buttonText);
       $('#paypal-one-time').find('[name="amount"]').attr('value', amountSelected);
-      $('#paypal-recurring').find('[name="a3"]').attr('value', amountSelected);
+      $('#paypal-recurring').find('[name="amount"]').attr('value', amountSelected);
     };
 
     $theForm.find("[name='donation_amount']").change(function() {

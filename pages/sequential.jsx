@@ -519,11 +519,22 @@ var Sequential = React.createClass({
             });
 
             function submitSuccess(data, textStatus, XHR) {
+
+              var amount = data.amount; // cents
+              var currency = data.currency;
+              var transactionId = data.id;
+              // Todo: need to work out how we identify this status?
+              var donationFrequency = 'one-time';
+
+              var params = '?payment=Stripe&amount=' + amount + '&currency=' + currency + '&id=' +transactionId + '&frequency=' +donationFrequency;
+              var thankYouURL = '/thank-you' + params;
+
               if (win.location.assign) {
-                win.location.assign("/thank-you");
+                win.location.assign(thankYouURL);
               } else {
-                win.location = "/thank-you";
+                win.location = thankYouURL;
               }
+
             }
 
             function submitError(XHR, textStatus, error) {

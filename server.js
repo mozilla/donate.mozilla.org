@@ -111,7 +111,7 @@ server.route([
             return console.error('donation failed:', err);
           }
           var bodyData = querystring.parse(body);
-          reply.redirect('/thank-you/?tx=' + bodyData.PAYMENTINFO_0_TRANSACTIONID + '&amt=' + data.PAYMENTREQUEST_0_AMT + '&cc=' + data.CURRENCYCODE);
+          reply.redirect('/thank-you/?frequency=onetime&tx=' + bodyData.PAYMENTINFO_0_TRANSACTIONID + '&amt=' + data.PAYMENTREQUEST_0_AMT + '&cc=' + data.CURRENCYCODE);
         });
       });
     }
@@ -159,9 +159,10 @@ server.route([
             return console.error('donation failed:', err);
           }
           var bodyData = querystring.parse(body);
-          // The below TRANSACTIONID is undefined.
-          // I'm not sure how to get this yet for recurring payments.
-          reply.redirect('/thank-you/?tx=' + bodyData.PAYMENTINFO_0_TRANSACTIONID + '&amt=' + data.AMT + '&cc=' + data.CURRENCYCODE);
+          // Create unique tx id by combining PayerID and timestamp
+          var stamp = Date.now() / 100;
+          var txId = data.PAYERID + stamp;
+          reply.redirect('/thank-you/?frequency=monthly&tx=' + txId + '&amt=' + data.AMT + '&cc=' + data.CURRENCYCODE);
         });
       });
     }
@@ -213,9 +214,9 @@ server.route([
           VERSION: "106.0",
           PAYMENTREQUEST_0_PAYMENTACTION: "Sale",
           PAYMENTREQUEST_0_AMT: transaction.amount,
-          PAYMENTREQUEST_0_DESC: "Mozilla Foundation Recurring Donation",
+          PAYMENTREQUEST_0_DESC: "Mozilla Foundation Monthly Donation",
           PAYMENTREQUEST_0_CURRENCYCODE: transaction.currency_code,
-          L_BILLINGAGREEMENTDESCRIPTION0: "Mozilla Foundation Recurring Donation",
+          L_BILLINGAGREEMENTDESCRIPTION0: "Mozilla Foundation Monthly Donation",
           L_BILLINGTYPE0: "RecurringPayments",
           LOCALECODE: transaction.lc,
           NOSHIPPING: "1",

@@ -1,4 +1,5 @@
 import React from 'react';
+import assign from 'react/lib/Object.assign';
 import Router from 'react-router';
 import currencies from '../scripts/currencies.js';
 import routes from './routes.jsx';
@@ -11,9 +12,9 @@ Router.run(routes, Router.HistoryLocation, function (Handler, state) {
   }
 
   if(state.params.locale) {
-    values = Object.assign(values, intlDataFor(state.params.locale));
+    values = assign(values, intlDataFor(state.params.locale));
   } else {
-    values = Object.assign(values, intlData);
+    values = assign(values, intlData);
   }
   React.render(<Handler {...values} />, document.querySelector("#my-app"));
 });

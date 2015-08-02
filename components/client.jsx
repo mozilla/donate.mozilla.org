@@ -1,9 +1,9 @@
 import React from 'react';
 import assign from 'react/lib/Object.assign';
 import Router from 'react-router';
-import currencies from '../scripts/currencies.js';
+import currencies from '../data/currencies.js';
 import routes from './routes.jsx';
-import {intlDataFor, intlData} from '../public/js/i18n.js';
+import {intlDataFor, intlData} from '../locales/i18n.js';
 
 Router.run(routes, Router.HistoryLocation, function (Handler, state) {
   var values = {};

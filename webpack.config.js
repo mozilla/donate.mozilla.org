@@ -6,7 +6,7 @@ var Router = require('react-router');
 var routes = require('./components/routes.jsx');
 var paths = require('./scripts/paths.js');
 var currencies = require('./data/currencies.js');
-var englishStrings = require(path.join(__dirname, 'locales/en-US.json'));
+var englishStrings = require('./locales/en-US.json');
 
 module.exports = {
   entry: "./components/client.jsx",
@@ -40,11 +40,11 @@ module.exports = {
         }
 
         if(state.params.locale) {
-          var currentString = require(path.join(__dirname, 'locales/' + state.params.locale +'.json'));
+          var currentString = require('./locales/' + state.params.locale +'.json');
           var mergedStrings = Object.assign(englishStrings, currentString),
-          values = Object.assign({messages: mergedStrings}, values);
+          values = Object.assign({locales : [state.params.locale], messages: mergedStrings}, values);
         } else {
-          values = Object.assign({messages: englishStrings}, values);
+          values = Object.assign({locales : ['en-US'], messages: englishStrings}, values);
         }
         callback(React.renderToStaticMarkup(Index({
           markup: React.renderToStaticMarkup(Page(values))

@@ -140,7 +140,7 @@ Username: send-donation@test.com
 
 Password: testtest
 
-## Exhange rates
+## Exchange rates
 
 On our donation thank you page, we record donation amounts using the Optimizely conversion tracking tag so we can see which variations of A/B tests we run result in the most donations.
 

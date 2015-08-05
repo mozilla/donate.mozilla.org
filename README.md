@@ -112,6 +112,101 @@ You have to make sure you match your language code in your YAML file and the nam
 5. `intlDataFor`
   This method expect a valid language code, and it will return `intlData` for the given language.
 
+### How to setup a new A/B test page or form
+
+There are 4 steps to setup a new test page or form:
+
+1. [Add new page or component](#add-new-page-or-component)
+2. [Add route](#add-route)
+3. [Starting the test](#starting-the-test)
+4. [Ending the test](#ending-the-test)
+
+##### Files and directories structure
+
+```
+.
+├── components
+│   ├── footer.jsx
+│   ├── header.jsx
+├── less
+│   ├── components
+│   │   ├── footer.less
+│   │   ├── header.less
+│   │   └── simple-paypal.less
+│   ├── pages
+│   │   ├── give-bitcoin.less
+│   │   └── index.less
+│   └── shared.less
+├── locales
+│   ├── de.json
+│   ├── de.yaml
+│   ├── en-US.json
+│   ├── en-US.yaml
+├── pages
+│   ├── give-bitcoin.jsx
+│   └── thank-you.jsx
+├── public
+│   ├── exchange-rates
+│   │   └── rates-backup.json
+│   ├── images
+│   │   └── bitcoin_donation_large.png
+│   └── js
+│       └── stripe.js
+├── scripts
+│   ├── build.js
+│   └── paths.js
+├── tests
+│   ├── selenium
+│   │   └── start.js
+│   └── start.js
+```
+
+##### Add new page or component
+
+All new components should be added under `components` directory, and page should be under `pages`.
+
+Where possible, we should re-use components across tests.
+
+##### Add route
+
+To add new page to the application you have to edit `routes.jsx` file:
+
+``` typescript
+var routes = (
+  <Route>
+    <Route name="your-route-name" path="/path-to-your-route" handler={require('path-to-your-component.jsx')} />
+  </Route>
+);
+```
+
+See [URL best practices](#url-best-practices).
+
+##### Localization
+
+* New pages should make use of existing strings.
+* If new strings are required, these are added to our existing strings.
+* New pages will be created for all locales where we currently have strings
+
+##### URL best practices
+* The core version of the form should always be our current champion (best performer)
+* All links we promote on external properties (snippet, etc) should link to the core version of the form. e.g. donate.mozilla.org
+* Routing to temporary test URLs is managed via Optimizely via the core URL
+* Tests are run against temporary test URLs
+** These URLs are named in ways to identify the test function
+** e.g. donate.mozilla.org/visual-background-de
+* If the test variation wins, we move the content of this temporary test URL into the core URL 
+
+##### Starting the test
+
+* Deploy the test URLs to production
+* Test new URLs are working
+* Setup A/B test routing via Optimizely to distribute traffic between the test variations
+
+##### Ending the test
+* If one of the test variations is the winner, make this page the default / control page for all visitors
+* Remove the temporary test URLs setup for this test
+* Traffic to temporary test URLs redirects to the core URLs
+** TBC: do we explicitly manage these redirects in code, or do we have a catch-all redirect for our 404 page? 
 
 
 ## Tests

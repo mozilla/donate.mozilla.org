@@ -188,7 +188,7 @@ See [URL best practices](#url-best-practices).
 * New pages will be created for all locales where we currently have strings
 
 ##### URL best practices
-* The core version of the form should always be our current champion (best performer)
+* The default version of the form should always be our current champion (best performer)
 * All links we promote on external properties (snippet, etc) should link to the core version of the form. e.g. donate.mozilla.org
 * Routing to temporary test URLs is managed via Optimizely via the core URL
 * Tests are run against temporary test URLs

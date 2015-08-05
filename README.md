@@ -181,13 +181,13 @@ var routes = (
 
 See [URL best practices](#url-best-practices).
 
-#### Localization
+##### Localization
 
 * New pages should make use of existing strings.
 * If new strings are required, these are added to our existing strings.
 * New pages will be created for all locales where we currently have strings
 
-#### URL best practices
+##### URL best practices
 * The core version of the form should always be our current champion (best performer)
 * All links we promote on external properties (snippet, etc) should link to the core version of the form. e.g. donate.mozilla.org
 * Routing to temporary test URLs is managed via Optimizely via the core URL
@@ -196,13 +196,13 @@ See [URL best practices](#url-best-practices).
 ** e.g. donate.mozilla.org/visual-background-de
 * If the test variation wins, we move the content of this temporary test URL into the core URL 
 
-#### Starting the test
+##### Starting the test
 
 * Deploy the test URLs to production
 * Test new URLs are working
 * Setup A/B test routing via Optimizely to distribute traffic between the test variations
 
-#### Ending the test
+##### Ending the test
 * If one of the test variations is the winner, make this page the default / control page for all visitors
 * Remove the temporary test URLs setup for this test
 * Traffic to temporary test URLs redirects to the core URLs

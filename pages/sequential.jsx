@@ -2,6 +2,8 @@ import React from 'react';
 import Footer from '../components/footer.jsx';
 import Header from '../components/header.jsx';
 import Link from '../components/link.jsx';
+import PaypalButton from '../components/paypal-button.jsx';
+import CreditCardButton from '../components/credit-card-button.jsx';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
 
 var ga = require('react-ga');
@@ -655,24 +657,8 @@ var Sequential = React.createClass({
                     </div>
                   </div>
                   <div className="row" id="payment-type-row">
-                    <div className="half">
-                      <input type="radio" name="payment-type" value="cc" id="payment-cc" data-parsley-group="page-2" data-parsley-multiple="payment-type" data-parsley-errors-container="#payment-type-error-msg" data-parsley-required/>
-                      <label id="payment-cc-label" htmlFor="payment-cc">
-                        <div className="row payment-logos credit-card-logos">
-                          <p>&nbsp;</p>
-                        </div>
-                        <div className="row medium-label-size">{this.getIntlMessage('credit_card')}</div>
-                      </label>
-                    </div>
-                    <div className="half">
-                      <input type="radio" name="payment-type" value="paypal" id="payment-paypal" data-parsley-group="page-2" data-parsley-multiple="payment-type" data-parsley-errors-container="#payment-type-error-msg" data-parsley-required/>
-                      <label htmlFor="payment-paypal">
-                        <div className="row payment-logos paypal-logo">
-                          <p>&nbsp;</p>
-                        </div>
-                        <div className="row medium-label-size">PayPal</div>
-                      </label>
-                    </div>
+                    <PaypalButton />
+                    <CreditCardButton />
                   </div>
                   {/* Credit Card Info */}
                   <div className="cc-additional-info credit-card-section">

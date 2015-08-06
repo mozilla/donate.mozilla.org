@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router';
-import pages from '../scripts/pages.js';
+import pages from '../data/pages.js';
 
 var routes = (
   <Route>

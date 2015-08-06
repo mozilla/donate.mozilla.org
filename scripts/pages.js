@@ -18,6 +18,11 @@ var pages = {
     name: "give-bitcoin",
     path: "/give-bitcoin/?",
     handler: require('../pages/give-bitcoin.jsx')
+  },
+  "/one-page": {
+    name: "one-page",
+    path: "/one-page/?",
+    handler: require('../pages/single-form.jsx')
   }
 };
 

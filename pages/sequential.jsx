@@ -5,7 +5,7 @@ import Link from '../components/link.jsx';
 import PaypalButton from '../components/paypal-button.jsx';
 import CreditCardButton from '../components/credit-card-button.jsx';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
-import CTA from '../components/CTA.jsx';
+import SectionHeading from '../components/section-heading.jsx';
 import Frequency from '../components/donation-frequency.jsx';
 
 var ga = require('react-ga');
@@ -592,7 +592,7 @@ var Sequential = React.createClass({
                 {/* = Amount Section ====================  */}
                 <fieldset id="page-1" className="sequence-page">
                   <div className="row">
-                    <CTA>{this.getIntlMessage("donate_now")}</CTA>
+                    <SectionHeading><h2>{this.getIntlMessage("donate_now")}</h2></SectionHeading>
                   </div>
                   <div className="row donation-amount-row hidden-visibility">
                     <div className="third">

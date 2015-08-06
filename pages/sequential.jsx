@@ -688,9 +688,9 @@ var Sequential = React.createClass({
                       <div className="half">
                         <div className="field-container">
                           <i className="fa fa-calendar-o field-icon"></i>
-                          <input aria-label={this.getIntlMessage('credit_card_expiration_month')} data-stripe="exp-month" type="tel" placeholder={this.getIntlMessage('MM')} pattern="\\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_month" autoComplete="off"/>
+                          <input aria-label={this.getIntlMessage('credit_card_expiration_month')} data-stripe="exp-month" type="tel" placeholder={this.getIntlMessage('MM')} pattern="\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_month" autoComplete="off"/>
                           &frasl;
-                          <input aria-label={this.getIntlMessage('credit_card_expiration_year')} type="tel" data-stripe="exp-year" placeholder={this.getIntlMessage('YY')} pattern="\\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_year" autoComplete="off"/>
+                          <input aria-label={this.getIntlMessage('credit_card_expiration_year')} type="tel" data-stripe="exp-year" placeholder={this.getIntlMessage('YY')} pattern="\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_year" autoComplete="off"/>
                         </div>
                       </div>
                       <div className="half">

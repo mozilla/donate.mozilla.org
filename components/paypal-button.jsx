@@ -1,8 +1,7 @@
 import React from 'react';
-import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
 
 var PaypalButton = React.createClass({
-  mixins: [IntlMixin],
+  mixins: require('react-intl').IntlMixin,
   render: function() {
     return (
       <div className="half">

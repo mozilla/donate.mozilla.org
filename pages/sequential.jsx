@@ -3,6 +3,8 @@ import Footer from '../components/footer.jsx';
 import Header from '../components/header.jsx';
 import Link from '../components/link.jsx';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import CTA from '../components/CTA.jsx';
+import Frequency from '../components/donation-frequency.jsx';
 
 var ga = require('react-ga');
 
@@ -588,10 +590,7 @@ var Sequential = React.createClass({
                 {/* = Amount Section ====================  */}
                 <fieldset id="page-1" className="sequence-page">
                   <div className="row">
-                    <div className="full">
-                      <h2>{this.getIntlMessage("donate_now")}</h2>
-                      <p className="currency-display"></p>
-                    </div>
+                    <CTA>{this.getIntlMessage("donate_now")}</CTA>
                   </div>
                   <div className="row donation-amount-row hidden-visibility">
                     <div className="third">
@@ -626,16 +625,7 @@ var Sequential = React.createClass({
                       <div id="amount-other-error-msg"></div>
                     </div>
                   </div>
-                  <div className="row" id="recurring-option-row">
-                    <div className="half">
-                      <input type="radio" name="recurring_acknowledge" value="0" defaultChecked="checked" id="one-time-payment" data-parsley-multiple="recurring_acknowledge" data-parsley-group="page-1" data-parsley-errors-container="#recurring-error-msg" data-parsley-required/>
-                      <label htmlFor="one-time-payment" className="medium-label-size">{this.getIntlMessage('one_time')}</label>
-                    </div>
-                    <div className="half">
-                      <input type="radio" name="recurring_acknowledge" value="1" id="monthly-payment" data-parsley-multiple="recurring_acknowledge" data-parsley-group="page-1"/>
-                      <label htmlFor="monthly-payment" className="medium-label-size">{this.getIntlMessage('monthly')}</label>
-                    </div>
-                  </div>
+                  <Frequency/>
                   <div className="row error-msg-row">
                     <div className="full">
                       <div id="recurring-error-msg"></div>

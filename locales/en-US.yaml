@@ -33,6 +33,7 @@ en-US:
   amount: Amount
   email: Email
   payment: Payment
+  choose_payment: Choose Payment
   country: Country
   none: None
   donation_min_error: Donations must be 2$ or more

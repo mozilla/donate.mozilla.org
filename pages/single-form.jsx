@@ -21,11 +21,11 @@ var SingleForm = React.createClass({
             <Frequency/>
             <div className="payment-section">
               <SectionHeading>
-                <h2>{this.getIntlMessage("payment")}</h2>
+                <h4>{this.getIntlMessage("choose_payment")}</h4>
                 <p id="secure-label"><i className="fa fa-lock"></i>{this.getIntlMessage('secure')}</p>
               </SectionHeading>
-              <PayPalButton/>
               <CreditCardButton/>
+              <PayPalButton/>
             </div>
           </div>
         <Footer/>

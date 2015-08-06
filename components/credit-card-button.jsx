@@ -1,7 +1,7 @@
 import React from 'react';
 
 var CreditCardButton = React.createClass({
-  mixins: require('react-intl').IntlMixin,
+  mixins: [require('react-intl').IntlMixin],
   render: function() {
     return (
       <div className="half">

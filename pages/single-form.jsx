@@ -2,6 +2,7 @@ import React from 'react';
 import Footer from '../components/footer.jsx';
 import Header from '../components/header.jsx';
 import SectionHeading from '../components/section-heading.jsx';
+import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
 import PayPalButton from '../components/paypal-button.jsx';
 import CreditCardButton from '../components/credit-card-button.jsx';
@@ -16,6 +17,7 @@ var SingleForm = React.createClass({
             <SectionHeading>
               <h2>{this.getIntlMessage("donate_now")}</h2>
             </SectionHeading>
+            <AmountButtons />
             <Frequency/>
             <div className="payment-section">
               <SectionHeading>

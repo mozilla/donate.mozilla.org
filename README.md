@@ -3,6 +3,13 @@
 # donate.mozilla.org
 Mozilla donation forms
 
+## Requirements
+
+[node](https://nodejs.org/) with [`Intl` support](https://github.com/joyent/node/wiki/Intl).  To test if you have `Intl` support:
+
+```
+$> node -e "require('Intl')"
+```
 
 ## Setup
 
@@ -194,7 +201,7 @@ See [URL best practices](#url-best-practices).
 * Tests are run against temporary test URLs
 ** These URLs are named in ways to identify the test function
 ** e.g. donate.mozilla.org/visual-background-de
-* If the test variation wins, we move the content of this temporary test URL into the core URL 
+* If the test variation wins, we move the content of this temporary test URL into the core URL
 
 ##### Starting the test
 
@@ -206,7 +213,7 @@ See [URL best practices](#url-best-practices).
 * If one of the test variations is the winner, make this page the default / control page for all visitors
 * Remove the temporary test URLs setup for this test
 * Traffic to temporary test URLs redirects to the core URLs
-** TBC: do we explicitly manage these redirects in code, or do we have a catch-all redirect for our 404 page? 
+** TBC: do we explicitly manage these redirects in code, or do we have a catch-all redirect for our 404 page?
 
 
 ## Tests
@@ -246,7 +253,3 @@ We need to convert these donation amounts into USD dollars. To do this, we perio
 Ideally, we keep these rates up to date, but this is not a business critial data source, so in case of downtime or problems fetching the data, we also store a reasonable snap-shot in `/public/exchangerates/rates-backup.json`.
 
 The build script for the website checks if we have a recent snapshot, and if not creates one. If you are working as a developer on the project, you will need to get an API key from https://openexchangerates.org/signup - the 'Free Forever' plan should be sufficient for development.
-
-
-
-

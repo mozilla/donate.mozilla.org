@@ -171,7 +171,7 @@ var Sequential = React.createClass({
     // ***********************************************
 
     function hidePage(page, status) {
-      $(page).addClass('page-hidden-' + status).prop('disabled', true);
+      $(page).addClass('page-hidden-' + status);
       var amount;
       if (page === "#page-1") {
         if (status === "complete") {
@@ -222,10 +222,6 @@ var Sequential = React.createClass({
     $theForm.on('click', '[data-button-type="next"]', function(e) {
       e.preventDefault();
       $('#one-line-error').hide();
-
-      /*if ($('input[name="donation_amount"]:checked').val() === 'other') {
-        $('input[name="donation_amount_other"]').attr('required', true);
-      }*/
 
       var
         $context = $(this),
@@ -312,7 +308,7 @@ var Sequential = React.createClass({
         $('#page-1').add('#page-2').removeClass('hidden').attr('disabled', false);
 
         function hidePages() {
-          $('#page-1').add('#page-2').addClass('hidden').attr('disabled', true);
+          $('#page-1').add('#page-2').addClass('hidden');
         }
 
         $donateButton.prop('disabled', true).html('<i class="fa fa-cog fa-spin"/> Submitting…');

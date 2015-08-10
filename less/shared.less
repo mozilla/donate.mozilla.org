@@ -318,7 +318,7 @@ input[type="number"],
 input[type="tel"],
 select,
 input[type="email"],
-input[name="donation_amount_other"] {
+#amount-other-input {
   width: 100%;
   margin-bottom: 5px;
   border: 1px solid #EAEFF2;
@@ -348,7 +348,7 @@ input[type="text"],
 input[type="number"],
 input[type="email"],
 input[type="tel"],
-input[name="donation_amount_other"] {
+#amount-other-input {
   padding: 7px 30px 7px 33px;
 }
 
@@ -357,7 +357,7 @@ select:focus,
 input[type="number"]:focus,
 input[type="email"]:focus,
 input[type="tel"]:focus,
-input[name="donation_amount_other"]:focus {
+#amount-other-input:focus {
   border-color: #38A9ED;
 }
 
@@ -407,7 +407,7 @@ input#amount-other + label {
 }
 
 input#amount-other + label + input[type="number"],
-input#amount-other + label + input[name="donation_amount_other"] {
+input#amount-other + label + #amount-other-input {
   position: absolute;
   top: 2px;
   left: 35px;
@@ -749,7 +749,7 @@ select.parsley-error:focus {
     padding: 10px;
   }
   input#amount-other + label + input[type="number"],
-  input#amount-other + label + input[name="donation_amount_other"] {
+  input#amount-other + label + #amount-other-input {
     width: 76%;
   }
 }
@@ -791,14 +791,7 @@ select.parsley-error:focus {
   color: #939597;
 }
 
-#donation-form-sequential {
-  position: relative;
-  height: 445px;
-  width: 100%;
-  transition: height 400ms;
-}
-
-#donation-form-sequential {
+#donation-form {
 
   #one-line-error {
     display: none;
@@ -814,13 +807,9 @@ select.parsley-error:focus {
       }
     }
   }
-  #one-line-error {
-    position: absolute;
-    bottom: 0;
-  }
 }
 
-#donation-form-sequential h2 {
+#donation-form h2 {
   margin-bottom: 35px;
 }
 
@@ -829,6 +818,7 @@ ol.progress {
   list-style: none;
   padding-left: 0;
   text-align: center;
+  height: 100px;
 }
 
 ol.progress li {

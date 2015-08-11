@@ -1,0 +1,174 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+
+  "Description": "AWS resources for donate.mozilla.org",
+
+  "Parameters": {
+    "CloudfrontAliases": {
+      "Type": "CommaDelimitedList",
+      "Description": "DNS aliases for the Cloudfront distribution"
+    },
+    "ApplicationURL": {
+      "Type": "String",
+      "Description": "Hostname of the application server. Don't add the protocol here"
+    },
+    "IAMCertificateId": {
+      "Type": "String",
+      "Description": "Custom SSL certificate to use with Cloudfront distribution. Required if you're setting CloudfrontAliases"
+    },
+    "LogBucketName": {
+      "Type": "String",
+      "Description": "S3 bucket to deliver access logs to"
+    }
+  },
+
+  "Mappings": {
+    "S3RegionMap": {
+      "ap-northeast-1": {
+        "endpoint": "s3-ap-northeast-1.amazonaws.com"
+      },
+      "ap-southeast-1": {
+        "endpoint": "s3-ap-southeast-1.amazonaws.com"
+      },
+      "ap-southeast-2": {
+        "endpoint": "s3-ap-southeast-2.amazonaws.com"
+      },
+      "eu-central-1": {
+        "endpoint": "s3-eu-central-1.amazonaws.com"
+      },
+      "eu-west-1": {
+        "endpoint": "s3-eu-west-1.amazonaws.com"
+      },
+      "sa-east-1": {
+        "endpoint": "s3-sa-east-1.amazonaws.com"
+      },
+      "us-east-1": {
+        "endpoint": "s3.amazonaws.com"
+      },
+      "us-west-1": {
+        "endpoint": "s3-us-west-1.amazonaws.com"
+      },
+      "us-west-2": {
+        "endpoint": "s3-us-west-2.amazonaws.com"
+      }
+    }
+  },
+
+  "Conditions": {
+    "UseCloudfrontAliases": {
+      "Fn::Not": [{"Fn::Equals": [{"Fn::Join": ["", {"Ref": "CloudfrontAliases"}]}, ""]}]
+    },
+    "UseCustomSSLCertificate": {
+      "Fn::Not": [{"Fn::Equals": [{"Ref": "IAMCertificateId"}, ""]}]
+    }
+  },
+
+  "Resources": {
+    "Cloudfront": {
+      "Type": "AWS::CloudFront::Distribution",
+      "Properties": {
+        "DistributionConfig": {
+          "Aliases": {
+            "Fn::If": [
+              "UseCloudfrontAliases",
+              {"Ref": "CloudfrontAliases"},
+              {"Ref": "AWS::NoValue"}
+            ]
+          },
+          "CacheBehaviors": [
+            {
+              "AllowedMethods": ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"],
+              "ForwardedValues": {
+                "Cookies": {
+                  "Forward": "none"
+                },
+                "Headers": [],
+                "QueryString": false
+              },
+              "PathPattern": "/api/*",
+              "TargetOriginId": "appserver",
+              "ViewerProtocolPolicy": "redirect-to-https"
+            }
+          ],
+          "DefaultCacheBehavior": {
+            "AllowedMethods": ["GET", "HEAD"],
+            "ForwardedValues": {
+              "Cookies": {
+                "Forward": "none"
+              },
+              "Headers": [],
+              "QueryString": false
+            },
+            "TargetOriginId": "appserver",
+            "ViewerProtocolPolicy": "redirect-to-https"
+          },
+          "DefaultRootObject": "index.html",
+          "Enabled": true,
+          "Logging": {
+            "IncludeCookies": "false",
+            "Bucket": {
+              "Fn::Join": ["", [
+                {"Ref": "LogBucketName"},
+                ".",
+                {"Fn::FindInMap": ["S3RegionMap", {"Ref": "AWS::Region"}, "endpoint"]}
+              ]]
+            },
+            "Prefix": {
+              "Fn::Join": ["", [{"Ref": "AWS::StackName"}, "/cf/"]]
+            }
+          },
+          "Origins": [
+            {
+              "CustomOriginConfig": {
+                "OriginProtocolPolicy": "match-viewer"
+              },
+              "DomainName": {
+                "Ref": "ApplicationURL"
+              },
+              "Id": "appserver"
+            }
+          ],
+          "ViewerCertificate": {
+            "CloudFrontDefaultCertificate": {
+              "Fn::If": [
+                "UseCustomSSLCertificate",
+                {"Ref": "AWS::NoValue"},
+                true
+              ]
+            },
+            "IamCertificateId": {
+              "Fn::If": [
+                "UseCustomSSLCertificate",
+                {"Ref": "IAMCertificateId"},
+                {"Ref": "AWS::NoValue"}
+              ]
+            },
+            "MinimumProtocolVersion": {
+              "Fn::If": [
+                "UseCustomSSLCertificate",
+                "TLSv1",
+                {"Ref": "AWS::NoValue"}
+              ]
+            },
+            "SslSupportMethod": {
+              "Fn::If": [
+                "UseCustomSSLCertificate",
+                "sni-only",
+                {"Ref": "AWS::NoValue"}
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "Outputs": {
+    "CloudfrontURL": {
+      "Value": {
+        "Fn::GetAtt": [ "Cloudfront", "DomainName" ]
+      },
+      "Description": "URL for Cloudfront distribution"
+    }
+  }
+}

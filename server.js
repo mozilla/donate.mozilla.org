@@ -31,7 +31,7 @@ server.route([
      }
   }, {
     method: 'POST',
-    path: '/stripe',
+    path: '/api/stripe',
     handler: function(request, reply) {
       // obtain StripeToken
       var transaction = request.payload || {};
@@ -86,7 +86,7 @@ server.route([
     }
   }, {
     method: 'POST',
-    path: '/signup',
+    path: '/api/signup',
     handler: function(request, reply) {
       var transaction = request.payload || {};
       httpRequest({
@@ -102,7 +102,7 @@ server.route([
     }
   }, {
     method: 'GET',
-    path: '/paypal-one-time-redirect',
+    path: '/api/paypal-one-time-redirect',
     handler: function(request, reply) {
       httpRequest({
         url:'https://api-3t.sandbox.paypal.com/nvp',
@@ -145,7 +145,7 @@ server.route([
     }
   }, {
     method: 'GET',
-    path: '/paypal-recurring-redirect',
+    path: '/api/paypal-recurring-redirect',
     handler: function(request, reply) {
       httpRequest({
         url:'https://api-3t.sandbox.paypal.com/nvp',
@@ -196,7 +196,7 @@ server.route([
     }
   }, {
     method: 'POST',
-    path: '/paypal-one-time',
+    path: '/api/paypal-one-time',
     handler: function(request, reply) {
       var transaction = request.payload || {};
       httpRequest({
@@ -216,7 +216,7 @@ server.route([
           NOSHIPPING: "1",
           ALLOWNOTE: "0",
           cancelUrl: request.headers.referer,
-          returnUrl: request.headers.referer + "paypal-one-time-redirect"
+          returnUrl: request.headers.referer + "api/paypal-one-time-redirect"
         }
       }, function(err, httpResponse, body) {
         if (err) {
@@ -228,7 +228,7 @@ server.route([
     }
   }, {
     method: 'POST',
-    path: '/paypal-recurring',
+    path: '/api/paypal-recurring',
     handler: function(request, reply) {
       var transaction = request.payload || {};
       httpRequest({
@@ -250,7 +250,7 @@ server.route([
           NOSHIPPING: "1",
           ALLOWNOTE: "0",
           cancelUrl: request.headers.referer,
-          returnUrl: request.headers.referer + "paypal-recurring-redirect"
+          returnUrl: request.headers.referer + "api/paypal-recurring-redirect"
         }
       }, function(err, httpResponse, body) {
         if (err) {

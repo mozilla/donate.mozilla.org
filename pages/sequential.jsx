@@ -443,7 +443,7 @@ var Sequential = React.createClass({
                 state: formData.state_cd
               }
             };
-            var submitDonation = $.ajax('/stripe', {
+            var submitDonation = $.ajax('/api/stripe', {
               type: 'POST',
               data: transaction,
               statusCode: {
@@ -493,7 +493,7 @@ var Sequential = React.createClass({
           <Header/>
           <div>
             <div className="form-wrapper container">
-              <form id="donation-form-sequential" action="/stripe" method="post" data-parsley-excluded="input[type=button], input[type=submit], input[type=reset], input[type=hidden], [disabled]">
+              <form id="donation-form-sequential" action="/api/stripe" method="post" data-parsley-excluded="input[type=button], input[type=submit], input[type=reset], input[type=hidden], [disabled]">
                 <ol className="progress">
                   <li data-position="#page-1" className="active">
                     <div>{this.getIntlMessage('amount')}</div>
@@ -1195,13 +1195,13 @@ var Sequential = React.createClass({
               </p>
             </div>
           </div>
-          <form action="/paypal-one-time" method="post" target="_top" id="paypal-one-time">
+          <form action="/api/paypal-one-time" method="post" target="_top" id="paypal-one-time">
             <input type="hidden" name="lc" value="US"/>
             <input type="hidden" name="currency_code" value="USD"/>
             {/* Donation Amount */}
             <input type="hidden" name="amount" value="3"/>
           </form>
-          <form action="/paypal-recurring" method="post" id="paypal-recurring">
+          <form action="/api/paypal-recurring" method="post" id="paypal-recurring">
             <input type="hidden" name="lc" value="US"/>
             <input type="hidden" name="custom" value="20140923 eoy14 sequential"/>
             <input type="hidden" name="currency_code" value="USD"/>

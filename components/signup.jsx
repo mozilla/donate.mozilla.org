@@ -45,7 +45,7 @@ var Form = React.createClass({
 
           <div className="wrap">
             <div className="row">
-              <form id="signup" action="/signup" method="post">
+              <form id="signup" action="/api/signup" method="post">
                 <div className="input">
                   <input data-parsley-required className="text" size="48" id="email" name="email" type="email" placeholder="youremail@example.com">
                     <i className="fa fa-envelope field-icon"></i>

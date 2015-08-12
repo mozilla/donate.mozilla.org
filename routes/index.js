@@ -6,7 +6,7 @@ var routes = {
   "signup": function(request, reply) {
     var transaction = request.payload || {};
     httpRequest({
-      url: 'http://donate-mozilla.herokuapp.com/thank-you/',
+      url: 'https://sendto.mozilla.org/page/signup/EOYFR2014-donor',
       method: "POST",
       form: transaction
     }, function(err, httpResponse, body) {

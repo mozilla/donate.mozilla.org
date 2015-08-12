@@ -1,4 +1,4 @@
-import assign from 'react/lib/Object.assign';
+var assign = require('react/lib/Object.assign');
 
 function getMessages(req) {
   var messages = {};

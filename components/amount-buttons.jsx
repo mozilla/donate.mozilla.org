@@ -24,7 +24,7 @@ var AmountButtons = React.createClass({
     function updateAmountOptions(presetNum) {
       if (presetNum && AMOUNT_PRESET[presetNum]) {
         $("input[name='donation_amount']").each(function(idx) {
-          if ($(this).attr("id") == "amount-other") {
+          if ($(this).attr("id") === "amount-other") {
             return;
           }
           var selectedPreset = AMOUNT_PRESET[presetNum];

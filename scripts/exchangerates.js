@@ -36,7 +36,7 @@ function log (s) {
  */
 function checkForLatestLocalCopy (callback) {
   try {
-    latest = fs.readFileSync(pathForLatestRates, 'utf-8' );
+    var latest = fs.readFileSync(pathForLatestRates, 'utf-8' );
     latest = JSON.parse( latest );
 
     return callback(null, latest);

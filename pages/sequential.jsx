@@ -68,6 +68,7 @@ var Sequential = React.createClass({
     }
 
     function showCreditCardForm() {
+      $('.not-required-paypal').attr('required', true).attr('data-parsley-required', "true");
       $(".cc-additional-info").slideDown(100);
       $(".stripe-notice").show();
       win.setTimeout(function() {
@@ -80,18 +81,6 @@ var Sequential = React.createClass({
     }
 
     $("#payment-cc").change(showCreditCardForm);
-    $("#payment-paypal").change(function() {
-      // reset
-      $(".cc-additional-info").hide();
-      calculateHeight();
-      $("#one-line-error").hide();
-      if ($('[name="recurring_acknowledge"]:checked').val() === '0') {
-        $('#paypal-one-time').submit();
-      } else {
-        $('#paypal-recurring').submit();
-      }
-    });
-
     $(win).on('resize', calculateHeight);
 
     $("i.hint").click(function() {
@@ -160,9 +149,6 @@ var Sequential = React.createClass({
     // ***********************************************
     var updateDonateButtonText = function(amountSelected) {
       var buttonText;
-      if (amountSelected === "other") {
-        amountSelected = $theForm.find("[name='donation_amount_other']").val();
-      }
       var locale = "US";
       if (amountSelected && locale === "US") {
         buttonText = "Donate $" + amountSelected + " now";
@@ -170,32 +156,14 @@ var Sequential = React.createClass({
         buttonText = this.getIntlMessage("donate_now");
       }
       $("#donate-btn").text(buttonText);
-      $('#paypal-one-time').find('[name="amount"]').attr('value', amountSelected);
-      $('#paypal-recurring').find('[name="amount"]').attr('value', amountSelected);
     };
 
     $theForm.find("[name='donation_amount']").change(function() {
       updateDonateButtonText($(this).val());
     });
-    $theForm.find("[name='donation_amount']").change(function(e) {
-      if ($(this).val() !== 'other') {
-        $('input[name="donation_amount_other"]').attr('required', false).attr('data-parsley-required', "false");
-      }
-    });
 
-    $theForm.find("[name='donation_amount_other']").keyup(function() {
-      updateDonateButtonText($(this).val());
-    });
-    $theForm.find("[name='donation_amount']").change(function() {
-      $theForm.find("[name='donation_amount_other']").val("");
-    });
-    $theForm.find("[name='donation_amount_other']").keydown(function(event) {
-      var functionKeys = [8, 9, 13, 27, 37, 39, 46, 110, 190]; // backspace, tab, enter, escape, left arrow, right arrow, delete, decimal point, period
-      var numberKeys = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105]; // numbers
-      var allowed = functionKeys.concat(numberKeys);
-      if (allowed.indexOf(event.keyCode) === -1) {
-        event.preventDefault();
-      }
+    $theForm.find("#amount-other-input").keyup(function() {
+      updateDonateButtonText($theForm.find("[name='donation_amount']:checked").val());
     });
 
     // ***********************************************
@@ -203,11 +171,11 @@ var Sequential = React.createClass({
     // ***********************************************
 
     function hidePage(page, status) {
-      $(page).addClass('page-hidden-' + status).prop('disabled', true);
+      $(page).addClass('page-hidden-' + status);
       var amount;
       if (page === "#page-1") {
         if (status === "complete") {
-          amount = "$" + $('#paypal-one-time').find('[name="amount"]').attr('value');
+          amount = "$" + $theForm.find("[name='donation_amount']:checked").val();
           $("[data-position='#page-1'] .page-breadcrumb").text(amount);
         } else {
           $("[data-position='#page-1'] .page-breadcrumb").text("");
@@ -254,10 +222,6 @@ var Sequential = React.createClass({
     $theForm.on('click', '[data-button-type="next"]', function(e) {
       e.preventDefault();
       $('#one-line-error').hide();
-
-      if ($('input[name="donation_amount"]:checked').val() === 'other') {
-        $('input[name="donation_amount_other"]').attr('required', true);
-      }
 
       var
         $context = $(this),
@@ -324,6 +288,9 @@ var Sequential = React.createClass({
 
 
     $theForm.parsley().subscribe('parsley:form:validated', function(formInstance) {
+      if ($("#payment-type-row input:checked").val() === "paypal") {
+        return;
+      }
       $('#one-line-error').hide();
       calculateHeight();
       if (formInstance.submitEvent !== undefined) {
@@ -341,24 +308,10 @@ var Sequential = React.createClass({
         $('#page-1').add('#page-2').removeClass('hidden').attr('disabled', false);
 
         function hidePages() {
-          $('#page-1').add('#page-2').addClass('hidden').attr('disabled', true);
+          $('#page-1').add('#page-2').addClass('hidden');
         }
 
         $donateButton.prop('disabled', true).html('<i class="fa fa-cog fa-spin"/> Submitting…');
-
-        function prepDonationAmount() {
-          // Set donation amount hidden inputs so all APIs are happy
-          var selected;
-          if ($('input[name="donation_amount_other"]').val() !== '') {
-            selected = $('input[name="donation_amount_other"]').val();
-          } else {
-            selected = $('input[name="donation_amount"]:checked').val()
-          }
-          $('input[name="amount_other"]').attr('value', selected);
-        }
-
-        prepDonationAmount();
-
 
         function findCCType(ccNum) {
           if (ccNum.match(regVisa)) {
@@ -371,8 +324,6 @@ var Sequential = React.createClass({
             return null;
           }
         }
-
-        $('input[name="cc_type_cd"]').attr('value', findCCType($('input[name="cc_number"]').val()));
 
         function submission400s(XHR, textStatus, error) {
           switch (XHR.responseJSON.code) {
@@ -429,8 +380,13 @@ var Sequential = React.createClass({
             var formData = {};
             $theForm.serializeArray().map(function(x){formData[x.name] = x.value;});
             var transaction = {
+<<<<<<< HEAD
               stripeToken: response.id,
               amount: formData.amount_other,
+=======
+              stripeToken: response['id'],
+              amount: formData.donation_amount,
+>>>>>>> 2a8c8dd... boil down form
               email: formData.email,
               recurring_acknowledge: formData.recurring_acknowledge,
               metadata: {
@@ -544,7 +500,7 @@ var Sequential = React.createClass({
                   <div className="full">
                     <div className="field-container">
                       <i className="fa fa-credit-card field-icon"></i>
-                      <input type="tel" name="cc_number" data-stripe="number" placeholder={this.getIntlMessage('credit_card_number')} maxLength="16" data-parsley-group="page-2" autoComplete="off" data-parsley-visa-mc-card-num="" data-parsley-required/>
+                      <input type="tel" className="not-required-paypal" name="cc_number" data-stripe="number" placeholder={this.getIntlMessage('credit_card_number')} maxLength="16" data-parsley-group="page-2" autoComplete="off" data-parsley-visa-mc-card-num="" data-parsley-required/>
                     </div>
                   </div>
                 </div>
@@ -552,15 +508,15 @@ var Sequential = React.createClass({
                   <div className="half">
                     <div className="field-container">
                       <i className="fa fa-calendar-o field-icon"></i>
-                      <input aria-label={this.getIntlMessage('credit_card_expiration_month')} data-stripe="exp-month" type="tel" placeholder={this.getIntlMessage('MM')} pattern="\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_month" autoComplete="off"/>
+                      <input className="not-required-paypal" aria-label={this.getIntlMessage('credit_card_expiration_month')} data-stripe="exp-month" type="tel" placeholder={this.getIntlMessage('MM')} pattern="\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_month" autoComplete="off"/>
                       &frasl;
-                      <input aria-label={this.getIntlMessage('credit_card_expiration_year')} type="tel" data-stripe="exp-year" placeholder={this.getIntlMessage('YY')} pattern="\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_year" autoComplete="off"/>
+                      <input className="not-required-paypal" aria-label={this.getIntlMessage('credit_card_expiration_year')} type="tel" data-stripe="exp-year" placeholder={this.getIntlMessage('YY')} pattern="\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_year" autoComplete="off"/>
                     </div>
                   </div>
                   <div className="half">
                     <div className="field-container">
                       <i className="fa fa-lock field-icon"></i>
-                      <input type="tel" name="cc_cvv" maxLength="4" data-stripe="cvc" placeholder={this.getIntlMessage('CVC')} data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required autoComplete="off"/><i className="fa fa-question-circle hint"></i>
+                      <input className="not-required-paypal" type="tel" name="cc_cvv" maxLength="4" data-stripe="cvc" placeholder={this.getIntlMessage('CVC')} data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required autoComplete="off"/><i className="fa fa-question-circle hint"></i>
                     </div>
                   </div>
                   <div className="full">
@@ -595,12 +551,12 @@ var Sequential = React.createClass({
                   <div className="half">
                     <div className="field-container">
                       <i className="fa fa-user field-icon"></i>
-                      <input type="text" autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" name="firstname" placeholder={this.getIntlMessage('first_name')} data-parsley-group="page-3" data-parsley-required/>
+                      <input className="not-required-paypal" type="text" autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" name="firstname" placeholder={this.getIntlMessage('first_name')} data-parsley-group="page-3" data-parsley-required/>
                     </div>
                   </div>
                   <div className="half">
                     <div className="field-container">
-                      <input type="text" autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" name="lastname" placeholder={this.getIntlMessage('last_name')} data-parsley-group="page-3" className="less-indented" data-parsley-required/>
+                      <input className="not-required-paypal less-indented" type="text" autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" name="lastname" placeholder={this.getIntlMessage('last_name')} data-parsley-group="page-3" data-parsley-required/>
                     </div>
                   </div>
                 </div>
@@ -611,7 +567,7 @@ var Sequential = React.createClass({
                     <div className="full">
                       <div className="field-container">
                         <i className="fa fa-map-marker field-icon"></i>
-                        <select onChange={this.onCountryChange} name="country" data-parsley-group="page-3" value={this.state.country} data-parsley-required >
+                        <select onChange={this.onCountryChange} name="country" data-parsley-group="page-3" value={this.state.country} data-parsley-required className="not-required-paypal">
                           <option value=""></option>
                           <option value="AF">Afghanistan</option>
                           <option value="AL">Albania</option>
@@ -848,20 +804,20 @@ var Sequential = React.createClass({
                   </div>
                   <div className="row">
                     <div className="full">
-                      <input type="text" name="addr1" placeholder={this.getIntlMessage('address')} data-parsley-group="page-3" data-parsley-required/>
+                      <input className="not-required-paypal" type="text" name="addr1" placeholder={this.getIntlMessage('address')} data-parsley-group="page-3" data-parsley-required/>
                     </div>
                   </div>
                   <div className="row">
                     <div className="half">
-                      <input type="text" name="city" placeholder={this.getIntlMessage('city')} data-parsley-group="page-3" data-parsley-required/>
+                      <input className="not-required-paypal" type="text" name="city" placeholder={this.getIntlMessage('city')} data-parsley-group="page-3" data-parsley-required/>
                     </div>
                     <div className="half">
-                      <input type="text" name="zip" placeholder={this.getIntlMessage('postal_code')} className="less-indented" data-parsley-group="page-3" data-parsley-required/>
+                      <input className="not-required-paypal less-indented" type="text" name="zip" placeholder={this.getIntlMessage('postal_code')} data-parsley-group="page-3" data-parsley-required/>
                     </div>
                   </div>
                   <div className="row">
                     <div className="full">
-                      <select onChange={this.onProvinceChange} id="wsstate_cd" value={this.state.province} name="state_cd" autoComplete="billing region" className="">
+                      <select className="not-required-paypal" onChange={this.onProvinceChange} id="wsstate_cd" value={this.state.province} name="state_cd" autoComplete="billing region">
                         <option value="">{this.getIntlMessage('state_province')}</option>
                       </select>
                       <select className="states-select" data-country="none">
@@ -1120,7 +1076,7 @@ var Sequential = React.createClass({
                     <div className="full">
                       <div className="field-container">
                         <i className="fa fa-envelope field-icon"></i>
-                        <input type="email" name="email" placeholder={this.getIntlMessage('email')} data-parsley-group="page-3" data-parsley-required/><i className="fa fa-question-circle hint"></i>
+                        <input className="not-required-paypal" type="email" name="email" placeholder={this.getIntlMessage('email')} data-parsley-group="page-3" data-parsley-required/><i className="fa fa-question-circle hint"></i>
                         <div className="hint-msg small">
                           <FormattedHTMLMessage message={ this.getIntlMessage("email_info") } />
                         </div>
@@ -1135,7 +1091,7 @@ var Sequential = React.createClass({
               <div id="privacy-policy">
                 <div className="row cc-additional-info">
                   <div className="full">
-                    <input type="checkbox" name="legal_confirm" id="legalConfirm" data-parsley-group="page-3" data-parsley-errors-container="#privacy-error-msg" data-parsley-error-message={this.getIntlMessage('pp_acknowledge')} data-parsley-required/><label htmlFor="legalConfirm">
+                    <input className="not-required-paypal" type="checkbox" name="legal_confirm" id="legalConfirm" data-parsley-group="page-3" data-parsley-errors-container="#privacy-error-msg" data-parsley-error-message={this.getIntlMessage('pp_acknowledge')} data-parsley-required/><label htmlFor="legalConfirm">
                     <FormattedHTMLMessage message={ this.getIntlMessage("privacy_policy") } />
                     </label>
                   </div>
@@ -1152,7 +1108,7 @@ var Sequential = React.createClass({
                 <div className="row">
                   <div className="full">
                     <button type="submit" className="btn large-label-size" id="donate-btn">
-                    {this.getIntlMessage("donate_now")}
+                      {this.getIntlMessage("donate_now")}
                     </button>
                   </div>
                 </div>
@@ -1169,10 +1125,6 @@ var Sequential = React.createClass({
           </div>
           {/* = One Line Error Message Ends ==========  */}
           {/* = Submit Button Ends ==========  */}
-          <input type="hidden" name="bp_load_counter" value="1"/>
-          <input type="hidden" name="cc_type_cd" value=""/>
-          <input type="hidden" name="amount" value="other"/>
-          <input type="hidden" name="amount_other" value=""/>
         </FormContainer>
         <div className="row disclaimers">
           <p className="other_ways_to_give">
@@ -1191,21 +1143,6 @@ var Sequential = React.createClass({
           <p className="stripe-notice">
             <small><FormattedHTMLMessage message={ this.getIntlMessage("stripe_notice") } /></small>
           </p>
-          <form action="/api/paypal-one-time" method="post" target="_top" id="paypal-one-time">
-            <input type="hidden" name="lc" value="US"/>
-            <input type="hidden" name="item_name" value={this.getIntlMessage("mozilla_donation")}/>
-            <input type="hidden" name="currency_code" value="USD"/>
-            {/* Donation Amount */}
-            <input type="hidden" name="amount" value="3"/>
-          </form>
-          <form action="/api/paypal-recurring" method="post" id="paypal-recurring">
-            <input type="hidden" name="lc" value="US"/>
-            <input type="hidden" name="item_name" value={this.getIntlMessage("mozilla_monthly_donation")}/>
-            <input type="hidden" name="custom" value="20140923 eoy14 sequential"/>
-            <input type="hidden" name="currency_code" value="USD"/>
-            {/* Donation Amount */}
-            <input type="hidden" name="amount" value="3"/>
-          </form>
         </div>
         <Footer/>
       </div>

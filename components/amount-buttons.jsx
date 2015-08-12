@@ -2,12 +2,18 @@ import React from 'react';
 
 var AmountButtons = React.createClass({
   mixins: [require('react-intl').IntlMixin],
+  getInitialState: function() {
+    return {
+      otherValue: "0"
+    };
+  },
   componentDidMount: function() {
     var win = window,
-      AMOUNT_SET_PARAM = "preset",
-      AMOUNT_PRESET = {
-        2: [100, 50, 25, 15]
-      };
+        amountButtons = this,
+        AMOUNT_SET_PARAM = "preset",
+        AMOUNT_PRESET = {
+          2: [100, 50, 25, 15]
+        };
 
     // extract query param from url
     // code modified from: http://www.sitepoint.com/url-parameters-jquery/
@@ -17,7 +23,7 @@ var AmountButtons = React.createClass({
       return results ? results[1] : null;
     };
 
-    $("input#amount-other + label + input[name='donation_amount_other']").focus(function() {
+    $("#amount-other-input").focus(function() {
       $(this).prevAll("input[type='radio']").click();
     });
 
@@ -45,6 +51,30 @@ var AmountButtons = React.createClass({
 
     updateAmountOptions($.urlParam(AMOUNT_SET_PARAM));
 
+    $("#amount-other-input")[0].addEventListener("input", function() {
+      var amount = $('#amount-other-input').val();
+      amountButtons.setState({
+        otherValue: amount
+      });
+    });
+
+    $("[name='donation_amount']").change(function(e) {
+      if ($(this).attr("id") === 'amount-other') {
+        $('#amount-other-input').attr('required', true).attr('data-parsley-required', "true");
+      } else {
+        $('#amount-other-input').attr('required', false).attr('data-parsley-required', "false");
+      }
+    });
+
+    $("#amount-other-input").keydown(function(event) {
+      var functionKeys = [8, 9, 13, 27, 37, 39, 46, 110, 190]; // backspace, tab, enter, escape, left arrow, right arrow, delete, decimal point, period
+      var numberKeys = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105]; // numbers
+      var allowed = functionKeys.concat(numberKeys);
+      if (allowed.indexOf(event.keyCode) === -1) {
+        event.preventDefault();
+      }
+    });
+
     // ***********************************************
     // Preselect dollar amount
     // ***********************************************
@@ -53,10 +83,9 @@ var AmountButtons = React.createClass({
       var amount = winLocationHash.match(amtRegex)[1];
       if ($(winLocationHash)[0]) {
         $(winLocationHash)[0].checked = true;
-        $('input[name="donation_amount_other"]').val("");
       } else {
         $("#amount-other")[0].checked = true;
-        $('input[name="donation_amount_other"]').val(amount);
+        $('#amount-other-input').val(amount);
       }
       history.replaceState({
         page: 1,
@@ -110,9 +139,9 @@ var AmountButtons = React.createClass({
           </div>
           <div className="two-third">
             <div id="amount-other-container">
-              <input type="radio" name="donation_amount" value="other" id="amount-other" data-parsley-multiple="donation_amount" data-parsley-group="page-1"/>
+              <input type="radio" name="donation_amount" value={this.state.otherValue} id="amount-other" data-parsley-multiple="donation_amount" data-parsley-group="page-1"/>
               <label htmlFor="amount-other" className="large-label-size">$</label>
-              <input name="donation_amount_other" placeholder={this.getIntlMessage('other_amount')} className="medium-label-size" data-parsley-multiple="donation_amount" data-parsley-group="page-1" data-parsley-errors-container="#amount-other-error-msg" data-parsley-type="number" data-parsley-check-amount data-parsley-min="2"/>
+              <input id="amount-other-input" placeholder={this.getIntlMessage('other_amount')} className="medium-label-size" data-parsley-multiple="donation_amount" data-parsley-group="page-1" data-parsley-errors-container="#amount-other-error-msg" data-parsley-type="number" data-parsley-check-amount data-parsley-min="2"/>
             </div>
           </div>
         </div>
@@ -122,3 +151,4 @@ var AmountButtons = React.createClass({
 });
 
 module.exports = AmountButtons;
+

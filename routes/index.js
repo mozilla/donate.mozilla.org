@@ -46,37 +46,37 @@ var routes = {
       });
     }
   },
-  "paypal-one-time": function(request, reply) {
+  "paypal": function(request, reply) {
     var transaction = request.payload || {};
-    paypal.setupSingle({
-      amount: transaction.amount,
-      currency: transaction.currency_code,
-      locale: transaction.lc,
-      item_name: transaction.item_name,
-      cancelUrl: request.headers.referer,
-      returnUrl: request.server.info.uri + "/api/paypal-one-time-redirect"
-    }, function(err, charge) {
-      if (err) {
-        return console.error('donation failed:', err);
-      }
-      reply.redirect("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + charge.TOKEN);
-    });
-  },
-  "paypal-recurring": function(request, reply) {
-    var transaction = request.payload || {};
-    paypal.setupRecurring({
-      amount: transaction.amount,
-      currency: transaction.currency_code,
-      locale: transaction.lc,
-      item_name: transaction.item_name,
-      cancelUrl: request.headers.referer,
-      returnUrl: request.server.info.uri + "/api/paypal-recurring-redirect"
-    }, function(err, subscription) {
-      if (err) {
-        return console.error('donation failed:', err);
-      }
-      reply.redirect("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + subscription.TOKEN);
-    });
+    if (transaction.recurring_acknowledge === '0') {
+      paypal.setupSingle({
+        amount: transaction.donation_amount,
+        currency: transaction.paypal_currency_code,
+        locale: transaction.paypal_locale_code,
+        item_name: transaction.item_name_single,
+        cancelUrl: request.headers.referer,
+        returnUrl: request.server.info.uri + "/api/paypal-one-time-redirect"
+      }, function(err, charge) {
+        if (err) {
+          return console.error('donation failed:', err);
+        }
+        reply.redirect("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + charge.TOKEN);
+      });
+    } else {
+      paypal.setupRecurring({
+        amount: transaction.donation_amount,
+        currency: transaction.paypal_currency_code,
+        locale: transaction.paypal_locale_code,
+        item_name: transaction.item_name_monthly,
+        cancelUrl: request.headers.referer,
+        returnUrl: request.server.info.uri + "/api/paypal-recurring-redirect"
+      }, function(err, subscription) {
+        if (err) {
+          return console.error('donation failed:', err);
+        }
+        reply.redirect("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + subscription.TOKEN);
+      });
+    }
   },
   "paypal-one-time-redirect": function(request, reply) {
     paypal.doSingle({

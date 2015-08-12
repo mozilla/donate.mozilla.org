@@ -1197,12 +1197,14 @@ var Sequential = React.createClass({
           </div>
           <form action="/api/paypal-one-time" method="post" target="_top" id="paypal-one-time">
             <input type="hidden" name="lc" value="US"/>
+            <input type="hidden" name="item_name" value={this.getIntlMessage("mozilla_donation")}/>
             <input type="hidden" name="currency_code" value="USD"/>
             {/* Donation Amount */}
             <input type="hidden" name="amount" value="3"/>
           </form>
           <form action="/api/paypal-recurring" method="post" id="paypal-recurring">
             <input type="hidden" name="lc" value="US"/>
+            <input type="hidden" name="item_name" value={this.getIntlMessage("mozilla_monthly_donation")}/>
             <input type="hidden" name="custom" value="20140923 eoy14 sequential"/>
             <input type="hidden" name="currency_code" value="USD"/>
             {/* Donation Amount */}

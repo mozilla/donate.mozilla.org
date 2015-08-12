@@ -58,3 +58,5 @@ en-US:
   continue: continue
   error_amount: Please select a value that is no less than {{ min_amount }}.
   donate_now_amount: Donate {{ currency_symbol }}{ amount } now
+  mozilla_donation: Mozilla Foundation Donation
+  mozilla_monthly_donation: Mozilla Foundation Monthly Donation

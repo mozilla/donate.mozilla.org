@@ -163,7 +163,7 @@ var simplePaypal = React.createClass({
           <input type="hidden" name="cmd" value="_donations"/>
           <input type="hidden" name="business" value="44ZHAVWJHTK2N"/>
           <input type="hidden" name="lc" value={this.props.paypalLocal}/>
-          <input type="hidden" name="item_name" value="Mozilla Foundation Donation"/>
+          <input type="hidden" name="item_name" value={this.getIntlMessage("mozilla_donation")}/>
           <input type="hidden" name="no_note" value="1"/>
           <input type="hidden" name="no_shipping" value="1"/>
           <input type="hidden" name="rm" value="1"/>
@@ -177,7 +177,7 @@ var simplePaypal = React.createClass({
           <input type="hidden" name="cmd" value="_xclick-subscriptions"/>
           <input type="hidden" name="business" value="44ZHAVWJHTK2N"/>
           <input type="hidden" name="lc" value={this.props.paypalLocal}/>
-          <input type="hidden" name="item_name" value="Mozilla Foundation Monthly Donation"/>
+          <input type="hidden" name="item_name" value={this.getIntlMessage("mozilla_monthly_donation")}/>
           <input type="hidden" name="no_note" value="1"/>
           <input type="hidden" name="no_shipping" value="2"/>
           <input type="hidden" name="return" value="//donate-mozilla.herokuapp.com/thank-you/"/>

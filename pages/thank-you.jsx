@@ -2,6 +2,7 @@ import React from 'react';
 import Footer from '../components/footer.jsx';
 import Header from '../components/header.jsx';
 import Signup from '../components/signup.jsx';
+import Social from '../components/social.jsx';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
 
 var ThankYou = React.createClass({
@@ -23,7 +24,7 @@ var ThankYou = React.createClass({
                 </h2>
               </div>
             </div>
-            {this.props.params && !this.props.params.locale ? <Signup/> : '' }
+            {this.props.params && !this.props.params.locale ? <Signup/> : <Social/> }
             <Footer/>
           </div>
         </div>

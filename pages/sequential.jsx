@@ -537,8 +537,8 @@ var Sequential = React.createClass({
                     </div>
                   </div>
                   <div className="row" id="payment-type-row">
-                    <PaypalButton />
                     <CreditCardButton />
+                    <PaypalButton />
                   </div>
                   {/* Credit Card Info */}
                   <div className="cc-additional-info credit-card-section">

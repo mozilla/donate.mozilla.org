@@ -55,6 +55,7 @@ en-US:
   other_amount_format_error: Please enter a number up to 2 decimal places.
   donate_today: Donate Today
   select_donation: Select your donation amount
+  share: Share
   continue: continue
   error_amount: Please select a value that is no less than {{ min_amount }}.
   donate_now_amount: Donate {{ currency_symbol }}{ amount } now

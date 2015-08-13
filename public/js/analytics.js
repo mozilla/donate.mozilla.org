@@ -1,4 +1,4 @@
-(function() {
+module.exports = function() {
   var queryString = decodeURIComponent(window.location.search);
   var tx = null; // transaction id
   var amt = null;
@@ -107,4 +107,4 @@
     //submit transaction to the Analytics servers
     ga('ecommerce:send');
   }
-})();
+};

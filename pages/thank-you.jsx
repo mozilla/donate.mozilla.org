@@ -4,9 +4,13 @@ import Header from '../components/header.jsx';
 import Signup from '../components/signup.jsx';
 import Social from '../components/social.jsx';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import analytics from '../public/js/analytics.js';
 
 var ThankYou = React.createClass({
   mixins: [IntlMixin],
+  componentDidMount: function() {
+    analytics();
+  },
   render: function() {
     return (
       <div>

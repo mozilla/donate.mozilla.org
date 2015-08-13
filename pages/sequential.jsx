@@ -54,7 +54,7 @@ var Sequential = React.createClass({
       var currentPage = $(".progress li.active").data("position").replace("#page-", "");
       if (dotSelected < currentPage) {
         window.history.go(dotSelected - currentPage);
-        if (dotSelected - currentPage == -2) {
+        if (dotSelected - currentPage === -2) {
           hidePage('#page-3', 'incomplete');
         }
       }
@@ -160,7 +160,7 @@ var Sequential = React.createClass({
     // ***********************************************
     var updateDonateButtonText = function(amountSelected) {
       var buttonText;
-      if (amountSelected == "other") {
+      if (amountSelected === "other") {
         amountSelected = $theForm.find("[name='donation_amount_other']").val();
       }
       var locale = "US";
@@ -426,11 +426,10 @@ var Sequential = React.createClass({
             // handle all error cases?
             console.log(response.error);
           } else {
-            var token = response['id'];
             var formData = {};
             $theForm.serializeArray().map(function(x){formData[x.name] = x.value;});
             var transaction = {
-              stripeToken: response['id'],
+              stripeToken: response.id,
               amount: formData.amount_other,
               email: formData.email,
               recurring_acknowledge: formData.recurring_acknowledge,

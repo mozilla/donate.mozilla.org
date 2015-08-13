@@ -33,8 +33,8 @@ module.exports = {
     new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
       Router.run(routes, outputPath, function (Handler, state) {
         var values = {};
-        var Index = React.createFactory(require('./pages/index.jsx'));
-        var Page = React.createFactory(Handler);
+        var index = React.createFactory(require('./pages/index.jsx'));
+        var page = React.createFactory(Handler);
         if (currencies[state.params.currency]) {
           values = currencies[state.params.currency];
         }
@@ -46,8 +46,8 @@ module.exports = {
         } else {
           values = Object.assign({locales : ['en-US'], messages: englishStrings}, values);
         }
-        callback(React.renderToStaticMarkup(Index({
-          markup: React.renderToStaticMarkup(Page(values))
+        callback(React.renderToStaticMarkup(index({
+          markup: React.renderToStaticMarkup(page(values))
         })));
       });
     })

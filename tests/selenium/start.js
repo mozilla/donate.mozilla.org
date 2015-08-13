@@ -1,8 +1,7 @@
 var server = require('../../server');
 server.start(function() {
   var webdriver = require('selenium-webdriver'),
-      By = require('selenium-webdriver').By,
-      until = webdriver.until;
+      By = require('selenium-webdriver').By;
 
   var driver = new webdriver.Builder().
      withCapabilities(webdriver.Capabilities.firefox()).

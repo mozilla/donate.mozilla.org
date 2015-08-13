@@ -24,11 +24,11 @@ server.route([
   }, {
     method: 'POST',
     path: '/api/signup',
-    handler: routes['signup']
+    handler: routes.signup
   }, {
     method: 'POST',
     path: '/api/stripe',
-    handler: routes['stripe']
+    handler: routes.stripe
   }, {
     method: 'POST',
     path: '/api/paypal-one-time',

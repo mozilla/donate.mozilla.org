@@ -15,10 +15,11 @@
     "watch:js": "webpack -w -h",
     "watch:css": "mkdirp public/css && autoless less public/css --autoprefix '> 1%, last 2 versions'  --source-map",
     "server": "node start.js",
-    "test": "npm-run-all --parallel test:server test:depcheck",
+    "test": "npm-run-all --parallel test:server test:depcheck test:lint",
     "test:server": "node tests/start.js",
     "test:selenium": "node tests/selenium/start.js",
-    "test:depcheck": "dependency-check ./package.json"
+    "test:depcheck": "dependency-check ./package.json",
+    "test:lint": "jsxhint --babel --config .jshintrc '**/*.js*' '!node_modules/**/*' '!public/**/*'"
   },
   "repository": {
     "type": "git",
@@ -59,5 +60,9 @@
     "stripe": "2.4.0",
     "webpack": "^1.9.10",
     "yaml-intl-xml-json-converter": "0.0.7"
+  },
+  "devDependencies": {
+    "jsxhint": "^0.15.1",
+    "mofo-style": "^1.0.1"
   }
 }

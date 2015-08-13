@@ -20,6 +20,12 @@ var Sequential = React.createClass({
       province: ""
     };
   },
+  calculateHeight: function() {
+    if (!window.location.hash) {
+      return;
+    }
+    $('.sequence-page-container').height($(window.location.hash).height());
+  },
   onCountryChange: function(event) {
     this.setState({
       country: event.target.value
@@ -60,21 +66,16 @@ var Sequential = React.createClass({
       }
     });
 
-    function calculateHeight() {
-      if (!win.location.hash) {
-        return;
-      }
-      $('.sequence-page-container').height($(win.location.hash).height());
-    }
+    var calculateHeight = this.calculateHeight;
 
     function showCreditCardForm() {
       $('.not-required-paypal').attr('required', true).attr('data-parsley-required', "true");
-      $(".cc-additional-info").slideDown(100);
+      $(".cc-additional-info").show();
+      calculateHeight();
       $(".stripe-notice").show();
       win.setTimeout(function() {
-        calculateHeight();
         $('[name="cc_number"]').focus();
-      }, 100);
+      }, 500);
       if ($(".parsley-error").length > 0) {
         $("#one-line-error").show();
       }
@@ -104,7 +105,7 @@ var Sequential = React.createClass({
       if (optgroup.length) {
         stateDropdown.val("");
         stateDropdown.append(optgroup.clone());
-        stateDropdown.prop("required", true);
+        stateDropdown.prop("required", true).attr('data-parsley-required', "true");
         stateDropdown.show();
       } else {
         var noneoptions = $("select[data-country='none'] option");
@@ -112,7 +113,7 @@ var Sequential = React.createClass({
         stateDropdown.append(clonedOptions);
         stateDropdown.find("option:selected").removeAttr("selected");
         clonedOptions.prop("selected", true);
-        stateDropdown.prop("required", false);
+        stateDropdown.prop("required", false).attr('data-parsley-required', "false");
         stateDropdown.hide();
       }
     }
@@ -313,18 +314,6 @@ var Sequential = React.createClass({
 
         $donateButton.prop('disabled', true).html('<i class="fa fa-cog fa-spin"/> Submitting…');
 
-        function findCCType(ccNum) {
-          if (ccNum.match(regVisa)) {
-            return 'vs';
-          } else if (ccNum.match(regMC)) {
-            return 'mc';
-          } else if (ccNum.match(regAMEX)) {
-            return 'ax';
-          } else {
-            return null;
-          }
-        }
-
         function submission400s(XHR, textStatus, error) {
           switch (XHR.responseJSON.code) {
             case 'duplicate':
@@ -509,7 +498,7 @@ var Sequential = React.createClass({
                     <div className="field-container">
                       <i className="fa fa-calendar-o field-icon"></i>
                       <input className="not-required-paypal" aria-label={this.getIntlMessage('credit_card_expiration_month')} data-stripe="exp-month" type="tel" placeholder={this.getIntlMessage('MM')} pattern="\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_month" autoComplete="off"/>
-                      &frasl;
+                      &nbsp;&frasl;&nbsp;
                       <input className="not-required-paypal" aria-label={this.getIntlMessage('credit_card_expiration_year')} type="tel" data-stripe="exp-year" placeholder={this.getIntlMessage('YY')} pattern="\d{2}" maxLength="2" data-parsley-group="page-2" data-parsley-type="digits" data-parsley-required name="cc_expir_year" autoComplete="off"/>
                     </div>
                   </div>

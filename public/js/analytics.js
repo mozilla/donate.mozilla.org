@@ -59,52 +59,100 @@ module.exports = function() {
     }
   }
 
+  // increase analytics value of monthly gifts
   if (product_category === 'monthly') {
-    // this donation is more valuable than a one time gift
     // estimate based on YR1 value
     amt = amt * 12;
   }
 
+  /**
+   * Function to load JSON file
+   * @param  {String} pathToFile
+   * @return {JSON}
+   */
+  function loadJSON(pathToFile) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.overrideMimeType('application/json');
+    xhttp.open('GET', pathToFile, false); // async = false
+    xhttp.send();
+    if (xhttp.status === 200) {
+      var file = xhttp.responseText;
+      try {
+        return JSON.parse(file);
+      } catch(e) {}
+    }
+    return null;
+  }
+
+  // Exchange rates for conversion metrics
+  var rates = null;
+  if (cc && cc !== 'USD') {
+    rates = loadJSON('/exchange-rates/latest.json');
+    if (!rates) {
+      // if latest.json hasn't been generated at build, this is a static backup
+      rates = loadJSON('/exchange-rates/rates-backup.json');
+    }
+  }
+
+  // 2 DP
+  function toTwoDP (i) {
+    return Math.round(i * 100) / 100;
+  }
 
   if (tx && amt && cc) {
 
-    // Filter out impact of major gifts on conversion analysis
-    // otherwise transactions can skew the average too far
-    if (cc === 'USD' && amt > 1000) {
-      amt = 1000;
+    var exchangeRate = 1;
+    var amtUSD = amt;
+
+    if (cc !== 'USD') {
+      if (rates && rates.rates && rates.rates[cc]) {
+        exchangeRate = rates.rates[cc];
+        amtUSD = toTwoDP(amt / exchangeRate);
+      }
     }
 
-    // Todo: add optimizely exchange rates
+    // Filter out impact of major gifts on conversion analysis
+    // otherwise transactions can skew the average too far
+    if (amtUSD > 1000) {
+      amtUSD = 1000;
+      amt = toTwoDP(1000 / exchangeRate);
+    }
 
     // Optimizely conversion tracking
     window.optimizely = window.optimizely || [];
     window.optimizely.push(['trackEvent', 'donation', {
-      'revenue': amt * 100
+      // Optimizely isn't multi currency, so only works with USD, in cents
+      'revenue': amtUSD * 100
     }]);
 
-    // We're using univeral analytics ecommerce tracking
-    // https://developers.google.com/analytics/devguides/collection/analyticsjs/ecommerce
-    ga('require', 'ecommerce');
 
-    ga('ecommerce:addTransaction', {
-      'id': tx,
-      'affiliation': 'Donations',
-      'revenue': amt,
-      'shipping': '0',
-      'tax': '0',
-      'currency': cc
-    });
+    if (window.ga) {
 
-    ga('ecommerce:addItem', {
-      'id': tx,
-      'name': product_name,
-      'sku': product_name,
-      'category': product_category,
-      'price': amt,
-      'quantity': '1'
-    });
+      // We're using universal analytics ecommerce tracking
+      // https://developers.google.com/analytics/devguides/collection/analyticsjs/ecommerce
+      ga('require', 'ecommerce');
 
-    //submit transaction to the Analytics servers
-    ga('ecommerce:send');
+      ga('ecommerce:addTransaction', {
+        'id': tx,
+        'affiliation': 'Donations',
+        'revenue': amt,
+        'shipping': '0',
+        'tax': '0',
+        'currency': cc
+      });
+
+      ga('ecommerce:addItem', {
+        'id': tx,
+        'name': product_name,
+        'sku': product_name,
+        'category': product_category,
+        'price': amt,
+        'quantity': '1'
+      });
+
+      //submit transaction to the Analytics servers
+      ga('ecommerce:send');
+
+    }
   }
 };

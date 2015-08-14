@@ -11,6 +11,7 @@
   "unused": "vars",
   "globals": {
       "$": false,
-      "Stripe": false
+      "Stripe": false,
+      "ga": false
   }
 }

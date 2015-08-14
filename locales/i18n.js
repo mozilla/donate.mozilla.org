@@ -12,13 +12,12 @@ function getMessages(req) {
 // This is essentially bulk require
 var req = require.context('./', true, /\.json.*$/);
 var messages = getMessages(req);
-var exports = {};
 
 var locale = navigator.language.split('-');
 locale = locale[1] ? `${locale[0]}-${locale[1].toUpperCase()}` : navigator.language;
 
 var strings = messages[locale] ? messages[locale] : messages['en-US'];
-exports = {
+module.exports = {
   intlData: {
     locales : ['en-US'],
     // Sometimes we will include a language with partial translation
@@ -41,5 +40,3 @@ exports = {
     return {locales: [locale], messages: assign(messages['en-US'], strings)};
   }
 };
-
-module.exports = exports;

@@ -10,21 +10,13 @@ import SectionHeading from '../components/section-heading.jsx';
 import Frequency from '../components/donation-frequency.jsx';
 import FormContainer from '../components/form-container.jsx';
 
-var ga = require('react-ga');
-
 var Sequential = React.createClass({
-  mixins: [IntlMixin],
+  mixins: [IntlMixin, require('../scripts/commonAPI.js')],
   getInitialState: function() {
     return {
       country: "US",
       province: ""
     };
-  },
-  calculateHeight: function() {
-    if (!window.location.hash) {
-      return;
-    }
-    $('.sequence-page-container').height($(window.location.hash).height());
   },
   onCountryChange: function(event) {
     this.setState({
@@ -40,6 +32,7 @@ var Sequential = React.createClass({
 
     var $theForm = $("#donation-form");
     var win = window;
+    var that = this;
 
     // ***********************************************
     // UI related
@@ -61,27 +54,14 @@ var Sequential = React.createClass({
       if (dotSelected < currentPage) {
         window.history.go(dotSelected - currentPage);
         if (dotSelected - currentPage === -2) {
-          hidePage('#page-3', 'incomplete');
+          that.hidePage('#page-3', 'incomplete');
         }
       }
     });
 
     var calculateHeight = this.calculateHeight;
 
-    function showCreditCardForm() {
-      $('.not-required-paypal').attr('required', true).attr('data-parsley-required', "true");
-      $(".cc-additional-info").show();
-      calculateHeight();
-      $(".stripe-notice").show();
-      win.setTimeout(function() {
-        $('[name="cc_number"]').focus();
-      }, 500);
-      if ($(".parsley-error").length > 0) {
-        $("#one-line-error").show();
-      }
-    }
-
-    $("#payment-cc").change(showCreditCardForm);
+    $("#payment-cc").change(this.showCreditCardForm);
     $(win).on('resize', calculateHeight);
 
     $("i.hint").click(function() {
@@ -145,93 +125,17 @@ var Sequential = React.createClass({
       }
     });
 
-    // ***********************************************
-    // Update Donate button to make it show the selected donation amount
-    // ***********************************************
-    var updateDonateButtonText = function(amountSelected) {
-      var buttonText;
-      var locale = "US";
-      var recurring = $('[name="recurring_acknowledge"]:checked').val() === '1';
-      if (amountSelected && locale === "US") {
-        if (recurring) {
-          buttonText = "Donate $" + amountSelected + " monthly";
-        } else {
-          buttonText = "Donate $" + amountSelected + " now";
-        }
-      } else {
-        if (recurring) {
-          buttonText = this.getIntlMessage("donate_monthly");
-        } else {
-          buttonText = this.getIntlMessage("donate_now");
-        }
-      }
-      $("#donate-btn").text(buttonText);
-    };
-
     $theForm.find("[name='recurring_acknowledge']").change(function() {
-      updateDonateButtonText($theForm.find("[name='donation_amount']:checked").val());
+      that.updateDonateButtonText($theForm.find("[name='donation_amount']:checked").val());
     });
-    
+
     $theForm.find("[name='donation_amount']").change(function() {
-      updateDonateButtonText($(this).val());
+      that.updateDonateButtonText($(this).val());
     });
 
     $theForm.find("#amount-other-input").keyup(function() {
-      updateDonateButtonText($theForm.find("[name='donation_amount']:checked").val());
+      that.updateDonateButtonText($theForm.find("[name='donation_amount']:checked").val());
     });
-
-    // ***********************************************
-    // Program next links and back button
-    // ***********************************************
-
-    function hidePage(page, status) {
-      $(page).addClass('page-hidden-' + status);
-      var amount;
-      if (page === "#page-1") {
-        if (status === "complete") {
-          amount = "$" + $theForm.find("[name='donation_amount']:checked").val();
-          $("[data-position='#page-1'] .page-breadcrumb").text(amount);
-        } else {
-          $("[data-position='#page-1'] .page-breadcrumb").text("");
-        }
-      } else if (page === "#page-2") {
-        if (status === "complete") {
-          $("[data-position='#page-2'] .page-breadcrumb").text("Credit card");
-        } else {
-          $("[data-position='#page-2'] .page-breadcrumb").text("");
-        }
-      }
-      win.setTimeout(function() {
-        $(page).addClass('hidden');
-      }, 501);
-    }
-
-    function showPage(page) {
-      $('ol.progress').find('li').removeClass('active');
-      $('ol.progress').find('li[data-position="' + page + '"]').addClass('active');
-
-      $("[data-position='" + page + "'] .page-breadcrumb").text("");
-
-      $(page).removeClass('hidden');
-      $(page).prop('disabled', false);
-      win.setTimeout(function() {
-        $(page).removeClass('page-hidden-incomplete').removeClass('page-hidden-complete');
-      }, 100);
-
-      calculateHeight();
-
-      // Reset progress bar dots' cursor type accordlying
-      $(".progress li").css({
-        cursor: "default"
-      });
-      $(".progress li.active").prevAll("li").css({
-        cursor: "pointer"
-      });
-
-      // These are virtual pageviews, so we track them manually in GA
-      var currentPage = window.location.pathname;
-      ga.pageview(currentPage + page);
-    }
 
     $theForm.on('click', '[data-button-type="next"]', function(e) {
       e.preventDefault();
@@ -246,8 +150,8 @@ var Sequential = React.createClass({
           hash: '#page-' + next,
           page: next
         }, '', $context.prop('href'));
-        hidePage('#page-' + current, 'complete');
-        showPage('#page-' + next);
+        that.hidePage('#page-' + current, 'complete');
+        that.showPage('#page-' + next);
       } else {
         $theForm.parsley().validate('page-' + current);
         calculateHeight();
@@ -258,17 +162,17 @@ var Sequential = React.createClass({
 
       $('#one-line-error').hide();
       if (e.state.page !== null) {
-        hidePage('#page-' + (e.state.page - 1), 'complete');
-        hidePage('#page-' + (e.state.page + 1), 'incomplete');
+        that.hidePage('#page-' + (e.state.page - 1), 'complete');
+        that.hidePage('#page-' + (e.state.page + 1), 'incomplete');
       } else {
-        hidePage('#page-2', 'incomplete');
-        hidePage('#page-3', 'incomplete');
+        that.hidePage('#page-2', 'incomplete');
+        that.hidePage('#page-3', 'incomplete');
       }
       history.replaceState({
         page: e.state.page,
         hash: e.state.hash
       }, '', e.state.hash);
-      showPage(e.state.hash);
+      that.showPage(e.state.hash);
     };
 
     // ***********************************************

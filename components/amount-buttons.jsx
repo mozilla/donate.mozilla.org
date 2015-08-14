@@ -1,7 +1,7 @@
 import React from 'react';
 
 var AmountButtons = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  mixins: [require('react-intl').IntlMixin, require('../scripts/commonAPI.js')],
   getInitialState: function() {
     return {
       otherValue: "0"
@@ -13,7 +13,8 @@ var AmountButtons = React.createClass({
         AMOUNT_SET_PARAM = "preset",
         AMOUNT_PRESET = {
           2: [100, 50, 25, 15]
-        };
+        },
+        that = this;
 
     // extract query param from url
     // code modified from: http://www.sitepoint.com/url-parameters-jquery/
@@ -91,7 +92,7 @@ var AmountButtons = React.createClass({
         page: 1,
         hash: '#page-1'
       }, '', '#page-1');
-      updateDonateButtonText(amount);
+      that.updateDonateButtonText(amount);
     }
 
     var winLocationHash = win.location.hash;
@@ -105,9 +106,9 @@ var AmountButtons = React.createClass({
         hash: '#page-2'
       }, '', '#page-2');
       $('#payment-cc').prop('checked', true);
-      showCreditCardForm();
-      hidePage('#page-1', 'complete');
-      showPage('#page-2');
+      that.showCreditCardForm();
+      that.hidePage('#page-1', 'complete');
+      that.showPage('#page-2');
     } else {
       history.replaceState({
         page: 1,

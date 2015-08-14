@@ -5,10 +5,3 @@ sudo: false
 cache:
   directories:
   - node_modules
-deploy:
-  provider: heroku
-  api_key:
-    secure: "qZQX27p7rpfRbi5+sWWpcolEVpfnio8VkekdL0czkTPPthIAsv8nlhX/e2ISx1yKpafAhZrY1AthpEZMyidkrOA1NDZNwp6n/3fDeAHSFdma7R2+i8vXl+34++Xk6d291UrPhMtKFUGshZHadnP/rimy0xjakBh8RaHAfxw78jpMFxmViArBLDqZiyF66r/3WiVrtHDZJAWleQXDdrMo1EKgBthdsXMckyPP4Gkk1gf1fgruns7KmG5wMUZUyvUnq2L8xyNf21YXP4zHuFFlBHIqZMLTKmCvRSTihUyd3EImekw5lO1LjUxHWFYQL6meCSk6LG3N4o2tBe2WcuHxcWRAU5sVRS2Z3ukU9+tehRKGTwHEMskwg3zvN5PCefsEjVqBbPBjYgtg1VeXS3z39zkhY+NB1aiDRyvrFcx4PULI1DsarDeQmOjOr5tCJ1veB2/7rskRb7FHgGOgtdFh0X3++4+uCWQyIQluX2xeNEWixnjddvNYQ28NT28g1tTM0WhzHSA0pPeYiXOfM12rfOIdnrLFhV2sTdBuHc4lTQYj795H1dolaidvEEZ5D/1DCyru249bYv3k2DBFMeetJteOjv2gloZAz9h4eiJF7B/rzwnx8saROj15wxGi5Ql2cH7Dz4UmezjXBe0Z87lh8tIgpNU1wU9NPIYUQ3gg8XE="
-  app: donate-mozilla-org-us-staging
-  on:
-    repo: mozilla/donate.mozilla.org

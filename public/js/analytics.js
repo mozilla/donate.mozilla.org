@@ -94,6 +94,11 @@ module.exports = function() {
     }
   }
 
+  // 2 DP
+  function toTwoDP (i) {
+    return Math.round(i * 100) / 100;
+  }
+
   if (tx && amt && cc) {
 
     var exchangeRate = 1;
@@ -102,7 +107,7 @@ module.exports = function() {
     if (cc !== 'USD') {
       if (rates && rates.rates && rates.rates[cc]) {
         exchangeRate = rates.rates[cc];
-        amtUSD = amt / exchangeRate;
+        amtUSD = toTwoDP(amt / exchangeRate);
       }
     }
 
@@ -110,7 +115,7 @@ module.exports = function() {
     // otherwise transactions can skew the average too far
     if (amtUSD > 1000) {
       amtUSD = 1000;
-      amt = 1000 / exchangeRate;
+      amt = toTwoDP(1000 / exchangeRate);
     }
 
     // Optimizely conversion tracking
@@ -120,29 +125,34 @@ module.exports = function() {
       'revenue': amtUSD * 100
     }]);
 
-    // We're using univeral analytics ecommerce tracking
-    // https://developers.google.com/analytics/devguides/collection/analyticsjs/ecommerce
-    ga('require', 'ecommerce');
 
-    ga('ecommerce:addTransaction', {
-      'id': tx,
-      'affiliation': 'Donations',
-      'revenue': amt,
-      'shipping': '0',
-      'tax': '0',
-      'currency': cc
-    });
+    if (window.ga) {
 
-    ga('ecommerce:addItem', {
-      'id': tx,
-      'name': product_name,
-      'sku': product_name,
-      'category': product_category,
-      'price': amt,
-      'quantity': '1'
-    });
+      // We're using universal analytics ecommerce tracking
+      // https://developers.google.com/analytics/devguides/collection/analyticsjs/ecommerce
+      ga('require', 'ecommerce');
 
-    //submit transaction to the Analytics servers
-    ga('ecommerce:send');
+      ga('ecommerce:addTransaction', {
+        'id': tx,
+        'affiliation': 'Donations',
+        'revenue': amt,
+        'shipping': '0',
+        'tax': '0',
+        'currency': cc
+      });
+
+      ga('ecommerce:addItem', {
+        'id': tx,
+        'name': product_name,
+        'sku': product_name,
+        'category': product_category,
+        'price': amt,
+        'quantity': '1'
+      });
+
+      //submit transaction to the Analytics servers
+      ga('ecommerce:send');
+
+    }
   }
 };

@@ -31,12 +31,8 @@ server.route([
     handler: routes.stripe
   }, {
     method: 'POST',
-    path: '/api/paypal-one-time',
-    handler: routes['paypal-one-time']
-  }, {
-    method: 'POST',
-    path: '/api/paypal-recurring',
-    handler: routes['paypal-recurring']
+    path: '/api/paypal',
+    handler: routes.paypal
   }, {
     method: 'GET',
     path: '/api/paypal-one-time-redirect',

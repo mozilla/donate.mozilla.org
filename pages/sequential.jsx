@@ -457,11 +457,22 @@ var Sequential = React.createClass({
 
             function submitSuccess(data, textStatus, XHR) {
 
-              var amount = data.amount; // cents
-              var currency = data.currency;
               var transactionId = data.id;
-              // Todo: need to work out how we identify this status?
-              var donationFrequency = 'one-time';
+              var amount;
+              var currency;
+              var donationFrequency;
+
+              if (data.plan) {
+                donationFrequency = 'monthly';
+                currency = data.plan.currency;
+                // Stripe plans are a multiple of the currencies equivilent of Cents
+                // e.g. £5/month = 500 £0.01 subscriptions
+                amount = data.quantity;
+              } else {
+                donationFrequency = 'one-time';
+                amount = data.amount;
+                currency = data.currency;
+              }
 
               var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' +donationFrequency;
               var thankYouURL = '/thank-you/' + params;

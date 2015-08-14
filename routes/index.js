@@ -60,7 +60,7 @@ var routes = {
         if (err) {
           return console.error('donation failed:', err);
         }
-        reply.redirect("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + charge.TOKEN);
+        reply.redirect(process.env.PAYPAY_ENDPOINT + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + charge.TOKEN);
       });
     } else {
       paypal.setupRecurring({
@@ -74,7 +74,7 @@ var routes = {
         if (err) {
           return console.error('donation failed:', err);
         }
-        reply.redirect("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + subscription.TOKEN);
+        reply.redirect(process.env.PAYPAY_ENDPOINT + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + subscription.TOKEN);
       });
     }
   },

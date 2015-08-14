@@ -151,14 +151,27 @@ var Sequential = React.createClass({
     var updateDonateButtonText = function(amountSelected) {
       var buttonText;
       var locale = "US";
+      var recurring = $('[name="recurring_acknowledge"]:checked').val() === '1';
       if (amountSelected && locale === "US") {
-        buttonText = "Donate $" + amountSelected + " now";
+        if (recurring) {
+          buttonText = "Donate $" + amountSelected + " monthly";
+        } else {
+          buttonText = "Donate $" + amountSelected + " now";
+        }
       } else {
-        buttonText = this.getIntlMessage("donate_now");
+        if (recurring) {
+          buttonText = this.getIntlMessage("donate_monthly");
+        } else {
+          buttonText = this.getIntlMessage("donate_now");
+        }
       }
       $("#donate-btn").text(buttonText);
     };
 
+    $theForm.find("[name='recurring_acknowledge']").change(function() {
+      updateDonateButtonText($theForm.find("[name='donation_amount']:checked").val());
+    });
+    
     $theForm.find("[name='donation_amount']").change(function() {
       updateDonateButtonText($(this).val());
     });

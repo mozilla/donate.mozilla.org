@@ -32,7 +32,7 @@ server.route([
   }, {
     method: 'POST',
     path: '/api/paypal',
-    handler: routes['paypal']
+    handler: routes.paypal
   }, {
     method: 'GET',
     path: '/api/paypal-one-time-redirect',

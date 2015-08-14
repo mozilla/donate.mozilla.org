@@ -369,13 +369,8 @@ var Sequential = React.createClass({
             var formData = {};
             $theForm.serializeArray().map(function(x){formData[x.name] = x.value;});
             var transaction = {
-<<<<<<< HEAD
               stripeToken: response.id,
-              amount: formData.amount_other,
-=======
-              stripeToken: response['id'],
               amount: formData.donation_amount,
->>>>>>> 2a8c8dd... boil down form
               email: formData.email,
               recurring_acknowledge: formData.recurring_acknowledge,
               metadata: {

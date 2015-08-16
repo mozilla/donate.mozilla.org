@@ -1,4 +1,12 @@
 require('habitat').load();
+
+var newrelic;
+if (process.env.NEW_RELIC_ENABLED === "true") {
+  newrelic = require('newrelic');
+} else {
+  newrelic = {};
+}
+
 var Path = require('path');
 
 var Hapi = require('hapi');

@@ -7,7 +7,7 @@ var Footer = React.createClass({
         <div className="footer">
           <div className="row">
             <div className="half">
-              <img src="https://ddz69tinzt56n.cloudfront.net/images/Mozilla-wordmark.png"/>
+              <img src="/images/Mozilla-wordmark.png"/>
               <p className="license">Portions of this content are &copy;1998&ndash;2015
                 by
                 individual mozilla.org contributors. Content available under a <a href="https://www.mozilla.org/foundation/licensing/website-content/" target="_blank">Creative Commons license</a>.

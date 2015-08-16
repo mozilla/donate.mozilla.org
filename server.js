@@ -10,9 +10,7 @@ if (process.env.NEW_RELIC_ENABLED === 'true') {
 }
 
 var Path = require('path');
-
 var Hapi = require('hapi');
-var Good = require('good');
 
 var routes = require('./routes');
 
@@ -23,6 +21,14 @@ server.connection({
   uri: process.env.APPLICATION_URI
 });
 
+var securityConfig = {
+  hsts: process.env.HSTS_ENABLED === 'true' ? 15768000 : false,
+  xframe: true,
+  xss: true,
+  noOpen: true,
+  noSniff: true
+};
+
 server.route([
   {
     method: 'GET',
@@ -31,27 +37,45 @@ server.route([
       directory: {
         path: Path.join(__dirname, 'public')
       }
+    },
+    config: {
+      security: securityConfig
     }
   }, {
     method: 'POST',
     path: '/api/signup',
-    handler: routes.signup
+    handler: routes.signup,
+    config: {
+      security: securityConfig
+    }
   }, {
     method: 'POST',
     path: '/api/stripe',
-    handler: routes.stripe
+    handler: routes.stripe,
+    config: {
+      security: securityConfig
+    }
   }, {
     method: 'POST',
     path: '/api/paypal',
-    handler: routes.paypal
+    handler: routes.paypal,
+    config: {
+      security: securityConfig
+    }
   }, {
     method: 'GET',
     path: '/api/paypal-one-time-redirect',
-    handler: routes['paypal-one-time-redirect']
+    handler: routes['paypal-one-time-redirect'],
+    config: {
+      security: securityConfig
+    }
   }, {
     method: 'GET',
     path: '/api/paypal-recurring-redirect',
-    handler: routes['paypal-recurring-redirect']
+    handler: routes['paypal-recurring-redirect'],
+    config: {
+      security: securityConfig
+    }
   }
 ]);
 
@@ -66,18 +90,37 @@ server.ext('onPreResponse', function(request, reply) {
 
 module.exports = {
   start: function(done) {
-    server.register({
-      register: Good,
-      options: {
-        reporters: [{
-          reporter: require('good-console'),
-          events: {
-            response: '*',
-            log: '*'
-          }
-        }]
+    server.register([
+      {
+        register: require('good'),
+        options: {
+          reporters: [{
+            reporter: require('good-console'),
+            events: {
+              response: '*',
+              log: '*'
+            }
+          }]
+        }
+      },
+      {
+        register: require('scooter')
+      },
+      {
+        register: require('blankie'),
+        options: {
+          connectSrc: ['self', '206878104.log.optimizely.com', 'https://api.stripe.com'],
+          fontSrc: ['self', 'https://fonts.gstatic.com', 'https://maxcdn.bootstrapcdn.com'],
+          frameSrc: ['https://js.stripe.com'],
+          imgSrc: ['self', 'https://www.google-analytics.com'],
+          scriptSrc: ['self', 'https://cdn.optimizely.com',
+            'https://www.google-analytics.com', 'https://ajax.googleapis.com',
+            'https://js.stripe.com'],
+          styleSrc: ['self', 'unsafe-inline', 'https://fonts.googleapis.com',
+            'https://maxcdn.bootstrapcdn.com']
+        }
       }
-    }, function (err) {
+    ], function (err) {
       if (err) {
         throw err;
       }

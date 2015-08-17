@@ -24,7 +24,7 @@ function setupPaypal(transaction, recurring, callback) {
     charge.L_BILLINGTYPE0 = "RecurringPayments";
   }
   httpRequest({
-    url: process.env.PAYPAY_API_ENDPOINT,
+    url: process.env.PAYPAL_API_ENDPOINT,
     method: "POST",
     form: charge
   }, function(err, httpResponse, body) {
@@ -39,7 +39,7 @@ function setupPaypal(transaction, recurring, callback) {
 
 function doPaypal(transaction, recurring, callback) {
   httpRequest({
-    url: process.env.PAYPAY_API_ENDPOINT,
+    url: process.env.PAYPAL_API_ENDPOINT,
     method: "POST",
     form: {
       USER: process.env.PAYPAL_USER,
@@ -76,7 +76,7 @@ function doPaypal(transaction, recurring, callback) {
       details.PAYMENTREQUEST_0_CURRENCYCODE = data.CURRENCYCODE;
     }
     httpRequest({
-      url: process.env.PAYPAY_API_ENDPOINT,
+      url: process.env.PAYPAL_API_ENDPOINT,
       method: "POST",
       form: details
     }, function(err, httpResponse, body) {

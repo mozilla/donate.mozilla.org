@@ -17,7 +17,8 @@ var routes = require('./routes');
 var server = new Hapi.Server();
 server.connection({
   host: process.env.HOST,
-  port: process.env.PORT
+  port: process.env.PORT,
+  uri: process.env.APPLICATION_URI
 });
 
 server.route([

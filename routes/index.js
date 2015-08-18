@@ -54,7 +54,7 @@ var routes = {
         currency: transaction.paypal_currency_code,
         locale: transaction.paypal_locale_code,
         item_name: transaction.item_name_single,
-        cancelUrl: request.headers.referer,
+        cancelUrl: request.server.info.uri + "/",
         returnUrl: request.server.info.uri + "/api/paypal-one-time-redirect"
       }, function(err, charge) {
         if (err) {
@@ -68,7 +68,7 @@ var routes = {
         currency: transaction.paypal_currency_code,
         locale: transaction.paypal_locale_code,
         item_name: transaction.item_name_monthly,
-        cancelUrl: request.headers.referer,
+        cancelUrl: request.server.info.uri + "/",
         returnUrl: request.server.info.uri + "/api/paypal-recurring-redirect"
       }, function(err, subscription) {
         if (err) {

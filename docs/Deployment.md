@@ -6,8 +6,71 @@
 - [donate.mofoprod.net](https://donate.mofoprod.net/)
 
 Any changes to the [CloudFormation template](../ops/cloudformation.json) must be deployed manually.
+The CloudFormation stacks `donate-mozilla-org-staging` and `donate-mozilla-org-production` are deployed in `us-east-1` in the `mofo-secure` AWS account.
 
-The CloudFormation stacks, `donate-mozilla-org-staging` and `donate-mozilla-org-production`, are deployed in `us-east-1` in the `mofo-secure` AWS account.
+### Prerequisites
+
+- AWS IAM credentials (ask jbuck for them)
+
+### Deploy tool
+
+If you'd like to update the template or the parameters you should use [the deploy tool](deploy.js).
+To fetch the stacks current state use the `get` command:
+
+```
+$ node ops/deploy.js get staging
+{ StackId: 'arn:aws:cloudformation:us-east-1:318526611700:stack/donate-mozilla-org-staging/ff18a190-4133-11e5-9ebf-5001dc3ed86e',
+  StackName: 'donate-mozilla-org-staging',
+  Description: 'AWS resources for donate.mozilla.org',
+  Parameters:
+   [ { ParameterKey: 'LogBucketName',
+       ParameterValue: 'logs-s3bucket-1qkkk2485xips' },
+     { ParameterKey: 'CloudfrontAliases',
+       ParameterValue: 'donate.mofostaging.net' },
+     { ParameterKey: 'ApplicationURL',
+       ParameterValue: 'donate-mozilla-org-eu-staging.herokuapp.com' },
+     { ParameterKey: 'IAMCertificateId',
+       ParameterValue: 'ASCAI7WNHRDSDVL4XBNN6' } ],
+  CreationTime: Wed Aug 12 2015 16:52:08 GMT-0400 (EDT),
+  LastUpdatedTime: Tue Aug 18 2015 21:48:59 GMT-0400 (EDT),
+  StackStatus: 'UPDATE_IN_PROGRESS',
+  DisableRollback: false,
+  NotificationARNs: [],
+  Capabilities: [],
+  Outputs:
+   [ { OutputKey: 'CloudfrontURL',
+       OutputValue: 'd2i7tygoojoeom.cloudfront.net',
+       Description: 'URL for Cloudfront distribution' } ],
+  Tags:
+   [ { Key: 'project', Value: 'fundraising' },
+     { Key: 'application', Value: 'donate.mozilla.org' },
+     { Key: 'environment', Value: 'staging' } ] }
+```
+
+To update the stack use the `set` command:
+
+```
+$ node ops/deploy.js set staging ApplicationURL=donate-mozilla-org-eu-staging.herokuapp.com
+*** Parameters to update ***
+{ StackName: 'donate-mozilla-org-staging',
+  UsePreviousTemplate: true,
+  Parameters:
+   [ { ParameterKey: 'LogBucketName', UsePreviousValue: true },
+     { ParameterKey: 'CloudfrontAliases', UsePreviousValue: true },
+     { ParameterKey: 'ApplicationURL',
+       ParameterValue: 'donate-mozilla-org-eu-staging.herokuapp.com',
+       UsePreviousValue: false },
+     { ParameterKey: 'IAMCertificateId', UsePreviousValue: true } ] }
+Update queued!
+```
+
+If the [local CloudFormation template](../ops/cloudformation.json) differs from the stacks current template, then the `set` command will also update the template.
+
+### Multi-region failover
+
+We have donate.mozilla.org running in both Heroku regions. If one region is encountering problems, we can use the deploy tool to failover the CDN to the other working region.
+
+You can initiate this by setting the `ApplicationURL` of the stack to the other region. A complete failover can take as long as 15 minutes while the CloudFront CDN updates globally.
 
 ## Heroku
 

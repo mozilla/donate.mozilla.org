@@ -63,6 +63,7 @@
     "yaml-intl-xml-json-converter": "0.0.7"
   },
   "devDependencies": {
+    "aws-sdk": "^2.1.45",
     "jsxhint": "^0.15.1",
     "mofo-style": "^1.0.1"
   }

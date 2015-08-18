@@ -12,3 +12,9 @@ public/*/index.html
 public/main.js
 public/exchange-rates/latest.json
 locales/*.json
+public/de/
+public/en-US/
+public/es/
+public/fr/
+public/id/
+public/pt-BR/

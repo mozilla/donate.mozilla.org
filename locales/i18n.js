@@ -1,4 +1,5 @@
 import assign from 'react/lib/Object.assign';
+var isLocale = /^[\w]{2,2}($|((-[\w]{2,})?((@|\.)[\w]{2,})?)$)/;
 
 function getMessages(req) {
   var messages = {};
@@ -23,12 +24,27 @@ module.exports = {
     // Sometimes we will include a language with partial translation
     // and we need to make sure the object that we pass to `intlData`
     // contains all keys based on the `en-US` messages.
-    messages: assign(messages['en-US'], strings)
+    messages: assign({}, messages['en-US'], strings)
   },
   defaultLang: 'en-US',
   currentLanguage: locale,
   isSupportedLanguage: function(lang) {
     return !!messages[lang];
+  },
+  // This method will check if we have language code in the URL
+  // by extracting the pathname from `window.location` and split
+  // them to find language code. The expected language code is in the
+  // first parameter e.g. /en-US/thank-you. If we don't find the language code
+  // we will assume that the URL does not contain language code and return false for `test`
+  urlOverrideLang: function(path) {
+    var localPath = path || location.pathname;
+    var localeCode = localPath.split('/')[1];
+    var pathname = localPath.split('/')[2];
+    return {
+      test: isLocale.test(localeCode),
+      pathname: pathname,
+      lang: isLocale.test(localeCode) ? localeCode : null
+    };
   },
   intlDataFor: function(lang) {
     // we need to make sure we transform the given locale to the right format first
@@ -36,7 +52,6 @@ module.exports = {
     var locale = lang.split('-');
     locale = locale[1] ? `${locale[0]}-${locale[1].toUpperCase()}` : lang;
     var strings = messages[locale] ? messages[locale] : messages['en-US'];
-
-    return {locales: [locale], messages: assign(messages['en-US'], strings)};
+    return {locales: [locale], messages: assign({}, messages['en-US'], strings)};
   }
 };

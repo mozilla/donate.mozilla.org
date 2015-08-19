@@ -83,7 +83,7 @@
                   "Forward": "none"
                 },
                 "Headers": [],
-                "QueryString": false
+                "QueryString": true
               },
               "PathPattern": "/api/*",
               "TargetOriginId": "appserver",

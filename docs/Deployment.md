@@ -113,12 +113,11 @@ It's currently configured so that each staging app will promote to the productio
 ```
 $ heroku pipeline:diff -a donate-mozilla-org-eu-staging
 Comparing donate-mozilla-org-eu-staging to donate-mozilla-org-eu-prod...done, donate-mozilla-org-eu-staging ahead by 1 commit:
-  ea76788
+  60d3331  2015-08-18  First pass at QA checklist  (Jon Buckley)
+  47f328e  2015-08-19  Allow querystring in API routes for PayPal callbacks  (Jon Buckley)
 ```
 
-2. Check out these commits on GitHub to ensure that you're pushing the right code to production.
-
-3. Deploy to production:
+2. Deploy to production:
 
 ```
 $ heroku pipeline:promote -a donate-mozilla-org-eu-staging && heroku pipeline:promote -a donate-mozilla-org-us-staging

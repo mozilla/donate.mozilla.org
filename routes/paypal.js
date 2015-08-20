@@ -28,13 +28,13 @@ function setupPaypal(transaction, recurring, callback) {
     method: 'POST',
     form: charge
   }, function(err, httpResponse, body) {
-      if (err) {
-        callback(err);
-      } else {
-        var data = querystring.parse(body);
-        callback(null, data);
-      }
-    });
+    if (err) {
+      callback(err);
+    } else {
+      var data = querystring.parse(body);
+      callback(null, data);
+    }
+  });
 }
 
 function doPaypal(transaction, recurring, callback) {

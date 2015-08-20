@@ -1,4 +1,4 @@
-var React = require('react');
+import React from 'react';
 
 var Form = React.createClass({
   componentDidMount: function() {

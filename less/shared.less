@@ -154,9 +154,6 @@ input[type="submit"] {
   background: #fff;
 }
 
-.container {
-}
-
 .wrap {
   max-width: 100%;
   margin: 0 auto;
@@ -450,18 +447,18 @@ select * {
   padding-left: 29px;
 }
 
-select[name='country'].normalTextColor,
+select[name='country'].normal-text-color,
 select[name='country'] [value],
-select[name='state_cd'].normalTextColor,
-select[name='state_cd'] [value] {
+select#wsstate_cd.normal-text-color,
+select#wsstate_cd [value] {
   color: #333;
 }
 
 select[name='country'],
 select[name='country'] option[value=""],
-select[name='state_cd'],
-select[name='state_cd'] option[value=""],
-select[name='state_cd'] option[value="none"] {
+select#wsstate_cd,
+select#wsstate_cd option[value=""],
+select#wsstate_cd option[value="none"] {
   color: #ccc;
 }
 
@@ -640,7 +637,7 @@ label[for="payment-paypal"]:hover .payment-logos {
 #secure-label {
   display: inline-block;
   position: absolute;
-  right: 0;
+  right: 1px;
   top: 0;
   font-size: 14px;
   font-weight: 800;
@@ -813,79 +810,6 @@ select.parsley-error:focus {
   margin-bottom: 35px;
 }
 
-ol.progress {
-  counter-reset: progress;
-  list-style: none;
-  padding-left: 0;
-  text-align: center;
-  height: 100px;
-}
-
-ol.progress li {
-  counter-increment: progress;
-  position: relative;
-  width: 33%;
-  float: left;
-  margin-top: 40px;
-}
-
-.page-breadcrumb {
-  color: #0095DD;
-}
-
-ol.progress li::before {
-  background: none repeat scroll 0% 0% #EAEFF2;
-  border-radius: 50%;
-  box-shadow: 0px 0px 0px 10px #EAEFF2;
-  content: counter(progress, decimal);
-  height: 34px;
-  line-height: 2.4;
-  position: absolute;
-  top: -44px;
-  width: 34px;
-  left: 50%;
-  margin-left: -17px;
-}
-
-ol.progress li.active::before {
-  background: #0095DD;
-  color: #ffffff;
-}
-
-[data-button-type="next"] {
-  border: 0 transparent dashed;
-  background: #C13832;
-  color: #ffffff;
-  float: right;
-  font-size: 1.375rem;
-  margin-right: 1.5rem;
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  position: relative;
-  height: 46px;
-}
-
-[data-button-type="next"]:hover, [data-button-type="next"]:active, [data-button-type="next"]:focus {
-  background: #EA3B28;
-  outline: none;
-}
-
 .hidden-visibility {
   visibility: hidden;
 }
-
-[data-button-type="next"]::before {
-  border-top: 23px solid transparent;
-  border-bottom: 23px solid transparent;
-  border-left: 23px dashed #C13832;
-  position: absolute;
-  content: '';
-  right: -23px;
-  top: 0;
-}
-
-[data-button-type="next"]:hover::before, [data-button-type="next"]:active::before , [data-button-type="next"]:focus::before {
-  border-left-color: #EA3B28;
-}
-
-

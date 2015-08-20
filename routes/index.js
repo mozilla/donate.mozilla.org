@@ -18,7 +18,7 @@ var routes = {
   },
   'stripe': function(request, reply) {
     var transaction = request.payload || {};
-    if (transaction.recurring_acknowledge === '0') {
+    if (transaction.recurring === 0) {
       stripe.single({
         amount: transaction.amount,
         stripeToken: transaction.stripeToken
@@ -35,7 +35,15 @@ var routes = {
         amount: transaction.amount,
         stripeToken: transaction.stripeToken,
         email: transaction.email,
-        metadata: transaction.metadata
+        metadata: {
+          firstname: transaction.firstName,
+          lastname: transaction.lastName,
+          country: transaction.country,
+          address: transaction.address,
+          city: transaction.city,
+          zip: transaction.zip,
+          state: transaction.state
+        }
       }, function(err, subscription) {
         if (err) {
           console.log(err);
@@ -48,33 +56,39 @@ var routes = {
   },
   'paypal': function(request, reply) {
     var transaction = request.payload || {};
-    if (transaction.recurring_acknowledge === '0') {
+    if (transaction.recurring === 0) {
       paypal.setupSingle({
-        amount: transaction.donation_amount,
-        currency: transaction.paypal_currency_code,
-        locale: transaction.paypal_locale_code,
-        item_name: transaction.item_name_single,
+        amount: transaction.amount,
+        currency: transaction.currencyCode,
+        locale: transaction.localeCode,
+        item_name: transaction.description,
         cancelUrl: request.server.info.uri + '/',
         returnUrl: request.server.info.uri + '/api/paypal-one-time-redirect'
       }, function(err, charge) {
         if (err) {
           return console.error('donation failed:', err);
         }
-        reply.redirect(process.env.PAYPAL_ENDPOINT + '/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=' + charge.TOKEN);
+        reply({
+          endpoint: process.env.PAYPAL_ENDPOINT,
+          token: charge.TOKEN
+        });
       });
     } else {
       paypal.setupRecurring({
-        amount: transaction.donation_amount,
-        currency: transaction.paypal_currency_code,
-        locale: transaction.paypal_locale_code,
-        item_name: transaction.item_name_monthly,
+        amount: transaction.amount,
+        currency: transaction.currencyCode,
+        locale: transaction.localeCode,
+        item_name: transaction.description,
         cancelUrl: request.server.info.uri + '/',
         returnUrl: request.server.info.uri + '/api/paypal-recurring-redirect'
       }, function(err, subscription) {
         if (err) {
           return console.error('donation failed:', err);
         }
-        reply.redirect(process.env.PAYPAL_ENDPOINT + '/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=' + subscription.TOKEN);
+        reply({
+          endpoint: process.env.PAYPAL_ENDPOINT,
+          token: subscription.TOKEN
+        });
       });
     }
   },

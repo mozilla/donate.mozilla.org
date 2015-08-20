@@ -1,22 +1,22 @@
 var httpRequest = require('request');
-var stripe = require("./stripe");
-var paypal = require("./paypal");
+var stripe = require('./stripe');
+var paypal = require('./paypal');
 
 var routes = {
-  "signup": function(request, reply) {
+  'signup': function(request, reply) {
     var transaction = request.payload || {};
     httpRequest({
       url: 'https://sendto.mozilla.org/page/signup/EOYFR2014-donor',
-      method: "POST",
+      method: 'POST',
       form: transaction
-    }, function(err, httpResponse, body) {
+    }, function(err) {
       if (err) {
         return console.error('signup failed:', err);
       }
-      reply.redirect("/share");
+      reply.redirect('/share');
     });
   },
-  "stripe": function(request, reply) {
+  'stripe': function(request, reply) {
     var transaction = request.payload || {};
     if (transaction.recurring_acknowledge === '0') {
       stripe.single({
@@ -46,7 +46,7 @@ var routes = {
       });
     }
   },
-  "paypal": function(request, reply) {
+  'paypal': function(request, reply) {
     var transaction = request.payload || {};
     if (transaction.recurring_acknowledge === '0') {
       paypal.setupSingle({
@@ -54,13 +54,13 @@ var routes = {
         currency: transaction.paypal_currency_code,
         locale: transaction.paypal_locale_code,
         item_name: transaction.item_name_single,
-        cancelUrl: request.server.info.uri + "/",
-        returnUrl: request.server.info.uri + "/api/paypal-one-time-redirect"
+        cancelUrl: request.server.info.uri + '/',
+        returnUrl: request.server.info.uri + '/api/paypal-one-time-redirect'
       }, function(err, charge) {
         if (err) {
           return console.error('donation failed:', err);
         }
-        reply.redirect(process.env.PAYPAL_ENDPOINT + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + charge.TOKEN);
+        reply.redirect(process.env.PAYPAL_ENDPOINT + '/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=' + charge.TOKEN);
       });
     } else {
       paypal.setupRecurring({
@@ -68,17 +68,17 @@ var routes = {
         currency: transaction.paypal_currency_code,
         locale: transaction.paypal_locale_code,
         item_name: transaction.item_name_monthly,
-        cancelUrl: request.server.info.uri + "/",
-        returnUrl: request.server.info.uri + "/api/paypal-recurring-redirect"
+        cancelUrl: request.server.info.uri + '/',
+        returnUrl: request.server.info.uri + '/api/paypal-recurring-redirect'
       }, function(err, subscription) {
         if (err) {
           return console.error('donation failed:', err);
         }
-        reply.redirect(process.env.PAYPAL_ENDPOINT + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + subscription.TOKEN);
+        reply.redirect(process.env.PAYPAL_ENDPOINT + '/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=' + subscription.TOKEN);
       });
     }
   },
-  "paypal-one-time-redirect": function(request, reply) {
+  'paypal-one-time-redirect': function(request, reply) {
     paypal.doSingle({
       token: request.url.query.token
     }, function(err, charge) {
@@ -88,7 +88,7 @@ var routes = {
       reply.redirect('/thank-you/?frequency=onetime&tx=' + charge.PAYMENTINFO_0_TRANSACTIONID + '&amt=' + charge.PAYMENTREQUEST_0_AMT + '&cc=' + charge.CURRENCYCODE);
     });
   },
-  "paypal-recurring-redirect": function(request, reply) {
+  'paypal-recurring-redirect': function(request, reply) {
     paypal.doRecurring({
       token: request.url.query.token
     }, function(err, subscription) {

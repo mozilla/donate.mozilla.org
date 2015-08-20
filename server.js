@@ -1,7 +1,9 @@
 require('habitat').load();
 
+/*eslint-disable no-unused-vars*/
 var newrelic;
-if (process.env.NEW_RELIC_ENABLED === "true") {
+/*eslint-disable no-unused-vars*/
+if (process.env.NEW_RELIC_ENABLED === 'true') {
   newrelic = require('newrelic');
 } else {
   newrelic = {};
@@ -23,13 +25,13 @@ server.connection({
 
 server.route([
   {
-     method: 'GET',
-     path: '/{params*}',
-     handler: {
-       directory: {
-         path: Path.join(__dirname, 'public')
-       }
-     }
+    method: 'GET',
+    path: '/{params*}',
+    handler: {
+      directory: {
+        path: Path.join(__dirname, 'public')
+      }
+    }
   }, {
     method: 'POST',
     path: '/api/signup',

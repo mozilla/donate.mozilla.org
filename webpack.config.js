@@ -9,7 +9,7 @@ var currencies = require('./data/currencies.js');
 var englishStrings = require('./locales/en-US.json');
 
 module.exports = {
-  entry: "./components/client.jsx",
+  entry: './components/client.jsx',
 
   output: {
     filename: '[name].js',
@@ -23,9 +23,9 @@ module.exports = {
 
   module: {
     loaders: [
-      { test: /\.js$/, loaders:  ['babel-loader'], exclude: ['node_modules'] },
-      { test: /\.jsx$/, loaders: ['babel-loader'] },
-      { test: /\.json$/, loaders: ['json-loader'] }
+    { test: /\.js$/, loaders:  ['babel-loader'], exclude: ['node_modules'] },
+    { test: /\.jsx$/, loaders: ['babel-loader'] },
+    { test: /\.json$/, loaders: ['json-loader'] }
     ]
   },
 
@@ -41,7 +41,7 @@ module.exports = {
 
         if(state.params.locale) {
           var currentString = require('./locales/' + state.params.locale +'.json');
-          var mergedStrings = Object.assign(englishStrings, currentString),
+          var mergedStrings = Object.assign(englishStrings, currentString);
           values = Object.assign({locales : [state.params.locale], messages: mergedStrings}, values);
         } else {
           values = Object.assign({locales : ['en-US'], messages: englishStrings}, values);

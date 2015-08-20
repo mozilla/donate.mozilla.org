@@ -3,8 +3,8 @@ import Router from 'react-router';
 import currencies from '../data/currencies.js';
 import routes from './routes.jsx';
 import {intlData} from '../locales/i18n.js';
-var intlDataFor = require('../locales/i18n.js').intlDataFor;
-var assign = require('react/lib/Object.assign');
+import {intlDataFor} from '../locales/i18n.js';
+import assign from 'react/lib/Object.assign';
 
 Router.run(routes, Router.HistoryLocation, function (Handler, state) {
   var values = {};

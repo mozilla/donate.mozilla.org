@@ -1,5 +1,3 @@
-var stripe = require("./stripe");
-
 var stripeKeys = {
   publishableKey: process.env.STRIPE_PUBLIC_KEY,
   // This is just a test key right now, nothing secret about it.
@@ -28,7 +26,7 @@ module.exports = {
       } else {
         var amt = parseFloat(transaction.amount, 10);
         var subscription = {
-          plan: "base",
+          plan: 'base',
           // Stripe has plans with set amounts, not custom amounts.
           // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
           // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price

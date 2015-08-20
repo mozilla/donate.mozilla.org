@@ -19,7 +19,7 @@
     "test:server": "node tests/start.js",
     "test:selenium": "node tests/selenium/start.js",
     "test:depcheck": "dependency-check ./package.json",
-    "test:lint": "jsxhint --babel --config .jshintrc '**/*.js*' '!node_modules/**/*' '!public/**/*'"
+    "test:lint": "eslint '.'"
   },
   "repository": {
     "type": "git",
@@ -64,7 +64,8 @@
   },
   "devDependencies": {
     "aws-sdk": "^2.1.45",
-    "jsxhint": "^0.15.1",
+    "eslint": "^1.2.0",
+    "eslint-plugin-react": "^3.2.3",
     "mofo-style": "^1.0.1"
   }
 }

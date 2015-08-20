@@ -1,31 +1,31 @@
 var httpRequest = require('request');
-var querystring = require("querystring");
+var querystring = require('querystring');
 
 function setupPaypal(transaction, recurring, callback) {
   var charge = {
     USER: process.env.PAYPAL_USER,
     PWD: process.env.PAYPAL_PWD,
     SIGNATURE: process.env.PAYPAL_SIGNATURE,
-    METHOD: "SetExpressCheckout",
-    VERSION: "106.0",
-    PAYMENTREQUEST_0_PAYMENTACTION: "Sale",
+    METHOD: 'SetExpressCheckout',
+    VERSION: '106.0',
+    PAYMENTREQUEST_0_PAYMENTACTION: 'Sale',
     PAYMENTREQUEST_0_AMT: transaction.amount,
     PAYMENTREQUEST_0_DESC: transaction.item_name,
     PAYMENTREQUEST_0_CURRENCYCODE: transaction.currency,
     LOCALECODE: transaction.locale,
-    NOSHIPPING: "1",
-    ALLOWNOTE: "0",
+    NOSHIPPING: '1',
+    ALLOWNOTE: '0',
     cancelUrl: transaction.cancelUrl,
     returnUrl: transaction.returnUrl
   };
   if (recurring) {
     charge.PAYMENTREQUEST_0_DESC = transaction.item_name;
     charge.L_BILLINGAGREEMENTDESCRIPTION0 = transaction.item_name;
-    charge.L_BILLINGTYPE0 = "RecurringPayments";
+    charge.L_BILLINGTYPE0 = 'RecurringPayments';
   }
   httpRequest({
     url: process.env.PAYPAL_API_ENDPOINT,
-    method: "POST",
+    method: 'POST',
     form: charge
   }, function(err, httpResponse, body) {
       if (err) {
@@ -34,19 +34,19 @@ function setupPaypal(transaction, recurring, callback) {
         var data = querystring.parse(body);
         callback(null, data);
       }
-  });
+    });
 }
 
 function doPaypal(transaction, recurring, callback) {
   httpRequest({
     url: process.env.PAYPAL_API_ENDPOINT,
-    method: "POST",
+    method: 'POST',
     form: {
       USER: process.env.PAYPAL_USER,
       PWD: process.env.PAYPAL_PWD,
       SIGNATURE: process.env.PAYPAL_SIGNATURE,
-      METHOD: "GetExpressCheckoutDetails",
-      VERSION: "106.0",
+      METHOD: 'GetExpressCheckoutDetails',
+      VERSION: '106.0',
       TOKEN: transaction.token
     }
   }, function(err, httpResponse, body) {
@@ -58,16 +58,16 @@ function doPaypal(transaction, recurring, callback) {
       USER: process.env.PAYPAL_USER,
       PWD: process.env.PAYPAL_PWD,
       SIGNATURE: process.env.PAYPAL_SIGNATURE,
-      METHOD: "DoExpressCheckoutPayment",
-      VERSION: "106.0",
+      METHOD: 'DoExpressCheckoutPayment',
+      VERSION: '106.0',
       TOKEN: data.TOKEN,
-      PAYERID: data.PAYERID,
+      PAYERID: data.PAYERID
     };
     if (recurring) {
       details.DESC = data.DESC;
       details.PROFILESTARTDATE = data.TIMESTAMP;
-      details.BILLINGPERIOD = "Month";
-      details.BILLINGFREQUENCY = "12";
+      details.BILLINGPERIOD = 'Month';
+      details.BILLINGFREQUENCY = '12';
       details.AMT = data.AMT;
       details.INITAMT = data.AMT;
       details.CURRENCYCODE = data.CURRENCYCODE;
@@ -77,7 +77,7 @@ function doPaypal(transaction, recurring, callback) {
     }
     httpRequest({
       url: process.env.PAYPAL_API_ENDPOINT,
-      method: "POST",
+      method: 'POST',
       form: details
     }, function(err, httpResponse, body) {
       if (err) {

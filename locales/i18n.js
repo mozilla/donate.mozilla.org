@@ -1,4 +1,4 @@
-var assign = require('react/lib/Object.assign');
+import assign from 'react/lib/Object.assign';
 
 function getMessages(req) {
   var messages = {};
@@ -23,7 +23,7 @@ module.exports = {
     // Sometimes we will include a language with partial translation
     // and we need to make sure the object that we pass to `intlData`
     // contains all keys based on the `en-US` messages.
-    messages: assign(messages['en-US'], strings),
+    messages: assign(messages['en-US'], strings)
   },
   defaultLang: 'en-US',
   currentLanguage: locale,

@@ -1,6 +1,6 @@
 function getLocales(arr) {
   return arr.map(function(item) {
-    return item.replace("./", "").replace(".json", "");
+    return item.replace('./', '').replace('.json', '');
   });
 }
 

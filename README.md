@@ -30,6 +30,8 @@ $> npm start
 - [QA Checklist](docs/QA_Checklist.md)
 - [Support](docs/Support.md)
 - [Metrics & A/B Testing](docs/Metrics.md)
+- [Client and Server](docs/Client_Server.md)
+- [Form Components](docs/Form_Components.md)
 
 ## Localization
 

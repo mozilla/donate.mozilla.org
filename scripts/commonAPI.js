@@ -6,33 +6,33 @@ module.exports = {
   // ***********************************************
   updateDonateButtonText: function(amountSelected) {
     var buttonText;
-    var locale = "US";
-    var recurring = $('[name="recurring_acknowledge"]:checked').val() === '1';
-    if (amountSelected && locale === "US") {
+    var locale = 'US';
+    var recurring = $('[name=\'recurring_acknowledge\']:checked').val() === '1';
+    if (amountSelected && locale === 'US') {
       if (recurring) {
-        buttonText = "Donate $" + amountSelected + " monthly";
+        buttonText = 'Donate $' + amountSelected + ' monthly';
       } else {
-        buttonText = "Donate $" + amountSelected + " now";
+        buttonText = 'Donate $' + amountSelected + ' now';
       }
     } else {
       if (recurring) {
-        buttonText = this.getIntlMessage("donate_monthly");
+        buttonText = this.getIntlMessage('donate_monthly');
       } else {
-        buttonText = this.getIntlMessage("donate_now");
+        buttonText = this.getIntlMessage('donate_now');
       }
     }
-    $("#donate-btn").text(buttonText);
+    $('#donate-btn').text(buttonText);
   },
   showCreditCardForm: function() {
-    $('.not-required-paypal').attr('required', true).attr('data-parsley-required', "true");
-    $(".cc-additional-info").show();
+    $('.not-required-paypal').attr('required', true).attr('data-parsley-required', 'true');
+    $('.cc-additional-info').show();
     this.calculateHeight();
-    $(".stripe-notice").show();
+    $('.stripe-notice').show();
     window.setTimeout(function() {
-      $('[name="cc_number"]').focus();
+      $('[name=\'cc_number\']').focus();
     }, 500);
-    if ($(".parsley-error").length > 0) {
-      $("#one-line-error").show();
+    if ($('.parsley-error').length > 0) {
+      $('#one-line-error').show();
     }
   },
   calculateHeight: function() {
@@ -47,18 +47,18 @@ module.exports = {
   hidePage: function(page, status) {
     $(page).addClass('page-hidden-' + status);
     var amount;
-    if (page === "#page-1") {
-      if (status === "complete") {
-        amount = "$" + $("#donation-form").find("[name='donation_amount']:checked").val();
-        $("[data-position='#page-1'] .page-breadcrumb").text(amount);
+    if (page === '#page-1') {
+      if (status === 'complete') {
+        amount = '$' + $('#donation-form').find('[name=\'donation_amount\']:checked').val();
+        $('[data-position=\'#page-1\'] .page-breadcrumb').text(amount);
       } else {
-        $("[data-position='#page-1'] .page-breadcrumb").text("");
+        $('[data-position=\'#page-1\'] .page-breadcrumb').text('');
       }
-    } else if (page === "#page-2") {
-      if (status === "complete") {
-        $("[data-position='#page-2'] .page-breadcrumb").text("Credit card");
+    } else if (page === '#page-2') {
+      if (status === 'complete') {
+        $('[data-position=\'#page-2\'] .page-breadcrumb').text('Credit card');
       } else {
-        $("[data-position='#page-2'] .page-breadcrumb").text("");
+        $('[data-position=\'#page-2\'] .page-breadcrumb').text('');
       }
     }
     window.setTimeout(function() {
@@ -67,9 +67,9 @@ module.exports = {
   },
   showPage: function(page) {
     $('ol.progress').find('li').removeClass('active');
-    $('ol.progress').find('li[data-position="' + page + '"]').addClass('active');
+    $('ol.progress').find('li[data-position=\'' + page + '\']').addClass('active');
 
-    $("[data-position='" + page + "'] .page-breadcrumb").text("");
+    $('[data-position=\'' + page + '\'] .page-breadcrumb').text('');
 
     $(page).removeClass('hidden');
     $(page).prop('disabled', false);
@@ -80,15 +80,15 @@ module.exports = {
     this.calculateHeight();
 
     // Reset progress bar dots' cursor type accordlying
-    $(".progress li").css({
-      cursor: "default"
+    $('.progress li').css({
+      cursor: 'default'
     });
-    $(".progress li.active").prevAll("li").css({
-      cursor: "pointer"
+    $('.progress li.active').prevAll('li').css({
+      cursor: 'pointer'
     });
 
     // These are virtual pageviews, so we track them manually in GA
     var currentPage = window.location.pathname;
     reactGA.pageview(currentPage + page);
   }
-}
+};

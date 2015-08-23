@@ -11,12 +11,11 @@ var Habitat = require('habitat');
 Habitat.load();
 var env = new Habitat();
 
-var openexachangeratesKey = env.get("OPENEXCHANGERATES_KEY");
-var openexchangeratesAPI = "https://openexchangerates.org/api/latest.json?app_id=";
+var openexachangeratesKey = env.get('OPENEXCHANGERATES_KEY');
+var openexchangeratesAPI = 'https://openexchangerates.org/api/latest.json?app_id=';
 
 if (!openexachangeratesKey) {
   console.error('Please set OPENEXCHANGERATES_KEY in your environment variables');
-  return;
 }
 
 var pathForLatestRates = './public/exchange-rates/latest.json';
@@ -98,7 +97,7 @@ checkForLatestLocalCopy(function (err, latestCopy) {
   // else, we don't have a copy, or it needs updating
   log('Fetching latest exchange rate data now');
 
-  getLatestRates(function (err) {
+  getLatestRates(function () {
     log('Finished fetching latest exchange rates');
   });
 

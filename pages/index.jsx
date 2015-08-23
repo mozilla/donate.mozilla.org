@@ -13,6 +13,7 @@ var Index = React.createClass({
           <script src="/js/parsley.min.js"></script>
           <script src="https://js.stripe.com/v1/"></script>
           <script src="/js/stripe.js"></script>
+          <script src="/js/stripe-checkout.js"></script>
           <script src="/js/ga.js"></script>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic"/>
           <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>

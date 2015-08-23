@@ -5,7 +5,7 @@ import SectionHeading from '../components/section-heading.jsx';
 import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
 import PayPalButton from '../components/paypal-button.jsx';
-import CreditCardButton from '../components/credit-card-button.jsx';
+import StripeButton from '../components/stripe-button.jsx';
 import FormContainer from '../components/form-container.jsx';
 
 var SingleForm = React.createClass({
@@ -25,7 +25,7 @@ var SingleForm = React.createClass({
               <h4>{this.getIntlMessage("choose_payment")}</h4>
               <p id="secure-label"><i className="fa fa-lock"></i>{this.getIntlMessage('secure')}</p>
             </SectionHeading>
-            <CreditCardButton/>
+            <StripeButton/>
             <PayPalButton/>
           </div>
         </FormContainer>

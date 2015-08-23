@@ -12,6 +12,7 @@
   "globals": {
       "$": false,
       "Stripe": false,
-      "ga": false
+      "ga": false,
+      "StripeCheckout": false
   }
 }

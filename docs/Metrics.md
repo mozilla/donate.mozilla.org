@@ -1,11 +1,48 @@
 # Metrics
 
+1. [Instrumentation (Google Analytics)](#instrumentation-google-analytics)
+2. [A/B Testing](#ab-testing)
+3. [Exchange Rates](#exchange-rates)
+
+
 ## Instrumentation (Google Analytics)
 
-* TODO: add content about GA
-  * convesion tracking
-  * virtual views
-  * react-ga lib
+We load Google Analytics on all of our donate web pages, via [index.jsx](https://github.com/mozilla/donate.mozilla.org/blob/master/pages/index.jsx). We're using the standard [Universal Analytics](https://support.google.com/analytics/answer/2790010?hl%3Den) tracking tag, which gives us default data about pageviews [code](https://github.com/mozilla/donate.mozilla.org/blob/master/public/js/ga.js).
+
+We also want to track some additional information specific to our fundraising so we can measure the impact of our campaigns and efforts.
+
+### Revenue Goal Tracking
+
+[analytics.js](https://github.com/mozilla/donate.mozilla.org/blob/master/public/js/analytics.js) is loaded on all of our 'thank you' pages, after a donation is complete. In this file we look for URL parameters provided by our various payment providers to extract:
+
+* `transaction id`
+* `donation amount`
+* `currency code`
+* `frequency` < One-off or Monthly
+
+We then use these values to record a [Google Analytics Ecommerce Event](https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingEcommerce), and an [Optimizely Revenue Event](https://help.optimizely.com/hc/en-us/articles/200039865-Revenue-tracking-goals).
+
+### Virtual Pageviews
+
+Some of our donation forms are 'sequential', where the user completes one step at a time. Because we have built this user flow using JavaScript, the whole interaction happens without changing the URL the user is on. In this scenario, Google Analytics doesn't know the user has moved between multiple virtual pages unless we fire specific tracking events.
+
+When tracking GA events in React, we use our own library [react-ga](https://github.com/mozilla/react-ga/).
+
+e.g.
+
+```js
+  var reactGA = require('react-ga');
+
+  ...
+
+  showPage: function(page) {
+    ...
+
+    var currentPage = window.location.pathname;
+    reactGA.pageview(currentPage + page);
+  }
+```
+
 
 ## A/B Testing
 

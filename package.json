@@ -12,7 +12,7 @@
     "build:js": "webpack",
     "build:exchangerates": "node scripts/exchangerates.js",
     "build:css": "npm run watch:css -- --no-watch",
-    "watch:js": "webpack -w -h",
+    "watch:js": "webpack -w",
     "watch:css": "mkdirp public/css && autoless less public/css --autoprefix '> 1%, last 2 versions'  --source-map",
     "server": "node start.js",
     "test": "npm-run-all --parallel test:server test:depcheck test:lint",

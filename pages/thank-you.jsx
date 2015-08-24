@@ -31,7 +31,7 @@ var ThankYou = React.createClass({
                 </h2>
               </div>
             </div>
-            {this.props.params && !this.props.params.locale ? <Signup/> : <Social/> }
+            {this.props.params && this.props.params.locale === 'en-US' ? <Signup/> : <Social/> }
             <Footer/>
           </div>
         </div>

@@ -39,7 +39,7 @@ module.exports = {
           values = currencies[state.params.currency];
         }
 
-        if(state.params.locale) {
+        if(state.params.locale && require('./locales/index.js').indexOf(state.params.locale) !== -1) {
           var currentString = require('./locales/' + state.params.locale +'.json');
           var mergedStrings = Object.assign(englishStrings, currentString);
           values = Object.assign({locales : [state.params.locale], messages: mergedStrings}, values);

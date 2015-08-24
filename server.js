@@ -55,6 +55,15 @@ server.route([
   }
 ]);
 
+// This will catch all 404s and redirect them to root URL
+// with preserving the pathname for client-side to handle.
+server.ext('onPreResponse', function(request, reply) {
+  if(request.response.output && request.response.output.statusCode === 404) {
+    return reply.redirect('/?pathname=' + request.url.pathname);
+  }
+  return reply.continue();
+});
+
 module.exports = {
   start: function(done) {
     server.register({

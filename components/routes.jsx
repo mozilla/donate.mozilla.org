@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router';
 import pages from '../data/pages.js';
+import locales from '../locales/index.js';
 
 var routes = (
   <Route>
@@ -11,9 +12,22 @@ var routes = (
         );
       })
     }
-    <Route name="paypal-donate" path="/paypal-donate-:currency/?" handler={require('../pages/paypal-donate.jsx')} />
-    <Route name="donate-locale" path="/donate-:locale/?" handler={require('../pages/sequential.jsx')} />
-    <Route name="thank-you-locale" path="/thank-you-:locale/?" handler={require('../pages/thank-you.jsx')} />
+    {/* route with locale in them */}
+    {
+      locales.map(function(locale) {
+        return Object.keys(pages).map(function(key) {
+          var routeOBJ = {
+            key: pages[key].name + '-' + locale,
+            name:pages[key].name + '-' + locale,
+            path:pages[key].path.replace(':locale', locale),
+            handler: pages[key].handler
+          }
+          return (
+            <Route {...routeOBJ}/>
+          );
+        })
+      })
+    }
   </Route>
 );
 

@@ -6,6 +6,6 @@ function getLocales(arr) {
 
 var reqF = require('enhanced-require');
 var req = reqF(module);
-var arr = req.context('./', true, /\.json$/).keys();
+var arr = !req.context ? require.context('./', true, /\.json$/).keys() : req.context('./', true, /\.json$/).keys();
 
 module.exports = getLocales(arr);

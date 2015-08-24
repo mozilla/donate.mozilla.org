@@ -7,7 +7,6 @@ var routes = require('./components/routes.jsx');
 var paths = require('./scripts/paths.js');
 var currencies = require('./data/currencies.js');
 var englishStrings = require('./locales/en-US.json');
-var isLocale = /^[\w]{2,2}($|((-[\w]{2,})?((@|\.)[\w]{2,})?)$)/;
 
 module.exports = {
   entry: './components/client.jsx',
@@ -40,7 +39,7 @@ module.exports = {
           values = currencies[state.params.currency];
         }
 
-        if(state.params.locale && isLocale.test(state.params.locale)) {
+        if(state.params.locale && require('./locales/index.js').indexOf(state.params.locale) !== -1) {
           var currentString = require('./locales/' + state.params.locale +'.json');
           var mergedStrings = Object.assign(englishStrings, currentString);
           values = Object.assign({locales : [state.params.locale], messages: mergedStrings}, values);

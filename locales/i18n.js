@@ -1,5 +1,5 @@
 import assign from 'react/lib/Object.assign';
-var isLocale = /^[\w]{2,2}($|((-[\w]{2,})?((@|\.)[\w]{2,})?)$)/;
+import locales from '../locales/index.js';
 
 function getMessages(req) {
   var messages = {};
@@ -41,9 +41,9 @@ module.exports = {
     var localeCode = localPath.split('/')[1];
     var pathname = localPath.split('/')[2];
     return {
-      test: isLocale.test(localeCode),
+      test: locales.indexOf(localeCode) !== -1,
       pathname: pathname,
-      lang: isLocale.test(localeCode) ? localeCode : null
+      lang: locales.indexOf(localeCode) !== -1 ? localeCode : null
     };
   },
   intlDataFor: function(lang) {

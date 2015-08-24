@@ -7,9 +7,9 @@
 
 ## Instrumentation (Google Analytics)
 
-We load Google Analytics on all of our fundraising web pages, via [index.jsx](https://github.com/mozilla/donate.mozilla.org/blob/master/pages/index.jsx#L16). This is the standard Universal Analytics tracking tag, which gives us default data about page views [code](https://github.com/mozilla/donate.mozilla.org/blob/master/public/js/ga.js).
+We load Google Analytics on all of our donate web pages, via [index.jsx](https://github.com/mozilla/donate.mozilla.org/blob/master/pages/index.jsx). We're using the standard [Universal Analytics](https://support.google.com/analytics/answer/2790010?hl%3Den) tracking tag, which gives us default data about pageviews [code](https://github.com/mozilla/donate.mozilla.org/blob/master/public/js/ga.js).
 
-We also want to track some more specific information related to fundraising so that we can measure the impact of our fundraising campaigns and efforts.
+We also want to track some additional information specific to our fundraising so we can measure the impact of our campaigns and efforts.
 
 ### Revenue Goal Tracking
 
@@ -20,7 +20,7 @@ We also want to track some more specific information related to fundraising so t
 * `currency code`
 * `frequency` < One-off or Monthly
 
-We then use these values to record a Google Analytics Ecommerce Event, and an Optimizely Revenue Event.
+We then use these values to record a [Google Analytics Ecommerce Event](https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingEcommerce), and an [Optimizely Revenue Event](https://help.optimizely.com/hc/en-us/articles/200039865-Revenue-tracking-goals).
 
 ### Virtual Pageviews
 

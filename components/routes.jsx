@@ -6,26 +6,31 @@ import locales from '../locales/index.js';
 var routes = (
   <Route>
     {
-      Object.keys(pages).map(function(key) {
-        return (
-          <Route key={key} {...pages[key]} />
-        );
-      })
-    }
-    {/* route with locale in them */}
-    {
       locales.map(function(locale) {
         return Object.keys(pages).map(function(key) {
           var routeOBJ = {
-            key: pages[key].name + '-' + locale,
-            name:pages[key].name + '-' + locale,
-            path:pages[key].path.replace(':locale', locale),
+            key:  pages[key].name + '-' + locale,
+            name: pages[key].name + '-' + locale,
+            path: pages[key].path.replace(':locale', locale),
             handler: pages[key].handler
           }
           return (
             <Route {...routeOBJ}/>
           );
         })
+      })
+    }
+    {
+      Object.keys(pages).map(function(key) {
+        var routeOBJ = {
+          key:  pages[key].name,
+          name: pages[key].name,
+          path: '/' + pages[key].name + '/?',
+          handler: pages[key].handler
+        }
+        return (
+          <Route {...routeOBJ} />
+        )
       })
     }
   </Route>

@@ -7,9 +7,9 @@ var DonateButton = React.createClass({
   },
   render: function() {
     var message = this.getIntlMessage("donate_now");
-    if (this.props.display) {
+    if (this.props.amount) {
       // Need to translate this.
-      message = "Donate $" + this.props.display + " now";
+      message = "Donate " + this.props.amount + " now";
     }
     return (
       <div className="row">

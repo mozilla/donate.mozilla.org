@@ -122,7 +122,7 @@ var SingleForm = React.createClass({
 
               <PrivacyPolicy onChange={this.onChange} name="privacyPolicy"/>
               <DonateButton validate={["name", "address", "email", "privacyPolicy"]}
-                onSubmit={this.stripe} display={amount}
+                onSubmit={this.stripe} amount={amount}
                 submit={["amount", "frequency", "creditCardInfo", "name", "address", "email"]}
               />
             </Page>

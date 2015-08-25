@@ -10,17 +10,14 @@ var englishStrings = require('./locales/en-US.json');
 
 module.exports = {
   entry: './components/client.jsx',
-
   output: {
     filename: '[name].js',
     chunkFilename: '[id].chunk.js',
     path: path.join('public')
   },
-
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
-
   module: {
     loaders: [
     { test: /\.js$/, loaders:  ['babel-loader'], exclude: ['node_modules'] },
@@ -28,7 +25,6 @@ module.exports = {
     { test: /\.json$/, loaders: ['json-loader'] }
     ]
   },
-
   plugins: [
     new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
       Router.run(routes, outputPath, function (Handler, state) {

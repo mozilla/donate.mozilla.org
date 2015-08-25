@@ -46,21 +46,6 @@ module.exports = {
   // ***********************************************
   hidePage: function(page, status) {
     $(page).addClass('page-hidden-' + status);
-    var amount;
-    if (page === '#page-1') {
-      if (status === 'complete') {
-        amount = '$' + $('#donation-form').find('[name=\'donation_amount\']:checked').val();
-        $('[data-position=\'#page-1\'] .page-breadcrumb').text(amount);
-      } else {
-        $('[data-position=\'#page-1\'] .page-breadcrumb').text('');
-      }
-    } else if (page === '#page-2') {
-      if (status === 'complete') {
-        $('[data-position=\'#page-2\'] .page-breadcrumb').text('Credit card');
-      } else {
-        $('[data-position=\'#page-2\'] .page-breadcrumb').text('');
-      }
-    }
     window.setTimeout(function() {
       $(page).addClass('hidden');
     }, 501);

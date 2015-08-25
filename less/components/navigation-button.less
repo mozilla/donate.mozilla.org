@@ -1,0 +1,33 @@
+ol.progress li {
+  counter-increment: progress;
+  position: relative;
+  width: 33%;
+  float: left;
+  margin-top: 40px;
+
+  .page-breadcrumb {
+    color: #0095DD;
+  }
+
+  &::before {
+    background: none repeat scroll 0% 0% #EAEFF2;
+    border-radius: 50%;
+    box-shadow: 0px 0px 0px 10px #EAEFF2;
+    content: counter(progress, decimal);
+    height: 34px;
+    line-height: 2.4;
+    position: absolute;
+    top: -44px;
+    width: 34px;
+    left: 50%;
+    margin-left: -17px;
+  }
+
+  &.active::before {
+    background: #0095DD;
+    color: #ffffff;
+  }
+  &.complete {
+    cursor: pointer;
+  }
+}

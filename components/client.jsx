@@ -2,6 +2,7 @@ import React from 'react';
 import Router from 'react-router';
 import currencies from '../data/currencies.js';
 import routes from './routes.jsx';
+require('whatwg-fetch');
 import i18n from '../locales/i18n.js';
 import assign from 'react/lib/Object.assign';
 import paths from '../scripts/paths.js';

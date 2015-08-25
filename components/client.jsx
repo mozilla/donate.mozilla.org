@@ -11,9 +11,9 @@ function redirectTo(pathname, query, Handler) {
   // we need to check if the requested path exists in our paths list
   // if not redirect to root which is better than showing blank page
   if(paths.indexOf(pathname) === -1) {
-    Handler.transitionTo('/');
+    Handler.replaceWith('/');
   } else {
-    Handler.transitionTo(pathname, {}, query)
+    Handler.replaceWith(pathname, {}, query)
   }
 }
 

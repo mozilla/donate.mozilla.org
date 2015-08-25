@@ -4,16 +4,20 @@ var paypal = require('./paypal');
 
 var routes = {
   'signup': function(request, reply) {
+    var url = 'https://sendto.mozilla.org/page/signup/EOYFR2014-donor';
     var transaction = request.payload || {};
+    if(transaction.language_code !== 'en-US') {
+      url = url + '-' + transaction.language_code;
+    }
     httpRequest({
-      url: 'https://sendto.mozilla.org/page/signup/EOYFR2014-donor',
+      url: url,
       method: 'POST',
       form: transaction
     }, function(err) {
       if (err) {
         return console.error('signup failed:', err);
       }
-      reply.redirect('/share');
+      reply.redirect('/' + transaction.language_code + '/share');
     });
   },
   'stripe': function(request, reply) {

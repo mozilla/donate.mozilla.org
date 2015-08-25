@@ -58,6 +58,7 @@ var Form = React.createClass({
                 </div>
                 <input name="submit-btn" value="Sign up now" type="submit"/>
                 <input name="redirect_url" value="" type="hidden"/>
+                <input name="language_code" value={this.props.language} type="hidden"/>
                 <input id="_guid" name="_guid" value="" type="hidden"/>
               </form>
             </div>

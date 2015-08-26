@@ -1,4 +1,5 @@
-var assign = require('react/lib/Object.assign');
+import assign from 'react/lib/Object.assign';
+import reactGA from 'react-ga';
 
 module.exports = {
   updateHeight: function() {
@@ -33,16 +34,20 @@ module.exports = {
   nextPage: function(validate) {
     var valid = this.validateProps(validate);
     if (valid) {
-      this.setState({
-        activePage: this.state.activePage+1
-      });
+      this.toThisPage(this.state.activePage+1);
     }
-    this.updateHeight();
   },
   toThisPage: function(index) {
     this.setState({
       activePage: index
     });
+
+    // Index starts at 0, and our page tracking starts at 1.
+    var page = index+1;
+    // Build the page the way it is expected.
+    var currentPage = window.location.pathname + "#page-" + page;
+    // These are virtual pageviews, so we track them manually in GA
+    reactGA.pageview(currentPage);
     this.updateHeight();
   },
   submit: function(action, props, callback) {

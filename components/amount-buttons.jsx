@@ -1,7 +1,7 @@
 import React from 'react';
 
 var AmountButtons = React.createClass({
-  mixins: [require('react-intl').IntlMixin, require('../scripts/commonAPI.js')],
+  mixins: [require('react-intl').IntlMixin],
   getInitialState: function() {
     return {
       otherAmount: "",

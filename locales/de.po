@@ -1,0 +1,203 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-08-26 12:22-0400\n"
+"PO-Revision-Date: 2015-08-26 12:22-0400\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: de <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "one_time"
+msgstr "Einmalig"
+
+msgid "from_all_of_us_at_mozilla"
+msgstr "Von uns allen bei Mozilla"
+
+msgid "thank_you_for_your_donation"
+msgstr "<em>Vielen Dank</em> für Ihre Spende"
+
+msgid "monthly"
+msgstr "Monatlich"
+
+msgid "please_select_an_amount"
+msgstr "Bitte wählen Sie einen Betrag"
+
+msgid "other_amount"
+msgstr "Anderer Betrag"
+
+msgid "secure"
+msgstr "Sicher"
+
+msgid "credit_card"
+msgstr "Kreditkarte"
+
+msgid "this_is_required"
+msgstr "Dies ist erforderlich"
+
+msgid "first_name"
+msgstr "Vorname"
+
+msgid "last_name"
+msgstr "Nachname"
+
+msgid "address"
+msgstr "Adresse"
+
+msgid "city"
+msgstr "Stadt"
+
+msgid "postal_code"
+msgstr "Postleitzahl"
+
+msgid "state_province"
+msgstr "Staat/Provinz"
+
+msgid "credit_card_number"
+msgstr "Kreditkartennummer"
+
+msgid "MM"
+msgstr "MM"
+
+msgid "YY"
+msgstr "JJ"
+
+msgid "CVC"
+msgstr "CVC"
+
+msgid "cvc_info"
+msgstr "Die CVC-Nummer befindet sich auf der Rückseite Ihrer Karte."
+
+msgid "credit_card_expiration_month"
+msgstr "Monat des Ablaufs"
+
+msgid "credit_card_expiration_year"
+msgstr "Jahr des Ablaufs"
+
+msgid "email_info"
+msgstr "Wir werden Ihnen eine Quittung für die Spende per E-Mail senden. Wir senden Ihnen keine weiteren E-Mails ohne Ihre Erlaubnis."
+
+msgid "pp_acknowledge"
+msgstr "Um dieses Formular abzuschicken, müssen Sie unsere Datenschutz-Bestimmungen akzeptieren."
+
+msgid "privacy_policy"target=\"_blank\">privacy policy</a>"
+msgstr "Ich akzeptiere den Umgang mit diesen Informationen durch Sie, wie er in Ihren <a href=\"https://www.mozilla.org/privacy/\" target=\"_blank\">Datenschutz-Bestimmungen</a> erklärt wird"
+
+msgid "please_complete"
+msgstr "Ups, bitte füllen Sie alle in rot hervorgehobenen Felder aus."
+
+msgid "problems_donating"most common questions. Still have problems? <a href=\"mailto:donate@mozilla.org\">Send us an email</a>."
+msgstr "Probleme beim Spenden? <a href=\"https://wiki.mozilla.org/Donate\" target=\"_blank\">Besuche unsere FAQ</a> für Antworten für die häufigsten Fragen. Hast du immer noch Probleme? <a href=\"mailto:donate@mozilla.org\">Sende uns eine E-Mail</a>"
+
+msgid "donate_now"
+msgstr "Jetzt spenden"
+
+msgid "donate_monthly"
+msgstr ""
+
+msgid "donation_notice"charitable purposes. They are tax-deductible in the U.S. to the fullest extent permitted by law."
+msgstr "Die Spenden gehen an die Mozilla Foundation, eine 501(c)(3)-Organisation, und werden nach eigenem Ermessen für wohltätige Zwecke verwendet. Sie sind in den USA, soweit es gesetzlich zulässig ist, im vollsten Umfang steuerlich absetzbar."
+
+msgid "stripe_notice"target=\"_blank\">Privacy & Terms</a>."
+msgstr ""
+
+msgid "amount"
+msgstr "Betrag"
+
+msgid "email"
+msgstr "E-Mail-Adresse"
+
+msgid "payment"
+msgstr "Zahlung"
+
+msgid "choose_payment"
+msgstr ""
+
+msgid "country"
+msgstr "Land"
+
+msgid "none"
+msgstr "Keine"
+
+msgid "donation_min_error"
+msgstr "Spenden müssen mindestens 2 USD betragen"
+
+msgid "submitting"
+msgstr "Senden..."
+
+msgid "something_went_wrong_with_your_transaction_please_try_again_later"
+msgstr "Bei Ihrer Transaktion hat etwas nicht funktioniert. Bitte versuchen Sie es später noch einmal."
+
+msgid "try_again_later"
+msgstr "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal."
+
+msgid "gone_wrong_try_another"
+msgstr "Etwas scheint nicht funktioniert zu haben. Bitte überprüfen Sie Ihre Kartendaten oder benutzen Sie eine andere Karte."
+
+msgid "expired_card"
+msgstr "Leider ist Ihre Karte abgelaufen. Bitte überprüfen Sie Ihre Kartendaten oder versuchen es mit einer anderen Karte."
+
+msgid "invalid_CVC"
+msgstr "Ungültige Kartenprüfnummer"
+
+msgid "invalid_number"
+msgstr "Ungültige Kreditkartennummer"
+
+msgid "invalid_zip"
+msgstr "Ungültige Postleitzahl"
+
+msgid "fraud_card"
+msgstr "Es tut uns leid, aber Ihre Transaktion hat eine Sicherheitswarnung zum Schutz vor Betrug ausgelöst. Bitte versuchen Sie es mit einer anderen Karte."
+
+msgid "declined_card"
+msgstr "Leider ist Ihre Karte abgelehnt worden. Bitte überprüfen Sie Ihre Kartendaten oder versuchen es mit einer anderen Karte."
+
+msgid "transaction_try_another"
+msgstr "Bei Ihrer Transaktion ist ein Fehler aufgetreten. Bitte überprüfen Sie Ihre Kartendaten oder benutzen Sie eine andere Karte."
+
+msgid "dupe_donation"
+msgstr "Wir scheinen Ihre Spende bereits empfangen zu haben – bitte laden Sie die Seite neu, falls Sie noch einmal spenden möchten."
+
+msgid "select_your_amount"
+msgstr "Bitte wählen Sie den Betrag"
+
+msgid "next"
+msgstr "Weiter"
+
+msgid "personal"
+msgstr "Persönlich"
+
+msgid "other_amount_format_error"
+msgstr "Bitte geben Sie eine Zahl mit bis zu 2 Nachkommastellen ein"
+
+msgid "donate_today"
+msgstr "Jetzt spenden"
+
+msgid "select_donation"
+msgstr "Wählen Sie Ihren Spendenbetrag"
+
+msgid "share"
+msgstr ""
+
+msgid "continue"
+msgstr "Weiter"
+
+msgid "error_amount"
+msgstr "Wählen Sie bitte einen Wert nicht kleiner als {{ min_amount }}."
+
+msgid "donate_now_amount"
+msgstr "Jetzt spenden {{ currency_symbol }}{ amount }"
+
+msgid "mozilla_donation"
+msgstr ""
+
+msgid "mozilla_monthly_donation"
+msgstr ""

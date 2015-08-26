@@ -1,0 +1,211 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: payments-l 10n\n"
+"Language-Team: none\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2015-08-12 17:47+0000\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2015-08-12 17:47+0000\n"
+"Last-Translator: Automatically generated\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "donation_notice_bitcoin"
+msgstr "The Mozilla Foundation is a California non-profit corporation exempt from United States federal income taxation under IRC 501(c)(3) and a public charity classified under IRC sections 170(b)(1)(A) and 509(a)(1). Bitcoin donations Mozilla receives are considered charitable contributions under U.S. federal tax laws, to be used in its discretion for its charitable purposes. If you have questions, check out <a href=\"https://wiki.mozilla.org/Donate\">our FAQ</a> or contact us at <a href=\"mailto:donate@mozilla.org\">donate@mozilla.org</a>."
+
+msgid "one_time"
+msgstr "One-time"
+
+msgid "tell_your_friends"
+msgstr "Tell your friends"
+
+msgid "help_spread_the_word"
+msgstr "We need your help to spread the word."
+
+msgid "help_protect_the_web"
+msgstr "Help protect the open Web."
+
+msgid "from_all_of_us_at_mozilla"
+msgstr "From all of us at Mozilla"
+
+msgid "thank_you_for_your_donation"
+msgstr "<em>Thank you</em> for your donation"
+
+msgid "monthly"
+msgstr "Monthly"
+
+msgid "please_select_an_amount"
+msgstr "Please select an amount"
+
+msgid "other_amount"
+msgstr "Other amount"
+
+msgid "secure"
+msgstr "Secure"
+
+msgid "credit_card"
+msgstr "Credit card"
+
+msgid "this_is_required"
+msgstr "This is required"
+
+msgid "first_name"
+msgstr "First name"
+
+msgid "last_name"
+msgstr "Last name"
+
+msgid "address"
+msgstr "Address"
+
+msgid "city"
+msgstr "City"
+
+msgid "postal_code"
+msgstr "Zip/Postal code"
+
+msgid "state_province"
+msgstr "State/Province"
+
+msgid "credit_card_number"
+msgstr "Credit card number"
+
+msgid "MM"
+msgstr "MM"
+
+msgid "YY"
+msgstr "YY"
+
+msgid "CVC"
+msgstr "CVC"
+
+msgid "cvc_info"
+msgstr "You can find your three-digit CVC number on the back of your credit card"
+
+msgid "credit_card_expiration_month"
+msgstr "Credit Card Expiration Month"
+
+msgid "credit_card_expiration_year"
+msgstr "Credit Card Expiration Year"
+
+msgid "email_info"
+msgstr "We&rsquo;ll email you a receipt for your donation. We won&rsquo;t send you other email without your permission."
+
+msgid "pp_acknowledge"
+msgstr "To submit this form you must agree with our privacy policy"
+
+msgid "privacy_policy"
+msgstr "I&rsquo;m okay with you handling this info as you explain in your <a href=\"https://www.mozilla.org/privacy/\" target=\"_blank\">privacy policy</a>"
+
+msgid "please_complete"
+msgstr "Oops, please complete fields highlighted in red"
+
+msgid "problems_donating"
+msgstr "Problems donating? <a href=\"https://wiki.mozilla.org/Donate\" target=\"_blank\">Visit our FAQ</a> for answers to most common questions. Still have problems? <a href=\"mailto:donate@mozilla.org\">Send us an email</a>."
+
+msgid "donate_now"
+msgstr "Donate now"
+
+msgid "donate_monthly"
+msgstr "Donate monthly"
+
+msgid "donation_notice"
+msgstr "Contributions go to the Mozilla Foundation, a 501(c)(3) organization, to be used in its discretion for its charitable purposes. They are tax-deductible in the U.S. to the fullest extent permitted by law."
+
+msgid "stripe_notice"
+msgstr "We use Stripe for credit card processing. For more information see their <a href=\"https://stripe.com/terms/\" target=\"_blank\">Privacy & Terms</a>."
+
+msgid "amount"
+msgstr "Amount"
+
+msgid "email"
+msgstr "Email"
+
+msgid "payment"
+msgstr "Payment"
+
+msgid "choose_payment"
+msgstr "Choose Payment"
+
+msgid "country"
+msgstr "Country"
+
+msgid "none"
+msgstr "None"
+
+msgid "donation_min_error"
+msgstr "Donations must be 2$ or more"
+
+msgid "submitting"
+msgstr "Submitting…"
+
+msgid "something_went_wrong_with_your_transaction_please_try_again_later"
+msgstr "Something went wrong with your transaction. Please try again later"
+
+msgid "try_again_later"
+msgstr "Something seems to have gone wrong. Please try again later"
+
+msgid "gone_wrong_try_another"
+msgstr "Something seems to have gone wrong. Please verify your card details or try another card"
+
+msgid "expired_card"
+msgstr "Sorry, your card has expired. Please verify your card details or try another card"
+
+msgid "invalid_CVC"
+msgstr "Invalid CVC number"
+
+msgid "invalid_number"
+msgstr "Invalid credit card number"
+
+msgid "invalid_zip"
+msgstr "Invalid zip/postal code"
+
+msgid "fraud_card"
+msgstr "Sorry, your transaction was flagged for fraud protection. Please try another card"
+
+msgid "declined_card"
+msgstr "Sorry, your card was declined. Please verify your card details or try another card"
+
+msgid "transaction_try_another"
+msgstr "Something went wrong with your transaction. Please verify your card details or try another card"
+
+msgid "dupe_donation"
+msgstr "Looks like we already have your donation—please refresh if you wish to donate again"
+
+msgid "select_your_amount"
+msgstr "Select your amount"
+
+msgid "next"
+msgstr "Next"
+
+msgid "personal"
+msgstr "Personal"
+
+msgid "other_amount_format_error"
+msgstr "Please enter a number up to 2 decimal places."
+
+msgid "donate_today"
+msgstr "Donate Today"
+
+msgid "select_donation"
+msgstr "Select your donation amount"
+
+msgid "share"
+msgstr "Share"
+
+msgid "continue"
+msgstr "continue"
+
+msgid "error_amount"
+msgstr "Please select a value that is no less than {{ min_amount }}."
+
+msgid "donate_now_amount"
+msgstr "Donate {{ currency_symbol }}{ amount } now"
+
+msgid "mozilla_donation"
+msgstr "Mozilla Foundation Donation"
+
+msgid "mozilla_monthly_donation"
+msgstr "Mozilla Foundation Monthly Donation"

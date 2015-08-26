@@ -1,0 +1,203 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-08-26 12:22-0400\n"
+"PO-Revision-Date: 2015-08-26 12:22-0400\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: pt-BR <pt-BR@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "one_time"
+msgstr "Uma vez"
+
+msgid "from_all_of_us_at_mozilla"
+msgstr "De todos nós da Mozilla."
+
+msgid "thank_you_for_your_donation"
+msgstr "<em> Obrigado </em>  por sua doação"
+
+msgid "monthly"
+msgstr "Mensalmente"
+
+msgid "please_select_an_amount"
+msgstr "Por favor, selecione um valor."
+
+msgid "other_amount"
+msgstr "Outros valores."
+
+msgid "secure"
+msgstr "Seguro."
+
+msgid "credit_card"
+msgstr "Cartão de credito."
+
+msgid "this_is_required"
+msgstr "Campo requerido."
+
+msgid "first_name"
+msgstr "Nome"
+
+msgid "last_name"
+msgstr "Sobrenome"
+
+msgid "address"
+msgstr "Endereço"
+
+msgid "city"
+msgstr "Cidade"
+
+msgid "postal_code"
+msgstr "Código Postal"
+
+msgid "state_province"
+msgstr "Estado/Provincia"
+
+msgid "credit_card_number"
+msgstr "Número do cartão de crédito"
+
+msgid "MM"
+msgstr "MM"
+
+msgid "YY"
+msgstr "AA"
+
+msgid "CVC"
+msgstr "CVC"
+
+msgid "cvc_info"
+msgstr "Você pode encontrar o seu número de três dígitos CVC no verso do seu cartão de crédito."
+
+msgid "credit_card_expiration_month"
+msgstr "Mês de vencimento do cartão de crédito"
+
+msgid "credit_card_expiration_year"
+msgstr "Ano de vencimento do seu cartão de crédito"
+
+msgid "email_info"
+msgstr "Nós iremos enviar o recibo de sua doação por e-mail. Não enviaremos outros e-mails sem sua permissão."
+
+msgid "pp_acknowledge"
+msgstr "Para enviar esse formulário, você deve concordar com a nossa política de privacidade"
+
+msgid "privacy_policy"target=\"_blank\">privacy policy</a>"
+msgstr "Tudo bem você lidar com essas informações como explicado na  <a href=\"https://www.mozilla.org/privacy/\" target=\"_blank\"> política de privacidade.</a>"
+
+msgid "please_complete"
+msgstr "Oops, por favor complete os campos destacados em vermelho."
+
+msgid "problems_donating"most common questions. Still have problems? <a href=\"mailto:donate@mozilla.org\">Send us an email</a>."
+msgstr "Problemas com a doação? <a href=\"https://wiki.mozilla.org/Donate\" target=\"_blank\">Visite nossa FAQ</a> Para obter as respostas das perguntas mais frequentes. Continua com problemas ? <a href=\"mailto:donate@mozilla.org\">Nós envie um e-mail </a>."
+
+msgid "donate_now"
+msgstr "Doe agora"
+
+msgid "donate_monthly"
+msgstr ""
+
+msgid "donation_notice"charitable purposes. They are tax-deductible in the U.S. to the fullest extent permitted by law."
+msgstr "Contribuições vão para a Fundação Mozilla, uma organização 501 (c) (3), para ser usado a seu critério para os seus fins de caridade. Elas são dedutíveis de imposto nos EUA em toda a extensão permitida por lei."
+
+msgid "stripe_notice"target=\"_blank\">Privacy & Terms</a>."
+msgstr ""
+
+msgid "amount"
+msgstr "Valor"
+
+msgid "email"
+msgstr "E-mail"
+
+msgid "payment"
+msgstr "Pagamento"
+
+msgid "choose_payment"
+msgstr ""
+
+msgid "country"
+msgstr "País"
+
+msgid "none"
+msgstr "Nenhum"
+
+msgid "donation_min_error"
+msgstr "Doações devem ter valor de $2 ou mais"
+
+msgid "submitting"
+msgstr "Enviando..."
+
+msgid "something_went_wrong_with_your_transaction_please_try_again_later"
+msgstr "Algo errado aconteceu com sua transação. Por favor, tente novamente"
+
+msgid "try_again_later"
+msgstr "Algo errado aconteceu. Por favor, tente novamente mais tarde"
+
+msgid "gone_wrong_try_another"
+msgstr "Algo errado aconteceu. Por favor, verifique os detalhes do seu cartão ou tente outro"
+
+msgid "expired_card"
+msgstr "Desculpe, seu cartão está expirado. Por favor, verifique seus dados do cartão ou tente outro"
+
+msgid "invalid_CVC"
+msgstr "Número CVC inválido"
+
+msgid "invalid_number"
+msgstr "Número inválido do cartão de crédito"
+
+msgid "invalid_zip"
+msgstr "Código Postal inválido"
+
+msgid "fraud_card"
+msgstr "Desculpe, o cartão foi recusado. Por favor, verifique seus dados ou tente outro."
+
+msgid "declined_card"
+msgstr "Lamentamos, mas o seu cartão foi recusado. Por favor, verifique os detalhes do seu cartão ou tente utilizar outro."
+
+msgid "transaction_try_another"
+msgstr "Algo deu errado com sua transação. Por favor, verifique seus dados ou tente outro"
+
+msgid "dupe_donation"
+msgstr "Parece que já temos a sua doação, por favor, atualize caso você deseje doar novamente"
+
+msgid "select_your_amount"
+msgstr "Selecione um valor"
+
+msgid "next"
+msgstr "Próximo"
+
+msgid "personal"
+msgstr "Pessoal"
+
+msgid "other_amount_format_error"
+msgstr "Por favor introduza um número de no máximo 2 casas decimais."
+
+msgid "donate_today"
+msgstr "Doe Hoje"
+
+msgid "select_donation"
+msgstr "Selecione o valor da doação"
+
+msgid "share"
+msgstr ""
+
+msgid "continue"
+msgstr "continue"
+
+msgid "error_amount"
+msgstr "Por favor selecione um valor não inferior a {{ min_amount }}."
+
+msgid "donate_now_amount"
+msgstr "Doe {{ currency_symbol }}{ amount } agora"
+
+msgid "mozilla_donation"
+msgstr ""
+
+msgid "mozilla_monthly_donation"
+msgstr ""

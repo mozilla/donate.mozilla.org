@@ -111,8 +111,8 @@ module.exports = {
         options: {
           connectSrc: ['self', '206878104.log.optimizely.com', 'https://api.stripe.com'],
           fontSrc: ['self', 'https://fonts.gstatic.com', 'https://maxcdn.bootstrapcdn.com'],
-          frameSrc: ['https://js.stripe.com'],
-          imgSrc: ['self', 'https://www.google-analytics.com'],
+          frameSrc: ['https://js.stripe.com', 'https://checkout.stripe.com'],
+          imgSrc: ['self', 'https://www.google-analytics.com', 'https://q.stripe.com'],
           scriptSrc: ['self', 'https://cdn.optimizely.com',
             'https://www.google-analytics.com', 'https://ajax.googleapis.com',
             'https://js.stripe.com'],

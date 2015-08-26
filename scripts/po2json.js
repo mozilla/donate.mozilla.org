@@ -16,7 +16,7 @@ function writeFile(entries) {
 
 function getJSON(locale) {
   return new Promise(function(resolve) {
-    po.load(path.join(process.cwd(), config.src, locale + '.po'), function(_po) {
+    po.load(path.join(process.cwd(), config.src, locale, 'messages.po'), function(_po) {
       var json = {};
       _po.items.forEach(function(entry) {
         json[entry.msgid] = entry.msgstr[0];

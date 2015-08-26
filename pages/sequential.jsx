@@ -1,6 +1,7 @@
 import React from 'react';
 import Footer from '../components/footer.jsx';
 import Header from '../components/header.jsx';
+import SmallPrint from '../components/small-print.jsx';
 import SectionHeading from '../components/section-heading.jsx';
 
 import NavigationMenu from '../components/navigation-menu.jsx';
@@ -129,6 +130,7 @@ var SingleForm = React.createClass({
           </NavigationContainer>
 
         </div>
+        <SmallPrint stripeNotice={!this.state.hideCreditCardDetails}/>
         <Footer/>
       </div>
     );

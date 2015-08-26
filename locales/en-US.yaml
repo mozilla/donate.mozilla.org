@@ -57,8 +57,12 @@ en-US:
   donate_today: Donate Today
   select_donation: Select your donation amount
   share: Share
+  tell_your_friends: Tell your friends
+  help_spread_the_word: We need your help to spread the word.
   continue: continue
   error_amount: Please select a value that is no less than {{ min_amount }}.
   donate_now_amount: Donate {{ currency_symbol }}{ amount } now
   mozilla_donation: Mozilla Foundation Donation
   mozilla_monthly_donation: Mozilla Foundation Monthly Donation
+  help_protect_the_web: Help protect the open Web.
+  donation_notice_bitcoin: The Mozilla Foundation is a California non-profit corporation exempt from United States federal income taxation under IRC 501(c)(3) and a public charity classified under IRC sections 170(b)(1)(A) and 509(a)(1). Bitcoin donations Mozilla receives are considered charitable contributions under U.S. federal tax laws, to be used in its discretion for its charitable purposes. If you have questions, check out <a href="https://wiki.mozilla.org/Donate">our FAQ</a> or contact us at <a href="mailto:donate@mozilla.org">donate@mozilla.org</a>.

@@ -5,6 +5,7 @@ import Pontoon from '../components/pontoon.jsx';
 
 var Index = React.createClass({
   render: function() {
+    var IntlScript = (<script src="/js/Intl.js"></script>);
     return (
       <html>
         <head>
@@ -27,6 +28,8 @@ var Index = React.createClass({
         </head>
         <body>
           <div id="my-app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
+          {!this.Intl ? IntlScript : ''}
+          <script src="https://accept-language.org/polyfill.js"></script>
           <script src="/main.js"></script>
         </body>
       </html>

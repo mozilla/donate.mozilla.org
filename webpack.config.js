@@ -28,7 +28,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      "process.env": {
+      'process.env': {
         COINBASE_ENDPOINT: process.env.COINBASE_ENDPOINT
       }
     }),

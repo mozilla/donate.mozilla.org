@@ -114,46 +114,6 @@ var AmountButtons = React.createClass({
         event.preventDefault();
       }
     });
-
-    // ***********************************************
-    // Preselect dollar amount
-    // ***********************************************
-    function processAmountHash(winLocationHash) {
-      var amtRegex = /#amount-([\w\.]+)/;
-      var amount = winLocationHash.match(amtRegex)[1];
-      if ($(winLocationHash)[0]) {
-        $(winLocationHash)[0].checked = true;
-      } else {
-        $("#amount-other")[0].checked = true;
-        $('#amount-other-input').val(amount);
-      }
-      history.replaceState({
-        page: 1,
-        hash: '#page-1'
-      }, '', '#page-1');
-      amountButtons.updateDonateButtonText(amount);
-    }
-
-    var winLocationHash = win.location.hash;
-    if (winLocationHash.match(/#amount-\d+?/)) {
-      processAmountHash(winLocationHash);
-    } else if (winLocationHash.match(/#cc-amount-\d+?/)) {
-      winLocationHash = winLocationHash.replace("cc-", "");
-      processAmountHash(winLocationHash);
-      history.pushState({
-        page: 2,
-        hash: '#page-2'
-      }, '', '#page-2');
-      $('#payment-cc').prop('checked', true);
-      amountButtons.showCreditCardForm();
-      amountButtons.hidePage('#page-1', 'complete');
-      amountButtons.showPage('#page-2');
-    } else {
-      history.replaceState({
-        page: 1,
-        hash: '#page-1'
-      }, '', '#page-1');
-    }
   },
   render: function() {
     var otherAmount = this.state.otherAmount;

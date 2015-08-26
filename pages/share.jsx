@@ -11,8 +11,8 @@ var ThankYou = React.createClass({
         <Header/>
         <div>
           <div id="header-copy">
-            <h1>Tell your friends</h1>
-            <h4>We need your help to spread the word.</h4>
+            <h1>{this.getIntlMessage('tell_your_friends')}</h1>
+            <h4>{this.getIntlMessage('help_spread_the_word')}</h4>
           </div>
           <Social/>
           <Footer/>

@@ -1,14 +1,16 @@
-var React = require('react');
-var Footer = require('../components/footer.jsx');
-var Header = require('../components/header.jsx');
+import React from 'react';
+import Footer from '../components/footer.jsx';
+import Header from '../components/header.jsx';
+import { IntlMixin, FormattedHTMLMessage } from 'react-intl';
 
 var giveBitcoin = React.createClass({
+  mixins: [IntlMixin],
   render: function() {
     return (
       <div className="coinbase-page mozilla-eoy-donation">
         <Header/>
         <div id="header-copy">
-          <h2>Help protect the open Web.</h2>
+          <h2>{this.getIntlMessage('help_protect_the_web')}</h2>
         </div>
 
         <div className="container" id="form-wrapper">
@@ -22,7 +24,7 @@ var giveBitcoin = React.createClass({
           <div className="row">
             <p className="donation-notice">
               <small>
-                The Mozilla Foundation is a California non-profit corporation exempt from United States federal income taxation under IRC 501(c)(3) and a public charity classified under IRC sections 170(b)(1)(A) and 509(a)(1). Bitcoin donations Mozilla receives are considered charitable contributions under U.S. federal tax laws, to be used in its discretion for its charitable purposes. If you have questions, check out <a href="https://wiki.mozilla.org/Donate">our FAQ</a> or contact us at <a href="mailto:donate@mozilla.org">donate@mozilla.org</a>.
+                <FormattedHTMLMessage message={this.getIntlMessage('donation_notice_bitcoin')} />
               </small>
             </p>
           </div>

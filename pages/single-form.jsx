@@ -12,12 +12,6 @@ import FormContainer from '../components/form-container.jsx';
 
 var SingleForm = React.createClass({
   mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],
-  getInitialState() {
-    return {
-      amount: {state: {values: {amount: ""}}},
-      localeCode: "US"
-    };
-  },
   render: function() {
     return (
       <div className="mozilla-eoy-donation">
@@ -26,7 +20,11 @@ var SingleForm = React.createClass({
           <SectionHeading>
             <h2>{this.getIntlMessage("donate_now")}</h2>
           </SectionHeading>
-          <AmountButtons onChange={this.onChange} name="amount"/>
+          <AmountButtons name="amount"
+            onChange={this.onChange}
+            amount={this.state.amount.state.values.amount}
+            presets={this.state.presets}
+          />
           <Frequency onChange={this.onChange} name="frequency"/>
           <div className="payment-section">
             <SectionHeading>

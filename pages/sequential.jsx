@@ -24,13 +24,16 @@ import PrivacyPolicy from '../components/privacy-policy-input.jsx';
 var SingleForm = React.createClass({
   mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],
   getInitialState() {
+    var amount = "";
+    var presets;
+    if (this.props.queryString) {
+      amount = this.props.queryString.amount;
+      presets = this.props.queryString.presets;
+    }
     return {
-      hideCreditCardDetails: true,
       activePage: 0,
-      height: "252px",
-      amount: {state: {values: {amount: ""}}},
-      paymentType: "",
-      localeCode: "US"
+      hideCreditCardDetails: true,
+      height: "252px"
     };
   },
   expandCreditCardInfo: function() {
@@ -57,9 +60,10 @@ var SingleForm = React.createClass({
     if (this.state.hideCreditCardDetails) {
       creditCardDetailsClassName += " hidden";
     }
-    var amount = "";
-    if (this.state.amount.state.values.amount) {
-      amount = "$" + this.state.amount.state.values.amount;
+    var amount = this.state.amount.state.values.amount;
+    var displayAmount = "";
+    if (amount) {
+      displayAmount = "$" + amount;
     }
     return (
       <div className="mozilla-eoy-donation">
@@ -67,7 +71,7 @@ var SingleForm = React.createClass({
         <div className="container">
 
           <NavigationMenu>
-            <NavigationButton display={amount} onClick={this.toThisPage} activePage={this.state.activePage} index={0}>
+            <NavigationButton display={displayAmount} onClick={this.toThisPage} activePage={this.state.activePage} index={0}>
               <div>{this.getIntlMessage("amount")}</div>
             </NavigationButton>
             <NavigationButton display={this.state.paymentType} onClick={this.toThisPage} activePage={this.state.activePage} index={1}>
@@ -84,7 +88,7 @@ var SingleForm = React.createClass({
                 <h2>{this.getIntlMessage("donate_now")}</h2>
               </SectionHeading>
 
-              <AmountButtons onChange={this.onChange} name="amount"/>
+              <AmountButtons onChange={this.onChange} amount={amount} presets={this.state.presets} name="amount"/>
               <Frequency onChange={this.onChange} name="frequency"/>
               <NextButton onClick={this.nextPage} validate={["amount"]}/>
             </Page>
@@ -123,7 +127,7 @@ var SingleForm = React.createClass({
 
               <PrivacyPolicy onChange={this.onChange} name="privacyPolicy"/>
               <DonateButton validate={["name", "address", "email", "privacyPolicy"]}
-                onSubmit={this.stripe} amount={amount}
+                onSubmit={this.stripe} amount={displayAmount}
                 submit={["amount", "frequency", "creditCardInfo", "name", "address", "email"]}
               />
             </Page>

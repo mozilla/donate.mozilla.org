@@ -2,6 +2,20 @@ import assign from 'react/lib/Object.assign';
 import reactGA from 'react-ga';
 
 module.exports = {
+  getInitialState: function() {
+    var amount = "";
+    var presets;
+    if (this.props.queryString) {
+      amount = this.props.queryString.amount;
+      presets = this.props.queryString.presets;
+    }
+    return {
+      presets: presets,
+      amount: {state: {values: {amount: amount}}},
+      paymentType: "",
+      localeCode: "US"
+    };
+  },
   updateHeight: function() {
     if (this.state.activePage !== 0 && !this.state.activePage) {
       return;

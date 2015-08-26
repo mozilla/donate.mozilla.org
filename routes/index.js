@@ -4,7 +4,7 @@ var paypal = require('./paypal');
 
 var routes = {
   'signup': function(request, reply) {
-    var url = 'https://sendto.mozilla.org/page/signup/EOYFR2014-donor';
+    var url = process.env.SINGUP;
     var transaction = request.payload || {};
     if(transaction.language_code !== 'en-US') {
       url = url + '-' + transaction.language_code;

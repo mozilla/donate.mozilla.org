@@ -1,3 +1,4 @@
+var webpack = require('webpack');
 var SimpleHtmlPrecompiler = require('simple-html-precompiler');
 var path = require('path');
 var React = require('react');
@@ -26,6 +27,11 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      "process.env": {
+        COINBASE_ENDPOINT: process.env.COINBASE_ENDPOINT
+      }
+    }),
     new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
       Router.run(routes, outputPath, function (Handler, state) {
         var values = {};

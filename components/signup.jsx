@@ -1,6 +1,7 @@
 import React from 'react';
 
 var Form = React.createClass({
+  mixins: [require('react-intl').IntlMixin],
   componentDidMount: function() {
     var
         $opt_in = $('label[for="opt_in"]'),

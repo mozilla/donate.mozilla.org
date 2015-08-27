@@ -15,6 +15,7 @@ var ThankYou = React.createClass({
     analytics();
   },
   render: function() {
+    var locale = this.props.locales[0];
     return (
       <div>
         <div className="mozilla-eoy-donation">
@@ -31,7 +32,7 @@ var ThankYou = React.createClass({
                 </h2>
               </div>
             </div>
-            {this.props.params && ['de', 'en-US'].indexOf(this.props.params.locale) !== -1 ? <Signup language={this.props.params.locale }/> : <Social/> }
+            {this.props.params && ['de', 'en-US'].indexOf(locale) !== -1 ? <Signup language={locale}/> : <Social/> }
             <Footer/>
           </div>
         </div>

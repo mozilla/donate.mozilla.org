@@ -26,7 +26,7 @@ var pages = {
   },
   '/paypal-donate': {
     name: 'paypal-donate',
-    path: '/:locale/paypal-donate-:currency/?',
+    path: '/:locale/paypal-donate/?',
     handler: require('../pages/paypal-donate.jsx')
   }
 };

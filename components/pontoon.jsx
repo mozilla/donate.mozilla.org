@@ -1,6 +1,6 @@
 import React from 'react';
 
-var production = process.env.NPM_CONFIG_PRODUCTION === 'false' ? false : true;
+var production = process.env.ENABLE_PONTOON === 'false' ? false : true;
 
 var Pontoon = React.createClass({
   render: function() {

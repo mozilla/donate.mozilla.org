@@ -62,9 +62,6 @@ var SingleForm = React.createClass({
     }
     var amount = this.state.amount.state.values.amount;
     var displayAmount = "";
-    if (amount) {
-      displayAmount = "$" + amount;
-    }
     return (
       <div className="mozilla-eoy-donation">
         <Header/>
@@ -127,7 +124,7 @@ var SingleForm = React.createClass({
 
               <PrivacyPolicy onChange={this.onChange} name="privacyPolicy"/>
               <DonateButton validate={["name", "address", "email", "privacyPolicy"]}
-                onSubmit={this.stripe} amount={displayAmount}
+                onSubmit={this.stripe} amount={amount}
                 submit={["amount", "frequency", "creditCardInfo", "name", "address", "email"]}
               />
             </Page>

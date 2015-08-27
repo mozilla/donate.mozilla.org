@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import { FormattedHTMLMessage, IntlMixin, FormattedMessage } from 'react-intl';
 
 var PaypalInput = React.createClass({
   render: function() {
@@ -15,14 +15,14 @@ var PaypalInput = React.createClass({
 var PaypalButton = React.createClass({
   render: function() {
     var message = this.props.defaultMessage;
-    if (this.props.value) {
-      message = this.props.message
-                  .replace("{currency_symbol}", this.props.currencySymbol)
-                  .replace("{amount}", this.props.value);
-    }
     return (
       <button type="submit" className="btn large-label-size" id="donate-btn">
-        {message}
+      { this.props.value ?
+      <FormattedMessage
+        message={this.props.message}
+        currency_symbol={this.props.currencySymbol}
+        amount={this.props.value}
+        /> : message}
       </button>
     );
   }

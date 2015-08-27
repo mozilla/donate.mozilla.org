@@ -1,5 +1,5 @@
 var config = require('../intl-config.json');
-var po = require('node-po');
+var properties = require('properties-parser');
 var write = require('fs-writefile-promise');
 var path = require('path');
 
@@ -15,13 +15,12 @@ function writeFile(entries) {
 }
 
 function getJSON(locale) {
-  return new Promise(function(resolve) {
-    po.load(path.join(process.cwd(), config.src, locale, 'messages.po'), function(_po) {
-      var json = {};
-      _po.items.forEach(function(entry) {
-        json[entry.msgid] = entry.msgstr[0];
-      });
-      resolve({content: json, locale: locale});
+  return new Promise(function(resolve, reject) {
+    properties.read(path.join(process.cwd(), config.src, locale, 'messages.properties'), function(error, properties) {
+      if(error) {
+        return reject(error);
+      }
+      resolve({content: properties, locale: locale});
     });
   });
 }

@@ -1,6 +1,7 @@
-var React = require('react');
+import React from 'react';
 import Optimizely from '../components/optimizely.jsx';
 import OptimizelySubdomain from '../components/optimizelysubdomain.jsx';
+import Pontoon from '../components/pontoon.jsx';
 
 var Index = React.createClass({
   render: function() {
@@ -17,6 +18,7 @@ var Index = React.createClass({
           <script src="https://js.stripe.com/v1/"></script>
           <script src="/js/stripe.js"></script>
           <script src="/js/ga.js"></script>
+          <Pontoon/>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic"/>
           <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
           <link rel="icon" href="/images/favicon.ico" type="image/x-icon"/>

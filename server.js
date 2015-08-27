@@ -115,7 +115,7 @@ module.exports = {
           imgSrc: ['self', 'https://www.google-analytics.com'],
           scriptSrc: ['self', 'https://cdn.optimizely.com',
             'https://www.google-analytics.com', 'https://ajax.googleapis.com',
-            'https://js.stripe.com'],
+            'https://js.stripe.com', 'https://pontoon.mozilla.org'],
           styleSrc: ['self', 'unsafe-inline', 'https://fonts.googleapis.com',
             'https://maxcdn.bootstrapcdn.com']
         }

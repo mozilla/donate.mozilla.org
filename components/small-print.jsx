@@ -13,7 +13,7 @@ var Footer = React.createClass({
       <div className="row disclaimers">
         <p className="other_ways_to_give">
           <small>
-            Other ways to give: <Link to='give-bitcoin'>Bitcoin</Link> |
+            Other ways to give: <Link to='give-bitcoin'>{this.getIntlMessage('Bitcoin')}</Link> |
             <a target='_blank' href='https://wiki.mozilla.org/Ways_to_Give#Check_.28via_postal_service.29'>Check</a>
           </small>
         </p>

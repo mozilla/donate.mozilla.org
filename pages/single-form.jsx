@@ -1,6 +1,7 @@
 import React from 'react';
 import Footer from '../components/footer.jsx';
 import Header from '../components/header.jsx';
+import SmallPrint from '../components/small-print.jsx';
 import SectionHeading from '../components/section-heading.jsx';
 
 import AmountButtons from '../components/amount-buttons.jsx';
@@ -44,6 +45,7 @@ var SingleForm = React.createClass({
             />
           </div>
         </div>
+        <SmallPrint/>
         <Footer/>
       </div>
     );

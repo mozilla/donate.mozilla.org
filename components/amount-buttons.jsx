@@ -16,13 +16,29 @@ var AmountButton = React.createClass({
 });
 
 var AmountOtherButton = React.createClass({
+  onRadioClick: function() {
+    document.querySelector("#amount-other-input").focus();
+  },
+  onInputClick: function() {
+    document.querySelector("#amount-other").click();
+  },
   render: function() {
     return (
       <div className="two-third">
         <div id="amount-other-container">
-          <input checked={this.props.checked} onClick={this.props.onRadioClick} type="radio" name="donation_amount" value={this.props.amount} id="amount-other"/>
+          <input id="amount-other" type="radio" name="donation_amount"
+            checked={this.props.checked}
+            onClick={this.onRadioClick}
+            onChange={this.props.onRadioChange}
+            value={this.props.amount}
+          />
           <label htmlFor="amount-other" className="large-label-size">$</label>
-          <input onClick={this.props.onInputClick} type="text" id="amount-other-input" placeholder={this.props.placeholder} className="medium-label-size" value={this.props.amount}/>
+          <input id="amount-other-input" className="medium-label-size" type="text"
+            onChange={this.props.onInputChange}
+            value={this.props.amount}
+            onClick={this.onInputClick}
+            placeholder={this.props.placeholder}
+          />
         </div>
       </div>
     );
@@ -37,11 +53,17 @@ var AmountButtons = React.createClass({
     if (presets.length !== 4) {
       presets = ["20", "10", "5", "3"];
     }
+    var amount = this.props.amount;
+    var preset = presets.indexOf(amount);
+    var userInputting = false;
+    if (preset < 0 && amount !== "") {
+      userInputting = true;
+    }
     return {
       presets: presets,
-      userInputting: false,
+      userInputting: userInputting,
       values: {
-        amount: this.props.amount || "",
+        amount: amount || "",
         currencyCode: "USD"
       },
       valid: true
@@ -60,12 +82,13 @@ var AmountButtons = React.createClass({
     });
     this.props.onChange(this.props.name, this);
   },
-  otherRadioClick: function() {
-    document.querySelector("#amount-other-input").focus();
-    this.setAmount("", true);
+  otherRadioChange: function() {
+    if (!this.state.userInputting) {
+      this.setAmount("", true);
+    }
   },
-  otherInputClick: function() {
-    document.querySelector("#amount-other").click();
+  otherInputChange: function(e) {
+    this.setAmount(e.currentTarget.value, true);
   },
   validate: function() {
     var valid = false;
@@ -100,14 +123,9 @@ var AmountButtons = React.createClass({
     var amount = this.state.values.amount;
     var preset = this.state.presets.indexOf(amount);
     var userInputting = this.state.userInputting;
-
-    // userInputting is for the case where the user is
-    // inputting a value that happens to also be a preselect.
-    // In this case, we want to use the other value.
-    if (userInputting || (preset < 0 && amount !== "")) {
+    if (userInputting) {
       otherAmount = amount;
       amount = "";
-      userInputting = true;
     }
     var errorMessageClassName = "row error-msg-row";
     if (this.state.valid) {
@@ -123,8 +141,8 @@ var AmountButtons = React.createClass({
         <div className="row donation-amount-row">
           <AmountButton value={this.state.presets[3]} amount={amount} onChange={this.onChange}/>
           <AmountOtherButton checked={userInputting} amount={otherAmount}
-            onRadioClick={this.otherRadioClick}
-            onInputClick={this.otherInputClick}
+            onRadioChange={this.otherRadioChange}
+            onInputChange={this.otherInputChange}
             placeholder={this.getIntlMessage('other_amount')}
           />
         </div>

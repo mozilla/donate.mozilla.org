@@ -25,7 +25,7 @@ Router.run(routes, Router.HistoryLocation, function (Handler, state) {
   if(state.params.currency) {
     values = currencies[state.params.currency];
   }
-  values.queryString = query;
+  values.queryString = state.query;
 
   // checking if language code is part of the URL e.g. /en-US/thank-you
   if(i18n.urlOverrideLang(state.query.pathname).test) {

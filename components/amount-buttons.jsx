@@ -55,7 +55,7 @@ var AmountOtherButton = React.createClass({
 });
 
 var AmountButtons = React.createClass({
-  mixins: [IntlMixin, require('../scripts/commonAPI.js')],
+  mixins: [require('react-intl').IntlMixin],
   getInitialState: function() {
     var presets = this.props.presets || "";
     presets = presets.split(",");

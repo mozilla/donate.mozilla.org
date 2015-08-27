@@ -129,7 +129,7 @@ module.exports = {
     submitProps = this.buildProps(props);
     var handler = StripeCheckout.configure({
       // Need to get this from .env
-      key: 'pk_test_BZ0QTIwe7BVAk1ZDxOgWZ9Z6',
+      key: process.env.STRIPE_PUBLIC_KEY,
       image: '',
       token: function(response) {
         // Where is this things error? Maybe it's not called at all for an error case.

@@ -29,6 +29,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
+        STRIPE_PUBLIC_KEY: JSON.stringify(process.env.STRIPE_PUBLIC_KEY),
         COINBASE_ENDPOINT: JSON.stringify(process.env.COINBASE_ENDPOINT),
         OPTIMIZELY_ID: JSON.stringify(process.env.OPTIMIZELY_ID),
         OPTIMIZELY_ACTIVE: JSON.stringify(process.env.OPTIMIZELY_ACTIVE),

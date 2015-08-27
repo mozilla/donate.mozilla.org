@@ -66,54 +66,86 @@ module.exports = {
       callback(json);
     });
   },
+  stripeSuccess: function(data) {
+    var transactionId = data.id;
+    var amount;
+    var currency;
+    var donationFrequency;
+
+    if (data.plan) {
+      donationFrequency = 'monthly';
+      currency = data.plan.currency;
+      // Stripe plans are a multiple of the currencies equivilent of Cents
+      // e.g. £5/month = 500 £0.01 subscriptions
+      amount = data.quantity;
+    } else {
+      donationFrequency = 'one-time';
+      amount = data.amount;
+      currency = data.currency;
+    }
+
+    var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' +donationFrequency;
+    var thankYouURL = '/thank-you/' + params;
+
+    if (window.location.assign) {
+      window.location.assign(thankYouURL);
+    } else {
+      window.location = thankYouURL;
+    }
+  },
   stripe: function(validate, props) {
     var submit = this.submit;
+    var success = this.stripeSuccess;
     var valid = this.validateProps(validate);
     var submitProps = {};
-    if (valid) {
-      submitProps = this.buildProps(props);
-      Stripe.card.createToken({
-        number: submitProps.cardNumber,
-        cvc: submitProps.cvc,
-        exp_month: submitProps.expMonth,
-        exp_year: submitProps.expYear
-      }, function(status, response) {
-        if (response.error) {
-          // handle all error cases?
-          console.log(response.error);
-        } else {
-          submitProps.cardNumber = "";
-          submitProps.stripeToken = response.id;
-          submit("/api/stripe", submitProps, function(data) {
-            var transactionId = data.id;
-            var amount;
-            var currency;
-            var donationFrequency;
-
-            if (data.plan) {
-              donationFrequency = 'monthly';
-              currency = data.plan.currency;
-              // Stripe plans are a multiple of the currencies equivilent of Cents
-              // e.g. £5/month = 500 £0.01 subscriptions
-              amount = data.quantity;
-            } else {
-              donationFrequency = 'one-time';
-              amount = data.amount;
-              currency = data.currency;
-            }
-
-            var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' +donationFrequency;
-            var thankYouURL = '/thank-you/' + params;
-
-            if (window.location.assign) {
-              window.location.assign(thankYouURL);
-            } else {
-              window.location = thankYouURL;
-            }
-          });
-        }
-      });
+    if (!valid) {
+      return;
     }
+    submitProps = this.buildProps(props);
+    Stripe.card.createToken({
+      number: submitProps.cardNumber,
+      cvc: submitProps.cvc,
+      exp_month: submitProps.expMonth,
+      exp_year: submitProps.expYear
+    }, function(status, response) {
+      if (response.error) {
+        // handle all error cases?
+        console.log(response.error);
+      } else {
+        submitProps.cardNumber = "";
+        submitProps.stripeToken = response.id;
+        submit("/api/stripe", submitProps, success);
+      }
+    });
+  },
+  stripeCheckout: function(validate, props) {
+    var submit = this.submit;
+    var success = this.stripeSuccess;
+    var valid = this.validateProps(validate);
+    var submitProps= {};
+    if (!valid) {
+      return;
+    }
+    submitProps = this.buildProps(props);
+    var handler = StripeCheckout.configure({
+      // Need to get this from .env
+      key: process.env.STRIPE_PUBLIC_KEY,
+      image: '',
+      token: function(response) {
+        // Where is this things error? Maybe it's not called at all for an error case.
+        submitProps.cardNumber = "";
+        submitProps.stripeToken = response.id;
+        submit("/api/stripe", submitProps, success);
+      }
+    });
+
+    // Open Checkout with further options
+    handler.open({
+      name: this.getIntlMessage("mozilla_donation"),
+      description: submitProps.description,
+      // Stripe wants cents.
+      amount: submitProps.amount * 100
+    });
   },
   buildProps: function(fields) {
     var self = this;

@@ -1,10 +1,20 @@
 var React = require('react');
 
+var Habitat = require('habitat');
+Habitat.load();
+var env = new Habitat();
+
+var cookieDomain = env.get('FULL_SUBDOMAIN_FOR_COOKIE');
+
 var Index = React.createClass({
   render: function() {
     return (
       <html>
         <head>
+          <script>
+            window['optimizely'] = window['optimizely'] || [];
+            window['optimizely'].push(["setCookieDomain", {{cookieDomain}}]);
+          </script>
           <script src="https://cdn.optimizely.com/js/206878104.js"></script>
           <meta charSet="UTF-8"/>
           <meta name="viewport" content="width=device-width, initial-scale=1"/>

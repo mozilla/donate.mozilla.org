@@ -16,5 +16,4 @@ var OptimizelySubdomain = React.createClass({
   }
 });
 
-
 module.exports = OptimizelySubdomain;

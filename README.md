@@ -137,4 +137,14 @@ You have to make sure you match your language code in your YAML file and the nam
 $> npm run test:selenium
 ```
 
+## Environment Variables
+
+You can configure the following environment variables:
+
+|Variable|About|
+|--------|-----|
+| OPTIMIZELY_ID | Optimizely Project ID (not a secret) e.g. '206878104' |
+| OPTIMIZELY_ACTIVE | If set to 'yes' (String) the project will include Optimizely snippet in the page load |
+
+
 

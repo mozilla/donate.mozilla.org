@@ -29,7 +29,10 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        COINBASE_ENDPOINT: process.env.COINBASE_ENDPOINT
+        COINBASE_ENDPOINT: JSON.stringify(process.env.COINBASE_ENDPOINT),
+        OPTIMIZELY_ID: JSON.stringify(process.env.OPTIMIZELY_ID),
+        OPTIMIZELY_ACTIVE: JSON.stringify(process.env.OPTIMIZELY_ACTIVE),
+        FULL_SUBDOMAIN_FOR_COOKIE: JSON.stringify(process.env.FULL_SUBDOMAIN_FOR_COOKIE)
       }
     }),
     new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {

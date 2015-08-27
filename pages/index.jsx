@@ -1,11 +1,14 @@
 var React = require('react');
+import Optimizely from '../components/optimizely.jsx';
+import OptimizelySubdomain from '../components/optimizelysubdomain.jsx';
 
 var Index = React.createClass({
   render: function() {
     return (
       <html>
         <head>
-          <script src="https://cdn.optimizely.com/js/206878104.js"></script>
+          <OptimizelySubdomain/>
+          <Optimizely/>
           <meta charSet="UTF-8"/>
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <title>donate.mozilla.org | Give to Mozilla Today</title>

@@ -43,6 +43,7 @@ module.exports = {
         valid = false;
       }
     });
+    this.updateHeight();
     return valid;
   },
   nextPage: function(validate) {

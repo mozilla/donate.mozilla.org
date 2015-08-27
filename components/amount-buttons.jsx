@@ -97,7 +97,10 @@ var AmountButtons = React.createClass({
     }
   },
   otherInputChange: function(e) {
-    this.setAmount(e.currentTarget.value, true);
+    var newAmount = e.currentTarget.value;
+    if (/^(\d)*[\.]?(\d)*$/.test(newAmount)) {
+      this.setAmount(newAmount, true);
+    }
   },
   validate: function() {
     var valid = false;
@@ -111,21 +114,6 @@ var AmountButtons = React.createClass({
   },
   componentDidMount: function() {
     this.props.onChange(this.props.name, this);
-    var setAmount = this.setAmount;
-
-    document.querySelector("#amount-other-input").addEventListener("input", function() {
-      var amount = document.querySelector('#amount-other-input').value;
-      setAmount(amount, true);
-    });
-
-    $("#amount-other-input").keydown(function(event) {
-      var functionKeys = [8, 9, 13, 27, 37, 39, 46, 110, 190]; // backspace, tab, enter, escape, left arrow, right arrow, delete, decimal point, period
-      var numberKeys = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105]; // numbers
-      var allowed = functionKeys.concat(numberKeys);
-      if (allowed.indexOf(event.keyCode) === -1) {
-        event.preventDefault();
-      }
-    });
   },
   render: function() {
     var otherAmount = "";

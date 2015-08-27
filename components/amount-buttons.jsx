@@ -1,4 +1,5 @@
 import React from 'react';
+import {IntlMixin, FormattedNumber} from 'react-intl';
 
 var AmountButton = React.createClass({
   render: function() {
@@ -6,10 +7,18 @@ var AmountButton = React.createClass({
     if (this.props.value === this.props.amount) {
       checked = true;
     }
+
     return (
       <div className="third">
         <input onChange={this.props.onChange} checked={checked} type="radio" name="donation_amount" value={this.props.value} id={"amount-" + this.props.value}/>
-        <label htmlFor={"amount-" + this.props.value} className="large-label-size">${this.props.value}</label>
+        <label htmlFor={"amount-" + this.props.value} className="large-label-size">
+          <FormattedNumber
+            minimumFractionDigits={0}
+            value={this.props.value}
+            style="currency"
+            currency="USD"
+          />
+        </label>
       </div>
     );
   }
@@ -46,7 +55,7 @@ var AmountOtherButton = React.createClass({
 });
 
 var AmountButtons = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  mixins: [IntlMixin, require('../scripts/commonAPI.js')],
   getInitialState: function() {
     var presets = this.props.presets || "";
     presets = presets.split(",");

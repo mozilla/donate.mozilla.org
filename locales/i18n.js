@@ -1,7 +1,11 @@
 import assign from 'react/lib/Object.assign';
 import locales from '../locales/index.js';
 
-function getMessages(req) {
+// This is essentially bulk require
+var req = require.context('./', true, /\.json.*$/);
+var directories = getAllMessages(req);
+
+function getAllMessages(req) {
   var messages = {};
   req.keys().forEach(function (file) {
     var locale = file.replace('./', '').replace('.json', '');
@@ -10,26 +14,32 @@ function getMessages(req) {
   return messages;
 }
 
-// This is essentially bulk require
-var req = require.context('./', true, /\.json.*$/);
-var messages = getMessages(req);
+// we need to make sure we transform the given locale to the right format first
+// so we can access the right locale in our directories for example: pt-br should be transformed to pt-BR
+function formatLocale(lang) {
+  lang = lang.split('-');
+  return lang[1] ? `${lang[0]}-${lang[1].toUpperCase()}` : lang[0];
+}
 
-var locale = navigator.language.split('-');
-locale = locale[1] ? `${locale[0]}-${locale[1].toUpperCase()}` : navigator.language;
+function getMessages(locale) {
+  var messages = directories[locale] ? directories[locale] : directories['en-US'];
+  return assign({}, directories['en-US'], messages);
+}
 
-var strings = messages[locale] ? messages[locale] : messages['en-US'];
+
+var locale = formatLocale(navigator.language);
 module.exports = {
   intlData: {
     locales : ['en-US'],
     // Sometimes we will include a language with partial translation
     // and we need to make sure the object that we pass to `intlData`
     // contains all keys based on the `en-US` messages.
-    messages: assign({}, messages['en-US'], strings)
+    messages: getMessages(locale)
   },
   defaultLang: 'en-US',
   currentLanguage: locale,
   isSupportedLanguage: function(lang) {
-    return !!messages[lang];
+    return !!directories[lang];
   },
   // This method will check if we have language code in the URL
   // by extracting the pathname from `window.location` and split
@@ -47,11 +57,7 @@ module.exports = {
     };
   },
   intlDataFor: function(lang) {
-    // we need to make sure we transform the given locale to the right format first
-    // so we can access the right locale in our dictionary for example: pt-br should be transformed to pt-BR
-    var locale = lang.split('-');
-    locale = locale[1] ? `${locale[0]}-${locale[1].toUpperCase()}` : lang;
-    var strings = messages[locale] ? messages[locale] : messages['en-US'];
-    return {locales: [locale], messages: assign({}, messages['en-US'], strings)};
+    var locale = formatLocale(lang);
+    return {locales: [locale], messages: getMessages(locale)};
   }
 };

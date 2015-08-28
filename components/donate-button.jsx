@@ -1,8 +1,8 @@
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, IntlMixin, FormattedNumber} from 'react-intl';
 
 var DonateButton = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  mixins: [IntlMixin],
   onClick: function() {
     this.props.onSubmit(this.props.validate, this.props.submit);
   },
@@ -15,8 +15,14 @@ var DonateButton = React.createClass({
             { this.props.amount ?
             <FormattedMessage
               message={this.getIntlMessage('donate_now_amount')}
-              currency_symbol="$"
-              amount={this.props.amount}
+              donationAmount={
+                <FormattedNumber
+                  maximumFractionDigits={2}
+                  value={this.props.amount}
+                  style="currency"
+                  currency={this.props.currency || "usd"}
+                />
+              }
               /> : message}
           </button>
         </div>

@@ -27,6 +27,7 @@ $> npm start
 ## Documentation
 
 - [Deployment](docs/Deployment.md)
+- [Browser Support](docs/Browser_Support.md)
 - [QA Checklist](docs/QA_Checklist.md)
 - [Support](docs/Support.md)
 - [Metrics & A/B Testing](docs/Metrics.md)

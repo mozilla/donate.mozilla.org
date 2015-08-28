@@ -23,7 +23,7 @@ server.connection({
 
 var securityConfig = {
   hsts: process.env.HSTS_ENABLED === 'true' ? 15768000 : false,
-  xframe: true,
+  xframe: process.env.ENABLE_XFRAMEOPTIONS === 'true',
   xss: true,
   noOpen: true,
   noSniff: true
@@ -109,9 +109,9 @@ module.exports = {
       {
         register: require('blankie'),
         options: {
-          connectSrc: ['self', '206878104.log.optimizely.com', 'https://api.stripe.com'],
+          connectSrc: ['self', '206878104.log.optimizely.com', 'https://api.stripe.com', 'https://pontoon.mozilla.org'],
           fontSrc: ['self', 'https://fonts.gstatic.com', 'https://maxcdn.bootstrapcdn.com'],
-          frameSrc: ['https://js.stripe.com', 'https://checkout.stripe.com'],
+          frameSrc: ['https://js.stripe.com', 'https://checkout.stripe.com', 'https://pontoon.mozilla.org'],
           imgSrc: ['self', 'https://www.google-analytics.com', 'https://q.stripe.com'],
           scriptSrc: ['self', 'https://cdn.optimizely.com',
             'https://www.google-analytics.com', 'https://ajax.googleapis.com',

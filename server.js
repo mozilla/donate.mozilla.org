@@ -110,14 +110,14 @@ module.exports = {
         register: require('blankie'),
         options: {
           connectSrc: ['self', '206878104.log.optimizely.com', 'https://api.stripe.com', 'https://pontoon.mozilla.org'],
-          fontSrc: ['self', 'https://fonts.gstatic.com', 'https://maxcdn.bootstrapcdn.com'],
+          fontSrc: ['self', 'https://fonts.gstatic.com', 'https://maxcdn.bootstrapcdn.com', 'https://pontoon.mozilla.org'],
           frameSrc: ['https://js.stripe.com', 'https://checkout.stripe.com', 'https://pontoon.mozilla.org'],
-          imgSrc: ['self', 'https://www.google-analytics.com', 'https://q.stripe.com'],
+          imgSrc: ['self', 'https://www.google-analytics.com', 'https://q.stripe.com', 'https://pontoon.mozilla.org'],
           scriptSrc: ['self', 'https://cdn.optimizely.com',
             'https://www.google-analytics.com', 'https://ajax.googleapis.com',
             'https://js.stripe.com', 'https://pontoon.mozilla.org'],
           styleSrc: ['self', 'unsafe-inline', 'https://fonts.googleapis.com',
-            'https://maxcdn.bootstrapcdn.com']
+            'https://maxcdn.bootstrapcdn.com', 'https://pontoon.mozilla.org']
         }
       }
     ], function (err) {

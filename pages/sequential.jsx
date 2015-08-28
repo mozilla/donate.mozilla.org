@@ -61,14 +61,13 @@ var SingleForm = React.createClass({
       creditCardDetailsClassName += " hidden";
     }
     var amount = this.state.amount.state.values.amount;
-    var displayAmount = "";
     return (
       <div className="mozilla-eoy-donation">
         <Header/>
         <div className="container">
 
           <NavigationMenu>
-            <NavigationButton display={displayAmount} onClick={this.toThisPage} activePage={this.state.activePage} index={0}>
+            <NavigationButton amount={amount} currency={this.props.currency} onClick={this.toThisPage} activePage={this.state.activePage} index={0}>
               <div>{this.getIntlMessage("amount")}</div>
             </NavigationButton>
             <NavigationButton display={this.state.paymentType} onClick={this.toThisPage} activePage={this.state.activePage} index={1}>
@@ -85,7 +84,7 @@ var SingleForm = React.createClass({
                 <h2>{this.getIntlMessage("donate_now")}</h2>
               </SectionHeading>
 
-              <AmountButtons onChange={this.onChange} amount={amount} presets={this.state.presets} name="amount"/>
+              <AmountButtons currency={this.props.currency} onChange={this.onChange} amount={amount} presets={this.state.presets} name="amount"/>
               <Frequency onChange={this.onChange} name="frequency"/>
               <NextButton onClick={this.nextPage} validate={["amount"]}/>
             </Page>
@@ -124,7 +123,7 @@ var SingleForm = React.createClass({
 
               <PrivacyPolicy onChange={this.onChange} name="privacyPolicy"/>
               <DonateButton validate={["name", "address", "email", "privacyPolicy"]}
-                onSubmit={this.stripe} amount={amount}
+                onSubmit={this.stripe} amount={amount} currency={this.props.currency}
                 submit={["amount", "frequency", "creditCardInfo", "name", "address", "email"]}
               />
             </Page>

@@ -16,7 +16,7 @@ var AmountButton = React.createClass({
             minimumFractionDigits={0}
             value={this.props.value}
             style="currency"
-            currency="USD"
+            currency={this.props.currency || "usd"}
           />
         </label>
       </div>
@@ -73,7 +73,7 @@ var AmountButtons = React.createClass({
       userInputting: userInputting,
       values: {
         amount: amount || "",
-        currencyCode: "USD"
+        currencyCode: this.props.currency
       },
       valid: true
     };
@@ -98,7 +98,7 @@ var AmountButtons = React.createClass({
   },
   otherInputChange: function(e) {
     var newAmount = e.currentTarget.value;
-    if (/^(\d)*[\.]?(\d)*$/.test(newAmount)) {
+    if (/^(\d)*[\.]?(\d){0,2}$/.test(newAmount)) {
       this.setAmount(newAmount, true);
     }
   },
@@ -128,16 +128,22 @@ var AmountButtons = React.createClass({
     if (this.state.valid) {
       errorMessageClassName += " hidden";
     }
+    var currency = this.props.currency;
     return (
       <div className="amount-buttons">
         <div className="row donation-amount-row">
-          <AmountButton value={this.state.presets[0]} amount={amount} onChange={this.onChange}/>
-          <AmountButton value={this.state.presets[1]} amount={amount} onChange={this.onChange}/>
-          <AmountButton value={this.state.presets[2]} amount={amount} onChange={this.onChange}/>
+          <AmountButton value={this.state.presets[0]} currency={currency} amount={amount}
+            onChange={this.onChange}/>
+          <AmountButton value={this.state.presets[1]} currency={currency} amount={amount}
+            onChange={this.onChange}/>
+          <AmountButton value={this.state.presets[2]} currency={currency} amount={amount}
+            onChange={this.onChange}/>
         </div>
         <div className="row donation-amount-row">
-          <AmountButton value={this.state.presets[3]} amount={amount} onChange={this.onChange}/>
-          <AmountOtherButton checked={userInputting} amount={otherAmount}
+          <AmountButton value={this.state.presets[3]} currency={currency} amount={amount}
+            onChange={this.onChange}/>
+          <AmountOtherButton amount={otherAmount}
+            checked={userInputting} currency={currency}
             onRadioChange={this.otherRadioChange}
             onInputChange={this.otherInputChange}
             placeholder={this.getIntlMessage('other_amount')}
@@ -147,7 +153,9 @@ var AmountButtons = React.createClass({
           <div className="full">
             <div id="amount-error-msg">
               <ul id="parsley-id-multiple-donation_amount" className="parsley-errors-list filled">
-                <li className="parsley-custom-error-message">{this.getIntlMessage('please_select_an_amount')}</li>
+                <li className="parsley-custom-error-message">
+                  {this.getIntlMessage('please_select_an_amount')}
+                </li>
               </ul>
             </div>
           </div>

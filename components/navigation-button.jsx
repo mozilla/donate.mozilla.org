@@ -1,4 +1,5 @@
 import React from 'react';
+import {FormattedNumber} from 'react-intl';
 
 var NavigationButton = React.createClass({
   onClick: function(e) {
@@ -20,7 +21,15 @@ var NavigationButton = React.createClass({
     return (
       <li onClick={this.onClick} className={className}>
         {this.props.children}
-        <div className="page-breadcrumb">{this.props.display}</div>
+        <div className="page-breadcrumb">
+          { this.props.amount ?
+          <FormattedNumber
+            maximumFractionDigits={2}
+            value={this.props.amount}
+            style="currency"
+            currency={this.props.currency || "usd"}
+          /> : this.props.display}
+        </div>
       </li>
     );
   }

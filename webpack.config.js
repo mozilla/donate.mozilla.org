@@ -6,7 +6,6 @@ require('babel/register');
 var Router = require('react-router');
 var routes = require('./components/routes.jsx');
 var paths = require('./scripts/paths.js');
-var currencies = require('./data/currencies.js');
 var englishStrings = require('./locales/en-US.json');
 
 module.exports = {
@@ -41,9 +40,6 @@ module.exports = {
         var values = {};
         var index = React.createFactory(require('./pages/index.jsx'));
         var page = React.createFactory(Handler);
-        if (currencies[state.params.currency]) {
-          values = currencies[state.params.currency];
-        }
 
         if(state.params.locale && require('./locales/index.js').indexOf(state.params.locale) !== -1) {
           var currentString = require('./locales/' + state.params.locale +'.json');

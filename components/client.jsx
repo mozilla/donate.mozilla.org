@@ -18,13 +18,11 @@ function redirectTo(pathname, query, Handler) {
 }
 
 Router.run(routes, Router.HistoryLocation, function (Handler, state) {
-  var values = {};
   var pathname = state.query.pathname || state.pathname;
   var lang = i18n.isSupportedLanguage(i18n.currentLanguage) ? i18n.currentLanguage : i18n.defaultLang;
   var query = state.query.pathname ? {} : state.query;
-  if(state.params.currency) {
-    values = currencies[state.params.currency];
-  }
+
+  var values = query.currency && currencies[query.currency] ? currencies[query.currency] : currencies['usd'];
   values.queryString = state.query;
 
   // checking if language code is part of the URL e.g. /en-US/thank-you

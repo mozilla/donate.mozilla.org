@@ -13,7 +13,6 @@ var simplePaypal = React.createClass({
         <SimplePaypal
           currency={this.props.currency}
           minAmount={this.props.minAmount}
-          currencySymbol={this.props.currencySymbol}
           paypalLocal={this.props.paypalLocal}
         />
         <Footer/>

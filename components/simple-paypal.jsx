@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedHTMLMessage, IntlMixin, FormattedMessage } from 'react-intl';
+import { IntlMixin, FormattedMessage, FormattedNumber } from 'react-intl';
 
 var PaypalInput = React.createClass({
   render: function() {
@@ -13,16 +13,22 @@ var PaypalInput = React.createClass({
 });
 
 var PaypalButton = React.createClass({
+  mixins: [IntlMixin],
   render: function() {
-    var message = this.props.defaultMessage;
     return (
       <button type="submit" className="btn large-label-size" id="donate-btn">
-      { this.props.value ?
-      <FormattedMessage
-        message={this.props.message}
-        currency_symbol={this.props.currencySymbol}
-        amount={this.props.value}
-        /> : message}
+        { this.props.value ?
+        <FormattedMessage
+          message={this.props.message}
+          donationAmount={
+            <FormattedNumber
+              maximumFractionDigits={2}
+              value={this.props.value}
+              style="currency"
+              currency={this.props.currency || "usd"}
+            />
+          }
+          /> : this.props.defaultMessage}
       </button>
     );
   }
@@ -118,6 +124,7 @@ var simplePaypal = React.createClass({
                       donateKeyDown={this.donateKeyDown}
                       minAmount={this.props.minAmount}
                       placeholder={this.getIntlMessage("amount")}
+                      currency={this.props.currency}
                       value={this.state.value}
                     />
                   </div>
@@ -143,7 +150,7 @@ var simplePaypal = React.createClass({
                     value={this.state.value}
                     defaultMessage={this.getIntlMessage("donate_now")}
                     message={this.getIntlMessage("donate_now_amount")}
-                    currencySymbol={this.props.currencySymbol}
+                    currency={this.props.currency}
                   />
                 </div>
               </div>

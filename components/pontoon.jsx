@@ -1,10 +1,10 @@
 import React from 'react';
 
-var production = process.env.ENABLE_PONTOON === 'false' ? false : true;
+var enablePontoon = process.env.ENABLE_PONTOON === 'true';
 
 var Pontoon = React.createClass({
   render: function() {
-    if (!production) {
+    if (enablePontoon) {
       return (
         <script src='https://pontoon.mozilla.org/pontoon.js'></script>
       )

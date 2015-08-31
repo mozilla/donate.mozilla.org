@@ -32,7 +32,7 @@ var ThankYou = React.createClass({
                 </h2>
               </div>
             </div>
-            {this.props.params && ['de', 'en-US'].indexOf(locale) !== -1 ? <Signup language={locale}/> : <Social/> }
+            {this.props.params && ['de', 'en-US'].indexOf(locale) !== -1 ? <Signup language={locale}/> : <Social language={locale}/> }
             <Footer/>
           </div>
         </div>

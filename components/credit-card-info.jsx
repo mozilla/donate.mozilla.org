@@ -1,5 +1,9 @@
 import React from 'react';
 
+var regVisa = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+var regMC = /^(?:5[1-5][0-9]{14})$/;
+var regAMEX = /^(?:3[47][0-9]{13})$/;
+
 var CreditCardInfo = React.createClass({
   mixins: [require('react-intl').IntlMixin, require("../mixins/input.jsx")],
   getInitialState: function() {
@@ -23,14 +27,37 @@ var CreditCardInfo = React.createClass({
     });
     this.onChange();
   },
+  checkCardNumber: function(cardNumber) {
+    if ((cardNumber.match(regVisa) && cardNumber.match(regVisa).length > 0) ||
+        (cardNumber.match(regMC) && cardNumber.match(regMC).length > 0) ||
+        (cardNumber.match(regAMEX) && cardNumber.match(regAMEX).length > 0)) {
+      return true;
+    }
+    return false;
+  },
   validate: function() {
-    return this.validateFields(["cardNumber", "expMonth", "expYear", "cvc"]);
+    var valid = this.validateFields(["expMonth", "expYear", "cvc"]);
+    var cardNumber = this.state.values.cardNumber;
+    if (!this.checkCardNumber(cardNumber)) {
+      valid = false;
+      this.setState({
+        cardNumberValid: false
+      });
+    }
+    return valid;
   },
   focus: function() {
     document.querySelector("#card-number-input").focus();
   },
   onCardInput: function(e) {
-    this.onInput("cardNumber", e.currentTarget.value);
+    var value = e.currentTarget.value;
+    var state = this.state;
+    state.values.cardNumber = value;
+    if (this.checkCardNumber(value)) {
+      state.cardNumberValid = true;
+    }
+    this.setState(state);
+    this.onChange();
   },
   onExpMonthInput: function(e) {
     this.onInput("expMonth", e.currentTarget.value);

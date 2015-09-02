@@ -35,6 +35,9 @@ module.exports = {
         FULL_SUBDOMAIN_FOR_COOKIE: JSON.stringify(process.env.FULL_SUBDOMAIN_FOR_COOKIE)
       }
     }),
+    new webpack.ProvidePlugin({
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+    }),
     new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
       Router.run(routes, outputPath, function (Handler, state) {
         var values = {};

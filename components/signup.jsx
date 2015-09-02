@@ -44,7 +44,7 @@ var Form = React.createClass({
             <div className="row">
               <form id="signup" action="/api/signup" method="post">
                 <div className="input">
-                  <input data-parsley-required className="text" size="48" id="email" name="email" type="email" placeholder="youremail@example.com">
+                  <input data-parsley-required className="text" size="48" id="email" name="email" type="email" placeholder={this.getIntlMessage('your_email')}>
                     <i className="fa fa-envelope field-icon"></i>
                   </input>
                 </div>
@@ -53,7 +53,7 @@ var Form = React.createClass({
                     <label htmlFor="opt_in"> <label className="field" htmlFor="opt_in"><FormattedHTMLMessage message={this.getIntlMessage('i_am_okay_with')} /></label></label>
                   </input>
                 </div>
-                <input name="submit-btn" value="Sign up now" type="submit"/>
+                <input name="submit-btn" value={this.getIntlMessage('sign_up_now')} type="submit"/>
                 <input name="redirect_url" value="" type="hidden"/>
                 <input name="language_code" value={this.props.language} type="hidden"/>
                 <input id="_guid" name="_guid" value="" type="hidden"/>

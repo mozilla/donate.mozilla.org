@@ -1,10 +1,12 @@
 import React from 'react';
 import Link from './link.jsx';
-import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import { FormattedHTMLMessage, FormattedMessage, IntlMixin } from 'react-intl';
 
 var Footer = React.createClass({
   mixins: [IntlMixin],
   render: function() {
+    var bitcoinLink = (<Link to='give-bitcoin'>{this.getIntlMessage('Bitcoin')}</Link>);
+    var checkLink = (<a target='_blank' href='https://wiki.mozilla.org/Ways_to_Give#Check_.28via_postal_service.29'>{this.getIntlMessage('check')}</a>);
     var stripeNotice = "stripe-notice";
     if (!this.props.stripeNotice) {
       stripeNotice += " hidden";
@@ -13,8 +15,9 @@ var Footer = React.createClass({
       <div className="row disclaimers">
         <p className="other_ways_to_give">
           <small>
-            Other ways to give: <Link to='give-bitcoin'>{this.getIntlMessage('Bitcoin')}</Link> |
-            <a target='_blank' href='https://wiki.mozilla.org/Ways_to_Give#Check_.28via_postal_service.29'>Check</a>
+            <FormattedMessage message={this.getIntlMessage('other_way_to_give')}
+            bitcoinLink={bitcoinLink}
+            checkLink={checkLink}/>
           </small>
         </p>
         <p className="need-help">

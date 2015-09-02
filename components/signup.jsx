@@ -1,13 +1,13 @@
 import React from 'react';
+import {IntlMixin, FormattedHTMLMessage} from 'react-intl';
 
 var Form = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  mixins: [IntlMixin],
   componentDidMount: function() {
     var
         $opt_in = $('label[for="opt_in"]'),
         $email = $('#email'),
-        donator_email = donator_email || undefined,
-        donator_name = donator_name || undefined;
+        donator_email = donator_email || undefined;
 
     $opt_in.find('label').prepend('<span className="required">* ');
 
@@ -16,10 +16,6 @@ var Form = React.createClass({
 
     if (donator_email !== undefined) {
       $email.val(donator_email).attr('value',donator_email);
-    }
-
-    if (donator_name !== undefined) {
-      $('#header-copy').find('h2').html('<em>Thank you, ' + donator_name);
     }
 
     $('#signup').parsley().subscribe("parsley:form:validate", function (formInstance) {
@@ -34,10 +30,10 @@ var Form = React.createClass({
         <div className="form-wrapper container">
           <div className="wrap">
             <div className="row">
-              <h2>Sign up for email updates</h2>
+              <h2>{this.getIntlMessage('sign_up_for_email')}</h2>
 
               <h5>
-                Don&rsquo;t miss important news about the work your donation makes possible.
+                {this.getIntlMessage('dont_miss_important_news')}
               </h5>
 
             </div>
@@ -54,7 +50,7 @@ var Form = React.createClass({
                 </div>
                 <div className="input">
                   <input data-parsley-required id="opt_in" name="opt_in" type="checkbox" value="1">
-                    <label htmlFor="opt_in"> <label className="field" htmlFor="opt_in">I'm okay with you handling this info as you explain in your <a href="https://www.mozilla.org/en-US/privacy/">privacy policy</a>.</label></label>
+                    <label htmlFor="opt_in"> <label className="field" htmlFor="opt_in"><FormattedHTMLMessage message={this.getIntlMessage('i_am_okay_with')} /></label></label>
                   </input>
                 </div>
                 <input name="submit-btn" value="Sign up now" type="submit"/>

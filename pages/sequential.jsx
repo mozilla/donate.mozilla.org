@@ -83,48 +83,52 @@ var SingleForm = React.createClass({
               <SectionHeading>
                 <h2>{this.getIntlMessage("donate_now")}</h2>
               </SectionHeading>
-
               <AmountButtons currency={this.props.currency} onChange={this.onChange} amount={amount} presets={this.state.presets} name="amount"/>
               <Frequency onChange={this.onChange} name="frequency"/>
               <NextButton onClick={this.nextPage} validate={["amount"]}/>
             </Page>
 
-            <Page activePage={this.state.activePage} index={1}>
+            <Page activePage={this.state.activePage} index={1} onError={this.onPageError} errors={[this.state.errors.creditCardInfo]}>
               <SectionHeading>
                 <h2>{this.getIntlMessage("choose_payment")}</h2>
                 <p id="secure-label">
                   <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
                 </p>
               </SectionHeading>
-
               <CreditCardButton onClick={this.expandCreditCardInfo}/>
               <PayPalButton
                 submit={["frequency", "amount"]}
                 onSubmit={this.paypal}
                 onClick={this.collapseCreditCardInfo}
               />
-
               <div className={creditCardDetailsClassName}>
-                <CrediCardInfo onChange={this.onChange} name="creditCardInfo" ref="creditCardInfoField"/>
+                <CrediCardInfo error={this.state.errors.creditCardInfo}
+                  onChange={this.onChange} name="creditCardInfo" ref="creditCardInfoField"
+                />
                 <NextButton onClick={this.nextPage} validate={["creditCardInfo"]}/>
               </div>
             </Page>
 
-            <Page activePage={this.state.activePage} index={2}>
+            <Page activePage={this.state.activePage} index={2} onError={this.onPageError} errors={[this.state.errors.address, this.state.errors.other]}>
               <SectionHeading>
                 <h2>{this.getIntlMessage("personal")}</h2>
               </SectionHeading>
-
               <div className="full billing-info">
                 <Name onChange={this.onChange} name="name"/>
-                <Address onChange={this.onChange} name="address"/>
+                <Address
+                  onChange={this.onChange}
+                  name="address"
+                  error={this.state.errors.address}
+                />
                 <Email onChange={this.onChange} name="email"/>
               </div>
-
               <PrivacyPolicy onChange={this.onChange} name="privacyPolicy"/>
-              <DonateButton validate={["name", "address", "email", "privacyPolicy"]}
+              <DonateButton
+                submitting={this.state.submitting}
+                validate={["name", "address", "email", "privacyPolicy"]}
                 onSubmit={this.stripe} amount={amount} currency={this.props.currency}
                 submit={["amount", "frequency", "creditCardInfo", "name", "address", "email"]}
+                error={this.state.errors.other}
               />
             </Page>
           </NavigationContainer>

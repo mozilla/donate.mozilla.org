@@ -28,10 +28,15 @@ var routes = {
         stripeToken: transaction.stripeToken
       }, function(err, charge) {
         if (err) {
-          console.log(err);
+          reply({
+            error: err
+          });
+          console.log('Stripe charge failed:', err);
         } else {
-          reply(charge);
-          console.log('Successful charge sent to Stripe!');
+          reply({
+            success: charge
+          });
+          console.log('Stripe charge sent to Stripe!');
         }
       });
     } else {
@@ -50,10 +55,15 @@ var routes = {
         }
       }, function(err, subscription) {
         if (err) {
-          console.log(err);
+          reply({
+            error: err
+          });
+          console.log('Stripe subscription failed:', err);
         } else {
-          reply(subscription);
-          console.log('Successful subscription created!');
+          reply({
+            success: subscription
+          });
+          console.log('Stripe subscription created!');
         }
       });
     }

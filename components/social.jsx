@@ -3,7 +3,7 @@ import React from 'react';
 module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin],
   render: function() {
-    var twitterShareURL = 'http://twitter.com/share?url=https://donate.mozilla.org/' + this.props.language + '/&text=I donated to @mozilla today because I %23lovetheweb. Join me and help build %2B protect the Web forever:';
+    var twitterShareURL = 'http://twitter.com/share?url=https://donate.mozilla.org/' + this.props.language + '/&text=' + this.getIntlMessage('i_donated_to_mozilla');
     var facebookShareURL = 'http://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdonate.mozilla.org/' + this.props.language + '/';
     return (
       <div className="share-page">

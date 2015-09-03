@@ -13,7 +13,25 @@ module.exports = {
       presets: presets,
       amount: {state: {values: {amount: amount}}},
       paymentType: "",
-      localeCode: "US"
+      localeCode: "US",
+      submitting: false,
+      errors: {
+        creditCardInfo: {
+          page: 0,
+          number: "",
+          cvc: "",
+          monthExp: "",
+          yearExp: ""
+        },
+        address: {
+          page: 0,
+          code: ""
+        },
+        other: {
+          page: 0,
+          message: ""
+        }
+      }
     };
   },
   updateHeight: function() {
@@ -28,11 +46,23 @@ module.exports = {
       });
     });
   },
-  onChange: function(name, value) {
-    var newState = {};
+  onChange: function(name, value, field) {
+    var newState = this.state;
     newState[name] = value;
+    if (field && newState.errors[name] && newState.errors[name][field]) {
+      newState.errors[name][field] = "";
+    }
     this.setState(newState);
     this.updateHeight();
+  },
+  onPageError: function(errors, index) {
+    var stateErrors = this.state.errors;
+    errors.forEach(function(error) {
+      error.page = index;
+    });
+    this.setState({
+      errors: stateErrors
+    });
   },
   validateProps: function(props) {
     var self = this;
@@ -86,7 +116,9 @@ module.exports = {
     var amount;
     var currency;
     var donationFrequency;
-
+    this.setState({
+      submitting: false
+    });
     if (data.plan) {
       donationFrequency = 'monthly';
       currency = data.plan.currency;
@@ -108,14 +140,83 @@ module.exports = {
       window.location = thankYouURL;
     }
   },
+  stripeError: function(error) {
+    var newState = this.state;
+    var cardErrorCodes = {
+      "invalid_number": {
+        name: "creditCardInfo",
+        field: "number",
+        message: this.getIntlMessage('invalid_number')
+      },
+      "invalid_expiry_month": {
+        name: "creditCardInfo",
+        field: "monthExp",
+        message: this.getIntlMessage('invalid_expiry_month')
+      },
+      "invalid_expiry_year": {
+        name: "creditCardInfo",
+        field: "yearExp",
+        message: this.getIntlMessage('invalid_expiry_year')
+      },
+      "invalid_cvc": {
+        name: "creditCardInfo",
+        field: "cvc",
+        message: this.getIntlMessage('invalid_CVC')
+      },
+      "incorrect_number": {
+        name: "creditCardInfo",
+        field: "number",
+        message: this.getIntlMessage('incorrect_number')
+      },
+      "expired_card": {
+        name: "creditCardInfo",
+        field: "number",
+        message: this.getIntlMessage('expired_card')
+      },
+      "incorrect_cvc": {
+        name: "creditCardInfo",
+        field: "cvc",
+        message: this.getIntlMessage('incorrect_CVC')
+      },
+      "incorrect_zip": {
+        name: "address",
+        field: "code",
+        message: this.getIntlMessage('invalid_zip')
+      },
+      "card_declined": {
+        name: "creditCardInfo",
+        field: "number",
+        message: this.getIntlMessage('declined_card')
+      }
+    };
+    var cardError = cardErrorCodes[error.code];
+    newState.submitting = false;
+    if (error.rawType === "card_error" && cardError) {
+      if (newState.errors[cardError.name].page < newState.activePage) {
+        newState.activePage = newState.errors[cardError.name].page;
+      }
+      newState.errors[cardError.name][cardError.field] = cardError.message;
+    } else {
+      if (newState.errors.other.page < newState.activePage) {
+        newState.activePage = newState.errors.other.page;
+      }
+      newState.errors.other.message = this.getIntlMessage('try_again_later');
+    }
+    this.setState(newState);
+    this.updateHeight();
+  },
   stripe: function(validate, props) {
     var submit = this.submit;
     var success = this.stripeSuccess;
+    var error = this.stripeError;
     var valid = this.validateProps(validate);
     var submitProps = {};
     if (!valid) {
       return;
     }
+    this.setState({
+      submitting: true
+    });
     submitProps = this.buildProps(props);
     Stripe.card.createToken({
       number: submitProps.cardNumber,
@@ -124,12 +225,17 @@ module.exports = {
       exp_year: submitProps.expYear
     }, function(status, response) {
       if (response.error) {
-        // handle all error cases?
-        console.log(response.error);
+        error(result.error);
       } else {
         submitProps.cardNumber = "";
         submitProps.stripeToken = response.id;
-        submit("/api/stripe", submitProps, success);
+        submit("/api/stripe", submitProps, function(result) {
+          if (result.error) {
+            error(result.error);
+          } else {
+            success(result.success);
+          }
+        });
       }
     });
   },

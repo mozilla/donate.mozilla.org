@@ -357,9 +357,14 @@ var AddressInput = React.createClass({
     if (!this.state.cityValid) {
       cityClassName += "parsley-error";
     }
+    var errorMessageClassName = "row error-msg-row";
+    var errorMessage = this.props.error.code;
     var codeClassName = "";
-    if (!this.state.codeValid) {
+    if (!this.state.codeValid || errorMessage) {
       codeClassName += "parsley-error";
+    }
+    if (errorMessage === "") {
+      errorMessageClassName += " hidden";
     }
     return (
       <div className="cc-additional-info address-section">
@@ -618,6 +623,17 @@ var AddressInput = React.createClass({
         <div className="row">
           <div className="full">
             <ProvinceSelect ref="provinceSelect" country={this.state.values.country} onProvinceChange={this.onProvinceChange} className={provinceClassName} province={this.state.values.province}/>
+          </div>
+        </div>
+        <div className={errorMessageClassName}>
+          <div className="full">
+            <div id="amount-error-msg">
+              <ul id="parsley-id-multiple-donation_amount" className="parsley-errors-list filled">
+                <li className="parsley-custom-error-message">
+                  {errorMessage}
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

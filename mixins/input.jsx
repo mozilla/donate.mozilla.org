@@ -3,7 +3,7 @@ module.exports = {
     var self = this;
     var valid = true;
     fields.forEach(function(field) {
-      if (!self.state.values[field]) {
+      if (self.props.error[field] || !self.state.values[field]) {
         valid = false;
         var state = {};
         state[field + "Valid"] = valid
@@ -12,18 +12,18 @@ module.exports = {
     });
     return valid;
   },
-  onInput: function(name, value) {
+  onInput: function(field, value) {
     var values = this.state.values;
-    values[name] = value;
+    values[field] = value;
     var state = {
       values: values
     };
-    state[name + "Valid"] = true;
+    state[field + "Valid"] = true;
     this.setState(state);
-    this.onChange();
+    this.onChange(field);
   },
-  onChange: function() {
-    this.props.onChange(this.props.name, this);
+  onChange: function(field) {
+    this.props.onChange(this.props.name, this, field);
   },
   componentDidMount: function() {
     this.onChange();

@@ -15,10 +15,10 @@ var CreditCardInfo = React.createClass({
         expYear: "",
         cvc: "",
       },
-      cardNumberValid: true,
-      expMonthValid: true,
-      expYearValid: true,
-      cvcValid: true
+      cardNumberValid: !this.props.error.number,
+      expMonthValid: !this.props.error.monthExp,
+      expYearValid: !this.props.error.yearExp,
+      cvcValid: !this.props.error.cvc
     };
   },
   hintClicked: function() {
@@ -28,6 +28,9 @@ var CreditCardInfo = React.createClass({
     this.onChange();
   },
   checkCardNumber: function(cardNumber) {
+    if (this.props.error.number) {
+      return false;
+    }
     if ((cardNumber.match(regVisa) && cardNumber.match(regVisa).length > 0) ||
         (cardNumber.match(regMC) && cardNumber.match(regMC).length > 0) ||
         (cardNumber.match(regAMEX) && cardNumber.match(regAMEX).length > 0)) {
@@ -57,7 +60,7 @@ var CreditCardInfo = React.createClass({
       state.cardNumberValid = true;
     }
     this.setState(state);
-    this.onChange();
+    this.onChange("number");
   },
   onExpMonthInput: function(e) {
     this.onInput("expMonth", e.currentTarget.value);
@@ -77,20 +80,34 @@ var CreditCardInfo = React.createClass({
       hintClassName += " hidden";
     }
     var cardClassName = "";
-    if (!this.state.cardNumberValid) {
+    if (!this.state.cardNumberValid || this.props.error.number) {
       cardClassName += "parsley-error";
     }
     var monthClassName = "";
-    if (!this.state.expMonthValid) {
+    if (!this.state.expMonthValid || this.props.error.monthExp) {
       monthClassName += "parsley-error";
     }
     var yearClassName = "";
-    if (!this.state.expYearValid) {
+    if (!this.state.expYearValid || this.props.error.yearExp) {
       yearClassName += "parsley-error";
     }
     var cvcClassName = "";
-    if (!this.state.cvcValid) {
+    if (!this.state.cvcValid || this.props.error.cvc) {
       cvcClassName += "parsley-error";
+    }
+    var errorMessageClassName = "row error-msg-row";
+    var errorMessage = "";
+    if (this.props.error.number) {
+      errorMessage = this.props.error.number;
+    } else if (this.props.error.cvc) {
+      errorMessage = this.props.error.cvc;
+    } else if (this.props.error.monthExp) {
+      errorMessage = this.props.error.monthExp;
+    } else if (this.props.error.yearExp) {
+      errorMessage = this.props.error.yearExp;
+    }
+    if (errorMessage === "") {
+      errorMessageClassName += " hidden";
     }
     return (
       <div>
@@ -122,6 +139,17 @@ var CreditCardInfo = React.createClass({
             <div className={hintClassName}>
               <img src="https://ddz69tinzt56n.cloudfront.net/images/CVC-illustration.png" className="left"/>
               <div className="">{this.getIntlMessage('cvc_info')}</div>
+            </div>
+          </div>
+        </div>
+        <div className={errorMessageClassName}>
+          <div className="full">
+            <div id="amount-error-msg">
+              <ul id="parsley-id-multiple-donation_amount" className="parsley-errors-list filled">
+                <li className="parsley-custom-error-message">
+                  {errorMessage}
+                </li>
+              </ul>
             </div>
           </div>
         </div>

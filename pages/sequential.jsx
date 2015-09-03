@@ -83,7 +83,7 @@ var SingleForm = React.createClass({
               <SectionHeading>
                 <h2>{this.getIntlMessage("donate_now")}</h2>
               </SectionHeading>
-              <AmountButtons currency={this.props.currency} onChange={this.onChange} amount={amount} presets={this.state.presets} name="amount"/>
+              <AmountButtons currencySymbol={this.props.currencySymbol} currency={this.props.currency} onChange={this.onChange} amount={amount} presets={this.state.presets} name="amount"/>
               <Frequency onChange={this.onChange} name="frequency"/>
               <NextButton onClick={this.nextPage} validate={["amount"]}/>
             </Page>

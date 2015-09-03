@@ -41,13 +41,17 @@ var AmountOtherButton = React.createClass({
             onChange={this.props.onRadioChange}
             value={this.props.amount}
           />
-          <label htmlFor="amount-other" className="large-label-size">$</label>
-          <input id="amount-other-input" className="medium-label-size" type="text"
-            onChange={this.props.onInputChange}
-            value={this.props.amount}
-            onClick={this.onInputClick}
-            placeholder={this.props.placeholder}
-          />
+          <label htmlFor="amount-other" className="large-label-size">
+            <span className="currency-symbol-container">{this.props.currencySymbol}</span>
+          </label>
+          <div className="amount-other-wrapper">
+            <input id="amount-other-input" className="medium-label-size" type="text"
+              onChange={this.props.onInputChange}
+              value={this.props.amount}
+              onClick={this.onInputClick}
+              placeholder={this.props.placeholder}
+            />
+          </div>
         </div>
       </div>
     );
@@ -143,6 +147,7 @@ var AmountButtons = React.createClass({
           <AmountButton value={this.state.presets[3]} currency={currency} amount={amount}
             onChange={this.onChange}/>
           <AmountOtherButton amount={otherAmount}
+            currencySymbol={this.props.currencySymbol}
             checked={userInputting} currency={currency}
             onRadioChange={this.otherRadioChange}
             onInputChange={this.otherInputChange}

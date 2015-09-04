@@ -42,6 +42,8 @@ module.exports = {
     new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
       Router.run(routes, outputPath, function (Handler, state) {
         var values = {
+          currency: currencies['usd'],
+          presets: currencies['usd'].presets,
           currencies: currencies
         };
         var index = React.createFactory(require('./pages/index.jsx'));

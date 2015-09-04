@@ -21,7 +21,24 @@ Router.run(routes, Router.HistoryLocation, function (Handler, state) {
   var queryString = state.query;
   var pathname = queryString.pathname || state.pathname;
 
+  var presets = "";
+  var currencyCode = "usd";
+  if (queryString) {
+    presets = queryString.presets || "";
+    currencyCode = queryString.currency || currencyCode;
+  }
+  var currency = currencies[currencyCode];
+  presets = presets.split(",");
+
+  // If we didn't get correct presets from the query string,
+  // so default to the currency defined preset.
+  if (presets.length !== 4) {
+    presets = currency.presets;
+  }
+
   var values = {
+    currency: currency,
+    presets: presets,
     currencies: currencies,
     queryString: queryString
   };

@@ -62,7 +62,7 @@ var SingleForm = React.createClass({
         <div className="container">
 
           <NavigationMenu>
-            <NavigationButton amount={amount} currency={this.state.currency.code} onClick={this.toThisPage} activePage={this.state.activePage} index={0}>
+            <NavigationButton amount={amount} currency={this.props.currency.code} onClick={this.toThisPage} activePage={this.state.activePage} index={0}>
               <div>{this.getIntlMessage("amount")}</div>
             </NavigationButton>
             <NavigationButton display={this.state.paymentType} onClick={this.toThisPage} activePage={this.state.activePage} index={1}>
@@ -81,13 +81,13 @@ var SingleForm = React.createClass({
                   <span className="currency-dropdown-container">
                     <CurrencyDrop
                       currencies={this.props.currencies}
-                      currency={this.state.currency.code}
+                      currency={this.props.currency.code}
                       onChange={this.onCurrencyChanged}
                     />
                   </span>
                 </h2>
               </SectionHeading>
-              <AmountButtons currencySymbol={this.state.currency.symbol} currency={this.state.currency.code} onChange={this.onAmountChange} amount={amount} presets={this.state.presets} name="amount"/>
+              <AmountButtons currencySymbol={this.props.currency.symbol} currency={this.props.currency.code} onChange={this.onAmountChange} amount={amount} presets={this.props.presets} name="amount"/>
               <Frequency onChange={this.onChange} name="frequency"/>
               <NextButton onClick={this.nextPage} validate={["amount"]}/>
             </Page>
@@ -130,7 +130,7 @@ var SingleForm = React.createClass({
               <DonateButton
                 submitting={this.state.submitting}
                 validate={["name", "address", "email", "privacyPolicy"]}
-                onSubmit={this.stripe} amount={amount} currency={this.state.currency.code}
+                onSubmit={this.stripe} amount={amount} currency={this.props.currency.code}
                 submit={["amount", "frequency", "creditCardInfo", "name", "address", "email"]}
                 error={this.state.errors.other}
               />

@@ -8,7 +8,7 @@ var currencies = {
   'php': {
     currency: 'PHP',
     minAmount: '90',
-    currencySymbol: 'P',
+    currencySymbol: '₱',
     paypalLocal: 'PH'
   },
   'pln': {

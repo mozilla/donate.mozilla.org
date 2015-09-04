@@ -4,10 +4,12 @@ import { IntlMixin, FormattedMessage, FormattedNumber } from 'react-intl';
 var PaypalInput = React.createClass({
   render: function() {
     return (
-      <input
-        onChange={this.props.donateOnChange}
-        onKeyDown={this.props.donateKeyDown}
-        type="number" name="donation_amount_other" min={this.props.minAmount} placeholder={this.props.placeholder} className="medium-label-size" required value={this.props.value}/>
+      <div className="amount-other-wrapper">
+        <input
+          onChange={this.props.donateOnChange}
+          onKeyDown={this.props.donateKeyDown}
+          type="number" name="donation_amount_other" min={this.props.minAmount} placeholder={this.props.placeholder} className="amount-other-input medium-label-size" required value={this.props.value}/>
+      </div>
     );
   }
 });

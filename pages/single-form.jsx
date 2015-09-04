@@ -3,6 +3,7 @@ import Footer from '../components/footer.jsx';
 import Header from '../components/header.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SectionHeading from '../components/section-heading.jsx';
+import CurrencyDrop from '../components/currency-dropdown.jsx';
 
 import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
@@ -18,13 +19,22 @@ var SingleForm = React.createClass({
         <Header/>
         <div className="container">
           <SectionHeading>
-            <h2>{this.getIntlMessage("donate_now")}</h2>
+            <h2>
+              {this.getIntlMessage("donate_now")}
+              <span className="currency-dropdown-container">
+                <CurrencyDrop
+                  currencies={this.props.currencies}
+                  currency={this.state.currency.code}
+                  onChange={this.onCurrencyChanged}
+                />
+              </span>
+            </h2>
           </SectionHeading>
           <AmountButtons name="amount"
-            currency={this.props.currency}
-            currencySymbol={this.props.currencySymbol}
-            onChange={this.onChange}
-            amount={this.state.amount.state.values.amount}
+            currency={this.state.currency.code}
+            currencySymbol={this.state.currency.symbol}
+            onChange={this.onAmountChange}
+            amount={this.state.values.amount}
             presets={this.state.presets}
           />
           <Frequency onChange={this.onChange} name="frequency"/>

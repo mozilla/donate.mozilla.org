@@ -1,20 +1,41 @@
 import assign from 'react/lib/Object.assign';
 import reactGA from 'react-ga';
+import {Navigation} from 'react-router';
 
 module.exports = {
+  mixins: [Navigation],
   getInitialState: function() {
     var amount = "";
-    var presets;
+    var presets = "";
+    var currencyCode = "usd";
     if (this.props.queryString) {
-      amount = this.props.queryString.amount;
-      presets = this.props.queryString.presets;
+      amount = this.props.queryString.amount || "";
+      presets = this.props.queryString.presets || "";
+      currencyCode = this.props.queryString.currency || currencyCode;
     }
+    var currency = this.props.currencies[currencyCode];
+
+    presets = presets.split(",");
+
+    // If we didn't get correct presets from the query string,
+    // so default to the currency defined preset.
+    if (presets.length !== 4) {
+      presets = currency.presets;
+    }
+
+    window.addEventListener("popstate", function(event) {
+      console.log(event.state);
+    });
+
     return {
       presets: presets,
-      amount: {state: {values: {amount: amount}}},
       paymentType: "",
       localeCode: "US",
       submitting: false,
+      currency: currency,
+      values: {
+        amount: amount
+      },
       errors: {
         creditCardInfo: {
           page: 0,
@@ -54,6 +75,31 @@ module.exports = {
     }
     this.setState(newState);
     this.updateHeight();
+  },
+  onAmountChange: function(name, value, amount) {
+    this.onChange(name, value);
+    this.setState({
+      values: {
+        amount: amount
+      }
+    });
+  },
+  onCurrencyChanged: function(e) {
+    var value = e.currentTarget.value;
+    var currencies = this.props.currencies;
+    var currency = currencies[value] || this.state.currency;
+    var presets = currency.presets;
+    this.replaceWith(document.location.pathname, {}, {
+      currency: currency.code,
+      presets: presets.join(",")
+    });
+    this.setState({
+      currency: currency,
+      presets: presets,
+      values: {
+        amount: ""
+      }
+    });
   },
   onPageError: function(errors, index) {
     var stateErrors = this.state.errors;

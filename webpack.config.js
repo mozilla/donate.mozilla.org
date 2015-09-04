@@ -7,6 +7,7 @@ var Router = require('react-router');
 var routes = require('./components/routes.jsx');
 var paths = require('./scripts/paths.js');
 var englishStrings = require('./locales/en-US.json');
+var currencies = require('./data/currencies.js');
 
 module.exports = {
   entry: './components/client.jsx',
@@ -40,7 +41,9 @@ module.exports = {
     }),
     new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
       Router.run(routes, outputPath, function (Handler, state) {
-        var values = {};
+        var values = {
+          currencies: currencies
+        };
         var index = React.createFactory(require('./pages/index.jsx'));
         var page = React.createFactory(Handler);
 

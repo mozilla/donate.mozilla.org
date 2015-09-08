@@ -3,7 +3,7 @@ import Footer from '../components/footer.jsx';
 import Header from '../components/header.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SectionHeading from '../components/section-heading.jsx';
-import CurrencyDrop from '../components/currency-dropdown.jsx';
+import CurrencyDropdown from '../components/currency-dropdown.jsx';
 
 import NavigationMenu from '../components/navigation-menu.jsx';
 import NavigationButton from '../components/navigation-button.jsx';
@@ -55,7 +55,7 @@ var SingleForm = React.createClass({
     if (this.state.hideCreditCardDetails) {
       creditCardDetailsClassName += " hidden";
     }
-    var amount = this.state.values.amount;
+    var amount = this.state.props.amount.values.amount;
     return (
       <div className="mozilla-eoy-donation">
         <Header/>
@@ -79,7 +79,7 @@ var SingleForm = React.createClass({
                 <h2>
                   {this.getIntlMessage("donate_now")}
                   <span className="currency-dropdown-container">
-                    <CurrencyDrop
+                    <CurrencyDropdown
                       currencies={this.props.currencies}
                       currency={this.props.currency.code}
                       onChange={this.onCurrencyChanged}

@@ -3,7 +3,7 @@ import Footer from '../components/footer.jsx';
 import Header from '../components/header.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SectionHeading from '../components/section-heading.jsx';
-import CurrencyDrop from '../components/currency-dropdown.jsx';
+import CurrencyDropdown from '../components/currency-dropdown.jsx';
 
 import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
@@ -22,7 +22,7 @@ var SingleForm = React.createClass({
             <h2>
               {this.getIntlMessage("donate_now")}
               <span className="currency-dropdown-container">
-                <CurrencyDrop
+                <CurrencyDropdown
                   currencies={this.props.currencies}
                   currency={this.props.currency.code}
                   onChange={this.onCurrencyChanged}
@@ -34,7 +34,7 @@ var SingleForm = React.createClass({
             currency={this.props.currency.code}
             currencySymbol={this.props.currency.symbol}
             onChange={this.onAmountChange}
-            amount={this.state.values.amount}
+            amount={this.state.props.amount.values.amount}
             presets={this.props.presets}
           />
           <Frequency onChange={this.onChange} name="frequency"/>

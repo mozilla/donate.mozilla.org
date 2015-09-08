@@ -14,8 +14,12 @@ module.exports = {
       paymentType: "",
       localeCode: "US",
       submitting: false,
-      values: {
-        amount: amount
+      props: {
+        amount: {
+          values: {
+            amount: amount
+          }
+        }
       },
       errors: {
         creditCardInfo: {
@@ -60,9 +64,13 @@ module.exports = {
   onAmountChange: function(name, value, amount) {
     this.onChange(name, value);
     this.setState({
-      values: {
-        amount: amount
-      }
+      props: {
+        amount: {
+          values: {
+            amount: amount
+          }
+        }
+      },
     });
   },
   onCurrencyChanged: function(e) {
@@ -75,9 +83,13 @@ module.exports = {
       presets: presets.join(",")
     });
     this.setState({
-      values: {
-        amount: ""
-      }
+      props: {
+        amount: {
+          values: {
+            amount: ""
+          }
+        }
+      },
     });
   },
   onPageError: function(errors, index) {
@@ -297,7 +309,15 @@ module.exports = {
     var self = this;
     var props = {};
     fields.forEach(function(name) {
-      props = assign(props, self.state[name].state.values);
+      var prop = self.state[name].state.values;
+      // Currently some fields expose their values on the form, and not themselves.
+      // So we need to check for props in both places until all field componenets are updated.
+      if (!prop) {
+        prop = self.state.props[name].values;
+      }
+      if (prop) {
+        props = assign(props, prop);
+      }
     });
     return props;
   },

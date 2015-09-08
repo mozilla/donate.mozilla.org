@@ -3,6 +3,9 @@
 # donate.mozilla.org
 Mozilla donation forms
 
+* Staging: https://donate.mofostaging.net/en-US/
+* Production (temp URL): https://donate.mofoprod.net/
+
 ## Requirements
 
 [node](https://nodejs.org/) with [`Intl` support](https://github.com/joyent/node/wiki/Intl).  To test if you have `Intl` support:

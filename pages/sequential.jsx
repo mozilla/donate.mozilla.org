@@ -10,7 +10,7 @@ import NavigationButton from '../components/navigation-button.jsx';
 import NavigationContainer from '../components/navigation-container.jsx';
 import NextButton from '../components/next-button.jsx';
 import Page from '../components/navigation-page.jsx';
-import DonateButton from '../components/donate-button.jsx';
+import SubmitButton from '../components/submit-button.jsx';
 import PayPalButton from '../components/paypal-button.jsx';
 import CreditCardButton from '../components/credit-card-button.jsx';
 
@@ -22,8 +22,35 @@ import Address from '../components/address-input.jsx';
 import Email from '../components/email-input.jsx';
 import PrivacyPolicy from '../components/privacy-policy-input.jsx';
 
-var SingleForm = React.createClass({
-  mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],
+import {FormattedMessage, IntlMixin, FormattedNumber} from 'react-intl';
+
+var DonateButton = React.createClass({
+  mixins: [IntlMixin],
+  render: function() {
+    if (this.props.amount) {
+      return (
+        <FormattedMessage
+          message={this.getIntlMessage('donate_now_amount')}
+          donationAmount={
+            <FormattedNumber
+              maximumFractionDigits={2}
+              value={this.props.amount}
+              style="currency"
+              currency={this.props.currency || "usd"}
+            />
+          }
+        />
+      );
+    } else {
+      return (
+        <span>{this.getIntlMessage("donate_now")}</span>
+      );
+    }
+  }
+});
+
+module.exports = React.createClass({
+  mixins: [IntlMixin, require('../mixins/form.jsx')],
   getInitialState() {
     return {
       activePage: 0,
@@ -124,16 +151,20 @@ var SingleForm = React.createClass({
                   name="address"
                   error={this.state.errors.address}
                 />
-                <Email onChange={this.onChange} name="email"/>
+                <Email onChange={this.onChange} name="email" info={this.getIntlMessage("email_info")}/>
               </div>
               <PrivacyPolicy onChange={this.onChange} name="privacyPolicy"/>
-              <DonateButton
+              <SubmitButton
                 submitting={this.state.submitting}
                 validate={["name", "address", "email", "privacyPolicy"]}
-                onSubmit={this.stripe} amount={amount} currency={this.props.currency.code}
+                onSubmit={this.stripe}
                 submit={["amount", "frequency", "creditCardInfo", "name", "address", "email"]}
                 error={this.state.errors.other}
-              />
+              >
+                <DonateButton
+                  amount={amount} currency={this.props.currency}
+                />
+              </SubmitButton>
             </Page>
           </NavigationContainer>
 
@@ -144,5 +175,3 @@ var SingleForm = React.createClass({
     );
   }
 });
-
-module.exports = SingleForm;

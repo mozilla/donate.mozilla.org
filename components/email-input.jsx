@@ -39,14 +39,27 @@ var EmailInput = React.createClass({
     });
     this.props.onChange(this.props.name, this);
   },
-  render: function() {
+  renderHint: function() {
     var hintClassIconName = "fa fa-question-circle hint";
     var hintClassName = "hint-msg small";
+    var info = this.props.info;
     if (this.state.showHint) {
       hintClassIconName += " on";
     } else {
       hintClassName += " hidden";
     }
+    if (info) {
+      return (
+        <span>
+          <i onClick={this.hintClicked} className={hintClassIconName}></i>
+          <div className={hintClassName}>
+            <FormattedHTMLMessage message={info}/>
+          </div>
+        </span>
+      );
+    }
+  },
+  render: function() {
     var inputClassName = "";
     if (!this.state.valid) {
       inputClassName += "parsley-error";
@@ -58,10 +71,7 @@ var EmailInput = React.createClass({
             <div className="field-container">
               <i className="fa fa-envelope field-icon"></i>
               <input type="email" className={inputClassName} name="email" value={this.state.values.email} onChange={this.onEmailChange} placeholder={this.getIntlMessage('email')}/>
-              <i onClick={this.hintClicked} className={hintClassIconName}></i>
-              <div className={hintClassName}>
-                <FormattedHTMLMessage message={ this.getIntlMessage("email_info") } />
-              </div>
+              {this.renderHint()}
             </div>
           </div>
         </div>

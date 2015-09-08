@@ -12,7 +12,6 @@ module.exports = {
 
     return {
       paymentType: "",
-      localeCode: "US",
       submitting: false,
       props: {
         amount: {
@@ -133,7 +132,7 @@ module.exports = {
     this.updateHeight();
   },
   submit: function(action, props, callback) {
-    props.localeCode = this.state.localeCode || "US";
+    props.locale = this.props.locales[0];
     fetch(action, {
       method: 'post',
       credentials: 'same-origin',
@@ -169,13 +168,8 @@ module.exports = {
     }
 
     var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' +donationFrequency;
-    var thankYouURL = '/thank-you/' + params;
 
-    if (window.location.assign) {
-      window.location.assign(thankYouURL);
-    } else {
-      window.location = thankYouURL;
-    }
+    this.transitionTo('/' + this.props.locales[0] + '/thank-you/' + params);
   },
   stripeError: function(error) {
     var newState = this.state;
@@ -324,6 +318,28 @@ module.exports = {
     this.onSubmit("/api/paypal", validate, props, function(json) {
       window.location = json.endpoint + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + json.token;
     });
+  },
+  signupSuccess: function(result) {
+    this.setState({
+      submitting: false
+    });
+    if (result.error) {
+      this.setState({
+        errors: {
+          other: {
+            message: this.getIntlMessage('try_again_later')
+          }
+        }
+      });
+    } else {
+      this.transitionTo('/' + this.props.locales[0] + '/share');
+    }
+  },
+  signup: function(validate, props, callback) {
+    this.setState({
+      submitting: true
+    });
+    this.onSubmit("/api/signup", validate, props, this.signupSuccess);
   },
   onSubmit: function(action, validate, props, callback) {
     var valid = this.validateProps(validate);

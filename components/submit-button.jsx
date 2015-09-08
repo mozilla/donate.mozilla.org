@@ -1,39 +1,18 @@
 import React from 'react';
 import {FormattedMessage, IntlMixin, FormattedNumber} from 'react-intl';
 
-var ButtonContent = React.createClass({
-  mixins: [IntlMixin],
-  render: function() {
-    if (this.props.submitting) {
-      return (
-        <span><i className="fa fa-cog fa-spin"/>{this.getIntlMessage('submitting')}</span>
-      );
-    } else if (this.props.amount) {
-      return (
-        <FormattedMessage
-          message={this.getIntlMessage('donate_now_amount')}
-          donationAmount={
-            <FormattedNumber
-              maximumFractionDigits={2}
-              value={this.props.amount}
-              style="currency"
-              currency={this.props.currency || "usd"}
-            />
-          }
-        />
-      );
-    } else {
-      return (
-        <span>{this.getIntlMessage("donate_now")}</span>
-      );
-    }
-  }
-});
-
 var DonateButton = React.createClass({
   mixins: [IntlMixin],
   onClick: function() {
     this.props.onSubmit(this.props.validate, this.props.submit);
+  },
+  renderButton: function() {
+    if (this.props.submitting) {
+      return (
+        <span><i className="fa fa-cog fa-spin"/>{this.getIntlMessage('submitting')}</span>
+      );
+    }
+    return this.props.children;
   },
   render: function() {
     var errorMessageClassName = "row error-msg-row";
@@ -45,11 +24,7 @@ var DonateButton = React.createClass({
       <div className="row">
         <div className="full">
           <button onClick={this.onClick} type="submit" className="btn large-label-size" id="donate-btn">
-            <ButtonContent
-              amount={this.props.amount}
-              submitting={this.props.submitting}
-              currency={this.props.currency}
-            />
+            {this.renderButton()}
           </button>
         </div>
         <div className={errorMessageClassName}>

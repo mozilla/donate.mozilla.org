@@ -4,20 +4,29 @@ var paypal = require('./paypal');
 
 var routes = {
   'signup': function(request, reply) {
-    var url = process.env.SINGUP;
+    var url = process.env.SIGNUP;
     var transaction = request.payload || {};
-    if(transaction.language_code !== 'en-US') {
-      url = url + '-' + transaction.language_code;
+    if(transaction.locale !== 'en-US') {
+      url = url + '-' + transaction.locale;
     }
     httpRequest({
       url: url,
       method: 'POST',
-      form: transaction
+      form: {
+        'opt_in': '1',
+        email: transaction.email
+      }
     }, function(err) {
       if (err) {
-        return console.error('signup failed:', err);
+        reply({
+          error: err
+        });
+        console.error('signup failed:', err);
+      } else {
+        reply({
+          success: true
+        });
       }
-      reply.redirect('/' + transaction.language_code + '/share');
     });
   },
   'stripe': function(request, reply) {

@@ -315,9 +315,8 @@ module.exports = {
       if (!prop) {
         prop = self.state.props[name].values;
       }
-      if (prop) {
-        props = assign(props, prop);
-      }
+      // Modify props to now container the values in prop.
+      assign(props, prop);
     });
     return props;
   },
@@ -329,9 +328,9 @@ module.exports = {
   onSubmit: function(action, validate, props, callback) {
     var valid = this.validateProps(validate);
     var submitProps = {};
-    if (valid) {
+    if (false) {
       submitProps = this.buildProps(props);
-      this.submit(action, submitProps, callback);
+      //this.submit(action, submitProps, callback);
     }
   }
 };

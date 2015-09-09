@@ -6,17 +6,20 @@
     border: 0 dashed transparent;
     left: 0;
     position: absolute;
-    transition: left 500ms;
+    transition: left 500ms, visibility 500ms;
     padding: 0;
     margin: 0;
     width: 100%;
+    visibility: visible;
 
     &.page-hidden-complete {
       left: -100%;
+      visibility: hidden;
     }
 
     &.page-hidden-incomplete {
       left: 100%;
+      visibility: hidden;
     }
   }
 }

@@ -8,9 +8,9 @@ var NextButton = React.createClass({
   },
   render: function() {
     return (
-      <div onClick={this.onClick} className="next-button">
+      <button onClick={this.onClick} className="next-button">
         {this.getIntlMessage('next')}
-      </div>
+      </button>
     );
   }
 });

@@ -80,7 +80,7 @@ var simplePaypal = React.createClass({
 
         <form action={process.env.PAYPAL_ENDPOINT + "/cgi-bin/webscr"} method="post" target="_top" ref="paypalOneTime">
           <input type="hidden" name="cmd" value="_donations"/>
-          <input type="hidden" name="business" value="receive-donation@test.com"/>
+          <input type="hidden" name="business" value={process.env.PAYPAL_EMAIL}/>
           <input type="hidden" name="lc" value="US"/>
           <input type="hidden" name="item_name" value={this.getIntlMessage("mozilla_donation")}/>
           <input type="hidden" name="no_note" value="1"/>
@@ -94,7 +94,7 @@ var simplePaypal = React.createClass({
 
         <form action={process.env.PAYPAL_ENDPOINT + "/cgi-bin/webscr"} method="post" ref="paypalRecurring">
           <input type="hidden" name="cmd" value="_xclick-subscriptions"/>
-          <input type="hidden" name="business" value="receive-donation@test.com"/>
+          <input type="hidden" name="business" value={process.env.PAYPAL_EMAIL}/>
           <input type="hidden" name="lc" value="US"/>
           <input type="hidden" name="item_name" value={this.getIntlMessage("mozilla_monthly_donation")}/>
           <input type="hidden" name="no_note" value="1"/>

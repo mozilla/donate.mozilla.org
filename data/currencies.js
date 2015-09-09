@@ -1,142 +1,134 @@
-var currencies = {
+module.exports = {
   'usd': {
-    currency: 'USD',
+    code: 'usd',
     minAmount: '2',
-    currencySymbol: '$',
-    paypalLocal: 'US'
+    symbol: '$',
+    presets: ['20', '10', '5', '3']
   },
   'php': {
-    currency: 'PHP',
+    code: 'php',
     minAmount: '90',
-    currencySymbol: '₱',
-    paypalLocal: 'PH'
+    symbol: '₱',
+    presets: ['400', '200', '100', '90']
   },
   'pln': {
-    currency: 'PLN',
+    code: 'pln',
     minAmount: '7',
-    currencySymbol: 'zł',
-    paypalLocal: 'PL'
+    symbol: 'zł',
+    presets: ['40', '20', '10', '7']
   },
   'rub': {
-    currency: 'RUB',
+    code: 'rub',
     minAmount: '100',
-    currencySymbol: 'руб',
-    paypalLocal: 'RU'
+    symbol: 'руб',
+    presets: ['600', '300', '150', '100']
   },
   'sek': {
-    currency: 'SEK',
+    code: 'sek',
     minAmount: '15',
-    currencySymbol: 'kr',
-    paypalLocal: 'sv_SE'
+    symbol: 'kr',
+    presets: ['80', '40', '20', '15']
   },
   'thb': {
-    currency: 'THB',
+    code: 'thb',
     minAmount: '70',
-    currencySymbol: '฿',
-    paypalLocal: 'th_TH'
+    symbol: '฿',
+    presets: ['400', '200', '100', '70']
   },
   'twd': {
-    currency: 'TWD',
+    code: 'twd',
     minAmount: '62',
-    currencySymbol: 'NT$',
-    paypalLocal: 'zh_TW'
+    symbol: 'NT$',
+    presets: ['400', '200', '100', '70']
   },
   'nzd': {
-    currency: 'NZD',
+    code: 'nzd',
     minAmount: '3',
-    currencySymbol: '$',
-    paypalLocal: 'US'
+    symbol: '$',
+    presets: ['20', '10', '5', '3']
   },
   'huf': {
-    currency: 'HUF',
+    code: 'huf',
     minAmount: '490',
-    currencySymbol: 'Ft',
-    paypalLocal: 'HU'
+    symbol: 'Ft',
+    presets: ['2800', '1400', '700', '500']
   },
   'ils': {
-    currency: 'ILS',
+    code: 'ils',
     minAmount: '8',
-    currencySymbol: '₪',
-    paypalLocal: 'he_IL'
+    symbol: '₪',
+    presets: ['60', '30', '15', '10']
   },
   'jpy': {
-    currency: 'JPY',
+    code: 'jpy',
     minAmount: '240',
-    currencySymbol: '¥',
-    paypalLocal: 'ja_JP'
+    symbol: '¥',
+    presets: ['1200', '600', '300', '250']
   },
   'mxn': {
-    currency: 'MXN',
+    code: 'mxn',
     minAmount: '30',
-    currencySymbol: '$',
-    paypalLocal: 'ES'
+    symbol: '$',
+    presets: ['160', '80', '40', '30']
   },
   'nok': {
-    currency: 'NOK',
+    code: 'nok',
     minAmount: '15',
-    currencySymbol: 'kr',
-    paypalLocal: 'no_NO'
+    symbol: 'kr',
+    presets: ['80', '40', '20', '15']
   },
   'aud': {
-    currency: 'AUD',
+    code: 'aud',
     minAmount: '2',
-    currencySymbol: '$',
-    paypalLocal: 'US'
+    symbol: '$',
+    presets: ['20', '10', '5', '3']
   },
   'brl': {
-    currency: 'BRL',
+    code: 'brl',
     minAmount: '5',
-    currencySymbol: 'R$',
-    paypalLocal: 'pt_BR'
+    symbol: 'R$',
+    presets: ['40', '20', '10', '5']
   },
   'cad': {
-    currency: 'CAD',
+    code: 'cad',
     minAmount: '2',
-    currencySymbol: '$',
-    paypalLocal: 'US'
+    symbol: '$',
+    presets: ['20', '10', '5', '3']
   },
   'chf': {
-    currency: 'CHF',
+    code: 'chf',
     minAmount: '2',
-    currencySymbol: 'CHF',
-    paypalLocal: 'DE'
+    symbol: 'CHF',
+    presets: ['20', '10', '5', '3']
   },
   'czk': {
-    currency: 'CZK',
+    code: 'czk',
     minAmount: '45',
-    currencySymbol: 'Kč',
-    paypalLocal: 'CZ'
+    symbol: 'Kč',
+    presets: ['240', '120', '60', '45']
   },
   'dkk': {
-    currency: 'DKK',
+    code: 'dkk',
     minAmount: '12',
-    currencySymbol: 'kr',
-    paypalLocal: 'da_DK'
+    symbol: 'kr',
+    presets: ['80', '40', '20', '12']
   },
-  'eur-de': {
-    currency: 'EUR',
+  'eur': {
+    code: 'eur',
     minAmount: '2',
-    currencySymbol: '€',
-    paypalLocal: 'DE'
-  },
-  'eur-fr': {
-    currency: 'EUR',
-    minAmount: '2',
-    currencySymbol: '€',
-    paypalLocal: 'FR'
+    symbol: '€',
+    presets: ['20', '10', '5', '3']
   },
   'gbp': {
-    currency: 'GBP',
+    code: 'gbp',
     minAmount: '1',
-    currencySymbol: '£',
-    paypalLocal: 'US'
+    symbol: '£',
+    presets: ['20', '10', '5', '3']
   },
   'hkd': {
-    currency: 'HKD',
+    code: 'hkd',
     minAmount: '15',
-    currencySymbol: '$',
-    paypalLocal: 'US'
+    symbol: '$',
+    presets: ['80', '40', '20', '15']
   }
 };
-
-module.exports = currencies;

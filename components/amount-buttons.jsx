@@ -61,24 +61,15 @@ var AmountOtherButton = React.createClass({
 var AmountButtons = React.createClass({
   mixins: [require('react-intl').IntlMixin],
   getInitialState: function() {
-    var presets = this.props.presets || "";
-    presets = presets.split(",");
-    if (presets.length !== 4) {
-      presets = ["20", "10", "5", "3"];
-    }
     var amount = this.props.amount;
+    var presets = this.props.presets;
     var preset = presets.indexOf(amount);
     var userInputting = false;
     if (preset < 0 && amount) {
       userInputting = true;
     }
     return {
-      presets: presets,
       userInputting: userInputting,
-      values: {
-        amount: amount || "",
-        currencyCode: this.props.currency
-      },
       valid: true
     };
   },
@@ -87,13 +78,11 @@ var AmountButtons = React.createClass({
   },
   setAmount: function(amount, userInputting) {
     var values = this.state.values;
-    values.amount = amount;
     this.setState({
       userInputting: userInputting,
-      valid: true,
-      values: values
+      valid: true
     });
-    this.props.onChange(this.props.name, this);
+    this.props.onChange(this.props.name, this, amount);
   },
   otherRadioChange: function() {
     if (!this.state.userInputting) {
@@ -108,7 +97,7 @@ var AmountButtons = React.createClass({
   },
   validate: function() {
     var valid = false;
-    if (this.state.values.amount) {
+    if (this.props.amount) {
       valid = true;
     }
     this.setState({
@@ -121,8 +110,9 @@ var AmountButtons = React.createClass({
   },
   render: function() {
     var otherAmount = "";
-    var amount = this.state.values.amount;
-    var preset = this.state.presets.indexOf(amount);
+    var amount = this.props.amount;
+    var presets = this.props.presets;
+    var preset = presets.indexOf(amount);
     var userInputting = this.state.userInputting;
     if (userInputting) {
       otherAmount = amount;
@@ -136,15 +126,15 @@ var AmountButtons = React.createClass({
     return (
       <div className="amount-buttons">
         <div className="row donation-amount-row">
-          <AmountButton value={this.state.presets[0]} currency={currency} amount={amount}
+          <AmountButton value={presets[0]} currency={currency} amount={amount}
             onChange={this.onChange}/>
-          <AmountButton value={this.state.presets[1]} currency={currency} amount={amount}
+          <AmountButton value={presets[1]} currency={currency} amount={amount}
             onChange={this.onChange}/>
-          <AmountButton value={this.state.presets[2]} currency={currency} amount={amount}
+          <AmountButton value={presets[2]} currency={currency} amount={amount}
             onChange={this.onChange}/>
         </div>
         <div className="row donation-amount-row">
-          <AmountButton value={this.state.presets[3]} currency={currency} amount={amount}
+          <AmountButton value={presets[3]} currency={currency} amount={amount}
             onChange={this.onChange}/>
           <AmountOtherButton amount={otherAmount}
             currencySymbol={this.props.currencySymbol}

@@ -1,20 +1,26 @@
 import assign from 'react/lib/Object.assign';
 import reactGA from 'react-ga';
+import {Navigation} from 'react-router';
 
 module.exports = {
+  mixins: [Navigation],
   getInitialState: function() {
     var amount = "";
-    var presets;
     if (this.props.queryString) {
-      amount = this.props.queryString.amount;
-      presets = this.props.queryString.presets;
+      amount = this.props.queryString.amount || "";
     }
+
     return {
-      presets: presets,
-      amount: {state: {values: {amount: amount}}},
       paymentType: "",
       localeCode: "US",
       submitting: false,
+      props: {
+        amount: {
+          values: {
+            amount: amount
+          }
+        }
+      },
       errors: {
         creditCardInfo: {
           page: 0,
@@ -54,6 +60,37 @@ module.exports = {
     }
     this.setState(newState);
     this.updateHeight();
+  },
+  onAmountChange: function(name, value, amount) {
+    this.onChange(name, value);
+    this.setState({
+      props: {
+        amount: {
+          values: {
+            amount: amount
+          }
+        }
+      },
+    });
+  },
+  onCurrencyChanged: function(e) {
+    var value = e.currentTarget.value;
+    var currencies = this.props.currencies;
+    var currency = currencies[value] || this.state.currency;
+    var presets = currency.presets;
+    this.transitionTo(document.location.pathname, {}, {
+      currency: currency.code,
+      presets: presets.join(",")
+    });
+    this.setState({
+      props: {
+        amount: {
+          values: {
+            amount: ""
+          }
+        }
+      },
+    });
   },
   onPageError: function(errors, index) {
     var stateErrors = this.state.errors;
@@ -272,7 +309,14 @@ module.exports = {
     var self = this;
     var props = {};
     fields.forEach(function(name) {
-      props = assign(props, self.state[name].state.values);
+      var prop = self.state[name].state.values;
+      // Currently some fields expose their values on the form, and not themselves.
+      // So we need to check for props in both places until all field componenets are updated.
+      if (!prop) {
+        prop = self.state.props[name].values;
+      }
+      // Modify props to now contain the values in prop.
+      assign(props, prop);
     });
     return props;
   },

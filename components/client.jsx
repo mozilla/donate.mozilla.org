@@ -17,26 +17,45 @@ function redirectTo(pathname, query, Handler) {
 }
 
 Router.run(routes, Router.HistoryLocation, function (Handler, state) {
-  var pathname = state.query.pathname || state.pathname;
   var lang = i18n.isSupportedLanguage(i18n.currentLanguage) ? i18n.currentLanguage : i18n.defaultLang;
-  var query = state.query.pathname ? {} : state.query;
+  var queryString = state.query;
+  var pathname = queryString.pathname || state.pathname;
 
-  var values = query.currency && currencies[query.currency] ? currencies[query.currency] : currencies['usd'];
-  values.queryString = state.query;
+  var presets = "";
+  var currencyCode = "usd";
+  if (queryString) {
+    presets = queryString.presets || "";
+    currencyCode = queryString.currency || currencyCode;
+  }
+  var currency = currencies[currencyCode];
+  presets = presets.split(",");
+
+  // If we didn't get correct presets from the query string,
+  // so default to the currency defined preset.
+  if (presets.length !== 4) {
+    presets = currency.presets;
+  }
+
+  var values = {
+    currency: currency,
+    presets: presets,
+    currencies: currencies,
+    queryString: queryString
+  };
 
   // checking if language code is part of the URL e.g. /en-US/thank-you
-  if(i18n.urlOverrideLang(state.query.pathname).test) {
+  if(i18n.urlOverrideLang(queryString.pathname).test) {
     // but is the language code supported in our app?
     if(i18n.isSupportedLanguage(i18n.urlOverrideLang().lang)) {
       var messages = i18n.intlDataFor(i18n.urlOverrideLang().lang);
       values = assign(values, messages);
     } else {
       pathname = pathname.split('/')[2] ? pathname.split('/')[2] : '';
-      return redirectTo(pathname, query, Handler)
+      return redirectTo(pathname, queryString, Handler)
     }
     // if not we will hijack the URL and insert the language code in the URL
-  } else if(!i18n.urlOverrideLang(state.query.pathname).test) {
-    return redirectTo("/" + lang + pathname, query, Handler)
+  } else if(!i18n.urlOverrideLang(queryString.pathname).test) {
+    return redirectTo("/" + lang + pathname, queryString, Handler)
   }
   React.render(<Handler {...values} />, document.querySelector("#my-app"));
 });

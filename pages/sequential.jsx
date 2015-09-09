@@ -3,6 +3,7 @@ import Footer from '../components/footer.jsx';
 import Header from '../components/header.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SectionHeading from '../components/section-heading.jsx';
+import CurrencyDropdown from '../components/currency-dropdown.jsx';
 
 import NavigationMenu from '../components/navigation-menu.jsx';
 import NavigationButton from '../components/navigation-button.jsx';
@@ -24,12 +25,6 @@ import PrivacyPolicy from '../components/privacy-policy-input.jsx';
 var SingleForm = React.createClass({
   mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],
   getInitialState() {
-    var amount = "";
-    var presets;
-    if (this.props.queryString) {
-      amount = this.props.queryString.amount;
-      presets = this.props.queryString.presets;
-    }
     return {
       activePage: 0,
       hideCreditCardDetails: true,
@@ -60,14 +55,14 @@ var SingleForm = React.createClass({
     if (this.state.hideCreditCardDetails) {
       creditCardDetailsClassName += " hidden";
     }
-    var amount = this.state.amount.state.values.amount;
+    var amount = this.state.props.amount.values.amount;
     return (
       <div className="mozilla-eoy-donation">
         <Header/>
         <div className="container">
 
           <NavigationMenu>
-            <NavigationButton amount={amount} currency={this.props.currency} onClick={this.toThisPage} activePage={this.state.activePage} index={0}>
+            <NavigationButton amount={amount} currency={this.props.currency.code} onClick={this.toThisPage} activePage={this.state.activePage} index={0}>
               <div>{this.getIntlMessage("amount")}</div>
             </NavigationButton>
             <NavigationButton display={this.state.paymentType} onClick={this.toThisPage} activePage={this.state.activePage} index={1}>
@@ -81,9 +76,18 @@ var SingleForm = React.createClass({
           <NavigationContainer height={this.state.height}>
             <Page activePage={this.state.activePage} index={0}>
               <SectionHeading>
-                <h2>{this.getIntlMessage("donate_now")}</h2>
+                <h2>
+                  {this.getIntlMessage("donate_now")}
+                  <span className="currency-dropdown-container">
+                    <CurrencyDropdown
+                      currencies={this.props.currencies}
+                      currency={this.props.currency.code}
+                      onChange={this.onCurrencyChanged}
+                    />
+                  </span>
+                </h2>
               </SectionHeading>
-              <AmountButtons currencySymbol={this.props.currencySymbol} currency={this.props.currency} onChange={this.onChange} amount={amount} presets={this.state.presets} name="amount"/>
+              <AmountButtons currencySymbol={this.props.currency.symbol} currency={this.props.currency.code} onChange={this.onAmountChange} amount={amount} presets={this.props.presets} name="amount"/>
               <Frequency onChange={this.onChange} name="frequency"/>
               <NextButton onClick={this.nextPage} validate={["amount"]}/>
             </Page>
@@ -126,7 +130,7 @@ var SingleForm = React.createClass({
               <DonateButton
                 submitting={this.state.submitting}
                 validate={["name", "address", "email", "privacyPolicy"]}
-                onSubmit={this.stripe} amount={amount} currency={this.props.currency}
+                onSubmit={this.stripe} amount={amount} currency={this.props.currency.code}
                 submit={["amount", "frequency", "creditCardInfo", "name", "address", "email"]}
                 error={this.state.errors.other}
               />

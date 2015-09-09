@@ -315,7 +315,7 @@ module.exports = {
       if (!prop) {
         prop = self.state.props[name].values;
       }
-      // Modify props to now container the values in prop.
+      // Modify props to now contain the values in prop.
       assign(props, prop);
     });
     return props;

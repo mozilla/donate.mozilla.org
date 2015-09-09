@@ -11,9 +11,11 @@ var simplePaypal = React.createClass({
       <div className="mozilla-eoy-donation">
         <Header/>
         <SimplePaypal
-          currency={this.props.currency.code}
+          presets={this.props.presets}
+          currency={this.props.currency}
           minAmount={this.props.minAmount}
           paypalLocal={this.props.paypalLocal}
+          locales={this.props.locales}
         />
         <Footer/>
       </div>

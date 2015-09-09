@@ -1,93 +1,30 @@
 import React from 'react';
-import { IntlMixin, FormattedMessage, FormattedNumber } from 'react-intl';
+import IntlMixin from 'react-intl';
 
-var PaypalInput = React.createClass({
-  render: function() {
-    return (
-      <div className="amount-other-wrapper">
-        <input
-          onChange={this.props.donateOnChange}
-          onKeyDown={this.props.donateKeyDown}
-          type="number" name="donation_amount_other" min={this.props.minAmount} placeholder={this.props.placeholder} className="amount-other-input medium-label-size" required value={this.props.value}/>
-      </div>
-    );
-  }
-});
-
-var PaypalButton = React.createClass({
-  mixins: [IntlMixin],
-  render: function() {
-    return (
-      <button type="submit" className="btn large-label-size" id="donate-btn">
-        { this.props.value ?
-        <FormattedMessage
-          message={this.props.message}
-          donationAmount={
-            <FormattedNumber
-              maximumFractionDigits={2}
-              value={this.props.value}
-              style="currency"
-              currency={this.props.currency || "usd"}
-            />
-          }
-          /> : this.props.defaultMessage}
-      </button>
-    );
-  }
-});
+import AmountButtons from '../components/amount-buttons.jsx';
+import Frequency from '../components/donation-frequency.jsx';
+import SubmitButton from '../components/submit-button.jsx';
+import DonateButton from '../components/donate-button.jsx';
 
 var simplePaypal = React.createClass({
-  mixins: [IntlMixin],
-  getInitialState: function() {
-    return {
-      value: ""
-    };
-  },
-  donateOnChange: function(event) {
-    this.setState({
-      value: event.target.value
-    });
-  },
-  donateKeyDown: function(event) {
-    var functionKeys = [46, 8, 9, 27, 13, 110, 190, 37, 39]; // backspace, delete, tab, escape, enter . left, and right
-    var numberKeys = [ 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105 ]; // numbers
-    var allowed = functionKeys.concat(numberKeys);
-    if (allowed.indexOf(event.keyCode) === -1) {
-      event.preventDefault();
-    }
-  },
-  componentDidMount: function() {
-    // ***********************************************
-    // Update Donate button to make it show the selected donation amount
-    // ***********************************************
-    var $theForm = $('#primary-form');
-
-    // check if a pre-selected amount is passed via the URL
-    if (window.location.hash.match(/#amount-\d+?/)) {
+  mixins: [IntlMixin, require('../mixins/form.jsx')],
+  simplePaypal(validate, props) {
+    var valid = this.validateProps(validate);
+    var submitProps = {};
+    if (valid) {
       this.setState({
-        value: window.location.hash.substring(8)
+        submitting: true
       });
-    }
-
-    $('input#amount-other + label + input[type="number"]').focus(function () {
-      $(this).prevAll('input[type="radio"]').click();
-    });
-
-    // ***********************************************
-    // Catch the form submission and send off the appropriate donation type
-    // ***********************************************
-
-    $theForm.on('submit', function (e) {
-      e.preventDefault();
-
-      if ($('input[name="recurring_acknowledge"]:checked').val() === '0') {
-        $('#paypal-one-time').submit();
+      submitProps = this.buildProps(props);
+      if (submitProps.recurring === "1") {
+        this.refs.paypalRecurring.getDOMNode().submit();
       } else {
-        $('#paypal-recurring').submit();
+        this.refs.paypalOneTime.getDOMNode().submit();
       }
-    });
+    }
   },
   render: function() {
+    var amount = this.state.props.amount.values.amount;
     return (
       <div className="simple-paypal">
         <div id="header-copy">
@@ -105,7 +42,6 @@ var simplePaypal = React.createClass({
                 {this.getIntlMessage("secure")}
               </p>
             </div>
-
             <div className="row">
               <div className="full">
                 <h4>
@@ -113,50 +49,24 @@ var simplePaypal = React.createClass({
                 </h4>
               </div>
             </div>
-            <form action="#" id="primary-form">
-              <div className="row donation-amount-row">
-                <div className="full">
-                  <div id="amount-other-container">
-                    <input type="radio" name="donation_amount" value="other" id="amount-other"/>
-                    <label htmlFor="amount-other" className="large-label-size">
-                      {this.props.currency}
-                    </label>
-                    <PaypalInput
-                      donateOnChange={this.donateOnChange}
-                      donateKeyDown={this.donateKeyDown}
-                      minAmount={this.props.minAmount}
-                      placeholder={this.getIntlMessage("amount")}
-                      currency={this.props.currency}
-                      value={this.state.value}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="row" id="recurring-option-row">
-                <div className="half">
-                  <input type="radio" name="recurring_acknowledge" defaultChecked="checked" value="0" required id="one-time-payment"/>
-                  <label htmlFor="one-time-payment" className="medium-label-size">
-                    {this.getIntlMessage("one_time")}
-                  </label>
-                </div>
-                <div className="half">
-                  <input type="radio" name="recurring_acknowledge" value="1" required id="monthly-payment"/>
-                  <label htmlFor="monthly-payment" className="medium-label-size">
-                    {this.getIntlMessage("monthly")}
-                  </label>
-                </div>
-              </div>
-              <div className="row">
-                <div className="full">
-                  <PaypalButton
-                    value={this.state.value}
-                    defaultMessage={this.getIntlMessage("donate_now")}
-                    message={this.getIntlMessage("donate_now_amount")}
-                    currency={this.props.currency}
+            <div className="row">
+              <div className="full">
+                <AmountButtons currencySymbol={this.props.currency.symbol} currency={this.props.currency.code} onChange={this.onAmountChange} amount={amount} presets={this.props.presets} name="amount"/>
+                <Frequency onChange={this.onChange} name="frequency"/>
+                <SubmitButton
+                  submitting={this.state.submitting}
+                  validate={["amount"]}
+                  onSubmit={this.simplePaypal}
+                  submit={["amount", "frequency"]}
+                  error={this.state.errors.other}
+                >
+                  <DonateButton
+                    amount={amount} currency={this.props.currency.code}
                   />
-                </div>
+                </SubmitButton>
+
               </div>
-            </form>
+            </div>
           </div>
         </div>
 
@@ -168,34 +78,34 @@ var simplePaypal = React.createClass({
           </p>
         </div>
 
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" id="paypal-one-time">
+        <form action={process.env.PAYPAL_ENDPOINT + "/cgi-bin/webscr"} method="post" target="_top" ref="paypalOneTime">
           <input type="hidden" name="cmd" value="_donations"/>
-          <input type="hidden" name="business" value="44ZHAVWJHTK2N"/>
-          <input type="hidden" name="lc" value={this.props.paypalLocal}/>
+          <input type="hidden" name="business" value="receive-donation@test.com"/>
+          <input type="hidden" name="lc" value="US"/>
           <input type="hidden" name="item_name" value={this.getIntlMessage("mozilla_donation")}/>
           <input type="hidden" name="no_note" value="1"/>
           <input type="hidden" name="no_shipping" value="1"/>
           <input type="hidden" name="rm" value="1"/>
           {/* Donation Amount */}
-          <input type="hidden" name="amount" value={this.state.value || 0}/>
-          <input type="hidden" name="return" value="//donate-mozilla.herokuapp.com/thank-you/"/>
-          <input type="hidden" name="currency_code" value={this.props.currency}/>
+          <input type="hidden" name="amount" value={amount}/>
+          <input type="hidden" name="return" value={process.env.APPLICATION_URI + "/" + this.props.locales[0] + "/thank-you/"}/>
+          <input type="hidden" name="currency_code" value={this.props.currency.code.toUpperCase()}/>
         </form>
 
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" id="paypal-recurring">
+        <form action={process.env.PAYPAL_ENDPOINT + "/cgi-bin/webscr"} method="post" ref="paypalRecurring">
           <input type="hidden" name="cmd" value="_xclick-subscriptions"/>
-          <input type="hidden" name="business" value="44ZHAVWJHTK2N"/>
-          <input type="hidden" name="lc" value={this.props.paypalLocal}/>
+          <input type="hidden" name="business" value="receive-donation@test.com"/>
+          <input type="hidden" name="lc" value="US"/>
           <input type="hidden" name="item_name" value={this.getIntlMessage("mozilla_monthly_donation")}/>
           <input type="hidden" name="no_note" value="1"/>
           <input type="hidden" name="no_shipping" value="2"/>
-          <input type="hidden" name="return" value="//donate-mozilla.herokuapp.com/thank-you/"/>
+          <input type="hidden" name="return" value={process.env.APPLICATION_URI + "/" + this.props.locales[0] + "/thank-you/"}/>
           <input type="hidden" name="src" value="1"/>
           <input type="hidden" name="p3" value="1"/>
-          <input type="hidden" name="currency_code" value={this.props.currency}/>
+          <input type="hidden" name="currency_code" value={this.props.currency.code.toUpperCase()}/>
           <input type="hidden" name="t3" value="M"/>
           <input name="srt" type="hidden" value="0"/>
-          <input type="hidden" name="a3" value={this.state.value || 0}/>
+          <input type="hidden" name="a3" value={amount}/>
 
         </form>
       </div>

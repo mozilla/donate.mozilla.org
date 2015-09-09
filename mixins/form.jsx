@@ -328,9 +328,9 @@ module.exports = {
   onSubmit: function(action, validate, props, callback) {
     var valid = this.validateProps(validate);
     var submitProps = {};
-    if (false) {
+    if (valid) {
       submitProps = this.buildProps(props);
-      //this.submit(action, submitProps, callback);
+      this.submit(action, submitProps, callback);
     }
   }
 };

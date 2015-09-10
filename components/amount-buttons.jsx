@@ -1,5 +1,5 @@
 import React from 'react';
-import {IntlMixin, FormattedNumber} from 'react-intl';
+import {FormattedMessage, IntlMixin, FormattedNumber} from 'react-intl';
 
 var AmountButton = React.createClass({
   render: function() {
@@ -16,7 +16,7 @@ var AmountButton = React.createClass({
             minimumFractionDigits={0}
             value={this.props.value}
             style="currency"
-            currency={this.props.currency || "usd"}
+            currency={this.props.currencyCode || "usd"}
           />
         </label>
       </div>
@@ -70,7 +70,8 @@ var AmountButtons = React.createClass({
     }
     return {
       userInputting: userInputting,
-      valid: true
+      valid: true,
+      errorMessage: ""
     };
   },
   onChange: function(e) {
@@ -97,13 +98,39 @@ var AmountButtons = React.createClass({
   },
   validate: function() {
     var valid = false;
+    var errorMessage = "";
     if (this.props.amount) {
-      valid = true;
+      if (parseInt(this.props.amount, 10) < parseInt(this.props.currency.minAmount, 10)) {
+        errorMessage = this.getIntlMessage('donation_min_error');
+      } else {
+        valid = true;
+      }
+    } else {
+      errorMessage = this.getIntlMessage('please_select_an_amount');
     }
     this.setState({
-      valid: valid
+      valid: valid,
+      errorMessage: errorMessage
     });
     return valid;
+  },
+  renderErrorMessage: function() {
+    if (this.state.errorMessage === this.getIntlMessage('donation_min_error')) {
+      return (
+        <FormattedMessage
+          message={this.state.errorMessage}
+          minAmount={
+            <FormattedNumber
+              maximumFractionDigits={2}
+              value={this.props.currency.minAmount}
+              style="currency"
+              currency={this.props.currency.code || "usd"}
+            />
+          }
+        />
+      );
+    }
+    return this.state.errorMessage;
   },
   componentDidMount: function() {
     this.props.onChange(this.props.name, this);
@@ -126,19 +153,19 @@ var AmountButtons = React.createClass({
     return (
       <div className="amount-buttons">
         <div className="row donation-amount-row">
-          <AmountButton value={presets[0]} currency={currency} amount={amount}
+          <AmountButton value={presets[0]} currencyCode={currency.code} amount={amount}
             onChange={this.onChange}/>
-          <AmountButton value={presets[1]} currency={currency} amount={amount}
+          <AmountButton value={presets[1]} currencyCode={currency.code} amount={amount}
             onChange={this.onChange}/>
-          <AmountButton value={presets[2]} currency={currency} amount={amount}
+          <AmountButton value={presets[2]} currencyCode={currency.code} amount={amount}
             onChange={this.onChange}/>
         </div>
         <div className="row donation-amount-row">
-          <AmountButton value={presets[3]} currency={currency} amount={amount}
+          <AmountButton value={presets[3]} currencyCode={currency.code} amount={amount}
             onChange={this.onChange}/>
           <AmountOtherButton amount={otherAmount}
-            currencySymbol={this.props.currencySymbol}
-            checked={userInputting} currency={currency}
+            currencySymbol={currency.symbol}
+            checked={userInputting}
             onRadioChange={this.otherRadioChange}
             onInputChange={this.otherInputChange}
             placeholder={this.getIntlMessage('other_amount')}
@@ -149,7 +176,7 @@ var AmountButtons = React.createClass({
             <div id="amount-error-msg">
               <ul id="parsley-id-multiple-donation_amount" className="parsley-errors-list filled">
                 <li className="parsley-custom-error-message">
-                  {this.getIntlMessage('please_select_an_amount')}
+                  {this.renderErrorMessage()}
                 </li>
               </ul>
             </div>
@@ -161,4 +188,3 @@ var AmountButtons = React.createClass({
 });
 
 module.exports = AmountButtons;
-

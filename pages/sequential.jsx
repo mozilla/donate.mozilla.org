@@ -90,7 +90,11 @@ module.exports = React.createClass({
                   </span>
                 </h2>
               </SectionHeading>
-              <AmountButtons currencySymbol={this.props.currency.symbol} currency={this.props.currency.code} onChange={this.onAmountChange} amount={amount} presets={this.props.presets} name="amount"/>
+              <AmountButtons name="amount"
+                currency={this.props.currency}
+                onChange={this.onAmountChange}
+                amount={amount} presets={this.props.presets}
+              />
               <Frequency onChange={this.onChange} name="frequency"/>
               <NextButton onClick={this.nextPage} validate={["amount"]}/>
             </Page>

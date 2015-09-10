@@ -31,8 +31,7 @@ var SingleForm = React.createClass({
             </h2>
           </SectionHeading>
           <AmountButtons name="amount"
-            currency={this.props.currency.code}
-            currencySymbol={this.props.currency.symbol}
+            currency={this.props.currency}
             onChange={this.onAmountChange}
             amount={this.state.props.amount.values.amount}
             presets={this.props.presets}

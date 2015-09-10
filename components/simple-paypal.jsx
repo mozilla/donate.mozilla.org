@@ -51,7 +51,12 @@ var simplePaypal = React.createClass({
             </div>
             <div className="row">
               <div className="full">
-                <AmountButtons currencySymbol={this.props.currency.symbol} currency={this.props.currency.code} onChange={this.onAmountChange} amount={amount} presets={this.props.presets} name="amount"/>
+                <AmountButtons name="amount"
+                  currency={this.props.currency}
+                  onChange={this.onAmountChange}
+                  presets={this.props.presets}
+                  amount={amount}
+                />
                 <Frequency onChange={this.onChange} name="frequency"/>
                 <SubmitButton
                   submitting={this.state.submitting}

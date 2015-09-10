@@ -39,12 +39,26 @@ var CreditCardInfo = React.createClass({
     return false;
   },
   validate: function() {
-    var valid = this.validateFields(["expMonth", "expYear", "cvc"]);
+    var valid = this.validateFields(["cvc"]);
     var cardNumber = this.state.values.cardNumber;
     if (!this.checkCardNumber(cardNumber)) {
       valid = false;
       this.setState({
         cardNumberValid: false
+      });
+    }
+    var year = parseInt(this.state.values.expYear, 10);
+    if (this.props.error.yearExp || !year || year < 15) {
+      valid = false;
+      this.setState({
+        expYearValid: false
+      });
+    }
+    var month = parseInt(this.state.values.expMonth, 10);
+    if (this.props.error.monthExp || !month || month < 1 || month > 12) {
+      valid = false;
+      this.setState({
+        expMonthValid: false
       });
     }
     return valid;
@@ -55,21 +69,32 @@ var CreditCardInfo = React.createClass({
   onCardInput: function(e) {
     var value = e.currentTarget.value;
     var state = this.state;
-    state.values.cardNumber = value;
-    if (this.checkCardNumber(value)) {
-      state.cardNumberValid = true;
+    if (/^(\d)*$/.test(value)) {
+      state.values.cardNumber = value;
+      if (this.checkCardNumber(value)) {
+        state.cardNumberValid = true;
+      }
+      this.setState(state);
+      this.onChange("number");
     }
-    this.setState(state);
-    this.onChange("number");
   },
   onExpMonthInput: function(e) {
-    this.onInput("expMonth", e.currentTarget.value);
+    var value = e.currentTarget.value;
+    if (/^(\d)*$/.test(value)) {
+      this.onInput("expMonth", value);
+    }
   },
   onExpYearInput: function(e) {
-    this.onInput("expYear", e.currentTarget.value);
+    var value = e.currentTarget.value;
+    if (/^(\d)*$/.test(value)) {
+      this.onInput("expYear", value);
+    }
   },
   onCvcInput: function(e) {
-    this.onInput("cvc", e.currentTarget.value);
+    var value = e.currentTarget.value;
+    if (/^(\d)*$/.test(value)) {
+      this.onInput("cvc", value);
+    }
   },
   render: function() {
     var hintClassIconName = "fa fa-question-circle hint";

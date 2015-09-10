@@ -144,7 +144,9 @@ module.exports = {
     }).then(function(response) {
       return response.json();
     }).then(function(json) {
-      callback(json);
+      if (callback) {
+        callback(json);
+      }
     });
   },
   stripeSuccess: function(data) {
@@ -169,7 +171,7 @@ module.exports = {
 
     var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' +donationFrequency;
 
-    this.transitionTo('/' + this.props.locales[0] + '/thank-you/' + params);
+    this.transitionTo('/' + this.props.locales[0] + '/thank-you/?' + params);
   },
   stripeError: function(error) {
     var newState = this.state;
@@ -314,7 +316,7 @@ module.exports = {
     });
     return props;
   },
-  paypal: function(validate, props, callback) {
+  paypal: function(validate, props) {
     this.onSubmit("/api/paypal", validate, props, function(json) {
       window.location = json.endpoint + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + json.token;
     });
@@ -335,7 +337,7 @@ module.exports = {
       this.transitionTo('/' + this.props.locales[0] + '/share');
     }
   },
-  signup: function(validate, props, callback) {
+  signup: function(validate, props) {
     this.setState({
       submitting: true
     });

@@ -29,11 +29,14 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
+        APPLICATION_URI: JSON.stringify(process.env.APPLICATION_URI),
         STRIPE_PUBLIC_KEY: JSON.stringify(process.env.STRIPE_PUBLIC_KEY),
         COINBASE_ENDPOINT: JSON.stringify(process.env.COINBASE_ENDPOINT),
         OPTIMIZELY_ID: JSON.stringify(process.env.OPTIMIZELY_ID),
         OPTIMIZELY_ACTIVE: JSON.stringify(process.env.OPTIMIZELY_ACTIVE),
-        FULL_SUBDOMAIN_FOR_COOKIE: JSON.stringify(process.env.FULL_SUBDOMAIN_FOR_COOKIE)
+        FULL_SUBDOMAIN_FOR_COOKIE: JSON.stringify(process.env.FULL_SUBDOMAIN_FOR_COOKIE),
+        PAYPAL_EMAIL: JSON.stringify(process.env.PAYPAL_EMAIL),
+        PAYPAL_ENDPOINT: JSON.stringify(process.env.PAYPAL_ENDPOINT)
       }
     }),
     new webpack.ProvidePlugin({

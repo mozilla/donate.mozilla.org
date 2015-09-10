@@ -11,6 +11,7 @@ import NavigationContainer from '../components/navigation-container.jsx';
 import NextButton from '../components/next-button.jsx';
 import Page from '../components/navigation-page.jsx';
 import SubmitButton from '../components/submit-button.jsx';
+import DonateButton from '../components/donate-button.jsx';
 import PayPalButton from '../components/paypal-button.jsx';
 import CreditCardButton from '../components/credit-card-button.jsx';
 
@@ -22,32 +23,7 @@ import Address from '../components/address-input.jsx';
 import Email from '../components/email-input.jsx';
 import PrivacyPolicy from '../components/privacy-policy-input.jsx';
 
-import {FormattedMessage, IntlMixin, FormattedNumber} from 'react-intl';
-
-var DonateButton = React.createClass({
-  mixins: [IntlMixin],
-  render: function() {
-    if (this.props.amount) {
-      return (
-        <FormattedMessage
-          message={this.getIntlMessage('donate_now_amount')}
-          donationAmount={
-            <FormattedNumber
-              maximumFractionDigits={2}
-              value={this.props.amount}
-              style="currency"
-              currency={this.props.currency || "usd"}
-            />
-          }
-        />
-      );
-    } else {
-      return (
-        <span>{this.getIntlMessage("donate_now")}</span>
-      );
-    }
-  }
-});
+import IntlMixin from 'react-intl';
 
 module.exports = React.createClass({
   mixins: [IntlMixin, require('../mixins/form.jsx')],
@@ -162,7 +138,7 @@ module.exports = React.createClass({
                 error={this.state.errors.other}
               >
                 <DonateButton
-                  amount={amount} currency={this.props.currency}
+                  amount={amount} currency={this.props.currency.code}
                 />
               </SubmitButton>
             </Page>

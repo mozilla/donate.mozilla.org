@@ -16,6 +16,7 @@ var simplePaypal = React.createClass({
           minAmount={this.props.minAmount}
           paypalLocal={this.props.paypalLocal}
           locales={this.props.locales}
+          queryString={this.props.queryString}
         />
         <Footer/>
       </div>

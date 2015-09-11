@@ -92,10 +92,10 @@ module.exports = React.createClass({
               </SectionHeading>
               <AmountButtons name="amount"
                 currency={this.props.currency}
-                onChange={this.onAmountChange}
+                onChange={this.updateFormField}
                 amount={amount} presets={this.props.presets}
               />
-              <Frequency onChange={this.onChange} name="frequency"/>
+              <Frequency onChange={this.updateFormField} name="frequency" value={this.state.props.frequency.values.frequency}/>
               <NextButton onClick={this.nextPage} validate={["amount"]}/>
             </Page>
 

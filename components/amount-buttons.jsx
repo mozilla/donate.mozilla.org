@@ -83,7 +83,9 @@ var AmountButtons = React.createClass({
       userInputting: userInputting,
       valid: true
     });
-    this.props.onChange(this.props.name, this, amount);
+    this.props.onChange(this.props.name, this, {
+      amount: amount
+    });
   },
   otherRadioChange: function() {
     if (!this.state.userInputting) {

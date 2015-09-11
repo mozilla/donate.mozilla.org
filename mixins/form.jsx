@@ -6,10 +6,13 @@ module.exports = {
   mixins: [Navigation],
   getInitialState: function() {
     var amount = "";
+    var frequency = "single";
     if (this.props.queryString) {
       amount = this.props.queryString.amount || "";
+      if (this.props.queryString.frequency === "monthly") {
+        frequency = "monthly";
+      }
     }
-
     return {
       paymentType: "",
       submitting: false,
@@ -17,6 +20,11 @@ module.exports = {
         amount: {
           values: {
             amount: amount
+          }
+        },
+        frequency: {
+          values: {
+            frequency: frequency
           }
         }
       },
@@ -60,16 +68,15 @@ module.exports = {
     this.setState(newState);
     this.updateHeight();
   },
-  onAmountChange: function(name, value, amount) {
+  updateFormField: function(name, value, values) {
     this.onChange(name, value);
+    if (!values) {
+      return;
+    }
+    var newProps = this.state.props;
+    newProps[name].values = values;
     this.setState({
-      props: {
-        amount: {
-          values: {
-            amount: amount
-          }
-        }
-      },
+      props: newProps
     });
   },
   onCurrencyChanged: function(e) {
@@ -81,14 +88,10 @@ module.exports = {
       currency: currency.code,
       presets: presets.join(",")
     });
+    var newProps = this.state.props;
+    newProps.amount.values.amount = "";
     this.setState({
-      props: {
-        amount: {
-          values: {
-            amount: ""
-          }
-        }
-      },
+      props: newProps
     });
   },
   onPageError: function(errors, index) {
@@ -306,9 +309,13 @@ module.exports = {
     var self = this;
     var props = {};
     fields.forEach(function(name) {
-      var prop = self.state[name].state.values;
+      var state = self.state[name].state;
+      var prop;
       // Currently some fields expose their values on the form, and not themselves.
       // So we need to check for props in both places until all field componenets are updated.
+      if (state) {
+        prop = state.values;
+      }
       if (!prop) {
         prop = self.state.props[name].values;
       }

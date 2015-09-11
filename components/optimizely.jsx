@@ -11,6 +11,7 @@ var Optimizely = React.createClass({
         <script src={optimizelyURL}></script>
       )
     }
+    return false;
   }
 });
 

@@ -11,7 +11,7 @@ function setupPaypal(transaction, recurring, callback) {
     PAYMENTREQUEST_0_PAYMENTACTION: 'Sale',
     PAYMENTREQUEST_0_AMT: transaction.amount,
     PAYMENTREQUEST_0_DESC: transaction.item_name,
-    PAYMENTREQUEST_0_CURRENCYCODE: transaction.currency,
+    PAYMENTREQUEST_0_CURRENCYCODE: transaction.currency.toUpperCase(),
     LOCALECODE: transaction.locale,
     NOSHIPPING: '1',
     ALLOWNOTE: '0',

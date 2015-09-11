@@ -8,6 +8,7 @@ var routes = require('./components/routes.jsx');
 var paths = require('./scripts/paths.js');
 var englishStrings = require('./locales/en-US.json');
 var currencies = require('./data/currencies.js');
+var url = require('url');
 
 module.exports = {
   entry: './components/client.jsx',
@@ -43,7 +44,7 @@ module.exports = {
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     }),
     new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
-      Router.run(routes, outputPath, function (Handler, state) {
+      Router.run(routes, outputPath, function (Handler) {
         var values = {
           currency: currencies['usd'],
           presets: currencies['usd'].presets,
@@ -51,15 +52,23 @@ module.exports = {
         };
         var index = React.createFactory(require('./pages/index.jsx'));
         var page = React.createFactory(Handler);
-
-        if(state.params.locale && require('./locales/index.js').indexOf(state.params.locale) !== -1) {
-          var currentString = require('./locales/' + state.params.locale +'.json');
-          var mergedStrings = Object.assign(englishStrings, currentString);
-          values = Object.assign({locales : [state.params.locale], messages: mergedStrings}, values);
+        var locale = url.parse(outputPath).pathname.split('/')[1];
+        if(locale && require('./locales/index.js').indexOf(locale) !== -1) {
+          var currentString = require('./locales/' + locale +'.json');
+          var mergedStrings = Object.assign({}, englishStrings, currentString);
+          values = Object.assign({}, {locales : [locale], messages: mergedStrings}, values);
         } else {
-          values = Object.assign({locales : ['en-US'], messages: englishStrings}, values);
+          locale = 'en-US';
+          values = Object.assign({}, {locales : [locale], messages: englishStrings}, values);
         }
         callback(React.renderToStaticMarkup(index({
+          localeInfo: locale,
+          metaOG: {
+            desc: values.messages.i_donated_to_mozilla,
+            title: values.messages.support_mozilla,
+            site_name: 'mozilla.org',
+            site_url: url.resolve(process.env.APPLICATION_URI, locale + '/')
+          },
           markup: React.renderToStaticMarkup(page(values))
         })));
       });

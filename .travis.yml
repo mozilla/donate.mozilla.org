@@ -9,3 +9,5 @@ sudo: false
 cache:
   directories:
   - node_modules
+env:
+- APPLICATION_URI="http:\/\/example.com"

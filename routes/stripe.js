@@ -11,7 +11,7 @@ module.exports = {
     var charge = {
       // stripe works in cents
       amount: transaction.amount * 100,
-      currency: 'USD',
+      currency: transaction.currency,
       card: transaction.stripeToken
     };
     stripe.charges.create(charge, callback);

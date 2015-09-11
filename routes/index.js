@@ -34,6 +34,7 @@ var routes = {
     if (transaction.recurring === 0) {
       stripe.single({
         amount: transaction.amount,
+        currency: transaction.currency,
         stripeToken: transaction.stripeToken
       }, function(err, charge) {
         if (err) {
@@ -82,7 +83,7 @@ var routes = {
     if (transaction.recurring === 0) {
       paypal.setupSingle({
         amount: transaction.amount,
-        currency: transaction.currencyCode,
+        currency: transaction.currency,
         locale: transaction.localeCode,
         item_name: transaction.description,
         cancelUrl: request.server.info.uri + '/',
@@ -99,7 +100,7 @@ var routes = {
     } else {
       paypal.setupRecurring({
         amount: transaction.amount,
-        currency: transaction.currencyCode,
+        currency: transaction.currency,
         locale: transaction.localeCode,
         item_name: transaction.description,
         cancelUrl: request.server.info.uri + '/',

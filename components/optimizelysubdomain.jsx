@@ -7,12 +7,12 @@ var OptimizelySubdomain = React.createClass({
   cookieScript: function() { return {__html: "window['optimizely'] = window['optimizely'] || []; window['optimizely'].push(['setCookieDomain', '" + cookieDomain + "']);"}; },
   render: function() {
     if (optimizelyActive === 'yes') {
-
       return (
         <script dangerouslySetInnerHTML={this.cookieScript()}>
         </script>
       )
     }
+    return false;
   }
 });
 

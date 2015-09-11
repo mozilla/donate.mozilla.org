@@ -31,6 +31,7 @@ var CreditCardInfo = React.createClass({
     if (this.props.error.number) {
       return false;
     }
+    cardNumber = cardNumber.replace(/ /g, "");
     if ((cardNumber.match(regVisa) && cardNumber.match(regVisa).length > 0) ||
         (cardNumber.match(regMC) && cardNumber.match(regMC).length > 0) ||
         (cardNumber.match(regAMEX) && cardNumber.match(regAMEX).length > 0)) {
@@ -69,7 +70,7 @@ var CreditCardInfo = React.createClass({
   onCardInput: function(e) {
     var value = e.currentTarget.value;
     var state = this.state;
-    if (/^(\d)*$/.test(value)) {
+    if (/^(\d| )*$/.test(value) && value.replace(/ /g, "").length <= 16) {
       state.values.cardNumber = value;
       if (this.checkCardNumber(value)) {
         state.cardNumberValid = true;
@@ -134,13 +135,14 @@ var CreditCardInfo = React.createClass({
     if (errorMessage === "") {
       errorMessageClassName += " hidden";
     }
+    var cardNumber = this.state.values.cardNumber;
     return (
       <div>
         <div className="row">
           <div className="full">
             <div className="field-container">
               <i className="fa fa-credit-card field-icon"></i>
-              <input type="tel" className={cardClassName} id="card-number-input" name="cc_number" onChange={this.onCardInput} value={this.state.values.cardNumber} placeholder={this.getIntlMessage('credit_card_number')} maxLength="16" autoComplete="off"/>
+              <input type="tel" className={cardClassName} id="card-number-input" name="cc_number" onChange={this.onCardInput} value={cardNumber} placeholder={this.getIntlMessage('credit_card_number')} autoComplete="off"/>
             </div>
           </div>
         </div>

@@ -31,3 +31,13 @@ Default: usd
 Available options: mxn, nok, aud, brl, cad, chf, czk, dkk, eur-de, eur-fr, gbp, hkd
 
 Note, only works with lowercase values.
+
+### frequency
+
+Specify the donation frequency.
+
+Query string example: `?frequency=monthly`
+
+Default: single
+
+Available options: single, monthly

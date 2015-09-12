@@ -26,8 +26,11 @@ function getMessages(locale) {
   return assign({}, directories['en-US'], messages);
 }
 
-
-var locale = formatLocale(navigator.language);
+//This is an easy cross browser way to get the preferred language
+/** @const */ var DEFAULT_VALUE = 'en';
+/** @const */ var PREFERRED_LANGUAGE = navigator.language || navigator.userLanguage ||
+                  navigator.browserLanguage || navigator.systemLanguage || DEFAULT_VALUE;
+var locale = formatLocale(PREFERRED_LANGUAGE);
 module.exports = {
   intlData: {
     locales : ['en-US'],

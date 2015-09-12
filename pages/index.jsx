@@ -25,7 +25,7 @@ var Index = React.createClass({
         </head>
         <body>
           <div id="my-app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
-          <script src="https://cdn.polyfill.io/v1/polyfill.min.js?features=Intl.~locale.fr,Intl.~locale.pt-BR,Intl.~locale.de,Intl.~locale.id,Intl.~locale.es,Intl.~locale.en-US"></script>
+          <script src="https://cdn.polyfill.io/v1/polyfill.min.js?features=Promise,Intl.~locale.fr,Intl.~locale.pt-BR,Intl.~locale.de,Intl.~locale.id,Intl.~locale.es,Intl.~locale.en-US"></script>
           <script src="/main.js"></script>
           <Pontoon/>
           <script src="https://js.stripe.com/v1/"></script>

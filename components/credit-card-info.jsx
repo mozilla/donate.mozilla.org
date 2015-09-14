@@ -164,7 +164,7 @@ var CreditCardInfo = React.createClass({
           </div>
           <div className="full">
             <div className={hintClassName}>
-              <img src="https://ddz69tinzt56n.cloudfront.net/images/CVC-illustration.png" className="left"/>
+              <img src="/images/CVC-illustration.png" className="left"/>
               <div className="">{this.getIntlMessage('cvc_info')}</div>
             </div>
           </div>

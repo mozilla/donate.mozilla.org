@@ -9,6 +9,7 @@ var paths = require('./scripts/paths.js');
 var englishStrings = require('./locales/en-US.json');
 var currencies = require('./data/currencies.js');
 var url = require('url');
+require('habitat').load();
 
 module.exports = {
   entry: './components/client.jsx',
@@ -29,16 +30,16 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        APPLICATION_URI: JSON.stringify(process.env.APPLICATION_URI),
-        STRIPE_PUBLIC_KEY: JSON.stringify(process.env.STRIPE_PUBLIC_KEY),
-        COINBASE_ENDPOINT: JSON.stringify(process.env.COINBASE_ENDPOINT),
-        OPTIMIZELY_ID: JSON.stringify(process.env.OPTIMIZELY_ID),
-        OPTIMIZELY_ACTIVE: JSON.stringify(process.env.OPTIMIZELY_ACTIVE),
-        FULL_SUBDOMAIN_FOR_COOKIE: JSON.stringify(process.env.FULL_SUBDOMAIN_FOR_COOKIE),
-        PAYPAL_EMAIL: JSON.stringify(process.env.PAYPAL_EMAIL),
-        PAYPAL_ENDPOINT: JSON.stringify(process.env.PAYPAL_ENDPOINT)
-      }
+      'process.env': JSON.stringify({
+        APPLICATION_URI: process.env.APPLICATION_URI,
+        STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,
+        COINBASE_ENDPOINT: process.env.COINBASE_ENDPOINT,
+        OPTIMIZELY_ID: process.env.OPTIMIZELY_ID,
+        OPTIMIZELY_ACTIVE: process.env.OPTIMIZELY_ACTIVE,
+        FULL_SUBDOMAIN_FOR_COOKIE: process.env.FULL_SUBDOMAIN_FOR_COOKIE,
+        PAYPAL_EMAIL: process.env.PAYPAL_EMAIL,
+        PAYPAL_ENDPOINT: process.env.PAYPAL_ENDPOINT
+      })
     }),
     new webpack.ProvidePlugin({
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'

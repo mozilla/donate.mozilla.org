@@ -13,10 +13,10 @@ var simplePaypal = React.createClass({
         <SimplePaypal
           presets={this.props.presets}
           currency={this.props.currency}
-          minAmount={this.props.minAmount}
+          amount={this.props.amount}
+          frequency={this.props.frequency}
           paypalLocal={this.props.paypalLocal}
           locales={this.props.locales}
-          queryString={this.props.queryString}
         />
         <Footer/>
       </div>

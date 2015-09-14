@@ -24,19 +24,19 @@ var SingleForm = React.createClass({
               <span className="currency-dropdown-container">
                 <CurrencyDropdown
                   currencies={this.props.currencies}
-                  currency={this.props.currency.code}
+                  currency={this.state.currency.code}
                   onChange={this.onCurrencyChanged}
                 />
               </span>
             </h2>
           </SectionHeading>
           <AmountButtons name="amount"
-            currency={this.props.currency}
+            currency={this.state.currency}
             onChange={this.updateFormField}
             amount={this.state.props.amount.values.amount}
-            presets={this.props.presets}
+            presets={this.state.presets}
           />
-          <Frequency onChange={this.updateFormField} name="frequency"
+          <Frequency onChange={this.onFrequencyChange} name="frequency"
             value={this.state.props.frequency.values.frequency}
           />
           <div className="payment-section">

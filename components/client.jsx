@@ -23,24 +23,31 @@ Router.run(routes, Router.HistoryLocation, function (Handler, state) {
 
   var presets = "";
   var currencyCode = "usd";
+  var amount = "";
+  var frequency = "single";
   if (queryString) {
-    presets = queryString.presets || "";
+    presets = queryString.presets || presets;
     currencyCode = queryString.currency || currencyCode;
+    amount = queryString.amount || amount;
+    if (queryString.frequency === "monthly") {
+      frequency = "monthly";
+    }
   }
   var currency = currencies[currencyCode];
   presets = presets.split(",");
 
-  // If we didn't get correct presets from the query string,
-  // so default to the currency defined preset.
+  // We didn't get valid presets from the query string,
+  // so default to the currency and frequency preset.
   if (presets.length !== 4) {
-    presets = currency.presets;
+    presets = currency.presets[frequency];
   }
 
   var values = {
     currency: currency,
     presets: presets,
     currencies: currencies,
-    queryString: queryString
+    amount: amount,
+    frequency: frequency
   };
 
   // checking if language code is part of the URL e.g. /en-US/thank-you

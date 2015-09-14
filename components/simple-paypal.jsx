@@ -52,12 +52,12 @@ var simplePaypal = React.createClass({
             <div className="row">
               <div className="full">
                 <AmountButtons name="amount"
-                  currency={this.props.currency}
+                  currency={this.state.currency}
                   onChange={this.updateFormField}
-                  presets={this.props.presets}
+                  presets={this.state.presets}
                   amount={amount}
                 />
-                <Frequency onChange={this.updateFormField} name="frequency"
+                <Frequency onChange={this.onFrequencyChange} name="frequency"
                   value={this.state.props.frequency.values.frequency}
                 />
                 <SubmitButton
@@ -68,7 +68,7 @@ var simplePaypal = React.createClass({
                   error={this.state.errors.other}
                 >
                   <DonateButton
-                    amount={amount} currency={this.props.currency.code}
+                    amount={amount} currency={this.state.currency.code}
                   />
                 </SubmitButton>
 
@@ -96,7 +96,7 @@ var simplePaypal = React.createClass({
           {/* Donation Amount */}
           <input type="hidden" name="amount" value={amount}/>
           <input type="hidden" name="return" value={process.env.APPLICATION_URI + "/" + this.props.locales[0] + "/thank-you/"}/>
-          <input type="hidden" name="currency_code" value={this.props.currency.code.toUpperCase()}/>
+          <input type="hidden" name="currency_code" value={this.state.currency.code.toUpperCase()}/>
         </form>
 
         <form action={process.env.PAYPAL_ENDPOINT + "/cgi-bin/webscr"} method="post" ref="paypalRecurring">
@@ -109,7 +109,7 @@ var simplePaypal = React.createClass({
           <input type="hidden" name="return" value={process.env.APPLICATION_URI + "/" + this.props.locales[0] + "/thank-you/"}/>
           <input type="hidden" name="src" value="1"/>
           <input type="hidden" name="p3" value="1"/>
-          <input type="hidden" name="currency_code" value={this.props.currency.code.toUpperCase()}/>
+          <input type="hidden" name="currency_code" value={this.state.currency.code.toUpperCase()}/>
           <input type="hidden" name="t3" value="M"/>
           <input name="srt" type="hidden" value="0"/>
           <input type="hidden" name="a3" value={amount}/>

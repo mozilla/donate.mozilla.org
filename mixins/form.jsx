@@ -5,26 +5,20 @@ import {Navigation} from 'react-router';
 module.exports = {
   mixins: [Navigation],
   getInitialState: function() {
-    var amount = "";
-    var frequency = "single";
-    if (this.props.queryString) {
-      amount = this.props.queryString.amount || "";
-      if (this.props.queryString.frequency === "monthly") {
-        frequency = "monthly";
-      }
-    }
     return {
       paymentType: "",
       submitting: false,
+      presets: this.props.presets,
+      currency: this.props.currency,
       props: {
         amount: {
           values: {
-            amount: amount
+            amount: this.props.amount
           }
         },
         frequency: {
           values: {
-            frequency: frequency
+            frequency: this.props.frequency
           }
         }
       },
@@ -79,18 +73,24 @@ module.exports = {
       props: newProps
     });
   },
+  onFrequencyChange: function(name, value, values) {
+    if (values && this.state.props.frequency.values.frequency !== values.frequency) {
+      this.setState({
+        presets: this.state.currency.presets[values.frequency]
+      });
+    }
+    this.updateFormField(name, value, values);
+  },
   onCurrencyChanged: function(e) {
     var value = e.currentTarget.value;
     var currencies = this.props.currencies;
     var currency = currencies[value] || this.state.currency;
-    var presets = currency.presets;
-    this.transitionTo(document.location.pathname, {}, {
-      currency: currency.code,
-      presets: presets.join(",")
-    });
+    var presets = currency.presets[this.state.props.frequency.values.frequency];
     var newProps = this.state.props;
     newProps.amount.values.amount = "";
     this.setState({
+      presets: presets,
+      currency: currency,
       props: newProps
     });
   },

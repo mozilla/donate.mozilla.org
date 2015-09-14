@@ -31,6 +31,11 @@ var AmountOtherButton = React.createClass({
   onInputClick: function() {
     document.querySelector("#amount-other").click();
   },
+  onRadioChange: function() {
+    if (!this.props.checked) {
+      this.props.onRadioChange();
+    }
+  },
   render: function() {
     return (
       <div className="two-third">
@@ -38,7 +43,7 @@ var AmountOtherButton = React.createClass({
           <input id="amount-other" type="radio" name="donation_amount"
             checked={this.props.checked}
             onClick={this.onRadioClick}
-            onChange={this.props.onRadioChange}
+            onChange={this.onRadioChange}
             value={this.props.amount}
           />
           <label htmlFor="amount-other" className="large-label-size">
@@ -61,15 +66,10 @@ var AmountOtherButton = React.createClass({
 var AmountButtons = React.createClass({
   mixins: [require('react-intl').IntlMixin],
   getInitialState: function() {
-    var amount = this.props.amount;
-    var presets = this.props.presets;
-    var preset = presets.indexOf(amount);
-    var userInputting = false;
-    if (preset < 0 && amount) {
-      userInputting = true;
-    }
     return {
-      userInputting: userInputting,
+      // userInputting is used to override checked amount
+      // buttons while the user is entering an other amount.
+      userInputting: false,
       valid: true,
       errorMessage: ""
     };
@@ -88,9 +88,7 @@ var AmountButtons = React.createClass({
     });
   },
   otherRadioChange: function() {
-    if (!this.state.userInputting) {
-      this.setAmount("", true);
-    }
+    this.setAmount("", true);
   },
   otherInputChange: function(e) {
     var newAmount = e.currentTarget.value;
@@ -142,8 +140,8 @@ var AmountButtons = React.createClass({
     var amount = this.props.amount;
     var presets = this.props.presets;
     var preset = presets.indexOf(amount);
-    var userInputting = this.state.userInputting;
-    if (userInputting) {
+    var otherChecked = this.state.userInputting || (amount && preset < 0);
+    if (otherChecked) {
       otherAmount = amount;
       amount = "";
     }
@@ -167,7 +165,7 @@ var AmountButtons = React.createClass({
             onChange={this.onChange}/>
           <AmountOtherButton amount={otherAmount}
             currencySymbol={currency.symbol}
-            checked={userInputting}
+            checked={otherChecked}
             onRadioChange={this.otherRadioChange}
             onInputChange={this.otherInputChange}
             placeholder={this.getIntlMessage('other_amount')}

@@ -60,9 +60,9 @@ module.exports = {
     });
   },
   onChange: function(name, value, field) {
-    var newState = this.state;
+    var newState = {};
     newState[name] = value;
-    if (field && newState.errors[name] && newState.errors[name][field]) {
+    if (field && this.state.errors[name] && this.state.errors[name][field]) {
       newState.errors[name][field] = "";
     }
     this.setState(newState);
@@ -178,7 +178,7 @@ module.exports = {
     this.transitionTo('/' + this.props.locales[0] + '/thank-you/?' + params);
   },
   stripeError: function(error) {
-    var newState = this.state;
+    var newState = {};
     var cardErrorCodes = {
       "invalid_number": {
         name: "creditCardInfo",
@@ -229,12 +229,12 @@ module.exports = {
     var cardError = cardErrorCodes[error.code];
     newState.submitting = false;
     if (error.rawType === "card_error" && cardError) {
-      if (newState.errors[cardError.name].page < newState.activePage) {
+      if (this.state.errors[cardError.name].page < this.state.activePage) {
         newState.activePage = newState.errors[cardError.name].page;
       }
       newState.errors[cardError.name][cardError.field] = cardError.message;
     } else {
-      if (newState.errors.other.page < newState.activePage) {
+      if (this.state.errors.other.page < this.state.activePage) {
         newState.activePage = newState.errors.other.page;
       }
       newState.errors.other.message = this.getIntlMessage('try_again_later');

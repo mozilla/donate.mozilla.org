@@ -140,8 +140,8 @@ var AmountButtons = React.createClass({
     var amount = this.props.amount;
     var presets = this.props.presets;
     var preset = presets.indexOf(amount);
-    var userInputting = this.state.userInputting || (amount && preset < 0);
-    if (userInputting) {
+    var otherChecked = this.state.userInputting || (amount && preset < 0);
+    if (otherChecked) {
       otherAmount = amount;
       amount = "";
     }
@@ -165,7 +165,7 @@ var AmountButtons = React.createClass({
             onChange={this.onChange}/>
           <AmountOtherButton amount={otherAmount}
             currencySymbol={currency.symbol}
-            checked={userInputting}
+            checked={otherChecked}
             onRadioChange={this.otherRadioChange}
             onInputChange={this.otherInputChange}
             placeholder={this.getIntlMessage('other_amount')}

@@ -59,13 +59,14 @@ module.exports = React.createClass({
       creditCardDetailsClassName += " hidden";
     }
     var amount = this.state.props.amount.values.amount;
+    var currency = this.props.currency;
     return (
       <div className="mozilla-eoy-donation">
         <Header/>
         <div className="container">
 
           <NavigationMenu>
-            <NavigationButton amount={amount} currency={this.props.currency.code} onClick={this.toThisPage} activePage={this.state.activePage} index={0}>
+            <NavigationButton amount={amount} currency={currency.code} onClick={this.toThisPage} activePage={this.state.activePage} index={0}>
               <div>{this.getIntlMessage("amount")}</div>
             </NavigationButton>
             <NavigationButton display={this.state.paymentType} onClick={this.toThisPage} activePage={this.state.activePage} index={1}>
@@ -84,14 +85,14 @@ module.exports = React.createClass({
                   <span className="currency-dropdown-container">
                     <CurrencyDropdown
                       currencies={this.props.currencies}
-                      currency={this.props.currency.code}
+                      currency={currency.code}
                       onChange={this.onCurrencyChanged}
                     />
                   </span>
                 </h2>
               </SectionHeading>
               <AmountButtons name="amount"
-                currency={this.props.currency}
+                currency={currency}
                 onChange={this.updateFormField}
                 amount={amount} presets={this.props.presets}
               />
@@ -142,7 +143,7 @@ module.exports = React.createClass({
                 error={this.state.errors.other}
               >
                 <DonateButton
-                  amount={amount} currency={this.props.currency.code}
+                  amount={amount} currency={currency.code}
                 />
               </SubmitButton>
             </Page>

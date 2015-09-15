@@ -226,16 +226,18 @@ module.exports = {
         message: this.getIntlMessage('declined_card')
       }
     };
+
     var cardError = cardErrorCodes[error.code];
     newState.submitting = false;
+    newState.errors = this.state.errors;
     if (error.rawType === "card_error" && cardError) {
       if (this.state.errors[cardError.name].page < this.state.activePage) {
-        newState.activePage = newState.errors[cardError.name].page;
+        newState.activePage = this.state.errors[cardError.name].page;
       }
       newState.errors[cardError.name][cardError.field] = cardError.message;
     } else {
       if (this.state.errors.other.page < this.state.activePage) {
-        newState.activePage = newState.errors.other.page;
+        newState.activePage = this.state.errors.other.page;
       }
       newState.errors.other.message = this.getIntlMessage('try_again_later');
     }

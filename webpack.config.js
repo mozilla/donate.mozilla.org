@@ -26,7 +26,14 @@ module.exports = {
     { test: /\.js$/, loaders:  ['babel-loader'], exclude: ['node_modules'] },
     { test: /\.jsx$/, loaders: ['babel-loader'] },
     { test: /\.json$/, loaders: ['json-loader'] }
+    ],
+    preLoaders: [
+    { test: /\.jsx$/, loaders: ['eslint-loader'], exclude: ['node_modules'] }
     ]
+  },
+  eslint: {
+    emitError: true,
+    emitWarning: true
   },
   plugins: [
     new webpack.DefinePlugin({

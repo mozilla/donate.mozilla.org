@@ -8,9 +8,9 @@ server.start(function() {
   build();
 
   driver.manage().timeouts().implicitlyWait(30000);
-  driver.get('http://localhost:3000');
-  driver.findElement(By.xpath('//fieldset[@id=\'page-1\']/div[3]/div/label')).click();
-  driver.findElement(By.linkText('Next')).click();
+  driver.get('http://localhost:3000/de/');
+  driver.findElement(By.id('amount-other-input')).sendKeys('10');
+  driver.findElement(By.css('.page-active .next-button')).click();
   driver.findElement(By.id('payment-cc-label')).click();
   driver.findElement(By.name('cc_number')).clear();
   driver.findElement(By.name('cc_number')).sendKeys('4242424242424242');
@@ -20,7 +20,7 @@ server.start(function() {
   driver.findElement(By.name('cc_expir_year')).sendKeys('16');
   driver.findElement(By.name('cc_cvv')).clear();
   driver.findElement(By.name('cc_cvv')).sendKeys('123');
-  driver.findElement(By.linkText('Next')).click();
+  driver.findElement(By.css('.page-active .next-button')).click();
   driver.findElement(By.name('firstname')).clear();
   driver.findElement(By.name('firstname')).sendKeys('testname');
   driver.findElement(By.name('lastname')).clear();
@@ -39,11 +39,11 @@ server.start(function() {
   driver.findElement(By.id('donate-btn')).click();
   driver.wait(function() {
     return driver.getCurrentUrl().then(function (url) {
-      return url === 'http://localhost:3000/thank-you/';
+      return url.indexOf('http://localhost:3000/de/thank-you/') === 0;
     });
-  }, 10000);
-
-  driver.quit();
+  }, 5000).then(function() {
+    server.stop(function() {
+      driver.quit();
+    });
+  });
 });
-
-

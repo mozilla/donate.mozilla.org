@@ -80,64 +80,58 @@ var routes = {
   },
   'paypal': function(request, reply) {
     var transaction = request.payload || {};
-    if (transaction.frequency !== 'monthly') {
-      paypal.setupSingle({
-        amount: transaction.amount,
-        currency: transaction.currency,
-        locale: transaction.locale,
-        item_name: transaction.description,
-        cancelUrl: request.server.info.uri + '/',
-        returnUrl: request.server.info.uri + '/api/paypal-one-time-redirect'
+    var frequency = transaction.frequency || "";
+    var details = {
+      amount: transaction.amount,
+      currency: transaction.currency,
+      locale: transaction.locale,
+      item_name: transaction.description,
+      cancelUrl: request.server.info.uri + '/',
+      returnUrl: request.server.info.uri + '/api/paypal-redirect/' + frequency + '/' + transaction.locale + '/'
+    };
+    function callback(err, data) {
+      if (err) {
+        return console.error('donation failed:', err);
+      }
+      reply({
+        endpoint: process.env.PAYPAL_ENDPOINT,
+        token: data.TOKEN
+      });
+    }
+    if (frequency !== 'monthly') {
+      paypal.setupSingle(details, callback);
+    } else {
+      paypal.setupRecurring(details, callback);
+    }
+  },
+  'paypal-redirect': function(request, reply) {
+    var locale = request.params.locale || '';
+    if (locale) {
+      locale = '/' + locale;
+    }
+    var frequency = request.params.frequency || 'single';
+    if (frequency !== 'monthly') {
+      paypal.doSingle({
+        token: request.url.query.token
       }, function(err, charge) {
         if (err) {
           return console.error('donation failed:', err);
         }
-        reply({
-          endpoint: process.env.PAYPAL_ENDPOINT,
-          token: charge.TOKEN
-        });
+        reply.redirect(locale + '/thank-you/?frequency=' + frequency + '&tx=' + charge.PAYMENTINFO_0_TRANSACTIONID + '&amt=' + charge.PAYMENTREQUEST_0_AMT + '&cc=' + charge.CURRENCYCODE);
       });
     } else {
-      paypal.setupRecurring({
-        amount: transaction.amount,
-        currency: transaction.currency,
-        locale: transaction.locale,
-        item_name: transaction.description,
-        cancelUrl: request.server.info.uri + '/',
-        returnUrl: request.server.info.uri + '/api/paypal-recurring-redirect'
+      paypal.doRecurring({
+        token: request.url.query.token
       }, function(err, subscription) {
         if (err) {
           return console.error('donation failed:', err);
         }
-        reply({
-          endpoint: process.env.PAYPAL_ENDPOINT,
-          token: subscription.TOKEN
-        });
+        // Create unique tx id by combining PayerID and timestamp
+        var stamp = Date.now() / 100;
+        var txId = subscription.PAYERID + stamp;
+        reply.redirect(locale + '/thank-you/?frequency=' + frequency + '&tx=' + txId + '&amt=' + subscription.AMT + '&cc=' + subscription.CURRENCYCODE);
       });
     }
-  },
-  'paypal-one-time-redirect': function(request, reply) {
-    paypal.doSingle({
-      token: request.url.query.token
-    }, function(err, charge) {
-      if (err) {
-        return console.error('donation failed:', err);
-      }
-      reply.redirect('/thank-you/?frequency=onetime&tx=' + charge.PAYMENTINFO_0_TRANSACTIONID + '&amt=' + charge.PAYMENTREQUEST_0_AMT + '&cc=' + charge.CURRENCYCODE);
-    });
-  },
-  'paypal-recurring-redirect': function(request, reply) {
-    paypal.doRecurring({
-      token: request.url.query.token
-    }, function(err, subscription) {
-      if (err) {
-        return console.error('donation failed:', err);
-      }
-      // Create unique tx id by combining PayerID and timestamp
-      var stamp = Date.now() / 100;
-      var txId = subscription.PAYERID + stamp;
-      reply.redirect('/thank-you/?frequency=monthly&tx=' + txId + '&amt=' + subscription.AMT + '&cc=' + subscription.CURRENCYCODE);
-    });
   }
 };
 

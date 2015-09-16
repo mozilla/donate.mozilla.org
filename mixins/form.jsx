@@ -136,7 +136,7 @@ module.exports = {
   },
   submit: function(action, props, callback) {
     props.locale = this.props.locales[0];
-    props.currency = this.props.currency.code;
+    props.currency = this.state.currency.code;
     fetch(action, {
       method: 'post',
       credentials: 'same-origin',

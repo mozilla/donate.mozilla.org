@@ -5,6 +5,7 @@ import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
 import SubmitButton from '../components/submit-button.jsx';
 import DonateButton from '../components/donate-button.jsx';
+import {paypalLocales} from '../intl-config.json';
 
 var simplePaypal = React.createClass({
   mixins: [IntlMixin, require('../mixins/form.jsx')],
@@ -88,7 +89,7 @@ var simplePaypal = React.createClass({
         <form action={process.env.PAYPAL_ENDPOINT + "/cgi-bin/webscr"} method="post" target="_top" ref="paypalOneTime">
           <input type="hidden" name="cmd" value="_donations"/>
           <input type="hidden" name="business" value={process.env.PAYPAL_EMAIL}/>
-          <input type="hidden" name="lc" value="US"/>
+          <input type="hidden" name="lc" value={paypalLocales[this.props.locales[0]]}/>
           <input type="hidden" name="item_name" value={this.getIntlMessage("mozilla_donation")}/>
           <input type="hidden" name="no_note" value="1"/>
           <input type="hidden" name="no_shipping" value="1"/>
@@ -102,7 +103,7 @@ var simplePaypal = React.createClass({
         <form action={process.env.PAYPAL_ENDPOINT + "/cgi-bin/webscr"} method="post" ref="paypalRecurring">
           <input type="hidden" name="cmd" value="_xclick-subscriptions"/>
           <input type="hidden" name="business" value={process.env.PAYPAL_EMAIL}/>
-          <input type="hidden" name="lc" value="US"/>
+          <input type="hidden" name="lc" value={paypalLocales[this.props.locales[0]]}/>
           <input type="hidden" name="item_name" value={this.getIntlMessage("mozilla_monthly_donation")}/>
           <input type="hidden" name="no_note" value="1"/>
           <input type="hidden" name="no_shipping" value="2"/>

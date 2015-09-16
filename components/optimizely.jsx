@@ -9,7 +9,7 @@ var Optimizely = React.createClass({
     if (optimizelyActive === 'yes') {
       return (
         <script src={optimizelyURL}></script>
-      )
+      );
     }
     return false;
   }

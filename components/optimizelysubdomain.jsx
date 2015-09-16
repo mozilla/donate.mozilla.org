@@ -10,7 +10,7 @@ var OptimizelySubdomain = React.createClass({
       return (
         <script dangerouslySetInnerHTML={this.cookieScript()}>
         </script>
-      )
+      );
     }
     return false;
   }

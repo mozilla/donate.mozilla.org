@@ -7,7 +7,7 @@ var Pontoon = React.createClass({
     if (enablePontoon) {
       return (
         <script src='https://pontoon.mozilla.org/pontoon.js'></script>
-      )
+      );
     } else {
       return null;
     }

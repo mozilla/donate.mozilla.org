@@ -10,13 +10,13 @@ var Linker = React.createClass({
         <Link to={this.props.to}>
           {this.props.children}
         </Link>
-      )
+      );
     }
     return (
       <a href={this.props.href}>
         {this.props.children}
       </a>
-    )
+    );
   }
 });
 

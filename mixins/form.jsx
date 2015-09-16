@@ -264,7 +264,7 @@ module.exports = {
       exp_year: submitProps.expYear
     }, function(status, response) {
       if (response.error) {
-        error(result.error);
+        error(response.error);
       } else {
         submitProps.cardNumber = "";
         submitProps.stripeToken = response.id;

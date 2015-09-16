@@ -19,7 +19,7 @@
     "test:server": "node tests/start.js",
     "test:selenium": "node tests/selenium/start.js",
     "test:depcheck": "dependency-check ./package.json",
-    "test:lint": "eslint '.'"
+    "test:lint": "eslint --ext .js,.jsx ."
   },
   "repository": {
     "type": "git",

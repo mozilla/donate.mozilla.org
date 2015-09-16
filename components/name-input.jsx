@@ -6,7 +6,7 @@ var NameInput = React.createClass({
     return {
       values: {
         first: "",
-        last: "",
+        last: ""
       },
       firstValid: true,
       lastValid: true

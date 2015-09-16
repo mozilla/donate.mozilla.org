@@ -9,7 +9,6 @@ import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
 import PayPalButton from '../components/paypal-button.jsx';
 import StripeButton from '../components/stripe-button.jsx';
-import FormContainer from '../components/form-container.jsx';
 
 var SingleForm = React.createClass({
   mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],

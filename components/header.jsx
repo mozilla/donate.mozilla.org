@@ -6,7 +6,7 @@ var Footer = React.createClass({
       <div className="mozilla-wordmark">
         <img src="/images/Mozilla-wordmark.png"/>
       </div>
-    )
+    );
   }
 });
 

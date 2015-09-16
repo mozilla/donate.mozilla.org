@@ -1,7 +1,7 @@
 {
-	"supportedLocales": ["en-US", "de", "fr", "pt-BR", "es", "id"],
-	"dest": "locales",
-	"src": "locales",
+  "supportedLocales": ["en-US", "de", "fr", "pt-BR", "es", "id"],
+  "dest": "locales",
+  "src": "locales",
   "paypalLocales": {
     "en-US": "US",
     "de": "DE",

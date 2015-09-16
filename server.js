@@ -64,15 +64,8 @@ server.route([
     }
   }, {
     method: 'GET',
-    path: '/api/paypal-one-time-redirect',
-    handler: routes['paypal-one-time-redirect'],
-    config: {
-      security: securityConfig
-    }
-  }, {
-    method: 'GET',
-    path: '/api/paypal-recurring-redirect',
-    handler: routes['paypal-recurring-redirect'],
+    path: '/api/paypal-redirect/{frequency}/{locale}/',
+    handler: routes['paypal-redirect'],
     config: {
       security: securityConfig
     }

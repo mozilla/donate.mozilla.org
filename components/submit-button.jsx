@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormattedMessage, IntlMixin, FormattedNumber} from 'react-intl';
+import {IntlMixin} from 'react-intl';
 
 var DonateButton = React.createClass({
   mixins: [IntlMixin],

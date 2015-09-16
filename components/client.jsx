@@ -12,7 +12,7 @@ function redirectTo(pathname, query, Handler) {
   if(paths.indexOf(pathname) === -1) {
     Handler.replaceWith('/');
   } else {
-    Handler.replaceWith(pathname, {}, query)
+    Handler.replaceWith(pathname, {}, query);
   }
 }
 
@@ -58,11 +58,11 @@ Router.run(routes, Router.HistoryLocation, function (Handler, state) {
       values = assign(values, messages);
     } else {
       pathname = pathname.split('/')[2] ? pathname.split('/')[2] : '';
-      return redirectTo(pathname, queryString, Handler)
+      return redirectTo(pathname, queryString, Handler);
     }
     // if not we will hijack the URL and insert the language code in the URL
   } else if(!i18n.urlOverrideLang(queryString.pathname).test) {
-    return redirectTo("/" + lang + pathname, queryString, Handler)
+    return redirectTo("/" + lang + pathname, queryString, Handler);
   }
   React.render(<Handler {...values} />, document.querySelector("#my-app"));
 });

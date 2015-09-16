@@ -117,7 +117,7 @@ var simplePaypal = React.createClass({
 
         </form>
       </div>
-    )
+    );
   }
 });
 

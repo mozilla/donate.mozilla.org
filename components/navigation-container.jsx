@@ -9,7 +9,7 @@ var NavigationContainer = React.createClass({
       <div style={{height: this.props.height}} className="sequence-page-container">
         {this.props.children}
       </div>
-    )
+    );
   }
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormattedMessage, IntlMixin, FormattedNumber} from 'react-intl';
+import {FormattedMessage, FormattedNumber} from 'react-intl';
 
 var AmountButton = React.createClass({
   render: function() {
@@ -78,7 +78,6 @@ var AmountButtons = React.createClass({
     this.setAmount(e.currentTarget.value, false);
   },
   setAmount: function(amount, userInputting) {
-    var values = this.state.values;
     this.setState({
       userInputting: userInputting,
       valid: true
@@ -183,7 +182,7 @@ var AmountButtons = React.createClass({
           </div>
         </div>
       </div>
-    )
+    );
   }
 });
 

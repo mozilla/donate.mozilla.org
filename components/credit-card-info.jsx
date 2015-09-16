@@ -13,7 +13,7 @@ var CreditCardInfo = React.createClass({
         cardNumber: "",
         expMonth: "",
         expYear: "",
-        cvc: "",
+        cvc: ""
       },
       cardNumberValid: !this.props.error.number,
       expMonthValid: !this.props.error.monthExp,

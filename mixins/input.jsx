@@ -6,7 +6,7 @@ module.exports = {
       if (self.props.error[field] || !self.state.values[field]) {
         valid = false;
         var state = {};
-        state[field + "Valid"] = valid
+        state[field + "Valid"] = valid;
         self.setState(state);
       }
     });

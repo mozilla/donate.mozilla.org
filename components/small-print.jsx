@@ -31,7 +31,7 @@ var Footer = React.createClass({
           <small><FormattedHTMLMessage message={ this.getIntlMessage("stripe_notice") } /></small>
         </p>
       </div>
-    )
+    );
   }
 });
 

@@ -84,7 +84,7 @@ var routes = {
       paypal.setupSingle({
         amount: transaction.amount,
         currency: transaction.currency,
-        locale: transaction.localeCode,
+        locale: transaction.locale,
         item_name: transaction.description,
         cancelUrl: request.server.info.uri + '/',
         returnUrl: request.server.info.uri + '/api/paypal-one-time-redirect'
@@ -101,7 +101,7 @@ var routes = {
       paypal.setupRecurring({
         amount: transaction.amount,
         currency: transaction.currency,
-        locale: transaction.localeCode,
+        locale: transaction.locale,
         item_name: transaction.description,
         cancelUrl: request.server.info.uri + '/',
         returnUrl: request.server.info.uri + '/api/paypal-recurring-redirect'

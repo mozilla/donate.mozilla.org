@@ -1,5 +1,6 @@
 var httpRequest = require('request');
 var querystring = require('querystring');
+var paypalLocales = require('../intl-config.json').paypalLocales;
 
 function setupPaypal(transaction, recurring, callback) {
   var charge = {
@@ -12,7 +13,7 @@ function setupPaypal(transaction, recurring, callback) {
     PAYMENTREQUEST_0_AMT: transaction.amount,
     PAYMENTREQUEST_0_DESC: transaction.item_name,
     PAYMENTREQUEST_0_CURRENCYCODE: transaction.currency.toUpperCase(),
-    LOCALECODE: transaction.locale,
+    LOCALECODE: paypalLocales[transaction.locale],
     NOSHIPPING: '1',
     ALLOWNOTE: '0',
     cancelUrl: transaction.cancelUrl,

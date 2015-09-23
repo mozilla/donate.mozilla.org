@@ -10,6 +10,7 @@ var Index = React.createClass({
       <html>
         <head>
           <meta charSet="UTF-8"/>
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <meta property="og:title" content={metaOG.title} />
           <meta property="og:site_name" content={metaOG.site_name} />
@@ -28,6 +29,10 @@ var Index = React.createClass({
           <script src="https://cdn.polyfill.io/v1/polyfill.min.js?features=Promise,Intl.~locale.fr,Intl.~locale.pt-BR,Intl.~locale.de,Intl.~locale.id,Intl.~locale.es,Intl.~locale.en-US"></script>
           <script src="/main.js"></script>
           <Pontoon/>
+          {/*[if lt IE 10]*/}
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/4.0.1/placeholders.jquery.js"></script>
+          {/*[endif]*/}
           <script src="https://js.stripe.com/v1/"></script>
           <script src="/js/stripe.js"></script>
           <script src="/js/stripe-checkout.js"></script>

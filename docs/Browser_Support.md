@@ -15,7 +15,7 @@ We require full functionality and a good user experience on:
 
 * FF *30+*
 * Chrome *40+*
-* IE *11*
+* IE *10*
 * Safari *Latest*
 
 #### Special case for IE8

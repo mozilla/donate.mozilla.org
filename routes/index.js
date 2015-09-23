@@ -54,14 +54,15 @@ var routes = {
         amount: transaction.amount,
         stripeToken: transaction.stripeToken,
         email: transaction.email,
+        currency: transaction.currency,
         metadata: {
-          firstname: transaction.firstName,
-          lastname: transaction.lastName,
+          firstname: transaction.first,
+          lastname: transaction.last,
           country: transaction.country,
           address: transaction.address,
           city: transaction.city,
-          zip: transaction.zip,
-          state: transaction.state,
+          zip: transaction.code,
+          state: transaction.province,
           locale: transaction.locale
         }
       }, function(err, subscription) {

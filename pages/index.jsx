@@ -10,6 +10,7 @@ var Index = React.createClass({
       <html>
         <head>
           <meta charSet="UTF-8"/>
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <meta property="og:title" content={metaOG.title} />
           <meta property="og:site_name" content={metaOG.site_name} />

@@ -257,6 +257,7 @@ module.exports = {
       submitting: true
     });
     submitProps = this.buildProps(props);
+    Stripe.setPublishableKey(process.env.STRIPE_PUBLIC_KEY);
     Stripe.card.createToken({
       number: submitProps.cardNumber,
       cvc: submitProps.cvc,

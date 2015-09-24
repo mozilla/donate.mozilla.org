@@ -108,7 +108,7 @@ module.exports = {
           imgSrc: ['self', 'https://www.google-analytics.com', 'https://q.stripe.com', 'https://pontoon.mozilla.org'],
           scriptSrc: ['self', 'https://cdn.optimizely.com',
             'https://www.google-analytics.com', 'https://ajax.googleapis.com',
-            'https://js.stripe.com', 'https://pontoon.mozilla.org', 'https://cdn.polyfill.io'],
+            'https://js.stripe.com', 'https://checkout.stripe.com', 'https://pontoon.mozilla.org', 'https://cdn.polyfill.io'],
           styleSrc: ['self', 'unsafe-inline', 'https://fonts.googleapis.com',
             'https://maxcdn.bootstrapcdn.com', 'https://pontoon.mozilla.org']
         }

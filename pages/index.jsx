@@ -20,7 +20,7 @@ var Index = React.createClass({
           <title>donate.mozilla.org | Give to Mozilla Today</title>
           <OptimizelySubdomain/>
           <Optimizely/>
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic"/>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic&subset=latin-ext"/>
           <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
           <link rel="icon" href="/images/favicon.ico" type="image/x-icon"/>
           <link rel="stylesheet" href="/css/index.css"/>

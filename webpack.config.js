@@ -23,12 +23,12 @@ module.exports = {
   },
   module: {
     loaders: [
-    { test: /\.js$/, loaders:  ['babel-loader'], exclude: ['node_modules'] },
-    { test: /\.jsx$/, loaders: ['babel-loader'] },
-    { test: /\.json$/, loaders: ['json-loader'] }
+      { test: /\.js$/, loaders:  ['babel-loader'], exclude: ['node_modules'] },
+      { test: /\.jsx$/, loaders: ['babel-loader'] },
+      { test: /\.json$/, loaders: ['json-loader'] }
     ],
     preLoaders: [
-    { test: /\.jsx$/, loaders: ['eslint-loader'], exclude: ['node_modules'] }
+      { test: /\.jsx$/, loaders: ['eslint-loader'], exclude: ['node_modules'] }
     ]
   },
   eslint: {

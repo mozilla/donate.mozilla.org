@@ -25,10 +25,10 @@ module.exports = {
       errors: {
         creditCardInfo: {
           page: 0,
-          number: "",
+          cardNumber: "",
           cvc: "",
-          monthExp: "",
-          yearExp: ""
+          expMonth: "",
+          expYear: ""
         },
         address: {
           page: 0,
@@ -55,6 +55,7 @@ module.exports = {
   },
   onChange: function(name, value, field) {
     var newState = {};
+    newState.errors = this.state.errors;
     newState[name] = value;
     if (field && this.state.errors[name] && this.state.errors[name][field]) {
       newState.errors[name][field] = "";
@@ -177,7 +178,7 @@ module.exports = {
 
     this.transitionTo('/' + this.props.locales[0] + '/thank-you/?' + params);
   },
-  stripeError: function(error) {
+  stripeError: function(errorCode, errorType) {
     var newState = {};
     var cardErrorCodes = {
       "invalid_number": {
@@ -187,12 +188,12 @@ module.exports = {
       },
       "invalid_expiry_month": {
         name: "creditCardInfo",
-        field: "monthExp",
+        field: "expMonth",
         message: this.getIntlMessage('invalid_expiry_month')
       },
       "invalid_expiry_year": {
         name: "creditCardInfo",
-        field: "yearExp",
+        field: "expYear",
         message: this.getIntlMessage('invalid_expiry_year')
       },
       "invalid_cvc": {
@@ -227,10 +228,10 @@ module.exports = {
       }
     };
 
-    var cardError = cardErrorCodes[error.code];
+    var cardError = cardErrorCodes[errorCode];
     newState.submitting = false;
     newState.errors = this.state.errors;
-    if (error.rawType === "card_error" && cardError) {
+    if (errorType === "card_error" && cardError) {
       if (this.state.errors[cardError.name].page < this.state.activePage) {
         newState.activePage = this.state.errors[cardError.name].page;
       }
@@ -264,13 +265,13 @@ module.exports = {
       exp_year: submitProps.expYear
     }, function(status, response) {
       if (response.error) {
-        error(response.error);
+        error(response.error.code, response.error.type);
       } else {
         submitProps.cardNumber = "";
         submitProps.stripeToken = response.id;
         submit("/api/stripe", submitProps, function(result) {
           if (result.error) {
-            error(result.error);
+            error(result.error.code, result.error.rawType);
           } else {
             success(result.success);
           }

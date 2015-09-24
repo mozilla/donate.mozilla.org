@@ -15,9 +15,9 @@ var CreditCardInfo = React.createClass({
         expYear: "",
         cvc: ""
       },
-      cardNumberValid: !this.props.error.number,
-      expMonthValid: !this.props.error.monthExp,
-      expYearValid: !this.props.error.yearExp,
+      cardNumberValid: !this.props.error.cardNumber,
+      expMonthValid: !this.props.error.expMonth,
+      expYearValid: !this.props.error.expYear,
       cvcValid: !this.props.error.cvc
     };
   },
@@ -28,7 +28,7 @@ var CreditCardInfo = React.createClass({
     this.onChange();
   },
   checkCardNumber: function(cardNumber) {
-    if (this.props.error.number) {
+    if (this.props.error.cardNumber) {
       return false;
     }
     cardNumber = cardNumber.replace(/ /g, "");
@@ -49,14 +49,14 @@ var CreditCardInfo = React.createClass({
       });
     }
     var year = parseInt(this.state.values.expYear, 10);
-    if (this.props.error.yearExp || !year || year < 15) {
+    if (this.props.error.expYear || !year || year < 15) {
       valid = false;
       this.setState({
         expYearValid: false
       });
     }
     var month = parseInt(this.state.values.expMonth, 10);
-    if (this.props.error.monthExp || !month || month < 1 || month > 12) {
+    if (this.props.error.expMonth || !month || month < 1 || month > 12) {
       valid = false;
       this.setState({
         expMonthValid: false
@@ -76,7 +76,7 @@ var CreditCardInfo = React.createClass({
         state.cardNumberValid = true;
       }
       this.setState(state);
-      this.onChange("number");
+      this.onChange("cardNumber");
     }
   },
   onExpMonthInput: function(e) {
@@ -106,15 +106,15 @@ var CreditCardInfo = React.createClass({
       hintClassName += " hidden";
     }
     var cardClassName = "";
-    if (!this.state.cardNumberValid || this.props.error.number) {
+    if (!this.state.cardNumberValid || this.props.error.cardNumber) {
       cardClassName += "parsley-error";
     }
     var monthClassName = "";
-    if (!this.state.expMonthValid || this.props.error.monthExp) {
+    if (!this.state.expMonthValid || this.props.error.expMonth) {
       monthClassName += "parsley-error";
     }
     var yearClassName = "";
-    if (!this.state.expYearValid || this.props.error.yearExp) {
+    if (!this.state.expYearValid || this.props.error.expYear) {
       yearClassName += "parsley-error";
     }
     var cvcClassName = "";
@@ -123,14 +123,14 @@ var CreditCardInfo = React.createClass({
     }
     var errorMessageClassName = "row error-msg-row";
     var errorMessage = "";
-    if (this.props.error.number) {
-      errorMessage = this.props.error.number;
+    if (this.props.error.cardNumber) {
+      errorMessage = this.props.error.cardNumber;
     } else if (this.props.error.cvc) {
       errorMessage = this.props.error.cvc;
-    } else if (this.props.error.monthExp) {
-      errorMessage = this.props.error.monthExp;
-    } else if (this.props.error.yearExp) {
-      errorMessage = this.props.error.yearExp;
+    } else if (this.props.error.expMonth) {
+      errorMessage = this.props.error.expMonth;
+    } else if (this.props.error.expYear) {
+      errorMessage = this.props.error.expYear;
     }
     if (errorMessage === "") {
       errorMessageClassName += " hidden";

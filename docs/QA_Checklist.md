@@ -58,3 +58,15 @@ Stripe also provides many other [test credit cards](https://stripe.com/docs/test
 3. Click the privacy checkbox
 4. Click the Sign up now button
 5. Ensure you are redirected to [/share/](http://localhost:3000/share/)
+
+
+### Variables to test
+
+1. Currencies - e.g. USD / EUR / GPB - do the correct currencies get passed to Stripe and Paypal?
+2. Onetime / Monthly - does the correct donation frequency get passed to Stripe and Paypal?
+3. Amount - does the correct amount (selected in input) get passed to Stripe and Paypal?
+4. Language - does the form work the same in multiple languages (e.g. `/en-US/` or `/de`)
+5. Form variations
+  * Root: https://donate.mofostaging.net/en-US/
+  * One-page: https://donate.mofostaging.net/en-US/one-page/
+  * Simple PayPal: https://donate.mofostaging.net/en-US/paypal-donate/

@@ -73,7 +73,7 @@ module.exports = {
         }
         callback(React.renderToStaticMarkup(index({
           localeInfo: locale,
-          metaOG: {
+          metaData: {
             desc: values.messages.i_donated_to_mozilla,
             title: values.messages.support_mozilla,
             site_name: 'mozilla.org',

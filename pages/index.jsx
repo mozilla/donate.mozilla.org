@@ -5,19 +5,19 @@ import Pontoon from '../components/pontoon.jsx';
 
 var Index = React.createClass({
   render: function() {
-    var metaOG = this.props.metaOG;
+    var metaData = this.props.metaData;
     return (
       <html>
         <head>
           <meta charSet="UTF-8"/>
           <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
-          <meta property="og:title" content={metaOG.title} />
+          <meta property="og:title" content={metaData.title} />
           <meta property="og:type" content="website" />
-          <meta property="og:site_name" content={metaOG.site_name} />
-          <meta property="og:url" content={metaOG.site_url} />
-          <meta property="og:description" content={metaOG.desc} />
-          <title>donate.mozilla.org | {metaOG.site_title}</title>
+          <meta property="og:site_name" content={metaData.site_name} />
+          <meta property="og:url" content={metaData.site_url} />
+          <meta property="og:description" content={metaData.desc} />
+          <title>donate.mozilla.org | {metaData.site_title}</title>
           <OptimizelySubdomain/>
           <Optimizely/>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic"/>

@@ -17,7 +17,7 @@ var Index = React.createClass({
           <meta property="og:site_name" content={metaOG.site_name} />
           <meta property="og:url" content={metaOG.site_url} />
           <meta property="og:description" content={metaOG.desc} />
-          <title>donate.mozilla.org | Give to Mozilla Today</title>
+          <title>donate.mozilla.org | {metaOG.site_title}</title>
           <OptimizelySubdomain/>
           <Optimizely/>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic"/>

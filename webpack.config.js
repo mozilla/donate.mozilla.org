@@ -77,7 +77,8 @@ module.exports = {
             desc: values.messages.i_donated_to_mozilla,
             title: values.messages.support_mozilla,
             site_name: 'mozilla.org',
-            site_url: url.resolve(process.env.APPLICATION_URI, locale + '/')
+            site_url: url.resolve(process.env.APPLICATION_URI, locale + '/'),
+            site_title: values.messages.give_to_mozilla
           },
           markup: React.renderToStaticMarkup(page(values))
         })));

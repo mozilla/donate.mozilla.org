@@ -35,8 +35,7 @@ var Index = React.createClass({
           <script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/4.0.1/placeholders.jquery.js"></script>
           {/*[endif]*/}
           <script src="https://js.stripe.com/v1/"></script>
-          <script src="/js/stripe.js"></script>
-          <script src="/js/stripe-checkout.js"></script>
+          <script src="https://checkout.stripe.com/checkout.js"></script>
           <script src="/js/ga.js"></script>
         </body>
       </html>

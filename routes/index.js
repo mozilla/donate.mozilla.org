@@ -61,7 +61,8 @@ var routes = {
           address: transaction.address,
           city: transaction.city,
           zip: transaction.zip,
-          state: transaction.state
+          state: transaction.state,
+          locale: transaction.locale
         }
       }, function(err, subscription) {
         if (err) {

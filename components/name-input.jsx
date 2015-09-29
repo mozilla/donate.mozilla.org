@@ -18,13 +18,13 @@ var NameInput = React.createClass({
   },
   validate: function() {
     var valid = true;
-    if (this.state.values.first.trim(' ').length === 0) {
+    if (!this.state.values.first || !this.state.values.first.trim()) {
       valid = false;
       this.setState({
         firstValid: valid
       });
     }
-    if (this.state.values.last.trim(' ').length === 0) {
+    if (!this.state.values.last || !this.state.values.last.trim()) {
       valid = false;
       this.setState({
         lastValid: valid

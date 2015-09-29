@@ -6,4 +6,4 @@ console.warn = function (warning) {
   warn.apply(console, arguments);
 };
 
-require('./inputs.test.jsx');
+require('./name-input.tests.jsx');

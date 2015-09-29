@@ -24,8 +24,8 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.js$/, loaders:  ['babel-loader'], exclude: ['node_modules'] },
-      { test: /\.jsx$/, loaders: ['babel-loader'] },
-      { test: /\.json$/, loaders: ['json-loader'] }
+      { test: /\.jsx$/, loaders: ['babel-loader'], exclude: ['node_modules'] },
+      { test: /\.json$/, loaders: ['json-loader'], exclude: ['node_modules'] }
     ],
     preLoaders: [
       { test: /\.jsx$/, loaders: ['eslint-loader'], exclude: ['node_modules'] }
@@ -51,6 +51,7 @@ module.exports = {
     new webpack.ProvidePlugin({
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     }),
+    new webpack.ContextReplacementPlugin(/buffer/, require('buffer')),
     new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
       Router.run(routes, outputPath, function (Handler) {
         var values = {

@@ -1,6 +1,7 @@
 var httpRequest = require('request');
 var stripe = require('./stripe');
 var paypal = require('./paypal');
+var amountModifier = require('./amount-modifier');
 
 var routes = {
   'signup': function(request, reply) {
@@ -31,10 +32,12 @@ var routes = {
   },
   'stripe': function(request, reply) {
     var transaction = request.payload || {};
+    var currency = transaction.currency;
+    var amount = amountModifier.stripe(transaction.amount, currency);
     if (transaction.frequency !== 'monthly') {
       stripe.single({
-        amount: transaction.amount,
-        currency: transaction.currency,
+        amount: amount,
+        currency: currency,
         stripeToken: transaction.stripeToken
       }, function(err, charge) {
         if (err) {
@@ -51,10 +54,13 @@ var routes = {
       });
     } else {
       stripe.recurring({
-        amount: transaction.amount,
+        // Stripe has plans with set amounts, not custom amounts.
+        // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
+        // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
+        quantity: amount,
         stripeToken: transaction.stripeToken,
         email: transaction.email,
-        currency: transaction.currency,
+        currency: currency,
         metadata: {
           firstname: transaction.first,
           lastname: transaction.last,
@@ -83,9 +89,11 @@ var routes = {
   'paypal': function(request, reply) {
     var transaction = request.payload || {};
     var frequency = transaction.frequency || "";
+    var currency = transaction.currency;
+    var amount = amountModifier.paypal(transaction.amount, currency);
     var details = {
-      amount: transaction.amount,
-      currency: transaction.currency,
+      amount: amount,
+      currency: currency,
       locale: transaction.locale,
       item_name: transaction.description,
       cancelUrl: request.server.info.uri + '/',

@@ -9,8 +9,7 @@ var stripe = require('stripe')(stripeKeys.secretKey);
 module.exports = {
   single: function(transaction, callback) {
     var charge = {
-      // stripe works in cents
-      amount: transaction.amount * 100,
+      amount: transaction.amount,
       currency: transaction.currency,
       card: transaction.stripeToken
     };
@@ -24,13 +23,9 @@ module.exports = {
       if (err) {
         callback(err);
       } else {
-        var amt = parseFloat(transaction.amount, 10);
         var subscription = {
           plan: transaction.currency,
-          // Stripe has plans with set amounts, not custom amounts.
-          // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
-          // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
-          quantity: amt * 100,
+          quantity: transaction.quantity,
           source: transaction.stripeToken
         };
         stripe.customers.createSubscription(customer.id, subscription, callback);

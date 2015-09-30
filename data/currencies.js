@@ -93,6 +93,7 @@ module.exports = {
     code: 'huf',
     minAmount: '490',
     symbol: 'Ft',
+    zeroDecimal: "paypal",
     presets: {
       single: ['5000', '3500', '2000', '1000'],
       monthly: ['2000', '1500', '1350', '1000']
@@ -111,6 +112,7 @@ module.exports = {
     code: 'jpy',
     minAmount: '240',
     symbol: '¥',
+    zeroDecimal: "stripe paypal",
     presets: {
       single: ['10000', '5000', '2500', '1000'],
       monthly: ['5000', '2500', '1000', '500']
@@ -192,6 +194,7 @@ module.exports = {
     code: 'twd',
     minAmount: '62',
     symbol: 'NT$',
+    zeroDecimal: "paypal",
     presets: {
       single: ['1000', '500', '250', '100'],
       monthly: ['250', '150', '100', '50']

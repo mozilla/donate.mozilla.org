@@ -64,6 +64,7 @@ describe('input components', function () {
         firstName.value = ' ';
         TestUtils.Simulate.change(firstName);
         should(el.refs.baseElement.validate()).equal(false);
+        should(firstName.className).equal('parsley-error');
       });
     });
   });

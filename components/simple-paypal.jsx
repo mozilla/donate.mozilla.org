@@ -6,10 +6,11 @@ import Frequency from '../components/donation-frequency.jsx';
 import SubmitButton from '../components/submit-button.jsx';
 import DonateButton from '../components/donate-button.jsx';
 import {paypalLocales} from '../intl-config.json';
+import amountModifier from '../scripts/amount-modifier.js';
 
 var simplePaypal = React.createClass({
   mixins: [IntlMixin, require('../mixins/form.jsx')],
-  simplePaypal(validate, props) {
+  simplePaypal: function(validate, props) {
     var valid = this.validateProps(validate);
     var submitProps = {};
     if (valid) {
@@ -25,6 +26,7 @@ var simplePaypal = React.createClass({
     }
   },
   render: function() {
+    var currencyCode = this.state.currency.code;
     var amount = this.state.props.amount.values.amount;
     return (
       <div className="simple-paypal">
@@ -69,7 +71,7 @@ var simplePaypal = React.createClass({
                   error={this.state.errors.other}
                 >
                   <DonateButton
-                    amount={amount} currency={this.state.currency.code}
+                    amount={amount} currency={currencyCode}
                   />
                 </SubmitButton>
 
@@ -95,9 +97,9 @@ var simplePaypal = React.createClass({
           <input type="hidden" name="no_shipping" value="1"/>
           <input type="hidden" name="rm" value="1"/>
           {/* Donation Amount */}
-          <input type="hidden" name="amount" value={amount}/>
+          <input type="hidden" name="amount" value={amountModifier.paypal(amount, currencyCode)}/>
           <input type="hidden" name="return" value={process.env.APPLICATION_URI + "/" + this.props.locales[0] + "/thank-you/"}/>
-          <input type="hidden" name="currency_code" value={this.state.currency.code.toUpperCase()}/>
+          <input type="hidden" name="currency_code" value={currencyCode.toUpperCase()}/>
         </form>
 
         <form action={process.env.PAYPAL_ENDPOINT + "/cgi-bin/webscr"} method="post" ref="paypalRecurring">
@@ -110,10 +112,10 @@ var simplePaypal = React.createClass({
           <input type="hidden" name="return" value={process.env.APPLICATION_URI + "/" + this.props.locales[0] + "/thank-you/"}/>
           <input type="hidden" name="src" value="1"/>
           <input type="hidden" name="p3" value="1"/>
-          <input type="hidden" name="currency_code" value={this.state.currency.code.toUpperCase()}/>
+          <input type="hidden" name="currency_code" value={currencyCode.toUpperCase()}/>
           <input type="hidden" name="t3" value="M"/>
           <input name="srt" type="hidden" value="0"/>
-          <input type="hidden" name="a3" value={amount}/>
+          <input type="hidden" name="a3" value={amountModifier.paypal(amount, currencyCode)}/>
 
         </form>
       </div>

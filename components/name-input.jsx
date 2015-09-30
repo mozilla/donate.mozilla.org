@@ -2,6 +2,10 @@ import React from 'react';
 
 var NameInput = React.createClass({
   mixins: [require('react-intl').IntlMixin],
+  propTypes: {
+    onChange: React.PropTypes.func.isRequired,
+    name: React.PropTypes.string.isRequired
+  },
   getInitialState: function() {
     return {
       values: {
@@ -14,13 +18,13 @@ var NameInput = React.createClass({
   },
   validate: function() {
     var valid = true;
-    if (!this.state.values.first) {
+    if (!this.state.values.first || !this.state.values.first.trim()) {
       valid = false;
       this.setState({
         firstValid: valid
       });
     }
-    if (!this.state.values.last) {
+    if (!this.state.values.last || !this.state.values.last.trim()) {
       valid = false;
       this.setState({
         lastValid: valid
@@ -69,12 +73,12 @@ var NameInput = React.createClass({
         <div className="half">
           <div className="field-container">
             <i className="fa fa-user field-icon"></i>
-            <input className={firstClassName} type="text" value={this.state.values.name} onChange={this.onFirstChange} autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" name="firstname" placeholder={this.getIntlMessage('first_name')}/>
+            <input ref="firstName" className={firstClassName} type="text" value={this.state.values.name} onChange={this.onFirstChange} autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" name="firstname" placeholder={this.getIntlMessage('first_name')}/>
           </div>
         </div>
         <div className="half">
           <div className="field-container">
-            <input className={lastClassName} type="text" value={this.state.values.last} onChange={this.onLastChange} autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" name="lastname" placeholder={this.getIntlMessage('last_name')}/>
+            <input ref="lastName" className={lastClassName} type="text" value={this.state.values.last} onChange={this.onLastChange} autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" name="lastname" placeholder={this.getIntlMessage('last_name')}/>
           </div>
         </div>
       </div>

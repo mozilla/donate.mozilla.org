@@ -13,7 +13,8 @@
         "es6": true,
         "browser": true,
         "node": true,
-        "commonjs": true
+        "commonjs": true,
+        "mocha": "true"
     },
     "globals": {
       "$": true,

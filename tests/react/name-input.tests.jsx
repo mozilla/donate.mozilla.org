@@ -56,14 +56,24 @@ describe('input components', function () {
         should(el.refs.baseElement.validate()).equal(true);
       });
     });
+    it('should error when only whitespace given in the field', function () {
+      should.doesNotThrow(() => {
+        var NameInput = stubContext(Name, IntlContext);
+        var el = TestUtils.renderIntoDocument(<NameInput name='name-input' onChange={function(){}} />);
+        var firstName = React.findDOMNode(el.refs.baseElement.refs.firstName);
+        firstName.value = '    ';
+        TestUtils.Simulate.change(firstName);
+        should(el.refs.baseElement.validate()).equal(false);
+      });
+    });
     it('should have error class when first name is empty', function () {
       should.doesNotThrow(() => {
         var NameInput = stubContext(Name, IntlContext);
         var el = TestUtils.renderIntoDocument(<NameInput name='name-input' onChange={function(){}} />);
         var firstName = React.findDOMNode(el.refs.baseElement.refs.firstName);
-        firstName.value = ' ';
+        firstName.value = '';
         TestUtils.Simulate.change(firstName);
-        should(el.refs.baseElement.validate()).equal(false);
+        el.refs.baseElement.validate();
         should(firstName.className).equal('parsley-error');
       });
     });

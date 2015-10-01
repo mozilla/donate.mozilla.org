@@ -296,6 +296,10 @@ var ProvinceSelect = React.createClass({
 
 var AddressInput = React.createClass({
   mixins: [IntlMixin, require("../mixins/input.jsx")],
+  propTypes: {
+    error: React.PropTypes.object.isRequired,
+    onChange: React.PropTypes.func.isRequired
+  },
   getInitialState: function() {
     return {
       values: {

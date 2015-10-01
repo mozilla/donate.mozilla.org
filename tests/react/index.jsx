@@ -7,3 +7,4 @@ console.warn = function (warning) {
 };
 
 require('./name-input.tests.jsx');
+require('./address-input.tests.jsx');

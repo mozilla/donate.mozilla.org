@@ -3,7 +3,7 @@ module.exports = {
     var self = this;
     var valid = true;
     fields.forEach(function(field) {
-      if (self.props.error[field] || !self.state.values[field]) {
+      if (self.props.error[field] || !self.state.values[field].trim()) {
         valid = false;
         var state = {};
         state[field + "Valid"] = valid;

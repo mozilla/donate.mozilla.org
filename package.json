@@ -15,7 +15,7 @@
     "watch:js": "webpack -w",
     "watch:css": "mkdirp public/css && autoless less public/css --autoprefix '> 1%, last 2 versions'  --source-map",
     "server": "node start.js",
-    "test": "npm-run-all --parallel test:server test:depcheck test:lint test:karma",
+    "test": "npm-run-all --parallel test:selenium test:depcheck test:lint test:karma",
     "test:karma": "karma start",
     "test:coverage": "KARMA_ENV=coverage karma start --reporters coverage,coveralls",
     "watch:test": "karma start --no-single-run --browsers Chrome",

@@ -23,7 +23,7 @@ var amountModifier = {
   // paypal doesn't accept cents in some currencies.
   paypal: function(amount, currencyCode) {
     return this.modify(amount, "paypal", currencyCode);
-  },
+  }
 };
 
 module.exports = amountModifier;

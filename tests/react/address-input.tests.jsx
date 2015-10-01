@@ -59,7 +59,7 @@ describe('address-input.jsx', function () {
       CityInput.value = " ";
       TestUtils.Simulate.change(CityInput);
       var ZipInput = el.getDOMNode().querySelector('input[name="zip"]');
-      ZipInput.value = " ";
+      ZipInput.value = undefined;
       TestUtils.Simulate.change(ZipInput);
       var ProvinceSelect = el.getDOMNode().querySelector('select[id="wsstate_cd"]');
       ProvinceSelect.value = "AL";

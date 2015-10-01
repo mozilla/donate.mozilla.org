@@ -1,7 +1,7 @@
 var httpRequest = require('request');
 var stripe = require('./stripe');
 var paypal = require('./paypal');
-var amountModifier = require('./amount-modifier');
+var amountModifier = require('../scripts/amount-modifier');
 
 var routes = {
   'signup': function(request, reply) {

@@ -137,7 +137,10 @@ module.exports = {
   },
   submit: function(action, props, callback) {
     props.locale = this.props.locales[0];
-    props.currency = this.state.currency.code;
+    var currency = this.state.currency;
+    if (currency) {
+      props.currency = currency.code;
+    }
     fetch(action, {
       method: 'post',
       credentials: 'same-origin',
@@ -350,15 +353,15 @@ module.exports = {
     }
   },
   signup: function(validate, props) {
-    this.setState({
-      submitting: true
-    });
     this.onSubmit("/api/signup", validate, props, this.signupSuccess);
   },
   onSubmit: function(action, validate, props, callback) {
     var valid = this.validateProps(validate);
     var submitProps = {};
     if (valid) {
+      this.setState({
+        submitting: true
+      });
       submitProps = this.buildProps(props);
       this.submit(action, submitProps, callback);
     }

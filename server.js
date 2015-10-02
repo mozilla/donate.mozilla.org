@@ -11,6 +11,7 @@ if (process.env.NEW_RELIC_ENABLED === 'true') {
 
 var Path = require('path');
 var Hapi = require('hapi');
+var Joi = require('joi');
 
 var routes = require('./routes');
 
@@ -46,21 +47,53 @@ server.route([
     path: '/api/signup',
     handler: routes.signup,
     config: {
-      security: securityConfig
+      security: securityConfig,
+      validate: {
+        params: {
+          locale: Joi.string().min(2).max(12),
+          email: Joi.string().email()
+        }
+      }
     }
   }, {
     method: 'POST',
     path: '/api/stripe',
     handler: routes.stripe,
     config: {
-      security: securityConfig
+      security: securityConfig,
+      validate: {
+        params: {
+          currency: Joi.string().min(3).max(3),
+          amount: Joi.number(),
+          frequency: Joi.string().min(6).max(7),
+          stripeToken: [Joi.string(), Joi.number()],
+          email: Joi.string().email(),
+          first: Joi.string(),
+          last: Joi.string(),
+          country: Joi.string(),
+          address: Joi.string(),
+          city: Joi.string(),
+          code: Joi.string(),
+          province: Joi.string(),
+          locale: Joi.string().min(2).max(12)
+        }
+      }
     }
   }, {
     method: 'POST',
     path: '/api/paypal',
     handler: routes.paypal,
     config: {
-      security: securityConfig
+      security: securityConfig,
+      validate: {
+        params: {
+          frequency: Joi.string().min(6).max(7),
+          currency: Joi.string().min(3).max(3),
+          amount: Joi.number(),
+          locale: Joi.string().min(2).max(12),
+          description: Joi.string()
+        }
+      }
     }
   }, {
     method: 'GET',

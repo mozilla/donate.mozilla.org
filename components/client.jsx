@@ -33,13 +33,23 @@ Router.run(routes, Router.HistoryLocation, function (Handler, state) {
       frequency = "monthly";
     }
   }
-  var currency = currencies[currencyCode];
-  presets = presets.split(",");
 
+  var currency = currencies[currencyCode];
+  if (!currency) {
+    currency = currencies['usd'];
+  }
   // We didn't get valid presets from the query string,
   // so default to the currency and frequency preset.
+  presets = presets.split(",");
   if (presets.length !== 4) {
     presets = currency.presets[frequency];
+  } else if(presets.length === 4) {
+    if(!presets.every(isNumber)) {
+      presets = currency.presets[frequency];
+    }
+  }
+  function isNumber(item) {
+    return !isNaN(item);
   }
 
   var values = {

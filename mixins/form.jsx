@@ -183,7 +183,7 @@ module.exports = {
     var cardErrorCodes = {
       "invalid_number": {
         name: "creditCardInfo",
-        field: "number",
+        field: "cardNumber",
         message: this.getIntlMessage('invalid_number')
       },
       "invalid_expiry_month": {
@@ -203,12 +203,12 @@ module.exports = {
       },
       "incorrect_number": {
         name: "creditCardInfo",
-        field: "number",
+        field: "cardNumber",
         message: this.getIntlMessage('incorrect_number')
       },
       "expired_card": {
         name: "creditCardInfo",
-        field: "number",
+        field: "cardNumber",
         message: this.getIntlMessage('expired_card')
       },
       "incorrect_cvc": {
@@ -223,7 +223,7 @@ module.exports = {
       },
       "card_declined": {
         name: "creditCardInfo",
-        field: "number",
+        field: "cardNumber",
         message: this.getIntlMessage('declined_card')
       }
     };

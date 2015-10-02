@@ -42,7 +42,10 @@ var routes = {
       }, function(err, charge) {
         if (err) {
           reply({
-            error: err
+            error: {
+              code: err.code,
+              rawType: err.rawType
+            }
           });
           console.log('Stripe charge failed:', err);
         } else {
@@ -74,7 +77,10 @@ var routes = {
       }, function(err, subscription) {
         if (err) {
           reply({
-            error: err
+            error: {
+              code: err.code,
+              rawType: err.rawType
+            }
           });
           console.log('Stripe subscription failed:', err);
         } else {

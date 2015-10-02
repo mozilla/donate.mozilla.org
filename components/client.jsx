@@ -33,11 +33,14 @@ Router.run(routes, Router.HistoryLocation, function (Handler, state) {
       frequency = "monthly";
     }
   }
-  var currency = currencies[currencyCode];
-  presets = presets.split(",");
 
+  var currency = Object.keys(currencies).indexOf(currencyCode) === -1 ? currencies['usd'] : currencies[currencyCode];
   // We didn't get valid presets from the query string,
   // so default to the currency and frequency preset.
+  if(/^[\d,]+$/.test(presets)) {
+    presets = presets.split(",");
+  }
+
   if (presets.length !== 4) {
     presets = currency.presets[frequency];
   }

@@ -41,8 +41,9 @@ server.start(function() {
     return driver.getCurrentUrl().then(function (url) {
       return url.indexOf('http://localhost:3000/de/thank-you/') === 0;
     });
-  }, 5000).then(function() {
+  }, 10000).then(function() {
     server.stop(function() {
+      driver.close();
       driver.quit();
     });
   });

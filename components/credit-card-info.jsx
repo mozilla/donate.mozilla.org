@@ -6,6 +6,10 @@ var regAMEX = /^(?:3[47][0-9]{13})$/;
 
 var CreditCardInfo = React.createClass({
   mixins: [require('react-intl').IntlMixin, require("../mixins/input.jsx")],
+  propTypes: {
+    error: React.PropTypes.object.isRequired,
+    onChange: React.PropTypes.func.isRequired
+  },
   getInitialState: function() {
     return {
       showHint: false,
@@ -40,7 +44,13 @@ var CreditCardInfo = React.createClass({
     return false;
   },
   validate: function() {
-    var valid = this.validateFields(["cvc"]);
+    var valid = true;
+    if(!/^[0-9]{3,4}$/.test(this.state.values.cvc)) {
+      valid = false;
+      this.setState({
+        cvcValid: false
+      });
+    }
     var cardNumber = this.state.values.cardNumber;
     if (!this.checkCardNumber(cardNumber)) {
       valid = false;

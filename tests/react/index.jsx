@@ -8,3 +8,4 @@ console.warn = function (warning) {
 
 require('./name-input.tests.jsx');
 require('./address-input.tests.jsx');
+require('./credit-card-info.tests.jsx');

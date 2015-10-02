@@ -43,6 +43,7 @@ server.start(function() {
     });
   }, 5000).then(function() {
     server.stop(function() {
+      driver.close();
       driver.quit();
     });
   });

@@ -38,18 +38,14 @@ Router.run(routes, Router.HistoryLocation, function (Handler, state) {
   if (!currency) {
     currency = currencies['usd'];
   }
+  function isNumber(item) {
+    return !isNaN(item);
+  }
   // We didn't get valid presets from the query string,
   // so default to the currency and frequency preset.
   presets = presets.split(",");
-  if (presets.length !== 4) {
+  if (presets.length !== 4 || !presets.every(isNumber)) {
     presets = currency.presets[frequency];
-  } else if(presets.length === 4) {
-    if(!presets.every(isNumber)) {
-      presets = currency.presets[frequency];
-    }
-  }
-  function isNumber(item) {
-    return !isNaN(item);
   }
 
   var values = {

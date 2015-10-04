@@ -6,6 +6,10 @@ import Pontoon from '../components/pontoon.jsx';
 var Index = React.createClass({
   render: function() {
     var metaData = this.props.metaData;
+    var googleFonts = "https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic";
+    if (this.props.localeInfo === "cs") {
+      googleFonts += "&subset=latin-ext";
+    }
     return (
       <html>
         <head>
@@ -20,7 +24,7 @@ var Index = React.createClass({
           <title>donate.mozilla.org | {metaData.site_title}</title>
           <OptimizelySubdomain/>
           <Optimizely/>
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic"/>
+          <link rel="stylesheet" href={googleFonts}/>
           <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
           <link rel="icon" href="/images/favicon.ico" type="image/x-icon"/>
           <link rel="stylesheet" href="/css/index.css"/>

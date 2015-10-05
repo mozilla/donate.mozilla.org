@@ -52,7 +52,12 @@ var routes = {
           console.log('Stripe charge failed:', err);
         } else {
           reply({
-            success: charge
+            success: {
+              frequency: "one-time",
+              amount: charge.amount,
+              currency: charge.currency,
+              id: charge.id
+            }
           });
           console.log('Stripe charge sent to Stripe!');
         }
@@ -87,7 +92,12 @@ var routes = {
           console.log('Stripe subscription failed:', err);
         } else {
           reply({
-            success: subscription
+            success: {
+              frequency: "monthly",
+              currency: subscription.plan.currency,
+              quantity: subscription.quantity,
+              id: subscription.id
+            }
           });
           console.log('Stripe subscription created!');
         }

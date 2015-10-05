@@ -7,22 +7,24 @@ var routes = {
   'signup': function(request, reply) {
     var url = process.env.SIGNUP;
     var transaction = request.payload || {};
-    if(transaction.locale !== 'en-US') {
-      url = url + '-' + transaction.locale;
-    }
-    httpRequest({
+    httpRequest.post({
       url: url,
-      method: 'POST',
       form: {
-        'opt_in': '1',
+        format: 'html',
+        lang: transaction.locale,
+        newsletters: 'mozilla-foundation',
+        trigger_welcome: 'N',
+        source_url: 'https://donate.mozilla.org/',
         email: transaction.email
       }
-    }, function(err) {
-      if (err) {
+    }, function(err, response, body) {
+      if (err || body.status === "error") {
         reply({
-          error: err
+          error: {
+            status: "error"
+          }
         });
-        console.error('signup failed:', err);
+        console.error('signup failed:', err || body);
       } else {
         reply({
           success: true

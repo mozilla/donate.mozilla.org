@@ -12,7 +12,8 @@ if (process.env.NEW_RELIC_ENABLED === 'true') {
 var Path = require('path');
 var Hapi = require('hapi');
 var Joi = require('joi');
-
+var polyfillio = require('polyfill-service');
+var PolyfillSet = require('./scripts/PolyfillSet.js');
 var routes = require('./routes');
 
 var server = new Hapi.Server();
@@ -104,22 +105,19 @@ server.route([
     }
   }, {
     method: 'GET',
-    path: '/api/polyfill',
+    path: '/api/polyfill.js',
     handler: function(request, reply) {
-      require('polyfill-service').getPolyfillString({
-        uaString: request.headers['user-agent'],
-        minify: true,
-        features: {
-          'Promise': { flags: ['gated'] },
-          'Intl.~locale.fr': { flags: ['gated'] },
-          'Intl.~locale.pt-BR': { flags: ['gated'] },
-          'Intl.~locale.de': { flags: ['gated'] },
-          'Intl.~locale.id': { flags: ['gated'] },
-          'Intl.~locale.es': { flags: ['gated'] },
-          'Intl.~locale.en-US': { flags: ['gated'] }
-        }
-      }).then(function(bundleString) {
-        reply(bundleString);
+      var features = request.query.features;
+      var flags = request.query.flags ? request.query.flags.split(',') : [];
+
+      var polyfills = PolyfillSet.fromQueryParam(features || 'default', flags);
+      var params = {
+        features: polyfills.get(),
+        minify: true
+      };
+      params.uaString = request.plugins.scooter.source;
+      polyfillio.getPolyfillString(params).then(function(bundleString) {
+        reply(bundleString).type('application/javascript');
       });
     },
     config: {

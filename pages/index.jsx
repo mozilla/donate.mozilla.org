@@ -31,12 +31,12 @@ var Index = React.createClass({
         </head>
         <body>
           <div id="my-app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
-          <script src="/api/polyfill"></script>
+          <script src="https://cdn.polyfill.io/v1/polyfill.min.js?features=Promise,Intl.~locale.fr,Intl.~locale.pt-BR,Intl.~locale.de,Intl.~locale.id,Intl.~locale.es,Intl.~locale.en-US"></script>
           <script src="/main.js"></script>
           <Pontoon/>
           {/*[if lt IE 10]*/}
-          <script src="/js/jquery-1.9.1.js"></script>
-          <script src="/js/placeholders.jquery.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/4.0.1/placeholders.jquery.js"></script>
           {/*[endif]*/}
           <script src="https://js.stripe.com/v1/"></script>
           <script src="https://checkout.stripe.com/checkout.js"></script>

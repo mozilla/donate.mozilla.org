@@ -102,29 +102,6 @@ server.route([
     config: {
       security: securityConfig
     }
-  }, {
-    method: 'GET',
-    path: '/api/polyfill',
-    handler: function(request, reply) {
-      require('polyfill-service').getPolyfillString({
-        uaString: request.headers['user-agent'],
-        minify: true,
-        features: {
-          'Promise': { flags: ['gated'] },
-          'Intl.~locale.fr': { flags: ['gated'] },
-          'Intl.~locale.pt-BR': { flags: ['gated'] },
-          'Intl.~locale.de': { flags: ['gated'] },
-          'Intl.~locale.id': { flags: ['gated'] },
-          'Intl.~locale.es': { flags: ['gated'] },
-          'Intl.~locale.en-US': { flags: ['gated'] }
-        }
-      }).then(function(bundleString) {
-        reply(bundleString);
-      });
-    },
-    config: {
-      security: securityConfig
-    }
   }
 ]);
 
@@ -164,7 +141,7 @@ module.exports = {
           imgSrc: ['self', 'https://www.google-analytics.com', 'https://q.stripe.com', 'https://pontoon.mozilla.org'],
           scriptSrc: ['self', 'https://cdn.optimizely.com',
             'https://www.google-analytics.com', 'https://ajax.googleapis.com',
-            'https://js.stripe.com', 'https://checkout.stripe.com', 'https://pontoon.mozilla.org'],
+            'https://js.stripe.com', 'https://checkout.stripe.com', 'https://pontoon.mozilla.org', 'https://cdn.polyfill.io'],
           styleSrc: ['self', 'unsafe-inline', 'https://fonts.googleapis.com',
             'https://maxcdn.bootstrapcdn.com', 'https://pontoon.mozilla.org']
         }

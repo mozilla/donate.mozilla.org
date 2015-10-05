@@ -74,7 +74,6 @@
     "mocha": "^2.2.5",
     "newrelic": "^1.21.2",
     "npm-run-all": "^1.2.5",
-    "polyfill-service": "^2.0.0",
     "properties-parser": "^0.3.0",
     "react": "^0.13.3",
     "react-ga": "^1.0.14",

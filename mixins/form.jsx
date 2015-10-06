@@ -135,7 +135,7 @@ module.exports = {
     reactGA.pageview(currentPage);
     this.updateHeight();
   },
-  submit: function(action, props, success, failure) {
+  submit: function(action, props, success, error) {
     props.locale = this.props.locales[0];
     var currency = this.state.currency;
     if (currency) {
@@ -150,21 +150,21 @@ module.exports = {
       },
       body: JSON.stringify(props)
     }).then(function(response) {
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
+      var responseContent;
+      var callback = success;
       if (!response.headers.get("content-type")) {
-        return;
+        responseContent = response.text();
+      } else {
+        responseContent = response.json();
       }
-      return response.json();
-    }).then(function(response) {
-      if (success) {
-        success(response);
+      if (!response.ok) {
+        callback = error;
       }
-    }).catch(function(error) {
-      if (failure) {
-        failure(error);
-      }
+      responseContent.then(function(result) {
+        if (callback) {
+          callback(result);
+        }
+      });
     });
   },
   stripeSuccess: function(data) {
@@ -281,12 +281,8 @@ module.exports = {
       } else {
         submitProps.cardNumber = "";
         submitProps.stripeToken = response.id;
-        submit("/api/stripe", submitProps, function(result) {
-          if (result.error) {
-            error(result.error.code, result.error.rawType);
-          } else {
-            success(result.success);
-          }
+        submit("/api/stripe", submitProps, success, function(response) {
+          error(response.stripe.code, response.stripe.rawType);
         });
       }
     });

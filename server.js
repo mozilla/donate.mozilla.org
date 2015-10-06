@@ -81,6 +81,15 @@ server.route([
           province: Joi.string(),
           locale: Joi.string().min(2).max(12)
         }
+      },
+      response: {
+        schema: {
+          id: Joi.string(),
+          frequency: Joi.string().valid("monthly", "one-time"),
+          currency: Joi.string().min(3).max(3),
+          quantity: Joi.string(),
+          amount: Joi.number()
+        }
       }
     }
   }, {
@@ -96,6 +105,12 @@ server.route([
           amount: Joi.number(),
           locale: Joi.string().min(2).max(12),
           description: Joi.string()
+        }
+      },
+      response: {
+        schema: {
+          endpoint: Joi.string(),
+          token: Joi.string()
         }
       }
     }

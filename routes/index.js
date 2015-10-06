@@ -40,23 +40,19 @@ var routes = {
         stripeToken: transaction.stripeToken
       }, function(err, charge) {
         if (err) {
-          reply({
-            error: {
-              code: err.code,
-              rawType: err.rawType
-            }
-          });
-          console.log('Stripe charge failed:', err);
+          var badRequest = boom.badRequest('Stripe charge failed');
+          badRequest.output.payload.stripe = {
+            code: err.code,
+            rawType: err.rawType
+          };
+          reply(badRequest);
         } else {
           reply({
-            success: {
-              frequency: "one-time",
-              amount: charge.amount,
-              currency: charge.currency,
-              id: charge.id
-            }
-          });
-          console.log('Stripe charge sent to Stripe!');
+            frequency: "one-time",
+            amount: charge.amount,
+            currency: charge.currency,
+            id: charge.id
+          }).code(200);
         }
       });
     } else {
@@ -80,23 +76,17 @@ var routes = {
         }
       }, function(err, subscription) {
         if (err) {
-          reply({
-            error: {
-              code: err.code,
-              rawType: err.rawType
-            }
-          });
-          console.log('Stripe subscription failed:', err);
+          reply(boom.create(400, 'Stripe subscription failed', {
+            code: err.code,
+            rawType: err.rawType
+          }));
         } else {
           reply({
-            success: {
-              frequency: "monthly",
-              currency: subscription.plan.currency,
-              quantity: subscription.quantity,
-              id: subscription.id
-            }
-          });
-          console.log('Stripe subscription created!');
+            frequency: "monthly",
+            currency: subscription.plan.currency,
+            quantity: subscription.quantity,
+            id: subscription.id
+          }).code(200);
         }
       });
     }
@@ -116,12 +106,13 @@ var routes = {
     };
     function callback(err, data) {
       if (err) {
-        return console.error('donation failed:', err);
+        reply(boom.wrap(err, 500, 'Paypal donation failed'));
+      } else {
+        reply({
+          endpoint: process.env.PAYPAL_ENDPOINT,
+          token: data.TOKEN
+        }).code(200);
       }
-      reply({
-        endpoint: process.env.PAYPAL_ENDPOINT,
-        token: data.TOKEN
-      });
     }
     if (frequency !== 'monthly') {
       paypal.setupSingle(details, callback);

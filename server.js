@@ -54,6 +54,9 @@ server.route([
           locale: Joi.string().min(2).max(12),
           email: Joi.string().email()
         }
+      },
+      response: {
+        schema: false
       }
     }
   }, {

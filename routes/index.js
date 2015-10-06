@@ -1,6 +1,7 @@
 var httpRequest = require('request');
 var stripe = require('./stripe');
 var paypal = require('./paypal');
+var boom = require('boom');
 var amountModifier = require('../scripts/amount-modifier');
 
 var routes = {
@@ -9,6 +10,7 @@ var routes = {
     var transaction = request.payload || {};
     httpRequest.post({
       url: url,
+      json: true,
       form: {
         format: 'html',
         lang: transaction.locale,
@@ -18,17 +20,12 @@ var routes = {
         email: transaction.email
       }
     }, function(err, response, body) {
-      if (err || body.status === "error") {
-        reply({
-          error: {
-            status: "error"
-          }
-        });
-        console.error('signup failed:', err || body);
+      if (err) {
+        reply(boom.wrap(err, 500, 'Unable to complete Basket signup'));
+      } else if (body.status === "error") {
+        reply(boom.create(response.statusCode, body.desc));
       } else {
-        reply({
-          success: true
-        });
+        reply().code(204);
       }
     });
   },

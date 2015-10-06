@@ -135,7 +135,7 @@ module.exports = {
     reactGA.pageview(currentPage);
     this.updateHeight();
   },
-  submit: function(action, props, callback) {
+  submit: function(action, props, success, failure) {
     props.locale = this.props.locales[0];
     var currency = this.state.currency;
     if (currency) {
@@ -150,10 +150,20 @@ module.exports = {
       },
       body: JSON.stringify(props)
     }).then(function(response) {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      if (!response.headers.get("content-type")) {
+        return;
+      }
       return response.json();
-    }).then(function(json) {
-      if (callback) {
-        callback(json);
+    }).then(function(response) {
+      if (success) {
+        success(response);
+      }
+    }).catch(function(error) {
+      if (failure) {
+        failure(error);
       }
     });
   },
@@ -338,22 +348,24 @@ module.exports = {
     this.setState({
       submitting: false
     });
-    if (result.error) {
-      this.setState({
-        errors: {
-          other: {
-            message: this.getIntlMessage('try_again_later')
-          }
+    this.transitionTo('/' + this.props.locales[0] + '/share');
+  },
+  signupError: function(result) {
+    this.setState({
+      submitting: false
+    });
+    this.setState({
+      errors: {
+        other: {
+          message: this.getIntlMessage('try_again_later')
         }
-      });
-    } else {
-      this.transitionTo('/' + this.props.locales[0] + '/share');
-    }
+      }
+    });
   },
   signup: function(validate, props) {
-    this.onSubmit("/api/signup", validate, props, this.signupSuccess);
+    this.onSubmit("/api/signup", validate, props, this.signupSuccess, this.signupError);
   },
-  onSubmit: function(action, validate, props, callback) {
+  onSubmit: function(action, validate, props, success, error) {
     var valid = this.validateProps(validate);
     var submitProps = {};
     if (valid) {
@@ -361,7 +373,7 @@ module.exports = {
         submitting: true
       });
       submitProps = this.buildProps(props);
-      this.submit(action, submitProps, callback);
+      this.submit(action, submitProps, success, error);
     }
   }
 };

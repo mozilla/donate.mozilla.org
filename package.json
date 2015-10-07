@@ -18,7 +18,7 @@
     "test": "npm-run-all --parallel test:server test:depcheck test:lint test:karma",
     "test:karma": "karma start",
     "test:coverage": "KARMA_ENV=coverage karma start --reporters coverage,coveralls",
-    "watch:test": "karma start --no-single-run --browsers Chrome",
+    "watch:test": "karma start --no-single-run --browsers Firefox",
     "test:server": "node tests/start.js",
     "test:selenium": "node tests/selenium/start.js",
     "test:depcheck": "dependency-check ./package.json",

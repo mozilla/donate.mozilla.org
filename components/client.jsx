@@ -35,7 +35,13 @@ Router.run(routes, Router.HistoryLocation, function (Handler, state) {
     presets = currency.presets[frequency];
   }
 
-  langURLParser.run(Handler, state);
+  var pathname = langURLParser(state);
+  if(pathname) {
+    if(queryString) {
+      delete queryString.redirect;
+    }
+    return Handler.replaceWith(pathname, {}, state.query);
+  }
   var localesData = i18n.intlDataFor(i18n.urlOverrideLang().lang);
   var values = {
     currency: currency,

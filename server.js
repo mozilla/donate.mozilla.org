@@ -130,7 +130,7 @@ server.route([
 // with preserving the pathname for client-side to handle.
 server.ext('onPreResponse', function(request, reply) {
   if(request.response.output && request.response.output.statusCode === 404) {
-    return reply.redirect('/?pathname=' + request.url.pathname);
+    return reply.redirect('/?redirect=' + request.url.pathname);
   }
   return reply.continue();
 });

@@ -57,4 +57,6 @@ You can configure the following environment variables:
 | OPTIMIZELY_ACTIVE | If set to 'yes' (String) the project will include Optimizely snippet in the page load |
 
 
+#### Thanks
 
+Thanks to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to run our build in real browsers.

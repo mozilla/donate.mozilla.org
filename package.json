@@ -88,7 +88,7 @@
     "selenium-webdriver": "2.47.0",
     "should": "7.1.0",
     "simple-html-precompiler": "1.0.1",
-    "stripe": "2.4.0",
+    "stripe": "4.0.0",
     "webpack": "1.12.2",
     "whatwg-fetch": "0.9.0"
   },

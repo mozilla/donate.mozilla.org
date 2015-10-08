@@ -38,14 +38,7 @@ $> npm start
 - [Donation Components](docs/Donation_Components.md)
 - [Query Strings](docs/Query_Strings.md)
 - [Localization](docs/Localization.md)
-
-## Tests
-
-#### Selenium
-
-```
-$> npm run test:selenium
-```
+- [Tests](docs/Tests.md)
 
 ## Environment Variables
 

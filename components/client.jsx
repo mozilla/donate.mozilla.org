@@ -15,7 +15,9 @@ Router.run(routes, Router.HistoryLocation, function (Handler, state) {
   if (queryString) {
     presets = queryString.presets || presets;
     currencyCode = queryString.currency || currencyCode;
-    amount = queryString.amount || amount;
+    if(queryString.amount && !isNaN(queryString.amount)) {
+      amount = queryString.amount.trim();
+    }
     if (queryString.frequency === "monthly") {
       frequency = "monthly";
     }

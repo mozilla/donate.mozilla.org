@@ -11,7 +11,7 @@ Router.run(routes, Router.HistoryLocation, function (Handler, state) {
     if(queryString) {
       delete queryString.redirect;
     }
-    return Handler.replaceWith(pathname, {}, state.query);
+    return Handler.replaceWith(pathname, {}, queryString);
   }
-  React.render(<Handler {...queryParser(queryString)} />, document.querySelector("#my-app"));
+  React.render(<Handler {...queryParser(queryString, state.pathname)} />, document.querySelector("#my-app"));
 });

@@ -13,7 +13,6 @@ module.exports = function(state) {
   var currentLang = langURL.lang || i18n.currentLanguage;
   var lang = i18n.isSupportedLanguage(currentLang) ? currentLang : i18n.defaultLang;
   var langInPath = i18n.urlOverrideLang(pathname).lang;
-
   /*
   * Handle all path in the param only
   * e.g. anything that's not in the /?redirect=pathname

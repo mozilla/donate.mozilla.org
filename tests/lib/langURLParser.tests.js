@@ -1,8 +1,6 @@
 var should = require('should');
 var langURLParser = require('../../scripts/langURLParser.js');
-// This is a mock Handler to get a return path from our actual library
-// to see where is the final result of the redirect.
-// We are expecting callback to be pass on the last parameter of Handler.replaceWith()
+
 describe('langURLParser.js', function () {
   it('should return true if given path /en-US/ in the paths list', function () {
     langURLParser({pathname: '/en-US/'}, function(returnPath) {

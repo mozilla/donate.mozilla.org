@@ -3,7 +3,7 @@ var currencies = require('../data/currencies.js');
 var amountModifier = {
   modify: function(amount, service, currencyCode) {
     if (!amount) {
-      return "";
+      return "0";
     }
     var amt = parseFloat(amount, 10);
     var currency = currencies[currencyCode];
@@ -15,7 +15,7 @@ var amountModifier = {
     if (service === "stripe") {
       return amt * 100 + "";
     }
-    return amount;
+    return amount + "";
   },
   stripe: function(amount, currencyCode) {
     return this.modify(amount, "stripe", currencyCode);

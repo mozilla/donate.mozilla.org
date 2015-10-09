@@ -1,3 +1,4 @@
+var should = require('should');
 var queryParser = require("../../scripts/queryParser.js");
 var currencies = require('../../data/currencies.js');
 var pathname = '/en-US/';
@@ -6,6 +7,11 @@ var defaultMonthlyPresets = currencies.usd.presets.monthly;
 var queryString;
 
 describe("queryParser.js", function() {
+  it("does not throw with empty object", function() {
+    should.doesNotThrow(function() {
+      queryParser({}, pathname);
+    });
+  });
   describe("/?presets", function() {
     beforeEach(function() {
       queryString = {};

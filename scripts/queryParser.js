@@ -6,30 +6,25 @@ function isNumber(item) {
 }
 
 module.exports = function(queryString, pathname) {
-  var presets = "";
-  var currencyCode = "usd";
+  queryString = queryString || {};
+  var presets = queryString.presets || "";
+  var currencyCode = queryString.currency || "usd";
   var amount = "";
   var frequency = "single";
-  var currency = currencies['usd'];
+  var currency = currencies[currencyCode] || currencies['usd'];
 
-  if (queryString) {
-    presets = queryString.presets || presets;
-    currencyCode = queryString.currency;
-    if(queryString.amount && !isNaN(queryString.amount)) {
-      amount = queryString.amount.trim();
-    }
-    if (queryString.frequency === "monthly") {
-      frequency = "monthly";
-    }
-    if(queryString.currency !== "usd" && currencies[currencyCode]) {
-      currency = currencies[currencyCode];
-    }
-    // We didn't get valid presets from the query string,
-    // so default to the currency and frequency preset.
-    presets = presets.split(",");
-    if (presets.length !== 4 || !presets.every(isNumber)) {
-      presets = currency.presets[frequency];
-    }
+  if(queryString.amount && !isNaN(queryString.amount)) {
+    amount = queryString.amount.trim();
+  }
+  if (queryString.frequency === "monthly") {
+    frequency = "monthly";
+  }
+
+  // We didn't get valid presets from the query string,
+  // so default to the currency and frequency preset.
+  presets = presets.split(",");
+  if (presets.length !== 4 || !presets.every(isNumber)) {
+    presets = currency.presets[frequency];
   }
 
   var localesData = i18n.intlDataFor(i18n.urlOverrideLang(pathname).lang);

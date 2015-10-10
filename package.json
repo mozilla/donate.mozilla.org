@@ -81,7 +81,7 @@
     "react": "^0.13.3",
     "react-ga": "^1.0.14",
     "react-intl": "^1.2.0",
-    "react-router": "^0.13.3",
+    "react-router": "^1.0.0-rc3",
     "react-test-context": "0.0.2",
     "request": "^2.60.0",
     "scooter": "^2.0.1",

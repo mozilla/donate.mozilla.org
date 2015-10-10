@@ -8,8 +8,12 @@ var simplePaypal = React.createClass({
   mixins: [IntlMixin],
   render: function() {
     return (
-      <div className="mozilla-eoy-donation">
-        <Header/>
+      <div className="row">
+        <Header>
+          <h1>
+            {this.getIntlMessage("donate_now")}
+          </h1>
+        </Header>
         <SimplePaypal
           presets={this.props.presets}
           currency={this.props.currency}

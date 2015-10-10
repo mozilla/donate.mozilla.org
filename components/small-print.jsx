@@ -13,7 +13,7 @@ var Footer = React.createClass({
     }
     return (
       <div className="row disclaimers">
-        <p className="other_ways_to_give">
+        <p className="other-ways-to-give">
           <small>
             <FormattedMessage message={this.getIntlMessage('other_way_to_give')}
             bitcoinLink={bitcoinLink}

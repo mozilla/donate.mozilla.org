@@ -1,0 +1,19 @@
+.credit-card-info {
+  input[name="cc_expir_month"] {
+    width: 45%;
+    padding-right: 10px;
+  }
+  input[name="cc_expir_year"] {
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 45%;
+  }
+  @media screen and (max-width: 380px) {
+    .fa.fa-calendar-o.field-icon {
+      display: none;
+    }
+    input[name="cc_expir_month"] {
+      padding-left: 10px;
+    }
+  }
+}

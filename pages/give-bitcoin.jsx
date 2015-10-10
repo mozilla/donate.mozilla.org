@@ -7,13 +7,12 @@ var giveBitcoin = React.createClass({
   mixins: [IntlMixin],
   render: function() {
     return (
-      <div className="coinbase-page mozilla-eoy-donation">
-        <Header/>
-        <div id="header-copy">
+      <div className="coinbase-page row">
+        <Header>
           <h2>{this.getIntlMessage('help_protect_the_web')}</h2>
-        </div>
+        </Header>
 
-        <div className="container" id="form-wrapper">
+        <div className="container">
           <div className="wrap">
             <div className="row">
               <a className="coinbase-button" href={process.env.COINBASE_ENDPOINT + "/checkouts/a9b87242f4430d841e140fdc90b81df2"}>

@@ -54,14 +54,14 @@ module.exports = React.createClass({
     this.updateHeight();
   },
   render: function() {
-    var creditCardDetailsClassName = "full cc-additional-info credit-card-section";
+    var creditCardDetailsClassName = "full credit-card-section";
     if (this.state.hideCreditCardDetails) {
       creditCardDetailsClassName += " hidden";
     }
     var amount = this.state.props.amount.values.amount;
     var currency = this.state.currency;
     return (
-      <div className="mozilla-eoy-donation">
+      <div className="row">
         <Header/>
         <div className="container">
 
@@ -82,7 +82,7 @@ module.exports = React.createClass({
               <SectionHeading>
                 <h2>
                   {this.getIntlMessage("donate_now")}
-                  <span className="currency-dropdown-container">
+                  <span className="right">
                     <CurrencyDropdown
                       currencies={this.props.currencies}
                       currency={currency.code}

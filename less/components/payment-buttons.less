@@ -1,0 +1,76 @@
+.payment-logos {
+  width: 116px;
+  height: 40px;
+  margin: 0 auto;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-image: url('/images/payment_logos_updated.png');
+}
+
+.credit-card-logos {
+  background-position: center -36px;
+}
+
+.paypal-logo {
+  background-position: center -104px;
+}
+
+label[for="payment-cc"]:hover .payment-logos {
+  background-position: center -3px;
+}
+
+label[for="payment-paypal"]:hover .payment-logos {
+  background-position: center -70px;
+}
+
+label[for="payment-paypal"],
+label[for="payment-cc"] {
+  height: 83px;
+}
+
+@media screen and (min-width: 480px) {
+  .payment-logos {
+    width: 196px;
+    height: 60px;
+  }
+
+  .credit-card-logos {
+    background-position: -16px -58px, center;
+  }
+
+  label[for="payment-cc"]:hover .payment-logos {
+    background-position: -16px 1px, center;
+  }
+
+  .paypal-logo {
+    background-position: -18px -182px, center;
+  }
+
+  label[for="payment-paypal"]:hover .payment-logos {
+    background-position: -18px -123px, center;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .payment-logos {
+    width: 165px;
+    height: 45px;
+  }
+
+  .credit-card-logos {
+    background-position: -16px -55px, center;
+  }
+
+  label[for="payment-cc"]:hover .payment-logos {
+    background-position: -16px -5px, center;
+  }
+
+  .paypal-logo {
+    background-position: -18px -160px, center;
+  }
+
+  label[for="payment-paypal"]:hover .payment-logos {
+    background-position: -18px -111px, center;
+  }
+}

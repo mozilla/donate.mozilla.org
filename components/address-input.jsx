@@ -371,7 +371,7 @@ var AddressInput = React.createClass({
       errorMessageClassName += " hidden";
     }
     return (
-      <div className="cc-additional-info address-section">
+      <div className="address-input">
         <div className="row">
           <div className="full">
             <div className="field-container">

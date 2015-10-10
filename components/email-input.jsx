@@ -76,7 +76,7 @@ var EmailInput = React.createClass({
       errorMessageClassName += " hidden";
     }
     return (
-      <div className="cc-additional-info" id="email-row">
+      <div className="email-input">
         <div className="row hint-msg-parent">
           <div className="full">
             <div className="field-container">

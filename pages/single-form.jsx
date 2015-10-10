@@ -14,13 +14,13 @@ var SingleForm = React.createClass({
   mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],
   render: function() {
     return (
-      <div className="mozilla-eoy-donation">
+      <div className="row">
         <Header/>
         <div className="container">
           <SectionHeading>
             <h2>
               {this.getIntlMessage("donate_now")}
-              <span className="currency-dropdown-container">
+              <span className="right">
                 <CurrencyDropdown
                   currencies={this.props.currencies}
                   currency={this.state.currency.code}

@@ -8,16 +8,13 @@ var ThankYou = React.createClass({
   render: function() {
     var language = this.props.locales[0];
     return (
-      <div className="mozilla-eoy-donation">
-        <Header/>
-        <div>
-          <div id="header-copy">
-            <h1>{this.getIntlMessage('tell_your_friends')}</h1>
-            <h4>{this.getIntlMessage('help_spread_the_word')}</h4>
-          </div>
-          <Social language={language}/>
-          <Footer/>
-        </div>
+      <div className="row">
+        <Header>
+          <h1>{this.getIntlMessage('tell_your_friends')}</h1>
+          <h4>{this.getIntlMessage('help_spread_the_word')}</h4>
+        </Header>
+        <Social language={language}/>
+        <Footer/>
       </div>
     );
   }

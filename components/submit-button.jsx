@@ -21,9 +21,9 @@ var DonateButton = React.createClass({
       errorMessageClassName += " hidden";
     }
     return (
-      <div className="row">
+      <div className="row submit-button">
         <div className="full">
-          <button onClick={this.onClick} type="submit" className="btn large-label-size" id="donate-btn">
+          <button onClick={this.onClick} type="submit" className="submit-btn large-label-size">
             {this.renderButton()}
           </button>
         </div>

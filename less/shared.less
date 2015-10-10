@@ -42,7 +42,6 @@ h3,
 h4,
 h5,
 h6,
-.btn,
 input[type="radio"] + label,
 input[type="checkbox"] + label {
   font-weight: 300;
@@ -98,10 +97,6 @@ br {
   line-height: 125%;
 }
 
-.payment-section {
-  padding-top: 30px;
-}
-
 button,
 input,
 optgroup,
@@ -130,26 +125,10 @@ input[type="submit"] {
   display: none;
 }
 
-.btn {
-  display: inline-block;
-  margin-bottom: 0;
-  font-weight: normal;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  background-image: none;
-  border: 1px solid transparent;
-  white-space: nowrap;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857;
-  border-radius: 0;
-  -moz-user-select: none;
-}
-
 .container {
   margin: 0 auto;
-  width: 420px;
+  max-width: 420px;
+  width: 100%;
   overflow-x: hidden;
   padding: 30px;
   background: #fff;
@@ -205,19 +184,6 @@ input[type="submit"] {
   text-align: right;
 }
 
-.other_ways_to_give {
-  max-width: 420px;
-  margin: 20px auto;
-  color: #999;
-  text-align: center;
-}
-
-.donation-notice {
-  max-width: 420px;
-  margin: 20px auto;
-  color: #999;
-}
-
 /* = Set placeholder text colour ========== */
 
 ::-webkit-input-placeholder {
@@ -254,51 +220,8 @@ input[type="submit"] {
   float: left;
 }
 
-.mozilla-wordmark {
-  margin: 20px auto;
-  width: 700px;
-}
-.footer {
-  margin: 0 auto;
-  width: 700px;
-}
-
-.mozilla-wordmark img {
-  max-width: 150px;
-}
-
-/* = Buttons ========== */
-
-.btn {
-  width: 100%;
-  margin-bottom: 15px;
-  border-radius: 3px;
-  background-color: #EAEFF2;
-}
-
-.btn:hover {
-  background: #0095DD;
-  color: #fff;
-}
-
-.mozilla-eoy-donation {
-  overflow: hidden;
-}
-
-#donate-btn {
-  color: #fff;
-  font-weight: 800;
-  background-color: #C13832; /* Mozilla Red */
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-top: 15px;
-  margin-bottom: 20px;
-  transition: all 0.3s ease 0s;
-}
-
-.btn#donate-btn:hover {
-  background-color: #EA3B28; /* Mozilla Red */
-  color: #fff;
+.right {
+  float: right;
 }
 
 /* = Form Fields ========== */
@@ -315,55 +238,20 @@ input[type="text"],
 input[type="number"],
 input[type="tel"],
 select,
-input[type="email"],
-#amount-other-input {
+input[type="email"] {
   width: 100%;
   margin-bottom: 5px;
   border: 1px solid #EAEFF2;
   border-radius: 3px;
-}
-
-.field-container input[name="cc_expir_month"] {
-  width: 45%;
-  padding-right: 10px;
-}
-.field-container input[name="cc_expir_year"] {
-  padding-left: 10px;
-  padding-right: 10px;
-  width: 45%;
-}
-
-@media screen and (max-width: 380px) {
-  .fa.fa-calendar-o.field-icon {
-    display: none;
-  }
-  .field-container input[name="cc_expir_month"] {
-    padding-left: 10px;
-  }
-}
-
-input[type="text"],
-input[type="number"],
-input[type="email"],
-input[type="tel"],
-#amount-other-input {
   padding: 7px 30px 7px 33px;
-  &:invalid {
-    box-shadow: none;
-  }
 }
 
 input[type="text"]:focus,
 select:focus,
 input[type="number"]:focus,
 input[type="email"]:focus,
-input[type="tel"]:focus,
-#amount-other-input:focus {
+input[type="tel"]:focus {
   border-color: #38A9ED;
-}
-
-.currency-dropdown-container {
-  float: right;
 }
 
 input[name="donation_amount"],
@@ -399,41 +287,6 @@ input[name="payment-type"]:checked + label {
   color: #fff;
 }
 
-label[for="payment-paypal"], label[for="payment-cc"] {
-  height: 83px;
-}
-
-#amount-other-container {
-  position: relative;
-}
-
-input#amount-other + label {
-  text-align: left;
-}
-
-.currency-symbol-container {
-  width: 40px;
-  text-align: center;
-  display: block;
-}
-
-.amount-other-wrapper {
-  position: absolute;
-  top: 2px;
-  left: 60px;
-  right: 6px;
-  height: 42px;
-}
-
-#amount-other-input {
-  line-height: 24px;
-  padding-left: 10px;
-  padding-right: 5px;
-  border: none;
-  width: 100%;
-  height: 100%;
-}
-
 input[type=number] {
   -moz-appearance: textfield;
   -webkit-appearance: none;
@@ -465,25 +318,6 @@ select * {
   padding-left: 29px;
 }
 
-select[name='country'].normal-text-color,
-select[name='country'] [value],
-select#wsstate_cd.normal-text-color,
-select#wsstate_cd [value] {
-  color: #333;
-}
-
-select[name='country'],
-select[name='country'] option[value=""],
-select#wsstate_cd,
-select#wsstate_cd option[value=""],
-select#wsstate_cd option[value="none"] {
-  color: #ccc;
-}
-
-.states-select {
-  display: none;
-}
-
 .field-container {
   display: inline-block;
   position: relative;
@@ -496,11 +330,6 @@ i.fa.field-icon {
   color: #4D4E53; /*Mozilla charcoal*/
   top: 12px;
   left: 12px;
-}
-
-input.less-indented {
-  padding-left: 15px;
-  padding-right: 7px;
 }
 
 i.fa.hint {
@@ -524,131 +353,12 @@ i.fa.hint {
   padding-top: 12px;
 }
 
-
 /* = Layout, sections, and other UI related stuff ========== */
 
-.big-section {
-  padding-top: 25px;
-}
-
-.big-section:first-of-type {
-  padding-top: 0;
-}
-
-.big-section:not(:first-of-type) {
-  margin-top: 25px;
-  background: url("/images/thin-stripe.png") repeat-x scroll center top transparent;
-}
-
-.donation-amount-row {
-  margin-bottom: 5px;
-}
-
-#recurring-option-row {
-  margin-top: 10px;
-}
-
-#payment-type-row .btn {
-  font-size: 18px;
-}
-
-#payment-type-row .btn.selected {
-  background: #0095DD;
-  color: #fff;
-}
-
-#payment-type-row img {
-  padding: 0;
-}
-
-@media screen and (min-width: 480px) {
-  #payment-type-row label {
-    height: 100px;
-  }
-}
-
-@media screen and (min-width: 600px) {
-  #payment-type-row label {
-    height: 85px;
-  }
-}
-
-.payment-logos {
-  width: 116px;
-  height: 40px;
-  margin: 0 auto;
-  background-size: 100% auto;
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-image: url('/images/payment_logos_updated.png');
-}
-
-.credit-card-logos {
-  background-position: center -36px;
-}
-
-.paypal-logo {
-  background-position: center -104px;
-}
-
-label[for="payment-cc"]:hover .payment-logos {
-  background-position: center -3px;
-}
-
-label[for="payment-paypal"]:hover .payment-logos {
-  background-position: center -70px;
-}
-
-@media screen and (min-width: 480px) {
-  .payment-logos {
-    width: 196px;
-    height: 60px;
-  }
-
-  .credit-card-logos {
-    background-position: -16px -58px, center;
-  }
-
-  label[for="payment-cc"]:hover .payment-logos {
-    background-position: -16px 1px, center;
-  }
-
-  .paypal-logo {
-    background-position: -18px -182px, center;
-  }
-
-  label[for="payment-paypal"]:hover .payment-logos {
-    background-position: -18px -123px, center;
-  }
-}
-
-@media screen and (min-width: 600px) {
-  .payment-logos {
-    width: 165px;
-    height: 45px;
-  }
-
-  .credit-card-logos {
-    background-position: -16px -55px, center;
-  }
-
-  label[for="payment-cc"]:hover .payment-logos {
-    background-position: -16px -5px, center;
-  }
-
-  .paypal-logo {
-    background-position: -18px -160px, center;
-  }
-
-  label[for="payment-paypal"]:hover .payment-logos {
-    background-position: -18px -111px, center;
-  }
-}
-
-#full-name-row,
-.address-section,
+.name-input,
+.address-input,
 .credit-card-section,
-#email-row {
+.email-input {
   margin-top: 15px;
 }
 
@@ -662,47 +372,9 @@ label[for="payment-paypal"]:hover .payment-logos {
   color: #939597;
   text-transform: uppercase;
   letter-spacing: 0.1px;
-}
-
-#secure-label i.fa {
-  margin-right: 6px;
-}
-
-#privacy-policy {
-  margin-top: 10px;
-}
-
-#privacy-policy input[type="checkbox"] + label {
-  margin-left: 10px;
-  display: inline;
-}
-
-footer {
-  margin-top: 40px;
-  background: #fff;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  color: #666;
-  font-size: 12px;
-}
-
-footer .half {
-  width: 40%;
-  margin-right: 30px;
-}
-
-footer img {
-  max-width: 120px;
-}
-
-footer ul {
-  padding-left: 0;
-  list-style: none;
-}
-
-/* Temp Fix */
-form#contribution input {
-  max-width: 30px;
+  i.fa {
+    margin-right: 6px;
+  }
 }
 
 /* Parsley.js / Validation Styling */
@@ -710,13 +382,6 @@ form#contribution input {
 #one-line-error {
   font-size: 12px;
   margin: 0;
-}
-
-form#signup {
-  font-size: 16px;
-  .input {
-    margin-bottom: 35px;
-  }
 }
 
 #amount-error-msg .parsley-errors-list,
@@ -752,13 +417,6 @@ select.parsley-error:focus {
   border-bottom: #C13832 solid 1px;
 }
 
-@media screen and (max-width: 600px) {
-  .container,
-  .mozilla-wordmark {
-    width: 100%;
-  }
-}
-
 @media screen and (max-width: 480px) {
   .container {
     padding: 10px;
@@ -767,43 +425,6 @@ select.parsley-error:focus {
   input#amount-other + label + #amount-other-input {
     width: 76%;
   }
-}
-
-#signuptable {
-  max-width: 100%;
-}
-
-#header-copy {
-  text-align: center;
-}
-
-#signup label.field {
-  font-weight: 300;
-}
-
-#signup input[type="submit"] {
-  margin: 10px auto 3px;
-  text-align: center;
-  background: #C13832;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  border: 0 transparent solid;
-  color: #ffffff;
-  display: block;
-  padding: 11px 20px;
-  font-weight: 400;
-  font-size: 20px;
-  border-radius: 2px;
-  box-shadow: 3px 3px 16px #eee;
-}
-
-.currency-display {
-  display: inline-block;
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
-  font-size: 14px;
-  font-weight: 800;
-  color: #939597;
 }
 
 #donation-form {
@@ -826,8 +447,4 @@ select.parsley-error:focus {
 
 #donation-form h2 {
   margin-bottom: 35px;
-}
-
-.hidden-visibility {
-  visibility: hidden;
 }

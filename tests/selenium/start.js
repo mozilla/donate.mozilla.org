@@ -36,7 +36,7 @@ server.start(function() {
   driver.findElement(By.name('email')).clear();
   driver.findElement(By.name('email')).sendKeys('test@email.com');
   driver.findElement(By.id('legalConfirm')).click();
-  driver.findElement(By.id('donate-btn')).click();
+  driver.findElement(By.css('.submit-btn')).click();
   driver.wait(function() {
     return driver.getCurrentUrl().then(function (url) {
       return url.indexOf('http://localhost:3000/de/thank-you/') === 0;

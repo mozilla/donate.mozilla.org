@@ -3,8 +3,13 @@
         "indent": [1, 2],
         "no-extra-boolean-cast": [1],
         "no-empty": [1],
+        "space-after-keywords": [2],
+        "space-before-keywords": [2, "always"],
+        "space-before-blocks": [2],
+        "space-before-function-paren": [2, "always"],
         "no-console": [0],
         "comma-dangle": [1],
+        "eol-last": [2],
         "no-unused-vars": [1, {"vars": "all", "args": "none"}],
         "linebreak-style": [2, "unix"],
         "semi": [1, "always"]

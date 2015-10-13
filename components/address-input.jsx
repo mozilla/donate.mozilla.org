@@ -3,13 +3,13 @@ import IntlMixin from 'react-intl';
 
 var ProvinceSelect = React.createClass({
   mixins: [IntlMixin],
-  validate: function() {
+  validate: function () {
     if (this.props.province || !this.refs.provinceSelect) {
       return true;
     }
     return false;
   },
-  render: function() {
+  render: function () {
     var provinceClassName = this.props.className;
     if (this.props.province) {
       provinceClassName += " normal-text-color";
@@ -300,7 +300,7 @@ var AddressInput = React.createClass({
     error: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired
   },
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       values: {
         country: "US",
@@ -316,22 +316,22 @@ var AddressInput = React.createClass({
       codeValid: true
     };
   },
-  onCountryChange: function(e) {
+  onCountryChange: function (e) {
     this.onInput("country", e.currentTarget.value);
   },
-  onProvinceChange: function(e) {
+  onProvinceChange: function (e) {
     this.onInput("province", e.currentTarget.value);
   },
-  onAddressChange: function(e) {
+  onAddressChange: function (e) {
     this.onInput("address", e.currentTarget.value);
   },
-  onCityChange: function(e) {
+  onCityChange: function (e) {
     this.onInput("city", e.currentTarget.value);
   },
-  onCodeChange: function(e) {
+  onCodeChange: function (e) {
     this.onInput("code", e.currentTarget.value);
   },
-  validate: function() {
+  validate: function () {
     var valid = this.validateFields(["country", "address", "city", "code"]);
     if (!this.refs.provinceSelect.validate()) {
       valid = false;
@@ -341,7 +341,7 @@ var AddressInput = React.createClass({
     }
     return valid;
   },
-  render: function() {
+  render: function () {
     var countryClassName = "";
     if (this.state.values.country) {
       countryClassName = "normal-text-color";

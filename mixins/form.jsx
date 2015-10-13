@@ -4,7 +4,7 @@ import {Navigation} from 'react-router';
 
 module.exports = {
   mixins: [Navigation],
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       paymentType: "",
       submitting: false,
@@ -41,19 +41,19 @@ module.exports = {
       }
     };
   },
-  updateHeight: function() {
+  updateHeight: function () {
     if (this.state.activePage !== 0 && !this.state.activePage) {
       return;
     }
     var self = this;
-    window.setTimeout(function() {
+    window.setTimeout(function () {
       var activePage = document.querySelector(".page-active");
       self.setState({
         height: activePage.offsetHeight + "px"
       });
     });
   },
-  onChange: function(name, value, field) {
+  onChange: function (name, value, field) {
     var newState = {};
     newState.errors = this.state.errors;
     newState[name] = value;
@@ -63,7 +63,7 @@ module.exports = {
     this.setState(newState);
     this.updateHeight();
   },
-  updateFormField: function(name, value, values) {
+  updateFormField: function (name, value, values) {
     this.onChange(name, value);
     if (!values) {
       return;
@@ -74,7 +74,7 @@ module.exports = {
       props: newProps
     });
   },
-  onFrequencyChange: function(name, value, values) {
+  onFrequencyChange: function (name, value, values) {
     if (values && this.state.props.frequency.values.frequency !== values.frequency) {
       this.setState({
         presets: this.state.currency.presets[values.frequency]
@@ -82,7 +82,7 @@ module.exports = {
     }
     this.updateFormField(name, value, values);
   },
-  onCurrencyChanged: function(e) {
+  onCurrencyChanged: function (e) {
     var value = e.currentTarget.value;
     var currencies = this.props.currencies;
     var currency = currencies[value] || this.state.currency;
@@ -95,20 +95,20 @@ module.exports = {
       props: newProps
     });
   },
-  onPageError: function(errors, index) {
+  onPageError: function (errors, index) {
     var stateErrors = this.state.errors;
-    errors.forEach(function(error) {
+    errors.forEach(function (error) {
       error.page = index;
     });
     this.setState({
       errors: stateErrors
     });
   },
-  validateProps: function(props) {
+  validateProps: function (props) {
     var self = this;
     var valid = true;
     props = props || [];
-    props.forEach(function(name) {
+    props.forEach(function (name) {
       if (!self.state[name].validate()) {
         valid = false;
       }
@@ -116,13 +116,13 @@ module.exports = {
     this.updateHeight();
     return valid;
   },
-  nextPage: function(validate) {
+  nextPage: function (validate) {
     var valid = this.validateProps(validate);
     if (valid) {
       this.toThisPage(this.state.activePage+1);
     }
   },
-  toThisPage: function(index) {
+  toThisPage: function (index) {
     this.setState({
       activePage: index
     });
@@ -135,7 +135,7 @@ module.exports = {
     reactGA.pageview(currentPage);
     this.updateHeight();
   },
-  submit: function(action, props, success, error) {
+  submit: function (action, props, success, error) {
     props.locale = this.props.locales[0];
     var currency = this.state.currency;
     if (currency) {
@@ -149,7 +149,7 @@ module.exports = {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(props)
-    }).then(function(response) {
+    }).then(function (response) {
       var responseContent;
       var callback = success;
       if (!response.headers.get("content-type")) {
@@ -160,14 +160,14 @@ module.exports = {
       if (!response.ok) {
         callback = error;
       }
-      responseContent.then(function(result) {
+      responseContent.then(function (result) {
         if (callback) {
           callback(result);
         }
       });
     });
   },
-  stripeSuccess: function(data) {
+  stripeSuccess: function (data) {
     var transactionId = data.id;
     var amount;
     var currency;
@@ -189,7 +189,7 @@ module.exports = {
 
     this.transitionTo('/' + this.props.locales[0] + '/thank-you/?' + params);
   },
-  stripeError: function(errorCode, errorType) {
+  stripeError: function (errorCode, errorType) {
     var newState = {};
     var cardErrorCodes = {
       "invalid_number": {
@@ -256,7 +256,7 @@ module.exports = {
     this.setState(newState);
     this.updateHeight();
   },
-  stripe: function(validate, props) {
+  stripe: function (validate, props) {
     var submit = this.submit;
     var success = this.stripeSuccess;
     var error = this.stripeError;
@@ -275,19 +275,19 @@ module.exports = {
       cvc: submitProps.cvc,
       exp_month: submitProps.expMonth,
       exp_year: submitProps.expYear
-    }, function(status, response) {
+    }, function (status, response) {
       if (response.error) {
         error(response.error.code, response.error.type);
       } else {
         submitProps.cardNumber = "";
         submitProps.stripeToken = response.id;
-        submit("/api/stripe", submitProps, success, function(response) {
+        submit("/api/stripe", submitProps, success, function (response) {
           error(response.stripe.code, response.stripe.rawType);
         });
       }
     });
   },
-  stripeCheckout: function(validate, props) {
+  stripeCheckout: function (validate, props) {
     var submit = this.submit;
     var success = this.stripeSuccess;
     var valid = this.validateProps(validate);
@@ -300,7 +300,7 @@ module.exports = {
       // Need to get this from .env
       key: process.env.STRIPE_PUBLIC_KEY,
       image: '',
-      token: function(response) {
+      token: function (response) {
         // Where is this things error? Maybe it's not called at all for an error case.
         submitProps.cardNumber = "";
         submitProps.stripeToken = response.id;
@@ -316,10 +316,10 @@ module.exports = {
       amount: submitProps.amount * 100
     });
   },
-  buildProps: function(fields) {
+  buildProps: function (fields) {
     var self = this;
     var props = {};
-    fields.forEach(function(name) {
+    fields.forEach(function (name) {
       var state = self.state[name].state;
       var prop;
       // Currently some fields expose their values on the form, and not themselves.
@@ -335,18 +335,18 @@ module.exports = {
     });
     return props;
   },
-  paypal: function(validate, props) {
-    this.onSubmit("/api/paypal", validate, props, function(json) {
+  paypal: function (validate, props) {
+    this.onSubmit("/api/paypal", validate, props, function (json) {
       window.location = json.endpoint + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + json.token;
     });
   },
-  signupSuccess: function(result) {
+  signupSuccess: function (result) {
     this.setState({
       submitting: false
     });
     this.transitionTo('/' + this.props.locales[0] + '/share');
   },
-  signupError: function(result) {
+  signupError: function (result) {
     this.setState({
       submitting: false
     });
@@ -358,10 +358,10 @@ module.exports = {
       }
     });
   },
-  signup: function(validate, props) {
+  signup: function (validate, props) {
     this.onSubmit("/api/signup", validate, props, this.signupSuccess, this.signupError);
   },
-  onSubmit: function(action, validate, props, success, error) {
+  onSubmit: function (action, validate, props, success, error) {
     var valid = this.validateProps(validate);
     var submitProps = {};
     if (valid) {

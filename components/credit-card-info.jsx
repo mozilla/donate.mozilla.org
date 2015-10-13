@@ -10,7 +10,7 @@ var CreditCardInfo = React.createClass({
     error: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired
   },
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       showHint: false,
       values: {
@@ -25,13 +25,13 @@ var CreditCardInfo = React.createClass({
       cvcValid: !this.props.error.cvc
     };
   },
-  hintClicked: function() {
+  hintClicked: function () {
     this.setState({
       showHint: !this.state.showHint
     });
     this.onChange();
   },
-  checkCardNumber: function(cardNumber) {
+  checkCardNumber: function (cardNumber) {
     if (this.props.error.cardNumber) {
       return false;
     }
@@ -43,9 +43,9 @@ var CreditCardInfo = React.createClass({
     }
     return false;
   },
-  validate: function() {
+  validate: function () {
     var valid = true;
-    if(!/^[0-9]{3,4}$/.test(this.state.values.cvc)) {
+    if (!/^[0-9]{3,4}$/.test(this.state.values.cvc)) {
       valid = false;
       this.setState({
         cvcValid: false
@@ -74,10 +74,10 @@ var CreditCardInfo = React.createClass({
     }
     return valid;
   },
-  focus: function() {
+  focus: function () {
     document.querySelector("#card-number-input").focus();
   },
-  onCardInput: function(e) {
+  onCardInput: function (e) {
     var value = e.currentTarget.value;
     var state = this.state;
     if (/^(\d| )*$/.test(value) && value.replace(/ /g, "").length <= 16) {
@@ -89,25 +89,25 @@ var CreditCardInfo = React.createClass({
       this.onChange("cardNumber");
     }
   },
-  onExpMonthInput: function(e) {
+  onExpMonthInput: function (e) {
     var value = e.currentTarget.value;
     if (/^(\d)*$/.test(value)) {
       this.onInput("expMonth", value);
     }
   },
-  onExpYearInput: function(e) {
+  onExpYearInput: function (e) {
     var value = e.currentTarget.value;
     if (/^(\d)*$/.test(value)) {
       this.onInput("expYear", value);
     }
   },
-  onCvcInput: function(e) {
+  onCvcInput: function (e) {
     var value = e.currentTarget.value;
     if (/^(\d)*$/.test(value)) {
       this.onInput("cvc", value);
     }
   },
-  render: function() {
+  render: function () {
     var hintClassIconName = "fa fa-question-circle hint";
     var hintClassName = "hint-msg small";
     if (this.state.showHint) {

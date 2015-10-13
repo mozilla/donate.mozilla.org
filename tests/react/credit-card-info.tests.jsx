@@ -17,9 +17,9 @@ var stubContext = require('react-test-context');
 var CrediCardInfo = require('../../components/credit-card-info.jsx');
 
 
-function SetupCCInfoComponent(testCase) {
+function SetupCCInfoComponent (testCase) {
   var CrediCardInfoInputs = stubContext(CrediCardInfo, IntlContext);
-  var el = TestUtils.renderIntoDocument(React.createElement(stubContext(CrediCardInfoInputs, IntlContext),{error:{}, onChange: function(){}}));
+  var el = TestUtils.renderIntoDocument(React.createElement(stubContext(CrediCardInfoInputs, IntlContext),{error:{}, onChange: function () {}}));
   var CCNumInput = el.getDOMNode().querySelector('input[name="cc_number"]');
   CCNumInput.value = testCase.ccNum;
   TestUtils.Simulate.change(CCNumInput);
@@ -44,18 +44,18 @@ describe('credit-card-info.jsx', function () {
   });
   it('should throw when passing wrong prop types', function () {
     should.throws(() => {
-      TestUtils.renderIntoDocument(React.createElement(stubContext(CrediCardInfo, IntlContext),{error:'error', onChange: function(){}}));
+      TestUtils.renderIntoDocument(React.createElement(stubContext(CrediCardInfo, IntlContext),{error:'error', onChange: function () {}}));
     });
   });
   it('should not throw when passing all props', function () {
     should.doesNotThrow(() => {
-      TestUtils.renderIntoDocument(React.createElement(stubContext(CrediCardInfo, IntlContext),{error:{}, onChange: function(){}}));
+      TestUtils.renderIntoDocument(React.createElement(stubContext(CrediCardInfo, IntlContext),{error:{}, onChange: function () {}}));
     });
   });
   it('.validate() should return false when all fields are empty', function () {
     should.doesNotThrow(() => {
       var CrediCardInfoInputs = stubContext(CrediCardInfo, IntlContext);
-      var el = TestUtils.renderIntoDocument(React.createElement(stubContext(CrediCardInfoInputs, IntlContext),{error:{}, onChange: function(){}}));
+      var el = TestUtils.renderIntoDocument(React.createElement(stubContext(CrediCardInfoInputs, IntlContext),{error:{}, onChange: function () {}}));
       should(el.refs.baseElement.refs.baseElement.validate()).equal(false);
     });
   });

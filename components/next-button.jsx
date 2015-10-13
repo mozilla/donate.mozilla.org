@@ -3,10 +3,10 @@ import { IntlMixin } from 'react-intl';
 
 var NextButton = React.createClass({
   mixins: [IntlMixin],
-  onClick: function() {
+  onClick: function () {
     this.props.onClick(this.props.validate);
   },
-  render: function() {
+  render: function () {
     return (
       <button onClick={this.onClick} className="next-button">
         {this.getIntlMessage('next')}

@@ -22,20 +22,20 @@ describe('name-input.jsx', function () {
   it('should not throw when passing all props', function () {
     should.doesNotThrow(() => {
       var NameInput = stubContext(Name, IntlContext);
-      TestUtils.renderIntoDocument(<NameInput name='name-input' onChange={function(){}} />);
+      TestUtils.renderIntoDocument(<NameInput name='name-input' onChange={function () {}} />);
     });
   });
   it('.validate() should return false when first name and last name field are empty', function () {
     should.doesNotThrow(() => {
       var NameInput = stubContext(Name, IntlContext);
-      var el = TestUtils.renderIntoDocument(<NameInput name='name-input' onChange={function(){}} />);
+      var el = TestUtils.renderIntoDocument(<NameInput name='name-input' onChange={function () {}} />);
       should(el.refs.baseElement.validate()).equal(false);
     });
   });
   it('.validate() should return false when only first name field is filled', function () {
     should.doesNotThrow(() => {
       var NameInput = stubContext(Name, IntlContext);
-      var el = TestUtils.renderIntoDocument(<NameInput name='name-input' onChange={function(){}} />);
+      var el = TestUtils.renderIntoDocument(<NameInput name='name-input' onChange={function () {}} />);
       var firstName = React.findDOMNode(el.refs.baseElement.refs.firstName);
       firstName.value = 'Ali';
       TestUtils.Simulate.change(firstName);
@@ -45,7 +45,7 @@ describe('name-input.jsx', function () {
   it('.validate() should return true when first and last name fields are filled', function () {
     should.doesNotThrow(() => {
       var NameInput = stubContext(Name, IntlContext);
-      var el = TestUtils.renderIntoDocument(<NameInput name='name-input' onChange={function(){}} />);
+      var el = TestUtils.renderIntoDocument(<NameInput name='name-input' onChange={function () {}} />);
       var firstName = React.findDOMNode(el.refs.baseElement.refs.firstName);
       firstName.value = 'Ali';
       TestUtils.Simulate.change(firstName);
@@ -58,7 +58,7 @@ describe('name-input.jsx', function () {
   it('should error when only whitespace given in the field', function () {
     should.doesNotThrow(() => {
       var NameInput = stubContext(Name, IntlContext);
-      var el = TestUtils.renderIntoDocument(<NameInput name='name-input' onChange={function(){}} />);
+      var el = TestUtils.renderIntoDocument(<NameInput name='name-input' onChange={function () {}} />);
       var firstName = React.findDOMNode(el.refs.baseElement.refs.firstName);
       firstName.value = '    ';
       TestUtils.Simulate.change(firstName);
@@ -68,7 +68,7 @@ describe('name-input.jsx', function () {
   it('should have error class when first name is empty', function () {
     should.doesNotThrow(() => {
       var NameInput = stubContext(Name, IntlContext);
-      var el = TestUtils.renderIntoDocument(<NameInput name='name-input' onChange={function(){}} />);
+      var el = TestUtils.renderIntoDocument(<NameInput name='name-input' onChange={function () {}} />);
       var firstName = React.findDOMNode(el.refs.baseElement.refs.firstName);
       firstName.value = '';
       TestUtils.Simulate.change(firstName);

@@ -6,7 +6,7 @@ var NameInput = React.createClass({
     onChange: React.PropTypes.func.isRequired,
     name: React.PropTypes.string.isRequired
   },
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       values: {
         first: "",
@@ -16,7 +16,7 @@ var NameInput = React.createClass({
       lastValid: true
     };
   },
-  validate: function() {
+  validate: function () {
     var valid = true;
     if (!this.state.values.first || !this.state.values.first.trim()) {
       valid = false;
@@ -32,7 +32,7 @@ var NameInput = React.createClass({
     }
     return valid;
   },
-  onFirstChange: function(e) {
+  onFirstChange: function (e) {
     this.setState({
       values: {
         first: e.currentTarget.value,
@@ -44,7 +44,7 @@ var NameInput = React.createClass({
     });
     this.props.onChange(this.props.name, this);
   },
-  onLastChange: function(e) {
+  onLastChange: function (e) {
     this.setState({
       values: {
         first: this.state.values.first,
@@ -56,10 +56,10 @@ var NameInput = React.createClass({
     });
     this.props.onChange(this.props.name, this);
   },
-  componentDidMount: function() {
+  componentDidMount: function () {
     this.props.onChange(this.props.name, this);
   },
-  render: function() {
+  render: function () {
     var firstClassName = "";
     if (!this.state.firstValid) {
       firstClassName += "parsley-error";

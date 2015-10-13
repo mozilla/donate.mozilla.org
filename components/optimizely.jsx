@@ -5,7 +5,7 @@ var optimizelyID = process.env.OPTIMIZELY_ID || '206878104';
 var optimizelyURL = 'https://cdn.optimizely.com/js/' + optimizelyID + '.js';
 
 var Optimizely = React.createClass({
-  render: function() {
+  render: function () {
     if (optimizelyActive === 'yes') {
       return (
         <script src={optimizelyURL}></script>

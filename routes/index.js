@@ -5,7 +5,7 @@ var boom = require('boom');
 var amountModifier = require('../scripts/amount-modifier');
 
 var routes = {
-  'signup': function(request, reply) {
+  'signup': function (request, reply) {
     var url = process.env.SIGNUP;
     var transaction = request.payload || {};
     httpRequest.post({
@@ -19,7 +19,7 @@ var routes = {
         source_url: 'https://donate.mozilla.org/',
         email: transaction.email
       }
-    }, function(err, response, body) {
+    }, function (err, response, body) {
       if (err) {
         reply(boom.wrap(err, 500, 'Unable to complete Basket signup'));
       } else if (body.status === "error") {
@@ -29,7 +29,7 @@ var routes = {
       }
     });
   },
-  'stripe': function(request, reply) {
+  'stripe': function (request, reply) {
     var transaction = request.payload || {};
     var currency = transaction.currency;
     var amount = amountModifier.stripe(transaction.amount, currency);
@@ -38,7 +38,7 @@ var routes = {
         amount: amount,
         currency: currency,
         stripeToken: transaction.stripeToken
-      }, function(err, charge) {
+      }, function (err, charge) {
         if (err) {
           var badRequest = boom.badRequest('Stripe charge failed');
           badRequest.output.payload.stripe = {
@@ -74,7 +74,7 @@ var routes = {
           state: transaction.province,
           locale: transaction.locale
         }
-      }, function(err, subscription) {
+      }, function (err, subscription) {
         if (err) {
           reply(boom.create(400, 'Stripe subscription failed', {
             code: err.code,
@@ -91,7 +91,7 @@ var routes = {
       });
     }
   },
-  'paypal': function(request, reply) {
+  'paypal': function (request, reply) {
     var transaction = request.payload || {};
     var frequency = transaction.frequency || "";
     var currency = transaction.currency;
@@ -104,7 +104,7 @@ var routes = {
       cancelUrl: request.server.info.uri + '/',
       returnUrl: request.server.info.uri + '/api/paypal-redirect/' + frequency + '/' + transaction.locale + '/'
     };
-    function callback(err, data) {
+    function callback (err, data) {
       if (err) {
         reply(boom.wrap(err, 500, 'Paypal donation failed'));
       } else {
@@ -120,7 +120,7 @@ var routes = {
       paypal.setupRecurring(details, callback);
     }
   },
-  'paypal-redirect': function(request, reply) {
+  'paypal-redirect': function (request, reply) {
     var locale = request.params.locale || '';
     if (locale) {
       locale = '/' + locale;
@@ -129,7 +129,7 @@ var routes = {
     if (frequency !== 'monthly') {
       paypal.doSingle({
         token: request.url.query.token
-      }, function(err, charge) {
+      }, function (err, charge) {
         if (err) {
           return console.error('donation failed:', err);
         }
@@ -138,7 +138,7 @@ var routes = {
     } else {
       paypal.doRecurring({
         token: request.url.query.token
-      }, function(err, subscription) {
+      }, function (err, subscription) {
         if (err) {
           return console.error('donation failed:', err);
         }

@@ -2,13 +2,13 @@ import React from 'react';
 
 module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin],
-  componentDidMount: function() {
+  componentDidMount: function () {
     this.updateFrequency(this.props.value);
   },
-  onChange: function(e) {
+  onChange: function (e) {
     this.updateFrequency(e.currentTarget.value);
   },
-  updateFrequency: function(frequency) {
+  updateFrequency: function (frequency) {
     var description = this.getIntlMessage("mozilla_donation");
     if (frequency === "monthly") {
       description = this.getIntlMessage("mozilla_monthly_donation");
@@ -18,10 +18,10 @@ module.exports = React.createClass({
       description: description
     });
   },
-  validate: function() {
+  validate: function () {
     return true;
   },
-  render: function() {
+  render: function () {
     var frequency = this.props.value;
     return (
       <div>

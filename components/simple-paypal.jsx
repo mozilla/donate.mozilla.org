@@ -10,7 +10,7 @@ import amountModifier from '../scripts/amount-modifier.js';
 
 var simplePaypal = React.createClass({
   mixins: [IntlMixin, require('../mixins/form.jsx')],
-  simplePaypal: function(validate, props) {
+  simplePaypal: function (validate, props) {
     var valid = this.validateProps(validate);
     var submitProps = {};
     if (valid) {
@@ -25,7 +25,7 @@ var simplePaypal = React.createClass({
       }
     }
   },
-  render: function() {
+  render: function () {
     var currencyCode = this.state.currency.code;
     var amount = this.state.props.amount.values.amount;
     return (

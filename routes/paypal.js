@@ -2,7 +2,7 @@ var httpRequest = require('request');
 var querystring = require('querystring');
 var paypalLocales = require('../intl-config.json').paypalLocales;
 
-function setupPaypal(transaction, recurring, callback) {
+function setupPaypal (transaction, recurring, callback) {
   var charge = {
     USER: process.env.PAYPAL_USER,
     PWD: process.env.PAYPAL_PWD,
@@ -28,7 +28,7 @@ function setupPaypal(transaction, recurring, callback) {
     url: process.env.PAYPAL_API_ENDPOINT,
     method: 'POST',
     form: charge
-  }, function(err, httpResponse, body) {
+  }, function (err, httpResponse, body) {
     if (err) {
       callback(err);
     } else {
@@ -38,7 +38,7 @@ function setupPaypal(transaction, recurring, callback) {
   });
 }
 
-function doPaypal(transaction, recurring, callback) {
+function doPaypal (transaction, recurring, callback) {
   httpRequest({
     url: process.env.PAYPAL_API_ENDPOINT,
     method: 'POST',
@@ -50,7 +50,7 @@ function doPaypal(transaction, recurring, callback) {
       VERSION: '106.0',
       TOKEN: transaction.token
     }
-  }, function(err, httpResponse, body) {
+  }, function (err, httpResponse, body) {
     if (err) {
       return callback(err);
     }
@@ -80,7 +80,7 @@ function doPaypal(transaction, recurring, callback) {
       url: process.env.PAYPAL_API_ENDPOINT,
       method: 'POST',
       form: details
-    }, function(err, httpResponse, body) {
+    }, function (err, httpResponse, body) {
       if (err) {
         return callback(err);
       }
@@ -98,16 +98,16 @@ function doPaypal(transaction, recurring, callback) {
 }
 
 module.exports = {
-  setupSingle: function(transaction, callback) {
+  setupSingle: function (transaction, callback) {
     setupPaypal(transaction, false, callback);
   },
-  setupRecurring: function(transaction, callback) {
+  setupRecurring: function (transaction, callback) {
     setupPaypal(transaction, true, callback);
   },
-  doSingle: function(transaction, callback) {
+  doSingle: function (transaction, callback) {
     doPaypal(transaction, false, callback);
   },
-  doRecurring: function(transaction, callback) {
+  doRecurring: function (transaction, callback) {
     doPaypal(transaction, true, callback);
   }
 };

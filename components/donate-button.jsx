@@ -3,7 +3,7 @@ import {FormattedMessage, IntlMixin, FormattedNumber} from 'react-intl';
 
 module.exports = React.createClass({
   mixins: [IntlMixin],
-  render: function() {
+  render: function () {
     if (this.props.amount) {
       return (
         <FormattedMessage

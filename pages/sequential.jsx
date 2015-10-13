@@ -27,14 +27,14 @@ import IntlMixin from 'react-intl';
 
 module.exports = React.createClass({
   mixins: [IntlMixin, require('../mixins/form.jsx')],
-  getInitialState() {
+  getInitialState () {
     return {
       activePage: 0,
       hideCreditCardDetails: true,
       height: "252px"
     };
   },
-  expandCreditCardInfo: function() {
+  expandCreditCardInfo: function () {
     this.setState({
       hideCreditCardDetails: false
     });
@@ -44,7 +44,7 @@ module.exports = React.createClass({
     window.setTimeout(this.refs.creditCardInfoField.focus, 500);
     this.updateHeight();
   },
-  collapseCreditCardInfo: function() {
+  collapseCreditCardInfo: function () {
     this.setState({
       hideCreditCardDetails: true
     });
@@ -53,7 +53,7 @@ module.exports = React.createClass({
     });
     this.updateHeight();
   },
-  render: function() {
+  render: function () {
     var creditCardDetailsClassName = "full credit-card-section";
     if (this.state.hideCreditCardDetails) {
       creditCardDetailsClassName += " hidden";

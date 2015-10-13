@@ -12,6 +12,6 @@ if (env.get('NPM_CONFIG_PRODUCTION')) {
 
 var npm = spawn('npm', ['run', buildCommand], { stdio: 'inherit' });
 
-npm.on('close', function(code) {
+npm.on('close', function (code) {
   process.exit(code);
 });

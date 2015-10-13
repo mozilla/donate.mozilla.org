@@ -4,7 +4,7 @@ import OptimizelySubdomain from '../components/optimizelysubdomain.jsx';
 import Pontoon from '../components/pontoon.jsx';
 
 var Index = React.createClass({
-  render: function() {
+  render: function () {
     var metaData = this.props.metaData;
     var googleFonts = "https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic";
     if (this.props.localeInfo === "cs") {

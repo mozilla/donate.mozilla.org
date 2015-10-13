@@ -3,10 +3,10 @@ import {IntlMixin} from 'react-intl';
 
 var DonateButton = React.createClass({
   mixins: [IntlMixin],
-  onClick: function() {
+  onClick: function () {
     this.props.onSubmit(this.props.validate, this.props.submit);
   },
-  renderButton: function() {
+  renderButton: function () {
     if (this.props.submitting) {
       return (
         <span><i className="fa fa-cog fa-spin"/>{this.getIntlMessage('submitting')}</span>
@@ -14,7 +14,7 @@ var DonateButton = React.createClass({
     }
     return this.props.children;
   },
-  render: function() {
+  render: function () {
     var errorMessageClassName = "row error-msg-row";
     var errorMessage = this.props.error.message;
     if (errorMessage === "") {

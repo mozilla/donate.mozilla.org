@@ -1,5 +1,5 @@
 var server = require('../../server');
-server.start(function() {
+server.start(function () {
   var webdriver = require('selenium-webdriver'),
     By = require('selenium-webdriver').By;
 
@@ -37,12 +37,12 @@ server.start(function() {
   driver.findElement(By.name('email')).sendKeys('test@email.com');
   driver.findElement(By.id('legalConfirm')).click();
   driver.findElement(By.css('.submit-btn')).click();
-  driver.wait(function() {
+  driver.wait(function () {
     return driver.getCurrentUrl().then(function (url) {
       return url.indexOf('http://localhost:3000/de/thank-you/') === 0;
     });
-  }, 5000).then(function() {
-    server.stop(function() {
+  }, 5000).then(function () {
+    server.stop(function () {
       driver.quit();
     });
   });

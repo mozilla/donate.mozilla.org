@@ -3,7 +3,7 @@ import Router from 'react-router';
 var Link = Router.Link;
 
 var Linker = React.createClass({
-  render: function() {
+  render: function () {
     // Swap out Link or a simple anchor depending on the props we have.
     if (this.props.to) {
       return (

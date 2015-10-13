@@ -5,7 +5,7 @@ import Social from '../components/social.jsx';
 
 var ThankYou = React.createClass({
   mixins: [require('react-intl').IntlMixin],
-  render: function() {
+  render: function () {
     var language = this.props.locales[0];
     return (
       <div className="row">

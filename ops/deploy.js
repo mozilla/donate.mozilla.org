@@ -16,7 +16,7 @@ var local_template = fs.readFileSync(path.join(__dirname, '/cloudformation.json'
 if (command === 'get') {
   CF.describeStacks({
     StackName: stack_name
-  }, function(describe_error, data) {
+  }, function (describe_error, data) {
     if (describe_error) {
       throw describe_error;
     }
@@ -30,7 +30,7 @@ if (command === 'get') {
 } else if (command === 'set') {
   CF.describeStacks({
     StackName: stack_name
-  }, function(describe_error, data) {
+  }, function (describe_error, data) {
     if (describe_error) {
       throw describe_error;
     }
@@ -42,7 +42,7 @@ if (command === 'get') {
 
     CF.getTemplate({
       StackName: stack_name
-    }, function(template_error, data) {
+    }, function (template_error, data) {
       if (template_error) {
         throw template_error;
       }
@@ -52,14 +52,14 @@ if (command === 'get') {
 
       // Lets figure out what parameter updates we need to do
       var cli_params = {};
-      argv.forEach(function(p) {
+      argv.forEach(function (p) {
         var key = p.substring(0, p.indexOf('='));
         var value = p.substring(p.indexOf('=') + 1);
 
         cli_params[key] = value;
       });
 
-      var stack_params = stack.Parameters.map(function(p) {
+      var stack_params = stack.Parameters.map(function (p) {
         if (cli_params[p.ParameterKey]) {
           return {
             ParameterKey: p.ParameterKey,
@@ -87,7 +87,7 @@ if (command === 'get') {
       console.log('*** Parameters to update ***');
       console.log(update_params);
 
-      CF.updateStack(update_params, function(update_error) {
+      CF.updateStack(update_params, function (update_error) {
         if (update_error) {
           throw update_error;
         }

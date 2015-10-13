@@ -1,12 +1,12 @@
 import React from 'react';
 
 var NavigationPage = React.createClass({
-  componentDidMount: function() {
+  componentDidMount: function () {
     if (this.props.onError) {
       this.props.onError(this.props.errors, this.props.index);
     }
   },
-  render: function() {
+  render: function () {
     var className = "sequence-page";
     var activePage = this.props.activePage;
     var index = this.props.index;

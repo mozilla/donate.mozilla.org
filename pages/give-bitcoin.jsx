@@ -22,9 +22,7 @@ var giveBitcoin = React.createClass({
           </div>
           <div className="row">
             <p className="donation-notice">
-              <small>
-                <FormattedHTMLMessage message={this.getIntlMessage('donation_notice_bitcoin')} />
-              </small>
+              <FormattedHTMLMessage message={this.getIntlMessage('donation_notice_bitcoin')} />
             </p>
           </div>
         </div>

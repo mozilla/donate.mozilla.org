@@ -243,7 +243,15 @@ input[type="email"] {
   margin-bottom: 5px;
   border: 1px solid #EAEFF2;
   border-radius: 3px;
-  padding: 7px 30px 7px 33px;
+  padding: 7px 7px 7px 33px;
+}
+
+input[type="email"] {
+  padding-right: 33px;
+}
+input[name="lastname"],
+input[name="zip"] {
+  padding-left: 14px;
 }
 
 input[type="text"]:focus,
@@ -302,8 +310,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 i.fa.field-icon.icon-in-focus,
-i.fa.hint.on {
-  color: #38A9ED;
+i.fa.hint {
+  &.on {
+    color: #38A9ED;
+  }
 }
 
 select {
@@ -326,7 +336,7 @@ select * {
 
 i.fa.field-icon {
   position: absolute;
-  font-size: 16px;
+  font-size: 14px;
   color: #4D4E53; /*Mozilla charcoal*/
   top: 12px;
   left: 12px;

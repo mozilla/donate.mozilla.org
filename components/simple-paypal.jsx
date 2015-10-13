@@ -77,9 +77,7 @@ var simplePaypal = React.createClass({
 
         <div className="row">
           <p className="donation-notice">
-            <small>
-              {this.getIntlMessage("donation_notice")}
-            </small>
+            {this.getIntlMessage("donation_notice")}
           </p>
         </div>
 

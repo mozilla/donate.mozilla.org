@@ -55,13 +55,17 @@ module.exports = React.createClass({
   },
   render: function() {
     var creditCardDetailsClassName = "row credit-card-section";
+    var className = "row";
+    if (this.props.test) {
+      className += " " + this.props.test;
+    }
     if (this.state.hideCreditCardDetails) {
       creditCardDetailsClassName += " hidden";
     }
     var amount = this.state.props.amount.values.amount;
     var currency = this.state.currency;
     return (
-      <div className="row">
+      <div className={className}>
         <Header/>
         <div className="container">
 

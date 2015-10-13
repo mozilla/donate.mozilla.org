@@ -29,6 +29,7 @@ module.exports = function(queryString, pathname) {
 
   var localesData = i18n.intlDataFor(i18n.urlOverrideLang(pathname).lang);
   return {
+    test: queryString.test,
     currency: currency,
     presets: presets,
     currencies: currencies,

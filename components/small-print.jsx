@@ -14,21 +14,18 @@ var Footer = React.createClass({
     return (
       <div className="row disclaimers">
         <p className="other-ways-to-give">
-          <small>
             <FormattedMessage message={this.getIntlMessage('other_way_to_give')}
             bitcoinLink={bitcoinLink}
             checkLink={checkLink}/>
-          </small>
         </p>
         <p className="need-help">
-          <small><FormattedHTMLMessage message={ this.getIntlMessage("problems_donating") } />
-            </small>
+          <FormattedHTMLMessage message={ this.getIntlMessage("problems_donating") } />
         </p>
         <p className="donation-notice">
-          <small>{this.getIntlMessage('donation_notice')}</small>
+          {this.getIntlMessage('donation_notice')}
         </p>
         <p className={stripeNotice}>
-          <small><FormattedHTMLMessage message={ this.getIntlMessage("stripe_notice") } /></small>
+          <FormattedHTMLMessage message={ this.getIntlMessage("stripe_notice") } />
         </p>
       </div>
     );

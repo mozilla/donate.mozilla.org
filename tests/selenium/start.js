@@ -38,7 +38,7 @@ server.start(function() {
   driver.findElement(By.id('legalConfirm')).click();
   driver.findElement(By.css('.submit-btn')).click();
   driver.wait(function() {
-    return driver.getCurrentUrl().then(function (url) {
+    return driver.getCurrentUrl().then(function(url) {
       return url.indexOf('http://localhost:3000/de/thank-you/') === 0;
     });
   }, 5000).then(function() {

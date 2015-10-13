@@ -45,7 +45,7 @@ var CreditCardInfo = React.createClass({
   },
   validate: function() {
     var valid = true;
-    if(!/^[0-9]{3,4}$/.test(this.state.values.cvc)) {
+    if (!/^[0-9]{3,4}$/.test(this.state.values.cvc)) {
       valid = false;
       this.setState({
         cvcValid: false

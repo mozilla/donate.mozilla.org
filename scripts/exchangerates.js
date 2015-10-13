@@ -21,11 +21,11 @@ if (!openexachangeratesKey) {
 var pathForLatestRates = './public/exchange-rates/latest.json';
 
 
-function warn (s) {
+function warn(s) {
   console.warn('[exchangerates.js]', s);
 }
 
-function log (s) {
+function log(s) {
   console.info('[exchangerates.js]', s);
 }
 
@@ -33,7 +33,7 @@ function log (s) {
  * Look to see if we've already saved a copy locally
  * @param  {Function} callback
  */
-function checkForLatestLocalCopy (callback) {
+function checkForLatestLocalCopy(callback) {
   try {
     var latest = fs.readFileSync(pathForLatestRates, 'utf-8' );
     latest = JSON.parse( latest );
@@ -51,10 +51,10 @@ function checkForLatestLocalCopy (callback) {
  * Fetches JSON of exchange rates from openexchangerates.org
  * @param  {Function} callback
  */
-function getLatestRates (callback) {
+function getLatestRates(callback) {
   log('Fetching latest rates from openexchangerates.org');
 
-  request(openexchangeratesAPI + openexachangeratesKey, function (error, response, body) {
+  request(openexchangeratesAPI + openexachangeratesKey, function(error, response, body) {
 
     if (error || response.statusCode !== 200) {
       warn(error);
@@ -72,7 +72,7 @@ function getLatestRates (callback) {
 
 // execution
 
-checkForLatestLocalCopy(function (err, latestCopy) {
+checkForLatestLocalCopy(function(err, latestCopy) {
   log('Finished checking for local copy of exchange rates');
 
   if (latestCopy) {
@@ -97,7 +97,7 @@ checkForLatestLocalCopy(function (err, latestCopy) {
   // else, we don't have a copy, or it needs updating
   log('Fetching latest exchange rate data now');
 
-  getLatestRates(function () {
+  getLatestRates(function() {
     log('Finished fetching latest exchange rates');
   });
 

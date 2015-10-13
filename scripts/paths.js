@@ -6,7 +6,7 @@ function createPaths(first, arr, isLocale) {
   var returnArray = [];
   first.forEach(function(item) {
     returnArray = returnArray.concat(arr.map(function(key) {
-      if(item.indexOf(localeString) !== -1 && isLocale) {
+      if (item.indexOf(localeString) !== -1 && isLocale) {
         return item.replace(localeString, key).replace('?', '');
       } else {
         return item;

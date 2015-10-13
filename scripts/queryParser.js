@@ -13,7 +13,7 @@ module.exports = function(queryString, pathname) {
   var frequency = "single";
   var currency = currencies[currencyCode] || currencies['usd'];
 
-  if(queryString.amount && !isNaN(queryString.amount)) {
+  if (queryString.amount && !isNaN(queryString.amount)) {
     amount = queryString.amount.trim();
   }
   if (queryString.frequency === "monthly") {

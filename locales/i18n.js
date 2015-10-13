@@ -7,7 +7,7 @@ var directories = getAllMessages(req);
 
 function getAllMessages(req) {
   var messages = {};
-  req.keys().forEach(function (file) {
+  req.keys().forEach(function(file) {
     var locale = file.replace('./', '').replace('.json', '');
     messages[locale] = req(file);
   });

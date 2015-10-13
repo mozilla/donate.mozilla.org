@@ -16,27 +16,27 @@ describe("queryParser.js", function() {
     beforeEach(function() {
       queryString = {};
     });
-    it("presets=1,2,3,4 should return ['1','2','3','4']", function () {
+    it("presets=1,2,3,4 should return ['1','2','3','4']", function() {
       queryString.presets = "1,2,3,4";
       queryParser(queryString, pathname).presets.should.containDeep(['1','2','3','4']);
     });
-    it("presets=1,2,3, should return the defaultSinglePresets values", function () {
+    it("presets=1,2,3, should return the defaultSinglePresets values", function() {
       queryString.presets = "1,2,3,";
       queryParser(queryString, pathname).presets.should.equal(defaultSinglePresets);
     });
-    it("presets=1,2,3,4,1,2,3 should return the defaultSinglePresets values", function () {
+    it("presets=1,2,3,4,1,2,3 should return the defaultSinglePresets values", function() {
       queryString.presets = "1,2,3,4,1,2,3";
       queryParser(queryString, pathname).presets.should.equal(defaultSinglePresets);
     });
-    it("presets=a,b,c,d should return the defaultSinglePresets values", function () {
+    it("presets=a,b,c,d should return the defaultSinglePresets values", function() {
       queryString.presets = "a,b,c,d";
       queryParser(queryString, pathname).presets.should.equal(defaultSinglePresets);
     });
-    it("presets=NaN should return the defaultSinglePresets values", function () {
+    it("presets=NaN should return the defaultSinglePresets values", function() {
       queryString.presets = NaN;
       queryParser(queryString, pathname).presets.should.equal(defaultSinglePresets);
     });
-    it("presets=null should return the defaultSinglePresets values", function () {
+    it("presets=null should return the defaultSinglePresets values", function() {
       queryString.presets = null;
       queryParser(queryString, pathname).presets.should.equal(defaultSinglePresets);
     });

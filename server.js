@@ -147,7 +147,7 @@ server.route([
 // This will catch all 404s and redirect them to root URL
 // with preserving the pathname for client-side to handle.
 server.ext('onPreResponse', function(request, reply) {
-  if(request.response.output && request.response.output.statusCode === 404) {
+  if (request.response.output && request.response.output.statusCode === 404) {
     return reply.redirect('/?redirect=' + request.url.pathname);
   }
   return reply.continue();
@@ -185,12 +185,12 @@ module.exports = {
             'https://maxcdn.bootstrapcdn.com', 'https://pontoon.mozilla.org']
         }
       }
-    ], function (err) {
+    ], function(err) {
       if (err) {
         throw err;
       }
 
-      server.start(function () {
+      server.start(function() {
         server.log('info', 'Running server at: ' + server.info.uri);
         if (done) {
           done();

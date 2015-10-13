@@ -53,7 +53,7 @@ module.exports = {
     }),
     new webpack.ContextReplacementPlugin(/buffer/, require('buffer')),
     new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
-      Router.run(routes, outputPath, function (Handler) {
+      Router.run(routes, outputPath, function(Handler) {
         var values = {
           currency: currencies['usd'],
           presets: currencies['usd'].presets['single'],
@@ -64,7 +64,7 @@ module.exports = {
         var index = React.createFactory(require('./pages/index.jsx'));
         var page = React.createFactory(Handler);
         var locale = url.parse(outputPath).pathname.split('/')[1];
-        if(locale && require('./locales/index.js').indexOf(locale) !== -1) {
+        if (locale && require('./locales/index.js').indexOf(locale) !== -1) {
           var currentString = require('./locales/' + locale +'.json');
           var mergedStrings = Object.assign({}, englishStrings, currentString);
           values = Object.assign({}, {locales : [locale], messages: mergedStrings}, values);

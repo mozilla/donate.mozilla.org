@@ -13,6 +13,7 @@ module.exports = function(state) {
   var currentLang = langURL.lang || i18n.currentLanguage;
   var lang = i18n.isSupportedLanguage(currentLang) ? currentLang : i18n.defaultLang;
   var langInPath = i18n.urlOverrideLang(pathname).lang;
+
   /*
   * Handle all path in the param only
   * e.g. anything that's not in the /?redirect=pathname
@@ -25,6 +26,8 @@ module.exports = function(state) {
       // if so we will return and do nothing.
       if (paths.indexOf(pathname) !== -1) {
         return;
+      } else {
+        return '/' + lang + '/';
       }
       // If we don't have locale in the URL we want to hiject the
       // /thank-you/ -> /en-US/thank-you/
@@ -32,31 +35,29 @@ module.exports = function(state) {
       pathname = '/' + lang + pathname;
       if (paths.indexOf(pathname) !== -1) {
         return pathname;
+      } else {
+        return '/' + lang + '/';
       }
     }
-  } else {
-    // remove `redirect` property from the query object before passing it in the replaceWith()
-    if (langInPath) {
-      if (paths.indexOf(pathname) !== -1) {
-        return pathname;
-      } else {
-        return pathname = '/' + lang + '/';
-      }
+  // remove `redirect` property from the query object before passing it in the replaceWith()
+  } else if (langInPath) {
+    if (paths.indexOf(pathname) !== -1) {
+      return;
     } else {
-      if (paths.indexOf(pathname) !== -1) {
-        return pathname = '/' + lang + pathname;
-      } else {
-        // let's find out first before going to home page if the pathname without
-        // locale does exist in paths Array, so we can redirect with our default locale
-        var pathWithoutLang = pathname.split('/');
-        pathWithoutLang.splice(1,1);
-        pathname = pathWithoutLang.join('/');
-        if (paths.indexOf(pathname) !== -1) {
-          return pathname = '/' + lang + pathname;
-        } else {
-          return pathname = '/' + lang + '/';
-        }
-      }
+      return '/' + lang + '/';
+    }
+  } else if (paths.indexOf(pathname) !== -1) {
+    return '/' + lang + pathname;
+  } else {
+    // let's find out first before going to home page if the pathname without
+    // locale does exist in paths Array, so we can redirect with our default locale
+    var pathWithoutLang = pathname.split('/');
+    pathWithoutLang.splice(1,1);
+    pathname = pathWithoutLang.join('/');
+    if (paths.indexOf(pathname) !== -1) {
+      return '/' + lang + pathname;
+    } else {
+      return '/' + lang + '/';
     }
   }
 };

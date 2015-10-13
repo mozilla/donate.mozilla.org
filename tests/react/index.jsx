@@ -11,3 +11,4 @@ require('./address-input.tests.jsx');
 require('./credit-card-info.tests.jsx');
 require('../lib/langURLParser.tests.js');
 require('../lib/queryParser.tests.js');
+require('../lib/amount-modifier.tests.js');

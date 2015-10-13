@@ -39,7 +39,7 @@ var AmountOtherButton = React.createClass({
   render: function() {
     return (
       <div className="two-third">
-        <div id="amount-other-container">
+        <div className="amount-other-container">
           <input id="amount-other" type="radio" name="donation_amount"
             checked={this.props.checked}
             onClick={this.onRadioClick}

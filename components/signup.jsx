@@ -9,7 +9,7 @@ var Form = React.createClass({
   render: function() {
     return (
       <div>
-        <div className="form-wrapper container">
+        <div className="container">
           <div className="wrap">
             <div className="row">
               <h2>{this.getIntlMessage('sign_up_for_email')}</h2>

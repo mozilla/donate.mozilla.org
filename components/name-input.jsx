@@ -69,7 +69,7 @@ var NameInput = React.createClass({
       lastClassName += "parsley-error";
     }
     return (
-      <div className="row cc-additional-info" id="full-name-row">
+      <div className="row name-input">
         <div className="half">
           <div className="field-container">
             <i className="fa fa-user field-icon"></i>

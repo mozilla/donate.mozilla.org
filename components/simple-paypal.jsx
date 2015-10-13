@@ -30,12 +30,7 @@ var simplePaypal = React.createClass({
     var amount = this.state.props.amount.values.amount;
     return (
       <div className="simple-paypal">
-        <div id="header-copy">
-          <h1>
-            {this.getIntlMessage("donate_now")}
-          </h1>
-        </div>
-        <div id="form-wrapper" className="container">
+        <div className="container">
           <div className="wrap">
             <div className="row">
               <img src="/images/paypal_logo@2x.png" alt="PayPal Logo" width="140" height="58"/>

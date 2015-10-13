@@ -147,7 +147,7 @@ var CreditCardInfo = React.createClass({
     }
     var cardNumber = this.state.values.cardNumber;
     return (
-      <div>
+      <div className="credit-card-info">
         <div className="row">
           <div className="full">
             <div className="field-container">

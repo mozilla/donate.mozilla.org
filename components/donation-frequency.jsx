@@ -25,7 +25,7 @@ module.exports = React.createClass({
     var frequency = this.props.value;
     return (
       <div>
-        <div className="row" id="recurring-option-row">
+        <div className="row donation-frequency">
           <div className="half">
             <input name="recurring_acknowledge" checked={frequency !== "monthly"}
               onChange={this.onChange} type="radio" value="single" id="one-time-payment"

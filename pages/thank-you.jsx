@@ -18,20 +18,17 @@ var ThankYou = React.createClass({
     var locale = this.props.locales[0];
     return (
       <div>
-        <div className="mozilla-eoy-donation">
-          <Header/>
-          <div>
-            <div id="header-copy">
-              <div className="row">
-                <h1>{ this.getIntlMessage("from_all_of_us_at_mozilla") }</h1>
+        <div className="row">
+          <Header>
+            <h1>{ this.getIntlMessage("from_all_of_us_at_mozilla") }</h1>
 
-                <h2>
-                  <FormattedHTMLMessage
-                    message={ this.getIntlMessage("thank_you_for_your_donation") }
-                  />
-                </h2>
-              </div>
-            </div>
+            <h2>
+              <FormattedHTMLMessage
+                message={ this.getIntlMessage("thank_you_for_your_donation") }
+              />
+            </h2>
+          </Header>
+          <div>
             {this.props.params && ['de', 'en-US'].indexOf(locale) !== -1 ? <Signup locales={this.props.locales}/> : <Social language={locale}/> }
             <Footer/>
           </div>

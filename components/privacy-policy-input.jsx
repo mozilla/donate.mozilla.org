@@ -39,7 +39,7 @@ var PrivacyPolicyInput = React.createClass({
     }
     return (
       <div id="privacy-policy" className="full">
-        <div className="row cc-additional-info">
+        <div className="row">
           <div className="full">
             <input type="checkbox" onChange={this.onChange} checked={this.state.values.checked} name="legal_confirm" id="legalConfirm"/>
             <label htmlFor="legalConfirm">

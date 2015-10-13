@@ -1,7 +1,7 @@
 import React from 'react';
 
 var Footer = React.createClass({
-  render: function () {
+  render: function() {
     return (
       <footer>
         <div className="footer">

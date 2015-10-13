@@ -1,7 +1,7 @@
 import i18n from '../locales/i18n.js';
 import paths from './paths.js';
 
-module.exports = function (state) {
+module.exports = function(state) {
   var redirectQuery = false;
   var queryString = state.query;
   if (state.query) {

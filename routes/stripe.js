@@ -7,7 +7,7 @@ var stripeKeys = {
 var stripe = require('stripe')(stripeKeys.secretKey);
 
 module.exports = {
-  single: function (transaction, callback) {
+  single: function(transaction, callback) {
     var charge = {
       amount: transaction.amount,
       currency: transaction.currency,
@@ -15,11 +15,11 @@ module.exports = {
     };
     stripe.charges.create(charge, callback);
   },
-  recurring: function (transaction, callback) {
+  recurring: function(transaction, callback) {
     stripe.customers.create({
       email: transaction.email,
       metadata: transaction.metadata
-    }, function (err, customer) {
+    }, function(err, customer) {
       if (err) {
         callback(err);
       } else {

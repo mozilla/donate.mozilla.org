@@ -3,7 +3,7 @@ import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
 
 var PrivacyPolicyInput = React.createClass({
   mixins: [IntlMixin],
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       values: {
         checked: false
@@ -11,10 +11,10 @@ var PrivacyPolicyInput = React.createClass({
       valid: true
     };
   },
-  componentDidMount: function () {
+  componentDidMount: function() {
     this.props.onChange(this.props.name, this);
   },
-  onChange: function (e) {
+  onChange: function(e) {
     this.setState({
       valid: true
     });
@@ -25,14 +25,14 @@ var PrivacyPolicyInput = React.createClass({
     });
     this.props.onChange(this.props.name, this);
   },
-  validate: function () {
+  validate: function() {
     var valid = this.state.values.checked;
     this.setState({
       valid: valid
     });
     return valid;
   },
-  render: function () {
+  render: function() {
     var errorMessageClassName = "row error-msg-row";
     if (this.state.valid) {
       errorMessageClassName += " hidden";

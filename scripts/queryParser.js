@@ -1,11 +1,11 @@
 import currencies from '../data/currencies.js';
 import i18n from '../locales/i18n.js';
 
-function isNumber (item) {
+function isNumber(item) {
   return !isNaN(parseInt(item));
 }
 
-module.exports = function (queryString, pathname) {
+module.exports = function(queryString, pathname) {
   queryString = queryString || {};
   var presets = queryString.presets || "";
   var currencyCode = queryString.currency || "usd";

@@ -5,9 +5,9 @@ import locales from '../locales/index.js';
 var req = require.context('./', true, /\.json.*$/);
 var directories = getAllMessages(req);
 
-function getAllMessages (req) {
+function getAllMessages(req) {
   var messages = {};
-  req.keys().forEach(function (file) {
+  req.keys().forEach(function(file) {
     var locale = file.replace('./', '').replace('.json', '');
     messages[locale] = req(file);
   });
@@ -16,12 +16,12 @@ function getAllMessages (req) {
 
 // we need to make sure we transform the given locale to the right format first
 // so we can access the right locale in our directories for example: pt-br should be transformed to pt-BR
-function formatLocale (lang) {
+function formatLocale(lang) {
   lang = lang.split('-');
   return lang[1] ? `${lang[0]}-${lang[1].toUpperCase()}` : lang[0];
 }
 
-function getMessages (locale) {
+function getMessages(locale) {
   var messages = directories[locale] ? directories[locale] : directories['en-US'];
   return assign({}, directories['en-US'], messages);
 }
@@ -41,7 +41,7 @@ module.exports = {
   },
   defaultLang: 'en-US',
   currentLanguage: locale,
-  isSupportedLanguage: function (lang) {
+  isSupportedLanguage: function(lang) {
     return !!directories[lang];
   },
   // This method will check if we have language code in the URL
@@ -49,7 +49,7 @@ module.exports = {
   // them to find language code. The expected language code is in the
   // first parameter e.g. /en-US/thank-you. If we don't find the language code
   // we will assume that the URL does not contain language code and return false for `test`
-  urlOverrideLang: function (path) {
+  urlOverrideLang: function(path) {
     var localPath = path || location.pathname;
     var localeCode = localPath.split('/')[1];
     var pathname = localPath.split('/')[2];
@@ -59,7 +59,7 @@ module.exports = {
       lang: locales.indexOf(localeCode) !== -1 ? localeCode : null
     };
   },
-  intlDataFor: function (lang) {
+  intlDataFor: function(lang) {
     var locale = formatLocale(lang);
     return {locales: [locale], messages: getMessages(locale)};
   }

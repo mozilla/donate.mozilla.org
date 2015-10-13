@@ -6,7 +6,7 @@ import { IntlMixin } from 'react-intl';
 
 var simplePaypal = React.createClass({
   mixins: [IntlMixin],
-  render: function () {
+  render: function() {
     return (
       <div className="row">
         <Header>

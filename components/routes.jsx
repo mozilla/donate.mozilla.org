@@ -9,8 +9,8 @@ import locales from '../locales/index.js';
 var routes = (
   <Route>
     {
-      locales.map(function (locale) {
-        return Object.keys(pages).map(function (key) {
+      locales.map(function(locale) {
+        return Object.keys(pages).map(function(key) {
           var routeOBJ = {
             key:  pages[key].name + '-' + locale,
             name: pages[key].name + '-' + locale,
@@ -24,7 +24,7 @@ var routes = (
       })
     }
     {
-      Object.keys(pages).map(function (key) {
+      Object.keys(pages).map(function(key) {
         var routeOBJ = {
           key:  pages[key].name,
           name: pages[key].name,

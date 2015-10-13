@@ -124,7 +124,7 @@ server.route([
   }, {
     method: 'GET',
     path: '/api/polyfill.js',
-    handler: function (request, reply) {
+    handler: function(request, reply) {
       var features = request.query.features;
       var flags = request.query.flags ? request.query.flags.split(',') : [];
 
@@ -134,7 +134,7 @@ server.route([
         minify: true
       };
       params.uaString = request.plugins.scooter.source;
-      polyfillio.getPolyfillString(params).then(function (bundleString) {
+      polyfillio.getPolyfillString(params).then(function(bundleString) {
         reply(bundleString).type('application/javascript');
       });
     },
@@ -146,7 +146,7 @@ server.route([
 
 // This will catch all 404s and redirect them to root URL
 // with preserving the pathname for client-side to handle.
-server.ext('onPreResponse', function (request, reply) {
+server.ext('onPreResponse', function(request, reply) {
   if (request.response.output && request.response.output.statusCode === 404) {
     return reply.redirect('/?redirect=' + request.url.pathname);
   }
@@ -154,7 +154,7 @@ server.ext('onPreResponse', function (request, reply) {
 });
 
 module.exports = {
-  start: function (done) {
+  start: function(done) {
     server.register([
       {
         register: require('good'),
@@ -185,12 +185,12 @@ module.exports = {
             'https://maxcdn.bootstrapcdn.com', 'https://pontoon.mozilla.org']
         }
       }
-    ], function (err) {
+    ], function(err) {
       if (err) {
         throw err;
       }
 
-      server.start(function () {
+      server.start(function() {
         server.log('info', 'Running server at: ' + server.info.uri);
         if (done) {
           done();
@@ -198,8 +198,8 @@ module.exports = {
       });
     });
   },
-  stop: function (done) {
-    server.stop(function () {
+  stop: function(done) {
+    server.stop(function() {
       server.log('info', 'Stopped server at: ' + server.info.uri);
       if (done) {
         done();

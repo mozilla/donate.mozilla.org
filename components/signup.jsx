@@ -6,7 +6,7 @@ import SubmitButton from '../components/submit-button.jsx';
 
 var Form = React.createClass({
   mixins: [IntlMixin, require('../mixins/form.jsx')],
-  render: function () {
+  render: function() {
     return (
       <div>
         <div className="container">

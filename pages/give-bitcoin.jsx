@@ -5,7 +5,7 @@ import { IntlMixin, FormattedHTMLMessage } from 'react-intl';
 
 var giveBitcoin = React.createClass({
   mixins: [IntlMixin],
-  render: function () {
+  render: function() {
     return (
       <div className="coinbase-page row">
         <Header>

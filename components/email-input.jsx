@@ -3,7 +3,7 @@ import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
 
 var EmailInput = React.createClass({
   mixins: [IntlMixin],
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       showHint: false,
       values: {
@@ -13,10 +13,10 @@ var EmailInput = React.createClass({
       errorMessage: ""
     };
   },
-  componentDidMount: function () {
+  componentDidMount: function() {
     this.props.onChange(this.props.name, this);
   },
-  validate: function () {
+  validate: function() {
     var valid = !!this.state.values.email;
     var errorMessage = "";
     if (!this.refs.inputElement.getDOMNode().validity.valid) {
@@ -29,7 +29,7 @@ var EmailInput = React.createClass({
     });
     return valid;
   },
-  onEmailChange: function (e) {
+  onEmailChange: function(e) {
     this.setState({
       valid: true
     });
@@ -40,13 +40,13 @@ var EmailInput = React.createClass({
     });
     this.props.onChange(this.props.name, this);
   },
-  hintClicked: function () {
+  hintClicked: function() {
     this.setState({
       showHint: !this.state.showHint
     });
     this.props.onChange(this.props.name, this);
   },
-  renderHint: function () {
+  renderHint: function() {
     var hintClassIconName = "fa fa-question-circle hint";
     var hintClassName = "hint-msg small";
     var info = this.props.info;
@@ -66,7 +66,7 @@ var EmailInput = React.createClass({
       );
     }
   },
-  render: function () {
+  render: function() {
     var inputClassName = "";
     if (!this.state.valid) {
       inputClassName += "parsley-error";

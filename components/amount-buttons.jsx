@@ -2,7 +2,7 @@ import React from 'react';
 import {FormattedMessage, FormattedNumber} from 'react-intl';
 
 var AmountButton = React.createClass({
-  render: function () {
+  render: function() {
     var checked = false;
     if (this.props.value === this.props.amount) {
       checked = true;
@@ -25,18 +25,18 @@ var AmountButton = React.createClass({
 });
 
 var AmountOtherButton = React.createClass({
-  onRadioClick: function () {
+  onRadioClick: function() {
     document.querySelector("#amount-other-input").focus();
   },
-  onInputClick: function () {
+  onInputClick: function() {
     document.querySelector("#amount-other").click();
   },
-  onRadioChange: function () {
+  onRadioChange: function() {
     if (!this.props.checked) {
       this.props.onRadioChange();
     }
   },
-  render: function () {
+  render: function() {
     return (
       <div className="two-third">
         <div className="amount-other-container">
@@ -65,7 +65,7 @@ var AmountOtherButton = React.createClass({
 
 var AmountButtons = React.createClass({
   mixins: [require('react-intl').IntlMixin],
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       // userInputting is used to override checked amount
       // buttons while the user is entering an other amount.
@@ -74,10 +74,10 @@ var AmountButtons = React.createClass({
       errorMessage: ""
     };
   },
-  onChange: function (e) {
+  onChange: function(e) {
     this.setAmount(e.currentTarget.value, false);
   },
-  setAmount: function (amount, userInputting) {
+  setAmount: function(amount, userInputting) {
     this.setState({
       userInputting: userInputting,
       valid: true
@@ -86,16 +86,16 @@ var AmountButtons = React.createClass({
       amount: amount
     });
   },
-  otherRadioChange: function () {
+  otherRadioChange: function() {
     this.setAmount("", true);
   },
-  otherInputChange: function (e) {
+  otherInputChange: function(e) {
     var newAmount = e.currentTarget.value;
     if (/^(\d)*[\.]?(\d){0,2}$/.test(newAmount)) {
       this.setAmount(newAmount, true);
     }
   },
-  validate: function () {
+  validate: function() {
     var valid = false;
     var errorMessage = "";
     if (this.props.amount) {
@@ -113,7 +113,7 @@ var AmountButtons = React.createClass({
     });
     return valid;
   },
-  renderErrorMessage: function () {
+  renderErrorMessage: function() {
     if (this.state.errorMessage === this.getIntlMessage('donation_min_error')) {
       return (
         <FormattedMessage
@@ -131,10 +131,10 @@ var AmountButtons = React.createClass({
     }
     return this.state.errorMessage;
   },
-  componentDidMount: function () {
+  componentDidMount: function() {
     this.props.onChange(this.props.name, this);
   },
-  render: function () {
+  render: function() {
     var otherAmount = "";
     var amount = this.props.amount;
     var presets = this.props.presets;

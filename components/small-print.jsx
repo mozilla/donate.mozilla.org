@@ -4,7 +4,7 @@ import { FormattedHTMLMessage, FormattedMessage, IntlMixin } from 'react-intl';
 
 var Footer = React.createClass({
   mixins: [IntlMixin],
-  render: function () {
+  render: function() {
     var bitcoinLink = (<Link to='give-bitcoin'>{this.getIntlMessage('Bitcoin')}</Link>);
     var checkLink = (<a target='_blank' href='https://wiki.mozilla.org/Ways_to_Give#Check_.28via_postal_service.29'>{this.getIntlMessage('check')}</a>);
     var stripeNotice = "stripe-notice";

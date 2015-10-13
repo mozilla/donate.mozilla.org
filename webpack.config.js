@@ -52,8 +52,8 @@ module.exports = {
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     }),
     new webpack.ContextReplacementPlugin(/buffer/, require('buffer')),
-    new SimpleHtmlPrecompiler(paths, function (outputPath, callback) {
-      Router.run(routes, outputPath, function (Handler) {
+    new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
+      Router.run(routes, outputPath, function(Handler) {
         var values = {
           currency: currencies['usd'],
           presets: currencies['usd'].presets['single'],

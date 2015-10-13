@@ -12,7 +12,7 @@ var IntlMixin = require('react-intl').IntlMixin;
 
 var Example = React.createClass({
   mixins: [IntlMixin],
-  render: function () {
+  render: function() {
     return (
       <div>
         <h1>{this.getIntlMessage('key_name_here')}

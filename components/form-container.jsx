@@ -1,7 +1,7 @@
 import React from 'react';
 
 var FormContainer = React.createClass({
-  render: function () {
+  render: function() {
     return (
       <form id="donation-form" method="post">
         <div className="container">

@@ -1,7 +1,7 @@
 import React from 'react';
 
 var NavigationMenu = React.createClass({
-  render: function () {
+  render: function() {
     return (
       <ol className="progress">
         {this.props.children}

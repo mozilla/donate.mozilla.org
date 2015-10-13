@@ -2,12 +2,12 @@ import React from 'react';
 import {FormattedNumber} from 'react-intl';
 
 var NavigationButton = React.createClass({
-  onClick: function (e) {
+  onClick: function(e) {
     if (this.props.activePage > this.props.index) {
       this.props.onClick(this.props.index);
     }
   },
-  render: function () {
+  render: function() {
     var className = "";
     var activePage = this.props.activePage;
     var index = this.props.index;

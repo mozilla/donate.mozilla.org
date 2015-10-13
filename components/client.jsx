@@ -4,7 +4,7 @@ import routes from './routes.jsx';
 import langURLParser from '../scripts/langURLParser.js';
 import queryParser from '../scripts/queryParser.js';
 
-Router.run(routes, Router.HistoryLocation, function (Handler, state) {
+Router.run(routes, Router.HistoryLocation, function(Handler, state) {
   var queryString = state.query;
   var pathname = langURLParser(state);
   if (pathname) {

@@ -2,12 +2,12 @@ import React from 'react';
 
 module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin],
-  onChange: function () {
-    this.props.onClick = this.props.onClick || function () {};
+  onChange: function() {
+    this.props.onClick = this.props.onClick || function() {};
     this.props.onClick();
     this.props.onSubmit(this.props.validate, this.props.submit);
   },
-  render: function () {
+  render: function() {
     return (
       <div className="half paypal-button">
         <input onChange={this.onChange} type="radio" name="payment-type" value="paypal" id="payment-paypal"/>

@@ -11,10 +11,10 @@ import analytics from '../public/js/analytics.js';
 
 var ThankYou = React.createClass({
   mixins: [IntlMixin],
-  componentDidMount: function () {
+  componentDidMount: function() {
     analytics();
   },
-  render: function () {
+  render: function() {
     var locale = this.props.locales[0];
     return (
       <div>

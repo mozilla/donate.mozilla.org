@@ -2,10 +2,10 @@ import locales from '../locales/index.js';
 import pages from '../data/pages.js';
 var localeString = ':locale';
 
-function createPaths (first, arr, isLocale) {
+function createPaths(first, arr, isLocale) {
   var returnArray = [];
-  first.forEach(function (item) {
-    returnArray = returnArray.concat(arr.map(function (key) {
+  first.forEach(function(item) {
+    returnArray = returnArray.concat(arr.map(function(key) {
       if (item.indexOf(localeString) !== -1 && isLocale) {
         return item.replace(localeString, key).replace('?', '');
       } else {
@@ -19,7 +19,7 @@ function createPaths (first, arr, isLocale) {
 // create an array of paths from pages object.
 // this should include paths with :locale? in them.
 var pathWithOptional = [];
-Object.keys(pages).forEach(function (item) {
+Object.keys(pages).forEach(function(item) {
   pathWithOptional.push(pages[item].path);
 });
 

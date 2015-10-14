@@ -47,7 +47,7 @@ module.exports = function(state) {
   }
   // let's find out first before going to home page if the pathname without
   // locale does exist in paths Array, so we can redirect with our default locale
-  var pathWithoutLang = pathname.split('/');
+  let pathWithoutLang = pathname.split('/');
   pathWithoutLang.splice(1,1);
   pathname = pathWithoutLang.join('/');
   if (paths.indexOf(pathname) !== -1) {

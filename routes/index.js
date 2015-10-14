@@ -39,8 +39,9 @@ var routes = {
         currency: currency,
         stripeToken: transaction.stripeToken
       }, function(err, charge) {
+        var badRequest;
         if (err) {
-          var badRequest = boom.badRequest('Stripe charge failed');
+          badRequest = boom.badRequest('Stripe charge failed');
           badRequest.output.payload.stripe = {
             code: err.code,
             rawType: err.rawType

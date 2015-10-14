@@ -4,9 +4,9 @@ module.exports = {
     var valid = true;
     fields.forEach(function(field) {
       var str = self.state.values[field] || "";
+      var state = {};
       if (self.props.error[field] || !str.trim()) {
         valid = false;
-        var state = {};
         state[field + "Valid"] = valid;
         self.setState(state);
       }

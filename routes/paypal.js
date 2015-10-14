@@ -32,8 +32,7 @@ function setupPaypal(transaction, recurring, callback) {
     if (err) {
       callback(err);
     } else {
-      var data = querystring.parse(body);
-      callback(null, data);
+      callback(null, querystring.parse(body));
     }
   });
 }

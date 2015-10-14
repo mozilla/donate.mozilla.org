@@ -20,10 +20,11 @@ module.exports = {
       email: transaction.email,
       metadata: transaction.metadata
     }, function(err, customer) {
+      var subscription = {};
       if (err) {
         callback(err);
       } else {
-        var subscription = {
+        subscription = {
           plan: transaction.currency,
           quantity: transaction.quantity,
           source: transaction.stripeToken

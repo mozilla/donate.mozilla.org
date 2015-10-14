@@ -55,8 +55,8 @@ module.exports = {
     new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
       Router.run(routes, outputPath, function(Handler) {
         var values = {
-          currency: currencies['usd'],
-          presets: currencies['usd'].presets['single'],
+          currency: currencies.usd,
+          presets: currencies.usd.presets.single,
           currencies: currencies,
           amount: '',
           frequency: 'single'

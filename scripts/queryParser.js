@@ -11,7 +11,7 @@ module.exports = function(queryString, pathname) {
   var currencyCode = queryString.currency || "usd";
   var amount = "";
   var frequency = "single";
-  var currency = currencies[currencyCode] || currencies['usd'];
+  var currency = currencies[currencyCode] || currencies.usd;
 
   if (queryString.amount && !isNaN(queryString.amount)) {
     amount = queryString.amount.trim();

@@ -127,15 +127,13 @@ module.exports = React.createClass({
               <SectionHeading>
                 <h2>{this.getIntlMessage("personal")}</h2>
               </SectionHeading>
-              <div className="full billing-info">
-                <Name onChange={this.onChange} name="name"/>
-                <Address
-                  onChange={this.onChange}
-                  name="address"
-                  error={this.state.errors.address}
-                />
-                <Email onChange={this.onChange} name="email" info={this.getIntlMessage("email_info")}/>
-              </div>
+              <Name onChange={this.onChange} name="name"/>
+              <Address
+                onChange={this.onChange}
+                name="address"
+                error={this.state.errors.address}
+              />
+              <Email onChange={this.onChange} name="email" info={this.getIntlMessage("email_info")}/>
               <PrivacyPolicy onChange={this.onChange} name="privacyPolicy"/>
               <SubmitButton
                 submitting={this.state.submitting}

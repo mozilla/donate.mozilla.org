@@ -66,12 +66,11 @@ if (command === 'get') {
             ParameterValue: cli_params[p.ParameterKey],
             UsePreviousValue: false
           };
-        } else {
-          return {
-            ParameterKey: p.ParameterKey,
-            UsePreviousValue: true
-          };
         }
+        return {
+          ParameterKey: p.ParameterKey,
+          UsePreviousValue: true
+        };
       });
 
       var update_params = {

@@ -18,10 +18,9 @@ module.exports = React.createClass({
           }
         />
       );
-    } else {
-      return (
-        <span>{this.getIntlMessage("donate_now")}</span>
-      );
     }
+    return (
+      <span>{this.getIntlMessage("donate_now")}</span>
+    );
   }
 });

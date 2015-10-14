@@ -26,38 +26,32 @@ module.exports = function(state) {
       // if so we will return and do nothing.
       if (paths.indexOf(pathname) !== -1) {
         return;
-      } else {
-        return '/' + lang + '/';
       }
+      return '/' + lang + '/';
       // If we don't have locale in the URL we want to hiject the
       // /thank-you/ -> /en-US/thank-you/
-    } else {
-      pathname = '/' + lang + pathname;
-      if (paths.indexOf(pathname) !== -1) {
-        return pathname;
-      } else {
-        return '/' + lang + '/';
-      }
     }
+    pathname = '/' + lang + pathname;
+    if (paths.indexOf(pathname) !== -1) {
+      return pathname;
+    }
+    return '/' + lang + '/';
   // remove `redirect` property from the query object before passing it in the replaceWith()
   } else if (langInPath) {
     if (paths.indexOf(pathname) !== -1) {
       return;
-    } else {
-      return '/' + lang + '/';
     }
+    return '/' + lang + '/';
   } else if (paths.indexOf(pathname) !== -1) {
     return '/' + lang + pathname;
-  } else {
-    // let's find out first before going to home page if the pathname without
-    // locale does exist in paths Array, so we can redirect with our default locale
-    var pathWithoutLang = pathname.split('/');
-    pathWithoutLang.splice(1,1);
-    pathname = pathWithoutLang.join('/');
-    if (paths.indexOf(pathname) !== -1) {
-      return '/' + lang + pathname;
-    } else {
-      return '/' + lang + '/';
-    }
   }
+  // let's find out first before going to home page if the pathname without
+  // locale does exist in paths Array, so we can redirect with our default locale
+  var pathWithoutLang = pathname.split('/');
+  pathWithoutLang.splice(1,1);
+  pathname = pathWithoutLang.join('/');
+  if (paths.indexOf(pathname) !== -1) {
+    return '/' + lang + pathname;
+  }
+  return '/' + lang + '/';
 };

@@ -74,16 +74,18 @@ function getLatestRates(callback) {
 // execution
 
 checkForLatestLocalCopy(function(err, latestCopy) {
+  var currentTimeStamp, snapshotTimeStamp, ageOfSnapShot, maxAge;
+
   log('Finished checking for local copy of exchange rates');
 
   if (latestCopy) {
     log('Found local copy of exchange rates');
 
     if (latestCopy.timestamp) {
-      let currentTimeStamp = Math.round(+new Date()/1000);
-      let snapshotTimeStamp = latestCopy.timestamp;
-      let ageOfSnapShot = currentTimeStamp - snapshotTimeStamp;
-      let maxAge = 7200; // 2hr x 60m x 60s
+      currentTimeStamp = Math.round(+new Date()/1000);
+      snapshotTimeStamp = latestCopy.timestamp;
+      ageOfSnapShot = currentTimeStamp - snapshotTimeStamp;
+      maxAge = 7200; // 2hr x 60m x 60s
 
       if (ageOfSnapShot < maxAge) {
         log('Latest exchange rate snapshot is ' + ageOfSnapShot + ' seconds old. No need to refresh.');

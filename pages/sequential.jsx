@@ -54,7 +54,7 @@ module.exports = React.createClass({
     this.updateHeight();
   },
   render: function() {
-    var creditCardDetailsClassName = "full credit-card-section";
+    var creditCardDetailsClassName = "row credit-card-section";
     if (this.state.hideCreditCardDetails) {
       creditCardDetailsClassName += " hidden";
     }
@@ -107,12 +107,14 @@ module.exports = React.createClass({
                   <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
                 </p>
               </SectionHeading>
-              <CreditCardButton onClick={this.expandCreditCardInfo}/>
-              <PayPalButton
-                submit={["frequency", "amount"]}
-                onSubmit={this.paypal}
-                onClick={this.collapseCreditCardInfo}
-              />
+              <div className="row">
+                <CreditCardButton onClick={this.expandCreditCardInfo}/>
+                <PayPalButton
+                  submit={["frequency", "amount"]}
+                  onSubmit={this.paypal}
+                  onClick={this.collapseCreditCardInfo}
+                />
+              </div>
               <div className={creditCardDetailsClassName}>
                 <CrediCardInfo error={this.state.errors.creditCardInfo}
                   onChange={this.onChange} name="creditCardInfo" ref="creditCardInfoField"

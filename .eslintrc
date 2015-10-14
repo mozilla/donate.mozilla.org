@@ -13,7 +13,8 @@
         "eol-last": [2],
         "no-unused-vars": [1, {"vars": "all", "args": "none"}],
         "linebreak-style": [2, "unix"],
-        "semi": [1, "always"]
+        "semi": [1, "always"],
+        "eqeqeq": [2]
     },
     "env": {
         "es6": true,

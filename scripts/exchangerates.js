@@ -76,6 +76,7 @@ function getLatestRates(callback) {
 checkForLatestLocalCopy(function(err, latestCopy) {
   if (err) {
     // do something?
+    console.log(err);
   }
   var currentTimeStamp, snapshotTimeStamp, ageOfSnapShot, maxAge;
 

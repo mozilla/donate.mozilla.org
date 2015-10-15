@@ -83,7 +83,7 @@
     "react-intl": "1.2.0",
     "react-router": "0.13.4",
     "react-test-context": "0.1.0",
-    "request": "2.64.0",
+    "request": "2.65.0",
     "scooter": "2.0.1",
     "selenium-webdriver": "2.47.0",
     "should": "7.1.0",

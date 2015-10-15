@@ -2,7 +2,7 @@ import currencies from '../data/currencies.js';
 import i18n from '../locales/i18n.js';
 
 function isNumber(item) {
-  return !isNaN(parseInt(item));
+  return !isNaN(parseInt(item, 10));
 }
 
 module.exports = function(queryString, pathname) {

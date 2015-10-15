@@ -74,6 +74,10 @@ function getLatestRates(callback) {
 // execution
 
 checkForLatestLocalCopy(function(err, latestCopy) {
+  if (err) {
+    // do something?
+    console.log(err);
+  }
   var currentTimeStamp, snapshotTimeStamp, ageOfSnapShot, maxAge;
 
   log('Finished checking for local copy of exchange rates');

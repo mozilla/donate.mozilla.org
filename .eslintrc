@@ -17,7 +17,11 @@
         "semi": [1, "always"],
         "eqeqeq": [2],
         "no-else-return": [2],
-        "dot-notation": [2]
+        "dot-notation": [2],
+        "no-eq-null": [2],
+        "no-return-assign": [2],
+        "radix": [2],
+        "handle-callback-err": [2]
     },
     "env": {
         "es6": true,

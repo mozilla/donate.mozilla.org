@@ -13,6 +13,7 @@ module.exports = function(state) {
   var currentLang = langURL.lang || i18n.currentLanguage;
   var lang = i18n.isSupportedLanguage(currentLang) ? currentLang : i18n.defaultLang;
   var langInPath = i18n.urlOverrideLang(pathname).lang;
+  var defaultPath = '/' + lang + '/';
 
   /*
   * Handle all path in the param only
@@ -27,7 +28,7 @@ module.exports = function(state) {
       if (paths.indexOf(pathname) !== -1) {
         return;
       }
-      return '/' + lang + '/';
+      return defaultPath;
       // If we don't have locale in the URL we want to hiject the
       // /thank-you/ -> /en-US/thank-you/
     }
@@ -35,12 +36,12 @@ module.exports = function(state) {
     if (paths.indexOf(pathname) !== -1) {
       return pathname;
     }
-    return '/' + lang + '/';
+    return defaultPath;
   } else if (langInPath) {
     if (paths.indexOf(pathname) !== -1) {
       return;
     }
-    return '/' + lang + '/';
+    return defaultPath;
   } else if (paths.indexOf(pathname) !== -1) {
     return '/' + lang + pathname;
   }
@@ -52,5 +53,5 @@ module.exports = function(state) {
   if (paths.indexOf(pathname) !== -1) {
     return '/' + lang + pathname;
   }
-  return '/' + lang + '/';
+  return defaultPath;
 };

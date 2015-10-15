@@ -36,7 +36,6 @@ module.exports = function(state) {
       return pathname;
     }
     return '/' + lang + '/';
-  // remove `redirect` property from the query object before passing it in the replaceWith()
   } else if (langInPath) {
     if (paths.indexOf(pathname) !== -1) {
       return;

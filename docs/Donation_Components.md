@@ -56,7 +56,7 @@ A button that generally submits a donation to Stripe, this looks and works diffe
 
 ## Navigation Components
 
-Components that handle navigation between sequences, or pages. Like a newxt button, a sequence menu, or the actual displayed sequence and navigating between them.
+Components that handle navigation between sequences, or pages. Like a next button, a sequence menu, or the actual displayed sequence and navigating between them.
 
 ### navigation-button.jsx
 

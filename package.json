@@ -93,6 +93,6 @@
     "whatwg-fetch": "0.10.0"
   },
   "devDependencies": {
-    "aws-sdk": "2.2.7"
+    "aws-sdk": "2.2.10"
   }
 }

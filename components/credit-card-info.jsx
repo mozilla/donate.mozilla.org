@@ -158,11 +158,15 @@ var CreditCardInfo = React.createClass({
         </div>
         <div className="row hint-msg-parent">
           <div className="half">
-            <div className="field-container">
-              <i className="fa fa-calendar-o field-icon"></i>
-              <input id="exp-month-input" className={monthClassName} aria-label={this.getIntlMessage('credit_card_expiration_month')} onChange={this.onExpMonthInput} value={this.state.values.expMonth} type="tel" placeholder={this.getIntlMessage('MM')} maxLength="2" name="cc_expir_month" autoComplete="off"/>
-              &nbsp;&frasl;&nbsp;
-              <input id="exp-year-input" className={yearClassName} aria-label={this.getIntlMessage('credit_card_expiration_year')} onChange={this.onExpYearInput} value={this.state.values.expYear} type="tel" placeholder={this.getIntlMessage('YY')} maxLength="2" name="cc_expir_year" autoComplete="off"/>
+            <div className="exp-container">
+              <span className="exp-month-container">
+                <i className="fa fa-calendar-o field-icon"></i>
+                <input id="exp-month-input" className={monthClassName} aria-label={this.getIntlMessage('credit_card_expiration_month')} onChange={this.onExpMonthInput} value={this.state.values.expMonth} type="tel" placeholder={this.getIntlMessage('MM')} maxLength="2" name="cc_expir_month" autoComplete="off"/>
+              </span>
+              <span className="slash-container">&frasl;</span>
+              <span className="exp-year-container">
+                <input id="exp-year-input" className={yearClassName} aria-label={this.getIntlMessage('credit_card_expiration_year')} onChange={this.onExpYearInput} value={this.state.values.expYear} type="tel" placeholder={this.getIntlMessage('YY')} maxLength="2" name="cc_expir_year" autoComplete="off"/>
+              </span>
             </div>
           </div>
           <div className="half">

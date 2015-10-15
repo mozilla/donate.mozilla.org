@@ -1,6 +1,8 @@
 import React from 'react';
+import IntlMixin from 'react-intl';
 
 var Footer = React.createClass({
+  mixins: [IntlMixin],
   render: function() {
     return (
       <footer>
@@ -8,20 +10,17 @@ var Footer = React.createClass({
           <div className="row">
             <div className="half">
               <img src="/images/Mozilla-wordmark.png"/>
-              <p className="license">Portions of this content are &copy;1998&ndash;2015
-                by
-                individual mozilla.org contributors. Content available under a <a href="https://www.mozilla.org/foundation/licensing/website-content/" target="_blank">Creative Commons license</a>.
-              </p>
+              <p className="license">{this.getIntlMessage('footerLicense')}</p>
             </div>
             <div className="quarter">
               <ul>
-                <li><a href="https://www.mozilla.org/mission/" target="_blank">Mission</a></li>
-                <li><a href="https://www.mozilla.org/about/" target="_blank">About</a></li>
-                <li><a href="https://www.mozilla.org/contact/spaces/" target="_blank">Contact</a>
+                <li><a href="https://www.mozilla.org/mission/" target="_blank">{this.getIntlMessage('Mission')}</a></li>
+                <li><a href="https://www.mozilla.org/about/" target="_blank">{this.getIntlMessage('About')}</a></li>
+                <li><a href="https://www.mozilla.org/contact/spaces/" target="_blank">{this.getIntlMessage('Contact')}</a>
                 </li>
-                <li><a href="https://www.mozilla.org/privacy/" target="_blank">Privacy Policy</a>
+                <li><a href="https://www.mozilla.org/privacy/" target="_blank">{this.getIntlMessage('privacyPolicyFooter')}</a>
                 </li>
-                <li><a href="https://www.mozilla.org/about/legal/" target="_blank">Legal Notices</a>
+                <li><a href="https://www.mozilla.org/about/legal/" target="_blank">{this.getIntlMessage('legalNotices')}</a>
                 </li>
               </ul>
             </div>

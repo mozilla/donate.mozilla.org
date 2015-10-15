@@ -344,7 +344,7 @@ module.exports = {
     this.setState({
       submitting: false
     });
-    this.transitionTo('/' + this.props.locales[0] + '/share');
+    this.transitionTo('/' + this.props.locales[0] + '/share/');
   },
   signupError: function(result) {
     this.setState({

@@ -13,8 +13,12 @@ import StripeButton from '../components/stripe-button.jsx';
 var SingleForm = React.createClass({
   mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],
   render: function() {
+    var className = "row";
+    if (this.props.test) {
+      className += " " + this.props.test;
+    }
     return (
-      <div className="row">
+      <div className={className}>
         <Header/>
         <div className="container">
           <SectionHeading>

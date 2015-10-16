@@ -1,0 +1,217 @@
+.container {
+  border-radius: 6px;
+  padding: 10px;
+}
+a {
+  color: #0485B7;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input[type="radio"] + label,
+input[type="checkbox"] + label {
+  font-weight: normal;
+}
+
+h2 {
+  /* hack to make h2 look like h3 while we run the test */
+  /* so markup doesn't need to change */
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  margin-bottom: 32px;
+}
+
+#secure-label {
+  margin: 4px 0;
+  color: #D0D0D0;
+  font-size: 15px;
+}
+.credit-card-section {
+  margin-top: 27px;
+}
+input[type="text"], input[type="number"], input[type="tel"], select, input[type="email"] {
+  margin-bottom: 12px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="tel"],
+select,
+input[type="email"] {
+  border-width: 3px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  background-color: #F7F9FA;
+}
+
+input[type="text"]:focus,
+select:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus {
+  border-color: #06AAEA;
+  background-color: #FFF;
+}
+
+i.fa.field-icon.icon-in-focus,
+i.fa.field-icon.hint {
+  &.on {
+    color: #38A9ED;
+  }
+}
+
+i.fa.field-icon {
+  color: #65656D; /*Mozilla charcoal*/
+  &.fa-lock {
+    top: 13px;
+    font-size: 15px;
+  }
+}
+
+.next-button,
+.submit-btn {
+  background-color: #F65E6C;
+}
+
+.amount-button + label {
+  background-color: #A7AAB3;
+  color: rgb(255, 255, 255);
+}
+input[name="payment-type"] + label {
+  background-color: #E3E3E3;
+  color: black;
+}
+.amount-button + label,
+.next-button,
+.submit-btn,
+input[name="payment-type"] + label {
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: 1px solid rgba(191.25, 191.25, 191.25, 0.4);
+  border-right: 1px solid rgba(191.25, 191.25, 191.25, 0.3);
+  border-bottom: 1px solid rgba(127.5, 127.5, 127.5, 0.3);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3) inset, 0px 0px 0px 1px rgba(255, 255, 255, 0.1) inset, 0px 1px 0px rgba(23, 51, 78, 0.03), 0px 0px 4px rgba(0, 57, 102, 0.2);
+}
+
+.next-button {
+  padding-right: 1.5rem;
+  position: relative;
+  &::before {
+    position: absolute;
+    background-image: linear-gradient(135deg, transparent, rgba(0, 0, 0, 0.2));
+    border-top: 2px solid rgba(255, 255, 255, 0.5);
+    border-left: none;
+    border-right: 2px solid rgba(191.25, 191.25, 191.25, 0.3);
+    border-bottom: none;
+    height: 32px;
+    width: 32px;
+    top: 6px;
+    right: -16px;
+    background-color: #F65E6C;
+    transform: rotate(45deg);
+  }
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.next-button:hover {
+  &::before {
+    background-color: #FF7B87;
+  }
+}
+
+.amount-button + label:hover,
+.next-button:hover,
+.submit-btn:hover,
+input[name="payment-type"] + label:hover {
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+}
+.amount-button + label:hover {
+  background-color: #B3B6BF;
+}
+
+.next-button:hover,
+.submit-btn:hover {
+  background-color: #FF7B87;
+}
+input[name="payment-type"] + label:hover {
+  background-color: #EEEEEE;
+  color: black;
+}
+
+.amount-button:checked + label,
+input[name="payment-type"]:checked + label {
+  background-color: #49AFFD;
+  color: white;
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+}
+
+.credit-card-logos {
+  background-position: center -36px;
+}
+
+.paypal-logo {
+  background-position: center -104px;
+}
+
+label[for="payment-cc"]:hover .payment-logos {
+  background-position: center -36px;
+}
+
+label[for="payment-paypal"]:hover .payment-logos {
+  background-position: center -104px;
+}
+
+#payment-cc:checked + #payment-cc-label {
+  .credit-card-logos {
+    background-position: center -3px;
+  }
+}
+
+#payment-paypal:checked + .payment-submit-button {
+  .payment-logos {
+    background-position: center -70px;
+    color: white;
+  }
+}
+
+@media screen and (min-width: 480px) {
+  .container {
+    padding: 35px;
+  }
+
+  .credit-card-logos {
+    background-position: -16px -55px, center;
+  }
+
+  label[for="payment-cc"]:hover .payment-logos {
+    background-position: -16px -55px, center;
+  }
+
+  .paypal-logo {
+    background-position: -18px -160px, center;
+  }
+
+  label[for="payment-paypal"]:hover .payment-logos {
+    background-position: -18px -160px, center;
+  }
+
+  #payment-cc:checked + #payment-cc-label {
+    .credit-card-logos {
+      background-position: -16px -5px, center;
+    }
+  }
+
+  #payment-paypal:checked + .payment-submit-button {
+    .payment-logos {
+      background-position: -18px -111px, center;
+    }
+  }
+}

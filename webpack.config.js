@@ -49,9 +49,7 @@ module.exports = {
     }),
     new webpack.ContextReplacementPlugin(/buffer/, require('buffer')),
     new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
-      routeFileContent(outputPath, function(content) {
-        callback(content);
-      });
+      routeFileContent(outputPath, callback);
     })
   ]
 };

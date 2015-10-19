@@ -10,6 +10,7 @@ var NextButton = React.createClass({
     return (
       <button onClick={this.onClick} className="next-button">
         {this.getIntlMessage('next')}
+        <div className="button-arrow"></div>
       </button>
     );
   }

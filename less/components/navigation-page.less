@@ -5,21 +5,23 @@
   .sequence-page {
     border: 0 dashed transparent;
     left: 0;
-    position: absolute;
     transition: left 500ms, visibility 500ms;
     padding: 0;
     margin: 0;
     width: 100%;
     visibility: visible;
-
+    position: relative;
+    top: 0;
     &.page-hidden-complete {
       left: -100%;
       visibility: hidden;
+      position: absolute;
     }
 
     &.page-hidden-incomplete {
       left: 100%;
       visibility: hidden;
+      position: absolute;
     }
   }
 }

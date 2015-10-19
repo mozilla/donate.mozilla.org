@@ -31,7 +31,7 @@ module.exports = React.createClass({
     return {
       activePage: 0,
       hideCreditCardDetails: true,
-      height: "252px"
+      height: ""
     };
   },
   expandCreditCardInfo: function() {

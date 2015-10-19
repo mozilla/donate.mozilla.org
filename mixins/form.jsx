@@ -276,12 +276,26 @@ module.exports = {
       exp_month: submitProps.expMonth,
       exp_year: submitProps.expYear
     }, function(status, response) {
+      var stripeProps = {};
       if (response.error) {
         error(response.error.code, response.error.type);
       } else {
-        submitProps.cardNumber = "";
-        submitProps.stripeToken = response.id;
-        submit("/api/stripe", submitProps, success, function(response) {
+        stripeProps = {
+          currency: submitProps.currency,
+          amount: submitProps.amount,
+          frequency: submitProps.frequency,
+          stripeToken: response.id,
+          email: submitProps.email,
+          first: submitProps.first,
+          last: submitProps.last,
+          country: submitProps.country,
+          address: submitProps.address,
+          city: submitProps.city,
+          code: submitProps.code,
+          province: submitProps.province,
+          locale: submitProps.locale
+        };
+        submit("/api/stripe", stripeProps, success, function(response) {
           error(response.stripe.code, response.stripe.rawType);
         });
       }

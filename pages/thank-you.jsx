@@ -16,9 +16,13 @@ var ThankYou = React.createClass({
   },
   render: function() {
     var locale = this.props.locales[0];
+    var className = "row";
+    if (this.props.test) {
+      className += " " + this.props.test;
+    }
     return (
       <div>
-        <div className="row">
+        <div className={className}>
           <Header>
             <h1>{ this.getIntlMessage("from_all_of_us_at_mozilla") }</h1>
 

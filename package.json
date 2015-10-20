@@ -86,7 +86,7 @@
     "request": "2.65.0",
     "scooter": "2.0.1",
     "selenium-webdriver": "2.48.0",
-    "should": "7.1.0",
+    "should": "7.1.1",
     "simple-html-precompiler": "1.0.1",
     "stripe": "4.0.0",
     "webpack": "1.12.2",

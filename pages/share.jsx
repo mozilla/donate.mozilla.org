@@ -7,8 +7,12 @@ var ThankYou = React.createClass({
   mixins: [require('react-intl').IntlMixin],
   render: function() {
     var language = this.props.locales[0];
+    var className = "row";
+    if (this.props.test) {
+      className += " " + this.props.test;
+    }
     return (
-      <div className="row">
+      <div className={className}>
         <Header>
           <h1>{this.getIntlMessage('tell_your_friends')}</h1>
           <h4>{this.getIntlMessage('help_spread_the_word')}</h4>

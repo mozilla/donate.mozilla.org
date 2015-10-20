@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 284 116" enable-background="new 0 0 284 116" xml:space="preserve">
+<g>
+	<defs>
+		<rect id="SVGID_1_" x="-0.5" y="0.5" width="284" height="116"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_2_)">
+		<circle fill="#00FFBC" cx="141" cy="146" r="144"/>
+		<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="19" y1="146" x2="263" y2="146">
+			<stop  offset="0" style="stop-color:#A9E0FF"/>
+			<stop  offset="1" style="stop-color:#34CBFF"/>
+		</linearGradient>
+		<circle fill="url(#SVGID_3_)" cx="141" cy="146" r="122"/>
+		<line fill="none" stroke="#F2F2F2" stroke-width="1.1232" stroke-miterlimit="10" x1="252.5" y1="96.8" x2="206.3" y2="108.4"/>
+		<polyline fill="none" stroke="#F2F2F2" stroke-width="1.1232" stroke-miterlimit="10" points="225.4,131.5 205.4,109.3 
+			219.3,85.1 219.3,45.2 187.1,62.2 		"/>
+		<line fill="none" stroke="#F2F2F2" stroke-width="1.1232" stroke-miterlimit="10" x1="197" y1="81.3" x2="205.4" y2="109.3"/>
+		<path fill="none" stroke="#F2F2F2" stroke-width="1.1232" stroke-miterlimit="10" d="M205.4,109.3l-49-24.1"/>
+		<path fill="none" stroke="#F2F2F2" stroke-width="1.1232" stroke-miterlimit="10" d="M178.6,119c-1.9-1.1-19.3-32.4-19.3-32.4"/>
+		<path fill="none" stroke="#F2F2F2" stroke-width="1.1232" stroke-miterlimit="10" d="M178.6,119.8l8.6-58.5
+			c-1.1,0.3-30,22.7-30,22.7l25.2-69.9l-45.2,31"/>
+		<line fill="none" stroke="#F2F2F2" stroke-width="1.1232" stroke-miterlimit="10" x1="114.9" y1="20.3" x2="137.9" y2="45.2"/>
+		<line fill="none" stroke="#F2F2F2" stroke-width="1.1232" stroke-miterlimit="10" x1="137.2" y1="44.5" x2="156.4" y2="85.1"/>
+		<path fill="none" stroke="#F2F2F2" stroke-width="1.1232" stroke-miterlimit="10" d="M137.2,46.3c-1.9,1.5-47.9,71.7-47.9,71.7"/>
+		<path fill="none" stroke="#F2F2F2" stroke-width="1.1232" stroke-miterlimit="10" d="M154,83.2c-2.2-0.6-43.7-24.9-43.7-24.9"/>
+		<path fill="none" stroke="#F2F2F2" stroke-width="1.1232" stroke-miterlimit="10" d="M154,86.5c-1.5,1-27,16-27,16L85.9,85.1
+			c0,0-49.8-9.2-49.8-8.5c0,0.7,51.8,39.9,51.8,39.9l39.2-13.2"/>
+		<path fill="none" stroke="#F2F2F2" stroke-width="1.1232" stroke-miterlimit="10" d="M89.3,114.1c1.9-2.4,21.1-57.1,21.1-57.1
+			s-24.4,29-24.4,28.6s-2.3-24.1-2.3-24.1l-10.2-20"/>
+		<circle fill="#05C7DB" cx="182.4" cy="14.2" r="10.6"/>
+		<circle fill="#05C7DB" cx="156.4" cy="85.1" r="10.6"/>
+		<circle fill="#05C7DB" cx="205.1" cy="109.3" r="10.6"/>
+		<circle fill="#03DDC2" cx="186.8" cy="61.4" r="6"/>
+		<circle fill="#03DDC2" cx="137.9" cy="45.2" r="6"/>
+		<circle fill="#03DDC2" cx="85.9" cy="85.1" r="6"/>
+		<circle fill="#03DDC2" cx="114.9" cy="20.3" r="6"/>
+		<circle fill="#03DDC2" cx="219.3" cy="45.2" r="6"/>
+		<circle fill="#03DDC2" cx="253.5" cy="96.8" r="4.2"/>
+		<circle fill="#03DDC2" cx="219" cy="84.1" r="3.8"/>
+		<circle fill="#03DDC2" cx="196.7" cy="81.3" r="3.8"/>
+		<circle fill="#03DDC2" cx="127.1" cy="102.5" r="3.8"/>
+		<circle fill="#03DDC2" cx="110.3" cy="57.6" r="3.8"/>
+		<circle fill="#03DDC2" cx="82.9" cy="60.8" r="3.8"/>
+		<circle fill="#03DDC2" cx="73.4" cy="41.4" r="3.8"/>
+		<circle fill="#03DDC2" cx="87.9" cy="116.6" r="10.6"/>
+		<circle fill="#05C7DB" cx="38.1" cy="77.4" r="10.6"/>
+	</g>
+</g>
+</svg>

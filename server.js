@@ -48,11 +48,15 @@ server.route([
     path: '/api/signup',
     handler: routes.signup,
     config: {
+      payload: {
+        maxBytes: 32000,
+        allow: 'application/json'
+      },
       security: securityConfig,
       validate: {
-        params: {
-          locale: Joi.string().min(2).max(12),
-          email: Joi.string().email()
+        payload: {
+          locale: Joi.string().min(2).max(12).required(),
+          email: Joi.string().email().required()
         }
       },
       response: {
@@ -64,22 +68,26 @@ server.route([
     path: '/api/stripe',
     handler: routes.stripe,
     config: {
+      payload: {
+        maxBytes: 32000,
+        allow: 'application/json'
+      },
       security: securityConfig,
       validate: {
-        params: {
-          currency: Joi.string().min(3).max(3),
-          amount: Joi.number(),
-          frequency: Joi.string().min(6).max(7),
-          stripeToken: [Joi.string(), Joi.number()],
-          email: Joi.string().email(),
-          first: Joi.string(),
-          last: Joi.string(),
-          country: Joi.string(),
-          address: Joi.string(),
-          city: Joi.string(),
-          code: Joi.string(),
-          province: Joi.string(),
-          locale: Joi.string().min(2).max(12)
+        payload: {
+          currency: Joi.string().min(3).max(3).required(),
+          amount: Joi.number().required(),
+          frequency: Joi.string().min(6).max(7).required(),
+          stripeToken: [Joi.string().required(), Joi.number().required()],
+          email: Joi.string().email().required(),
+          first: Joi.string().required(),
+          last: Joi.string().required(),
+          country: Joi.string().required(),
+          address: Joi.string().required(),
+          city: Joi.string().required(),
+          code: Joi.string().required(),
+          province: Joi.string().required(),
+          locale: Joi.string().min(2).max(12).required()
         }
       },
       response: {
@@ -97,14 +105,18 @@ server.route([
     path: '/api/paypal',
     handler: routes.paypal,
     config: {
+      payload: {
+        maxBytes: 32000,
+        allow: 'application/json'
+      },
       security: securityConfig,
       validate: {
-        params: {
-          frequency: Joi.string().min(6).max(7),
-          currency: Joi.string().min(3).max(3),
-          amount: Joi.number(),
-          locale: Joi.string().min(2).max(12),
-          description: Joi.string()
+        payload: {
+          frequency: Joi.string().min(6).max(7).required(),
+          description: Joi.string().required(),
+          amount: Joi.number().required(),
+          locale: Joi.string().min(2).max(12).required(),
+          currency: Joi.string().min(1).max(4).required()
         }
       },
       response: {

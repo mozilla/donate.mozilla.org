@@ -45,7 +45,7 @@
     "babel-loader": "5.3.2",
     "blankie": "1.1.1",
     "boom": "2.9.0",
-    "buffer": "3.5.1",
+    "buffer": "3.4.3",
     "cross-spawn": "0.4.1",
     "dependency-check": "2.5.1",
     "enhanced-require": "0.5.0-beta6",

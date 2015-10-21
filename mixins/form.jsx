@@ -296,7 +296,11 @@ module.exports = {
           locale: submitProps.locale
         };
         submit("/api/stripe", stripeProps, success, function(response) {
-          error(response.stripe.code, response.stripe.rawType);
+          if (response.stripe) {
+            error(response.stripe.code, response.stripe.rawType);
+          } else {
+            error(response.statusCode, response.error);
+          }
         });
       }
     });

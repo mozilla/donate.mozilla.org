@@ -86,7 +86,7 @@ server.route([
           address: Joi.string().required(),
           city: Joi.string().required(),
           code: Joi.string().required(),
-          province: Joi.string().required(),
+          province: Joi.string(),
           locale: Joi.string().min(2).max(12).required()
         }
       },

@@ -6,7 +6,7 @@ import Pontoon from '../components/pontoon.jsx';
 var Index = React.createClass({
   render: function() {
     var metaData = this.props.metaData;
-    var googleFonts = "https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic";
+    var googleFonts = "https://fonts.googleapis.com/css?family=Open+Sans:600,400,300,300italic";
     if (this.props.localeInfo === "cs") {
       googleFonts += "&subset=latin-ext";
     }

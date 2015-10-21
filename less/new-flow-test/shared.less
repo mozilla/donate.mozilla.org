@@ -81,6 +81,8 @@ i.fa.field-icon {
 .button-arrow,
 .submit-btn {
   background-color: #F65E6C;
+  font-size: 22px;
+  font-weight: 400;
 }
 
 .amount-button + label {
@@ -162,6 +164,10 @@ input[name="payment-type"] + label {
 .amount-button + label:hover,
 .next-button:hover,
 .submit-btn:hover,
+input[name="payment-type"] + label:hover {
+  // This is needed to override the baseline background.
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+}
 input[name="payment-type"] + label:hover {
   // This is needed to override the baseline background.
   background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.1));

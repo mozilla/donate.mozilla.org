@@ -94,11 +94,18 @@ input[name="payment-type"] + label {
 #twitter,
 input[name="payment-type"] + label {
   background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+  transition: background 0s;
+  border-radius: 3px;
+}
+.amount-button + label,
+.next-button,
+.button-arrow,
+.submit-btn,
+.social-button,
+input[name="payment-type"] + label {
   position: relative;
   padding-top: 5px;
   padding-bottom: 5px;
-  transition: background 0s;
-  border-radius: 3px;
   &::before {
     content: '';
     position: absolute;

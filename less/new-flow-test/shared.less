@@ -26,7 +26,7 @@ h2 {
 }
 
 #secure-label {
-  margin: 4px 0;
+  margin: 9px 0 0 0;
   color: #D0D0D0;
   font-size: 15px;
 }
@@ -57,6 +57,11 @@ input[type="tel"]:focus {
   background-color: #FFF;
 }
 
+input.parsley-error, input.parsley-error:focus, select.parsley-error, select.parsley-error:focus {
+  border-color: #fB707D;
+}
+
+
 i.fa.field-icon.icon-in-focus,
 i.fa.field-icon.hint {
   &.on {
@@ -83,8 +88,8 @@ i.fa.field-icon {
   color: rgb(255, 255, 255);
 }
 input[name="payment-type"] + label {
-  background-color: #E3E3E3;
-  color: black;
+  background-color: #EBEBEB;
+  color: #65656D;
 }
 .amount-button + label,
 .next-button,
@@ -111,23 +116,30 @@ input[name="payment-type"] + label {
   }
 }
 
+input[name="payment-type"] + label {
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+}
+
 .next-button {
   &:hover {
     .button-arrow {
       background-color: #FF7B87;
     }
   }
-  padding-right: 1.5rem;
-  border-radius: 3px 0 0 3px;
+  padding-left: 25px;
+  border-radius: 3px 2px 2px 3px;
   &::before {
     border-radius: 3px 0 0 3px;
+    right: 0;
   }
 }
 
 .button-arrow {
-  border-radius: 0 3px 0 0;
+  border-radius: 0 3px 0 100%;
   &::before {
-    border-radius: 0 3px 0 0;
+    border-radius: 0 0 0 0;
+    left: 0;
+    bottom: 0;
   }
 }
 
@@ -152,7 +164,7 @@ input[name="payment-type"] + label {
 .submit-btn:hover,
 input[name="payment-type"] + label:hover {
   // This is needed to override the baseline background.
-  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
 }
 .amount-button + label:hover {
   background-color: #B3B6BF;
@@ -163,8 +175,7 @@ input[name="payment-type"] + label:hover {
   background-color: #FF7B87;
 }
 input[name="payment-type"] + label:hover {
-  background-color: #EEEEEE;
-  color: black;
+  background-color: #F2F2F2;
 }
 
 .amount-button:checked + label,

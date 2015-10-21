@@ -1,7 +1,15 @@
 .amount-buttons {
-  .amount-other-wrapper {
-    top: 3px;
-    right: 3px;
-    height: 41px;
+  .amount-other-container {
+    input[name="donation_amount"] + label {
+      padding: 5px 12px;
+    }
+    input[name="donation_amount"]:checked + label {
+      background: #0095DD;
+    }
+    .amount-other-wrapper {
+      top: 3px;
+      right: 3px;
+      height: 39px;
+    }
   }
 }

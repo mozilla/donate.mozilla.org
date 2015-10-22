@@ -33,17 +33,6 @@ var securityConfig = {
 
 server.route([
   {
-    method: 'GET',
-    path: '/{params*}',
-    handler: {
-      directory: {
-        path: Path.join(__dirname, 'public')
-      }
-    },
-    config: {
-      security: securityConfig
-    }
-  }, {
     method: 'POST',
     path: '/api/signup',
     handler: routes.signup,
@@ -169,6 +158,9 @@ module.exports = {
   start: function(done) {
     server.register([
       {
+        register: require('inert')
+      },
+      {
         register: require('good'),
         options: {
           reporters: [{
@@ -201,6 +193,19 @@ module.exports = {
       if (err) {
         throw err;
       }
+
+      server.route({
+        method: 'GET',
+        path: '/{params*}',
+        handler: {
+          directory: {
+            path: Path.join(__dirname, 'public')
+          }
+        },
+        config: {
+          security: securityConfig
+        }
+      });
 
       server.start(function() {
         server.log('info', 'Running server at: ' + server.info.uri);

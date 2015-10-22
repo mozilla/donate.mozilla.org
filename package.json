@@ -64,7 +64,7 @@
     "inject-loader": "2.0.1",
     "joi": "6.9.1",
     "json-loader": "0.5.3",
-    "karma": "0.13.11",
+    "karma": "0.13.14",
     "karma-chrome-launcher": "0.2.0",
     "karma-coverage": "0.5.3",
     "karma-coveralls": "1.1.2",

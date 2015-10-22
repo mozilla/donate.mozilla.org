@@ -58,7 +58,7 @@
     "good": "6.4.0",
     "good-console": "5.1.0",
     "habitat": "3.1.2",
-    "hapi": "8.8.1",
+    "hapi": "11.0.1",
     "imports-loader": "0.6.5",
     "inject-loader": "2.0.1",
     "joi": "6.9.1",

@@ -75,7 +75,7 @@
     "karma-webpack": "1.7.0",
     "mkdirp": "0.5.1",
     "mocha": "2.3.3",
-    "newrelic": "1.22.1",
+    "newrelic": "1.22.2",
     "npm-run-all": "1.2.12",
     "polyfill-service": "2.1.0-beta.1",
     "properties-parser": "0.3.0",

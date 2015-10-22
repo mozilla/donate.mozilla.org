@@ -314,15 +314,21 @@ module.exports = {
       return;
     }
     submitProps = this.buildProps(props);
+    var locale = this.props.locales[0];
+    var currency = this.state.currency && this.state.currency.code;
     var handler = StripeCheckout.configure({
       // Need to get this from .env
       key: process.env.STRIPE_PUBLIC_KEY,
       image: '',
       token: function(response) {
         // Where is this things error? Maybe it's not called at all for an error case.
-        submitProps.cardNumber = "";
-        submitProps.stripeToken = response.id;
-        submit("/api/stripe", submitProps, success);
+        submit("/api/stripe-checkout", {
+          frequency: submitProps.frequency,
+          amount: submitProps.amount,
+          stripeToken: response.id,
+          currency: currency,
+          locale: locale
+        }, success);
       }
     });
 

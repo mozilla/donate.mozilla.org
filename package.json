@@ -65,7 +65,7 @@
     "joi": "6.9.1",
     "json-loader": "0.5.3",
     "karma": "0.13.14",
-    "karma-chrome-launcher": "0.2.0",
+    "karma-chrome-launcher": "0.2.1",
     "karma-coverage": "0.5.3",
     "karma-coveralls": "1.1.2",
     "karma-firefox-launcher": "0.1.6",

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IntlMixin } from 'react-intl';
+import { IntlMixin, FormattedHTMLMessage } from 'react-intl';
 
 module.exports = React.createClass({
   mixins: [IntlMixin],

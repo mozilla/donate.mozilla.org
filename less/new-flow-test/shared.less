@@ -111,8 +111,8 @@ input[name="payment-type"] + label {
 .social-button,
 input[name="payment-type"] + label {
   position: relative;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  transition: background 0s;
+  border-radius: 3px;
   &::before {
     content: '';
     position: absolute;
@@ -123,6 +123,19 @@ input[name="payment-type"] + label {
     bottom: 1px;
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
+}
+
+.amount-button + label,
+.next-button,
+.button-arrow,
+#facebook,
+#twitter {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.submit-btn {
+  padding-top: 3px;
+  padding-bottom: 7px;
 }
 
 input[name="payment-type"] + label {

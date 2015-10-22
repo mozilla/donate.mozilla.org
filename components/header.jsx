@@ -4,7 +4,7 @@ var Footer = React.createClass({
   render: function() {
     return (
       <div className="header">
-        <img src="/images/Mozilla-wordmark.png"/>
+        <img src="/images/mozilla.svg"/>
         <div className="header-copy">
           <div className="row">
             {this.props.children}

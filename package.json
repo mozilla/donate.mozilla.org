@@ -41,7 +41,6 @@
   "homepage": "https://github.com/mozilla/donate.mozilla.org#readme",
   "dependencies": {
     "autoless": "0.1.7",
-    "aws-sdk": "2.2.11",
     "babel": "5.8.23",
     "babel-loader": "5.3.2",
     "blankie": "1.1.1",
@@ -95,7 +94,7 @@
     "whatwg-fetch": "0.10.0"
   },
   "devDependencies": {
-    "aws-sdk": "2.2.10"
+    "aws-sdk": "2.2.11"
   },
   "engines": {
     "node": "4.2.1"

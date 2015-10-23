@@ -24,7 +24,11 @@ server.connection({
 });
 
 var securityConfig = {
-  hsts: process.env.HSTS_ENABLED === 'true' ? 15768000 : false,
+  hsts: {
+    maxAge: 15768000,
+    includeSubDomains: true,
+    preload: true
+  },
   xframe: process.env.ENABLE_XFRAMEOPTIONS === 'true',
   xss: true,
   noOpen: true,

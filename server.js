@@ -95,6 +95,35 @@ server.route([
     }
   }, {
     method: 'POST',
+    path: '/api/stripe-checkout',
+    handler: routes.stripe,
+    config: {
+      payload: {
+        maxBytes: 32000,
+        allow: 'application/json'
+      },
+      security: securityConfig,
+      validate: {
+        payload: {
+          currency: Joi.string().min(3).max(3).required(),
+          amount: Joi.number().required(),
+          frequency: Joi.string().min(6).max(7).required(),
+          stripeToken: [Joi.string().required(), Joi.number().required()],
+          locale: Joi.string().min(2).max(12).required()
+        }
+      },
+      response: {
+        schema: {
+          id: Joi.string(),
+          frequency: Joi.string().valid("monthly", "one-time"),
+          currency: Joi.string().min(3).max(3),
+          quantity: Joi.number(),
+          amount: Joi.number()
+        }
+      }
+    }
+  }, {
+    method: 'POST',
     path: '/api/paypal',
     handler: routes.paypal,
     config: {

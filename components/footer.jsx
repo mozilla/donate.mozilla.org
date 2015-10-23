@@ -1,5 +1,5 @@
 import React from 'react';
-import IntlMixin from 'react-intl';
+import { IntlMixin, FormattedHTMLMessage } from 'react-intl';
 
 var Footer = React.createClass({
   mixins: [IntlMixin],
@@ -10,7 +10,11 @@ var Footer = React.createClass({
           <div className="row">
             <div className="half">
               <img src="/images/Mozilla-wordmark.png"/>
-              <p className="license">{this.getIntlMessage('footerLicense')}</p>
+              <p className="license">
+                <FormattedHTMLMessage
+                  message={ this.getIntlMessage("footerLicense") }
+                />
+              </p>
             </div>
             <div className="quarter">
               <ul>

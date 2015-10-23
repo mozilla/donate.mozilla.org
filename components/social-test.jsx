@@ -14,17 +14,17 @@ module.exports = React.createClass({
           </h2>
           <div className="row">
             <div className="half" id="facebook">
+              <div className="social-button"></div>
               <a href={facebookShareURL} target="_blank">
-                <i className="fa fa-facebook fa-5x"></i>
-
-                <p>facebook</p>
+                <i className="fa fa-facebook fa-4x"></i>
+                <div>facebook</div>
               </a>
             </div>
             <div className="half" id="twitter">
+              <div className="social-button"></div>
               <a href={twitterShareURL} target="_blank">
                 <i className="fa fa-twitter fa-5x"></i>
-
-                <p>twitter</p>
+                <div>twitter</div>
               </a>
             </div>
           </div>

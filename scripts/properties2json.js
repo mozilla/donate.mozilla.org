@@ -6,6 +6,9 @@ var FS = require("q-io/fs");
 
 function getListLocales() {
   return new Promise(function(resolve, reject) {
+    if (config.supportedLocales !== "*") {
+      return resolve(config.supportedLocales);
+    }
     FS.listDirectoryTree(path.join(process.cwd(), config.src)).then(function(dirTree) {
       var list = [];
       dirTree.forEach(function(i) {
@@ -45,9 +48,6 @@ function getContentMessages(locale) {
 }
 
 function processMessageFiles(locales) {
-  if (config.supportedLocales !== "*") {
-    locales = config.supportedLocales;
-  }
   return Promise.all(locales.map(getContentMessages));
 }
 

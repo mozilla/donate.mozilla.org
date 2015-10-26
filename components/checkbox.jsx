@@ -4,10 +4,10 @@ import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
 var Checkbox = React.createClass({
   mixins: [IntlMixin],
   getInitialState: function() {
-    var values = {};
-    values[this.props.type] = false;
     return {
-      values: values,
+      values: {
+        [this.props.type]: false
+      },
       valid: true
     };
   },
@@ -18,10 +18,10 @@ var Checkbox = React.createClass({
     this.setState({
       valid: true
     });
-    var values = {};
-    values[this.props.type] = e.currentTarget.checked;
     this.setState({
-      values: values
+      values: {
+        [this.props.type]: e.currentTarget.checked
+      }
     });
     this.props.onChange(this.props.name, this);
   },

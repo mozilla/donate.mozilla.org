@@ -1,7 +1,7 @@
 require('habitat').load();
 
 module.exports = {
-  "supportedLocales": process.env.SUPPORTED_LOCALES || ["en-US", "de", "fr", "pt-BR", "es", "id"],
+  "supportedLocales": process.env.SUPPORTED_LOCALES || "*",
   "dest": "locales",
   "src": "locales",
   "paypalLocales": {

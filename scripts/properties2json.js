@@ -1,7 +1,34 @@
-var config = require('../intl-config.json');
+var config = require('../intl-config.js');
 var properties = require('properties-parser');
 var write = require('fs-writefile-promise');
 var path = require('path');
+var FS = require("q-io/fs");
+var Habitat = require('habitat');
+Habitat.load();
+var env = new Habitat();
+
+var supportedLocales = env.get('SUPPORTED_LOCALES') || "*";
+
+function getListLocales() {
+  return new Promise(function(resolve, reject) {
+    if (Array.isArray(supportedLocales)) {
+      return resolve(supportedLocales);
+    }
+    FS.listDirectoryTree(path.join(process.cwd(), config.src)).then(function(dirTree) {
+      var list = [];
+      dirTree.forEach(function(i) {
+        var that = i.split(config.src + '/');
+        if (that[1]) {
+          list.push(that[1]);
+        }
+      });
+      return resolve(list);
+    }).catch(function(e) {
+      console.log(e);
+      reject(e);
+    });
+  });
+}
 
 function writeFile(entries) {
   entries.reduce(function(prevEntry, entry) {
@@ -14,7 +41,7 @@ function writeFile(entries) {
   }, {});
 }
 
-function getJSON(locale) {
+function getContentMessages(locale) {
   return new Promise(function(resolve, reject) {
     properties.read(path.join(process.cwd(), config.src, locale, 'messages.properties'), function(error, properties) {
       if (error) {
@@ -26,10 +53,10 @@ function getJSON(locale) {
 }
 
 function processMessageFiles(locales) {
-  return Promise.all(locales.map(getJSON));
+  return Promise.all(locales.map(getContentMessages));
 }
 
-processMessageFiles(config.supportedLocales)
+getListLocales().then(processMessageFiles)
 .then(writeFile).catch(function(err) {
   console.error(err);
   throw err;

@@ -1,6 +1,6 @@
 var httpRequest = require('request');
 var querystring = require('querystring');
-var paypalLocales = require('../intl-config.json').paypalLocales;
+var paypalLocales = require('../intl-config.js').paypalLocales;
 
 function setupPaypal(transaction, recurring, callback) {
   var charge = {

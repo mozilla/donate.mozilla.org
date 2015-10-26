@@ -1,5 +1,4 @@
-{
-  "supportedLocales": ["en-US", "de", "fr", "pt-BR", "es", "id"],
+module.exports = {
   "dest": "locales",
   "src": "locales",
   "paypalLocales": {
@@ -9,4 +8,4 @@
     "pt-BR": "BR",
     "id": "id_ID"
   }
-}
+};

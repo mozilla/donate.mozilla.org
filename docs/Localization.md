@@ -41,7 +41,7 @@ We are using [properties2json](../scripts/properties2json.js) to convert from .p
 
 ##### config for localization
 
-`intl-config.json`
+`intl-config.js`
 ``` json
 {
   "supportedLocales": ["en-US", "de", "fr", "pt-BR", "es"],
@@ -49,6 +49,8 @@ We are using [properties2json](../scripts/properties2json.js) to convert from .p
   "src": "locales"
 }
 ```
+Note: You can set `supportedLocales` to '*' in your `.env` to enable all locales under `src` directory.
+See the main README for more details.
 
 ##### .properties template
 

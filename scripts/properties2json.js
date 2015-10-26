@@ -1,7 +1,26 @@
-var config = require('../intl-config.json');
+var config = require('../intl-config.js');
 var properties = require('properties-parser');
 var write = require('fs-writefile-promise');
 var path = require('path');
+var FS = require("q-io/fs");
+
+function getListLocales() {
+  return new Promise(function(resolve, reject) {
+    FS.listDirectoryTree(path.join(process.cwd(), config.src)).then(function(dirTree) {
+      var list = [];
+      dirTree.forEach(function(i) {
+        var that = i.split(config.src + '/');
+        if (that[1]) {
+          list.push(that[1]);
+        }
+      });
+      return resolve(list);
+    }).catch(function(e) {
+      console.log(e);
+      reject(e);
+    });
+  });
+}
 
 function writeFile(entries) {
   entries.reduce(function(prevEntry, entry) {
@@ -14,7 +33,7 @@ function writeFile(entries) {
   }, {});
 }
 
-function getJSON(locale) {
+function getContentMessages(locale) {
   return new Promise(function(resolve, reject) {
     properties.read(path.join(process.cwd(), config.src, locale, 'messages.properties'), function(error, properties) {
       if (error) {
@@ -26,10 +45,13 @@ function getJSON(locale) {
 }
 
 function processMessageFiles(locales) {
-  return Promise.all(locales.map(getJSON));
+  if (config.supportedLocales !== "*") {
+    locales = config.supportedLocales;
+  }
+  return Promise.all(locales.map(getContentMessages));
 }
 
-processMessageFiles(config.supportedLocales)
+getListLocales().then(processMessageFiles)
 .then(writeFile).catch(function(err) {
   console.error(err);
   throw err;

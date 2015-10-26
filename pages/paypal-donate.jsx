@@ -5,7 +5,7 @@ import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
 import SubmitButton from '../components/submit-button.jsx';
 import DonateButton from '../components/donate-button.jsx';
-import {paypalLocales} from '../intl-config.json';
+import {paypalLocales} from '../intl-config.js';
 import amountModifier from '../scripts/amount-modifier.js';
 import { IntlMixin } from 'react-intl';
 

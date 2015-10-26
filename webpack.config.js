@@ -1,11 +1,10 @@
+require('habitat').load();
 require('babel/register');
 var webpack = require('webpack');
 var SimpleHtmlPrecompiler = require('simple-html-precompiler');
 var Path = require('path');
 var paths = require('./scripts/paths.js');
 var routeFileContent = require('./scripts/route-file-content.js');
-
-require('habitat').load();
 
 module.exports = {
   entry: './components/client.jsx',

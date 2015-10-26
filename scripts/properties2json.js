@@ -3,11 +3,16 @@ var properties = require('properties-parser');
 var write = require('fs-writefile-promise');
 var path = require('path');
 var FS = require("q-io/fs");
+var Habitat = require('habitat');
+Habitat.load();
+var env = new Habitat();
+
+var supportedLocales = env.get('SUPPORTED_LOCALES') || "*";
 
 function getListLocales() {
   return new Promise(function(resolve, reject) {
-    if (config.supportedLocales !== "*") {
-      return resolve(config.supportedLocales);
+    if (Array.isArray(supportedLocales)) {
+      return resolve(supportedLocales);
     }
     FS.listDirectoryTree(path.join(process.cwd(), config.src)).then(function(dirTree) {
       var list = [];

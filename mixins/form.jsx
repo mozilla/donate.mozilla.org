@@ -185,9 +185,15 @@ module.exports = {
       currency = data.currency;
     }
 
+    var location = "thank-you";
+    // If we are already signed up, send to share.
+    if (data.signup) {
+      location = "share";
+    }
+
     var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' + donationFrequency;
 
-    this.transitionTo('/' + this.props.locales[0] + '/thank-you/?' + params);
+    this.transitionTo('/' + this.props.locales[0] + '/' + location + '/?' + params);
   },
   stripeError: function(errorCode, errorType) {
     var newState = {};
@@ -293,7 +299,8 @@ module.exports = {
           city: submitProps.city,
           code: submitProps.code,
           province: submitProps.province,
-          locale: submitProps.locale
+          locale: submitProps.locale,
+          signup: submitProps.signup
         };
         submit("/api/stripe", stripeProps, success, function(response) {
           if (response.stripe) {

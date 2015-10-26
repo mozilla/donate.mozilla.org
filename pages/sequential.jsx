@@ -21,7 +21,7 @@ import CrediCardInfo from '../components/credit-card-info.jsx';
 import Name from '../components/name-input.jsx';
 import Address from '../components/address-input.jsx';
 import Email from '../components/email-input.jsx';
-import PrivacyPolicy from '../components/privacy-policy-input.jsx';
+import {PrivacyPolicyCheckbox, SignupCheckbox} from '../components/checkbox.jsx';
 
 import IntlMixin from 'react-intl';
 
@@ -138,12 +138,13 @@ module.exports = React.createClass({
                 error={this.state.errors.address}
               />
               <Email onChange={this.onChange} name="email" info={this.getIntlMessage("email_info")}/>
-              <PrivacyPolicy onChange={this.onChange} name="privacyPolicy"/>
+              <PrivacyPolicyCheckbox onChange={this.onChange} name="privacyPolicy"/>
+              <SignupCheckbox onChange={this.onChange} name="signup"/>
               <SubmitButton
                 submitting={this.state.submitting}
                 validate={["name", "address", "email", "privacyPolicy"]}
                 onSubmit={this.stripe}
-                submit={["amount", "frequency", "creditCardInfo", "name", "address", "email"]}
+                submit={["amount", "frequency", "creditCardInfo", "name", "address", "email", "signup"]}
                 error={this.state.errors.other}
               >
                 <DonateButton

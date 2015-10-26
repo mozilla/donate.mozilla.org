@@ -1,4 +1,5 @@
 var httpRequest = require('request');
+var signup = require('./signup');
 var stripe = require('./stripe');
 var paypal = require('./paypal');
 var boom = require('boom');
@@ -6,20 +7,8 @@ var amountModifier = require('../scripts/amount-modifier');
 
 var routes = {
   'signup': function(request, reply) {
-    var url = process.env.SIGNUP;
     var transaction = request.payload || {};
-    httpRequest.post({
-      url: url,
-      json: true,
-      form: {
-        format: 'html',
-        lang: transaction.locale,
-        newsletters: 'mozilla-foundation',
-        trigger_welcome: 'N',
-        source_url: 'https://donate.mozilla.org/',
-        email: transaction.email
-      }
-    }, function(err, response, body) {
+    signup(transaction, function(err, response, body) {
       if (err) {
         reply(boom.wrap(err, 500, 'Unable to complete Basket signup'));
       } else if (body.status === "error") {
@@ -48,11 +37,15 @@ var routes = {
           };
           reply(badRequest);
         } else {
+          if (transaction.signup) {
+            signup(transaction);
+          }
           reply({
             frequency: "one-time",
             amount: charge.amount,
             currency: charge.currency,
-            id: charge.id
+            id: charge.id,
+            signup: transaction.signup
           }).code(200);
         }
       });
@@ -73,7 +66,8 @@ var routes = {
           city: transaction.city,
           zip: transaction.code,
           state: transaction.province,
-          locale: transaction.locale
+          locale: transaction.locale,
+          signup: transaction.signup
         }
       }, function(err, subscription) {
         if (err) {
@@ -82,11 +76,15 @@ var routes = {
             rawType: err.rawType
           }));
         } else {
+          if (transaction.signup) {
+            signup(transaction);
+          }
           reply({
             frequency: "monthly",
             currency: subscription.plan.currency,
             quantity: subscription.quantity,
-            id: subscription.id
+            id: subscription.id,
+            signup: transaction.signup
           }).code(200);
         }
       });

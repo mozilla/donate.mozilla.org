@@ -19,7 +19,7 @@ import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
 import CrediCardInfo from '../components/credit-card-info.jsx';
 import Name from '../components/name-input.jsx';
-import Address from '../components/address-input.jsx';
+import {FullAddress, PartialAddress} from '../components/address-input.jsx';
 import Email from '../components/email-input.jsx';
 import {PrivacyPolicyCheckbox, SignupCheckbox} from '../components/checkbox.jsx';
 
@@ -52,6 +52,23 @@ module.exports = React.createClass({
       paymentType: "PayPal"
     });
     this.updateHeight();
+  },
+  renderSubmitButton: function(data) {
+    var amount = this.state.props.amount.values.amount;
+    var currency = this.state.currency;
+    return (
+      <SubmitButton
+        submitting={this.state.submitting}
+        validate={data.validate}
+        onSubmit={this.stripe}
+        submit={data.submit}
+        error={this.state.errors.other}
+      >
+        <DonateButton
+          amount={amount} currency={currency.code}
+        />
+      </SubmitButton>
+    );
   },
   render: function() {
     var creditCardDetailsClassName = "row credit-card-section";
@@ -132,25 +149,36 @@ module.exports = React.createClass({
                 <h2>{this.getIntlMessage("personal")}</h2>
               </SectionHeading>
               <Name onChange={this.onChange} name="name"/>
-              <Address
-                onChange={this.onChange}
-                name="address"
-                error={this.state.errors.address}
-              />
+              <div className="base-line-address">
+                <FullAddress
+                  onChange={this.onChange}
+                  name="address-full"
+                  error={this.state.errors.address}
+                />
+              </div>
+              <div className="partial-address">
+                <PartialAddress
+                  onChange={this.onChange}
+                  name="address-partial"
+                  error={this.state.errors.address}
+                />
+              </div>
               <Email onChange={this.onChange} name="email" info={this.getIntlMessage("email_info")}/>
               <PrivacyPolicyCheckbox onChange={this.onChange} name="privacyPolicy"/>
               <SignupCheckbox onChange={this.onChange} name="signup"/>
-              <SubmitButton
-                submitting={this.state.submitting}
-                validate={["name", "address", "email", "privacyPolicy"]}
-                onSubmit={this.stripe}
-                submit={["amount", "frequency", "creditCardInfo", "name", "address", "email", "signup"]}
-                error={this.state.errors.other}
-              >
-                <DonateButton
-                  amount={amount} currency={currency.code}
-                />
-              </SubmitButton>
+
+              <div className="base-line-address">
+                {this.renderSubmitButton({
+                  validate: ["name", "address-full", "email", "privacyPolicy"],
+                  submit: ["amount", "frequency", "creditCardInfo", "name", "address-full", "email", "signup"]
+                })}
+              </div>
+              <div className="partial-address">
+                {this.renderSubmitButton({
+                  validate: ["name", "address-partial", "email", "privacyPolicy"],
+                  submit: ["amount", "frequency", "creditCardInfo", "name", "address-partial", "email", "signup"]
+                })}
+              </div>
             </Page>
           </NavigationContainer>
 

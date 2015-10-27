@@ -8,7 +8,7 @@ public/build/*
 
 public/*.hot-update.js*
 public/index.html
-public/*/index.html
+public/**/*.html
 public/main.js
 public/exchange-rates/latest.json
 locales/*.json

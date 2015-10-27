@@ -1,4 +1,3 @@
-var httpRequest = require('request');
 var signup = require('./signup');
 var stripe = require('./stripe');
 var paypal = require('./paypal');

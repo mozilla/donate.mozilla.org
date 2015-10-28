@@ -1,5 +1,6 @@
 import React from 'react';
 import IntlMixin from 'react-intl';
+import Input from './input.jsx';
 
 var CountrySelect = React.createClass({
   mixins: [IntlMixin],
@@ -624,45 +625,6 @@ var Province = React.createClass({
   }
 });
 
-var Input = React.createClass({
-  mixins: [IntlMixin],
-  propTypes: {
-    onChange: React.PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
-      valid: true
-    };
-  },
-  onInputChange: function(e) {
-    this.setState({
-      valid: true
-    });
-    this.props.onChange(this.props.name, this, this.props.type, e.currentTarget.value);
-  },
-  validate: function() {
-    var valid = true;
-    valid = !!this.props.value;
-    this.setState({
-      valid: valid
-    });
-    return valid;
-  },
-  componentDidMount: function() {
-    this.props.onChange(this.props.name, this);
-  },
-  render: function() {
-    var className = "";
-    if (!this.state.valid) {
-      className += "parsley-error";
-    }
-    return (
-      <input className={className} type="text" name={this.props.type} onChange={this.onInputChange} value={this.props.value} placeholder={this.props.placeholder}/>
-    );
-  }
-});
-
-// TODO: ensure code error works after submission from stripe, or ensure we don't need to do that.
 var Code = React.createClass({
   mixins: [IntlMixin],
   propTypes: {

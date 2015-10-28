@@ -28,9 +28,9 @@ module.exports = {
           expMonth: "",
           expYear: ""
         },
-        address: {
+        code: {
           page: 0,
-          code: ""
+          message: ""
         },
         other: {
           page: 0,
@@ -57,6 +57,9 @@ module.exports = {
     newState[name] = element;
     if (field && this.state.errors[name] && this.state.errors[name][field]) {
       newState.errors[name][field] = "";
+    }
+    if (field && this.state.errors[field] && this.state.errors[field].message) {
+      newState.errors[field].message = "";
     }
     this.setState(newState);
     this.updateHeight();
@@ -232,8 +235,8 @@ module.exports = {
         message: this.getIntlMessage('incorrect_CVC')
       },
       "incorrect_zip": {
-        name: "address",
-        field: "code",
+        name: "code",
+        field: "message",
         message: this.getIntlMessage('invalid_zip')
       },
       "card_declined": {

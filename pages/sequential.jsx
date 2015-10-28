@@ -87,6 +87,11 @@ module.exports = React.createClass({
     var city = props.city;
     var code = props.code;
     var currency = this.state.currency;
+    var addressErrorClassName = "row error-msg-row";
+    var codeError = this.state.errors.code.message;
+    if (codeError === "") {
+      addressErrorClassName += " hidden";
+    }
     return (
       <div className={className}>
         <Header/>
@@ -150,7 +155,7 @@ module.exports = React.createClass({
               </div>
             </Page>
 
-            <Page activePage={this.state.activePage} index={2} onError={this.onPageError} errors={[this.state.errors.address, this.state.errors.other]}>
+            <Page activePage={this.state.activePage} index={2} onError={this.onPageError} errors={[this.state.errors.code, this.state.errors.other]}>
               <SectionHeading>
                 <h2>{this.getIntlMessage("personal")}</h2>
               </SectionHeading>
@@ -183,6 +188,7 @@ module.exports = React.createClass({
                       name="code"
                       onChange={this.updateFormField}
                       value={code}
+                      error={codeError}
                     />
                   </div>
                   <div className="full">
@@ -207,7 +213,19 @@ module.exports = React.createClass({
                       name="code-test"
                       onChange={this.updateFormField}
                       value={code}
+                      error={codeError}
                     />
+                  </div>
+                </div>
+                <div className={addressErrorClassName}>
+                  <div className="full">
+                    <div id="amount-error-msg">
+                      <ul id="parsley-id-multiple-donation_amount" className="parsley-errors-list filled">
+                        <li className="parsley-custom-error-message">
+                          {codeError}
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>

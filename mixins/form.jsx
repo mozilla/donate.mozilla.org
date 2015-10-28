@@ -19,6 +19,7 @@ module.exports = {
         address: "",
         code: ""
       },
+      values: {},
       errors: {
         creditCardInfo: {
           page: 0,
@@ -63,9 +64,9 @@ module.exports = {
   updateFormField: function(name, element, field, value) {
     this.onChange(name, element, field);
     var newProps = this.state.props;
-    var newValues = this.state.values || {};
+    var newValues = this.state.values;
     newProps[field] = value;
-    newValues[name] = value;
+    newValues[name] = field;
     this.setState({
       props: newProps,
       values: newValues
@@ -356,7 +357,9 @@ module.exports = {
         prop = state.values;
       }
       if (!prop) {
-        prop = self.state.values[name];
+        prop = {
+          [self.state.values[name]]: self.state.props[self.state.values[name]]
+        };
       }
       // Modify props to now contain the values in prop.
       assign(props, prop);
@@ -398,7 +401,6 @@ module.exports = {
         submitting: true
       });
       submitProps = this.buildProps(props);
-
       if (submitProps.frequency === "monthly") {
         description = this.getIntlMessage("mozilla_monthly_donation");
       }

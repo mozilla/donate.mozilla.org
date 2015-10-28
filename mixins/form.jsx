@@ -11,16 +11,13 @@ module.exports = {
       presets: this.props.presets,
       currency: this.props.currency,
       props: {
-        amount: {
-          values: {
-            amount: this.props.amount
-          }
-        },
-        frequency: {
-          values: {
-            frequency: this.props.frequency
-          }
-        }
+        amount:  this.props.amount,
+        frequency: this.props.frequency,
+        country: "US",
+        province: "",
+        city: "",
+        address: "",
+        code: ""
       },
       errors: {
         creditCardInfo: {
@@ -53,42 +50,42 @@ module.exports = {
       });
     });
   },
-  onChange: function(name, value, field) {
+  onChange: function(name, element, field) {
     var newState = {};
     newState.errors = this.state.errors;
-    newState[name] = value;
+    newState[name] = element;
     if (field && this.state.errors[name] && this.state.errors[name][field]) {
       newState.errors[name][field] = "";
     }
     this.setState(newState);
     this.updateHeight();
   },
-  updateFormField: function(name, value, values) {
-    this.onChange(name, value);
-    if (!values) {
-      return;
-    }
+  updateFormField: function(name, element, field, value) {
+    this.onChange(name, element, field);
     var newProps = this.state.props;
-    newProps[name].values = values;
+    var newValues = this.state.values || {};
+    newProps[field] = value;
+    newValues[name] = value;
     this.setState({
-      props: newProps
+      props: newProps,
+      values: newValues
     });
   },
-  onFrequencyChange: function(name, value, values) {
-    if (values && this.state.props.frequency.values.frequency !== values.frequency) {
+  onFrequencyChange: function(name, element, frequency) {
+    if (frequency && this.state.props.frequency !== frequency) {
       this.setState({
-        presets: this.state.currency.presets[values.frequency]
+        presets: this.state.currency.presets[frequency]
       });
     }
-    this.updateFormField(name, value, values);
+    this.updateFormField(name, element, "frequency", frequency);
   },
   onCurrencyChanged: function(e) {
     var value = e.currentTarget.value;
     var currencies = this.props.currencies;
     var currency = currencies[value] || this.state.currency;
-    var presets = currency.presets[this.state.props.frequency.values.frequency];
+    var presets = currency.presets[this.state.props.frequency];
     var newProps = this.state.props;
-    newProps.amount.values.amount = "";
+    newProps.amount = "";
     this.setState({
       presets: presets,
       currency: currency,
@@ -359,7 +356,7 @@ module.exports = {
         prop = state.values;
       }
       if (!prop) {
-        prop = self.state.props[name].values;
+        prop = self.state.values[name];
       }
       // Modify props to now contain the values in prop.
       assign(props, prop);
@@ -395,11 +392,17 @@ module.exports = {
   onSubmit: function(action, validate, props, success, error) {
     var valid = this.validateProps(validate);
     var submitProps = {};
+    var description = this.getIntlMessage("mozilla_donation");
     if (valid) {
       this.setState({
         submitting: true
       });
       submitProps = this.buildProps(props);
+
+      if (submitProps.frequency === "monthly") {
+        description = this.getIntlMessage("mozilla_monthly_donation");
+      }
+      submitProps.description = description;
       this.submit(action, submitProps, success, error);
     }
   }

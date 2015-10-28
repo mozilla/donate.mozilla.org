@@ -28,7 +28,7 @@ var simplePaypal = React.createClass({
   },
   render: function() {
     var currencyCode = this.state.currency.code;
-    var amount = this.state.props.amount.values.amount;
+    var amount = this.state.props.amount;
     var className = "row";
     if (this.props.test) {
       className += " " + this.props.test;
@@ -67,7 +67,7 @@ var simplePaypal = React.createClass({
                     amount={amount}
                   />
                   <Frequency onChange={this.onFrequencyChange} name="frequency"
-                    value={this.state.props.frequency.values.frequency}
+                    value={this.state.props.frequency}
                   />
                   <SubmitButton
                     submitting={this.state.submitting}

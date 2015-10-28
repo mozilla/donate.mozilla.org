@@ -544,189 +544,177 @@ var ProvinceSelect = React.createClass({
   }
 });
 
-var FullAddress = React.createClass({
-  mixins: [IntlMixin, require("../mixins/input.jsx")],
+var Country = React.createClass({
+  mixins: [IntlMixin],
   propTypes: {
-    error: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired
   },
   getInitialState: function() {
     return {
-      values: {
-        country: "US",
-        province: "",
-        address: "",
-        city: "",
-        code: ""
-      },
-      countryValid: true,
-      provinceValid: true,
-      addressValid: true,
-      cityValid: true,
-      codeValid: true
+      valid: true
     };
   },
   onCountryChange: function(e) {
-    this.onInput("country", e.currentTarget.value);
-  },
-  onProvinceChange: function(e) {
-    this.onInput("province", e.currentTarget.value);
-  },
-  onAddressChange: function(e) {
-    this.onInput("address", e.currentTarget.value);
-  },
-  onCityChange: function(e) {
-    this.onInput("city", e.currentTarget.value);
-  },
-  onCodeChange: function(e) {
-    this.onInput("code", e.currentTarget.value);
+    this.setState({
+      valid: true
+    });
+    this.props.onChange(this.props.name, this, "country", e.currentTarget.value);
   },
   validate: function() {
-    var valid = this.validateFields(["address", "city", "code"]);
+    var valid = true;
     if (!this.refs.countrySelect.validate()) {
       valid = false;
       this.setState({
-        countryValid: valid
-      });
-    }
-    if (!this.refs.provinceSelect.validate()) {
-      valid = false;
-      this.setState({
-        provinceValid: valid
+        valid: valid
       });
     }
     return valid;
   },
+  componentDidMount: function() {
+    this.props.onChange(this.props.name, this);
+  },
   render: function() {
-    var countryClassName = "";
-    if (!this.state.countryValid) {
-      countryClassName += " parsley-error";
-    }
-    var provinceClassName = "";
-    if (!this.state.provinceValid) {
-      provinceClassName += "parsley-error";
-    }
-    var addressClassName = "";
-    if (!this.state.addressValid) {
-      addressClassName += "parsley-error";
-    }
-    var cityClassName = "";
-    if (!this.state.cityValid) {
-      cityClassName += "parsley-error";
-    }
-    var errorMessageClassName = "row error-msg-row";
-    var errorMessage = this.props.error.code;
-    var codeClassName = "";
-    if (!this.state.codeValid || errorMessage) {
-      codeClassName += "parsley-error";
-    }
-    if (errorMessage === "") {
-      errorMessageClassName += " hidden";
+    var className = "";
+    if (!this.state.valid) {
+      className += " parsley-error";
     }
     return (
-      <div className="row address-input">
-        <div className="full">
-          <CountrySelect ref="countrySelect" country={this.state.values.country} onCountryChange={this.onCountryChange} className={countryClassName}/>
-        </div>
-        <div className="full">
-          <input className={addressClassName} type="text" name="addr1" onChange={this.onAddressChange} value={this.state.values.address} placeholder={this.getIntlMessage('address')}/>
-        </div>
-        <div className="half">
-          <input className={cityClassName} type="text" name="city" onChange={this.onCityChange} value={this.state.values.city} placeholder={this.getIntlMessage('city')}/>
-        </div>
-        <div className="half">
-          <input className={codeClassName} onChange={this.onCodeChange} value={this.state.values.code} type="text" name="zip" placeholder={this.getIntlMessage('postal_code')}/>
-        </div>
-        <div className="full">
-          <ProvinceSelect ref="provinceSelect" country={this.state.values.country} onProvinceChange={this.onProvinceChange} className={provinceClassName} province={this.state.values.province}/>
-        </div>
-        <div className={errorMessageClassName}>
-          <div className="full">
-            <div id="amount-error-msg">
-              <ul id="parsley-id-multiple-donation_amount" className="parsley-errors-list filled">
-                <li className="parsley-custom-error-message">
-                  {errorMessage}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+      <CountrySelect ref="countrySelect" country={this.props.value} onCountryChange={this.onCountryChange} className={className}/>
     );
   }
 });
 
-var PartialAddress = React.createClass({
-  mixins: [IntlMixin, require("../mixins/input.jsx")],
+var Province = React.createClass({
+  mixins: [IntlMixin],
   propTypes: {
-    error: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired
   },
   getInitialState: function() {
     return {
-      values: {
-        country: "US",
-        code: ""
-      },
-      countryValid: true,
-      codeValid: true
+      valid: true
     };
   },
-  onCountryChange: function(e) {
-    this.onInput("country", e.currentTarget.value);
-  },
-  onCodeChange: function(e) {
-    this.onInput("code", e.currentTarget.value);
+  onProvinceChange: function(e) {
+    this.setState({
+      valid: true
+    });
+    this.props.onChange(this.props.name, this, "province", e.currentTarget.value);
   },
   validate: function() {
-    var valid = this.validateFields(["code"]);
-    if (!this.refs.countrySelect.validate()) {
+    var valid = true;
+    if (!this.refs.provinceSelect.validate()) {
       valid = false;
       this.setState({
-        countryValid: valid
+        valid: valid
       });
     }
     return valid;
   },
+  componentDidMount: function() {
+    this.props.onChange(this.props.name, this);
+  },
   render: function() {
-    var countryClassName = "";
-    if (!this.state.countryValid) {
-      countryClassName += " parsley-error";
-    }
-    var errorMessageClassName = "row error-msg-row";
-    var errorMessage = this.props.error.code;
-    var codeClassName = "";
-    if (!this.state.codeValid || errorMessage) {
-      codeClassName += "parsley-error";
-    }
-    if (errorMessage === "") {
-      errorMessageClassName += " hidden";
+    var className = "";
+    if (!this.state.valid) {
+      className += " parsley-error";
     }
     return (
-      <div className="row address-input">
-        <div className="full">
-          <CountrySelect ref="countrySelect" country={this.state.values.country} onCountryChange={this.onCountryChange} className={countryClassName}/>
-        </div>
-        <div className="full">
-          <input className={codeClassName} onChange={this.onCodeChange} value={this.state.values.code} type="text" name="zip" placeholder={this.getIntlMessage('postal_code')}/>
-        </div>
-        <div className={errorMessageClassName}>
-          <div className="full">
-            <div id="amount-error-msg">
-              <ul id="parsley-id-multiple-donation_amount" className="parsley-errors-list filled">
-                <li className="parsley-custom-error-message">
-                  {errorMessage}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ProvinceSelect ref="provinceSelect" country={this.props.country} onProvinceChange={this.onProvinceChange} className={className} province={this.props.value}/>
+    );
+  }
+});
+
+var Input = React.createClass({
+  mixins: [IntlMixin],
+  propTypes: {
+    onChange: React.PropTypes.func.isRequired
+  },
+  getInitialState: function() {
+    return {
+      valid: true
+    };
+  },
+  onInputChange: function(e) {
+    this.setState({
+      valid: true
+    });
+    this.props.onChange(this.props.name, this, this.props.type, e.currentTarget.value);
+  },
+  validate: function() {
+    var valid = true;
+    valid = !!this.props.value;
+    this.setState({
+      valid: valid
+    });
+    return valid;
+  },
+  componentDidMount: function() {
+    this.props.onChange(this.props.name, this);
+  },
+  render: function() {
+    var className = "";
+    if (!this.state.valid) {
+      className += "parsley-error";
+    }
+    return (
+      <input className={className} type="text" name={this.props.type} onChange={this.onInputChange} value={this.props.value} placeholder={this.props.placeholder}/>
+    );
+  }
+});
+
+// TODO: ensure code error works after submission from stripe, or ensure we don't need to do that.
+var Code = React.createClass({
+  mixins: [IntlMixin],
+  propTypes: {
+    onChange: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return (
+      <Input
+        {...this.props}
+        placeholder={this.getIntlMessage('postal_code')}
+        type="code"
+      />
+    );
+  }
+});
+
+var City = React.createClass({
+  mixins: [IntlMixin],
+  propTypes: {
+    onChange: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return (
+      <Input
+        {...this.props}
+        placeholder={this.getIntlMessage('city')}
+        type="city"
+      />
+    );
+  }
+});
+
+var Address = React.createClass({
+  mixins: [IntlMixin],
+  propTypes: {
+    onChange: React.PropTypes.func.isRequired
+  },
+  render: function() {
+    return (
+      <Input
+        {...this.props}
+        placeholder={this.getIntlMessage('address')}
+        type="address"
+      />
     );
   }
 });
 
 module.exports = {
-  FullAddress: FullAddress,
-  PartialAddress: PartialAddress
+  Country: Country,
+  Address: Address,
+  Province: Province,
+  City: City,
+  Code: Code
 };

@@ -41,7 +41,7 @@ module.exports = {
     };
   },
   componentDidMount: function() {
-    dispatcher.on("onCurrencyChange", this.onCurrencyChanged);
+    dispatcher.on("currencyChange", this.onCurrencyChanged);
   },
   onCurrencyChanged: function(detail) {
     var value = detail.value;

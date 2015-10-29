@@ -12,7 +12,8 @@ module.exports = function(transaction, callback) {
       newsletters: 'mozilla-foundation',
       trigger_welcome: 'N',
       source_url: 'https://donate.mozilla.org/',
-      email: transaction.email
+      email: transaction.email,
+      country: transaction.country
     }
   }, callback);
 };

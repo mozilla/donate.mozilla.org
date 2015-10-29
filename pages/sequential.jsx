@@ -19,7 +19,7 @@ import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
 import CrediCardInfo from '../components/credit-card-info.jsx';
 import Name from '../components/name-input.jsx';
-import {FullAddress, PartialAddress} from '../components/address-input.jsx';
+import {Country, Address, Province, City, Code} from '../components/address-input.jsx';
 import Email from '../components/email-input.jsx';
 import {PrivacyPolicyCheckbox, SignupCheckbox} from '../components/checkbox.jsx';
 
@@ -54,7 +54,7 @@ module.exports = React.createClass({
     this.updateHeight();
   },
   renderSubmitButton: function(data) {
-    var amount = this.state.props.amount.values.amount;
+    var amount = this.state.props.amount;
     var currency = this.state.currency;
     return (
       <SubmitButton
@@ -79,8 +79,19 @@ module.exports = React.createClass({
     if (this.state.hideCreditCardDetails) {
       creditCardDetailsClassName += " hidden";
     }
-    var amount = this.state.props.amount.values.amount;
+    var props = this.state.props;
+    var amount = props.amount;
+    var country = props.country;
+    var province = props.province;
+    var address = props.address;
+    var city = props.city;
+    var code = props.code;
     var currency = this.state.currency;
+    var addressErrorClassName = "row error-msg-row";
+    var codeError = this.state.errors.code.message;
+    if (codeError === "") {
+      addressErrorClassName += " hidden";
+    }
     return (
       <div className={className}>
         <Header/>
@@ -117,7 +128,7 @@ module.exports = React.createClass({
                 onChange={this.updateFormField}
                 amount={amount} presets={this.state.presets}
               />
-              <Frequency onChange={this.onFrequencyChange} name="frequency" value={this.state.props.frequency.values.frequency}/>
+              <Frequency onChange={this.onFrequencyChange} name="frequency" value={props.frequency}/>
               <NextButton onClick={this.nextPage} validate={["amount"]}/>
             </Page>
 
@@ -144,24 +155,79 @@ module.exports = React.createClass({
               </div>
             </Page>
 
-            <Page activePage={this.state.activePage} index={2} onError={this.onPageError} errors={[this.state.errors.address, this.state.errors.other]}>
+            <Page activePage={this.state.activePage} index={2} onError={this.onPageError} errors={[this.state.errors.code, this.state.errors.other]}>
               <SectionHeading>
                 <h2>{this.getIntlMessage("personal")}</h2>
               </SectionHeading>
               <Name onChange={this.onChange} name="name"/>
-              <div className="base-line-address">
-                <FullAddress
-                  onChange={this.onChange}
-                  name="address-full"
-                  error={this.state.errors.address}
-                />
-              </div>
-              <div className="partial-address">
-                <PartialAddress
-                  onChange={this.onChange}
-                  name="address-partial"
-                  error={this.state.errors.address}
-                />
+              <div className="row address-input">
+                <div className="base-line-address">
+                  <div className="full">
+                    <Country
+                      name="country"
+                      onChange={this.updateFormField}
+                      value={country}
+                    />
+                  </div>
+                  <div className="full">
+                    <Address
+                      name="address"
+                      onChange={this.updateFormField}
+                      value={address}
+                    />
+                  </div>
+                  <div className="half">
+                    <City
+                      name="city"
+                      onChange={this.updateFormField}
+                      value={city}
+                    />
+                  </div>
+                  <div className="half">
+                    <Code
+                      name="code"
+                      onChange={this.updateFormField}
+                      value={code}
+                      error={codeError}
+                    />
+                  </div>
+                  <div className="full">
+                    <Province
+                      name="province"
+                      onChange={this.updateFormField}
+                      value={province}
+                      country={country}
+                    />
+                  </div>
+                </div>
+                <div className="partial-address">
+                  <div className="full">
+                    <Country
+                      name="country-test"
+                      onChange={this.updateFormField}
+                      value={country}
+                    />
+                  </div>
+                  <div className="full">
+                    <Code
+                      name="code-test"
+                      onChange={this.updateFormField}
+                      value={code}
+                      error={codeError}
+                    />
+                  </div>
+                </div>
+                <div className={addressErrorClassName}>
+                  <div className="full">
+                    <div id="amount-error-msg">
+                      <ul id="parsley-id-multiple-donation_amount" className="parsley-errors-list filled">
+                        <li className="parsley-custom-error-message">
+                          {codeError}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
               <Email onChange={this.onChange} name="email" info={this.getIntlMessage("email_info")}/>
               <PrivacyPolicyCheckbox onChange={this.onChange} name="privacyPolicy"/>
@@ -169,14 +235,14 @@ module.exports = React.createClass({
 
               <div className="base-line-address">
                 {this.renderSubmitButton({
-                  validate: ["name", "address-full", "email", "privacyPolicy"],
-                  submit: ["amount", "frequency", "creditCardInfo", "name", "address-full", "email", "signup"]
+                  validate: ["name", "country", "address", "city", "code", "province", "email", "privacyPolicy"],
+                  submit: ["amount", "frequency", "creditCardInfo", "name", "country", "address", "city", "code", "province", "email", "signup"]
                 })}
               </div>
               <div className="partial-address">
                 {this.renderSubmitButton({
-                  validate: ["name", "address-partial", "email", "privacyPolicy"],
-                  submit: ["amount", "frequency", "creditCardInfo", "name", "address-partial", "email", "signup"]
+                  validate: ["name", "country-test", "code-test", "email", "privacyPolicy"],
+                  submit: ["amount", "frequency", "creditCardInfo", "name", "country-test", "code-test", "email", "signup"]
                 })}
               </div>
             </Page>

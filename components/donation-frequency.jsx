@@ -9,14 +9,7 @@ module.exports = React.createClass({
     this.updateFrequency(e.currentTarget.value);
   },
   updateFrequency: function(frequency) {
-    var description = this.getIntlMessage("mozilla_donation");
-    if (frequency === "monthly") {
-      description = this.getIntlMessage("mozilla_monthly_donation");
-    }
-    this.props.onChange(this.props.name, this, {
-      frequency: frequency,
-      description: description
-    });
+    this.props.onChange(this.props.name, this, frequency);
   },
   validate: function() {
     return true;

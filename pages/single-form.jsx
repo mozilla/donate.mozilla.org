@@ -36,11 +36,11 @@ var SingleForm = React.createClass({
           <AmountButtons name="amount"
             currency={this.state.currency}
             onChange={this.updateFormField}
-            amount={this.state.props.amount.values.amount}
+            amount={this.state.props.amount}
             presets={this.state.presets}
           />
           <Frequency onChange={this.onFrequencyChange} name="frequency"
-            value={this.state.props.frequency.values.frequency}
+            value={this.state.props.frequency}
           />
           <div className="payment-section">
             <SectionHeading>

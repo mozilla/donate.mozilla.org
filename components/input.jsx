@@ -1,9 +1,7 @@
 import React from 'react';
+import dispatcher from '../scripts/input-dispatcher.js';
 
 module.exports = React.createClass({
-  propTypes: {
-    onChange: React.PropTypes.func.isRequired
-  },
   getInitialState: function() {
     return {
       valid: true
@@ -13,7 +11,10 @@ module.exports = React.createClass({
     this.setState({
       valid: true
     });
-    this.props.onChange(this.props.name, this, this.props.type, e.currentTarget.value);
+    dispatcher.fieldChange({
+      field: this.props.type,
+      value: e.currentTarget.value
+    });
   },
   validate: function() {
     var valid = true;
@@ -26,7 +27,11 @@ module.exports = React.createClass({
     return valid;
   },
   componentDidMount: function() {
-    this.props.onChange(this.props.name, this, this.props.type, this.props.value);
+    dispatcher.fieldReady({
+      name: this.props.name,
+      element: this,
+      field: this.props.type
+    });
   },
   render: function() {
     var className;
@@ -34,7 +39,12 @@ module.exports = React.createClass({
       className += " parsley-error";
     }
     return (
-      <input className={className} type="text" name={this.props.type} onChange={this.onInputChange} value={this.props.value} placeholder={this.props.placeholder}/>
+      <input
+        autoComplete={this.props.autoComplete} autoCorrect={this.props.autoCorrect} autoCapitalize={this.props.autoCapitalize} spellCheck={this.props.spellCheck}
+        className={className} type="text" name={this.props.type}
+        onChange={this.onInputChange} value={this.props.value}
+        placeholder={this.props.placeholder}
+      />
     );
   }
 });

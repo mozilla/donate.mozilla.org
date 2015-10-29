@@ -17,11 +17,12 @@ import CreditCardButton from '../components/credit-card-button.jsx';
 
 import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
-import CrediCardInfo from '../components/credit-card-info.jsx';
-import Name from '../components/name-input.jsx';
+import {CardNumber, CardCvc, CardExpMonth, CardExpYear} from '../components/credit-card-info.jsx';
+import {FirstName, LastName} from '../components/name-input.jsx';
 import {Country, Address, Province, City, Code} from '../components/address-input.jsx';
 import Email from '../components/email-input.jsx';
 import {PrivacyPolicyCheckbox, SignupCheckbox} from '../components/checkbox.jsx';
+import dispatcher from '../scripts/dispatcher.js';
 
 import IntlMixin from 'react-intl';
 
@@ -42,7 +43,7 @@ module.exports = React.createClass({
       paymentType: this.getIntlMessage('credit_card')
     });
     window.setTimeout(this.refs.creditCardInfoField.focus, 500);
-    this.updateHeight();
+    dispatcher.fire("heightChange");
   },
   collapseCreditCardInfo: function() {
     this.setState({
@@ -51,7 +52,7 @@ module.exports = React.createClass({
     this.setState({
       paymentType: "PayPal"
     });
-    this.updateHeight();
+    dispatcher.fire("heightChange");
   },
   renderSubmitButton: function(data) {
     var amount = this.state.props.amount;
@@ -79,6 +80,7 @@ module.exports = React.createClass({
     if (this.state.hideCreditCardDetails) {
       creditCardDetailsClassName += " hidden";
     }
+    
     var props = this.state.props;
     var amount = props.amount;
     var country = props.country;
@@ -87,10 +89,35 @@ module.exports = React.createClass({
     var city = props.city;
     var code = props.code;
     var currency = this.state.currency;
+    var firstName = props.firstName;
+    var lastName = props.lastName;
+    var cardNumber = props.cardNumber;
+    var cvc = props.cvc;
+    var expMonth = props.expMonth;
+    var expYear = props.expYear;
     var addressErrorClassName = "row error-msg-row";
-    var codeError = this.state.errors.code.message;
+    var errors = this.state.errors;
+    var codeError = errors.code.message;
     if (codeError === "") {
       addressErrorClassName += " hidden";
+    }
+    var creditCardErrorClassName = "row error-msg-row";
+    var creditCardError = "";
+    if (errors.cardNumber.message) {
+      creditCardError = errors.cardNumber.message;
+    } else if (errors.cvc.message) {
+      creditCardError = errors.cvc.message;
+    } else if (errors.expMonth.message) {
+      creditCardError = errors.expMonth.message;
+    } else if (errors.expYear.message) {
+      creditCardError = errors.expYear.message;
+    }
+    if (creditCardError === "") {
+      creditCardErrorClassName += " hidden";
+    }
+    var cvcHintClassName = "hint-msg small";
+    if (!this.state.showCvcHint) {
+      cvcHintClassName += " hidden";
     }
     return (
       <div className={className}>
@@ -124,14 +151,13 @@ module.exports = React.createClass({
               </SectionHeading>
               <AmountButtons name="amount"
                 currency={currency}
-                onChange={this.updateFormField}
                 amount={amount} presets={this.state.presets}
               />
-              <Frequency onChange={this.onFrequencyChange} name="frequency" value={props.frequency}/>
+              <Frequency name="frequency" value={props.frequency}/>
               <NextButton validate={["amount"]}/>
             </Page>
 
-            <Page activePage={this.state.activePage} index={1} onError={this.onPageError} errors={[this.state.errors.creditCardInfo]}>
+            <Page activePage={this.state.activePage} index={1} onError={this.onPageError} errors={[errors.cardNumber, errors.cvc, errors.expMonth, errors.expYear]}>
               <SectionHeading>
                 <h2>{this.getIntlMessage("choose_payment")}</h2>
                 <p id="secure-label">
@@ -148,45 +174,96 @@ module.exports = React.createClass({
                 />
               </div>
               <div className={creditCardDetailsClassName}>
-                <CrediCardInfo error={this.state.errors.creditCardInfo}
-                  onChange={this.onChange} name="creditCardInfo" ref="creditCardInfoField"
-                />
-                <NextButton validate={["creditCardInfo"]}/>
+                <div className="credit-card-info">
+                  <div className="row">
+                    <div className="full">
+                      <CardNumber value={cardNumber}
+                        name="cardNumber"
+                        ref="creditCardInfoField"
+                        error={errors.cardNumber.message}
+                      />
+                    </div>
+                  </div>
+                  <div className="row hint-msg-parent">
+                    <div className="half">
+                      <div className="exp-container">
+                        <CardExpMonth value={expMonth}
+                          name="expMonth"
+                          error={errors.expMonth.message}
+                        />
+                        <span className="slash-container">&frasl;</span>
+                        <CardExpYear value={expYear}
+                          name="expYear"
+                          error={errors.expYear.message}
+                        />
+                      </div>
+                    </div>
+                    <div className="half">
+                      <CardCvc
+                        name="cvc"
+                        showHint={this.state.showCvcHint}
+                        value={cvc}
+                        error={errors.cvc.message}
+                      />
+                    </div>
+                    <div className="full">
+                      <div className={cvcHintClassName}>
+                        <img src="/images/CVC-illustration.png" className="left"/>
+                        <div className="">{this.getIntlMessage('cvc_info')}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={creditCardErrorClassName}>
+                    <div className="full">
+                      <div id="amount-error-msg">
+                        <ul id="parsley-id-multiple-donation_amount" className="parsley-errors-list filled">
+                          <li className="parsley-custom-error-message">
+                            {creditCardError}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <NextButton validate={["cardNumber", "expMonth", "expYear", "cvc"]}/>
               </div>
             </Page>
 
-            <Page activePage={this.state.activePage} index={2} onError={this.onPageError} errors={[this.state.errors.code, this.state.errors.other]}>
+            <Page activePage={this.state.activePage} index={2} onError={this.onPageError} errors={[errors.code, errors.other]}>
               <SectionHeading>
                 <h2>{this.getIntlMessage("personal")}</h2>
               </SectionHeading>
-              <Name onChange={this.onChange} name="name"/>
+              <div className="row name-input">
+                <div className="half">
+                  <FirstName name="firstName" value={firstName}/>
+                </div>
+                <div className="half">
+                  <LastName name="lastName" value={lastName}/>
+                </div>
+              </div>
               <div className="row address-input">
                 <div className="base-line-address">
                   <div className="full">
                     <Country
                       name="country"
-                      onChange={this.updateFormField}
                       value={country}
                     />
                   </div>
                   <div className="full">
                     <Address
                       name="address"
-                      onChange={this.updateFormField}
                       value={address}
                     />
                   </div>
                   <div className="half">
                     <City
                       name="city"
-                      onChange={this.updateFormField}
                       value={city}
                     />
                   </div>
                   <div className="half">
                     <Code
                       name="code"
-                      onChange={this.updateFormField}
                       value={code}
                       error={codeError}
                     />
@@ -194,7 +271,6 @@ module.exports = React.createClass({
                   <div className="full">
                     <Province
                       name="province"
-                      onChange={this.updateFormField}
                       value={province}
                       country={country}
                     />
@@ -204,14 +280,12 @@ module.exports = React.createClass({
                   <div className="full">
                     <Country
                       name="country-test"
-                      onChange={this.updateFormField}
                       value={country}
                     />
                   </div>
                   <div className="full">
                     <Code
                       name="code-test"
-                      onChange={this.updateFormField}
                       value={code}
                       error={codeError}
                     />
@@ -229,20 +303,20 @@ module.exports = React.createClass({
                   </div>
                 </div>
               </div>
-              <Email onChange={this.onChange} name="email" info={this.getIntlMessage("email_info")}/>
-              <PrivacyPolicyCheckbox onChange={this.onChange} name="privacyPolicy"/>
-              <SignupCheckbox onChange={this.onChange} name="signup"/>
+              <Email value={props.email} name="email" info={this.getIntlMessage("email_info")}/>
+              <PrivacyPolicyCheckbox checked={props.privacyPolicy} name="privacyPolicy"/>
+              <SignupCheckbox checked={props.signup} name="signup"/>
 
               <div className="base-line-address">
                 {this.renderSubmitButton({
-                  validate: ["name", "country", "address", "city", "code", "province", "email", "privacyPolicy"],
-                  submit: ["amount", "frequency", "creditCardInfo", "name", "country", "address", "city", "code", "province", "email", "signup"]
+                  validate: ["firstName", "lastName", "country", "address", "city", "code", "province", "email", "privacyPolicy"],
+                  submit: ["amount", "frequency", "cardNumber", "expMonth", "expYear", "cvc", "firstName", "lastName", "country", "address", "city", "code", "province", "email", "signup"]
                 })}
               </div>
               <div className="partial-address">
                 {this.renderSubmitButton({
-                  validate: ["name", "country-test", "code-test", "email", "privacyPolicy"],
-                  submit: ["amount", "frequency", "creditCardInfo", "name", "country-test", "code-test", "email", "signup"]
+                  validate: ["firstName", "lastName", "country-test", "code-test", "email", "privacyPolicy"],
+                  submit: ["amount", "frequency", "cardNumber", "expMonth", "expYear", "cvc", "firstName", "lastName", "country-test", "code-test", "email", "signup"]
                 })}
               </div>
             </Page>

@@ -1,15 +1,24 @@
 import React from 'react';
+import dispatcher from '../scripts/input-dispatcher.js';
 
 module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin],
   componentDidMount: function() {
-    this.updateFrequency(this.props.value);
+    // Want to kill this, and make it a regular fieldChange
+    dispatcher.fieldReady({
+      name: this.props.name,
+      element: this,
+      field: "frequency"
+    });
   },
   onChange: function(e) {
-    this.updateFrequency(e.currentTarget.value);
-  },
-  updateFrequency: function(frequency) {
-    this.props.onChange(this.props.name, this, frequency);
+    dispatcher.fieldChange({
+      field: "frequency",
+      value: e.currentTarget.value
+    });
+    dispatcher.fire("frequencyChange", {
+      frequency: e.currentTarget.value
+    });
   },
   validate: function() {
     return true;

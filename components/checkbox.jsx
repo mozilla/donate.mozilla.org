@@ -1,32 +1,33 @@
 import React from 'react';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import dispatcher from '../scripts/input-dispatcher.js';
 
 var Checkbox = React.createClass({
   mixins: [IntlMixin],
   getInitialState: function() {
     return {
-      values: {
-        [this.props.type]: false
-      },
       valid: true
     };
   },
   componentDidMount: function() {
-    this.props.onChange(this.props.name, this);
+    dispatcher.fieldReady({
+      name: this.props.name,
+      element: this,
+      field: this.props.field
+    });
   },
-  onChange: function(e) {
+  onCheck: function(e) {
     this.setState({
       valid: true
     });
-    this.setState({
-      values: {
-        [this.props.type]: e.currentTarget.checked
-      }
+    dispatcher.fire("heightChange");
+    dispatcher.fieldChange({
+      field: this.props.field,
+      value: e.currentTarget.checked
     });
-    this.props.onChange(this.props.name, this);
   },
   validate: function() {
-    var valid = this.state.values[this.props.type];
+    var valid = this.props.checked;
     this.setState({
       valid: valid
     });
@@ -37,12 +38,11 @@ var Checkbox = React.createClass({
     if (this.state.valid) {
       errorMessageClassName += " hidden";
     }
-    var type = this.props.type;
     return (
       <div className="full checkbox">
         <div className="row">
           <div className="full">
-            <input type="checkbox" onChange={this.onChange} checked={this.state.values[type]} name="legal_confirm" id={this.props.id}/>
+            <input type="checkbox" onChange={this.onCheck} checked={this.props.checked} name="legal_confirm" id={this.props.id}/>
             <label htmlFor={this.props.id}>
               <FormattedHTMLMessage message={ this.props.message } />
             </label>
@@ -72,7 +72,7 @@ module.exports = {
           message={this.getIntlMessage("privacy_policy")}
           error={this.getIntlMessage('pp_acknowledge')}
           id="privacy-policy-checkbox"
-          type="privacyPolicy"
+          field="privacyPolicy"
         />
       );
     }
@@ -86,7 +86,7 @@ module.exports = {
             {...this.props}
             message={this.getIntlMessage("yes_i_want_to_keep_in_touch")}
             id="signup-checkbox"
-            type="signup"
+            field="signup"
           />
         </div>
       );

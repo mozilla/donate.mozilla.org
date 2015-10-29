@@ -28,7 +28,6 @@ var SingleForm = React.createClass({
                 <CurrencyDropdown
                   currencies={this.props.currencies}
                   currency={this.state.currency.code}
-                  onChange={this.onCurrencyChanged}
                 />
               </span>
             </h2>

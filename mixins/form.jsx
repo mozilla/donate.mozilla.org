@@ -1,6 +1,7 @@
 import assign from 'react/lib/Object.assign';
 import reactGA from 'react-ga';
 import {Navigation} from 'react-router';
+import dispatcher from '../scripts/dispatcher.js';
 
 module.exports = {
   mixins: [Navigation],
@@ -38,6 +39,22 @@ module.exports = {
         }
       }
     };
+  },
+  componentDidMount: function() {
+    dispatcher.on("onCurrencyChange", this.onCurrencyChanged);
+  },
+  onCurrencyChanged: function(detail) {
+    var value = detail.value;
+    var currencies = this.props.currencies;
+    var currency = currencies[value] || this.state.currency;
+    var presets = currency.presets[this.state.props.frequency];
+    var newProps = this.state.props;
+    newProps.amount = "";
+    this.setState({
+      presets: presets,
+      currency: currency,
+      props: newProps
+    });
   },
   updateHeight: function() {
     if (this.state.activePage !== 0 && !this.state.activePage) {
@@ -82,19 +99,6 @@ module.exports = {
       });
     }
     this.updateFormField(name, element, "frequency", frequency);
-  },
-  onCurrencyChanged: function(e) {
-    var value = e.currentTarget.value;
-    var currencies = this.props.currencies;
-    var currency = currencies[value] || this.state.currency;
-    var presets = currency.presets[this.state.props.frequency];
-    var newProps = this.state.props;
-    newProps.amount = "";
-    this.setState({
-      presets: presets,
-      currency: currency,
-      props: newProps
-    });
   },
   onPageError: function(errors, index) {
     var stateErrors = this.state.errors;

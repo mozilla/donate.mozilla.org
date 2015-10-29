@@ -5,7 +5,7 @@ var IntlContext = { messages: {'country': 'c', 'address': 'a', city: 'c', postal
 var stubContext = require('react-test-context');
 var {Address, Code, City} = require('../../components/address-input.jsx');
 
-describe('address-input.jsx', function() {
+describe('address-input.jsx {Address, Code, City}', function() {
   var items = [Address, Code, City];
   items.forEach(function(Item) {
     it('should require a field props', function() {
@@ -27,7 +27,7 @@ describe('address-input.jsx', function() {
       should.doesNotThrow(() => {
         var Element = stubContext(Item, IntlContext);
         var Input;
-        var el = TestUtils.renderIntoDocument(React.createElement(stubContext(Element, IntlContext),{
+        TestUtils.renderIntoDocument(React.createElement(stubContext(Element, IntlContext),{
           onChange: function(name, input) {
             Input = input;
           }
@@ -39,7 +39,7 @@ describe('address-input.jsx', function() {
       should.doesNotThrow(() => {
         var Element = stubContext(Item, IntlContext);
         var Input;
-        var el = TestUtils.renderIntoDocument(React.createElement(stubContext(Element, IntlContext),{
+        TestUtils.renderIntoDocument(React.createElement(stubContext(Element, IntlContext),{
           onChange: function(name, input) {
             Input = input;
           },
@@ -52,7 +52,7 @@ describe('address-input.jsx', function() {
       should.doesNotThrow(() => {
         var Element = stubContext(Item, IntlContext);
         var Input;
-        var el = TestUtils.renderIntoDocument(React.createElement(stubContext(Element, IntlContext),{
+        TestUtils.renderIntoDocument(React.createElement(stubContext(Element, IntlContext),{
           onChange: function(name, input) {
             Input = input;
           },

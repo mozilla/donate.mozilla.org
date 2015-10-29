@@ -118,7 +118,6 @@ module.exports = React.createClass({
                     <CurrencyDropdown
                       currencies={this.props.currencies}
                       currency={currency.code}
-                      onChange={this.onCurrencyChanged}
                     />
                   </span>
                 </h2>

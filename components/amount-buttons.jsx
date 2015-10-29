@@ -1,5 +1,6 @@
 import React from 'react';
 import {FormattedMessage, FormattedNumber} from 'react-intl';
+import dispatcher from '../scripts/input-dispatcher.js';
 
 var AmountButton = React.createClass({
   render: function() {
@@ -82,7 +83,11 @@ var AmountButtons = React.createClass({
       userInputting: userInputting,
       valid: true
     });
-    this.props.onChange(this.props.name, this, "amount", amount);
+    dispatcher.fire("heightChange");
+    dispatcher.fieldChange({
+      field: "amount",
+      value: amount
+    });
   },
   otherRadioChange: function() {
     this.setAmount("", true);
@@ -130,7 +135,11 @@ var AmountButtons = React.createClass({
     return this.state.errorMessage;
   },
   componentDidMount: function() {
-    this.props.onChange(this.props.name, this, "amount", this.props.amount);
+    dispatcher.fieldReady({
+      name: this.props.name,
+      element: this,
+      field: "amount"
+    });
   },
   render: function() {
     var otherAmount = "";

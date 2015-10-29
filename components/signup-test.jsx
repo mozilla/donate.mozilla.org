@@ -1,6 +1,7 @@
 import React from 'react';
 import IntlMixin from 'react-intl';
 import Email from '../components/email-input.jsx';
+import {PrivacyPolicyCheckbox} from '../components/checkbox.jsx';
 import SubmitButton from '../components/submit-button.jsx';
 
 var Form = React.createClass({
@@ -17,9 +18,10 @@ var Form = React.createClass({
           <div className="wrap">
             <div className="row">
               <Email onChange={this.onChange} name="email-test"/>
+              <PrivacyPolicyCheckbox onChange={this.onChange} name="privacyPolicy"/>
               <SubmitButton
                 submitting={this.state.submitting}
-                validate={["email-test"]}
+                validate={["email-test", "privacyPolicy"]}
                 onSubmit={this.signup}
                 submit={["email-test"]}
                 error={this.state.errors.other}

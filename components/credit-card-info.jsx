@@ -5,7 +5,7 @@ var regMC = /^(?:5[1-5][0-9]{14})$/;
 var regAMEX = /^(?:3[47][0-9]{13})$/;
 
 var CreditCardInfo = React.createClass({
-  mixins: [require('react-intl').IntlMixin, require("../mixins/input.jsx")],
+  mixins: [require('react-intl').IntlMixin],
   propTypes: {
     error: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired
@@ -106,6 +106,22 @@ var CreditCardInfo = React.createClass({
     if (/^(\d)*$/.test(value)) {
       this.onInput("cvc", value);
     }
+  },
+  onChange: function(field) {
+    this.props.onChange(this.props.name, this, field);
+  },
+  componentDidMount: function() {
+    this.onChange();
+  },
+  onInput: function(field, value) {
+    var values = this.state.values;
+    values[field] = value;
+    var state = {
+      values: values
+    };
+    state[field + "Valid"] = true;
+    this.setState(state);
+    this.onChange(field);
   },
   render: function() {
     var hintClassIconName = "fa fa-question-circle hint";

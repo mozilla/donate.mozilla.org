@@ -19,6 +19,10 @@ var ThankYou = React.createClass({
   },
   renderBaseline: function() {
     var locale = this.props.locales[0];
+    var signUpOrSocial = (<Social language={locale}/>);
+    if (this.props.params && /^(?=.*\ben\b)|^(?=.*\bde\b)/.test(locale)) {
+      signUpOrSocial = (<Signup country={this.props.country} email={this.props.email} locales={this.props.locales} />);
+    }
     return (
       <span className="base-line-thank-you">
         <Header>
@@ -30,7 +34,7 @@ var ThankYou = React.createClass({
           </h2>
         </Header>
         <div>
-          {this.props.params && ['de', 'en-US'].indexOf(locale) !== -1 ? <Signup country={this.props.country} email={this.props.email} locales={this.props.locales}/> : <Social language={locale}/> }
+          {signUpOrSocial}
           <Footer/>
         </div>
       </span>

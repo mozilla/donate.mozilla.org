@@ -1,23 +1,18 @@
-var server = require('../../server');
-
-module.exports = function(tests) {
+module.exports = function() {
+  var tests = [];
+  function next() {
+    var test = tests[0] || function() {};
+    test(function() {
+      tests.shift();
+      next();
+    });
+  }
   return {
-    start: function(done) {
-      var current = 0;
-      function next() {
-        run(current + 1);
+    run: function(test) {
+      tests.push(test);
+      if (test.length === 1) {
+        next();
       }
-      function run(index) {
-        current = index;
-        if (!tests[current]) {
-          server.stop(done);
-        } else {
-          tests[current].start(next);
-        }
-      }
-      server.start(function() {
-        run(current);
-      });
     }
   };
-};
+}();

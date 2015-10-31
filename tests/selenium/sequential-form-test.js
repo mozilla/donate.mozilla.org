@@ -40,7 +40,7 @@ module.exports = function(driver, By) {
     }
     driver.findElement(By.css('.submit-btn')).click();
   }
-  function start(done) {
+  return function(done) {
     test(false, 'http://localhost:3000/de/');
     driver.wait(function() {
       return driver.getCurrentUrl().then(function(url) {
@@ -54,8 +54,5 @@ module.exports = function(driver, By) {
         });
       }).then(done);
     });
-  }
-  return {
-    start: start
   };
 };

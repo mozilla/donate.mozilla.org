@@ -5,7 +5,12 @@ var driver = new webdriver.Builder().
   build();
 
 var sequentialForm = require('./sequential-form-test.js')(driver, By);
+var thankYou = require('./thank-you-test.js')(driver, By);
+var testRunner = require('./test-runner')([
+  sequentialForm,
+  thankYou
+]);
 
-var testRunner = require('./test-runner')([sequentialForm]);
-
-testRunner.start(driver.quit);
+testRunner.start(function() {
+  driver.quit();
+});

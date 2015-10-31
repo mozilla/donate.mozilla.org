@@ -26,7 +26,7 @@ module.exports = React.createClass({
     return valid;
   },
   componentDidMount: function() {
-    this.props.onChange(this.props.name, this);
+    this.props.onChange(this.props.name, this, this.props.type, this.props.value);
   },
   render: function() {
     var className;

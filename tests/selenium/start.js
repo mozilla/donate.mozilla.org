@@ -49,12 +49,12 @@ function test(noProvince, url) {
     country = 'Chile';
   }
   driver.findElement(By.name('country')).sendKeys(country);
-  driver.findElement(By.name('addr1')).clear();
-  driver.findElement(By.name('addr1')).sendKeys('test address');
+  driver.findElement(By.name('address')).clear();
+  driver.findElement(By.name('address')).sendKeys('test address');
   driver.findElement(By.name('city')).clear();
   driver.findElement(By.name('city')).sendKeys('testcity');
-  driver.findElement(By.name('zip')).clear();
-  driver.findElement(By.name('zip')).sendKeys('m5g 3u7');
+  driver.findElement(By.name('code')).clear();
+  driver.findElement(By.name('code')).sendKeys('m5g 3u7');
   if (!noProvince) {
     driver.findElement(By.id('wsstate_cd')).sendKeys('Ontario');
   }

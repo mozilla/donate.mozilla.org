@@ -29,7 +29,7 @@ module.exports = React.createClass({
     this.props.onChange(this.props.name, this);
   },
   render: function() {
-    var className = "test-shit";
+    var className;
     if (!this.state.valid || this.props.error) {
       className += " parsley-error";
     }

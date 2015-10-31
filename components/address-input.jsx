@@ -572,7 +572,7 @@ var Country = React.createClass({
     return valid;
   },
   componentDidMount: function() {
-    this.props.onChange(this.props.name, this);
+    this.props.onChange(this.props.name, this, "country", this.props.value);
   },
   render: function() {
     var className = "";
@@ -612,7 +612,7 @@ var Province = React.createClass({
     return valid;
   },
   componentDidMount: function() {
-    this.props.onChange(this.props.name, this);
+    this.props.onChange(this.props.name, this, "province", this.props.value);
   },
   render: function() {
     var className = "";

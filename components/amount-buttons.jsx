@@ -130,7 +130,7 @@ var AmountButtons = React.createClass({
     return this.state.errorMessage;
   },
   componentDidMount: function() {
-    this.props.onChange(this.props.name, this);
+    this.props.onChange(this.props.name, this, "amount", this.props.amount);
   },
   render: function() {
     var otherAmount = "";

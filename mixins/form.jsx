@@ -2,6 +2,7 @@ import assign from 'react/lib/Object.assign';
 import reactGA from 'react-ga';
 import {Navigation} from 'react-router';
 import dispatcher from '../scripts/dispatcher.js';
+import listener from '../scripts/listener.js';
 
 module.exports = {
   mixins: [Navigation],
@@ -41,10 +42,17 @@ module.exports = {
     };
   },
   componentDidMount: function() {
-    dispatcher.on("currencyChange", this.onCurrencyChanged);
+    listener.on("currencyChange", this.onCurrencyChanged);
+    listener.on("toPage", this.toThisPage);
+    listener.on("nextPage", this.nextPage);
   },
-  onCurrencyChanged: function(detail) {
-    var value = detail.value;
+  componentWillUnmount: function() {
+    listener.off("currencyChange", this.onCurrencyChanged);
+    listener.off("toPage", this.toThisPage);
+    listener.off("nextPage", this.nextPage);
+  },
+  onCurrencyChanged: function(e) {
+    var value = e.detail.value;
     var currencies = this.props.currencies;
     var currency = currencies[value] || this.state.currency;
     var presets = currency.presets[this.state.props.frequency];
@@ -121,13 +129,17 @@ module.exports = {
     this.updateHeight();
     return valid;
   },
-  nextPage: function(validate) {
+  nextPage: function(e) {
+    var validate = e.detail.validate;
     var valid = this.validateProps(validate);
     if (valid) {
-      this.toThisPage(this.state.activePage+1);
+      dispatcher.fire("toPage", {
+        page: this.state.activePage+1
+      });
     }
   },
-  toThisPage: function(index) {
+  toThisPage: function(e) {
+    var index = e.detail.page;
     this.setState({
       activePage: index
     });

@@ -141,11 +141,16 @@ module.exports = {
     this.updateHeight();
   },
   submit: function(action, props, success, error) {
+    this.setState({
+      submitting: true
+    });
+
     props.locale = this.props.locales[0];
     var currency = this.state.currency;
     if (currency) {
       props.currency = currency.code;
     }
+
     fetch(action, {
       method: 'post',
       credentials: 'same-origin',
@@ -374,9 +379,19 @@ module.exports = {
     return props;
   },
   paypal: function(validate, props) {
-    this.onSubmit("/api/paypal", validate, props, function(json) {
-      window.location = json.endpoint + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + json.token;
-    });
+    var valid = this.validateProps(validate);
+    var submitProps = {};
+    var description = this.getIntlMessage("mozilla_donation");
+    if (valid) {
+      submitProps = this.buildProps(props);
+      if (submitProps.frequency === "monthly") {
+        description = this.getIntlMessage("mozilla_monthly_donation");
+      }
+      submitProps.description = description;
+      this.submit("/api/paypal", submitProps, function(json) {
+        window.location = json.endpoint + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + json.token;
+      });
+    }
   },
   signupSuccess: function(result) {
     this.setState({
@@ -397,22 +412,11 @@ module.exports = {
     });
   },
   signup: function(validate, props) {
-    this.onSubmit("/api/signup", validate, props, this.signupSuccess, this.signupError);
-  },
-  onSubmit: function(action, validate, props, success, error) {
     var valid = this.validateProps(validate);
     var submitProps = {};
-    var description = this.getIntlMessage("mozilla_donation");
     if (valid) {
-      this.setState({
-        submitting: true
-      });
       submitProps = this.buildProps(props);
-      if (submitProps.frequency === "monthly") {
-        description = this.getIntlMessage("mozilla_monthly_donation");
-      }
-      submitProps.description = description;
-      this.submit(action, submitProps, success, error);
+      this.submit("/api/signup", submitProps, this.signupSuccess, this.signupError);
     }
   }
 };

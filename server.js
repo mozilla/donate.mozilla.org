@@ -120,7 +120,8 @@ server.route([
           frequency: Joi.string().valid("monthly", "one-time"),
           currency: Joi.string().min(3).max(3),
           quantity: Joi.number(),
-          amount: Joi.number()
+          amount: Joi.number(),
+          signup: Joi.boolean()
         }
       }
     }

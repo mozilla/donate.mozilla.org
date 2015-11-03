@@ -11,6 +11,11 @@ module.exports = function(driver, By, done) {
     });
   });
   driver.findElement(By.id('email')).sendKeys('send-donation@test.com');
+  driver.findElement(By.id('billing-name')).sendKeys('a');
+  driver.findElement(By.id('billing-street')).sendKeys('a');
+  driver.findElement(By.id('billing-zip')).sendKeys('a');
+  driver.findElement(By.id('billing-city')).sendKeys('a');
+  driver.findElement(By.id('submitButton')).click();
   driver.findElement(By.id('card_number')).sendKeys('4242');
   driver.findElement(By.id('card_number')).sendKeys('4242');
   driver.findElement(By.id('card_number')).sendKeys('4242');

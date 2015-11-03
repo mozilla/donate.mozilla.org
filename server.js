@@ -72,6 +72,7 @@ server.route([
           amount: Joi.number().required(),
           frequency: Joi.string().min(6).max(7).required(),
           stripeToken: [Joi.string().required(), Joi.number().required()],
+          description: Joi.string().required(),
           email: Joi.string().email().required(),
           first: Joi.string().required(),
           last: Joi.string().required(),
@@ -111,7 +112,14 @@ server.route([
           amount: Joi.number().required(),
           frequency: Joi.string().min(6).max(7).required(),
           stripeToken: [Joi.string().required(), Joi.number().required()],
-          locale: Joi.string().min(2).max(12).required()
+          locale: Joi.string().min(2).max(12).required(),
+          email: Joi.string().email().required(),
+          first: Joi.string().required(),
+          country: Joi.string().required(),
+          address: Joi.string().allow(''),
+          city: Joi.string().allow(''),
+          code: Joi.string().required(),
+          description: Joi.string().required()
         }
       },
       response: {

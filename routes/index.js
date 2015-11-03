@@ -21,11 +21,24 @@ var routes = {
     var transaction = request.payload || {};
     var currency = transaction.currency;
     var amount = amountModifier.stripe(transaction.amount, currency);
+    var metadata = {
+      firstname: transaction.first,
+      lastname: transaction.last,
+      country: transaction.country,
+      address: transaction.address,
+      city: transaction.city,
+      zip: transaction.code,
+      state: transaction.province,
+      locale: transaction.locale
+    };
     if (transaction.frequency !== 'monthly') {
       stripe.single({
         amount: amount,
         currency: currency,
-        stripeToken: transaction.stripeToken
+        stripeToken: transaction.stripeToken,
+        email: transaction.email,
+        description: transaction.description,
+        metadata: metadata
       }, function(err, charge) {
         var badRequest;
         if (err) {
@@ -54,20 +67,10 @@ var routes = {
         // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
         // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
         quantity: amount,
+        currency: currency,
         stripeToken: transaction.stripeToken,
         email: transaction.email,
-        currency: currency,
-        metadata: {
-          firstname: transaction.first,
-          lastname: transaction.last,
-          country: transaction.country,
-          address: transaction.address,
-          city: transaction.city,
-          zip: transaction.code,
-          state: transaction.province,
-          locale: transaction.locale,
-          signup: transaction.signup
-        }
+        metadata: metadata
       }, function(err, subscription) {
         if (err) {
           reply(boom.create(400, 'Stripe subscription failed', {

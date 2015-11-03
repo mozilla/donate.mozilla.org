@@ -1,7 +1,6 @@
 module.exports = function(driver, By) {
   function test(noProvince, url) {
     var country = 'Canada';
-    driver.manage().timeouts().implicitlyWait(3000);
     driver.get(url);
     driver.findElement(By.id('amount-other-input')).sendKeys('10');
     driver.findElement(By.css('.page-active .next-button')).click();
@@ -46,13 +45,12 @@ module.exports = function(driver, By) {
       return driver.getCurrentUrl().then(function(url) {
         return url.indexOf('http://localhost:3000/de/thank-you/') === 0;
       });
-    }).then(function() {
-      test(true, 'http://localhost:3000/de/?test=signup-test');
-      driver.wait(function() {
-        return driver.getCurrentUrl().then(function(url) {
-          return url.indexOf('http://localhost:3000/de/share/') === 0;
-        });
-      }).then(done);
     });
+    test(true, 'http://localhost:3000/de/?test=signup-test');
+    driver.wait(function() {
+      return driver.getCurrentUrl().then(function(url) {
+        return url.indexOf('http://localhost:3000/de/share/') === 0;
+      });
+    }).then(done);
   };
 };

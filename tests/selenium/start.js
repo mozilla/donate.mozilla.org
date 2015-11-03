@@ -5,16 +5,20 @@ var driver = new webdriver.Builder().
   withCapabilities(webdriver.Capabilities.firefox()).
   build();
 
+driver.manage().timeouts().implicitlyWait(3000);
+
 var testRunner = require('./test-runner');
 var sequentialForm = require('./sequential-form-test.js')(driver, By);
 var thankYou = require('./thank-you-test.js')(driver, By);
 
 server.start(function() {
-  testRunner.run(sequentialForm);
-  testRunner.run(thankYou);
-  testRunner.run(function() {
-    server.stop(function() {
-      driver.quit();
-    });
-  });
+  testRunner([
+    sequentialForm,
+    thankYou,
+    function() {
+      server.stop(function() {
+        driver.quit();
+      });
+    }
+  ]);
 });

@@ -1,10 +1,13 @@
 import React from 'react';
 import {FormattedNumber} from 'react-intl';
+import dispatcher from '../scripts/dispatcher.js';
 
 var NavigationButton = React.createClass({
   onClick: function(e) {
     if (this.props.activePage > this.props.index) {
-      this.props.onClick(this.props.index);
+      dispatcher.fire("toPage", {
+        page: this.props.index
+      });
     }
   },
   render: function() {

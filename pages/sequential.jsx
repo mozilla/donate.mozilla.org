@@ -98,10 +98,10 @@ module.exports = React.createClass({
         <div className="container">
 
           <NavigationMenu>
-            <NavigationButton amount={amount} currency={currency.code} onClick={this.toThisPage} activePage={this.state.activePage} index={0}>
+            <NavigationButton amount={amount} currency={currency.code} activePage={this.state.activePage} index={0}>
               <div>{this.getIntlMessage("amount")}</div>
             </NavigationButton>
-            <NavigationButton display={this.state.paymentType} onClick={this.toThisPage} activePage={this.state.activePage} index={1}>
+            <NavigationButton display={this.state.paymentType} activePage={this.state.activePage} index={1}>
               <div>{this.getIntlMessage("payment")}</div>
             </NavigationButton>
             <NavigationButton activePage={this.state.activePage} index={2}>
@@ -128,7 +128,7 @@ module.exports = React.createClass({
                 amount={amount} presets={this.state.presets}
               />
               <Frequency onChange={this.onFrequencyChange} name="frequency" value={props.frequency}/>
-              <NextButton onClick={this.nextPage} validate={["amount"]}/>
+              <NextButton validate={["amount"]}/>
             </Page>
 
             <Page activePage={this.state.activePage} index={1} onError={this.onPageError} errors={[this.state.errors.creditCardInfo]}>
@@ -150,7 +150,7 @@ module.exports = React.createClass({
                 <CrediCardInfo error={this.state.errors.creditCardInfo}
                   onChange={this.onChange} name="creditCardInfo" ref="creditCardInfoField"
                 />
-                <NextButton onClick={this.nextPage} validate={["creditCardInfo"]}/>
+                <NextButton validate={["creditCardInfo"]}/>
               </div>
             </Page>
 

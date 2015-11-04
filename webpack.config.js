@@ -35,8 +35,6 @@ module.exports = {
       'process.env': JSON.stringify({
         APPLICATION_URI: process.env.APPLICATION_URI,
         STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,
-        COINBASE_ENDPOINT: process.env.COINBASE_ENDPOINT,
-        COINBASE_PUBLIC_KEY: process.env.COINBASE_PUBLIC_KEY,
         OPTIMIZELY_ID: process.env.OPTIMIZELY_ID,
         OPTIMIZELY_ACTIVE: process.env.OPTIMIZELY_ACTIVE,
         FULL_SUBDOMAIN_FOR_COOKIE: process.env.FULL_SUBDOMAIN_FOR_COOKIE,

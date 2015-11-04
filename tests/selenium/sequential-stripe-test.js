@@ -1,4 +1,4 @@
-module.exports = function(driver, By) {
+module.exports = function(driver, By, done) {
   function stripeTest(noProvince, url) {
     var country = 'Canada';
     driver.get(url);
@@ -44,18 +44,16 @@ module.exports = function(driver, By) {
     driver.findElement(By.css('.page-active .next-button')).click();
     driver.findElement(By.id('payment-paypal')).click();
   }
-  return function(done) {
-    stripeTest(false, 'http://localhost:3000/de/');
-    driver.wait(function() {
-      return driver.getCurrentUrl().then(function(url) {
-        return url.indexOf('http://localhost:3000/de/thank-you/') === 0;
-      });
+  stripeTest(false, 'http://localhost:3000/de/');
+  driver.wait(function() {
+    return driver.getCurrentUrl().then(function(url) {
+      return url.indexOf('http://localhost:3000/de/thank-you/') === 0;
     });
-    stripeTest(true, 'http://localhost:3000/de/?test=signup-test');
-    driver.wait(function() {
-      return driver.getCurrentUrl().then(function(url) {
-        return url.indexOf('http://localhost:3000/de/share/') === 0;
-      });
-    }).then(done);
-  };
+  });
+  stripeTest(true, 'http://localhost:3000/de/?test=signup-test');
+  driver.wait(function() {
+    return driver.getCurrentUrl().then(function(url) {
+      return url.indexOf('http://localhost:3000/de/share/') === 0;
+    });
+  }).then(done);
 };

@@ -19,7 +19,7 @@ var simplePaypal = React.createClass({
         submitting: true
       });
       submitProps = this.buildProps(props);
-      if (submitProps.recurring === "1") {
+      if (submitProps.frequency === "monthly") {
         this.refs.paypalRecurring.getDOMNode().submit();
       } else {
         this.refs.paypalOneTime.getDOMNode().submit();

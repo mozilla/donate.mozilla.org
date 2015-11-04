@@ -8,29 +8,39 @@ var stripe = require('stripe')(stripeKeys.secretKey);
 
 module.exports = {
   single: function(transaction, callback) {
-    var charge = {
-      amount: transaction.amount,
-      currency: transaction.currency,
-      card: transaction.stripeToken
-    };
-    stripe.charges.create(charge, callback);
+    stripe.customers.create({
+      email: transaction.email,
+      metadata: transaction.metadata,
+      source: transaction.stripeToken
+    }, function(err, customer) {
+      var charge = {};
+      if (err) {
+        return callback(err);
+      }
+      charge = {
+        amount: transaction.amount,
+        currency: transaction.currency,
+        customer: customer.id,
+        description: transaction.description
+      };
+      stripe.charges.create(charge, callback);
+    });
   },
   recurring: function(transaction, callback) {
     stripe.customers.create({
       email: transaction.email,
-      metadata: transaction.metadata
+      metadata: transaction.metadata,
+      source: transaction.stripeToken
     }, function(err, customer) {
       var subscription = {};
       if (err) {
-        callback(err);
-      } else {
-        subscription = {
-          plan: transaction.currency,
-          quantity: transaction.quantity,
-          source: transaction.stripeToken
-        };
-        stripe.customers.createSubscription(customer.id, subscription, callback);
+        return callback(err);
       }
+      subscription = {
+        plan: transaction.currency,
+        quantity: transaction.quantity
+      };
+      stripe.customers.createSubscription(customer.id, subscription, callback);
     });
   }
 };

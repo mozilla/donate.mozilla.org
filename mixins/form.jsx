@@ -293,10 +293,14 @@ module.exports = {
     if (!valid) {
       return;
     }
+    var description = this.getIntlMessage("mozilla_donation");
     this.setState({
       submitting: true
     });
     submitProps = this.buildProps(props);
+    if (submitProps.frequency === "monthly") {
+      description = this.getIntlMessage("mozilla_monthly_donation");
+    }
     Stripe.setPublishableKey(process.env.STRIPE_PUBLIC_KEY);
     Stripe.card.createToken({
       number: submitProps.cardNumber,
@@ -322,7 +326,8 @@ module.exports = {
           code: submitProps.code,
           province: submitProps.province,
           locale: submitProps.locale,
-          signup: submitProps.signup
+          signup: submitProps.signup,
+          description: description
         };
         submit("/api/stripe", stripeProps, success, function(response) {
           if (response.stripe) {
@@ -342,13 +347,23 @@ module.exports = {
     if (!valid) {
       return;
     }
+    var description = this.getIntlMessage("mozilla_donation");
+    var handlerDesc = "";
     submitProps = this.buildProps(props);
+    if (submitProps.frequency === "monthly") {
+      description = this.getIntlMessage("mozilla_monthly_donation");
+      handlerDesc = this.getIntlMessage("monthly");
+    }
+
     var locale = this.props.locales[0];
     var currency = this.state.currency && this.state.currency.code;
     var handler = StripeCheckout.configure({
       // Need to get this from .env
       key: process.env.STRIPE_PUBLIC_KEY,
       image: '',
+      zipCode: true,
+      billingAddress: true,
+      locale: locale,
       token: function(response) {
         // Where is this things error? Maybe it's not called at all for an error case.
         submit("/api/stripe-checkout", {
@@ -356,7 +371,14 @@ module.exports = {
           amount: submitProps.amount,
           stripeToken: response.id,
           currency: currency,
-          locale: locale
+          locale: submitProps.locale,
+          email: response.email,
+          first: response.card.name,
+          country: response.card.address_country,
+          address: response.card.address_line1,
+          city: response.card.address_city,
+          code: response.card.address_zip,
+          description: description
         }, success);
       }
     });
@@ -364,7 +386,8 @@ module.exports = {
     // Open Checkout with further options
     handler.open({
       name: this.getIntlMessage("mozilla_donation"),
-      description: submitProps.description,
+      description: handlerDesc,
+      currency: currency,
       // Stripe wants cents.
       amount: submitProps.amount * 100
     });

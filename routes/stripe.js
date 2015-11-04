@@ -16,15 +16,14 @@ module.exports = {
       var charge = {};
       if (err) {
         return callback(err);
-      } else {
-        charge = {
-          amount: transaction.amount,
-          currency: transaction.currency,
-          customer: customer.id,
-          description: transaction.description
-        };
-        stripe.charges.create(charge, callback);
       }
+      charge = {
+        amount: transaction.amount,
+        currency: transaction.currency,
+        customer: customer.id,
+        description: transaction.description
+      };
+      stripe.charges.create(charge, callback);
     });
   },
   recurring: function(transaction, callback) {
@@ -36,13 +35,12 @@ module.exports = {
       var subscription = {};
       if (err) {
         return callback(err);
-      } else {
-        subscription = {
-          plan: transaction.currency,
-          quantity: transaction.quantity
-        };
-        stripe.customers.createSubscription(customer.id, subscription, callback);
       }
+      subscription = {
+        plan: transaction.currency,
+        quantity: transaction.quantity
+      };
+      stripe.customers.createSubscription(customer.id, subscription, callback);
     });
   }
 };

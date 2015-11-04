@@ -15,7 +15,7 @@ module.exports = {
     }, function(err, customer) {
       var charge = {};
       if (err) {
-        callback(err);
+        return callback(err);
       } else {
         charge = {
           amount: transaction.amount,
@@ -35,7 +35,7 @@ module.exports = {
     }, function(err, customer) {
       var subscription = {};
       if (err) {
-        callback(err);
+        return callback(err);
       } else {
         subscription = {
           plan: transaction.currency,

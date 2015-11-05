@@ -92,7 +92,9 @@ server.route([
           currency: Joi.string().min(3).max(3),
           quantity: Joi.number(),
           amount: Joi.number(),
-          signup: Joi.boolean()
+          signup: Joi.boolean(),
+          email: Joi.string().email().allow(''),
+          country: Joi.string().allow('')
         }
       }
     }
@@ -129,7 +131,9 @@ server.route([
           currency: Joi.string().min(3).max(3),
           quantity: Joi.number(),
           amount: Joi.number(),
-          signup: Joi.boolean()
+          signup: Joi.boolean(),
+          email: Joi.string().email().allow(''),
+          country: Joi.string().allow('')
         }
       }
     }

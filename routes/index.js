@@ -57,7 +57,9 @@ var routes = {
             amount: charge.amount,
             currency: charge.currency,
             id: charge.id,
-            signup: transaction.signup
+            signup: transaction.signup,
+            country: transaction.country,
+            email: transaction.email
           }).code(200);
         }
       });
@@ -86,7 +88,9 @@ var routes = {
             currency: subscription.plan.currency,
             quantity: subscription.quantity,
             id: subscription.id,
-            signup: transaction.signup
+            signup: transaction.signup,
+            country: transaction.country,
+            email: transaction.email
           }).code(200);
         }
       });

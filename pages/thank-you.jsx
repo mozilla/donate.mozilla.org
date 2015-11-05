@@ -30,7 +30,7 @@ var ThankYou = React.createClass({
           </h2>
         </Header>
         <div>
-          {this.props.params && ['de', 'en-US'].indexOf(locale) !== -1 ? <Signup locales={this.props.locales}/> : <Social language={locale}/> }
+          {this.props.params && ['de', 'en-US'].indexOf(locale) !== -1 ? <Signup country={this.props.country} email={this.props.email} locales={this.props.locales}/> : <Social language={locale}/> }
           <Footer/>
         </div>
       </span>
@@ -42,7 +42,7 @@ var ThankYou = React.createClass({
       <span className="new-flow-thank-you">
         <ThankYouHeader/>
         <div>
-          {this.props.params && ['de', 'en-US'].indexOf(locale) !== -1 ? <SignupTest locales={this.props.locales}/> : <SocialTest language={locale}/> }
+          {this.props.params && ['de', 'en-US'].indexOf(locale) !== -1 ? <SignupTest country={this.props.country} email={this.props.email} locales={this.props.locales}/> : <SocialTest language={locale}/> }
           <Footer/>
         </div>
       </span>

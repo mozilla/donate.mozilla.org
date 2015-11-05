@@ -141,6 +141,7 @@ module.exports = React.createClass({
               <div className="row">
                 <CreditCardButton onClick={this.expandCreditCardInfo}/>
                 <PayPalButton
+                  submitting={this.state.submitting}
                   submit={["frequency", "amount"]}
                   onSubmit={this.paypal}
                   onClick={this.collapseCreditCardInfo}

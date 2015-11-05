@@ -52,6 +52,7 @@ var SingleForm = React.createClass({
               onSubmit={this.stripeCheckout}
             />
             <PayPalButton
+              submitting={this.state.submitting}
               submit={["frequency", "amount"]}
               validate={["amount"]}
               onSubmit={this.paypal}

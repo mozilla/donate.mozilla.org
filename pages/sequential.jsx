@@ -23,6 +23,8 @@ import {Country, Address, Province, City, Code} from '../components/address-inpu
 import Email from '../components/email-input.jsx';
 import {PrivacyPolicyCheckbox, SignupCheckbox} from '../components/checkbox.jsx';
 
+import Error from '../components/error-message.jsx';
+
 import IntlMixin from 'react-intl';
 
 module.exports = React.createClass({
@@ -56,13 +58,14 @@ module.exports = React.createClass({
   renderSubmitButton: function(data) {
     var amount = this.state.props.amount;
     var currency = this.state.currency;
+
     return (
       <SubmitButton
         submitting={this.state.submitting}
         validate={data.validate}
         onSubmit={this.stripe}
         submit={data.submit}
-        error={this.state.errors.other}
+        errors={[this.state.errors.required.message, this.state.errors.other.message]}
       >
         <DonateButton
           amount={amount} currency={currency.code}
@@ -150,6 +153,7 @@ module.exports = React.createClass({
                 <CrediCardInfo error={this.state.errors.creditCardInfo}
                   onChange={this.onChange} name="creditCardInfo" ref="creditCardInfoField"
                 />
+                <Error message={this.state.errors.required.message}/>
                 <NextButton validate={["creditCardInfo"]}/>
               </div>
             </Page>

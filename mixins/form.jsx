@@ -37,6 +37,9 @@ module.exports = {
         other: {
           page: 0,
           message: ""
+        },
+        required: {
+          message: ""
         }
       }
     };
@@ -120,11 +123,20 @@ module.exports = {
   validateProps: function(props) {
     var self = this;
     var valid = true;
+    var errors = this.state.errors;
     props = props || [];
     props.forEach(function(name) {
       if (!self.state[name].validate()) {
         valid = false;
       }
+    });
+    if (!valid) {
+      errors.required.message = this.getIntlMessage("please_complete");
+    } else {
+      errors.required.message = "";
+    }
+    this.setState({
+      errors: errors
     });
     this.updateHeight();
     return valid;

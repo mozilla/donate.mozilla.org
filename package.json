@@ -5,7 +5,7 @@
   "main": "start.js",
   "scripts": {
     "start": "node scripts/build",
-    "start:prod": "npm run server",
+    "start:prod": "npm-run-all build:* server",
     "start:dev": "npm-run-all --parallel build:l10njson build:exchangerates watch:js server watch:css",
     "postinstall": "npm-run-all build:*",
     "build:l10njson": "node scripts/properties2json",

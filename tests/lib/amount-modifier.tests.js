@@ -43,4 +43,7 @@ describe("amount-modifier.js", function() {
   it("'10.10', 'Stripe', 'jpy' should return '10'", function() {
     amountModifier.modify('10.10', 'stripe', 'jpy').should.equal('10');
   });
+  it("'2.01', 'Stripe', 'usd' should return '201'", function() {
+    amountModifier.modify('2.01', 'stripe', 'usd').should.equal('201');
+  });
 });

@@ -180,11 +180,12 @@ server.route([
       var polyfills = PolyfillSet.fromQueryParam(features || 'default', flags);
       var params = {
         features: polyfills.get(),
-        minify: true
+        minify: true,
+        unknown: 'polyfill'
       };
       params.uaString = request.plugins.scooter.source;
       polyfillio.getPolyfillString(params).then(function(bundleString) {
-        reply(bundleString).type('application/javascript');
+        reply(bundleString).type('application/javascript; charset=utf-8');
       });
     },
     config: {

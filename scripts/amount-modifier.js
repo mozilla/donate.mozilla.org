@@ -20,7 +20,7 @@ var amountModifier = {
     var zeroDecimal = currency.zeroDecimal || "";
     // These currencies don't use cents
     if (zeroDecimal.indexOf(service) > -1) {
-      return Math.trunc(parseFloat(amount, 10)) + "";
+      return parseInt(amount, 10) + "";
     }
     // stripe works in lowest currency unit, in most cases cents.
     if (service === "stripe") {

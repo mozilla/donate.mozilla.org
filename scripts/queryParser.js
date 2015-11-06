@@ -36,6 +36,8 @@ module.exports = function(queryString, pathname) {
     amount: amount,
     frequency: frequency,
     messages: localesData.messages,
-    locales: localesData.locales
+    locales: localesData.locales,
+    email: queryString.email || "",
+    country: queryString.country || ""
   };
 };

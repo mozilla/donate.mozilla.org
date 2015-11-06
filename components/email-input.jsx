@@ -7,7 +7,7 @@ var EmailInput = React.createClass({
     return {
       showHint: false,
       values: {
-        email: ""
+        email: this.props.value || ""
       },
       valid: true,
       errorMessage: ""

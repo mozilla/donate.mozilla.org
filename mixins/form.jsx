@@ -193,6 +193,8 @@ module.exports = {
     var transactionId = data.id;
     var amount;
     var currency;
+    var email = data.email || "";
+    var country = data.country || "";
     var donationFrequency = data.frequency;
     this.setState({
       submitting: false
@@ -211,9 +213,18 @@ module.exports = {
     // If we are already signed up, send to share.
     if (data.signup) {
       location = "share";
+      email = "";
+      country = "";
     }
 
     var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' + donationFrequency;
+
+    if (email) {
+      params += "&email=" + email;
+    }
+    if (country) {
+      params += "&country=" + country;
+    }
 
     this.transitionTo('/' + this.props.locales[0] + '/' + location + '/?' + params);
   },

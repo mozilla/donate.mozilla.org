@@ -17,7 +17,7 @@ var Form = React.createClass({
           </div>
           <div className="wrap">
             <div className="row">
-              <Email onChange={this.onChange} name="email-test"/>
+              <Email value={this.props.email} onChange={this.onChange} name="email-test"/>
               <PrivacyPolicyCheckbox onChange={this.onChange} name="privacyPolicy"/>
               <SubmitButton
                 submitting={this.state.submitting}

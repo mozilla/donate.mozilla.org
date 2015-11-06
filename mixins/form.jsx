@@ -3,6 +3,7 @@ import reactGA from 'react-ga';
 import {Navigation} from 'react-router';
 import dispatcher from '../scripts/dispatcher.js';
 import listener from '../scripts/listener.js';
+import amountModifier from '../scripts/amount-modifier';
 
 module.exports = {
   mixins: [Navigation],
@@ -400,7 +401,7 @@ module.exports = {
       description: handlerDesc,
       currency: currency,
       // Stripe wants cents.
-      amount: submitProps.amount * 100
+      amount: amountModifier.stripe(submitProps.amount, currency)
     });
   },
   buildProps: function(fields) {

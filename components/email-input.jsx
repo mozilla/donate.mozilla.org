@@ -1,23 +1,25 @@
 import React from 'react';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import dispatcher from '../scripts/input-dispatcher.js';
 
 var EmailInput = React.createClass({
   mixins: [IntlMixin],
   getInitialState: function() {
     return {
       showHint: false,
-      values: {
-        email: this.props.value || ""
-      },
       valid: true,
       errorMessage: ""
     };
   },
   componentDidMount: function() {
-    this.props.onChange(this.props.name, this);
+    dispatcher.fieldReady({
+      name: this.props.name,
+      element: this,
+      field: "email"
+    });
   },
   validate: function() {
-    var valid = !!this.state.values.email;
+    var valid = !!this.props.value;
     var errorMessage = "";
     if (!this.refs.inputElement.getDOMNode().validity.valid) {
       valid = false;
@@ -33,18 +35,16 @@ var EmailInput = React.createClass({
     this.setState({
       valid: true
     });
-    this.setState({
-      values: {
-        email: e.currentTarget.value
-      }
+    dispatcher.fieldChange({
+      field: "email",
+      value: e.currentTarget.value
     });
-    this.props.onChange(this.props.name, this);
   },
   hintClicked: function() {
     this.setState({
       showHint: !this.state.showHint
     });
-    this.props.onChange(this.props.name, this);
+    dispatcher.fire("heightChange");
   },
   renderHint: function() {
     var hintClassIconName = "fa fa-question-circle hint";
@@ -81,7 +81,7 @@ var EmailInput = React.createClass({
           <div className="full">
             <div className="field-container">
               <i className="fa fa-envelope field-icon"></i>
-              <input type="email" ref="inputElement" className={inputClassName} name="email" value={this.state.values.email} onChange={this.onEmailChange} placeholder={this.getIntlMessage('email')}/>
+              <input type="email" ref="inputElement" className={inputClassName} name="email" value={this.props.value} onChange={this.onEmailChange} placeholder={this.getIntlMessage('email')}/>
               {this.renderHint()}
             </div>
           </div>

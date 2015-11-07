@@ -7,6 +7,7 @@ import SubmitButton from '../components/submit-button.jsx';
 var Form = React.createClass({
   mixins: [IntlMixin, require('../mixins/form.jsx')],
   render: function() {
+    var props = this.state.props;
     return (
       <div>
         <div className="container">
@@ -20,8 +21,8 @@ var Form = React.createClass({
           </div>
           <div className="wrap">
             <div className="row">
-              <Email value={this.props.email} onChange={this.onChange} name="email"/>
-              <PrivacyPolicyCheckbox onChange={this.onChange} name="privacyPolicy"/>
+              <Email value={props.email} name="email"/>
+              <PrivacyPolicyCheckbox checked={props.privacyPolicy} name="privacyPolicy"/>
               <SubmitButton
                 submitting={this.state.submitting}
                 validate={["email", "privacyPolicy"]}

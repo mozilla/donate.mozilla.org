@@ -1,9 +1,9 @@
 import assign from 'react/lib/Object.assign';
 import reactGA from 'react-ga';
 import {Navigation} from 'react-router';
-import dispatcher from '../scripts/dispatcher.js';
 import listener from '../scripts/listener.js';
 import amountModifier from '../scripts/amount-modifier';
+import dispatcher from '../scripts/dispatcher.js';
 
 module.exports = {
   mixins: [Navigation],
@@ -13,6 +13,7 @@ module.exports = {
       submitting: false,
       presets: this.props.presets,
       currency: this.props.currency,
+      showCvcHint: false,
       props: {
         amount:  this.props.amount,
         frequency: this.props.frequency,
@@ -20,16 +21,34 @@ module.exports = {
         province: "",
         city: "",
         address: "",
-        code: ""
+        code: "",
+        firstName: "",
+        LastName: "",
+        cardNumber: "",
+        cvc: "",
+        expMonth: "",
+        expYear: "",
+        email: "",
+        signup: false,
+        privacyPolicy: false
       },
       values: {},
       errors: {
-        creditCardInfo: {
+        cardNumber: {
           page: 0,
-          cardNumber: "",
-          cvc: "",
-          expMonth: "",
-          expYear: ""
+          message: ""
+        },
+        cvc: {
+          page: 0,
+          message: ""
+        },
+        expMonth: {
+          page: 0,
+          message: ""
+        },
+        expYear: {
+          page: 0,
+          message: ""
         },
         code: {
           page: 0,
@@ -43,17 +62,29 @@ module.exports = {
     };
   },
   componentDidMount: function() {
-    listener.on("currencyChange", this.onCurrencyChanged);
+    this.onHeightChange();
+    listener.on("currencyChange", this.onCurrencyChange);
+    listener.on("heightChange", this.onHeightChange);
+    listener.on("fieldChange", this.onFieldChange);
+    listener.on("fieldReady", this.onFieldReady);
+    listener.on("frequencyChange", this.onFrequencyChange);
+    listener.on("toggleCvcHint", this.onToggleCvcHint);
     listener.on("toPage", this.toThisPage);
     listener.on("nextPage", this.nextPage);
   },
   componentWillUnmount: function() {
-    listener.off("currencyChange", this.onCurrencyChanged);
+    listener.off("currencyChange", this.onCurrencyChange);
+    listener.off("heightChange", this.onHeightChange);
+    listener.off("fieldChange", this.onFieldChange);
+    listener.off("fieldReady", this.onFieldReady);
+    listener.off("frequencyChange", this.onFrequencyChange);
+    listener.off("toggleCvcHint", this.onToggleCvcHint);
     listener.off("toPage", this.toThisPage);
     listener.off("nextPage", this.nextPage);
   },
-  onCurrencyChanged: function(e) {
-    var value = e.detail.value;
+  onCurrencyChange: function(e) {
+    var detail = e.detail;
+    var value = detail.value;
     var currencies = this.props.currencies;
     var currency = currencies[value] || this.state.currency;
     var presets = currency.presets[this.state.props.frequency];
@@ -65,49 +96,61 @@ module.exports = {
       props: newProps
     });
   },
-  updateHeight: function() {
+  onToggleCvcHint: function() {
+    this.setState({
+      showCvcHint: !this.state.showCvcHint
+    });
+  },
+  onHeightChange: function() {
     if (this.state.activePage !== 0 && !this.state.activePage) {
       return;
     }
     var self = this;
     window.setTimeout(function() {
       var activePage = document.querySelector(".page-active");
-      self.setState({
-        height: activePage.offsetHeight + "px"
-      });
+      if (activePage) {
+        self.setState({
+          height: activePage.offsetHeight + "px"
+        });
+      }
     });
   },
-  onChange: function(name, element, field) {
+  onFieldReady: function(e) {
+    var detail = e.detail;
+    var element = detail.element;
+    var name = detail.name;
+    var field = detail.field;
+    var newValues = this.state.values;
     var newState = {};
-    newState.errors = this.state.errors;
+
     newState[name] = element;
-    if (field && this.state.errors[name] && this.state.errors[name][field]) {
-      newState.errors[name][field] = "";
-    }
+    newValues[name] = field;
+    newState.values = newValues;
+    this.setState(newState);
+  },
+  onFieldChange: function(e) {
+    var detail = e.detail;
+    var field = detail.field;
+    var value = detail.value;
+    var newProps = this.state.props;
+    var newState = {};
+
+    newState.errors = this.state.errors;
     if (field && this.state.errors[field] && this.state.errors[field].message) {
       newState.errors[field].message = "";
     }
-    this.setState(newState);
-    this.updateHeight();
-  },
-  updateFormField: function(name, element, field, value) {
-    this.onChange(name, element, field);
-    var newProps = this.state.props;
-    var newValues = this.state.values;
     newProps[field] = value;
-    newValues[name] = field;
-    this.setState({
-      props: newProps,
-      values: newValues
-    });
+    newState.props = newProps;
+    this.setState(newState);
   },
-  onFrequencyChange: function(name, element, frequency) {
-    if (frequency && this.state.props.frequency !== frequency) {
+  onFrequencyChange: function(e) {
+    var detail = e.detail;
+    var frequency = detail.frequency;
+    if (frequency) {
       this.setState({
         presets: this.state.currency.presets[frequency]
       });
     }
-    this.updateFormField(name, element, "frequency", frequency);
   },
   onPageError: function(errors, index) {
     var stateErrors = this.state.errors;
@@ -127,7 +170,7 @@ module.exports = {
         valid = false;
       }
     });
-    this.updateHeight();
+    this.onHeightChange();
     return valid;
   },
   nextPage: function(e) {
@@ -151,7 +194,7 @@ module.exports = {
     var currentPage = window.location.pathname + "#page-" + page;
     // These are virtual pageviews, so we track them manually in GA
     reactGA.pageview(currentPage);
-    this.updateHeight();
+    this.onHeightChange();
   },
   submit: function(action, props, success, error) {
     this.setState({
@@ -233,38 +276,38 @@ module.exports = {
     var newState = {};
     var cardErrorCodes = {
       "invalid_number": {
-        name: "creditCardInfo",
-        field: "cardNumber",
+        name: "cardNumber",
+        field: "message",
         message: this.getIntlMessage('invalid_number')
       },
       "invalid_expiry_month": {
-        name: "creditCardInfo",
-        field: "expMonth",
+        name: "expMonth",
+        field: "message",
         message: this.getIntlMessage('invalid_expiry_month')
       },
       "invalid_expiry_year": {
-        name: "creditCardInfo",
-        field: "expYear",
+        name: "expYear",
+        field: "message",
         message: this.getIntlMessage('invalid_expiry_year')
       },
       "invalid_cvc": {
-        name: "creditCardInfo",
-        field: "cvc",
+        name: "cvc",
+        field: "message",
         message: this.getIntlMessage('invalid_CVC')
       },
       "incorrect_number": {
-        name: "creditCardInfo",
-        field: "cardNumber",
+        name: "cardNumber",
+        field: "message",
         message: this.getIntlMessage('incorrect_number')
       },
       "expired_card": {
-        name: "creditCardInfo",
-        field: "cardNumber",
+        name: "cardNumber",
+        field: "message",
         message: this.getIntlMessage('expired_card')
       },
       "incorrect_cvc": {
-        name: "creditCardInfo",
-        field: "cvc",
+        name: "cvc",
+        field: "message",
         message: this.getIntlMessage('incorrect_CVC')
       },
       "incorrect_zip": {
@@ -273,8 +316,8 @@ module.exports = {
         message: this.getIntlMessage('invalid_zip')
       },
       "card_declined": {
-        name: "creditCardInfo",
-        field: "cardNumber",
+        name: "cardNumber",
+        field: "message",
         message: this.getIntlMessage('declined_card')
       }
     };
@@ -294,7 +337,7 @@ module.exports = {
       newState.errors.other.message = this.getIntlMessage('try_again_later');
     }
     this.setState(newState);
-    this.updateHeight();
+    this.onHeightChange();
   },
   stripe: function(validate, props) {
     var submit = this.submit;
@@ -330,8 +373,8 @@ module.exports = {
           frequency: submitProps.frequency,
           stripeToken: response.id,
           email: submitProps.email,
-          first: submitProps.first,
-          last: submitProps.last,
+          first: submitProps.firstName,
+          last: submitProps.lastName,
           country: submitProps.country,
           address: submitProps.address,
           city: submitProps.city,
@@ -405,21 +448,12 @@ module.exports = {
     });
   },
   buildProps: function(fields) {
-    var self = this;
+    var state = this.state;
     var props = {};
     fields.forEach(function(name) {
-      var state = self.state[name].state;
-      var prop;
-      // Currently some fields expose their values on the form, and not themselves.
-      // So we need to check for props in both places until all field componenets are updated.
-      if (state) {
-        prop = state.values;
-      }
-      if (!prop) {
-        prop = {
-          [self.state.values[name]]: self.state.props[self.state.values[name]]
-        };
-      }
+      var prop = {
+        [state.values[name]]: state.props[state.values[name]]
+      };
       // Modify props to now contain the values in prop.
       assign(props, prop);
     });

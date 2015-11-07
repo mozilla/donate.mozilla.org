@@ -1,6 +1,7 @@
 import React from 'react';
 import IntlMixin from 'react-intl';
 import Input from './input.jsx';
+import dispatcher from '../scripts/input-dispatcher.js';
 
 var countryOptions = [
   <option key="AF" value="AF">Afghanistan</option>,
@@ -577,9 +578,6 @@ var ProvinceSelect = React.createClass({
 
 var Country = React.createClass({
   mixins: [IntlMixin],
-  propTypes: {
-    onChange: React.PropTypes.func.isRequired
-  },
   getInitialState: function() {
     return {
       valid: true
@@ -589,7 +587,11 @@ var Country = React.createClass({
     this.setState({
       valid: true
     });
-    this.props.onChange(this.props.name, this, "country", e.currentTarget.value);
+    dispatcher.fire("heightChange");
+    dispatcher.fieldChange({
+      field: "country",
+      value: e.currentTarget.value
+    });
   },
   validate: function() {
     var valid = true;
@@ -602,7 +604,11 @@ var Country = React.createClass({
     return valid;
   },
   componentDidMount: function() {
-    this.props.onChange(this.props.name, this, "country", this.props.value);
+    dispatcher.fieldReady({
+      name: this.props.name,
+      element: this,
+      field: "country"
+    });
   },
   render: function() {
     var className = "";
@@ -617,9 +623,6 @@ var Country = React.createClass({
 
 var Province = React.createClass({
   mixins: [IntlMixin],
-  propTypes: {
-    onChange: React.PropTypes.func.isRequired
-  },
   getInitialState: function() {
     return {
       valid: true
@@ -629,7 +632,10 @@ var Province = React.createClass({
     this.setState({
       valid: true
     });
-    this.props.onChange(this.props.name, this, "province", e.currentTarget.value);
+    dispatcher.fieldChange({
+      field: "province",
+      value: e.currentTarget.value
+    });
   },
   validate: function() {
     var valid = true;
@@ -642,7 +648,11 @@ var Province = React.createClass({
     return valid;
   },
   componentDidMount: function() {
-    this.props.onChange(this.props.name, this, "province", this.props.value);
+    dispatcher.fieldReady({
+      name: this.props.name,
+      element: this,
+      field: "province"
+    });
   },
   render: function() {
     var className = "";
@@ -657,9 +667,6 @@ var Province = React.createClass({
 
 var Code = React.createClass({
   mixins: [IntlMixin],
-  propTypes: {
-    onChange: React.PropTypes.func.isRequired
-  },
   render: function() {
     return (
       <Input
@@ -673,9 +680,6 @@ var Code = React.createClass({
 
 var City = React.createClass({
   mixins: [IntlMixin],
-  propTypes: {
-    onChange: React.PropTypes.func.isRequired
-  },
   render: function() {
     return (
       <Input
@@ -689,9 +693,6 @@ var City = React.createClass({
 
 var Address = React.createClass({
   mixins: [IntlMixin],
-  propTypes: {
-    onChange: React.PropTypes.func.isRequired
-  },
   render: function() {
     return (
       <Input

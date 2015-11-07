@@ -14,10 +14,10 @@ module.exports = function(driver, By, done) {
     driver.findElement(By.name('cc_cvv')).clear();
     driver.findElement(By.name('cc_cvv')).sendKeys('123');
     driver.findElement(By.css('.page-active .next-button')).click();
-    driver.findElement(By.name('firstname')).clear();
-    driver.findElement(By.name('firstname')).sendKeys('testname');
-    driver.findElement(By.name('lastname')).clear();
-    driver.findElement(By.name('lastname')).sendKeys('lastname');
+    driver.findElement(By.name('firstName')).clear();
+    driver.findElement(By.name('firstName')).sendKeys('testname');
+    driver.findElement(By.name('lastName')).clear();
+    driver.findElement(By.name('lastName')).sendKeys('lastname');
     if (noProvince) {
       country = 'Chile';
     }
@@ -38,11 +38,6 @@ module.exports = function(driver, By, done) {
       driver.findElement(By.id('signup-checkbox')).click();
     }
     driver.findElement(By.css('.submit-btn')).click();
-  }
-  function payPal() {
-    driver.findElement(By.id('amount-other-input')).sendKeys('10');
-    driver.findElement(By.css('.page-active .next-button')).click();
-    driver.findElement(By.id('payment-paypal')).click();
   }
   stripeTest(false, 'http://localhost:3000/de/');
   driver.wait(function() {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import Error from '../components/error-message.jsx';
 
 var Checkbox = React.createClass({
   mixins: [IntlMixin],
@@ -33,9 +34,9 @@ var Checkbox = React.createClass({
     return valid;
   },
   render: function() {
-    var errorMessageClassName = "row error-msg-row";
-    if (this.state.valid) {
-      errorMessageClassName += " hidden";
+    var message = "";
+    if (!this.state.valid) {
+      message = this.props.error;
     }
     var type = this.props.type;
     return (
@@ -48,15 +49,7 @@ var Checkbox = React.createClass({
             </label>
           </div>
         </div>
-        <div className={errorMessageClassName}>
-          <div className="full">
-            <div id="privacy-error-msg">
-              <ul id="parsley-id-multiple-legal_confirm" className="parsley-errors-list filled">
-                <li className="parsley-custom-error-message">{this.props.error}</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <Error message={message}/>
       </div>
     );
   }

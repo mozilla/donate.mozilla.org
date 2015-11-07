@@ -27,7 +27,7 @@ var Form = React.createClass({
                 validate={["email", "privacyPolicy"]}
                 onSubmit={this.signup}
                 submit={["email"]}
-                error={this.state.errors.other}
+                errors={[this.state.errors.required.message, this.state.errors.other.message]}
               >
                 {this.getIntlMessage('sign_up_now')}
               </SubmitButton>

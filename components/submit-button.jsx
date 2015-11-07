@@ -1,5 +1,6 @@
 import React from 'react';
 import {IntlMixin} from 'react-intl';
+import Error from '../components/error-message.jsx';
 
 var DonateButton = React.createClass({
   mixins: [IntlMixin],
@@ -15,28 +16,13 @@ var DonateButton = React.createClass({
     return this.props.children;
   },
   render: function() {
-    var errorMessageClassName = "row error-msg-row";
-    var errorMessage = this.props.error.message;
-    if (errorMessage === "") {
-      errorMessageClassName += " hidden";
-    }
     return (
       <div className="row submit-button">
-        <div className="full">
+        <div className="full submit-button-container">
+          <Error message={this.props.errors}/>
           <button onClick={this.onClick} type="submit" className="submit-btn large-label-size">
             {this.renderButton()}
           </button>
-        </div>
-        <div className={errorMessageClassName}>
-          <div className="full">
-            <div id="amount-error-msg">
-              <ul id="parsley-id-multiple-donation_amount" className="parsley-errors-list filled">
-                <li className="parsley-custom-error-message">
-                  {errorMessage}
-                </li>
-              </ul>
-            </div>
-          </div>
         </div>
       </div>
     );

@@ -30,8 +30,7 @@ module.exports = React.createClass({
   getInitialState() {
     return {
       activePage: 0,
-      hideCreditCardDetails: true,
-      height: ""
+      hideCreditCardDetails: true
     };
   },
   expandCreditCardInfo: function() {
@@ -42,7 +41,6 @@ module.exports = React.createClass({
       paymentType: this.getIntlMessage('credit_card')
     });
     window.setTimeout(this.refs.creditCardInfoField.focus, 500);
-    this.updateHeight();
   },
   collapseCreditCardInfo: function() {
     this.setState({
@@ -51,7 +49,6 @@ module.exports = React.createClass({
     this.setState({
       paymentType: "PayPal"
     });
-    this.updateHeight();
   },
   renderSubmitButton: function(data) {
     var amount = this.state.props.amount;
@@ -109,7 +106,7 @@ module.exports = React.createClass({
             </NavigationButton>
           </NavigationMenu>
 
-          <NavigationContainer height={this.state.height}>
+          <NavigationContainer>
             <Page activePage={this.state.activePage} index={0}>
               <SectionHeading>
                 <h2>

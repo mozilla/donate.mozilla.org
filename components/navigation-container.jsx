@@ -6,7 +6,7 @@ var NavigationContainer = React.createClass({
   },
   render: function() {
     return (
-      <div style={{height: this.props.height}} className="sequence-page-container">
+      <div className="sequence-page-container">
         {this.props.children}
       </div>
     );

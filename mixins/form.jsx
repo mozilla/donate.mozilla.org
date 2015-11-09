@@ -65,18 +65,6 @@ module.exports = {
       props: newProps
     });
   },
-  updateHeight: function() {
-    if (this.state.activePage !== 0 && !this.state.activePage) {
-      return;
-    }
-    var self = this;
-    window.setTimeout(function() {
-      var activePage = document.querySelector(".page-active");
-      self.setState({
-        height: activePage.offsetHeight + "px"
-      });
-    });
-  },
   onChange: function(name, element, field) {
     var newState = {};
     newState.errors = this.state.errors;
@@ -88,7 +76,6 @@ module.exports = {
       newState.errors[field].message = "";
     }
     this.setState(newState);
-    this.updateHeight();
   },
   updateFormField: function(name, element, field, value) {
     this.onChange(name, element, field);
@@ -127,7 +114,6 @@ module.exports = {
         valid = false;
       }
     });
-    this.updateHeight();
     return valid;
   },
   nextPage: function(e) {
@@ -151,7 +137,6 @@ module.exports = {
     var currentPage = window.location.pathname + "#page-" + page;
     // These are virtual pageviews, so we track them manually in GA
     reactGA.pageview(currentPage);
-    this.updateHeight();
   },
   submit: function(action, props, success, error) {
     this.setState({
@@ -294,7 +279,6 @@ module.exports = {
       newState.errors.other.message = this.getIntlMessage('try_again_later');
     }
     this.setState(newState);
-    this.updateHeight();
   },
   stripe: function(validate, props) {
     var submit = this.submit;

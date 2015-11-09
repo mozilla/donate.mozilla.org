@@ -1,5 +1,5 @@
 module.exports = function(driver, By, done) {
-  function stripeTest(noProvince, url) {
+  function stripeTest(url, province, signup, address) {
     var country = 'Canada';
     driver.get(url);
     driver.findElement(By.id('amount-other-input')).sendKeys('10');
@@ -18,42 +18,53 @@ module.exports = function(driver, By, done) {
     driver.findElement(By.name('firstname')).sendKeys('testname');
     driver.findElement(By.name('lastname')).clear();
     driver.findElement(By.name('lastname')).sendKeys('lastname');
-    if (noProvince) {
+    if (!province) {
       country = 'Chile';
     }
-    driver.findElement(By.name('country')).sendKeys(country);
-    driver.findElement(By.name('address')).clear();
-    driver.findElement(By.name('address')).sendKeys('test address');
-    driver.findElement(By.name('city')).clear();
-    driver.findElement(By.name('city')).sendKeys('testcity');
-    driver.findElement(By.name('code')).clear();
-    driver.findElement(By.name('code')).sendKeys('m5g 3u7');
-    if (!noProvince) {
+    if (address) {
+      driver.findElement(By.name('country')).sendKeys(country);
+      driver.findElement(By.name('address')).clear();
+      driver.findElement(By.name('address')).sendKeys('test address');
+      driver.findElement(By.name('city')).clear();
+      driver.findElement(By.name('city')).sendKeys('testcity');
+      driver.findElement(By.name('code')).clear();
+      driver.findElement(By.name('code')).sendKeys('m5g 3u7');
+    } else {
+      driver.findElement(By.name('country-test')).sendKeys(country);
+      driver.findElement(By.name('code-test')).clear();
+      driver.findElement(By.name('code-test')).sendKeys('m5g 3u7');
+    }
+    if (address && province) {
       driver.findElement(By.id('wsstate_cd')).sendKeys('Ontario');
     }
     driver.findElement(By.name('email')).clear();
     driver.findElement(By.name('email')).sendKeys('test@email.com');
     driver.findElement(By.id('privacy-policy-checkbox')).click();
-    if (noProvince) {
+    if (signup) {
       driver.findElement(By.id('signup-checkbox')).click();
     }
-    driver.findElement(By.css('.submit-btn')).click();
+    if (address) {
+      driver.findElement(By.name('submit-button')).click();
+    } else {
+      driver.findElement(By.name('submit-button-test')).click();
+    }
   }
-  function payPal() {
-    driver.findElement(By.id('amount-other-input')).sendKeys('10');
-    driver.findElement(By.css('.page-active .next-button')).click();
-    driver.findElement(By.id('payment-paypal')).click();
-  }
-  stripeTest(false, 'http://localhost:3000/de/');
+  stripeTest('http://localhost:3000/de/', true, false, true);
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
       return url.indexOf('http://localhost:3000/de/thank-you/') === 0;
     });
   });
-  stripeTest(true, 'http://localhost:3000/de/?test=signup-test');
+  stripeTest('http://localhost:3000/de/?test=signup-test', false, true, true);
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
       return url.indexOf('http://localhost:3000/de/share/') === 0;
+    });
+  });
+  stripeTest('http://localhost:3000/en-US/?test=address-test', false, false, false);
+  driver.wait(function() {
+    return driver.getCurrentUrl().then(function(url) {
+      return url.indexOf('http://localhost:3000/en-US/thank-you/') === 0;
     });
   }).then(done);
 };

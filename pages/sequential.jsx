@@ -55,6 +55,7 @@ module.exports = React.createClass({
     var currency = this.state.currency;
     return (
       <SubmitButton
+        name={data.name}
         submitting={this.state.submitting}
         validate={data.validate}
         onSubmit={this.stripe}
@@ -232,12 +233,14 @@ module.exports = React.createClass({
 
               <div className="base-line-address">
                 {this.renderSubmitButton({
+                  name: "submit-button",
                   validate: ["name", "country", "address", "city", "code", "province", "email", "privacyPolicy"],
                   submit: ["amount", "frequency", "creditCardInfo", "name", "country", "address", "city", "code", "province", "email", "signup"]
                 })}
               </div>
               <div className="partial-address">
                 {this.renderSubmitButton({
+                  name: "submit-button-test",
                   validate: ["name", "country-test", "code-test", "email", "privacyPolicy"],
                   submit: ["amount", "frequency", "creditCardInfo", "name", "country-test", "code-test", "email", "signup"]
                 })}

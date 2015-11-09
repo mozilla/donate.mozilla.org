@@ -23,7 +23,7 @@ var DonateButton = React.createClass({
     return (
       <div className="row submit-button">
         <div className="full">
-          <button onClick={this.onClick} type="submit" className="submit-btn large-label-size">
+          <button onClick={this.onClick} name={this.props.name || "submit-button"} type="submit" className="submit-btn large-label-size">
             {this.renderButton()}
           </button>
         </div>

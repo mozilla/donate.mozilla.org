@@ -302,7 +302,13 @@ module.exports = {
       number: submitProps.cardNumber,
       cvc: submitProps.cvc,
       exp_month: submitProps.expMonth,
-      exp_year: submitProps.expYear
+      exp_year: submitProps.expYear,
+      address_city: submitProps.city,
+      address_country: submitProps.country,
+      address_line1: submitProps.address,
+      address_state: submitProps.province,
+      address_zip: submitProps.code,
+      name: submitProps.first + " " + submitProps.last
     }, function(status, response) {
       var stripeProps = {};
       if (response.error) {

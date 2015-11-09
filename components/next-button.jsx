@@ -1,13 +1,15 @@
 import React from 'react';
 import { IntlMixin } from 'react-intl';
 import dispatcher from '../scripts/dispatcher.js';
+import form from '../scripts/form.js';
 
 var NextButton = React.createClass({
   mixins: [IntlMixin],
   onClick: function() {
-    dispatcher.fire("nextPage", {
-      validate: this.props.validate
-    });
+    var valid = form.validate(this.props.validate);
+    if (valid) {
+      dispatcher.fire("nextPage");
+    }
   },
   render: function() {
     return (

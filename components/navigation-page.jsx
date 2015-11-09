@@ -1,9 +1,10 @@
 import React from 'react';
+import form from '../scripts/form.js';
 
 var NavigationPage = React.createClass({
   componentDidMount: function() {
-    if (this.props.onError) {
-      this.props.onError(this.props.errors, this.props.index);
+    if (this.props.errors) {
+      form.pageErrors(this.props.errors, this.props.index);
     }
   },
   render: function() {

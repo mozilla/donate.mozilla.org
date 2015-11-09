@@ -11,10 +11,12 @@ import SocialTest from '../components/social-test.jsx';
 import ThankYouHeader from '../components/thank-you-header.jsx';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
 import analytics from '../public/js/analytics.js';
+import form from '../scripts/form.js';
 
 var ThankYou = React.createClass({
   mixins: [IntlMixin],
   componentDidMount: function() {
+    form.updateField("email", this.props.email || "");
     analytics();
   },
   renderBaseline: function() {

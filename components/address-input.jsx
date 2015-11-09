@@ -1,7 +1,8 @@
 import React from 'react';
 import IntlMixin from 'react-intl';
 import Input from './input.jsx';
-import dispatcher from '../scripts/input-dispatcher.js';
+import listener from '../scripts/listener.js';
+import form from '../scripts/form.js';
 
 var countryOptions = [
   <option key="AF" value="AF">Afghanistan</option>,
@@ -580,18 +581,34 @@ var Country = React.createClass({
   mixins: [IntlMixin],
   getInitialState: function() {
     return {
-      valid: true
+      valid: true,
+      country: ""
     };
+  },
+  componentDidMount: function() {
+    listener.on("fieldUpdated", this.onFieldUpdated);
+    form.registerField({
+      name: this.props.name,
+      element: this,
+      field: "country"
+    });
+  },
+  componentWillUnmount: function() {
+    listener.off("fieldUpdated", this.onFieldUpdated);
+  },
+  onFieldUpdated: function(e) {
+    var detail = e.detail;
+    if (detail.field === "country") {
+      this.setState({
+        country: detail.value
+      });
+    }
   },
   onCountryChange: function(e) {
     this.setState({
       valid: true
     });
-    dispatcher.fire("heightChange");
-    dispatcher.fieldChange({
-      field: "country",
-      value: e.currentTarget.value
-    });
+    form.updateField("country", e.currentTarget.value);
   },
   validate: function() {
     var valid = true;
@@ -603,20 +620,13 @@ var Country = React.createClass({
     }
     return valid;
   },
-  componentDidMount: function() {
-    dispatcher.fieldReady({
-      name: this.props.name,
-      element: this,
-      field: "country"
-    });
-  },
   render: function() {
     var className = "";
     if (!this.state.valid) {
       className += " parsley-error";
     }
     return (
-      <CountrySelect ref="countrySelect" name={this.props.name} country={this.props.value} onCountryChange={this.onCountryChange} className={className}/>
+      <CountrySelect ref="countrySelect" name={this.props.name} country={this.state.country} onCountryChange={this.onCountryChange} className={className}/>
     );
   }
 });
@@ -625,17 +635,39 @@ var Province = React.createClass({
   mixins: [IntlMixin],
   getInitialState: function() {
     return {
-      valid: true
+      valid: true,
+      country: "",
+      province: ""
     };
+  },
+  componentDidMount: function() {
+    listener.on("fieldUpdated", this.onFieldUpdated);
+    form.registerField({
+      name: this.props.name,
+      element: this,
+      field: "province"
+    });
+  },
+  componentWillUnmount: function() {
+    listener.off("fieldUpdated", this.onFieldUpdated);
+  },
+  onFieldUpdated: function(e) {
+    var detail = e.detail;
+    if (detail.field === "province") {
+      this.setState({
+        province: detail.value
+      });
+    } else if (detail.field === "country") {
+      this.setState({
+        country: detail.value
+      });
+    }
   },
   onProvinceChange: function(e) {
     this.setState({
       valid: true
     });
-    dispatcher.fieldChange({
-      field: "province",
-      value: e.currentTarget.value
-    });
+    form.updateField("province", e.currentTarget.value);
   },
   validate: function() {
     var valid = true;
@@ -647,20 +679,13 @@ var Province = React.createClass({
     }
     return valid;
   },
-  componentDidMount: function() {
-    dispatcher.fieldReady({
-      name: this.props.name,
-      element: this,
-      field: "province"
-    });
-  },
   render: function() {
     var className = "";
     if (!this.state.valid) {
       className += " parsley-error";
     }
     return (
-      <ProvinceSelect ref="provinceSelect" name={this.props.name} country={this.props.country} onProvinceChange={this.onProvinceChange} className={className} province={this.props.value}/>
+      <ProvinceSelect ref="provinceSelect" name={this.props.name} country={this.state.country} onProvinceChange={this.onProvinceChange} className={className} province={this.state.province}/>
     );
   }
 });
@@ -672,7 +697,7 @@ var Code = React.createClass({
       <Input
         {...this.props}
         placeholder={this.getIntlMessage('postal_code')}
-        type="code"
+        field="code"
       />
     );
   }
@@ -685,7 +710,7 @@ var City = React.createClass({
       <Input
         {...this.props}
         placeholder={this.getIntlMessage('city')}
-        type="city"
+        field="city"
       />
     );
   }
@@ -698,7 +723,7 @@ var Address = React.createClass({
       <Input
         {...this.props}
         placeholder={this.getIntlMessage('address')}
-        type="address"
+        field="address"
       />
     );
   }

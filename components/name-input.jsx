@@ -10,7 +10,7 @@ var FirstName = React.createClass({
         <Input
           {...this.props}
           placeholder={this.getIntlMessage('first_name')}
-          type="firstName"
+          field="firstName"
           autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
         />
       </div>
@@ -26,7 +26,7 @@ var LastName = React.createClass({
         <Input
           {...this.props}
           placeholder={this.getIntlMessage('last_name')}
-          type="lastName"
+          field="lastName"
           autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
         />
       </div>

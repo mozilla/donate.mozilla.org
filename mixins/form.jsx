@@ -1,9 +1,9 @@
-import assign from 'react/lib/Object.assign';
 import reactGA from 'react-ga';
 import {Navigation} from 'react-router';
-import listener from '../scripts/listener.js';
 import amountModifier from '../scripts/amount-modifier';
+import listener from '../scripts/listener.js';
 import dispatcher from '../scripts/dispatcher.js';
+import form from '../scripts/form.js';
 
 module.exports = {
   mixins: [Navigation],
@@ -14,86 +14,53 @@ module.exports = {
       presets: this.props.presets,
       currency: this.props.currency,
       showCvcHint: false,
-      props: {
-        amount:  this.props.amount,
-        frequency: this.props.frequency,
-        country: "US",
-        province: "",
-        city: "",
-        address: "",
-        code: "",
-        firstName: "",
-        LastName: "",
-        cardNumber: "",
-        cvc: "",
-        expMonth: "",
-        expYear: "",
-        email: "",
-        signup: false,
-        privacyPolicy: false
-      },
-      values: {},
-      errors: {
-        cardNumber: {
-          page: 0,
-          message: ""
-        },
-        cvc: {
-          page: 0,
-          message: ""
-        },
-        expMonth: {
-          page: 0,
-          message: ""
-        },
-        expYear: {
-          page: 0,
-          message: ""
-        },
-        code: {
-          page: 0,
-          message: ""
-        },
-        other: {
-          page: 0,
-          message: ""
-        }
-      }
+      frequency: this.props.frequency
     };
   },
   componentDidMount: function() {
-    this.onHeightChange();
+    listener.on("fieldUpdated", this.onFieldUpdated);
+    form.updateField("amount", this.props.amount);
+    form.updateField("frequency", this.state.frequency);
+    form.updateField("country", "US");
+
     listener.on("currencyChange", this.onCurrencyChange);
-    listener.on("heightChange", this.onHeightChange);
-    listener.on("fieldChange", this.onFieldChange);
-    listener.on("fieldReady", this.onFieldReady);
-    listener.on("frequencyChange", this.onFrequencyChange);
     listener.on("toggleCvcHint", this.onToggleCvcHint);
     listener.on("toPage", this.toThisPage);
     listener.on("nextPage", this.nextPage);
   },
   componentWillUnmount: function() {
+    listener.off("fieldUpdated", this.onFieldUpdated);
+
     listener.off("currencyChange", this.onCurrencyChange);
-    listener.off("heightChange", this.onHeightChange);
-    listener.off("fieldChange", this.onFieldChange);
-    listener.off("fieldReady", this.onFieldReady);
-    listener.off("frequencyChange", this.onFrequencyChange);
     listener.off("toggleCvcHint", this.onToggleCvcHint);
     listener.off("toPage", this.toThisPage);
     listener.off("nextPage", this.nextPage);
+  },
+  onFieldUpdated: function(e) {
+    var detail = e.detail;
+    var value = detail.value;
+    var field = detail.field;
+    var presets = this.state.presets;
+    if (field === "frequency") {
+      if (this.state.currency) {
+        presets = this.state.currency.presets[value];
+      }
+      this.setState({
+        presets: presets,
+        frequency: value
+      });
+    }
   },
   onCurrencyChange: function(e) {
     var detail = e.detail;
     var value = detail.value;
     var currencies = this.props.currencies;
     var currency = currencies[value] || this.state.currency;
-    var presets = currency.presets[this.state.props.frequency];
-    var newProps = this.state.props;
-    newProps.amount = "";
+    var presets = currency.presets[this.state.frequency];
+    form.updateField("amount", "");
     this.setState({
       presets: presets,
-      currency: currency,
-      props: newProps
+      currency: currency
     });
   },
   onToggleCvcHint: function() {
@@ -101,78 +68,16 @@ module.exports = {
       showCvcHint: !this.state.showCvcHint
     });
   },
-  onFieldReady: function(e) {
-    var detail = e.detail;
-    var element = detail.element;
-    var name = detail.name;
-    var field = detail.field;
-    var newValues = this.state.values;
-    var newState = {};
-
-    newState[name] = element;
-    newValues[name] = field;
-    newState.values = newValues;
-    this.setState(newState);
-  },
-  onFieldChange: function(e) {
-    var detail = e.detail;
-    var field = detail.field;
-    var value = detail.value;
-    var newProps = this.state.props;
-    var newState = {};
-
-    newState.errors = this.state.errors;
-    if (field && this.state.errors[field] && this.state.errors[field].message) {
-      newState.errors[field].message = "";
-    }
-    newProps[field] = value;
-    newState.props = newProps;
-    this.setState(newState);
-  },
-  onFrequencyChange: function(e) {
-    var detail = e.detail;
-    var frequency = detail.frequency;
-    if (frequency) {
-      this.setState({
-        presets: this.state.currency.presets[frequency]
-      });
-    }
-  },
-  onPageError: function(errors, index) {
-    var stateErrors = this.state.errors;
-    errors.forEach(function(error) {
-      error.page = index;
-    });
-    this.setState({
-      errors: stateErrors
-    });
-  },
-  validateProps: function(props) {
-    var self = this;
-    var valid = true;
-    props = props || [];
-    props.forEach(function(name) {
-      if (!self.state[name].validate()) {
-        valid = false;
-      }
-    });
-<<<<<<< HEAD
-=======
-    this.onHeightChange();
->>>>>>> 5395aa4... using events for most callback
-    return valid;
-  },
   nextPage: function(e) {
-    var validate = e.detail.validate;
-    var valid = this.validateProps(validate);
-    if (valid) {
-      dispatcher.fire("toPage", {
-        page: this.state.activePage+1
-      });
-    }
+    dispatcher.fire("toPage", {
+      page: this.state.activePage+1
+    });
   },
   toThisPage: function(e) {
     var index = e.detail.page;
+    if (this.state.activePage === index) {
+      return;
+    }
     this.setState({
       activePage: index
     });
@@ -261,51 +166,41 @@ module.exports = {
     this.transitionTo('/' + this.props.locales[0] + '/' + location + '/?' + params);
   },
   stripeError: function(errorCode, errorType) {
-    var newState = {};
     var cardErrorCodes = {
       "invalid_number": {
-        name: "cardNumber",
-        field: "message",
+        field: "cardNumber",
         message: this.getIntlMessage('invalid_number')
       },
       "invalid_expiry_month": {
-        name: "expMonth",
-        field: "message",
+        field: "expMonth",
         message: this.getIntlMessage('invalid_expiry_month')
       },
       "invalid_expiry_year": {
-        name: "expYear",
-        field: "message",
+        field: "expYear",
         message: this.getIntlMessage('invalid_expiry_year')
       },
       "invalid_cvc": {
-        name: "cvc",
-        field: "message",
+        field: "cvc",
         message: this.getIntlMessage('invalid_CVC')
       },
       "incorrect_number": {
-        name: "cardNumber",
-        field: "message",
+        field: "cardNumber",
         message: this.getIntlMessage('incorrect_number')
       },
       "expired_card": {
-        name: "cardNumber",
-        field: "message",
+        field: "cardNumber",
         message: this.getIntlMessage('expired_card')
       },
       "incorrect_cvc": {
-        name: "cvc",
-        field: "message",
+        field: "cvc",
         message: this.getIntlMessage('incorrect_CVC')
       },
       "incorrect_zip": {
-        name: "code",
-        field: "message",
+        field: "code",
         message: this.getIntlMessage('invalid_zip')
       },
       "card_declined": {
-        name: "cardNumber",
-        field: "message",
+        field: "cardNumber",
         message: this.getIntlMessage('declined_card')
       },
       "processing_error": {
@@ -316,26 +211,20 @@ module.exports = {
     };
 
     var cardError = cardErrorCodes[errorCode];
-    newState.submitting = false;
-    newState.errors = this.state.errors;
     if (errorType === "card_error" && cardError) {
-      if (this.state.errors[cardError.name].page < this.state.activePage) {
-        newState.activePage = this.state.errors[cardError.name].page;
-      }
-      newState.errors[cardError.name][cardError.field] = cardError.message;
+      form.error(cardError.field, cardError.message);
     } else {
-      if (this.state.errors.other.page < this.state.activePage) {
-        newState.activePage = this.state.errors.other.page;
-      }
-      newState.errors.other.message = this.getIntlMessage('try_again_later');
+      form.error("other", this.getIntlMessage('try_again_later'));
     }
-    this.setState(newState);
+    this.setState({
+      submitting: false
+    });
   },
   stripe: function(validate, props) {
     var submit = this.submit;
     var success = this.stripeSuccess;
     var error = this.stripeError;
-    var valid = this.validateProps(validate);
+    var valid = form.validate(validate);
     var submitProps = {};
     if (!valid) {
       return;
@@ -344,7 +233,7 @@ module.exports = {
     this.setState({
       submitting: true
     });
-    submitProps = this.buildProps(props);
+    submitProps = form.buildProps(props);
     if (submitProps.frequency === "monthly") {
       description = this.getIntlMessage("mozilla_monthly_donation");
     }
@@ -395,14 +284,14 @@ module.exports = {
   stripeCheckout: function(validate, props) {
     var submit = this.submit;
     var success = this.stripeSuccess;
-    var valid = this.validateProps(validate);
+    var valid = form.validate(validate);
     var submitProps= {};
     if (!valid) {
       return;
     }
     var description = this.getIntlMessage("mozilla_donation");
     var handlerDesc = "";
-    submitProps = this.buildProps(props);
+    submitProps = form.buildProps(props);
     if (submitProps.frequency === "monthly") {
       description = this.getIntlMessage("mozilla_monthly_donation");
       handlerDesc = this.getIntlMessage("monthly");
@@ -445,24 +334,12 @@ module.exports = {
       amount: amountModifier.stripe(submitProps.amount, currency)
     });
   },
-  buildProps: function(fields) {
-    var state = this.state;
-    var props = {};
-    fields.forEach(function(name) {
-      var prop = {
-        [state.values[name]]: state.props[state.values[name]]
-      };
-      // Modify props to now contain the values in prop.
-      assign(props, prop);
-    });
-    return props;
-  },
   paypal: function(validate, props) {
-    var valid = this.validateProps(validate);
+    var valid = form.validate(validate);
     var submitProps = {};
     var description = this.getIntlMessage("mozilla_donation");
     if (valid) {
-      submitProps = this.buildProps(props);
+      submitProps = form.buildProps(props);
       if (submitProps.frequency === "monthly") {
         description = this.getIntlMessage("mozilla_monthly_donation");
       }
@@ -482,19 +359,13 @@ module.exports = {
     this.setState({
       submitting: false
     });
-    this.setState({
-      errors: {
-        other: {
-          message: this.getIntlMessage('try_again_later')
-        }
-      }
-    });
+    form.error("other", this.getIntlMessage('try_again_later'));
   },
   signup: function(validate, props) {
-    var valid = this.validateProps(validate);
+    var valid = form.validate(validate);
     var submitProps = {};
     if (valid) {
-      submitProps = this.buildProps(props);
+      submitProps = form.buildProps(props);
       this.submit("/api/signup", submitProps, this.signupSuccess, this.signupError);
     }
   }

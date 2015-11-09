@@ -1,33 +1,43 @@
 import React from 'react';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
-import dispatcher from '../scripts/input-dispatcher.js';
+import listener from '../scripts/listener.js';
+import form from '../scripts/form.js';
 
 var Checkbox = React.createClass({
   mixins: [IntlMixin],
   getInitialState: function() {
     return {
-      valid: true
+      valid: true,
+      value: false
     };
   },
   componentDidMount: function() {
-    dispatcher.fieldReady({
+    listener.on("fieldUpdated", this.onFieldUpdated);
+    form.registerField({
       name: this.props.name,
       element: this,
       field: this.props.field
     });
   },
+  componentWillUnmount: function() {
+    listener.off("fieldUpdated", this.onFieldUpdated);
+  },
+  onFieldUpdated: function(e) {
+    var detail = e.detail;
+    if (detail.field === this.props.field) {
+      this.setState({
+        value: detail.value
+      });
+    }
+  },
   onCheck: function(e) {
     this.setState({
       valid: true
     });
-    dispatcher.fire("heightChange");
-    dispatcher.fieldChange({
-      field: this.props.field,
-      value: e.currentTarget.checked
-    });
+    form.updateField(this.props.field, e.currentTarget.checked);
   },
   validate: function() {
-    var valid = this.props.checked;
+    var valid = this.state.value;
     this.setState({
       valid: valid
     });
@@ -42,7 +52,7 @@ var Checkbox = React.createClass({
       <div className="full checkbox">
         <div className="row">
           <div className="full">
-            <input type="checkbox" onChange={this.onCheck} checked={this.props.checked} name="legal_confirm" id={this.props.id}/>
+            <input type="checkbox" onChange={this.onCheck} checked={this.state.value} name="legal_confirm" id={this.props.id}/>
             <label htmlFor={this.props.id}>
               <FormattedHTMLMessage message={ this.props.message } />
             </label>

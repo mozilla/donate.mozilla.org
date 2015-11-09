@@ -1,6 +1,7 @@
 import React from 'react';
 import {FormattedNumber} from 'react-intl';
 import dispatcher from '../scripts/dispatcher.js';
+import listener from '../scripts/listener.js';
 
 var NavigationButton = React.createClass({
   onClick: function(e) {
@@ -24,18 +25,64 @@ var NavigationButton = React.createClass({
     return (
       <li onClick={this.onClick} className={className}>
         {this.props.children}
-        <div className="page-breadcrumb">
-          { this.props.amount ?
-          <FormattedNumber
-            maximumFractionDigits={2}
-            value={this.props.amount}
-            style="currency"
-            currency={this.props.currency || "usd"}
-          /> : this.props.display}
-        </div>
       </li>
     );
   }
 });
 
-module.exports = NavigationButton;
+var AmountNavigationButton = React.createClass({
+  getInitialState: function() {
+    return {
+      amount: ""
+    };
+  },
+  componentDidMount: function() {
+    listener.on("fieldUpdated", this.onFieldUpdated);
+  },
+  componentWillUnmount: function() {
+    listener.off("fieldUpdated", this.onFieldUpdated);
+  },
+  onFieldUpdated: function(e) {
+    var detail = e.detail;
+    if (detail.field === "amount") {
+      this.setState({
+        amount: detail.value
+      });
+    }
+  },
+  render: function() {
+    return (
+      <NavigationButton activePage={this.props.activePage} index={this.props.index}>
+        {this.props.children}
+        <div className="page-breadcrumb">
+          { this.state.amount ?
+          <FormattedNumber
+            maximumFractionDigits={2}
+            value={this.state.amount}
+            style="currency"
+            currency={this.props.currency || "usd"}
+          /> : ""}
+        </div>
+      </NavigationButton>
+    );
+  }
+});
+
+var DisplayNavigationButton = React.createClass({
+  render: function() {
+    return (
+      <NavigationButton activePage={this.props.activePage} index={this.props.index}>
+        {this.props.children}
+        <div className="page-breadcrumb">
+          {this.props.display}
+        </div>
+      </NavigationButton>
+    );
+  }
+});
+
+module.exports = {
+  NavigationButton: NavigationButton,
+  AmountNavigationButton: AmountNavigationButton,
+  DisplayNavigationButton: DisplayNavigationButton
+};

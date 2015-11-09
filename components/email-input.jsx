@@ -1,25 +1,39 @@
 import React from 'react';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
-import dispatcher from '../scripts/input-dispatcher.js';
+import listener from '../scripts/listener.js';
+import form from '../scripts/form.js';
 
 var EmailInput = React.createClass({
   mixins: [IntlMixin],
   getInitialState: function() {
     return {
+      email: "",
       showHint: false,
       valid: true,
       errorMessage: ""
     };
   },
   componentDidMount: function() {
-    dispatcher.fieldReady({
+    listener.on("fieldUpdated", this.onFieldUpdated);
+    form.registerField({
       name: this.props.name,
       element: this,
       field: "email"
     });
   },
+  componentWillUnmount: function() {
+    listener.off("fieldUpdated", this.onFieldUpdated);
+  },
+  onFieldUpdated: function(e) {
+    var detail = e.detail;
+    if (detail.field === "email") {
+      this.setState({
+        email: detail.value
+      });
+    }
+  },
   validate: function() {
-    var valid = !!this.props.value;
+    var valid = !!this.state.email;
     var errorMessage = "";
     if (!this.refs.inputElement.getDOMNode().validity.valid) {
       valid = false;
@@ -35,16 +49,12 @@ var EmailInput = React.createClass({
     this.setState({
       valid: true
     });
-    dispatcher.fieldChange({
-      field: "email",
-      value: e.currentTarget.value
-    });
+    form.updateField("email", e.currentTarget.value);
   },
   hintClicked: function() {
     this.setState({
       showHint: !this.state.showHint
     });
-    dispatcher.fire("heightChange");
   },
   renderHint: function() {
     var hintClassIconName = "fa fa-question-circle hint";
@@ -81,7 +91,7 @@ var EmailInput = React.createClass({
           <div className="full">
             <div className="field-container">
               <i className="fa fa-envelope field-icon"></i>
-              <input type="email" ref="inputElement" className={inputClassName} name="email" value={this.props.value} onChange={this.onEmailChange} placeholder={this.getIntlMessage('email')}/>
+              <input type="email" ref="inputElement" className={inputClassName} name="email" value={this.state.email} onChange={this.onEmailChange} placeholder={this.getIntlMessage('email')}/>
               {this.renderHint()}
             </div>
           </div>

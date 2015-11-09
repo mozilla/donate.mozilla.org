@@ -1,8 +1,30 @@
 import React from 'react';
 import {IntlMixin} from 'react-intl';
+import listener from '../scripts/listener.js';
 
 var DonateButton = React.createClass({
   mixins: [IntlMixin],
+  getInitialState: function() {
+    return {
+      error: ""
+    };
+  },
+  componentDidMount: function() {
+    listener.on("formError", this.onError);
+  },
+  componentWillUnmount: function() {
+    listener.off("formError", this.onError);
+  },
+  onError: function(e) {
+    var detail = e.detail;
+    var message = detail.message;
+    var field = detail.field;
+    if (field === "other") {
+      this.setState({
+        error: message
+      });
+    }
+  },
   onClick: function() {
     this.props.onSubmit(this.props.validate, this.props.submit);
   },
@@ -16,7 +38,7 @@ var DonateButton = React.createClass({
   },
   render: function() {
     var errorMessageClassName = "row error-msg-row";
-    var errorMessage = this.props.error.message;
+    var errorMessage = this.state.error;
     if (errorMessage === "") {
       errorMessageClassName += " hidden";
     }

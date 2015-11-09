@@ -1,6 +1,7 @@
 import React from 'react';
 import {FormattedMessage, FormattedNumber} from 'react-intl';
-import dispatcher from '../scripts/input-dispatcher.js';
+import listener from '../scripts/listener.js';
+import form from '../scripts/form.js';
 
 var AmountButton = React.createClass({
   render: function() {
@@ -72,7 +73,8 @@ var AmountButtons = React.createClass({
       // buttons while the user is entering an other amount.
       userInputting: false,
       valid: true,
-      errorMessage: ""
+      errorMessage: "",
+      amount: ""
     };
   },
   onChange: function(e) {
@@ -83,11 +85,7 @@ var AmountButtons = React.createClass({
       userInputting: userInputting,
       valid: true
     });
-    dispatcher.fire("heightChange");
-    dispatcher.fieldChange({
-      field: "amount",
-      value: amount
-    });
+    form.updateField("amount", amount);
   },
   otherRadioChange: function() {
     this.setAmount("", true);
@@ -101,8 +99,8 @@ var AmountButtons = React.createClass({
   validate: function() {
     var valid = false;
     var errorMessage = "";
-    if (this.props.amount) {
-      if (parseInt(this.props.amount, 10) < parseInt(this.props.currency.minAmount, 10)) {
+    if (this.state.amount) {
+      if (parseInt(this.state.amount, 10) < parseInt(this.props.currency.minAmount, 10)) {
         errorMessage = this.getIntlMessage('donation_min_error');
       } else {
         valid = true;
@@ -135,15 +133,27 @@ var AmountButtons = React.createClass({
     return this.state.errorMessage;
   },
   componentDidMount: function() {
-    dispatcher.fieldReady({
+    listener.on("fieldUpdated", this.onFieldUpdated);
+    form.registerField({
       name: this.props.name,
       element: this,
       field: "amount"
     });
   },
+  componentWillUnmount: function() {
+    listener.off("fieldUpdated", this.onFieldUpdated);
+  },
+  onFieldUpdated: function(e) {
+    var detail = e.detail;
+    if (detail.field === "amount") {
+      this.setState({
+        amount: detail.value
+      });
+    }
+  },
   render: function() {
     var otherAmount = "";
-    var amount = this.props.amount;
+    var amount = this.state.amount;
     var presets = this.props.presets;
     var preset = presets.indexOf(amount);
     var otherChecked = this.state.userInputting || (amount && preset < 0);

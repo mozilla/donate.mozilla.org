@@ -21,7 +21,8 @@ module.exports = {
         amount: transaction.amount,
         currency: transaction.currency,
         customer: customer.id,
-        description: transaction.description
+        description: transaction.description,
+        metadata: transaction.metadata
       };
       stripe.charges.create(charge, callback);
     });
@@ -38,7 +39,8 @@ module.exports = {
       }
       subscription = {
         plan: transaction.currency,
-        quantity: transaction.quantity
+        quantity: transaction.quantity,
+        metadata: transaction.metadata
       };
       stripe.customers.createSubscription(customer.id, subscription, callback);
     });

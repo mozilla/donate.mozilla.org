@@ -22,6 +22,7 @@ var routes = {
     var currency = transaction.currency;
     var amount = amountModifier.stripe(transaction.amount, currency);
     var metadata = {
+      email: transaction.email,
       locale: transaction.locale
     };
     if (transaction.frequency !== 'monthly') {

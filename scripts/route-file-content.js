@@ -3,12 +3,15 @@ import Router from 'react-router';
 import routes from '../components/routes.jsx';
 import englishStrings from '../locales/en-US.json';
 import currencies from '../data/currencies.js';
+import localeCurrency from '../data/locale-currency.js';
 import url from 'url';
 
 module.exports = function(outputPath, callback) {
   Router.run(routes, outputPath, function(Handler) {
+    var locale = url.parse(outputPath).pathname.split('/')[1];
+    var currencyCode = localeCurrency[locale] || 'usd';
     var values = {
-      currency: currencies.usd,
+      currency: currencies[currencyCode],
       presets: currencies.usd.presets.single,
       currencies: currencies,
       amount: '',
@@ -16,7 +19,6 @@ module.exports = function(outputPath, callback) {
     };
     var index = React.createFactory(require('../pages/index.jsx'));
     var page = React.createFactory(Handler);
-    var locale = url.parse(outputPath).pathname.split('/')[1];
     var currentString, mergedStrings;
 
     if (locale && require('../locales/index.js').indexOf(locale) !== -1) {

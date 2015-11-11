@@ -4,18 +4,18 @@ var currencies = require('../../data/currencies.js');
 var pathname = '/en-US/';
 var defaultSinglePresets = currencies.usd.presets.single;
 var defaultMonthlyPresets = currencies.usd.presets.monthly;
-var queryString;
 
 describe("queryParser.js", function() {
+  var queryString;
+  beforeEach(function() {
+    queryString = {};
+  });
   it("does not throw with empty object", function() {
     should.doesNotThrow(function() {
       queryParser({}, pathname);
     });
   });
   describe("/?presets", function() {
-    beforeEach(function() {
-      queryString = {};
-    });
     it("presets=1,2,3,4 should return ['1','2','3','4']", function() {
       queryString.presets = "1,2,3,4";
       queryParser(queryString, pathname).presets.should.containDeep(['1','2','3','4']);
@@ -74,6 +74,17 @@ describe("queryParser.js", function() {
     it("/?currency=gbp should return 'gbp' currency object", function() {
       queryString.currency = "gbp";
       queryParser(queryString, pathname).currency.should.be.an.Object().and.containEql({ symbol: '£'});
+    });
+    it("no currency in de should return 'eur' currency object", function() {
+      queryParser(queryString, '/de/').currency.should.be.an.Object().and.containEql({ symbol: '€'});
+    });
+    it("/?currency=gbp should override de locale and return 'gbp' currency object", function() {
+      queryString.currency = "gbp";
+      queryParser(queryString, '/de/').currency.should.be.an.Object().and.containEql({ symbol: '£'});
+    });
+    it("/?currency=blah in de locale should return 'eur' currency object", function() {
+      queryString.currency = "blah";
+      queryParser(queryString, '/de/').currency.should.be.an.Object().and.containEql({ symbol: '€'});
     });
     it("/?currency=blah should return default 'usd' object", function() {
       queryString.currency = "blah";

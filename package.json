@@ -43,7 +43,7 @@
     "async": "1.4.2",
     "autoless": "0.1.7",
     "babel": "5.8.23",
-    "babel-core": "5.8.25",
+    "babel-core": "6.1.4",
     "babel-loader": "5.3.2",
     "blankie": "1.1.1",
     "boom": "2.9.0",

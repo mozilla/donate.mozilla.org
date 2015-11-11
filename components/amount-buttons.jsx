@@ -10,8 +10,8 @@ var AmountButton = React.createClass({
 
     return (
       <div className="third">
-        <input onChange={this.props.onChange} checked={checked} className="amount-button" type="radio" name="donation_amount" value={this.props.value} id={"amount-" + this.props.value}/>
-        <label htmlFor={"amount-" + this.props.value} className="large-label-size">
+        <input onChange={this.props.onChange} checked={checked} className="amount-radio" type="radio" name="donation_amount" value={this.props.value} id={"amount-" + this.props.value}/>
+        <label htmlFor={"amount-" + this.props.value} className="amount-button large-label-size">
           <FormattedNumber
             minimumFractionDigits={0}
             value={this.props.value}

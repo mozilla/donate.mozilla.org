@@ -4,7 +4,7 @@ import Header from '../components/header.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SectionHeading from '../components/section-heading.jsx';
 import CurrencyDropdown from '../components/currency-dropdown.jsx';
-import Error from '../components/error-message.jsx';
+import {ErrorListener} from '../components/error.jsx';
 
 import NavigationMenu from '../components/navigation-menu.jsx';
 import {NavigationButton, AmountNavigationButton, DisplayNavigationButton} from '../components/navigation-button.jsx';
@@ -164,7 +164,7 @@ module.exports = React.createClass({
                       </div>
                     </div>
                   </div>
-                  <Error errors={["cardNumber", "cvc", "expMonth", "expYear"]}/>
+                  <ErrorListener errors={["cardNumber", "cvc", "expMonth", "expYear"]}/>
                 </div>
                 <NextButton validate={["cardNumber", "expMonth", "expYear", "cvc"]}/>
               </div>
@@ -208,7 +208,7 @@ module.exports = React.createClass({
                     <Code name="code-test"/>
                   </div>
                 </div>
-                <Error errors={["code"]}/>
+                <ErrorListener errors={["code"]}/>
               </div>
               <Email name="email" info={this.getIntlMessage("email_info")}/>
               <PrivacyPolicyCheckbox name="privacyPolicy"/>

@@ -34,7 +34,7 @@ module.exports = React.createClass({
       className += " parsley-error";
     }
     return (
-      <input className={className} type="text" name={this.props.type} onChange={this.onInputChange} value={this.props.value} placeholder={this.props.placeholder}/>
+      <input className={className} type="text" name={this.props.name} onChange={this.onInputChange} value={this.props.value} placeholder={this.props.placeholder}/>
     );
   }
 });

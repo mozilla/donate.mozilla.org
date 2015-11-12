@@ -476,7 +476,7 @@ var CountrySelect = React.createClass({
     return (
       <div className="field-container">
         <i className="fa fa-map-marker field-icon"></i>
-        <select onChange={this.props.onCountryChange} name="country" value={this.props.country} className={countryClassName}>
+        <select onChange={this.props.onCountryChange} name={this.props.name} value={this.props.country} className={countryClassName}>
           <option value="">{this.getIntlMessage('country')}</option>
           {countryOptions}
         </select>
@@ -500,7 +500,7 @@ var ProvinceSelect = React.createClass({
     }
     if (this.props.country === "US") {
       return (
-        <select ref="provinceSelect" onChange={this.props.onProvinceChange} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
+        <select ref="provinceSelect" onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
           <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="U.S. States and Territories">
             {usStates}
@@ -509,7 +509,7 @@ var ProvinceSelect = React.createClass({
       );
     } else if (this.props.country === "AU") {
       return (
-        <select ref="provinceSelect" onChange={this.props.onProvinceChange} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
+        <select ref="provinceSelect" onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
           <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="Australian States">
             {australianStates}
@@ -518,7 +518,7 @@ var ProvinceSelect = React.createClass({
       );
     } else if (this.props.country === "BR") {
       return (
-        <select ref="provinceSelect" onChange={this.props.onProvinceChange} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
+        <select ref="provinceSelect" onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
           <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="Brazilian States">
             {brazilianStates}
@@ -527,7 +527,7 @@ var ProvinceSelect = React.createClass({
       );
     } else if (this.props.country === "CA") {
       return (
-        <select ref="provinceSelect" onChange={this.props.onProvinceChange} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
+        <select ref="provinceSelect" onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
           <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="Canadian Provinces">
             {canadianProvinces}
@@ -536,7 +536,7 @@ var ProvinceSelect = React.createClass({
       );
     } else if (this.props.country === "IE") {
       return (
-        <select ref="provinceSelect" onChange={this.props.onProvinceChange} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
+        <select ref="provinceSelect" onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
           <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="Irish Counties">
             {irishCounties}
@@ -545,7 +545,7 @@ var ProvinceSelect = React.createClass({
       );
     } else if (this.props.country === "MX") {
       return (
-        <select onChange={this.props.onProvinceChange} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
+        <select onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
           <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="Mexican States">
             {mexicanStates}
@@ -554,7 +554,7 @@ var ProvinceSelect = React.createClass({
       );
     } else if (this.props.country === "ZA") {
       return (
-        <select onChange={this.props.onProvinceChange} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
+        <select onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
           <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="South African Provinces">
             {southAfricanProvinces}
@@ -563,7 +563,7 @@ var ProvinceSelect = React.createClass({
       );
     } else if (this.props.country === "SE") {
       return (
-        <select onChange={this.props.onProvinceChange} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
+        <select onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
           <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="Swedish Provinces">
             {swedishProvinces}
@@ -610,7 +610,7 @@ var Country = React.createClass({
       className += " parsley-error";
     }
     return (
-      <CountrySelect ref="countrySelect" country={this.props.value} onCountryChange={this.onCountryChange} className={className}/>
+      <CountrySelect ref="countrySelect" name={this.props.name} country={this.props.value} onCountryChange={this.onCountryChange} className={className}/>
     );
   }
 });
@@ -650,7 +650,7 @@ var Province = React.createClass({
       className += " parsley-error";
     }
     return (
-      <ProvinceSelect ref="provinceSelect" country={this.props.country} onProvinceChange={this.onProvinceChange} className={className} province={this.props.value}/>
+      <ProvinceSelect ref="provinceSelect" name={this.props.name} country={this.props.country} onProvinceChange={this.onProvinceChange} className={className} province={this.props.value}/>
     );
   }
 });

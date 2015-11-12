@@ -1,12 +1,26 @@
-var server = require('./server');
+var throng = require('throng');
+var donateServer = require('./server');
+var workers = process.env.WEB_CONCURRENCY || 1;
 
-server.start();
+function start() {
+  var server = donateServer();
 
-var shutdown = () => {
-  server.stop(() => {
-    process.exit(0);
+  server.start(function() {
+    server.log('info', 'Running server at: ' + server.info.uri);
   });
-};
 
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
+  var shutdown = () => {
+    server.stop(() => {
+      process.exit(0);
+    });
+  };
+
+  process.on('SIGINT', shutdown);
+  process.on('SIGTERM', shutdown);
+}
+
+// lol @ Infinity actually being used for something meaningful
+throng(start, {
+  workers,
+  lifetime: Infinity
+});

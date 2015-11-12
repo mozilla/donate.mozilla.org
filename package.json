@@ -54,7 +54,7 @@
     "eslint": "1.9.0",
     "eslint-loader": "1.1.0",
     "eslint-plugin-react": "3.8.0",
-    "expect": "1.12.2",
+    "expect": "1.13.0",
     "exports-loader": "0.6.2",
     "fs-writefile-promise": "1.0.3",
     "good": "6.4.0",

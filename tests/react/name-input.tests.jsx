@@ -15,7 +15,9 @@ describe('name-input.jsx {FirstName, LastName}', function() {
         listener.on("fieldReady", function(e) {
           should(e.detail.element.validate()).equal(false);
         });
-        TestUtils.renderIntoDocument(React.createElement(stubContext(Element, IntlContext)));
+        TestUtils.renderIntoDocument(React.createElement(stubContext(Element, IntlContext),{
+          name: "test"
+        }));
       });
     });
     it('.validate() should return false when all fields are whitespace', function() {
@@ -25,7 +27,8 @@ describe('name-input.jsx {FirstName, LastName}', function() {
           should(e.detail.element.validate()).equal(false);
         });
         TestUtils.renderIntoDocument(React.createElement(stubContext(Element, IntlContext),{
-          value: " "
+          value: " ",
+          name: "test"
         }));
       });
     });
@@ -36,7 +39,8 @@ describe('name-input.jsx {FirstName, LastName}', function() {
           should(e.detail.element.validate()).equal(true);
         });
         TestUtils.renderIntoDocument(React.createElement(stubContext(Element, IntlContext),{
-          value: "test"
+          value: "test",
+          name: "test"
         }));
       });
     });

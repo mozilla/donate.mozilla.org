@@ -32,6 +32,7 @@ var Index = React.createClass({
           <link rel="stylesheet" href={googleFonts}/>
           <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
           <script src="/api/polyfill.js?features=Promise,Intl.~locale.fr,Intl.~locale.pt-BR,Intl.~locale.de,Intl.~locale.id,Intl.~locale.es,Intl.~locale.en-US"></script>
+          <script src="/js/ga.js"></script>
           <script src="/main.js"></script>
           <Pontoon/>
           {/*[if lt IE 10]*/}
@@ -40,7 +41,6 @@ var Index = React.createClass({
           {/*[endif]*/}
           <script src="https://js.stripe.com/v2/"></script>
           <script src="https://checkout.stripe.com/checkout.js"></script>
-          <script src="/js/ga.js"></script>
         </body>
       </html>
     );

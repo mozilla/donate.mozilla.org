@@ -7,7 +7,6 @@ module.exports = function() {
   var product_name = null;
   var product_category = 'one-time';
 
-
   // Search for PayPal Params
   var pp_tx_re = /tx=(\w+)/;
   var pp_amt_re = /amt=([\w\.]+)/;

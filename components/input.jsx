@@ -3,6 +3,15 @@ import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 
 module.exports = React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired,
+    field: React.PropTypes.string.isRequired,
+    placeholder: React.PropTypes.string.isRequired,
+    autoComplete: React.PropTypes.string,
+    autoCorrect: React.PropTypes.string,
+    spellCheck: React.PropTypes.string,
+    autoCapitalize: React.PropTypes.string
+  },
   getInitialState: function() {
     return {
       value: "",

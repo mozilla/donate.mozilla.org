@@ -3,6 +3,9 @@ import Input from './input.jsx';
 
 var FirstName = React.createClass({
   mixins: [require('react-intl').IntlMixin],
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
   render: function() {
     return (
       <div className="field-container">
@@ -20,6 +23,9 @@ var FirstName = React.createClass({
 
 var LastName = React.createClass({
   mixins: [require('react-intl').IntlMixin],
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
   render: function() {
     return (
       <div className="field-container">

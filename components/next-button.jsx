@@ -4,6 +4,9 @@ import dispatcher from '../scripts/dispatcher.js';
 import form from '../scripts/form.js';
 
 var NextButton = React.createClass({
+  propTypes: {
+    validate: React.PropTypes.array.isRequired
+  },
   mixins: [IntlMixin],
   onClick: function() {
     var valid = form.validate(this.props.validate);

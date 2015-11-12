@@ -4,6 +4,12 @@ import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 
 var AmountButton = React.createClass({
+  propTypes: {
+    onChange: React.PropTypes.func,
+    amount: React.PropTypes.string,
+    value: React.PropTypes.string,
+    currencyCode: React.PropTypes.string
+  },
   render: function() {
     var checked = false;
     if (this.props.value === this.props.amount) {
@@ -27,6 +33,14 @@ var AmountButton = React.createClass({
 });
 
 var AmountOtherButton = React.createClass({
+  propTypes: {
+    checked: React.PropTypes.string,
+    onRadioChange: React.PropTypes.func,
+    onInputChange: React.PropTypes.func,
+    amount: React.PropTypes.string,
+    currencySymbol: React.PropTypes.string,
+    placeholder: React.PropTypes.string
+  },
   onRadioClick: function() {
     document.querySelector("#amount-other-input").focus();
   },
@@ -67,6 +81,11 @@ var AmountOtherButton = React.createClass({
 
 var AmountButtons = React.createClass({
   mixins: [require('react-intl').IntlMixin],
+  propTypes: {
+    presets: React.PropTypes.array,
+    currency: React.PropTypes.object,
+    name: React.PropTypes.string
+  },
   getInitialState: function() {
     return {
       // userInputting is used to override checked amount

@@ -2,6 +2,9 @@ import React from 'react';
 import listener from '../scripts/listener.js';
 
 module.exports = React.createClass({
+  propTypes: {
+    errors: React.PropTypes.array.isRequired
+  },
   getInitialState: function() {
     return {};
   },

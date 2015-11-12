@@ -4,6 +4,13 @@ import listener from '../scripts/listener.js';
 
 var DonateButton = React.createClass({
   mixins: [IntlMixin],
+  propTypes: {
+    onClick: React.PropTypes.func,
+    submitting: React.PropTypes.bool,
+    validate: React.PropTypes.array.isRequired,
+    submit: React.PropTypes.array.isRequired,
+    name: React.PropTypes.string
+  },
   getInitialState: function() {
     return {
       error: ""

@@ -467,6 +467,12 @@ var southAfricanProvinces = [
 
 var CountrySelect = React.createClass({
   mixins: [IntlMixin],
+  propTypes: {
+    country: React.PropTypes.string.isRequired,
+    name: React.PropTypes.string.isRequired,
+    className: React.PropTypes.string.isRequired,
+    onCountryChange: React.PropTypes.func.isRequired
+  },
   validate: function() {
     return !!this.props.country;
   },
@@ -489,6 +495,13 @@ var CountrySelect = React.createClass({
 
 var ProvinceSelect = React.createClass({
   mixins: [IntlMixin],
+  propTypes: {
+    province: React.PropTypes.string.isRequired,
+    country: React.PropTypes.string.isRequired,
+    name: React.PropTypes.string.isRequired,
+    className: React.PropTypes.string.isRequired,
+    onProvinceChange: React.PropTypes.func.isRequired
+  },
   validate: function() {
     if (this.props.province || !this.refs.provinceSelect) {
       return true;
@@ -579,6 +592,9 @@ var ProvinceSelect = React.createClass({
 
 var Country = React.createClass({
   mixins: [IntlMixin],
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
   getInitialState: function() {
     return {
       valid: true,
@@ -633,6 +649,9 @@ var Country = React.createClass({
 
 var Province = React.createClass({
   mixins: [IntlMixin],
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
   getInitialState: function() {
     return {
       valid: true,
@@ -691,6 +710,9 @@ var Province = React.createClass({
 });
 
 var Code = React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
   mixins: [IntlMixin],
   render: function() {
     return (
@@ -704,6 +726,9 @@ var Code = React.createClass({
 });
 
 var City = React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
   mixins: [IntlMixin],
   render: function() {
     return (
@@ -717,6 +742,9 @@ var City = React.createClass({
 });
 
 var Address = React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
   mixins: [IntlMixin],
   render: function() {
     return (

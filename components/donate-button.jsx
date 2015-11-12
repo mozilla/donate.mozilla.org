@@ -3,6 +3,9 @@ import {FormattedMessage, IntlMixin, FormattedNumber} from 'react-intl';
 import listener from '../scripts/listener.js';
 
 module.exports = React.createClass({
+  propTypes: {
+    currency: React.PropTypes.string.isRequired
+  },
   getInitialState: function() {
     return {
       amount: ""

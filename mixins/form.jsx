@@ -204,7 +204,6 @@ module.exports = {
         message: this.getIntlMessage('declined_card')
       },
       "processing_error": {
-        name: "creditCardInfo",
         field: "cardNumber",
         message: this.getIntlMessage('transaction_try_another')
       }

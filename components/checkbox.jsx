@@ -5,6 +5,13 @@ import form from '../scripts/form.js';
 
 var Checkbox = React.createClass({
   mixins: [IntlMixin],
+  propTypes: {
+    name: React.PropTypes.string.isRequired,
+    field: React.PropTypes.string.isRequired,
+    id: React.PropTypes.string.isRequired,
+    message: React.PropTypes.string.isRequired,
+    error: React.PropTypes.string
+  },
   getInitialState: function() {
     return {
       valid: true,
@@ -75,6 +82,9 @@ var Checkbox = React.createClass({
 module.exports = {
   PrivacyPolicyCheckbox: React.createClass({
     mixins: [IntlMixin],
+    propTypes: {
+      name: React.PropTypes.string.isRequired
+    },
     render: function() {
       return (
         <Checkbox
@@ -89,6 +99,9 @@ module.exports = {
   }),
   SignupCheckbox: React.createClass({
     mixins: [IntlMixin],
+    propTypes: {
+      name: React.PropTypes.string.isRequired
+    },
     render: function() {
       return (
         <div className="signup-checkbox">

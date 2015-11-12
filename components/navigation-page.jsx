@@ -2,6 +2,11 @@ import React from 'react';
 import form from '../scripts/form.js';
 
 var NavigationPage = React.createClass({
+  propTypes: {
+    activePage: React.PropTypes.number.isRequired,
+    index: React.PropTypes.number.isRequired,
+    errors: React.PropTypes.array
+  },
   componentDidMount: function() {
     if (this.props.errors) {
       form.pageErrors(this.props.errors, this.props.index);

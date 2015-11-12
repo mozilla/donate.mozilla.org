@@ -4,6 +4,10 @@ import dispatcher from '../scripts/dispatcher.js';
 import listener from '../scripts/listener.js';
 
 var NavigationButton = React.createClass({
+  propTypes: {
+    activePage: React.PropTypes.number.isRequired,
+    index: React.PropTypes.number.isRequired
+  },
   onClick: function(e) {
     if (this.props.activePage > this.props.index) {
       dispatcher.fire("toPage", {
@@ -31,6 +35,11 @@ var NavigationButton = React.createClass({
 });
 
 var AmountNavigationButton = React.createClass({
+  propTypes: {
+    activePage: React.PropTypes.number.isRequired,
+    index: React.PropTypes.number.isRequired,
+    currency: React.PropTypes.string
+  },
   getInitialState: function() {
     return {
       amount: ""
@@ -69,6 +78,11 @@ var AmountNavigationButton = React.createClass({
 });
 
 var DisplayNavigationButton = React.createClass({
+  propTypes: {
+    activePage: React.PropTypes.number.isRequired,
+    index: React.PropTypes.number.isRequired,
+    display: React.PropTypes.string
+  },
   render: function() {
     return (
       <NavigationButton activePage={this.props.activePage} index={this.props.index}>

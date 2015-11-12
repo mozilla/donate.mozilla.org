@@ -4,6 +4,9 @@ import form from '../scripts/form.js';
 
 module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin],
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
   getInitialState: function() {
     return {
       frequency: ""

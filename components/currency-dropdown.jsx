@@ -2,6 +2,10 @@ import React from 'react';
 import dispatcher from '../scripts/dispatcher.js';
 
 module.exports = React.createClass({
+  propTypes: {
+    currencies: React.PropTypes.object.isRequired,
+    currency: React.PropTypes.string.isRequired
+  },
   onChange: function(e) {
     dispatcher.fire("currencyChange", {
       value: e.currentTarget.value

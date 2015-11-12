@@ -3,8 +3,12 @@ import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 
-var EmailInput = React.createClass({
+module.exports = React.createClass({
   mixins: [IntlMixin],
+  propTypes: {
+    info: React.PropTypes.string,
+    name: React.PropTypes.string.isRequired
+  },
   getInitialState: function() {
     return {
       email: "",
@@ -111,5 +115,3 @@ var EmailInput = React.createClass({
     );
   }
 });
-
-module.exports = EmailInput;

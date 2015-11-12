@@ -1,5 +1,5 @@
 require('habitat').load();
-require('babel/register');
+require('babel-core/register');
 var webpack = require('webpack');
 var SimpleHtmlPrecompiler = require('simple-html-precompiler');
 var Path = require('path');

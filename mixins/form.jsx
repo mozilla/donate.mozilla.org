@@ -18,11 +18,11 @@ module.exports = {
     };
   },
   componentDidMount: function() {
-    listener.on("fieldUpdated", this.onFieldUpdated);
     form.updateField("amount", this.props.amount);
     form.updateField("frequency", this.state.frequency);
     form.updateField("country", "US");
 
+    listener.on("fieldUpdated", this.onFieldUpdated);
     listener.on("currencyChange", this.onCurrencyChange);
     listener.on("toggleCvcHint", this.onToggleCvcHint);
     listener.on("toPage", this.toThisPage);

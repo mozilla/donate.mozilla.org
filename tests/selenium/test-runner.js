@@ -1,4 +1,4 @@
-var server = require('../../server');
+var server = require('../../server')();
 var webdriver = require('selenium-webdriver'),
   By = require('selenium-webdriver').By;
 

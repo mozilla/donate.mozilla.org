@@ -1,4 +1,5 @@
 import currencies from '../data/currencies.js';
+import localeCurrency from '../data/locale-currency.js';
 import i18n from '../locales/i18n.js';
 
 function isNumber(item) {
@@ -7,11 +8,15 @@ function isNumber(item) {
 
 module.exports = function(queryString, pathname) {
   queryString = queryString || {};
+  var localesData = i18n.intlDataFor(i18n.urlOverrideLang(pathname).lang);
   var presets = queryString.presets || "";
-  var currencyCode = queryString.currency || "usd";
+  var locale = localesData.locales[0];
+
+  var queryStringCurrencyCode = queryString.currency;
+  var localeCurrencyCode = localeCurrency[locale];
   var amount = "";
   var frequency = "single";
-  var currency = currencies[currencyCode] || currencies.usd;
+  var currency = currencies[queryStringCurrencyCode] || currencies[localeCurrencyCode] || currencies.usd;
 
   if (queryString.amount && !isNaN(queryString.amount)) {
     amount = queryString.amount.trim();
@@ -27,7 +32,6 @@ module.exports = function(queryString, pathname) {
     presets = currency.presets[frequency];
   }
 
-  var localesData = i18n.intlDataFor(i18n.urlOverrideLang(pathname).lang);
   return {
     test: queryString.test,
     currency: currency,

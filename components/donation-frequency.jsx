@@ -1,21 +1,44 @@
 import React from 'react';
+import listener from '../scripts/listener.js';
+import form from '../scripts/form.js';
 
 module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin],
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
+  getInitialState: function() {
+    return {
+      frequency: ""
+    };
+  },
   componentDidMount: function() {
-    this.updateFrequency(this.props.value);
+    listener.on("fieldUpdated", this.onFieldUpdated);
+    form.registerField({
+      name: this.props.name,
+      element: this,
+      field: "frequency"
+    });
+  },
+  componentWillUnmount: function() {
+    listener.off("fieldUpdated", this.onFieldUpdated);
+  },
+  onFieldUpdated: function(e) {
+    var detail = e.detail;
+    if (detail.field === "frequency") {
+      this.setState({
+        frequency: detail.value
+      });
+    }
   },
   onChange: function(e) {
-    this.updateFrequency(e.currentTarget.value);
-  },
-  updateFrequency: function(frequency) {
-    this.props.onChange(this.props.name, this, frequency);
+    form.updateField("frequency", e.currentTarget.value);
   },
   validate: function() {
     return true;
   },
   render: function() {
-    var frequency = this.props.value;
+    var frequency = this.state.frequency;
     return (
       <div>
         <div className="row donation-frequency">

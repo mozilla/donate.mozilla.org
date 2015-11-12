@@ -1,6 +1,8 @@
 import React from 'react';
 import IntlMixin from 'react-intl';
 import Input from './input.jsx';
+import listener from '../scripts/listener.js';
+import form from '../scripts/form.js';
 
 var countryOptions = [
   <option key="AF" value="AF">Afghanistan</option>,
@@ -465,6 +467,12 @@ var southAfricanProvinces = [
 
 var CountrySelect = React.createClass({
   mixins: [IntlMixin],
+  propTypes: {
+    country: React.PropTypes.string.isRequired,
+    name: React.PropTypes.string.isRequired,
+    className: React.PropTypes.string.isRequired,
+    onCountryChange: React.PropTypes.func.isRequired
+  },
   validate: function() {
     return !!this.props.country;
   },
@@ -487,6 +495,13 @@ var CountrySelect = React.createClass({
 
 var ProvinceSelect = React.createClass({
   mixins: [IntlMixin],
+  propTypes: {
+    province: React.PropTypes.string.isRequired,
+    country: React.PropTypes.string.isRequired,
+    name: React.PropTypes.string.isRequired,
+    className: React.PropTypes.string.isRequired,
+    onProvinceChange: React.PropTypes.func.isRequired
+  },
   validate: function() {
     if (this.props.province || !this.refs.provinceSelect) {
       return true;
@@ -578,18 +593,38 @@ var ProvinceSelect = React.createClass({
 var Country = React.createClass({
   mixins: [IntlMixin],
   propTypes: {
-    onChange: React.PropTypes.func.isRequired
+    name: React.PropTypes.string.isRequired
   },
   getInitialState: function() {
     return {
-      valid: true
+      valid: true,
+      country: ""
     };
+  },
+  componentDidMount: function() {
+    listener.on("fieldUpdated", this.onFieldUpdated);
+    form.registerField({
+      name: this.props.name,
+      element: this,
+      field: "country"
+    });
+  },
+  componentWillUnmount: function() {
+    listener.off("fieldUpdated", this.onFieldUpdated);
+  },
+  onFieldUpdated: function(e) {
+    var detail = e.detail;
+    if (detail.field === "country") {
+      this.setState({
+        country: detail.value
+      });
+    }
   },
   onCountryChange: function(e) {
     this.setState({
       valid: true
     });
-    this.props.onChange(this.props.name, this, "country", e.currentTarget.value);
+    form.updateField("country", e.currentTarget.value);
   },
   validate: function() {
     var valid = true;
@@ -601,16 +636,13 @@ var Country = React.createClass({
     }
     return valid;
   },
-  componentDidMount: function() {
-    this.props.onChange(this.props.name, this, "country", this.props.value);
-  },
   render: function() {
     var className = "";
     if (!this.state.valid) {
       className += " parsley-error";
     }
     return (
-      <CountrySelect ref="countrySelect" name={this.props.name} country={this.props.value} onCountryChange={this.onCountryChange} className={className}/>
+      <CountrySelect ref="countrySelect" name={this.props.name} country={this.state.country} onCountryChange={this.onCountryChange} className={className}/>
     );
   }
 });
@@ -618,18 +650,43 @@ var Country = React.createClass({
 var Province = React.createClass({
   mixins: [IntlMixin],
   propTypes: {
-    onChange: React.PropTypes.func.isRequired
+    name: React.PropTypes.string.isRequired
   },
   getInitialState: function() {
     return {
-      valid: true
+      valid: true,
+      country: "",
+      province: ""
     };
+  },
+  componentDidMount: function() {
+    listener.on("fieldUpdated", this.onFieldUpdated);
+    form.registerField({
+      name: this.props.name,
+      element: this,
+      field: "province"
+    });
+  },
+  componentWillUnmount: function() {
+    listener.off("fieldUpdated", this.onFieldUpdated);
+  },
+  onFieldUpdated: function(e) {
+    var detail = e.detail;
+    if (detail.field === "province") {
+      this.setState({
+        province: detail.value
+      });
+    } else if (detail.field === "country") {
+      this.setState({
+        country: detail.value
+      });
+    }
   },
   onProvinceChange: function(e) {
     this.setState({
       valid: true
     });
-    this.props.onChange(this.props.name, this, "province", e.currentTarget.value);
+    form.updateField("province", e.currentTarget.value);
   },
   validate: function() {
     var valid = true;
@@ -641,63 +698,60 @@ var Province = React.createClass({
     }
     return valid;
   },
-  componentDidMount: function() {
-    this.props.onChange(this.props.name, this, "province", this.props.value);
-  },
   render: function() {
     var className = "";
     if (!this.state.valid) {
       className += " parsley-error";
     }
     return (
-      <ProvinceSelect ref="provinceSelect" name={this.props.name} country={this.props.country} onProvinceChange={this.onProvinceChange} className={className} province={this.props.value}/>
+      <ProvinceSelect ref="provinceSelect" name={this.props.name} country={this.state.country} onProvinceChange={this.onProvinceChange} className={className} province={this.state.province}/>
     );
   }
 });
 
 var Code = React.createClass({
-  mixins: [IntlMixin],
   propTypes: {
-    onChange: React.PropTypes.func.isRequired
+    name: React.PropTypes.string.isRequired
   },
+  mixins: [IntlMixin],
   render: function() {
     return (
       <Input
         {...this.props}
         placeholder={this.getIntlMessage('postal_code')}
-        type="code"
+        field="code"
       />
     );
   }
 });
 
 var City = React.createClass({
-  mixins: [IntlMixin],
   propTypes: {
-    onChange: React.PropTypes.func.isRequired
+    name: React.PropTypes.string.isRequired
   },
+  mixins: [IntlMixin],
   render: function() {
     return (
       <Input
         {...this.props}
         placeholder={this.getIntlMessage('city')}
-        type="city"
+        field="city"
       />
     );
   }
 });
 
 var Address = React.createClass({
-  mixins: [IntlMixin],
   propTypes: {
-    onChange: React.PropTypes.func.isRequired
+    name: React.PropTypes.string.isRequired
   },
+  mixins: [IntlMixin],
   render: function() {
     return (
       <Input
         {...this.props}
         placeholder={this.getIntlMessage('address')}
-        type="address"
+        field="address"
       />
     );
   }

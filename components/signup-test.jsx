@@ -17,14 +17,13 @@ var Form = React.createClass({
           </div>
           <div className="wrap">
             <div className="row">
-              <Email value={this.props.email} onChange={this.onChange} name="email-test"/>
-              <PrivacyPolicyCheckbox onChange={this.onChange} name="privacyPolicy"/>
+              <Email name="email-test"/>
+              <PrivacyPolicyCheckbox name="privacyPolicy-test"/>
               <SubmitButton
                 submitting={this.state.submitting}
-                validate={["email-test", "privacyPolicy"]}
+                validate={["email-test", "privacyPolicy-test"]}
                 onSubmit={this.signup}
                 submit={["email-test"]}
-                error={this.state.errors.other}
               >
                 {this.getIntlMessage('sign_up_now')}
               </SubmitButton>

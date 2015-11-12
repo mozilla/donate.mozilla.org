@@ -34,13 +34,9 @@ var SingleForm = React.createClass({
           </SectionHeading>
           <AmountButtons name="amount"
             currency={this.state.currency}
-            onChange={this.updateFormField}
-            amount={this.state.props.amount}
             presets={this.state.presets}
           />
-          <Frequency onChange={this.onFrequencyChange} name="frequency"
-            value={this.state.props.frequency}
-          />
+          <Frequency name="frequency"/>
           <div className="payment-section">
             <SectionHeading>
               <h4>{this.getIntlMessage("choose_payment")}</h4>

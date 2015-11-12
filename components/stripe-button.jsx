@@ -2,6 +2,11 @@ import React from 'react';
 
 module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin],
+  propTypes: {
+    onClick: React.PropTypes.func,
+    submitting: React.PropTypes.bool,
+    validate: React.PropTypes.array.isRequired
+  },
   onChange: function() {
     this.props.onClick = this.props.onClick || function() {};
     this.props.onClick();

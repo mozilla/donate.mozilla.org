@@ -2,6 +2,9 @@ import React from 'react';
 
 module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin],
+  propTypes: {
+    onClick: React.PropTypes.func.isRequired
+  },
   render: function() {
     return (
       <div onClick={this.props.onClick} className="half">

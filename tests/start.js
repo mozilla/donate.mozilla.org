@@ -1,5 +1,5 @@
-var server = require('../server');
+var server = require('../server')();
 
 server.start(function() {
-  server.stop();
+  server.stop(function() {});
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import {FormattedMessage, FormattedNumber} from 'react-intl';
+import {ErrorMessage} from './error.jsx';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 
@@ -34,7 +35,7 @@ var AmountButton = React.createClass({
 
 var AmountOtherButton = React.createClass({
   propTypes: {
-    checked: React.PropTypes.string,
+    checked: React.PropTypes.bool.isRequired,
     onRadioChange: React.PropTypes.func,
     onInputChange: React.PropTypes.func,
     amount: React.PropTypes.string,
@@ -102,7 +103,8 @@ var AmountButtons = React.createClass({
   setAmount: function(amount, userInputting) {
     this.setState({
       userInputting: userInputting,
-      valid: true
+      valid: true,
+      errorMessage: ""
     });
     form.updateField("amount", amount);
   },
@@ -175,7 +177,8 @@ var AmountButtons = React.createClass({
     var amount = this.state.amount;
     var presets = this.props.presets;
     var preset = presets.indexOf(amount);
-    var otherChecked = this.state.userInputting || (amount && preset < 0);
+    var otherChecked = this.state.userInputting || !!(amount && preset < 0);
+
     if (otherChecked) {
       otherAmount = amount;
       amount = "";
@@ -206,17 +209,7 @@ var AmountButtons = React.createClass({
             placeholder={this.getIntlMessage('other_amount')}
           />
         </div>
-        <div className={errorMessageClassName}>
-          <div className="full">
-            <div id="amount-error-msg">
-              <ul id="parsley-id-multiple-donation_amount" className="parsley-errors-list filled">
-                <li className="parsley-custom-error-message">
-                  {this.renderErrorMessage()}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <ErrorMessage message={this.renderErrorMessage()}/>
       </div>
     );
   }

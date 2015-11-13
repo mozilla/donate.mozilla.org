@@ -14,8 +14,9 @@ module.exports = function(tests) {
         driver.quit().then(next);
       });
     } else {
-      server.stop();
-      console.log("finished");
+      server.stop(function() {
+        console.log("finished");
+      });
     }
   }
   server.start(next);

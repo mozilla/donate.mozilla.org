@@ -6,16 +6,9 @@ var amountModifier = require('../scripts/amount-modifier');
 
 var routes = {
   'signup': function(request, reply) {
-    var transaction = request.payload || {};
-    signup(transaction, function(err, response, body) {
-      if (err) {
-        reply(boom.wrap(err, 500, 'Unable to complete Basket signup'));
-      } else if (body.status === "error") {
-        reply(boom.create(response.statusCode, body.desc));
-      } else {
-        reply().code(204);
-      }
-    });
+    var transaction = request.payload;
+    signup(transaction);
+    reply().code(204);
   },
   'stripe': function(request, reply) {
     var transaction = request.payload || {};

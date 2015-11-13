@@ -1,9 +1,8 @@
-var httpRequest = require('request');
+var hatchet = require('hatchet');
+var url = process.env.SIGNUP;
 
-module.exports = function(transaction, callback) {
-  var url = process.env.SIGNUP;
-  callback = callback || function() {};
-  httpRequest.post({
+module.exports = function(transaction) {
+  hatchet.send("sign_up_for_mofo_newsletter", {
     url: url,
     json: true,
     form: {
@@ -15,5 +14,5 @@ module.exports = function(transaction, callback) {
       email: transaction.email,
       country: transaction.country
     }
-  }, callback);
+  });
 };

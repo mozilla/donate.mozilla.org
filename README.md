@@ -50,6 +50,10 @@ You can configure the following environment variables:
 | OPTIMIZELY_ACTIVE | If set to 'yes' (String) the project will include Optimizely snippet in the page load |
 | SUPPORTED_LOCALES | If set to '*' all locales under `intl-config.js` file for `src` will be enabled otherwise it expects array of locales.
 
+### Hatchet
+
+Optionally configure Hatchet environment variables as documented [here](https://github.com/jbuck/hatchet) to send signup requests to a sawmill event processor queue.
+
 #### Thanks
 
 Thanks to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to run our build in real browsers.

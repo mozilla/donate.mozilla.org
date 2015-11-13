@@ -5,11 +5,13 @@ var SimpleHtmlPrecompiler = require('simple-html-precompiler');
 var Path = require('path');
 var paths = require('./scripts/paths.js');
 var routeFileContent = require('./scripts/route-file-content.js');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var AssetsPlugin = require('assets-webpack-plugin');
 
 module.exports = {
-  entry: './components/client.jsx',
+  entry: ['./components/client.jsx','./less/index.less'],
   output: {
-    filename: '[name].js',
+    filename: '[name].[hash].js',
     chunkFilename: '[id].chunk.js',
     path: Path.join('public')
   },
@@ -20,7 +22,10 @@ module.exports = {
     loaders: [
       { test: /\.js$/, loaders:  ['babel-loader'], exclude: ['node_modules'] },
       { test: /\.jsx$/, loaders: ['babel-loader'], exclude: ['node_modules'] },
-      { test: /\.json$/, loaders: ['json-loader'], exclude: ['node_modules'] }
+      { test: /\.json$/, loaders: ['json-loader'], exclude: ['node_modules'] },
+      { test: /\.less$/, loader: ExtractTextPlugin.extract(
+                    'css?sourceMap!less?sourceMap'
+                ), exclude: ['node_modules'] }
     ],
     preLoaders: [
       { test: /\.jsx$/, loaders: ['eslint-loader'], exclude: ['node_modules'] }
@@ -48,6 +53,10 @@ module.exports = {
     new webpack.ContextReplacementPlugin(/buffer/, require('buffer')),
     new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
       routeFileContent(outputPath, callback);
-    })
+    }),
+    new ExtractTextPlugin("style.[hash].css", {
+      allChunks: true
+    }),
+    new AssetsPlugin()
   ]
 };

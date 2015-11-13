@@ -1,7 +1,7 @@
 require('habitat').load();
 require('babel-core/register');
 var webpack = require('webpack');
-var SimpleHtmlPrecompiler = require('simple-html-precompiler');
+var SimpleHtmlPrecompiler = require('./scripts/simple-html-plugin.js');
 var Path = require('path');
 var paths = require('./scripts/paths.js');
 var routeFileContent = require('./scripts/route-file-content.js');
@@ -36,6 +36,7 @@ module.exports = {
     emitWarning: true
   },
   plugins: [
+    new AssetsPlugin(),
     new webpack.DefinePlugin({
       'process.env': JSON.stringify({
         APPLICATION_URI: process.env.APPLICATION_URI,
@@ -51,12 +52,11 @@ module.exports = {
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     }),
     new webpack.ContextReplacementPlugin(/buffer/, require('buffer')),
-    new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
-      routeFileContent(outputPath, callback);
-    }),
     new ExtractTextPlugin("style.[hash].css", {
       allChunks: true
     }),
-    new AssetsPlugin()
+    new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
+      routeFileContent(outputPath, callback);
+    })
   ]
 };

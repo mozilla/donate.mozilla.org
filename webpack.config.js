@@ -1,15 +1,17 @@
 require('habitat').load();
 require('babel-core/register');
 var webpack = require('webpack');
-var SimpleHtmlPrecompiler = require('simple-html-precompiler');
+var SimpleHtmlPrecompiler = require('./scripts/simple-html-plugin.js');
 var Path = require('path');
 var paths = require('./scripts/paths.js');
 var routeFileContent = require('./scripts/route-file-content.js');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var AssetsPlugin = require('assets-webpack-plugin');
 
 module.exports = {
-  entry: './components/client.jsx',
+  entry: ['./components/client.jsx','./less/index.less'],
   output: {
-    filename: '[name].js',
+    filename: '[name].[hash].js',
     chunkFilename: '[id].chunk.js',
     path: Path.join('public')
   },
@@ -20,7 +22,10 @@ module.exports = {
     loaders: [
       { test: /\.js$/, loaders:  ['babel-loader'], exclude: ['node_modules'] },
       { test: /\.jsx$/, loaders: ['babel-loader'], exclude: ['node_modules'] },
-      { test: /\.json$/, loaders: ['json-loader'], exclude: ['node_modules'] }
+      { test: /\.json$/, loaders: ['json-loader'], exclude: ['node_modules'] },
+      { test: /\.less$/, loader: ExtractTextPlugin.extract(
+                    'css?sourceMap!less?sourceMap'
+                ), exclude: ['node_modules'] }
     ],
     preLoaders: [
       { test: /\.jsx$/, loaders: ['eslint-loader'], exclude: ['node_modules'] }
@@ -31,6 +36,7 @@ module.exports = {
     emitWarning: true
   },
   plugins: [
+    new AssetsPlugin(),
     new webpack.DefinePlugin({
       'process.env': JSON.stringify({
         APPLICATION_URI: process.env.APPLICATION_URI,
@@ -46,6 +52,9 @@ module.exports = {
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     }),
     new webpack.ContextReplacementPlugin(/buffer/, require('buffer')),
+    new ExtractTextPlugin("style.[hash].css", {
+      allChunks: true
+    }),
     new SimpleHtmlPrecompiler(paths, function(outputPath, callback) {
       routeFileContent(outputPath, callback);
     })

@@ -1,7 +1,7 @@
 var hatchet = require('hatchet');
 var url = process.env.SIGNUP;
 
-module.exports = function(transaction) {
+module.exports = function(transaction, callback) {
   hatchet.send("send_post_request", {
     url: url,
     json: true,
@@ -14,5 +14,5 @@ module.exports = function(transaction) {
       email: transaction.email,
       country: transaction.country
     }
-  });
+  }, callback);
 };

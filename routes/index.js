@@ -7,8 +7,13 @@ var amountModifier = require('../scripts/amount-modifier');
 var routes = {
   'signup': function(request, reply) {
     var transaction = request.payload;
-    signup(transaction);
-    reply().code(204);
+    signup(transaction, function(err) {
+      if (err) {
+        return reply(boom.wrap(err, 500, 'Unable to complete Basket signup'));
+      }
+
+      reply().code(204);
+    });
   },
   'stripe': function(request, reply) {
     var transaction = request.payload || {};

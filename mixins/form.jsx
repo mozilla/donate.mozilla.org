@@ -247,7 +247,7 @@ module.exports = {
       address_line1: submitProps.address,
       address_state: submitProps.province,
       address_zip: submitProps.code,
-      name: submitProps.first + " " + submitProps.last
+      name: submitProps.firstName + " " + submitProps.lastName
     }, function(status, response) {
       var stripeProps = {};
       if (response.error) {

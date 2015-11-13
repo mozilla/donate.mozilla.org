@@ -2,7 +2,7 @@ var hatchet = require('hatchet');
 var url = process.env.SIGNUP;
 
 module.exports = function(transaction) {
-  hatchet.send("sign_up_for_mofo_newsletter", {
+  hatchet.send("send_post_request", {
     url: url,
     json: true,
     form: {

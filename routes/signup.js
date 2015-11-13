@@ -1,9 +1,8 @@
-var httpRequest = require('request');
+var hatchet = require('hatchet');
+var url = process.env.SIGNUP;
 
 module.exports = function(transaction, callback) {
-  var url = process.env.SIGNUP;
-  callback = callback || function() {};
-  httpRequest.post({
+  hatchet.send("send_post_request", {
     url: url,
     json: true,
     form: {

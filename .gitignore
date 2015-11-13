@@ -18,3 +18,5 @@ public/es/
 public/fr/
 public/id/
 public/pt-BR/
+public/main.*.js
+public/style.*.css

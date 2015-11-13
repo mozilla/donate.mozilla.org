@@ -13,5 +13,6 @@ Router.run(routes, Router.HistoryLocation, function(Handler, state) {
     }
     return Handler.replaceWith(pathname, {}, queryString);
   }
+  console.log('Hi Jon...');
   React.render(<Handler {...queryParser(queryString, state.pathname)} />, document.querySelector("#my-app"));
 });

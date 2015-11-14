@@ -97,7 +97,7 @@
     "simple-html-precompiler": "1.0.1",
     "stripe": "4.0.0",
     "throng": "1.0.1",
-    "webpack": "1.12.4",
+    "webpack": "1.12.5",
     "whatwg-fetch": "0.10.0"
   },
   "devDependencies": {

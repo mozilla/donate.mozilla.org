@@ -1,5 +1,5 @@
 import currencies from '../data/currencies.js';
-import localeCurrency from '../data/locale-currency.js';
+import {localeCurrencyData, localeCountryData} from '../data/locale-data.js';
 import i18n from '../locales/i18n.js';
 
 function isNumber(item) {
@@ -13,7 +13,8 @@ module.exports = function(queryString, pathname) {
   var locale = localesData.locales[0];
 
   var queryStringCurrencyCode = queryString.currency;
-  var localeCurrencyCode = localeCurrency[locale];
+  var localeCurrencyCode = localeCurrencyData[locale];
+  var country = queryString.country || localeCountryData[locale] || "US";
   var amount = "";
   var frequency = "single";
   var currency = currencies[queryStringCurrencyCode] || currencies[localeCurrencyCode] || currencies.usd;
@@ -42,6 +43,6 @@ module.exports = function(queryString, pathname) {
     messages: localesData.messages,
     locales: localesData.locales,
     email: queryString.email || "",
-    country: queryString.country || ""
+    country: country
   };
 };

@@ -65,7 +65,7 @@
     "hapi": "11.1.1",
     "hatchet": "0.3.2",
     "imports-loader": "0.6.5",
-    "inert": "3.1.0",
+    "inert": "3.2.0",
     "inject-loader": "2.0.1",
     "joi": "6.9.1",
     "json-loader": "0.5.3",

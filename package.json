@@ -67,7 +67,7 @@
     "imports-loader": "0.6.5",
     "inert": "3.2.0",
     "inject-loader": "2.0.1",
-    "joi": "6.9.1",
+    "joi": "7.0.0",
     "json-loader": "0.5.3",
     "karma": "0.13.15",
     "karma-chrome-launcher": "0.2.1",

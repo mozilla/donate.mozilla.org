@@ -60,6 +60,7 @@ module.exports = React.createClass({
         validate={data.validate}
         onSubmit={this.stripe}
         submit={data.submit}
+        errors={["other", "firstName", "lastName", "address", "country", "province", "city", "email", "code"]}
       >
         <DonateButton currency={currency.code}/>
       </SubmitButton>
@@ -170,7 +171,7 @@ module.exports = React.createClass({
               </div>
             </Page>
 
-            <Page activePage={this.state.activePage} index={2} errors={["code", "other"]}>
+            <Page activePage={this.state.activePage} index={2} errors={["other", "firstName", "lastName", "address", "country", "province", "city", "email", "code"]}>
               <SectionHeading>
                 <h2>{this.getIntlMessage("personal")}</h2>
               </SectionHeading>
@@ -208,7 +209,6 @@ module.exports = React.createClass({
                     <Code name="code-test"/>
                   </div>
                 </div>
-                <ErrorListener errors={["code"]}/>
               </div>
               <Email name="email" info={this.getIntlMessage("email_info")}/>
               <PrivacyPolicyCheckbox name="privacyPolicy"/>

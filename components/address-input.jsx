@@ -624,12 +624,15 @@ var Country = React.createClass({
     this.setState({
       valid: true
     });
+    // Changing the country should clear any errors on province.
+    form.error("province", "");
     form.updateField("country", e.currentTarget.value);
   },
   validate: function() {
     var valid = true;
     if (!this.refs.countrySelect.validate()) {
       valid = false;
+      form.error("country", this.getIntlMessage("please_complete"));
       this.setState({
         valid: valid
       });
@@ -692,6 +695,7 @@ var Province = React.createClass({
     var valid = true;
     if (!this.refs.provinceSelect.validate()) {
       valid = false;
+      form.error("province", this.getIntlMessage("please_complete"));
       this.setState({
         valid: valid
       });

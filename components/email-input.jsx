@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import { ErrorMessage } from './error.jsx';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 
@@ -43,6 +44,9 @@ module.exports = React.createClass({
       valid = false;
       errorMessage = this.getIntlMessage('email_invalid');
     }
+    if (!this.state.email || !this.state.email.trim()) {
+      form.error("email", this.getIntlMessage("please_complete"));
+    }
     this.setState({
       valid: valid,
       errorMessage: errorMessage
@@ -51,7 +55,8 @@ module.exports = React.createClass({
   },
   onEmailChange: function(e) {
     this.setState({
-      valid: true
+      valid: true,
+      errorMessage: ""
     });
     form.updateField("email", e.currentTarget.value);
   },
@@ -85,10 +90,6 @@ module.exports = React.createClass({
     if (!this.state.valid) {
       inputClassName += "parsley-error";
     }
-    var errorMessageClassName = "row error-msg-row";
-    if (!this.state.errorMessage) {
-      errorMessageClassName += " hidden";
-    }
     return (
       <div className="email-input">
         <div className="row hint-msg-parent">
@@ -100,17 +101,8 @@ module.exports = React.createClass({
             </div>
           </div>
         </div>
-        <div className={errorMessageClassName}>
-          <div className="full">
-            <div id="amount-error-msg">
-              <ul id="parsley-id-multiple-donation_amount" className="parsley-errors-list filled">
-                <li className="parsley-custom-error-message">
-                  {this.state.errorMessage}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+
+        <ErrorMessage message={this.state.errorMessage}/>
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import { ErrorMessage } from './error.jsx';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 
@@ -51,9 +52,9 @@ var Checkbox = React.createClass({
     return valid;
   },
   render: function() {
-    var errorMessageClassName = "row error-msg-row";
-    if (this.state.valid) {
-      errorMessageClassName += " hidden";
+    var errorMessage = "";
+    if (!this.state.valid) {
+      errorMessage = this.props.error;
     }
     return (
       <div className="full checkbox">
@@ -65,15 +66,8 @@ var Checkbox = React.createClass({
             </label>
           </div>
         </div>
-        <div className={errorMessageClassName}>
-          <div className="full">
-            <div id="privacy-error-msg">
-              <ul id="parsley-id-multiple-legal_confirm" className="parsley-errors-list filled">
-                <li className="parsley-custom-error-message">{this.props.error}</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+
+        <ErrorMessage message={errorMessage}/>
       </div>
     );
   }

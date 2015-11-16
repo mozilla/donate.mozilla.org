@@ -8,7 +8,7 @@ function SimpleHtmlPrecompiler(paths) {
 SimpleHtmlPrecompiler.prototype.apply = function(compiler) {
   var self = this;
 
-  compiler.plugin('after-emit', function(compiler, done) {
+  compiler.plugin('after-emit', function(compilation, done) {
     async.map(self.paths, routeFileContent, function(error, results) {
       if (error) {
         compilation.errors.push(error);

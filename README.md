@@ -3,8 +3,8 @@
 # donate.mozilla.org
 Mozilla donation forms
 
-* Staging: https://donate.mofostaging.net/en-US/
-* Production (temp URL): https://donate.mofoprod.net/
+* Staging: https://donate.mofostaging.net/
+* Production: https://donate.mozilla.org/
 
 ## Requirements
 

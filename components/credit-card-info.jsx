@@ -102,7 +102,7 @@ var CardNumber = React.createClass({
     return (
       <div className="field-container">
         <i className="fa fa-credit-card field-icon"></i>
-        <input type="tel" className={className} id="card-number-input" name="cc_number" onChange={this.onInput} value={this.state.value} placeholder={this.getIntlMessage('credit_card_number')} autoComplete="off"/>
+        <input type="tel" className={className} id="card-number-input" name={this.props.name} onChange={this.onInput} value={this.state.value} placeholder={this.getIntlMessage('credit_card_number')} autoComplete="off"/>
       </div>
     );
   }
@@ -131,7 +131,7 @@ var CardCvc = React.createClass({
     return (
       <div className="field-container">
         <i className="fa fa-lock field-icon"></i>
-        <input id="cvc-input" type="tel" className={className} name="cc_cvv" maxLength="4" onChange={this.onInput} value={this.state.value} placeholder={this.getIntlMessage('CVC')} autoComplete="off"/>
+        <input id="cvc-input" type="tel" className={className} name={this.props.name} maxLength="4" onChange={this.onInput} value={this.state.value} placeholder={this.getIntlMessage('CVC')} autoComplete="off"/>
         <i onClick={this.hintClicked} className={hintClassIconName}></i>
       </div>
     );
@@ -158,7 +158,7 @@ var CardExpMonth = React.createClass({
     return (
       <span className="exp-month-container">
         <i className="fa fa-calendar-o field-icon"></i>
-        <input id="exp-month-input" className={className} aria-label={this.getIntlMessage('credit_card_expiration_month')} onChange={this.onInput} value={this.state.expMonth} type="tel" placeholder={this.getIntlMessage('MM')} maxLength="2" name="cc_expir_month" autoComplete="off"/>
+        <input id="exp-month-input" className={className} aria-label={this.getIntlMessage('credit_card_expiration_month')} onChange={this.onInput} value={this.state.expMonth} type="tel" placeholder={this.getIntlMessage('MM')} maxLength="2" name={this.props.name} autoComplete="off"/>
       </span>
     );
   }
@@ -183,7 +183,7 @@ var CardExpYear = React.createClass({
     }
     return (
       <span className="exp-year-container">
-        <input id="exp-year-input" className={className} aria-label={this.getIntlMessage('credit_card_expiration_year')} onChange={this.onInput} value={this.state.value} type="tel" placeholder={this.getIntlMessage('YY')} maxLength="2" name="cc_expir_year" autoComplete="off"/>
+        <input id="exp-year-input" className={className} aria-label={this.getIntlMessage('credit_card_expiration_year')} onChange={this.onInput} value={this.state.value} type="tel" placeholder={this.getIntlMessage('YY')} maxLength="2" name={this.props.name} autoComplete="off"/>
       </span>
     );
   }

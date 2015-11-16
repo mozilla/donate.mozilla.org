@@ -5,14 +5,14 @@ module.exports = function(driver, By, done) {
     driver.findElement(By.id('amount-other-input')).sendKeys('10');
     driver.findElement(By.css('.page-active .next-button')).click();
     driver.findElement(By.id('payment-cc-label')).click();
-    driver.findElement(By.name('cc_number')).clear();
-    driver.findElement(By.name('cc_number')).sendKeys('4242424242424242');
-    driver.findElement(By.name('cc_expir_month')).clear();
-    driver.findElement(By.name('cc_expir_month')).sendKeys('01');
-    driver.findElement(By.name('cc_expir_year')).clear();
-    driver.findElement(By.name('cc_expir_year')).sendKeys('16');
-    driver.findElement(By.name('cc_cvv')).clear();
-    driver.findElement(By.name('cc_cvv')).sendKeys('123');
+    driver.findElement(By.id('card-number-input')).clear();
+    driver.findElement(By.id('card-number-input')).sendKeys('4242424242424242');
+    driver.findElement(By.id('exp-month-input')).clear();
+    driver.findElement(By.id('exp-month-input')).sendKeys('01');
+    driver.findElement(By.id('exp-year-input')).clear();
+    driver.findElement(By.id('exp-year-input')).sendKeys('16');
+    driver.findElement(By.id('cvc-input')).clear();
+    driver.findElement(By.id('cvc-input')).sendKeys('123');
     driver.findElement(By.css('.page-active .next-button')).click();
 
     driver.findElement(By.name('firstName')).clear();

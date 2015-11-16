@@ -241,7 +241,7 @@ module.exports = function() {
     if (err) {
       throw err;
     }
-
+    server.route(require('./scripts/hashes-routes.js')(securityConfig));
     server.route({
       method: 'GET',
       path: '/{params*}',

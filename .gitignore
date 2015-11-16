@@ -3,20 +3,12 @@ node_modules/
 *~
 .env
 npm-debug*
-public/css/*
-public/build/*
 
-public/*.hot-update.js*
-public/index.html
+public/css/*
 public/**/*.html
 public/main.js
 public/exchange-rates/latest.json
 locales/*.json
-public/de/
-public/en-US/
-public/es/
-public/fr/
-public/id/
-public/pt-BR/
 public/main.*.js
 public/style.*.css
+public/webpack-assets.json

@@ -44,8 +44,12 @@ module.exports = function(outputPath, callback) {
         },
         markup: React.renderToStaticMarkup(page(values))
       }));
-      fs.writeFileSync(Path.join(__dirname, '..', 'public', outputPath, 'index.html'), contentOfTheFile);
-      callback();
+
+      var nameOfTheFile = Path.join(__dirname, '..', 'public', outputPath, 'index.html');
+
+      fs.writeFile(nameOfTheFile, contentOfTheFile, function(err) {
+        callback(err, nameOfTheFile);
+      });
     });
   });
 };

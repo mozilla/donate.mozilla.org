@@ -1,15 +1,20 @@
-function SimpleHtmlPrecompiler(paths, build) {
+var async = require('async');
+var routeFileContent = require('./route-file-content.js');
+
+function SimpleHtmlPrecompiler(paths) {
   this.paths = paths;
-  this.build = build;
 }
 
 SimpleHtmlPrecompiler.prototype.apply = function(compiler) {
   var self = this;
+
   compiler.plugin('after-emit', function(compiler, done) {
-    self.paths.map(function(outputPath) {
-      self.build(outputPath, function(html) {});
+    async.map(self.paths, routeFileContent, function(error, results) {
+      if (error) {
+        compilation.errors.push(error);
+      }
+      done();
     });
-    done();
   });
 };
 

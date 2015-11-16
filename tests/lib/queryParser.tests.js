@@ -108,4 +108,77 @@ describe("queryParser.js", function() {
       queryParser(queryString, pathname).amount.should.be.empty();
     });
   });
+  describe("/?country", function() {
+    // locales set with no country set
+    it("/locale en-US should return US", function() {
+      queryParser(queryString, '/en-US/').country.should.be.equal('US');
+    });
+    it("/locale en-CA should return CA", function() {
+      queryParser(queryString, '/en-CA/').country.should.be.equal('CA');
+    });
+    it("/locale en-GB should return GB", function() {
+      queryParser(queryString, '/en-GB/').country.should.be.equal('GB');
+    });
+    it("/locale es should return ES", function() {
+      queryParser(queryString, '/es/').country.should.be.equal('ES');
+    });
+    it("/locale de should return DE", function() {
+      queryParser(queryString, '/de/').country.should.be.equal('DE');
+    });
+    it("/locale pt-BR should return BR", function() {
+      queryParser(queryString, '/pt-BR/').country.should.be.equal('BR');
+    });
+    it("/locale fr should return FR", function() {
+      queryParser(queryString, '/fr/').country.should.be.equal('FR');
+    });
+
+    // defaults to US
+    it("default should equal to US", function() {
+      queryParser(queryString, '/').country.should.be.equal('US');
+    });
+
+    // locale override false like values
+    it("'' country with en-GB locale should return GB", function() {
+      queryString.country = "";
+      queryParser(queryString, '/en-GB/').country.should.be.equal('GB');
+    });
+    it("0 country with en-CA should return CA", function() {
+      queryString.country = 0;
+      queryParser(queryString, '/en-CA/').country.should.be.equal('CA');
+    });
+    it("false with de should return DE", function() {
+      queryString.country = false;
+      queryParser(queryString, '/de/').country.should.be.equal('DE');
+    });
+
+    // ?country override locale
+    it("/?country=US should return US over locale", function() {
+      queryString.country = "US";
+      queryParser(queryString, '/en-CA/').country.should.be.equal('US');
+    });
+    it("/?country=CA should return CA over locale", function() {
+      queryString.country = "CA";
+      queryParser(queryString, pathname).country.should.be.equal('CA');
+    });
+    it("/?country=GB should return GB over locale", function() {
+      queryString.country = "GB";
+      queryParser(queryString, pathname).country.should.be.equal('GB');
+    });
+    it("/?country=DE should return DE over locale", function() {
+      queryString.country = "DE";
+      queryParser(queryString, pathname).country.should.be.equal('DE');
+    });
+    it("/?country=BR should return BR over locale", function() {
+      queryString.country = "BR";
+      queryParser(queryString, pathname).country.should.be.equal('BR');
+    });
+    it("/?country=FR should return FR over locale", function() {
+      queryString.country = "FR";
+      queryParser(queryString, pathname).country.should.be.equal('FR');
+    });
+    it("/?country=ES should return ES over locale", function() {
+      queryString.country = "ES";
+      queryParser(queryString, pathname).country.should.be.equal('ES');
+    });
+  });
 });

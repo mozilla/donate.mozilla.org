@@ -4,6 +4,7 @@ var should = require('should');
 var IntlContext =
   {
     messages: {
+      please_complete: 'please_complete',
       credit_card_number: 'cc number',
       credit_card_expiration_month: 'cc month',
       credit_card_expiration_year: 'cc year',

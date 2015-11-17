@@ -52,10 +52,6 @@ var errors = {
     page: 0,
     message: ""
   },
-  code: {
-    page: 0,
-    message: ""
-  },
   other: {
     page: 0,
     message: ""

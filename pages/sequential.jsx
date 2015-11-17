@@ -52,7 +52,6 @@ module.exports = React.createClass({
     });
   },
   renderSubmitButton: function(data) {
-    var currency = this.state.currency;
     return (
       <SubmitButton
         name={data.name}
@@ -62,7 +61,7 @@ module.exports = React.createClass({
         submit={data.submit}
         errors={["other", "firstName", "lastName", "address", "country", "province", "city", "email", "code"]}
       >
-        <DonateButton currency={currency.code}/>
+        <DonateButton/>
       </SubmitButton>
     );
   },
@@ -75,7 +74,6 @@ module.exports = React.createClass({
     if (this.state.hideCreditCardDetails) {
       creditCardDetailsClassName += " hidden";
     }
-    var currency = this.state.currency;
     var cvcHintClassName = "hint-msg small";
     if (!this.state.showCvcHint) {
       cvcHintClassName += " hidden";
@@ -86,7 +84,7 @@ module.exports = React.createClass({
         <div className="container">
 
           <NavigationMenu>
-            <AmountNavigationButton currency={currency.code} activePage={this.state.activePage} index={0}>
+            <AmountNavigationButton activePage={this.state.activePage} index={0}>
               <div>{this.getIntlMessage("amount")}</div>
             </AmountNavigationButton>
             <DisplayNavigationButton display={this.state.paymentType} activePage={this.state.activePage} index={1}>
@@ -103,17 +101,11 @@ module.exports = React.createClass({
                 <h2>
                   {this.getIntlMessage("donate_now")}
                   <span className="right">
-                    <CurrencyDropdown
-                      currencies={this.props.currencies}
-                      currency={currency.code}
-                    />
+                    <CurrencyDropdown/>
                   </span>
                 </h2>
               </SectionHeading>
-              <AmountButtons name="amount"
-                currency={currency}
-                presets={this.state.presets}
-              />
+              <AmountButtons name="amount"/>
               <Frequency name="frequency"/>
               <NextButton validate={["amount"]}/>
             </Page>

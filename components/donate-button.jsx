@@ -3,19 +3,19 @@ import {FormattedMessage, IntlMixin, FormattedNumber} from 'react-intl';
 import listener from '../scripts/listener.js';
 
 module.exports = React.createClass({
-  propTypes: {
-    currency: React.PropTypes.string.isRequired
-  },
   getInitialState: function() {
     return {
-      amount: ""
+      amount: "",
+      currency: {}
     };
   },
   componentDidMount: function() {
     listener.on("fieldUpdated", this.onFieldUpdated);
+    listener.on("stateUpdated", this.onStateUpdated);
   },
   componentWillUnmount: function() {
     listener.off("fieldUpdated", this.onFieldUpdated);
+    listener.off("stateUpdated", this.onStateUpdated);
   },
   onFieldUpdated: function(e) {
     var detail = e.detail;
@@ -25,9 +25,19 @@ module.exports = React.createClass({
       });
     }
   },
+  onStateUpdated: function(e) {
+    var detail = e.detail;
+    var state = detail.state;
+    var value = detail.value;
+    if (state === "currency") {
+      this.setState({
+        currency: value
+      });
+    }
+  },
   mixins: [IntlMixin],
   render: function() {
-    if (this.state.amount) {
+    if (this.state.amount ) {
       return (
         <FormattedMessage
           message={this.getIntlMessage('donate_now_amount')}
@@ -36,7 +46,7 @@ module.exports = React.createClass({
               maximumFractionDigits={2}
               value={this.state.amount}
               style="currency"
-              currency={this.props.currency || "usd"}
+              currency={this.state.currency.code}
             />
           }
         />

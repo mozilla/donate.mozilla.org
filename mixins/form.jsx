@@ -11,57 +11,37 @@ module.exports = {
     return {
       paymentType: "",
       submitting: false,
-      presets: this.props.presets,
-      currency: this.props.currency,
       showCvcHint: false,
-      frequency: this.props.frequency
+      currency: this.props.currency
     };
   },
   componentDidMount: function() {
     form.updateField("amount", this.props.amount);
-    form.updateField("frequency", this.state.frequency);
+    form.updateField("frequency", this.props.frequency);
     form.updateField("country", this.props.country);
+    form.updateState("currency", this.state.currency);
+    form.updateState("presets", this.props.presets);
 
-    listener.on("fieldUpdated", this.onFieldUpdated);
-    listener.on("currencyChange", this.onCurrencyChange);
+    listener.on("stateUpdated", this.onStateUpdated);
     listener.on("toggleCvcHint", this.onToggleCvcHint);
     listener.on("toPage", this.toThisPage);
     listener.on("nextPage", this.nextPage);
   },
   componentWillUnmount: function() {
-    listener.off("fieldUpdated", this.onFieldUpdated);
-
-    listener.off("currencyChange", this.onCurrencyChange);
+    listener.off("stateUpdated", this.onStateUpdated);
     listener.off("toggleCvcHint", this.onToggleCvcHint);
     listener.off("toPage", this.toThisPage);
     listener.off("nextPage", this.nextPage);
   },
-  onFieldUpdated: function(e) {
+  onStateUpdated: function(e) {
     var detail = e.detail;
+    var state = detail.state;
     var value = detail.value;
-    var field = detail.field;
-    var presets = this.state.presets;
-    if (field === "frequency") {
-      if (this.state.currency) {
-        presets = this.state.currency.presets[value];
-      }
+    if (state === "currency") {
       this.setState({
-        presets: presets,
-        frequency: value
+        currency: value
       });
     }
-  },
-  onCurrencyChange: function(e) {
-    var detail = e.detail;
-    var value = detail.value;
-    var currencies = this.props.currencies;
-    var currency = currencies[value] || this.state.currency;
-    var presets = currency.presets[this.state.frequency];
-    form.updateField("amount", "");
-    this.setState({
-      presets: presets,
-      currency: currency
-    });
   },
   onToggleCvcHint: function() {
     this.setState({

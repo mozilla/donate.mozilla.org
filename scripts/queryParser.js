@@ -37,7 +37,6 @@ module.exports = function(queryString, pathname) {
     test: queryString.test,
     currency: currency,
     presets: presets,
-    currencies: currencies,
     amount: amount,
     frequency: frequency,
     messages: localesData.messages,

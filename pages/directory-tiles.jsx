@@ -35,7 +35,7 @@ var btn = {
 
 };
 
-var giveBitcoin = React.createClass({
+module.exports = React.createClass({
   mixins: [IntlMixin],
   render: function() {
     var donateNow = this.getIntlMessage('donate_now');
@@ -64,5 +64,3 @@ var giveBitcoin = React.createClass({
     );
   }
 });
-
-module.exports = giveBitcoin;

@@ -26,8 +26,8 @@ var DonateButton = React.createClass({
   render: function() {
     return (
       <div className="row submit-button">
-        <ErrorListener errors={this.props.errors || []}/>
-        <div className="full">
+        <div className="full submit-button-container">
+          <ErrorListener errors={this.props.errors || []}/>
           <button onClick={this.onClick} name={this.props.name || "submit-button"} type="submit" className="submit-btn large-label-size">
             {this.renderButton()}
           </button>

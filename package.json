@@ -44,7 +44,7 @@
     "autoless": "0.1.7",
     "babel": "6.1.18",
     "babel-core": "6.1.21",
-    "babel-loader": "6.1.0",
+    "babel-loader": "6.2.0",
     "babel-preset-es2015": "6.1.18",
     "babel-preset-react": "6.1.18",
     "blankie": "1.1.1",

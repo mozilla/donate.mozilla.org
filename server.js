@@ -243,6 +243,12 @@ module.exports = function() {
       throw err;
     }
 
+    // We have these routes specifically for production where it's possible that
+    // a CDN index.html may refer to an outdated CSS/JS file that doesn't exist
+    if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
+      server.route(require('./lib/hashed-file-routes')(securityConfig));
+    }
+
     server.route({
       method: 'GET',
       path: '/{params*}',

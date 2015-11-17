@@ -1,6 +1,8 @@
+import fs from 'fs';
 import React from 'react';
 import Optimizely from '../components/optimizely.jsx';
 import OptimizelySubdomain from '../components/optimizelysubdomain.jsx';
+import Path from 'path';
 import Pontoon from '../components/pontoon.jsx';
 
 var Index = React.createClass({
@@ -10,6 +12,8 @@ var Index = React.createClass({
     if (this.props.localeInfo === "cs") {
       googleFonts += "&subset=latin-ext";
     }
+    var fileHashes = JSON.parse(fs.readFileSync(Path.join(__dirname, '../public/webpack-assets.json')));
+
     return (
       <html>
         <head>
@@ -25,7 +29,7 @@ var Index = React.createClass({
           <OptimizelySubdomain/>
           <Optimizely/>
           <link rel="icon" href="/images/favicon.ico" type="image/x-icon"/>
-          <link rel="stylesheet" href="/css/index.css"/>
+          <link rel="stylesheet" href={'/' + fileHashes.main.css}/>
           <script src="/js/ga.js"></script>
         </head>
         <body>
@@ -33,7 +37,7 @@ var Index = React.createClass({
           <link rel="stylesheet" href={googleFonts}/>
           <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
           <script src="/api/polyfill.js?features=Promise,Intl.~locale.fr,Intl.~locale.pt-BR,Intl.~locale.de,Intl.~locale.id,Intl.~locale.es,Intl.~locale.en-US"></script>
-          <script src="/main.js"></script>
+          <script src={'/' + fileHashes.main.js} ></script>
           <Pontoon/>
           {/*[if lt IE 10]*/}
           <script src="/js/jquery.min.js"></script>

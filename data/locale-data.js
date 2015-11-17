@@ -6,7 +6,8 @@ module.exports = {
     'es': 'eur',
     'en-US': 'usd',
     'en-CA': 'cad',
-    'en-GB': 'gbp'
+    'en-GB': 'gbp',
+    'it': 'eur'
   },
   localeCountryData: {
     'de': 'DE',
@@ -15,6 +16,7 @@ module.exports = {
     'es': 'ES',
     'en-US': 'US',
     'en-CA': 'CA',
-    'en-GB': 'GB'
+    'en-GB': 'GB',
+    'it': 'IT'
   }
 };

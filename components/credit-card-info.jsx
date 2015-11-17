@@ -55,6 +55,9 @@ var cardInfoMixin = {
   validate: function() {
     var valid = true;
     var value = this.state.value;
+    if (!value || !value.trim()) {
+      form.error(this.props.field, this.getIntlMessage("please_complete"));
+    }
     if (!this.validateTest(value) || this.state.error) {
       valid = false;
       this.setState({

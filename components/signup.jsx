@@ -33,6 +33,7 @@ var Form = React.createClass({
                   validate={["email", "privacyPolicy"]}
                   onSubmit={this.signup}
                   submit={["email"]}
+                  errors={["email"]}
                 >
                   {this.getIntlMessage('sign_up_now')}
                 </SubmitButton>
@@ -43,6 +44,7 @@ var Form = React.createClass({
                   validate={["email", "privacyPolicy"]}
                   onSubmit={this.signup}
                   submit={["email", "country"]}
+                  errors={["email", "country"]}
                 >
                   {this.getIntlMessage('sign_up_now')}
                 </SubmitButton>

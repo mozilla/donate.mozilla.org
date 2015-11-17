@@ -24,6 +24,34 @@ var errors = {
     page: 0,
     message: ""
   },
+  firstName: {
+    page: 0,
+    message: ""
+  },
+  lastName: {
+    page: 0,
+    message: ""
+  },
+  email: {
+    page: 0,
+    message: ""
+  },
+  address: {
+    page: 0,
+    message: ""
+  },
+  country: {
+    page: 0,
+    message: ""
+  },
+  province: {
+    page: 0,
+    message: ""
+  },
+  city: {
+    page: 0,
+    message: ""
+  },
   other: {
     page: 0,
     message: ""

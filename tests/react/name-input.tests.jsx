@@ -1,7 +1,7 @@
 var React = require('react');
 var TestUtils = require('react/lib/ReactTestUtils');
 var should = require('should');
-var IntlContext = { messages: {'first_name': 'first name', 'last_name': 'last name'} };
+var IntlContext = { messages: {'please_complete': 'please_complete', 'first_name': 'first name', 'last_name': 'last name'} };
 var stubContext = require('react-test-context');
 var {FirstName, LastName} = require('../../components/name-input.jsx');
 var items = [FirstName, LastName];

@@ -1,7 +1,7 @@
 var React = require('react');
 var TestUtils = require('react/lib/ReactTestUtils');
 var should = require('should');
-var IntlContext = { messages: {'country': 'c', 'address': 'a', city: 'c', postal_code: 'p', 'state_province': 's'} };
+var IntlContext = { messages: {'please_complete': 'please_complete', 'country': 'c', 'address': 'a', city: 'c', postal_code: 'p', 'state_province': 's'} };
 var stubContext = require('react-test-context');
 var {Address, Code, City} = require('../../components/address-input.jsx');
 

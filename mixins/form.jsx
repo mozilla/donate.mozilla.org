@@ -20,7 +20,7 @@ module.exports = {
   componentDidMount: function() {
     form.updateField("amount", this.props.amount);
     form.updateField("frequency", this.state.frequency);
-    form.updateField("country", "US");
+    form.updateField("country", this.props.country);
 
     listener.on("fieldUpdated", this.onFieldUpdated);
     listener.on("currencyChange", this.onCurrencyChange);

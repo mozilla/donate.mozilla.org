@@ -3,19 +3,21 @@ import Router from 'react-router';
 import routes from '../components/routes.jsx';
 import englishStrings from '../locales/en-US.json';
 import currencies from '../data/currencies.js';
-import localeCurrency from '../data/locale-currency.js';
+import {localeCurrencyData, localeCountryData} from '../data/locale-data.js';
 import url from 'url';
 
 module.exports = function(outputPath, callback) {
   Router.run(routes, outputPath, function(Handler) {
     var locale = url.parse(outputPath).pathname.split('/')[1];
-    var currencyCode = localeCurrency[locale] || 'usd';
+    var currencyCode = localeCurrencyData[locale] || 'usd';
+    var country = localeCountryData[locale] || 'US';
     var values = {
       currency: currencies[currencyCode],
       presets: currencies.usd.presets.single,
       currencies: currencies,
       amount: '',
-      frequency: 'single'
+      frequency: 'single',
+      country: country
     };
     var index = React.createFactory(require('../pages/index.jsx'));
     var page = React.createFactory(Handler);

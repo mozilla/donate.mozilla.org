@@ -50,7 +50,8 @@ module.exports = function() {
         validate: {
           payload: {
             locale: Joi.string().min(2).max(12).required(),
-            email: Joi.string().email().required()
+            email: Joi.string().email().required(),
+            country: Joi.string().allow('')
           }
         },
         response: {

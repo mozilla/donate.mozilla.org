@@ -32,7 +32,9 @@ describe('amount-buttons.jsx', function() {
       form.updateField('amount', '150');
 
       var testElement = Document.getDOMNode().querySelector('#amount-150');
-      should(testElement.checked).equal(true);
+      var checked = testElement.checked;
+      React.unmountComponentAtNode(Document.getDOMNode().parentNode);
+      should(checked).equal(true);
     });
   });
 });

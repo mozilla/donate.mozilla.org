@@ -26,7 +26,7 @@ var AmountButton = React.createClass({
             value={this.props.value}
             style="currency"
             currency={this.props.currencyCode}
-          /> : "" }
+          /> : <span>&nbsp;</span> }
         </label>
       </div>
     );
@@ -64,7 +64,12 @@ var AmountOtherButton = React.createClass({
             value={this.props.amount}
           />
           <label htmlFor="amount-other" className="large-label-size">
-            <span className="currency-symbol-container">{this.props.currencySymbol}</span>
+            <span className="currency-symbol-container">
+              { this.props.currencySymbol ?
+                <span>{this.props.currencySymbol}</span> :
+                <span>&nbsp;</span>
+              }
+            </span>
           </label>
           <div className="amount-other-wrapper">
             <input id="amount-other-input" className="medium-label-size" type="text"

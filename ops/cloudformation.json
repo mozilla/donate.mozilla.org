@@ -82,7 +82,7 @@
                 "Cookies": {
                   "Forward": "none"
                 },
-                "Headers": [],
+                "Headers": ["User-Agent"],
                 "QueryString": true
               },
               "PathPattern": "/api/*",

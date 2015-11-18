@@ -37,6 +37,21 @@ describe('amount-buttons.jsx', function() {
       should(checked).equal(true);
     });
   });
+  it('form.updateField amount to 42 should set other input value to 42', function() {
+    should.doesNotThrow(() => {
+      var TestInput = stubContext(AmountButtons, IntlContext);
+      var Page = React.createElement(stubContext(TestInput, IntlContext),{
+        name: "test"
+      });
+      var Document = TestUtils.renderIntoDocument(Page);
+
+      form.updateField('amount', '42');
+      var testElement = Document.getDOMNode().querySelector('#amount-other-input');
+      var value = testElement.value;
+      React.unmountComponentAtNode(Document.getDOMNode().parentNode);
+      should(value).equal('42');
+    });
+  });
   it('currency updates should clear selected amount', function() {
     should.doesNotThrow(() => {
       var TestInput = stubContext(AmountButtons, IntlContext);
@@ -57,8 +72,9 @@ describe('amount-buttons.jsx', function() {
           monthly: ['150', '100', '75', '50']
         }
       });
+      var value = testElement.value;
       React.unmountComponentAtNode(Document.getDOMNode().parentNode);
-      should(!TestUtils.value).equal(true);
+      should(value).equal('');
     });
   });
 });

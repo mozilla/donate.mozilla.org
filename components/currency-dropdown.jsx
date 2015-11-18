@@ -34,7 +34,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <select onChange={this.onChange} className="currency-dropdown" value={this.state.currency}>
+      <select onChange={this.onChange} className="currency-dropdown" value={this.state.currency.code}>
         {Object.keys(currencyData).map(function(currency, i) {
           return (
             <option value={currency} key={i}>

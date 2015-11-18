@@ -37,4 +37,28 @@ describe('amount-buttons.jsx', function() {
       should(checked).equal(true);
     });
   });
+  it('currency updates should clear selected amount', function() {
+    should.doesNotThrow(() => {
+      var TestInput = stubContext(AmountButtons, IntlContext);
+      var Page = React.createElement(stubContext(TestInput, IntlContext),{
+        name: "test"
+      });
+      var Document = TestUtils.renderIntoDocument(Page);
+
+      var testElement = Document.getDOMNode().querySelector('#amount-other-input');
+      testElement.value = '123';
+      TestUtils.Simulate.change(testElement);
+      form.updateState('currency', {
+        code: 'dkk',
+        minAmount: '12',
+        symbol: 'kr',
+        presets: {
+          single: ['1000', '500', '250', '150'],
+          monthly: ['150', '100', '75', '50']
+        }
+      });
+      React.unmountComponentAtNode(Document.getDOMNode().parentNode);
+      should(!TestUtils.value).equal(true);
+    });
+  });
 });

@@ -13,7 +13,7 @@ var Index = React.createClass({
       googleFonts += "&subset=latin-ext";
     }
     var fileHashes = JSON.parse(fs.readFileSync(Path.join(__dirname, '../public/webpack-assets.json')));
-
+    var commentIE = '<!-- [if lt IE 10]><script src="/js/jquery.min.js"></script><script src="/js/placeholder.min.js"></script><![endif]-->';
     return (
       <html>
         <head>
@@ -39,10 +39,9 @@ var Index = React.createClass({
           <script src={'/api/polyfill.js?features=Promise,Intl.~locale.' + this.props.localeInfo}></script>
           <script src={'/' + fileHashes.main.js} ></script>
           <Pontoon/>
-          {/*[if lt IE 10]*/}
-          <script src="/js/jquery.min.js"></script>
-          <script src="/js/placeholder.min.js"></script>
-          {/*[endif]*/}
+          <meta name="react-comment-hack"
+              dangerouslySetInnerHTML={{__html: commentIE}}>
+          </meta>
           <script src="https://js.stripe.com/v2/"></script>
           <script src="https://checkout.stripe.com/checkout.js"></script>
         </body>

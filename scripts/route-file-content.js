@@ -43,7 +43,7 @@ module.exports = function(outputPath, callback) {
           site_url: url.resolve(process.env.APPLICATION_URI, locale + '/'),
           site_title: values.messages.give_to_mozilla
         },
-        markup: React.renderToStaticMarkup(page(values))
+        markup: React.renderToString(page(values))
       }));
 
       var nameOfTheFile = Path.join(__dirname, '..', 'public', outputPath, 'index.html');

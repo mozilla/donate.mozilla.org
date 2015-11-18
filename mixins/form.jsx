@@ -16,11 +16,11 @@ module.exports = {
     };
   },
   componentDidMount: function() {
+    form.updateState("currency", this.state.currency);
+    form.updateState("presets", this.props.presets);
     form.updateField("amount", this.props.amount);
     form.updateField("frequency", this.props.frequency);
     form.updateField("country", this.props.country);
-    form.updateState("currency", this.state.currency);
-    form.updateState("presets", this.props.presets);
 
     listener.on("stateUpdated", this.onStateUpdated);
     listener.on("toggleCvcHint", this.onToggleCvcHint);

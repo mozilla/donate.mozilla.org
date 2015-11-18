@@ -2,7 +2,13 @@ module.exports = function(driver, By, done) {
   driver.get('http://localhost:3000/en-US/');
   driver.findElement(By.id('amount-other-input')).sendKeys('10');
   driver.findElement(By.css('.page-active .next-button')).click();
+  driver.wait(function() {
+    return driver.findElement(By.css('.paypal-button .payment-submit-button')).isEnabled().then(function(enabled) {
+      return enabled;
+    });
+  });
   driver.findElement(By.css('.paypal-button .payment-submit-button')).click();
+
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
       return url.indexOf('https://www.sandbox.paypal.com/cgi-bin/webscr') === 0;

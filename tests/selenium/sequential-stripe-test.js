@@ -4,6 +4,11 @@ module.exports = function(driver, By, done) {
     driver.get(url);
     driver.findElement(By.id('amount-other-input')).sendKeys('10');
     driver.findElement(By.css('.page-active .next-button')).click();
+    driver.wait(function() {
+      return driver.findElement(By.id('payment-cc-label')).isEnabled().then(function(enabled) {
+        return enabled;
+      });
+    });
     driver.findElement(By.id('payment-cc-label')).click();
     driver.findElement(By.id('card-number-input')).clear();
     driver.findElement(By.id('card-number-input')).sendKeys('4242424242424242');

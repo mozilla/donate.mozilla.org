@@ -7,7 +7,7 @@
 
 ## Instrumentation (Google Analytics)
 
-We load Google Analytics on all of our donate web pages, via [index.jsx](https://github.com/mozilla/donate.mozilla.org/blob/master/pages/index.jsx). We're using the standard [Universal Analytics](https://support.google.com/analytics/answer/2790010?hl%3Den) tracking tag, which gives us default data about pageviews [code](https://github.com/mozilla/donate.mozilla.org/blob/master/public/js/ga.js).
+We load Google Analytics on all of our donate web pages, via [index.jsx](https://github.com/mozilla/donate.mozilla.org/blob/master/pages/index.jsx). We're using the standard [Universal Analytics](https://support.google.com/analytics/answer/2790010?hl%3Den) tracking tag, which gives us default data about pageviews [code](https://github.com/mozilla/donate.mozilla.org/blob/master/pages/index.jsx#L33).
 
 We also want to track some additional information specific to our fundraising so we can measure the impact of our campaigns and efforts.
 

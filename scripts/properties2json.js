@@ -59,5 +59,7 @@ function processMessageFiles(locales) {
 getListLocales().then(processMessageFiles)
 .then(writeFile).catch(function(err) {
   console.error(err);
-  throw err;
+  if (err.code !== 'ENOENT') {
+    throw err;
+  }
 });

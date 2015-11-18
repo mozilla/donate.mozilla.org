@@ -258,7 +258,11 @@ module.exports = function() {
         }
       },
       config: {
-        security: securityConfig
+        security: securityConfig,
+        cache: {
+            expiresIn: 1000 * 60 * 5,
+            privacy: 'public'
+        }
       }
     });
   });

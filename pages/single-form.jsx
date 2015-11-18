@@ -25,17 +25,11 @@ var SingleForm = React.createClass({
             <h2>
               {this.getIntlMessage("donate_now")}
               <span className="right">
-                <CurrencyDropdown
-                  currencies={this.props.currencies}
-                  currency={this.state.currency.code}
-                />
+                <CurrencyDropdown/>
               </span>
             </h2>
           </SectionHeading>
-          <AmountButtons name="amount"
-            currency={this.state.currency}
-            presets={this.state.presets}
-          />
+          <AmountButtons name="amount"/>
           <Frequency name="frequency"/>
           <div className="payment-section">
             <SectionHeading>

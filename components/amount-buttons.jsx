@@ -16,17 +16,17 @@ var AmountButton = React.createClass({
     if (this.props.value === this.props.amount) {
       checked = true;
     }
-
     return (
       <div className="third">
         <input onChange={this.props.onChange} checked={checked} className="amount-radio" type="radio" name="donation_amount" value={this.props.value} id={"amount-" + this.props.value}/>
         <label htmlFor={"amount-" + this.props.value} className="amount-button large-label-size">
+          { this.props.currencyCode && this.props.value ?
           <FormattedNumber
             minimumFractionDigits={0}
             value={this.props.value}
             style="currency"
-            currency={this.props.currencyCode || "usd"}
-          />
+            currency={this.props.currencyCode}
+          /> : <span>&nbsp;</span> }
         </label>
       </div>
     );
@@ -64,7 +64,12 @@ var AmountOtherButton = React.createClass({
             value={this.props.amount}
           />
           <label htmlFor="amount-other" className="large-label-size">
-            <span className="currency-symbol-container">{this.props.currencySymbol}</span>
+            <span className="currency-symbol-container">
+              { this.props.currencySymbol ?
+                <span>{this.props.currencySymbol}</span> :
+                <span>&nbsp;</span>
+              }
+            </span>
           </label>
           <div className="amount-other-wrapper">
             <input id="amount-other-input" className="medium-label-size" type="text"
@@ -83,8 +88,6 @@ var AmountOtherButton = React.createClass({
 var AmountButtons = React.createClass({
   mixins: [require('react-intl').IntlMixin],
   propTypes: {
-    presets: React.PropTypes.array,
-    currency: React.PropTypes.object,
     name: React.PropTypes.string
   },
   getInitialState: function() {
@@ -94,7 +97,10 @@ var AmountButtons = React.createClass({
       userInputting: false,
       valid: true,
       errorMessage: "",
-      amount: ""
+      amount: "",
+      currency: {},
+      frequency: "",
+      presets: []
     };
   },
   onChange: function(e) {
@@ -121,7 +127,7 @@ var AmountButtons = React.createClass({
     var valid = false;
     var errorMessage = "";
     if (this.state.amount) {
-      if (parseInt(this.state.amount, 10) < parseInt(this.props.currency.minAmount, 10)) {
+      if (parseInt(this.state.amount, 10) < parseInt(this.state.currency.minAmount, 10)) {
         errorMessage = this.getIntlMessage('donation_min_error');
       } else {
         valid = true;
@@ -140,14 +146,15 @@ var AmountButtons = React.createClass({
       return (
         <FormattedMessage
           message={this.state.errorMessage}
-          minAmount={
+          minAmount={<span>
+            { this.state.currency.code ?
             <FormattedNumber
               maximumFractionDigits={2}
-              value={this.props.currency.minAmount}
+              value={this.state.currency.minAmount}
               style="currency"
-              currency={this.props.currency.code || "usd"}
-            />
-          }
+              currency={this.state.currency.code}
+            /> : "" }
+          </span>}
         />
       );
     }
@@ -155,6 +162,7 @@ var AmountButtons = React.createClass({
   },
   componentDidMount: function() {
     listener.on("fieldUpdated", this.onFieldUpdated);
+    listener.on("stateUpdated", this.onStateUpdated);
     form.registerField({
       name: this.props.name,
       element: this,
@@ -163,19 +171,48 @@ var AmountButtons = React.createClass({
   },
   componentWillUnmount: function() {
     listener.off("fieldUpdated", this.onFieldUpdated);
+    listener.off("stateUpdated", this.onStateUpdated);
   },
   onFieldUpdated: function(e) {
     var detail = e.detail;
-    if (detail.field === "amount") {
+    var field = detail.field;
+    var value = detail.value;
+    if (field === "amount") {
       this.setState({
-        amount: detail.value
+        amount: value
+      });
+    }
+    if (field === "frequency") {
+      this.setState({
+        frequency: value
+      });
+      if (this.state.currency.presets) {
+        form.updateState("presets", this.state.currency.presets[value]);
+      }
+    }
+  },
+  onStateUpdated: function(e) {
+    var detail = e.detail;
+    var state = detail.state;
+    var value = detail.value;
+    if (state === "currency") {
+      this.setState({
+        currency: value
+      });
+      if (this.state.frequency) {
+        form.updateState("presets", value.presets[this.state.frequency]);
+      }
+    }
+    if (state === "presets") {
+      this.setState({
+        presets: value
       });
     }
   },
   render: function() {
     var otherAmount = "";
     var amount = this.state.amount;
-    var presets = this.props.presets;
+    var presets = this.state.presets;
     var preset = presets.indexOf(amount);
     var otherChecked = this.state.userInputting || !!(amount && preset < 0);
 
@@ -187,7 +224,7 @@ var AmountButtons = React.createClass({
     if (this.state.valid) {
       errorMessageClassName += " hidden";
     }
-    var currency = this.props.currency;
+    var currency = this.state.currency;
     return (
       <div className="amount-buttons">
         <div className="row donation-amount-row">

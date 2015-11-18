@@ -16,20 +16,31 @@ var PaypalForm = React.createClass({
   mixins: [IntlMixin],
   getInitialState: function() {
     return {
-      amount: ""
+      amount: "",
+      currency: {}
     };
   },
   componentDidMount: function() {
     listener.on("fieldUpdated", this.onFieldUpdated);
+    listener.on("stateUpdated", this.onStateUpdated);
   },
   componentWillUnmount: function() {
     listener.off("fieldUpdated", this.onFieldUpdated);
+    listener.off("stateUpdated", this.onStateUpdated);
   },
   onFieldUpdated: function(e) {
     var detail = e.detail;
     if (detail.field === "amount") {
       this.setState({
         amount: detail.value
+      });
+    }
+  },
+  onStateUpdated: function(e) {
+    var detail = e.detail;
+    if (detail.state === "currency") {
+      this.setState({
+        currency: detail.value
       });
     }
   },
@@ -42,7 +53,7 @@ var PaypalForm = React.createClass({
   },
   render: function() {
     var amount = this.state.amount;
-    var currencyCode = this.props.currency;
+    var currencyCode = this.state.currency.code || "";
     return (
       <span>
         <form action={process.env.PAYPAL_ENDPOINT + "/cgi-bin/webscr"} method="post" target="_top" ref="paypalOneTime">
@@ -92,7 +103,6 @@ var simplePaypal = React.createClass({
     }
   },
   render: function() {
-    var currencyCode = this.state.currency.code;
     var className = "row";
     if (this.props.test) {
       className += " " + this.props.test;
@@ -122,10 +132,7 @@ var simplePaypal = React.createClass({
               </div>
               <div className="row">
                 <div className="full">
-                  <AmountButtons name="amount"
-                    currency={this.state.currency}
-                    presets={this.state.presets}
-                  />
+                  <AmountButtons name="amount"/>
                   <Frequency name="frequency"/>
                   <SubmitButton
                     submitting={this.state.submitting}
@@ -133,7 +140,7 @@ var simplePaypal = React.createClass({
                     onSubmit={this.simplePaypal}
                     submit={["amount", "frequency"]}
                   >
-                    <DonateButton currency={currencyCode}/>
+                    <DonateButton/>
                   </SubmitButton>
 
                 </div>
@@ -147,7 +154,6 @@ var simplePaypal = React.createClass({
             </p>
           </div>
           <PaypalForm ref="paypalForm"
-            currency={currencyCode}
             locale={this.props.locales[0]}
           />
         </div>

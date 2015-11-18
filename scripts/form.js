@@ -76,6 +76,12 @@ module.exports = {
     elements[name] = element;
     fields[name] = field;
   },
+  updateState: function(state, value) {
+    dispatcher.fire("stateUpdated", {
+      state: state,
+      value: value
+    });
+  },
   pageErrors: function(incoming, index) {
     incoming.forEach(function(error) {
       errors[error].page = index;

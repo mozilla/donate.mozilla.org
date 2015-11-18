@@ -17,7 +17,6 @@ module.exports = function(outputPath, callback) {
     var values = {
       currency: currencies[currencyCode],
       presets: currencies.usd.presets.single,
-      currencies: currencies,
       amount: '',
       frequency: 'single',
       country: country

@@ -202,6 +202,7 @@ var AmountButtons = React.createClass({
       if (this.state.frequency) {
         form.updateState("presets", value.presets[this.state.frequency]);
       }
+      form.updateField("amount", "");
     }
     if (state === "presets") {
       this.setState({

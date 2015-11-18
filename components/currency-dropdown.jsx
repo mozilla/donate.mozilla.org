@@ -29,7 +29,6 @@ module.exports = React.createClass({
     var currency = currencyData[e.currentTarget.value];
     if (currency) {
       form.updateState("currency", currency);
-      form.updateField("amount", "");
     }
   },
   render: function() {

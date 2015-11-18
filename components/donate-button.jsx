@@ -37,7 +37,7 @@ module.exports = React.createClass({
   },
   mixins: [IntlMixin],
   render: function() {
-    if (this.state.amount ) {
+    if (this.state.amount) {
       return (
         <FormattedMessage
           message={this.getIntlMessage('donate_now_amount')}

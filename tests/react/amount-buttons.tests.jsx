@@ -1,17 +1,15 @@
 var React = require('react');
 var TestUtils = require('react/lib/ReactTestUtils');
 var should = require('should');
-var IntlContext = { messages: {'donation_min_error': 'donation_min_error', 'please_select_an_amount': 'please_select_an_amount', 'donation_min_error': 'donation_min_error', 'other_amount': 'other_amount'} };
+var IntlContext = { messages: {'donation_min_error': 'donation_min_error', 'please_select_an_amount': 'please_select_an_amount', 'other_amount': 'other_amount'} };
 var stubContext = require('react-test-context');
 var AmountButtons = require('../../components/amount-buttons.jsx');
-var form = require('../../scripts/form.js');
 
 describe('amount-buttons.jsx', function() {
   var form;
   beforeEach(function() {
     form = require('../../scripts/form.js');
   });
-
   it('AmountButtons should select the right button after amount, frequency, currency, and presets are provided', function() {
     should.doesNotThrow(() => {
       var TestInput = stubContext(AmountButtons, IntlContext);

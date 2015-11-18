@@ -44,7 +44,7 @@ function writeFile(entries) {
 function getContentMessages(locale) {
   return new Promise(function(resolve, reject) {
     properties.read(path.join(process.cwd(), config.src, locale, 'messages.properties'), function(error, properties) {
-      if (error) {
+      if (error && error.code !== 'ENOENT') {
         return reject(error);
       }
       resolve({content: properties, locale: locale});
@@ -59,7 +59,4 @@ function processMessageFiles(locales) {
 getListLocales().then(processMessageFiles)
 .then(writeFile).catch(function(err) {
   console.error(err);
-  if (err.code !== 'ENOENT') {
-    throw err;
-  }
 });

@@ -231,7 +231,7 @@ module.exports = function() {
         fontSrc: ['self', 'https://fonts.gstatic.com', 'https://maxcdn.bootstrapcdn.com', 'https://pontoon.mozilla.org'],
         frameSrc: ['https://js.stripe.com', 'https://checkout.stripe.com', 'https://pontoon.mozilla.org'],
         imgSrc: ['self', 'https://www.google-analytics.com', 'https://q.stripe.com', 'https://pontoon.mozilla.org'],
-        scriptSrc: ['self', 'https://cdn.optimizely.com',
+        scriptSrc: ['self', 'unsafe-inline', 'https://cdn.optimizely.com',
           'https://www.google-analytics.com', 'https://ajax.googleapis.com',
           'https://js.stripe.com', 'https://checkout.stripe.com', 'https://pontoon.mozilla.org'],
         styleSrc: ['self', 'unsafe-inline', 'https://fonts.googleapis.com',

@@ -15,6 +15,9 @@ var Footer = React.createClass({
                   message={ this.getIntlMessage("footerLicense") }
                 />
               </p>
+              <p>
+                { this.getIntlMessage('firefox_footer') }
+              </p>
             </div>
             <div className="quarter">
               <ul>

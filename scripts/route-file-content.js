@@ -37,6 +37,7 @@ module.exports = function(outputPath, callback) {
       var contentOfTheFile = React.renderToStaticMarkup(index({
         localeInfo: locale,
         metaData: {
+          current_url: outputPath,
           desc: values.messages.i_donated_to_mozilla,
           title: values.messages.support_mozilla,
           site_name: 'mozilla.org',

@@ -47,7 +47,7 @@ function getContentMessages(locale) {
       if (error && error.code !== 'ENOENT') {
         return reject(error);
       }
-      resolve({content: properties, locale: locale});
+      resolve({content: properties || {}, locale: locale});
     });
   });
 }

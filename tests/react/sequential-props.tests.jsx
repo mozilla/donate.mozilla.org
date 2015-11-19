@@ -28,6 +28,7 @@ describe('sequential page query ?amount=100&currency=cad&presets=1,2,3,4&frequen
   should.doesNotThrow(() => {
     var TestInput = stubContext(SequentialPage, Context);
     var Page = React.createElement(stubContext(TestInput, Context), {
+      locales: ['en-US'],
       amount: "100",
       presets: ["1", "2", "3", "4"],
       currency: {

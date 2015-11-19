@@ -13,15 +13,21 @@ import StripeButton from '../components/stripe-button.jsx';
 var SingleForm = React.createClass({
   mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],
   render: function() {
+    var header = (<Header/>);
     var className = "row";
     if (this.props.test) {
       className += " " + this.props.test;
     }
+    // FIXME: Right now we only display this header for `en` locales
+    // this should be change to display for all once we have other locales translated.
+    if (/^(en)(\b|$)/.test(this.props.locales[0])) {
+      header = (<Header hideWaterMark={true}>
+          <h1>{this.getIntlMessage('donate_to_mozilla')}</h1>
+        </Header>);
+    }
     return (
       <div className={className}>
-        <Header hideWaterMark={true}>
-          <h1>{this.getIntlMessage('donate_to_mozilla')}</h1>
-        </Header>
+        {header}
         <div className="container">
           <SectionHeading>
             <h2>

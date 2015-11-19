@@ -1,23 +1,25 @@
 var React = require('react');
 var TestUtils = require('react/lib/ReactTestUtils');
 var should = require('should');
+var assign = require('react/lib/Object.assign');
 var Context = {
   messages: require('../../locales/en-US.json'),
   router: function() {}
 };
-Context.router.makeHref = function() {};
-Context.router.makePath = function() {};
-Context.router.makeHref = function() {};
-Context.router.transitionTo = function() {};
-Context.router.replaceWith = function() {};
-Context.router.goBack = function() {};
-Context.router.getCurrentPath = function() {};
-Context.router.getCurrentRoutes = function() {};
-Context.router.getCurrentPathname = function() {};
-Context.router.getCurrentParams = function() {};
-Context.router.getCurrentQuery = function() {};
-Context.router.isActive = function() {};
-Context.router.render = function() {};
+assign(Context.router, {
+  makeHref: function() {},
+  makePath: function() {},
+  transitionTo: function() {},
+  replaceWith: function() {},
+  goBack: function() {},
+  getCurrentPath: function() {},
+  getCurrentRoutes: function() {},
+  getCurrentPathname: function() {},
+  getCurrentParams: function() {},
+  getCurrentQuery: function() {},
+  isActive: function() {},
+  render: function() {}
+});
 
 var stubContext = require('react-test-context');
 var SequentialPage = require('../../pages/sequential.jsx');

@@ -21,7 +21,7 @@ var ThankYou = React.createClass({
     var className = "row";
     var locale = this.props.locales[0];
     var signUpOrSocial = (<Social language={locale}/>);
-    if (this.props.params && /^(en|de|pt|es|fr)(\b|$)/.test(locale)) {
+    if (this.props.params && /^(en|de)(\b|$)/.test(locale)) {
       signUpOrSocial = (<Signup country={this.props.country} email={this.props.email} locales={this.props.locales} />);
     }
     if (this.props.test) {

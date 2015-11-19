@@ -260,8 +260,8 @@ module.exports = function() {
       config: {
         security: securityConfig,
         cache: {
-            expiresIn: 1000 * 60 * 5,
-            privacy: 'public'
+          expiresIn: 1000 * 60 * 5,
+          privacy: 'public'
         }
       }
     });

@@ -8,9 +8,13 @@ import Pontoon from '../components/pontoon.jsx';
 var Index = React.createClass({
   render: function() {
     var metaData = this.props.metaData;
+    var robots = 'index, follow';
     var googleFonts = "https://fonts.googleapis.com/css?family=Open+Sans:600,400,300,300italic";
     if (this.props.localeInfo === "cs") {
       googleFonts += "&subset=latin-ext";
+    }
+    if (metaData.current_url.indexOf('thank-you') !== -1) {
+      robots = 'noindex, nofollow';
     }
     var fileHashes = JSON.parse(fs.readFileSync(Path.join(__dirname, '../public/webpack-assets.json')));
     var commentIE = '<!-- [if lt IE 10]><script src="/js/jquery.min.js"></script><script src="/js/placeholder.min.js"></script><![endif]-->';
@@ -30,6 +34,7 @@ var Index = React.createClass({
           <meta charSet="UTF-8"/>
           <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
+          <meta name='robots' content={robots}/>
           <meta property="og:type" content="website" />
           <meta property="og:title" content={metaData.title} />
           <meta property="og:site_name" content={metaData.site_name} />

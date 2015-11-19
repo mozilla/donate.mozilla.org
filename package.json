@@ -88,7 +88,7 @@
     "postcss-loader": "0.8.0",
     "properties-parser": "0.3.0",
     "q-io": "1.13.1",
-    "react": "0.13.3",
+    "react": "0.14.3",
     "react-ga": "1.2.0",
     "react-intl": "1.2.1",
     "react-router": "0.13.4",

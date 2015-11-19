@@ -80,7 +80,9 @@ module.exports = React.createClass({
     }
     return (
       <div className={className}>
-        <Header/>
+        <Header hideWaterMark={true}>
+          <h1>{this.getIntlMessage('donate_to_mozilla')}</h1>
+        </Header>
         <div className="container">
 
           <NavigationMenu>

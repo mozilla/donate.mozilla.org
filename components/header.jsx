@@ -2,13 +2,9 @@ import React from 'react';
 
 var Footer = React.createClass({
   render: function() {
-    var waterMark;
-    if (!this.props.hideWaterMark) {
-      waterMark = (<img src="/images/mozilla.svg"/>);
-    }
     return (
       <div className="header">
-        {waterMark}
+        <img alt={this.props.alt} src="/images/mozilla.svg" />
         <div className="header-copy">
           <div className="row">
             {this.props.children}

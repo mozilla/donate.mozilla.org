@@ -82,9 +82,7 @@ module.exports = React.createClass({
     // FIXME: Right now we only display this header for `en` locales
     // this should be change to display for all once we have other locales translated.
     if (/^(en)(\b|$)/.test(this.props.locales[0])) {
-      header = (<Header hideWaterMark={true}>
-          <h1>{this.getIntlMessage('donate_to_mozilla')}</h1>
-        </Header>);
+      header = (<Header alt={this.getIntlMessage('donate_to_mozilla')}/>);
     }
     return (
       <div className={className}>

@@ -41,6 +41,12 @@ var Index = React.createClass({
           <meta property="og:url" content={metaData.site_url} />
           <meta property="og:description" content={metaData.desc} />
           <meta property="og:image" content={metaData.APPLICATION_URI + "/assets/images/EOY_facebook_v1.a152496406bad899d1a920f6d6b9f507.png"} />
+          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:site" content="@mozilla" />
+          <meta name="twitter:title" content={metaData.title} />
+          <meta name="twitter:description" content={metaData.desc} />
+          <meta name="twitter:image" content={metaData.APPLICATION_URI + "/assets/images/EOY_facebook_v1.a152496406bad899d1a920f6d6b9f507.png"} />
+
           <title>donate.mozilla.org | {metaData.site_title}</title>
           <OptimizelySubdomain/>
           <Optimizely/>

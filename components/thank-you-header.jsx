@@ -29,7 +29,7 @@ module.exports = React.createClass({
       <div className="header">
         <img width="68" height="62" className="heart-image" src="/images/heart.png"/>
         {this.renderMessage()}
-        <img width="280" height="115" className="internet-graphic" src="/images/internet-graphic.svg"/>
+        <img width="280" height="115" className="internet-graphic" src="/images/internet-graphic.C16082852E2763D09A82C667AB912065.svg"/>
       </div>
     );
   }

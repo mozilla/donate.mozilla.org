@@ -9,7 +9,7 @@ var Footer = React.createClass({
         <div className="footer">
           <div className="row">
             <div className="half">
-              <img src="/images/mozilla.svg"/>
+              <img src="/images/mozilla.C16082852E2763D09A82C667AB912065.svg"/>
               <p className="license">
                 <FormattedHTMLMessage
                   message={ this.getIntlMessage("footerLicense") }

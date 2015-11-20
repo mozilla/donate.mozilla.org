@@ -110,9 +110,9 @@ var simplePaypal = React.createClass({
     return (
       <div className={className}>
         <Header>
-          <h1>
+          <h2>
             {this.getIntlMessage("donate_now")}
-          </h1>
+          </h2>
         </Header>
         <div className="simple-paypal">
           <div className="container">

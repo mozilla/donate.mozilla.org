@@ -80,7 +80,7 @@ module.exports = React.createClass({
     }
     return (
       <div className={className}>
-        <Header/>
+        <Header locale={this.props.locales[0]} alt={this.getIntlMessage('donate_to_mozilla')}></Header>
         <div className="container">
 
           <NavigationMenu>

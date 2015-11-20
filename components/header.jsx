@@ -5,7 +5,7 @@ var Footer = React.createClass({
     return (
       <div className="header">
         <h1>
-          <img alt={this.props.alt} src="/images/mozilla.svg" />
+          <img alt={this.props.alt || "Mozilla"} src="/images/mozilla.svg" />
         </h1>
         <div className="header-copy">
           <div className="row">

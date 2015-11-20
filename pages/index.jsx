@@ -40,7 +40,7 @@ var Index = React.createClass({
           <meta property="og:site_name" content={metaData.site_name} />
           <meta property="og:url" content={metaData.site_url} />
           <meta property="og:description" content={metaData.desc} />
-          <meta property="og:image" content="/images/mozilla.svg" />
+          <meta property="og:image" content={metaData.APPLICATION_URI + "/images/mozilla_wordmark.png"} />
           <title>donate.mozilla.org | {metaData.site_title}</title>
           <OptimizelySubdomain/>
           <Optimizely/>

@@ -42,7 +42,8 @@ module.exports = function(outputPath, callback) {
           title: values.messages.support_mozilla,
           site_name: 'mozilla.org',
           site_url: url.resolve(process.env.APPLICATION_URI, locale + '/'),
-          site_title: values.messages.give_to_mozilla
+          site_title: values.messages.give_to_mozilla,
+          APPLICATION_URI: process.env.APPLICATION_URI
         },
         markup: React.renderToString(page(values))
       }));

@@ -66,7 +66,6 @@ module.exports = React.createClass({
     );
   },
   render: function() {
-    var header = (<Header/>);
     var creditCardDetailsClassName = "row credit-card-section";
     var className = "row";
     if (this.props.test) {
@@ -79,14 +78,9 @@ module.exports = React.createClass({
     if (!this.state.showCvcHint) {
       cvcHintClassName += " hidden";
     }
-    // FIXME: Right now we only display this header for `en` locales
-    // this should be change to display for all once we have other locales translated.
-    if (/^(en)(\b|$)/.test(this.props.locales[0])) {
-      header = (<Header alt={this.getIntlMessage('donate_to_mozilla')}/>);
-    }
     return (
       <div className={className}>
-        {header}
+        <Header locale={this.props.locales[0]} alt={this.getIntlMessage('donate_to_mozilla')}></Header>
         <div className="container">
 
           <NavigationMenu>

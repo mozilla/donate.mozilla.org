@@ -11,7 +11,9 @@ module.exports = React.createClass({
   onChange: function() {
     this.props.onClick = this.props.onClick || function() {};
     this.props.onClick();
-    this.props.onSubmit(this.props.validate, this.props.submit);
+    if (!this.props.submitting) {
+      this.props.onSubmit(this.props.validate, this.props.submit);
+    }
   },
   renderButton: function() {
     if (this.props.submitting) {

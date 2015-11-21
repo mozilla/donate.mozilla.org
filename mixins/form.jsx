@@ -70,10 +70,6 @@ module.exports = {
     reactGA.pageview(currentPage);
   },
   submit: function(action, props, success, error) {
-    this.setState({
-      submitting: true
-    });
-
     props.locale = this.props.locales[0];
     var currency = this.state.currency;
     if (currency) {
@@ -205,7 +201,7 @@ module.exports = {
     var error = this.stripeError;
     var valid = form.validate(validate);
     var submitProps = {};
-    if (!valid) {
+    if (!valid || this.state.submitting) {
       return;
     }
     var description = this.getIntlMessage("mozilla_donation");
@@ -318,6 +314,9 @@ module.exports = {
     var submitProps = {};
     var description = this.getIntlMessage("mozilla_donation");
     if (valid) {
+      this.setState({
+        submitting: true
+      });
       submitProps = form.buildProps(props);
       if (submitProps.frequency === "monthly") {
         description = this.getIntlMessage("mozilla_monthly_donation");
@@ -344,6 +343,9 @@ module.exports = {
     var valid = form.validate(validate);
     var submitProps = {};
     if (valid) {
+      this.setState({
+        submitting: true
+      });
       submitProps = form.buildProps(props);
       this.submit("/api/signup", submitProps, this.signupSuccess, this.signupError);
     }

@@ -13,7 +13,9 @@ var DonateButton = React.createClass({
     name: React.PropTypes.string
   },
   onClick: function() {
-    this.props.onSubmit(this.props.validate, this.props.submit);
+    if (!this.props.submitting) {
+      this.props.onSubmit(this.props.validate, this.props.submit);
+    }
   },
   renderButton: function() {
     if (this.props.submitting) {

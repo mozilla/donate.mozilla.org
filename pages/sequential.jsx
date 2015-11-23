@@ -105,7 +105,7 @@ module.exports = React.createClass({
                   </span>
                 </h2>
               </SectionHeading>
-              <AmountButtons name="amount"/>
+              <AmountButtons name="amount" locale={this.props.locales[0]}/>
               <Frequency name="frequency"/>
               <NextButton validate={["amount"]}/>
             </Page>

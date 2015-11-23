@@ -132,7 +132,7 @@ var simplePaypal = React.createClass({
               </div>
               <div className="row">
                 <div className="full">
-                  <AmountButtons name="amount"/>
+                  <AmountButtons name="amount" locale={this.props.locales[0]}/>
                   <Frequency name="frequency"/>
                   <SubmitButton
                     submitting={this.state.submitting}

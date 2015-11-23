@@ -40,7 +40,14 @@ var AmountOtherButton = React.createClass({
     onInputChange: React.PropTypes.func,
     amount: React.PropTypes.string,
     currencySymbol: React.PropTypes.string,
-    placeholder: React.PropTypes.string
+    placeholder: React.PropTypes.string,
+    locale: React.PropTypes.string.isRequired,
+    userInputting: React.PropTypes.bool
+  },
+  getInitialState: function() {
+    return {
+      inputValue: ""
+    };
   },
   onRadioClick: function() {
     document.querySelector("#amount-other-input").focus();
@@ -53,7 +60,36 @@ var AmountOtherButton = React.createClass({
       this.props.onRadioChange();
     }
   },
+  onInputChange: function(e) {
+    var inputValue = e.currentTarget.value;
+    var amount = "";
+
+    if (/^(\d)*[\,]?(\d){0,2}$/.test(inputValue)) {
+      amount = inputValue.replace(",", ".");
+    } else if (/^(\d)*[\.]?(\d){0,2}$/.test(inputValue)) {
+      amount = inputValue;
+    } else {
+      inputValue = this.state.inputValue;
+    }
+    if (this.state.inputValue !== inputValue) {
+      this.setState({
+        inputValue: inputValue
+      });
+      this.props.onInputChange(amount);
+    }
+  },
   render: function() {
+    var amount = this.props.amount;
+    var inputValue = this.state.inputValue;
+    if (!amount) {
+      inputValue = "";
+    } else if (!this.props.userInputting) {
+      // We only need this for initial display before the user starts inputting,
+      // once they start inputting, we can adapt.
+      inputValue = new Intl.NumberFormat(this.props.locale, {
+        minimumFractionDigits: 2
+      }).format(amount);
+    }
     return (
       <div className="two-third">
         <div className="amount-other-container">
@@ -61,7 +97,7 @@ var AmountOtherButton = React.createClass({
             checked={this.props.checked}
             onClick={this.onRadioClick}
             onChange={this.onRadioChange}
-            value={this.props.amount}
+            value={amount}
           />
           <label htmlFor="amount-other" className="large-label-size">
             <span className="currency-symbol-container">
@@ -73,8 +109,8 @@ var AmountOtherButton = React.createClass({
           </label>
           <div className="amount-other-wrapper">
             <input id="amount-other-input" className="medium-label-size" type="text"
-              onChange={this.props.onInputChange}
-              value={this.props.amount}
+              onChange={this.onInputChange}
+              value={inputValue}
               onClick={this.onInputClick}
               placeholder={this.props.placeholder}
             />
@@ -117,11 +153,8 @@ var AmountButtons = React.createClass({
   otherRadioChange: function() {
     this.setAmount("", true);
   },
-  otherInputChange: function(e) {
-    var newAmount = e.currentTarget.value;
-    if (/^(\d)*[\.]?(\d){0,2}$/.test(newAmount)) {
-      this.setAmount(newAmount, true);
-    }
+  otherInputChange: function(newAmount) {
+    this.setAmount(newAmount, true);
   },
   validate: function() {
     var valid = false;
@@ -215,7 +248,8 @@ var AmountButtons = React.createClass({
     var amount = this.state.amount;
     var presets = this.state.presets;
     var preset = presets.indexOf(amount);
-    var otherChecked = this.state.userInputting || !!(amount && preset < 0);
+    var userInputting = this.state.userInputting;
+    var otherChecked = userInputting || !!(amount && preset < 0);
 
     if (otherChecked) {
       otherAmount = amount;
@@ -240,7 +274,9 @@ var AmountButtons = React.createClass({
           <AmountButton value={presets[3]} currencyCode={currency.code} amount={amount}
             onChange={this.onChange}/>
           <AmountOtherButton amount={otherAmount}
+            locale={this.props.locale}
             currencySymbol={currency.symbol}
+            userInputting={userInputting}
             checked={otherChecked}
             onRadioChange={this.otherRadioChange}
             onInputChange={this.otherInputChange}

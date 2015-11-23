@@ -13,8 +13,7 @@ import NextButton from '../components/next-button.jsx';
 import Page from '../components/navigation-page.jsx';
 import SubmitButton from '../components/submit-button.jsx';
 import DonateButton from '../components/donate-button.jsx';
-import PayPalButton from '../components/paypal-button.jsx';
-import CreditCardButton from '../components/credit-card-button.jsx';
+import {PayPalButton, CreditCardButton} from '../components/payment-options.jsx';
 
 import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
@@ -65,13 +64,48 @@ module.exports = React.createClass({
       </SubmitButton>
     );
   },
+  renderPaymentOptions: function() {
+    if (!this.state.currency.disabled) {
+      return (
+        <span>
+          <SectionHeading>
+            <h2>{this.getIntlMessage("choose_payment")}</h2>
+            <p id="secure-label">
+              <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
+            </p>
+          </SectionHeading>
+          <div className="row">
+            <CreditCardButton onClick={this.expandCreditCardInfo}/>
+            <PayPalButton
+              submitting={this.state.submitting}
+              submit={["frequency", "amount"]}
+              onSubmit={this.paypal}
+              onClick={this.collapseCreditCardInfo}
+            />
+          </div>
+        </span>
+      );
+    } else if (this.state.currency.disabled === "paypal") {
+      return (
+        <SectionHeading>
+          <h2>{this.getIntlMessage("credit_card")}</h2>
+          <p id="secure-label">
+            <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
+          </p>
+          <div className="row payment-logos credit-card-logos">
+            <p>&nbsp;</p>
+          </div>
+        </SectionHeading>
+      );
+    }
+  },
   render: function() {
     var creditCardDetailsClassName = "row credit-card-section";
     var className = "row";
     if (this.props.test) {
       className += " " + this.props.test;
     }
-    if (this.state.hideCreditCardDetails) {
+    if (this.state.hideCreditCardDetails && !this.state.currency.disabled) {
       creditCardDetailsClassName += " hidden";
     }
     var cvcHintClassName = "hint-msg small";
@@ -111,21 +145,8 @@ module.exports = React.createClass({
             </Page>
 
             <Page activePage={this.state.activePage} index={1} errors={["cardNumber", "cvc", "expMonth", "expYear"]}>
-              <SectionHeading>
-                <h2>{this.getIntlMessage("choose_payment")}</h2>
-                <p id="secure-label">
-                  <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
-                </p>
-              </SectionHeading>
-              <div className="row">
-                <CreditCardButton onClick={this.expandCreditCardInfo}/>
-                <PayPalButton
-                  submitting={this.state.submitting}
-                  submit={["frequency", "amount"]}
-                  onSubmit={this.paypal}
-                  onClick={this.collapseCreditCardInfo}
-                />
-              </div>
+
+              {this.renderPaymentOptions()}
               <div className={creditCardDetailsClassName}>
                 <div className="credit-card-info">
                   <div className="row">

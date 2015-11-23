@@ -7,11 +7,43 @@ import CurrencyDropdown from '../components/currency-dropdown.jsx';
 
 import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
-import PayPalButton from '../components/paypal-button.jsx';
-import StripeButton from '../components/stripe-button.jsx';
+import {PayPalButton, StripeButton} from '../components/payment-options.jsx';
+
+import SubmitButton from '../components/submit-button.jsx';
+import DonateButton from '../components/donate-button.jsx';
 
 var SingleForm = React.createClass({
   mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],
+  renderPaymentOptions: function() {
+    if (!this.state.currency.disabled) {
+      return (
+        <span>
+          <StripeButton
+            submit={["frequency", "amount"]}
+            validate={["amount"]}
+            onSubmit={this.stripeCheckout}
+          />
+          <PayPalButton
+            submitting={this.state.submitting}
+            submit={["frequency", "amount"]}
+            validate={["amount"]}
+            onSubmit={this.paypal}
+          />
+        </span>
+      );
+    } else if (this.state.currency.disabled === "paypal") {
+      return (
+        <SubmitButton
+          submitting={this.state.submitting}
+          submit={["amount", "frequency"]}
+          validate={["amount"]}
+          onSubmit={this.stripeCheckout}
+        >
+          <DonateButton currency={this.state.currency}/>
+        </SubmitButton>
+      );
+    }
+  },
   render: function() {
     var className = "row";
     if (this.props.test) {
@@ -36,17 +68,7 @@ var SingleForm = React.createClass({
               <h4>{this.getIntlMessage("choose_payment")}</h4>
               <p id="secure-label"><i className="fa fa-lock"></i>{this.getIntlMessage('secure')}</p>
             </SectionHeading>
-            <StripeButton
-              submit={["frequency", "amount"]}
-              validate={["amount"]}
-              onSubmit={this.stripeCheckout}
-            />
-            <PayPalButton
-              submitting={this.state.submitting}
-              submit={["frequency", "amount"]}
-              validate={["amount"]}
-              onSubmit={this.paypal}
-            />
+            {this.renderPaymentOptions()}
           </div>
         </div>
         <SmallPrint/>

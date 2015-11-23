@@ -44,7 +44,7 @@ var Index = React.createClass({
           <title>donate.mozilla.org | {metaData.site_title}</title>
           <OptimizelySubdomain/>
           <Optimizely/>
-          <link rel="icon" href="/images/favicon.ico" type="image/x-icon"/>
+          <link rel="icon" href="/images/favicon.8af3a74ede48e250ceb935c026242483.ico" type="image/x-icon"/>
           <link rel="stylesheet" href={'/' + fileHashes.main.css}/>
            <script dangerouslySetInnerHTML={{__html: ga}}></script>
         </head>

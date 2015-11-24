@@ -15,7 +15,7 @@ describe('amount-buttons.jsx', function() {
     should.doesNotThrow(() => {
       var TestInput = stubContext(AmountButtons, IntlContext);
       var Page = React.createElement(stubContext(TestInput, IntlContext),{
-        locale: "en-US",
+        locales: ["en-US"],
         name: "test"
       });
       var Document = TestUtils.renderIntoDocument(Page);
@@ -43,7 +43,7 @@ describe('amount-buttons.jsx', function() {
     should.doesNotThrow(() => {
       var TestInput = stubContext(AmountButtons, IntlContext);
       var Page = React.createElement(stubContext(TestInput, IntlContext),{
-        locale: "en-US",
+        locales: ["en-US"],
         name: "test"
       });
       var Document = TestUtils.renderIntoDocument(Page);
@@ -59,7 +59,7 @@ describe('amount-buttons.jsx', function() {
     should.doesNotThrow(() => {
       var TestInput = stubContext(AmountButtons, IntlContext);
       var Page = React.createElement(stubContext(TestInput, IntlContext),{
-        locale: "en-US",
+        locales: ["en-US"],
         name: "test"
       });
       var Document = TestUtils.renderIntoDocument(Page);
@@ -85,36 +85,63 @@ describe('amount-buttons.jsx', function() {
     should.doesNotThrow(() => {
       var TestInput = stubContext(AmountButtons, IntlContext);
       var Page = React.createElement(stubContext(TestInput, IntlContext),{
-        locale: "pt-BR",
+        locales: ["pt-BR"],
         name: "test"
       });
       var Document = TestUtils.renderIntoDocument(Page);
 
       var testElement = Document.getDOMNode().querySelector('#amount-other-input');
-      form.updateField('amount', '2.99');
+      form.updateField('amount', '2000.99');
       var value = testElement.value;
       React.unmountComponentAtNode(Document.getDOMNode().parentNode);
-      should(value).equal('2,99');
+      should(value).equal('2.000,99');
     });
   });
-  it('other input should allow and show commas, but store decimals', function() {
+  it('other input for en-US like number formats', function() {
     should.doesNotThrow(() => {
       var TestInput = stubContext(AmountButtons, IntlContext);
       var Page = React.createElement(stubContext(TestInput, IntlContext),{
-        locale: "en-US",
+        locales: ["en-US"],
         name: "test"
       });
       var Document = TestUtils.renderIntoDocument(Page);
-      listener.on('fieldUpdated', function(e) {
+      function onFieldUpdated(e) {
         var detail = e.detail;
+        var value = detail.value;
         if (detail.field === "amount") {
+          listener.off('fieldUpdated', onFieldUpdated);
           React.unmountComponentAtNode(Document.getDOMNode().parentNode);
-          should(detail.value).equal('1.23');
+          should(value).equal('1001.23');
         }
-      });
+      }
+      listener.on('fieldUpdated', onFieldUpdated);
 
       var testElement = Document.getDOMNode().querySelector('#amount-other-input');
-      testElement.value = '1,23';
+      testElement.value = '1,001.23';
+      TestUtils.Simulate.change(testElement);
+    });
+  });
+  it('other input for pt-BR like number formats', function() {
+    should.doesNotThrow(() => {
+      var TestInput = stubContext(AmountButtons, IntlContext);
+      var Page = React.createElement(stubContext(TestInput, IntlContext),{
+        locales: ["pt-BR"],
+        name: "test"
+      });
+      var Document = TestUtils.renderIntoDocument(Page);
+      function onFieldUpdated(e) {
+        var detail = e.detail;
+        var value = detail.value;
+        if (detail.field === "amount") {
+          listener.off('fieldUpdated', onFieldUpdated);
+          React.unmountComponentAtNode(Document.getDOMNode().parentNode);
+          should(value).equal('1001.23');
+        }
+      }
+      listener.on('fieldUpdated', onFieldUpdated);
+
+      var testElement = Document.getDOMNode().querySelector('#amount-other-input');
+      testElement.value = '1.001,23';
       TestUtils.Simulate.change(testElement);
     });
   });

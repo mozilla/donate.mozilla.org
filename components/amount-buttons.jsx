@@ -1,4 +1,5 @@
 import React from 'react';
+import IntlMixin from 'react-intl';
 import {FormattedMessage, FormattedNumber} from 'react-intl';
 import {ErrorMessage} from './error.jsx';
 import listener from '../scripts/listener.js';
@@ -34,6 +35,7 @@ var AmountButton = React.createClass({
 });
 
 var AmountOtherButton = React.createClass({
+  mixins: [IntlMixin],
   propTypes: {
     checked: React.PropTypes.bool.isRequired,
     onRadioChange: React.PropTypes.func,
@@ -41,12 +43,12 @@ var AmountOtherButton = React.createClass({
     amount: React.PropTypes.string,
     currencySymbol: React.PropTypes.string,
     placeholder: React.PropTypes.string,
-    locale: React.PropTypes.string.isRequired,
     userInputting: React.PropTypes.bool
   },
   getInitialState: function() {
     return {
-      inputValue: ""
+      inputValue: "",
+      decimalCurrency: this.testNumberFormat()
     };
   },
   onRadioClick: function() {
@@ -60,14 +62,17 @@ var AmountOtherButton = React.createClass({
       this.props.onRadioChange();
     }
   },
+  testNumberFormat: function() {
+    return this.formatNumber("1.50").indexOf(",") === -1;
+  },
   onInputChange: function(e) {
     var inputValue = e.currentTarget.value;
     var amount = "";
-
-    if (/^(\d)*[\,]?(\d){0,2}$/.test(inputValue)) {
-      amount = inputValue.replace(",", ".");
-    } else if (/^(\d)*[\.]?(\d){0,2}$/.test(inputValue)) {
-      amount = inputValue;
+    var decimalCurrency = this.state.decimalCurrency;
+    if (decimalCurrency && /^[\d,]*[\.]?\d{0,2}$/.test(inputValue)) {
+      amount = inputValue.replace(/,/g, "");
+    } else if (!decimalCurrency && /^[\d\.]*[,]?\d{0,2}$/.test(inputValue)) {
+      amount = inputValue.replace(/\./g, "").replace(",", ".");
     } else {
       inputValue = this.state.inputValue;
     }
@@ -86,9 +91,7 @@ var AmountOtherButton = React.createClass({
     } else if (!this.props.userInputting) {
       // We only need this for initial display before the user starts inputting,
       // once they start inputting, we can adapt.
-      inputValue = new Intl.NumberFormat(this.props.locale, {
-        minimumFractionDigits: 0
-      }).format(amount);
+      inputValue = this.formatNumber(amount);
     }
     return (
       <div className="two-third">

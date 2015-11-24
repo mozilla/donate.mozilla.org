@@ -23,70 +23,140 @@ var routes = {
       email: transaction.email,
       locale: transaction.locale
     };
-    if (transaction.frequency !== 'monthly') {
-      stripe.single({
-        amount: amount,
-        currency: currency,
-        stripeToken: transaction.stripeToken,
-        email: transaction.email,
-        description: transaction.description,
-        metadata: metadata
-      }, function(err, charge) {
-        var badRequest;
-        if (err) {
-          badRequest = boom.badRequest('Stripe charge failed');
-          badRequest.output.payload.stripe = {
-            code: err.code,
-            rawType: err.rawType
-          };
-          reply(badRequest);
+    var request_id = request.headers['X-Request-ID'];
+
+    stripe.customer({
+      metadata,
+      email: transaction.email,
+      stripeToken: transaction.stripeToken
+    }, function(err, customerData) {
+      var stripe_customer_create_service = customerData.stripe_customer_create_service;
+      var customer;
+      var badRequest;
+      if (err) {
+        badRequest = boom.badRequest('Stripe charge failed');
+        badRequest.output.payload.stripe = {
+          code: err.code,
+          rawType: err.rawType
+        };
+
+        request.log(['error', 'stripe', 'customer'], {
+          request_id,
+          stripe_customer_create_service,
+          code: err.code,
+          type: err.type,
+          param: err.param
+        });
+
+        reply(badRequest);
+      } else {
+        customer = customerData.customer;
+        request.log(['stripe', 'customer'], {
+          request_id,
+          stripe_customer_create_service,
+          customer_id: customer.id
+        });
+
+        if (transaction.frequency !== 'monthly') {
+          stripe.single({
+            amount,
+            currency,
+            metadata,
+            customer,
+            description: transaction.description
+          }, function(err, chargeData) {
+            var stripe_charge_create_service = chargeData.stripe_charge_create_service;
+            var charge;
+            var badRequest;
+            if (err) {
+              badRequest = boom.badRequest('Stripe charge failed');
+              badRequest.output.payload.stripe = {
+                code: err.code,
+                rawType: err.rawType
+              };
+
+              request.log(['error', 'stripe', 'single'], {
+                request_id,
+                stripe_charge_create_service,
+                customer_id: customer.id,
+                code: err.code,
+                type: err.type,
+                param: err.param
+              });
+
+              reply(badRequest);
+            } else {
+              charge = chargeData.charge;
+              if (transaction.signup) {
+                signup(transaction);
+              }
+              request.log(['stripe', 'single'], {
+                request_id,
+                stripe_charge_create_service,
+                charge_id: charge.id
+              });
+              reply({
+                frequency: "one-time",
+                amount: charge.amount,
+                currency: charge.currency,
+                id: charge.id,
+                signup: transaction.signup,
+                country: transaction.country,
+                email: transaction.email
+              }).code(200);
+            }
+          });
         } else {
-          if (transaction.signup) {
-            signup(transaction);
-          }
-          reply({
-            frequency: "one-time",
-            amount: charge.amount,
-            currency: charge.currency,
-            id: charge.id,
-            signup: transaction.signup,
-            country: transaction.country,
+          stripe.recurring({
+            // Stripe has plans with set amounts, not custom amounts.
+            // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
+            // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
+            currency,
+            metadata,
+            customer,
+            quantity: amount,
+            stripeToken: transaction.stripeToken,
             email: transaction.email
-          }).code(200);
+          }, function(err, subscriptionData) {
+            var stripe_create_subscription_service = subscriptionData.stripe_create_subscription_service;
+            var subscription;
+            if (err) {
+              request.log(['error', 'stripe', 'recurring'], {
+                request_id,
+                stripe_create_subscription_service,
+                customer_id: customer.id,
+                code: err.code,
+                type: err.type,
+                param: err.param
+              });
+              reply(boom.create(400, 'Stripe subscription failed', {
+                code: err.code,
+                rawType: err.rawType
+              }));
+            } else {
+              subscription = subscriptionData.subscription;
+              if (transaction.signup) {
+                signup(transaction);
+              }
+              request.log(['stripe', 'recurring'], {
+                request_id,
+                stripe_create_subscription_service,
+                customer_id: customer.id
+              });
+              reply({
+                frequency: "monthly",
+                currency: subscription.plan.currency,
+                quantity: subscription.quantity,
+                id: subscription.id,
+                signup: transaction.signup,
+                country: transaction.country,
+                email: transaction.email
+              }).code(200);
+            }
+          });
         }
-      });
-    } else {
-      stripe.recurring({
-        // Stripe has plans with set amounts, not custom amounts.
-        // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
-        // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
-        quantity: amount,
-        currency: currency,
-        stripeToken: transaction.stripeToken,
-        email: transaction.email,
-        metadata: metadata
-      }, function(err, subscription) {
-        if (err) {
-          reply(boom.create(400, 'Stripe subscription failed', {
-            code: err.code,
-            rawType: err.rawType
-          }));
-        } else {
-          if (transaction.signup) {
-            signup(transaction);
-          }
-          reply({
-            frequency: "monthly",
-            currency: subscription.plan.currency,
-            quantity: subscription.quantity,
-            id: subscription.id,
-            signup: transaction.signup,
-            country: transaction.country,
-            email: transaction.email
-          }).code(200);
-        }
-      });
-    }
+      }
+    });
   },
   'paypal': function(request, reply) {
     var transaction = request.payload || {};

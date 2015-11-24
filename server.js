@@ -22,12 +22,20 @@ var goodConfig = {
 if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
   goodConfig.events = {
     ops: '*',
-    error: '*'
+    error: '*',
+    request: [
+      'stripe',
+      'paypal'
+    ]
   };
 } else {
   goodConfig.events = {
     response: '*',
-    log: '*'
+    log: '*',
+    request: [
+      'stripe',
+      'paypal'
+    ]
   };
 }
 

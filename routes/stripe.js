@@ -7,42 +7,67 @@ var stripeKeys = {
 var stripe = require('stripe')(stripeKeys.secretKey);
 
 module.exports = {
-  single: function(transaction, callback) {
+  customer: function(transaction, callback) {
+    var startCreateCustomer = Date.now();
     stripe.customers.create({
       email: transaction.email,
       metadata: transaction.metadata,
       source: transaction.stripeToken
     }, function(err, customer) {
-      var charge = {};
+      var stripe_customer_create_service = Date.now() - startCreateCustomer;
       if (err) {
-        return callback(err);
+        return callback(err, {
+          stripe_customer_create_service
+        });
       }
-      charge = {
-        amount: transaction.amount,
-        currency: transaction.currency,
-        customer: customer.id,
-        description: transaction.description,
-        metadata: transaction.metadata
-      };
-      stripe.charges.create(charge, callback);
+
+      callback(null, {
+        stripe_customer_create_service,
+        customer
+      });
     });
   },
-  recurring: function(transaction, callback) {
-    stripe.customers.create({
-      email: transaction.email,
-      metadata: transaction.metadata,
-      source: transaction.stripeToken
-    }, function(err, customer) {
-      var subscription = {};
-      if (err) {
-        return callback(err);
+  single: function(transaction, callback) {
+    var charge = {
+      amount: transaction.amount,
+      currency: transaction.currency,
+      customer: transaction.customer.id,
+      description: transaction.description,
+      metadata: transaction.metadata
+    };
+    var startCreateCharge = Date.now();
+    stripe.charges.create(charge,
+      function(err, charge) {
+        var stripe_charge_create_service = Date.now() - startCreateCharge;
+
+        if (err) {
+          return callback(err, {
+            stripe_charge_create_service
+          });
+        }
+
+        callback(null, {
+          stripe_charge_create_service,
+          charge
+        });
       }
-      subscription = {
-        plan: transaction.currency,
-        quantity: transaction.quantity,
-        metadata: transaction.metadata
-      };
-      stripe.customers.createSubscription(customer.id, subscription, callback);
-    });
+    );
+  },
+  recurring: function(transaction, callback) {
+    var subscription = {
+      plan: transaction.currency,
+      quantity: transaction.quantity,
+      metadata: transaction.metadata
+    };
+    var startCreateSubscription = Date.now();
+    stripe.customers.createSubscription(transaction.customer.id, subscription,
+      function(err, subscription) {
+        var stripe_create_subscription_service = Date.now() - startCreateSubscription;
+        callback(err, {
+          stripe_create_subscription_service,
+          subscription
+        });
+      }
+    );
   }
 };

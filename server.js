@@ -16,7 +16,7 @@ var polyfillio = require('polyfill-service');
 var PolyfillSet = require('./scripts/PolyfillSet.js');
 var routes = require('./routes');
 var goodConfig = {
-  reporter: require('good-console')
+  reporter: require('good-console-logfmt')
 };
 
 if (process.env.NPM_CONFIG_PRODUCTION === 'true') {

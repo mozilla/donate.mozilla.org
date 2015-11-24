@@ -24,7 +24,20 @@ module.exports = function(driver, By, done) {
   driver.findElement(By.id('confirmButtonTop')).click();
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
-      return url.indexOf('http://localhost:3000/en-US/thank-you/') === 0;
+      var result = true;
+      if (url.indexOf('http://localhost:3000/en-US/thank-you/') === -1) {
+        result = false;
+      }
+      if (url.indexOf('&amt=10.00') === -1) {
+        result = false;
+      }
+      if (url.indexOf('&cc=USD') === -1) {
+        result = false;
+      }
+      if (url.indexOf('?frequency=single') === -1) {
+        result = false;
+      }
+      return result;
     });
   }).then(done);
 };

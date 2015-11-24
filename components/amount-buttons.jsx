@@ -87,7 +87,7 @@ var AmountOtherButton = React.createClass({
       // We only need this for initial display before the user starts inputting,
       // once they start inputting, we can adapt.
       inputValue = new Intl.NumberFormat(this.props.locale, {
-        minimumFractionDigits: 2
+        minimumFractionDigits: 0
       }).format(amount);
     }
     return (

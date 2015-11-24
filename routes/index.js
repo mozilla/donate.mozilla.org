@@ -171,13 +171,31 @@ var routes = {
       cancelUrl: request.server.info.uri + '/',
       returnUrl: request.server.info.uri + '/api/paypal-redirect/' + frequency + '/' + transaction.locale + '/'
     };
+    var request_id = request.headers['X-Request-ID'];
+    var logTags = ['paypal', 'sale'];
     function callback(err, data) {
+      var paypal_request_sale_service = data.paypal_request_sale_service;
+      var tags = logTags.slice();
+      tags.push(frequency === 'monthly' ? 'recurring' : 'single');
       if (err) {
+        tags.push('error');
+        request.log(tags, {
+          request_id,
+          paypal_request_sale_service,
+          // https://developer.paypal.com/docs/api/#errors
+          error_name: data.response.name,
+          error_message: data.response.message,
+          details: data.response.details
+        });
         reply(boom.wrap(err, 500, 'Paypal donation failed'));
       } else {
+        request.log(tags, {
+          request_id,
+          paypal_request_sale_service
+        });
         reply({
           endpoint: process.env.PAYPAL_ENDPOINT,
-          token: data.TOKEN
+          token: data.response.TOKEN
         }).code(200);
       }
     }
@@ -193,26 +211,97 @@ var routes = {
       locale = '/' + locale;
     }
     var frequency = request.params.frequency || 'single';
+    var request_id = request.headers['X-Request-ID'];
     if (frequency !== 'monthly') {
-      paypal.doSingle({
+      paypal.getSingleCheckoutDetails({
         token: request.url.query.token
-      }, function(err, charge) {
+      }, function(err, checkoutDetails) {
+        var paypal_checkout_details_service = checkoutDetails.paypal_checkout_details_service;
         if (err) {
-          return console.error('donation failed:', err);
+          request.log(['error', 'paypal', 'checkout-details', frequency], {
+            request_id,
+            paypal_checkout_details_service,
+            // https://developer.paypal.com/docs/api/#errors
+            error_name: checkoutDetails.response.name,
+            error_message: checkoutDetails.response.message,
+            details: checkoutDetails.response.details
+          });
+          return reply(boom.badRequest('donation failed', err));
         }
-        reply.redirect(locale + '/thank-you/?frequency=' + frequency + '&tx=' + charge.PAYMENTINFO_0_TRANSACTIONID + '&amt=' + charge.PAYMENTREQUEST_0_AMT + '&cc=' + charge.CURRENCYCODE);
+
+        request.log(['paypal', 'checkout-details', frequency], {
+          request_id,
+          paypal_checkout_details_service
+        });
+
+        paypal.completeSingleCheckout(checkoutDetails.response, function(err, data) {
+          var paypal_checkout_payment_service = data.paypal_checkout_payment_service;
+          if (err) {
+            request.log(['error', 'paypal', 'checkout-payment', frequency], {
+              request_id,
+              paypal_checkout_payment_service,
+              // https://developer.paypal.com/docs/api/#errors
+              error_name: data.response.name,
+              error_message: data.response.message,
+              details: data.response.details
+            });
+            return reply(boom.badRequest('donation failed', err));
+          }
+
+          request.log(['paypal', 'checkout', frequency], {
+            request_id,
+            paypal_checkout_payment_service
+          });
+
+          reply.redirect(`${locale}/thank-you/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
+        });
       });
     } else {
-      paypal.doRecurring({
+      paypal.getRecurringCheckoutDetails({
         token: request.url.query.token
-      }, function(err, subscription) {
+      }, function(err, checkoutDetails) {
+        var paypal_checkout_details_service = checkoutDetails.paypal_checkout_details_service;
         if (err) {
-          return console.error('donation failed:', err);
+          request.log(['error', 'paypal', 'checkout-details', frequency], {
+            request_id,
+            paypal_checkout_details_service,
+            // https://developer.paypal.com/docs/api/#errors
+            error_name: checkoutDetails.response.name,
+            error_message: checkoutDetails.response.message,
+            details: checkoutDetails.response.details
+          });
+          return reply(boom.badRequest('donation failed', err));
         }
-        // Create unique tx id by combining PayerID and timestamp
-        var stamp = Date.now() / 100;
-        var txId = subscription.PAYERID + stamp;
-        reply.redirect(locale + '/thank-you/?frequency=' + frequency + '&tx=' + txId + '&amt=' + subscription.AMT + '&cc=' + subscription.CURRENCYCODE);
+
+        request.log(['paypal', 'checkout-details', frequency], {
+          request_id,
+          paypal_checkout_details_service
+        });
+
+        paypal.completeRecurringCheckout(checkoutDetails.response, function(err, data) {
+          var paypal_checkout_payment_service = data.paypal_checkout_payment_service;
+          if (err) {
+            request.log(['error', 'paypal', 'checkout-payment', frequency], {
+              request_id,
+              paypal_checkout_payment_service,
+              // https://developer.paypal.com/docs/api/#errors
+              error_name: data.response.name,
+              error_message: data.response.message,
+              details: data.response.details
+            });
+            return reply(boom.badRequest('donation failed', err));
+          }
+
+          request.log(['paypal', 'checkout', frequency], {
+            request_id,
+            paypal_checkout_payment_service
+          });
+
+          // Create unique tx id by combining PayerID and timestamp
+          var stamp = Date.now() / 100;
+          var txId = data.txn.PAYERID + stamp;
+          reply.redirect(`${locale}/thank-you/?frequency=${frequency}&tx=${txId}&amt=${data.txn.AMT}&cc=${data.txn.CURRENCYCODE}`);
+        });
       });
     }
   }

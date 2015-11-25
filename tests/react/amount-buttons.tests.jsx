@@ -4,6 +4,7 @@ var should = require('should');
 var IntlContext = { messages: {'donation_min_error': 'donation_min_error', 'please_select_an_amount': 'please_select_an_amount', 'other_amount': 'other_amount'} };
 var stubContext = require('react-test-context');
 var AmountButtons = require('../../components/amount-buttons.jsx');
+var listener = require('../../scripts/listener.js');
 
 describe('amount-buttons.jsx', function() {
   var form;
@@ -14,6 +15,7 @@ describe('amount-buttons.jsx', function() {
     should.doesNotThrow(() => {
       var TestInput = stubContext(AmountButtons, IntlContext);
       var Page = React.createElement(stubContext(TestInput, IntlContext),{
+        locales: ["en-US"],
         name: "test"
       });
       var Document = TestUtils.renderIntoDocument(Page);
@@ -41,6 +43,7 @@ describe('amount-buttons.jsx', function() {
     should.doesNotThrow(() => {
       var TestInput = stubContext(AmountButtons, IntlContext);
       var Page = React.createElement(stubContext(TestInput, IntlContext),{
+        locales: ["en-US"],
         name: "test"
       });
       var Document = TestUtils.renderIntoDocument(Page);
@@ -56,6 +59,7 @@ describe('amount-buttons.jsx', function() {
     should.doesNotThrow(() => {
       var TestInput = stubContext(AmountButtons, IntlContext);
       var Page = React.createElement(stubContext(TestInput, IntlContext),{
+        locales: ["en-US"],
         name: "test"
       });
       var Document = TestUtils.renderIntoDocument(Page);
@@ -75,6 +79,70 @@ describe('amount-buttons.jsx', function() {
       var value = testElement.value;
       React.unmountComponentAtNode(Document.getDOMNode().parentNode);
       should(value).equal('');
+    });
+  });
+  it('other input should show commas in pt-BR for initial values', function() {
+    should.doesNotThrow(() => {
+      var TestInput = stubContext(AmountButtons, IntlContext);
+      var Page = React.createElement(stubContext(TestInput, IntlContext),{
+        locales: ["pt-BR"],
+        name: "test"
+      });
+      var Document = TestUtils.renderIntoDocument(Page);
+
+      var testElement = Document.getDOMNode().querySelector('#amount-other-input');
+      form.updateField('amount', '2000.99');
+      var value = testElement.value;
+      React.unmountComponentAtNode(Document.getDOMNode().parentNode);
+      should(value).equal('2.000,99');
+    });
+  });
+  it('other input for en-US like number formats', function() {
+    should.doesNotThrow(() => {
+      var TestInput = stubContext(AmountButtons, IntlContext);
+      var Page = React.createElement(stubContext(TestInput, IntlContext),{
+        locales: ["en-US"],
+        name: "test"
+      });
+      var Document = TestUtils.renderIntoDocument(Page);
+      function onFieldUpdated(e) {
+        var detail = e.detail;
+        var value = detail.value;
+        if (detail.field === "amount") {
+          listener.off('fieldUpdated', onFieldUpdated);
+          React.unmountComponentAtNode(Document.getDOMNode().parentNode);
+          should(value).equal('1001.23');
+        }
+      }
+      listener.on('fieldUpdated', onFieldUpdated);
+
+      var testElement = Document.getDOMNode().querySelector('#amount-other-input');
+      testElement.value = '1,001.23';
+      TestUtils.Simulate.change(testElement);
+    });
+  });
+  it('other input for pt-BR like number formats', function() {
+    should.doesNotThrow(() => {
+      var TestInput = stubContext(AmountButtons, IntlContext);
+      var Page = React.createElement(stubContext(TestInput, IntlContext),{
+        locales: ["pt-BR"],
+        name: "test"
+      });
+      var Document = TestUtils.renderIntoDocument(Page);
+      function onFieldUpdated(e) {
+        var detail = e.detail;
+        var value = detail.value;
+        if (detail.field === "amount") {
+          listener.off('fieldUpdated', onFieldUpdated);
+          React.unmountComponentAtNode(Document.getDOMNode().parentNode);
+          should(value).equal('1001.23');
+        }
+      }
+      listener.on('fieldUpdated', onFieldUpdated);
+
+      var testElement = Document.getDOMNode().querySelector('#amount-other-input');
+      testElement.value = '1.001,23';
+      TestUtils.Simulate.change(testElement);
     });
   });
 });

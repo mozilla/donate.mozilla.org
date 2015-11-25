@@ -27,7 +27,26 @@ module.exports = function(driver, By, done) {
   driver.switchTo().window(windowHandle);
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
-      return url.indexOf('http://localhost:3000/en-US/thank-you/') === 0;
+      var result = true;
+      if (url.indexOf('http://localhost:3000/en-US/thank-you/') === -1) {
+        result = false;
+      }
+      if (url.indexOf('&str_amount=1000') === -1) {
+        result = false;
+      }
+      if (url.indexOf('&str_currency=usd') === -1) {
+        result = false;
+      }
+      if (url.indexOf('&str_frequency=one-time') === -1) {
+        result = false;
+      }
+      if (url.indexOf('&email=send-donation%40test.com') === -1) {
+        result = false;
+      }
+      if (url.indexOf('&country=Canada') === -1) {
+        result = false;
+      }
+      return result;
     });
   }).then(done);
 };

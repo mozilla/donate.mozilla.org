@@ -1,6 +1,10 @@
-var httpRequest = require('request');
+var request = require('request');
 var querystring = require('querystring');
 var paypalLocales = require('../intl-config.js').paypalLocales;
+
+var httpRequest = request.defaults({
+  timeout: 25000
+});
 
 function setupPaypal(transaction, recurring, callback) {
   var charge = {

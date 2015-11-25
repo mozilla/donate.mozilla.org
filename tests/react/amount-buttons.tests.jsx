@@ -117,7 +117,7 @@ describe('amount-buttons.jsx', function() {
       listener.on('fieldUpdated', onFieldUpdated);
 
       var testElement = Document.getDOMNode().querySelector('#amount-other-input');
-      testElement.value = '1,001.23';
+      testElement.value = '1001.23';
       TestUtils.Simulate.change(testElement);
     });
   });
@@ -141,7 +141,7 @@ describe('amount-buttons.jsx', function() {
       listener.on('fieldUpdated', onFieldUpdated);
 
       var testElement = Document.getDOMNode().querySelector('#amount-other-input');
-      testElement.value = '1.001,23';
+      testElement.value = '1001,23';
       TestUtils.Simulate.change(testElement);
     });
   });

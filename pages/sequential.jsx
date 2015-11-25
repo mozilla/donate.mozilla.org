@@ -87,15 +87,17 @@ module.exports = React.createClass({
       );
     } else if (this.state.currency.disabled === "paypal") {
       return (
-        <SectionHeading>
-          <h2>{this.getIntlMessage("credit_card")}</h2>
-          <p id="secure-label">
-            <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
-          </p>
-          <div className="row payment-logos credit-card-logos">
-            <p>&nbsp;</p>
-          </div>
-        </SectionHeading>
+        <span className="paypal-disabled">
+          <SectionHeading>
+            <h2>{this.getIntlMessage("credit_card")}</h2>
+            <p id="secure-label">
+              <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
+            </p>
+            <div className="row payment-logos credit-card-logos">
+              <p>&nbsp;</p>
+            </div>
+          </SectionHeading>
+        </span>
       );
     }
   },

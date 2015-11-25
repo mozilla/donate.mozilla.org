@@ -18,6 +18,10 @@ var SingleForm = React.createClass({
     if (!this.state.currency.disabled) {
       return (
         <span>
+          <SectionHeading>
+            <h4>{this.getIntlMessage("choose_payment")}</h4>
+            <p id="secure-label"><i className="fa fa-lock"></i>{this.getIntlMessage('secure')}</p>
+          </SectionHeading>
           <StripeButton
             submit={["frequency", "amount"]}
             validate={["amount"]}
@@ -33,14 +37,25 @@ var SingleForm = React.createClass({
       );
     } else if (this.state.currency.disabled === "paypal") {
       return (
-        <SubmitButton
-          submitting={this.state.submitting}
-          submit={["amount", "frequency"]}
-          validate={["amount"]}
-          onSubmit={this.stripeCheckout}
-        >
-          <DonateButton currency={this.state.currency}/>
-        </SubmitButton>
+        <span className="paypal-disabled">
+          <SectionHeading>
+            <h2>{this.getIntlMessage("credit_card")}</h2>
+            <p id="secure-label">
+              <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
+            </p>
+            <div className="row payment-logos credit-card-logos">
+              <p>&nbsp;</p>
+            </div>
+          </SectionHeading>
+          <SubmitButton
+            submitting={this.state.submitting}
+            submit={["amount", "frequency"]}
+            validate={["amount"]}
+            onSubmit={this.stripeCheckout}
+          >
+            <DonateButton currency={this.state.currency}/>
+          </SubmitButton>
+        </span>
       );
     }
   },
@@ -64,10 +79,6 @@ var SingleForm = React.createClass({
           <AmountButtons name="amount" locale={this.props.locales[0]}/>
           <Frequency name="frequency"/>
           <div className="payment-section">
-            <SectionHeading>
-              <h4>{this.getIntlMessage("choose_payment")}</h4>
-              <p id="secure-label"><i className="fa fa-lock"></i>{this.getIntlMessage('secure')}</p>
-            </SectionHeading>
             {this.renderPaymentOptions()}
           </div>
         </div>

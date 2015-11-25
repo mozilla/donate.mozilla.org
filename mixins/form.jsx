@@ -189,7 +189,7 @@ module.exports = {
     if (errorType === "card_error" && cardError) {
       form.error(cardError.field, cardError.message);
     } else {
-      form.error("other", this.getIntlMessage('try_again_later'));
+      form.error("other", this.getIntlMessage('try_again_later') + " [" + errorType + "]");
     }
     this.setState({
       submitting: false

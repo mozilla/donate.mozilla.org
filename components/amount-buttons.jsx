@@ -69,10 +69,10 @@ var AmountOtherButton = React.createClass({
     var inputValue = e.currentTarget.value;
     var amount = "";
     var decimalCurrency = this.state.decimalCurrency;
-    if (decimalCurrency && /^[\d,]*[\.]?\d{0,2}$/.test(inputValue)) {
-      amount = inputValue.replace(/,/g, "");
-    } else if (!decimalCurrency && /^[\d\.]*[,]?\d{0,2}$/.test(inputValue)) {
-      amount = inputValue.replace(/\./g, "").replace(",", ".");
+    if (decimalCurrency && /^[\d]*[\.]?\d{0,2}$/.test(inputValue)) {
+      amount = inputValue;
+    } else if (!decimalCurrency && /^[\d]*[,]?\d{0,2}$/.test(inputValue)) {
+      amount = inputValue.replace(",", ".");
     } else {
       inputValue = this.state.inputValue;
     }

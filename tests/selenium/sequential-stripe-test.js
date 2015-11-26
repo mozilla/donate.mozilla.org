@@ -8,7 +8,7 @@ module.exports = function(driver, By, done) {
     }
     driver.findElement(By.css('.page-active .next-button')).click();
     driver.wait(function() {
-      if (url !== 'http://localhost:3000/in/') {
+      if (url !== 'http://localhost:3000/pa-IN/') {
         return driver.findElement(By.id('payment-cc-label')).isEnabled().then(function(enabled) {
           return enabled;
         });
@@ -17,7 +17,7 @@ module.exports = function(driver, By, done) {
         return enabled;
       });
     });
-    if (url !== 'http://localhost:3000/in/') {
+    if (url !== 'http://localhost:3000/pa-IN/') {
       driver.findElement(By.id('payment-cc-label')).click();
     }
     driver.findElement(By.id('card-number-input')).clear();
@@ -109,11 +109,11 @@ module.exports = function(driver, By, done) {
       return result;
     });
   });
-  stripeTest('http://localhost:3000/in/', true, false, true, '200', false);
+  stripeTest('http://localhost:3000/pa-IN/', true, false, true, '200', false);
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
       var result = true;
-      if (url.indexOf('http://localhost:3000/in/thank-you/') === -1) {
+      if (url.indexOf('http://localhost:3000/pa-IN/thank-you/') === -1) {
         result = false;
       }
       if (url.indexOf('&str_amount=20000') === -1) {

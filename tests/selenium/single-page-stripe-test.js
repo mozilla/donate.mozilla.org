@@ -50,7 +50,7 @@ module.exports = function(driver, By, done) {
     });
   });
 
-  driver.get('http://localhost:3000/in/one-page');
+  driver.get('http://localhost:3000/pa-IN/one-page');
   driver.findElement(By.id('amount-other-input')).sendKeys('200');
   driver.findElement(By.css('.submit-btn')).click();
 
@@ -79,7 +79,7 @@ module.exports = function(driver, By, done) {
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
       var result = true;
-      if (url.indexOf('http://localhost:3000/in/thank-you/') === -1) {
+      if (url.indexOf('http://localhost:3000/pa-IN/thank-you/') === -1) {
         result = false;
       }
       if (url.indexOf('&str_amount=20000') === -1) {

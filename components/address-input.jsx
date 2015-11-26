@@ -747,7 +747,7 @@ var Code = React.createClass({
       return;
     }
 
-    if (COUNTRIES_WITHOUT_POSTCODES.includes(detail.value)) {
+    if (COUNTRIES_WITHOUT_POSTCODES.indexOf(detail.value) > -1) {
       disabled = true;
     }
 

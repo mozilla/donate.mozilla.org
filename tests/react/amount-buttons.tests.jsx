@@ -97,52 +97,54 @@ describe('amount-buttons.jsx', function() {
       should(value).equal('2.000,99');
     });
   });
-  it('other input for en-US like number formats', function() {
-    should.doesNotThrow(() => {
-      var TestInput = stubContext(AmountButtons, IntlContext);
-      var Page = React.createElement(stubContext(TestInput, IntlContext),{
-        locales: ["en-US"],
-        name: "test"
-      });
-      var Document = TestUtils.renderIntoDocument(Page);
-      function onFieldUpdated(e) {
-        var detail = e.detail;
-        var value = detail.value;
-        if (detail.field === "amount") {
-          listener.off('fieldUpdated', onFieldUpdated);
-          React.unmountComponentAtNode(Document.getDOMNode().parentNode);
-          should(value).equal('1001.23');
+  function numberFormatTest(locale, testValue, expects) {
+    it(locale + ' with ' + testValue + ' should be ' + expects, function() {
+      should.doesNotThrow(() => {
+        var TestInput = stubContext(AmountButtons, IntlContext);
+        var Page = React.createElement(stubContext(TestInput, IntlContext),{
+          locales: [locale],
+          name: "test"
+        });
+        var Document = TestUtils.renderIntoDocument(Page);
+        function onFieldUpdated(e) {
+          var detail = e.detail;
+          var value = detail.value;
+          if (detail.field === "amount") {
+            listener.off('fieldUpdated', onFieldUpdated);
+            React.unmountComponentAtNode(Document.getDOMNode().parentNode);
+            should(value).equal(expects);
+          }
         }
-      }
-      listener.on('fieldUpdated', onFieldUpdated);
+        listener.on('fieldUpdated', onFieldUpdated);
 
-      var testElement = Document.getDOMNode().querySelector('#amount-other-input');
-      testElement.value = '1001.23';
-      TestUtils.Simulate.change(testElement);
-    });
-  });
-  it('other input for pt-BR like number formats', function() {
-    should.doesNotThrow(() => {
-      var TestInput = stubContext(AmountButtons, IntlContext);
-      var Page = React.createElement(stubContext(TestInput, IntlContext),{
-        locales: ["pt-BR"],
-        name: "test"
+        var testElement = Document.getDOMNode().querySelector('#amount-other-input');
+        testElement.value = testValue;
+        TestUtils.Simulate.change(testElement);
       });
-      var Document = TestUtils.renderIntoDocument(Page);
-      function onFieldUpdated(e) {
-        var detail = e.detail;
-        var value = detail.value;
-        if (detail.field === "amount") {
-          listener.off('fieldUpdated', onFieldUpdated);
-          React.unmountComponentAtNode(Document.getDOMNode().parentNode);
-          should(value).equal('1001.23');
-        }
-      }
-      listener.on('fieldUpdated', onFieldUpdated);
-
-      var testElement = Document.getDOMNode().querySelector('#amount-other-input');
-      testElement.value = '1001,23';
-      TestUtils.Simulate.change(testElement);
     });
-  });
+  }
+  numberFormatTest('en-US', '1,001.23', '1001.23');
+  numberFormatTest('en-US', '1.001,23', '1001.23');
+  numberFormatTest('pt-BR', '1,001.23', '1001.23');
+  numberFormatTest('pt-BR', '1.001,23', '1001.23');
+
+  numberFormatTest('en-US', '1,00,1.23', '1001.23');
+  numberFormatTest('en-US', '1.00.1,23', '1001.23');
+  numberFormatTest('pt-BR', '1,00,1.23', '1001.23');
+  numberFormatTest('pt-BR', '1.00.1,23', '1001.23');
+
+  numberFormatTest('en-US', '1,10', '1.10');
+  numberFormatTest('en-US', '1.10', '1.10');
+  numberFormatTest('pt-BR', '1,10', '1.10');
+  numberFormatTest('pt-BR', '1.10', '1.10');
+
+  numberFormatTest('en-US', '110,50', '110.50');
+  numberFormatTest('en-US', '110.50', '110.50');
+  numberFormatTest('pt-BR', '110,50', '110.50');
+  numberFormatTest('pt-BR', '110.50', '110.50');
+
+  numberFormatTest('en-US', '110,504', '110504');
+  numberFormatTest('en-US', '110.504', '110504');
+  numberFormatTest('pt-BR', '110,504', '110504');
+  numberFormatTest('pt-BR', '110.504', '110504');
 });

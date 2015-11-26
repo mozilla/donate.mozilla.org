@@ -249,7 +249,7 @@ module.exports = function() {
       server.route(require('./lib/hashed-file-routes')(securityConfig));
     }
 
-    server.route({
+    server.route([{
       method: 'GET',
       path: '/{params*}',
       handler: {
@@ -264,7 +264,22 @@ module.exports = function() {
           privacy: 'public'
         }
       }
-    });
+    }, {
+      method: 'GET',
+      path: '/assets/{params*}',
+      handler: {
+        directory: {
+          path: Path.join(__dirname, 'public')
+        }
+      },
+      config: {
+        security: securityConfig,
+        cache: {
+          expiresIn: 1000 * 60 * 5,
+          privacy: 'public'
+        }
+      }
+    }]);
   });
 
   return server;

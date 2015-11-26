@@ -22,8 +22,8 @@ module.exports = {
     minAmount: '5',
     symbol: 'R$',
     presets: {
-      single: ['250', '150', '100', '25'],
-      monthly: ['90', '75', '50', '25']
+      single: ['50', '25', '15', '10'],
+      monthly: ['50', '25', '15', '10']
     }
   },
   'cad': {

@@ -40,11 +40,11 @@ var Index = React.createClass({
           <meta property="og:site_name" content={metaData.site_name} />
           <meta property="og:url" content={metaData.site_url} />
           <meta property="og:description" content={metaData.desc} />
-          <meta property="og:image" content={metaData.APPLICATION_URI + "/images/EOY_facebook_v1.png"} />
+          <meta property="og:image" content={metaData.APPLICATION_URI + "/images/EOY_facebook_v1.a152496406bad899d1a920f6d6b9f507.png"} />
           <title>donate.mozilla.org | {metaData.site_title}</title>
           <OptimizelySubdomain/>
           <Optimizely/>
-          <link rel="icon" href="/images/favicon.ico" type="image/x-icon"/>
+          <link rel="icon" href="/images/favicon.8af3a74ede48e250ceb935c026242483.ico" type="image/x-icon"/>
           <link rel="stylesheet" href={'/' + fileHashes.main.css}/>
            <script dangerouslySetInnerHTML={{__html: ga}}></script>
         </head>

@@ -118,7 +118,7 @@ var simplePaypal = React.createClass({
           <div className="container">
             <div className="wrap">
               <div className="row">
-                <img src="/images/paypal_logo@2x.png" alt="PayPal Logo" width="140" height="58"/>
+                <img src="/images/paypal_logo@2x.603485f928e450e7098eb55bc982e19a.png" alt="PayPal Logo" width="140" height="58"/>
 
                 <p id="secure-label">
                   <i className="fa fa-lock"></i>

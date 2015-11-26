@@ -152,7 +152,7 @@ module.exports = React.createClass({
                     </div>
                     <div className="full">
                       <div className={cvcHintClassName}>
-                        <img src="/images/CVC-illustration.png" className="left"/>
+                        <img src="/images/CVC-illustration.70d7262b2227d24a2f440cc0d560b7da.png" className="left"/>
                         <div className="">{this.getIntlMessage('cvc_info')}</div>
                       </div>
                     </div>

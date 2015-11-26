@@ -20,7 +20,8 @@
     "test:server": "node tests/start.js",
     "test:selenium": "node tests/selenium/start.js",
     "test:depcheck": "dependency-check ./package.json",
-    "test:lint": "eslint --ext .js,.jsx ."
+    "test:lint": "eslint --ext .js,.jsx .",
+    "imagemin": "imagemin public/images/* public/images"
   },
   "repository": {
     "type": "git",
@@ -64,6 +65,7 @@
     "habitat": "3.1.2",
     "hapi": "11.1.2",
     "hatchet": "0.3.2",
+    "imagemin-cli": "2.0.0",
     "imports-loader": "0.6.5",
     "inert": "3.2.0",
     "inject-loader": "2.0.1",

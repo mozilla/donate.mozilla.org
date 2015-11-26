@@ -26,12 +26,14 @@ module.exports = {
     listener.on("toggleCvcHint", this.onToggleCvcHint);
     listener.on("toPage", this.toThisPage);
     listener.on("nextPage", this.nextPage);
+    listener.on("toggleCode", this.toggleCode);
   },
   componentWillUnmount: function() {
     listener.off("stateUpdated", this.onStateUpdated);
     listener.off("toggleCvcHint", this.onToggleCvcHint);
     listener.off("toPage", this.toThisPage);
     listener.off("nextPage", this.nextPage);
+    listener.on("toggleCode", this.toggleCode);
   },
   onStateUpdated: function(e) {
     var detail = e.detail;
@@ -51,6 +53,11 @@ module.exports = {
   nextPage: function(e) {
     dispatcher.fire("toPage", {
       page: this.state.activePage+1
+    });
+  },
+  toggleCode: function(e) {
+    this.setState({
+      fullWidthCity: e.detail.disabled
     });
   },
   toThisPage: function(e) {

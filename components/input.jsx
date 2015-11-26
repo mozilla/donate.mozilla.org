@@ -63,6 +63,9 @@ module.exports = React.createClass({
   validate: function() {
     var valid = true;
     var value = this.state.value || "";
+    if (this.props.disabled) {
+      return true;
+    }
     value = value.trim();
     if (!value) {
       form.error(this.props.field, this.getIntlMessage("please_complete"));
@@ -80,10 +83,12 @@ module.exports = React.createClass({
     }
     return (
       <input
-        autoComplete={this.props.autoComplete} autoCorrect={this.props.autoCorrect} autoCapitalize={this.props.autoCapitalize} spellCheck={this.props.spellCheck}
+        autoComplete={this.props.autoComplete} autoCorrect={this.props.autoCorrect}
+        autoCapitalize={this.props.autoCapitalize} spellCheck={this.props.spellCheck}
         className={className} type="text" name={this.props.name}
         onChange={this.onInputChange} value={this.state.value}
-        placeholder={this.props.placeholder}
+        placeholder={this.props.placeholder} disabled={this.props.disabled}
+        hidden={this.props.disabled}
       />
     );
   }

@@ -2,7 +2,18 @@ import React from 'react';
 import IntlMixin from 'react-intl';
 import Input from './input.jsx';
 import listener from '../scripts/listener.js';
+import dispatcher from '../scripts/dispatcher.js';
 import form from '../scripts/form.js';
+
+const COUNTRIES_WITHOUT_POSTCODES = [
+  "AO", "AG", "AW", "BS", "BZ", "BJ", "BW", "BF", "BI", "BO",
+  "CM", "CF", "KM", "CG", "CD", "CK", "CI", "DJ", "DM", "GQ",
+  "ER", "FJ", "TF", "GM", "GH", "GD", "GN", "GY", "HK", "IE",
+  "JM", "KE", "KI", "MO", "MW", "ML", "MR", "MU", "MS", "NR",
+  "AN", "NU", "KP", "PA", "QA", "RW", "KN", "LC", "ST", "SA",
+  "SC", "SL", "SB", "SO", "ZA", "SR", "SY", "TZ", "TL", "TK",
+  "TO", "TT", "TV", "UG", "AE", "VU", "YE", "ZW"
+];
 
 var countryOptions = [
   <option key="AF" value="AF">Afghanistan</option>,
@@ -717,12 +728,43 @@ var Code = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired
   },
+  getInitialState: function() {
+    return {
+      disabled: false
+    };
+  },
+  componentDidMount: function() {
+    listener.on("fieldUpdated", this.onFieldUpdated);
+  },
+  componentWillUnmount: function() {
+    listener.off("fieldUpdated", this.onFieldUpdated);
+  },
+  onFieldUpdated: function(e) {
+    var detail = e.detail;
+    var disabled = false;
+
+    if (detail.field !== "country") {
+      return;
+    }
+
+    if (COUNTRIES_WITHOUT_POSTCODES.includes(detail.value)) {
+      disabled = true;
+    }
+
+    this.setState({
+      disabled
+    });
+    dispatcher.fire('toggleCode', {
+      disabled
+    });
+  },
   mixins: [IntlMixin],
   render: function() {
     return (
       <Input
         {...this.props}
         placeholder={this.getIntlMessage('postal_code')}
+        disabled={this.state.disabled}
         field="code"
       />
     );

@@ -3,36 +3,19 @@ import React from 'react';
 /*eslint-disable no-unused-vars*/
 
 import { Route } from 'react-router';
-import pages from '../data/pages.js';
-import locales from '../locales/index.js';
+import pages from '../data/paths.js';
 
 var routes = (
   <Route>
     {
-      locales.map(function(locale) {
-        return Object.keys(pages).map(function(key) {
-          var routeOBJ = {
-            key:  pages[key].name + '-' + locale,
-            name: pages[key].name + '-' + locale,
-            path: pages[key].path.replace(':locale', locale),
-            handler: pages[key].handler
-          };
-          return (
-            <Route {...routeOBJ}/>
-          );
-        });
-      })
-    }
-    {
-      Object.keys(pages).map(function(key) {
+      Object.keys(pages).map(function(page, key) {
         var routeOBJ = {
-          key:  pages[key].name,
-          name: pages[key].name,
-          path: '/' + pages[key].name + '/?',
-          handler: pages[key].handler
+          key:  key,
+          path: pages[page].pathname,
+          handler: require('../pages/' + pages[page].filename)
         };
         return (
-          <Route {...routeOBJ} />
+          <Route {...routeOBJ}/>
         );
       })
     }

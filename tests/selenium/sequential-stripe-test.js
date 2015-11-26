@@ -8,11 +8,18 @@ module.exports = function(driver, By, done) {
     }
     driver.findElement(By.css('.page-active .next-button')).click();
     driver.wait(function() {
-      return driver.findElement(By.id('payment-cc-label')).isEnabled().then(function(enabled) {
+      if (url !== 'http://localhost:3000/pa-IN/') {
+        return driver.findElement(By.id('payment-cc-label')).isEnabled().then(function(enabled) {
+          return enabled;
+        });
+      }
+      return driver.findElement(By.id('card-number-input')).isEnabled().then(function(enabled) {
         return enabled;
       });
     });
-    driver.findElement(By.id('payment-cc-label')).click();
+    if (url !== 'http://localhost:3000/pa-IN/') {
+      driver.findElement(By.id('payment-cc-label')).click();
+    }
     driver.findElement(By.id('card-number-input')).clear();
     driver.findElement(By.id('card-number-input')).sendKeys('4242424242424242');
     driver.findElement(By.id('exp-month-input')).clear();
@@ -94,6 +101,25 @@ module.exports = function(driver, By, done) {
         result = false;
       }
       if (url.indexOf('&str_currency=eur') === -1) {
+        result = false;
+      }
+      if (url.indexOf('&str_frequency=one-time') === -1) {
+        result = false;
+      }
+      return result;
+    });
+  });
+  stripeTest('http://localhost:3000/pa-IN/', true, false, true, '200', false);
+  driver.wait(function() {
+    return driver.getCurrentUrl().then(function(url) {
+      var result = true;
+      if (url.indexOf('http://localhost:3000/pa-IN/thank-you/') === -1) {
+        result = false;
+      }
+      if (url.indexOf('&str_amount=20000') === -1) {
+        result = false;
+      }
+      if (url.indexOf('&str_currency=inr') === -1) {
         result = false;
       }
       if (url.indexOf('&str_frequency=one-time') === -1) {

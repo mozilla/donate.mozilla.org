@@ -303,6 +303,23 @@ input[type=number] {
   appearance: textfield;
 }
 
+.paypal-disabled {
+  #secure-label {
+    bottom: 0;
+    top: auto;
+    margin-bottom: 7px;
+    top: auto;
+  }
+  .credit-card-logos {
+    float: left;
+    margin-left: -20px;
+
+    @media screen and (max-width: 480px) {
+      margin-left: -16px;
+    }
+  }
+}
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -moz-appearance: none;

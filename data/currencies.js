@@ -108,6 +108,16 @@ module.exports = {
       monthly: ['75', '40', '25', '15']
     }
   },
+  'inr': {
+    code: 'inr',
+    minAmount: '130',
+    symbol: '₹',
+    disabled: "paypal",
+    presets: {
+      single: ['1300', '650', '330', '200'],
+      monthly: ['650', '330', '200', '130']
+    }
+  },
   'jpy': {
     code: 'jpy',
     minAmount: '240',

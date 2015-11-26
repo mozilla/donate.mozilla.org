@@ -6,7 +6,7 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       amount: "",
-      currency: {}
+      currency: this.props.currency || {}
     };
   },
   componentDidMount: function() {

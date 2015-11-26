@@ -21,7 +21,7 @@
     "test:selenium": "node tests/selenium/start.js",
     "test:depcheck": "dependency-check ./package.json",
     "test:lint": "eslint --ext .js,.jsx .",
-    "imagemin": "imagemin public/images/* public/images"
+    "imagemin": "imagemin assets/images/* assets/images"
   },
   "repository": {
     "type": "git",

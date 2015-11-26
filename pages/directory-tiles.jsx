@@ -45,15 +45,15 @@ module.exports = React.createClass({
           <h2>DEV-NOTE: Please make sure the string fits the box below.</h2>
         </Header>
         <div style={divStyle}>
-          <img src="/tiles-images/v1.png" />
+          <img src="/assets/tiles-images/v1.png" />
           <h2 style={textStyle}><FormattedHTMLMessage message={this.getIntlMessage('maker_firefox')}/></h2>
         </div>
         <div style={divStyle}>
-          <img src="/tiles-images/v2.png" />
+          <img src="/assets/tiles-images/v2.png" />
           <h2 style={textStyle}>{this.getIntlMessage('support_mozilla')}</h2>
         </div>
         <div style={divStyle}>
-          <img src="/tiles-images/rollover.png" />
+          <img src="/assets/tiles-images/rollover.png" />
           <h2 style={rolloverStyle}>{this.getIntlMessage('give_before_31')}</h2>
           <div style={btn}>
             {donateNow}

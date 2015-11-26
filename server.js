@@ -275,7 +275,7 @@ module.exports = function() {
       config: {
         security: securityConfig,
         cache: {
-          expiresIn: 1000 * 60 * 5,
+          expiresIn: 7 * 24 * 60 * 60 * 1000, // one week
           privacy: 'public'
         }
       }

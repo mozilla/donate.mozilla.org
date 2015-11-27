@@ -1,5 +1,5 @@
 module.exports = function(driver, By, done) {
-  driver.get('http://localhost:3000/en-US/one-page/');
+  driver.get('http://localhost:3000/en-US/');
   driver.findElement(By.id('amount-other-input')).sendKeys('10');
   driver.findElement(By.css('.paypal-button .payment-submit-button')).click();
   driver.wait(function() {

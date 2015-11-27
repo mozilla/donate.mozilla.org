@@ -1,5 +1,5 @@
 module.exports = function(driver, By, done) {
-  driver.get('http://localhost:3000/en-US/');
+  driver.get('http://localhost:3000/en-US/sequential/');
   driver.findElement(By.id('amount-other-input')).sendKeys('10');
   driver.findElement(By.css('.page-active .next-button')).click();
   driver.wait(function() {

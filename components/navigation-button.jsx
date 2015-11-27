@@ -2,17 +2,23 @@ import React from 'react';
 import {FormattedNumber} from 'react-intl';
 import dispatcher from '../scripts/dispatcher.js';
 import listener from '../scripts/listener.js';
+import form from '../scripts/form.js';
 
 var NavigationButton = React.createClass({
   propTypes: {
     activePage: React.PropTypes.number.isRequired,
-    index: React.PropTypes.number.isRequired
+    index: React.PropTypes.number.isRequired,
+    validate: React.PropTypes.array.isRequired
   },
   onClick: function(e) {
-    if (this.props.activePage > this.props.index) {
-      dispatcher.fire("toPage", {
-        page: this.props.index
-      });
+    var valid;
+    if ((this.props.activePage+1) >= this.props.index) {
+      valid = form.validate(this.props.validate);
+      if (valid) {
+        dispatcher.fire("toPage", {
+          page: this.props.index
+        });
+      }
     }
   },
   render: function() {

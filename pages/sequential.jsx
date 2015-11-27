@@ -120,13 +120,13 @@ module.exports = React.createClass({
         <div className="container">
 
           <NavigationMenu>
-            <AmountNavigationButton activePage={this.state.activePage} index={0}>
+            <AmountNavigationButton activePage={this.state.activePage} index={0} validate={[]}>
               <div>{this.getIntlMessage("amount")}</div>
             </AmountNavigationButton>
-            <DisplayNavigationButton display={this.state.paymentType} activePage={this.state.activePage} index={1}>
+            <DisplayNavigationButton display={this.state.paymentType} activePage={this.state.activePage} index={1} validate={["amount"]}>
               <div>{this.getIntlMessage("payment")}</div>
             </DisplayNavigationButton>
-            <NavigationButton activePage={this.state.activePage} index={2}>
+            <NavigationButton activePage={this.state.activePage} index={2} validate={["cardNumber", "cvc", "expMonth", "expYear"]}>
               <div>{this.getIntlMessage("personal")}</div>
             </NavigationButton>
           </NavigationMenu>

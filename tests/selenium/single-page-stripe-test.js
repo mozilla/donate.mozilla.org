@@ -1,5 +1,5 @@
 module.exports = function(driver, By, done) {
-  driver.get('http://localhost:3000/en-US/one-page');
+  driver.get('http://localhost:3000/en-US/');
   driver.findElement(By.id('amount-other-input')).sendKeys('10');
   driver.findElement(By.id('payment-cc-label')).click();
 
@@ -50,7 +50,7 @@ module.exports = function(driver, By, done) {
     });
   });
 
-  driver.get('http://localhost:3000/pa-IN/one-page');
+  driver.get('http://localhost:3000/pa-IN/');
   driver.findElement(By.id('amount-other-input')).sendKeys('200');
   driver.findElement(By.css('.submit-btn')).click();
 

@@ -8,7 +8,7 @@ module.exports = function(driver, By, done) {
     }
     driver.findElement(By.css('.page-active .next-button')).click();
     driver.wait(function() {
-      if (url !== 'http://localhost:3000/pa-IN/') {
+      if (url !== 'http://localhost:3000/pa-IN/sequential/') {
         return driver.findElement(By.id('payment-cc-label')).isEnabled().then(function(enabled) {
           return enabled;
         });
@@ -17,7 +17,7 @@ module.exports = function(driver, By, done) {
         return enabled;
       });
     });
-    if (url !== 'http://localhost:3000/pa-IN/') {
+    if (url !== 'http://localhost:3000/pa-IN/sequential/') {
       driver.findElement(By.id('payment-cc-label')).click();
     }
     driver.findElement(By.id('card-number-input')).clear();
@@ -65,7 +65,7 @@ module.exports = function(driver, By, done) {
       driver.findElement(By.name('submit-button-test')).click();
     }
   }
-  stripeTest('http://localhost:3000/de/', true, false, true, '10.00', true);
+  stripeTest('http://localhost:3000/de/sequential/', true, false, true, '10.00', true);
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
       var result = true;
@@ -90,7 +90,7 @@ module.exports = function(driver, By, done) {
       return result;
     });
   });
-  stripeTest('http://localhost:3000/de/?test=signup-test', false, true, true, '10', false);
+  stripeTest('http://localhost:3000/de/sequential/?test=signup-test', false, true, true, '10', false);
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
       var result = true;
@@ -109,7 +109,7 @@ module.exports = function(driver, By, done) {
       return result;
     });
   });
-  stripeTest('http://localhost:3000/pa-IN/', true, false, true, '200', false);
+  stripeTest('http://localhost:3000/pa-IN/sequential/', true, false, true, '200', false);
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
       var result = true;
@@ -128,7 +128,7 @@ module.exports = function(driver, By, done) {
       return result;
     });
   });
-  stripeTest('http://localhost:3000/en-US/?test=address-test', false, false, false, '10,00', false);
+  stripeTest('http://localhost:3000/en-US/sequential/?test=address-test', false, false, false, '10,00', false);
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
       var result = true;

@@ -1,8 +1,8 @@
 var pages = {
   '/': {
-    name: 'sequential',
+    name: 'one-page',
     path: '/:locale/',
-    handler: require('../pages/sequential.jsx')
+    handler: require('../pages/single-form.jsx')
   },
   '/thank-you/': {
     name: 'thank-you',
@@ -19,10 +19,10 @@ var pages = {
     path: '/:locale/give-bitcoin/?',
     handler: require('../pages/give-bitcoin.jsx')
   },
-  '/one-page/': {
-    name: 'one-page',
-    path: '/:locale/one-page/?',
-    handler: require('../pages/single-form.jsx')
+  '/sequential/': {
+    name: 'sequential',
+    path: '/:locale/sequential/?',
+    handler: require('../pages/sequential.jsx')
   },
   '/paypal-donate/': {
     name: 'paypal-donate',

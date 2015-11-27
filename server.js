@@ -15,6 +15,29 @@ var Joi = require('joi');
 var polyfillio = require('polyfill-service');
 var PolyfillSet = require('./scripts/PolyfillSet.js');
 var routes = require('./routes');
+var goodConfig = {
+  reporter: require('good-console-logfmt')
+};
+
+if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
+  goodConfig.events = {
+    ops: '*',
+    error: '*',
+    request: [
+      'stripe',
+      'paypal'
+    ]
+  };
+} else {
+  goodConfig.events = {
+    response: '*',
+    log: '*',
+    request: [
+      'stripe',
+      'paypal'
+    ]
+  };
+}
 
 module.exports = function() {
   var server = new Hapi.Server();
@@ -212,13 +235,7 @@ module.exports = function() {
     {
       register: require('good'),
       options: {
-        reporters: [{
-          reporter: require('good-console'),
-          events: {
-            response: '*',
-            log: '*'
-          }
-        }]
+        reporters: [goodConfig]
       }
     },
     {

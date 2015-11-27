@@ -28,20 +28,29 @@ function setupPaypal(transaction, recurring, callback) {
     charge.L_BILLINGAGREEMENTDESCRIPTION0 = transaction.item_name;
     charge.L_BILLINGTYPE0 = 'RecurringPayments';
   }
+  var paypalRequestSaleStart = Date.now();
   httpRequest({
     url: process.env.PAYPAL_API_ENDPOINT,
     method: 'POST',
     form: charge
   }, function(err, httpResponse, body) {
+    var paypal_request_sale_service = Date.now() - paypalRequestSaleStart;
     if (err) {
-      callback(err);
+      callback(err, {
+        paypal_request_sale_service,
+        response: querystring.parse(body)
+      });
     } else {
-      callback(null, querystring.parse(body));
+      callback(null, {
+        paypal_request_sale_service,
+        response: querystring.parse(body)
+      });
     }
   });
 }
 
-function doPaypal(transaction, recurring, callback) {
+function getCheckoutDetails(transaction, recurring, callback) {
+  var paypalCheckoutDetailsStart = Date.now();
   httpRequest({
     url: process.env.PAYPAL_API_ENDPOINT,
     method: 'POST',
@@ -54,48 +63,60 @@ function doPaypal(transaction, recurring, callback) {
       TOKEN: transaction.token
     }
   }, function(err, httpResponse, body) {
-    if (err) {
-      return callback(err);
-    }
+    var paypal_checkout_details_service = Date.now() - paypalCheckoutDetailsStart;
     var data = querystring.parse(body);
-    var details = {
-      USER: process.env.PAYPAL_USER,
-      PWD: process.env.PAYPAL_PWD,
-      SIGNATURE: process.env.PAYPAL_SIGNATURE,
-      METHOD: 'DoExpressCheckoutPayment',
-      VERSION: '106.0',
-      TOKEN: data.TOKEN,
-      PAYERID: data.PAYERID
-    };
-    if (recurring) {
-      details.DESC = data.DESC;
-      details.PROFILESTARTDATE = data.TIMESTAMP;
-      details.BILLINGPERIOD = 'Month';
-      details.BILLINGFREQUENCY = '12';
-      details.AMT = data.AMT;
-      details.INITAMT = data.AMT;
-      details.CURRENCYCODE = data.CURRENCYCODE;
-    } else {
-      details.PAYMENTREQUEST_0_AMT = data.PAYMENTREQUEST_0_AMT;
-      details.PAYMENTREQUEST_0_CURRENCYCODE = data.CURRENCYCODE;
+    return callback(err, {
+      paypal_checkout_details_service,
+      response: data
+    });
+  });
+}
+
+function doExpressCheckoutPayment(checkoutDetails, recurring, callback) {
+  var paypalCheckoutPaymentStart = Date.now();
+  var details = {
+    USER: process.env.PAYPAL_USER,
+    PWD: process.env.PAYPAL_PWD,
+    SIGNATURE: process.env.PAYPAL_SIGNATURE,
+    METHOD: 'DoExpressCheckoutPayment',
+    VERSION: '106.0',
+    TOKEN: checkoutDetails.TOKEN,
+    PAYERID: checkoutDetails.PAYERID
+  };
+  if (recurring) {
+    details.DESC = checkoutDetails.DESC;
+    details.PROFILESTARTDATE = checkoutDetails.TIMESTAMP;
+    details.BILLINGPERIOD = 'Month';
+    details.BILLINGFREQUENCY = '12';
+    details.AMT = checkoutDetails.AMT;
+    details.INITAMT = checkoutDetails.AMT;
+    details.CURRENCYCODE = checkoutDetails.CURRENCYCODE;
+  } else {
+    details.PAYMENTREQUEST_0_AMT = checkoutDetails.PAYMENTREQUEST_0_AMT;
+    details.PAYMENTREQUEST_0_CURRENCYCODE = checkoutDetails.CURRENCYCODE;
+  }
+  httpRequest({
+    url: process.env.PAYPAL_API_ENDPOINT,
+    method: 'POST',
+    form: details
+  }, function(err, httpResponse, body) {
+    var paypal_checkout_payment_service = Date.now() - paypalCheckoutPaymentStart;
+    if (err) {
+      return callback(err, {
+        paypal_checkout_payment_service
+      });
     }
-    httpRequest({
-      url: process.env.PAYPAL_API_ENDPOINT,
-      method: 'POST',
-      form: details
-    }, function(err, httpResponse, body) {
-      if (err) {
-        return callback(err);
-      }
-      var bodyData = querystring.parse(body);
-      bodyData.CURRENCYCODE = data.CURRENCYCODE;
-      if (recurring) {
-        bodyData.AMT = data.AMT;
-        bodyData.PAYERID = data.PAYERID;
-      } else {
-        bodyData.PAYMENTREQUEST_0_AMT = data.PAYMENTREQUEST_0_AMT;
-      }
-      callback(null, bodyData);
+    var txn = querystring.parse(body);
+    txn.CURRENCYCODE = checkoutDetails.CURRENCYCODE;
+    if (recurring) {
+      txn.AMT = checkoutDetails.AMT;
+      txn.PAYERID = checkoutDetails.PAYERID;
+    } else {
+      txn.PAYMENTREQUEST_0_AMT = checkoutDetails.PAYMENTREQUEST_0_AMT;
+    }
+    callback(null, {
+      paypal_checkout_payment_service,
+      txn
     });
   });
 }
@@ -107,10 +128,16 @@ module.exports = {
   setupRecurring: function(transaction, callback) {
     setupPaypal(transaction, true, callback);
   },
-  doSingle: function(transaction, callback) {
-    doPaypal(transaction, false, callback);
+  getSingleCheckoutDetails: function(transaction, callback) {
+    getCheckoutDetails(transaction, false, callback);
   },
-  doRecurring: function(transaction, callback) {
-    doPaypal(transaction, true, callback);
+  getRecurringCheckoutDetails: function(transaction, callback) {
+    getCheckoutDetails(transaction, true, callback);
+  },
+  completeSingleCheckout: function(checkoutDetails, callback) {
+    doExpressCheckoutPayment(checkoutDetails, false, callback);
+  },
+  completeRecurringCheckout: function(checkoutDetails, callback) {
+    doExpressCheckoutPayment(checkoutDetails, true, callback);
   }
 };

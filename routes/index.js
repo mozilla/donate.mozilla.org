@@ -23,70 +23,140 @@ var routes = {
       email: transaction.email,
       locale: transaction.locale
     };
-    if (transaction.frequency !== 'monthly') {
-      stripe.single({
-        amount: amount,
-        currency: currency,
-        stripeToken: transaction.stripeToken,
-        email: transaction.email,
-        description: transaction.description,
-        metadata: metadata
-      }, function(err, charge) {
-        var badRequest;
-        if (err) {
-          badRequest = boom.badRequest('Stripe charge failed');
-          badRequest.output.payload.stripe = {
-            code: err.code,
-            rawType: err.rawType
-          };
-          reply(badRequest);
+    var request_id = request.headers['X-Request-ID'];
+
+    stripe.customer({
+      metadata,
+      email: transaction.email,
+      stripeToken: transaction.stripeToken
+    }, function(err, customerData) {
+      var stripe_customer_create_service = customerData.stripe_customer_create_service;
+      var customer;
+      var badRequest;
+      if (err) {
+        badRequest = boom.badRequest('Stripe charge failed');
+        badRequest.output.payload.stripe = {
+          code: err.code,
+          rawType: err.rawType
+        };
+
+        request.log(['error', 'stripe', 'customer'], {
+          request_id,
+          stripe_customer_create_service,
+          code: err.code,
+          type: err.type,
+          param: err.param
+        });
+
+        reply(badRequest);
+      } else {
+        customer = customerData.customer;
+        request.log(['stripe', 'customer'], {
+          request_id,
+          stripe_customer_create_service,
+          customer_id: customer.id
+        });
+
+        if (transaction.frequency !== 'monthly') {
+          stripe.single({
+            amount,
+            currency,
+            metadata,
+            customer,
+            description: transaction.description
+          }, function(err, chargeData) {
+            var stripe_charge_create_service = chargeData.stripe_charge_create_service;
+            var charge;
+            var badRequest;
+            if (err) {
+              badRequest = boom.badRequest('Stripe charge failed');
+              badRequest.output.payload.stripe = {
+                code: err.code,
+                rawType: err.rawType
+              };
+
+              request.log(['error', 'stripe', 'single'], {
+                request_id,
+                stripe_charge_create_service,
+                customer_id: customer.id,
+                code: err.code,
+                type: err.type,
+                param: err.param
+              });
+
+              reply(badRequest);
+            } else {
+              charge = chargeData.charge;
+              if (transaction.signup) {
+                signup(transaction);
+              }
+              request.log(['stripe', 'single'], {
+                request_id,
+                stripe_charge_create_service,
+                charge_id: charge.id
+              });
+              reply({
+                frequency: "one-time",
+                amount: charge.amount,
+                currency: charge.currency,
+                id: charge.id,
+                signup: transaction.signup,
+                country: transaction.country,
+                email: transaction.email
+              }).code(200);
+            }
+          });
         } else {
-          if (transaction.signup) {
-            signup(transaction);
-          }
-          reply({
-            frequency: "one-time",
-            amount: charge.amount,
-            currency: charge.currency,
-            id: charge.id,
-            signup: transaction.signup,
-            country: transaction.country,
+          stripe.recurring({
+            // Stripe has plans with set amounts, not custom amounts.
+            // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
+            // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
+            currency,
+            metadata,
+            customer,
+            quantity: amount,
+            stripeToken: transaction.stripeToken,
             email: transaction.email
-          }).code(200);
+          }, function(err, subscriptionData) {
+            var stripe_create_subscription_service = subscriptionData.stripe_create_subscription_service;
+            var subscription;
+            if (err) {
+              request.log(['error', 'stripe', 'recurring'], {
+                request_id,
+                stripe_create_subscription_service,
+                customer_id: customer.id,
+                code: err.code,
+                type: err.type,
+                param: err.param
+              });
+              reply(boom.create(400, 'Stripe subscription failed', {
+                code: err.code,
+                rawType: err.rawType
+              }));
+            } else {
+              subscription = subscriptionData.subscription;
+              if (transaction.signup) {
+                signup(transaction);
+              }
+              request.log(['stripe', 'recurring'], {
+                request_id,
+                stripe_create_subscription_service,
+                customer_id: customer.id
+              });
+              reply({
+                frequency: "monthly",
+                currency: subscription.plan.currency,
+                quantity: subscription.quantity,
+                id: subscription.id,
+                signup: transaction.signup,
+                country: transaction.country,
+                email: transaction.email
+              }).code(200);
+            }
+          });
         }
-      });
-    } else {
-      stripe.recurring({
-        // Stripe has plans with set amounts, not custom amounts.
-        // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
-        // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
-        quantity: amount,
-        currency: currency,
-        stripeToken: transaction.stripeToken,
-        email: transaction.email,
-        metadata: metadata
-      }, function(err, subscription) {
-        if (err) {
-          reply(boom.create(400, 'Stripe subscription failed', {
-            code: err.code,
-            rawType: err.rawType
-          }));
-        } else {
-          if (transaction.signup) {
-            signup(transaction);
-          }
-          reply({
-            frequency: "monthly",
-            currency: subscription.plan.currency,
-            quantity: subscription.quantity,
-            id: subscription.id,
-            signup: transaction.signup,
-            country: transaction.country,
-            email: transaction.email
-          }).code(200);
-        }
-      });
-    }
+      }
+    });
   },
   'paypal': function(request, reply) {
     var transaction = request.payload || {};
@@ -101,13 +171,31 @@ var routes = {
       cancelUrl: request.server.info.uri + '/',
       returnUrl: request.server.info.uri + '/api/paypal-redirect/' + frequency + '/' + transaction.locale + '/'
     };
+    var request_id = request.headers['X-Request-ID'];
+    var logTags = ['paypal', 'sale'];
     function callback(err, data) {
+      var paypal_request_sale_service = data.paypal_request_sale_service;
+      var tags = logTags.slice();
+      tags.push(frequency === 'monthly' ? 'recurring' : 'single');
       if (err) {
+        tags.push('error');
+        request.log(tags, {
+          request_id,
+          paypal_request_sale_service,
+          // https://developer.paypal.com/docs/api/#errors
+          error_name: data.response.name,
+          error_message: data.response.message,
+          details: data.response.details
+        });
         reply(boom.wrap(err, 500, 'Paypal donation failed'));
       } else {
+        request.log(tags, {
+          request_id,
+          paypal_request_sale_service
+        });
         reply({
           endpoint: process.env.PAYPAL_ENDPOINT,
-          token: data.TOKEN
+          token: data.response.TOKEN
         }).code(200);
       }
     }
@@ -123,26 +211,97 @@ var routes = {
       locale = '/' + locale;
     }
     var frequency = request.params.frequency || 'single';
+    var request_id = request.headers['X-Request-ID'];
     if (frequency !== 'monthly') {
-      paypal.doSingle({
+      paypal.getSingleCheckoutDetails({
         token: request.url.query.token
-      }, function(err, charge) {
+      }, function(err, checkoutDetails) {
+        var paypal_checkout_details_service = checkoutDetails.paypal_checkout_details_service;
         if (err) {
-          return console.error('donation failed:', err);
+          request.log(['error', 'paypal', 'checkout-details', frequency], {
+            request_id,
+            paypal_checkout_details_service,
+            // https://developer.paypal.com/docs/api/#errors
+            error_name: checkoutDetails.response.name,
+            error_message: checkoutDetails.response.message,
+            details: checkoutDetails.response.details
+          });
+          return reply(boom.badRequest('donation failed', err));
         }
-        reply.redirect(locale + '/thank-you/?frequency=' + frequency + '&tx=' + charge.PAYMENTINFO_0_TRANSACTIONID + '&amt=' + charge.PAYMENTREQUEST_0_AMT + '&cc=' + charge.CURRENCYCODE);
+
+        request.log(['paypal', 'checkout-details', frequency], {
+          request_id,
+          paypal_checkout_details_service
+        });
+
+        paypal.completeSingleCheckout(checkoutDetails.response, function(err, data) {
+          var paypal_checkout_payment_service = data.paypal_checkout_payment_service;
+          if (err) {
+            request.log(['error', 'paypal', 'checkout-payment', frequency], {
+              request_id,
+              paypal_checkout_payment_service,
+              // https://developer.paypal.com/docs/api/#errors
+              error_name: data.response.name,
+              error_message: data.response.message,
+              details: data.response.details
+            });
+            return reply(boom.badRequest('donation failed', err));
+          }
+
+          request.log(['paypal', 'checkout', frequency], {
+            request_id,
+            paypal_checkout_payment_service
+          });
+
+          reply.redirect(`${locale}/thank-you/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
+        });
       });
     } else {
-      paypal.doRecurring({
+      paypal.getRecurringCheckoutDetails({
         token: request.url.query.token
-      }, function(err, subscription) {
+      }, function(err, checkoutDetails) {
+        var paypal_checkout_details_service = checkoutDetails.paypal_checkout_details_service;
         if (err) {
-          return console.error('donation failed:', err);
+          request.log(['error', 'paypal', 'checkout-details', frequency], {
+            request_id,
+            paypal_checkout_details_service,
+            // https://developer.paypal.com/docs/api/#errors
+            error_name: checkoutDetails.response.name,
+            error_message: checkoutDetails.response.message,
+            details: checkoutDetails.response.details
+          });
+          return reply(boom.badRequest('donation failed', err));
         }
-        // Create unique tx id by combining PayerID and timestamp
-        var stamp = Date.now() / 100;
-        var txId = subscription.PAYERID + stamp;
-        reply.redirect(locale + '/thank-you/?frequency=' + frequency + '&tx=' + txId + '&amt=' + subscription.AMT + '&cc=' + subscription.CURRENCYCODE);
+
+        request.log(['paypal', 'checkout-details', frequency], {
+          request_id,
+          paypal_checkout_details_service
+        });
+
+        paypal.completeRecurringCheckout(checkoutDetails.response, function(err, data) {
+          var paypal_checkout_payment_service = data.paypal_checkout_payment_service;
+          if (err) {
+            request.log(['error', 'paypal', 'checkout-payment', frequency], {
+              request_id,
+              paypal_checkout_payment_service,
+              // https://developer.paypal.com/docs/api/#errors
+              error_name: data.response.name,
+              error_message: data.response.message,
+              details: data.response.details
+            });
+            return reply(boom.badRequest('donation failed', err));
+          }
+
+          request.log(['paypal', 'checkout', frequency], {
+            request_id,
+            paypal_checkout_payment_service
+          });
+
+          // Create unique tx id by combining PayerID and timestamp
+          var stamp = Date.now() / 100;
+          var txId = data.txn.PAYERID + stamp;
+          reply.redirect(`${locale}/thank-you/?frequency=${frequency}&tx=${txId}&amt=${data.txn.AMT}&cc=${data.txn.CURRENCYCODE}`);
+        });
       });
     }
   }

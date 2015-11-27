@@ -5,6 +5,7 @@ var stripeKeys = {
 };
 
 var stripe = require('stripe')(stripeKeys.secretKey);
+stripe.setTimeout(25000);
 
 module.exports = {
   single: function(transaction, callback) {

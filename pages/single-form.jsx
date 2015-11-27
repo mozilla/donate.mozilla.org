@@ -11,6 +11,7 @@ import {PayPalButton, StripeButton} from '../components/payment-options.jsx';
 
 import SubmitButton from '../components/submit-button.jsx';
 import DonateButton from '../components/donate-button.jsx';
+import {PrivacyPolicyCheckbox} from '../components/checkbox.jsx';
 
 var SingleForm = React.createClass({
   mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],
@@ -22,15 +23,18 @@ var SingleForm = React.createClass({
             <h4>{this.getIntlMessage("choose_payment")}</h4>
             <p id="secure-label"><i className="fa fa-lock"></i>{this.getIntlMessage('secure')}</p>
           </SectionHeading>
+          <div className="row">
+            <PrivacyPolicyCheckbox name="privacyPolicy"/>
+          </div>
           <StripeButton
             submit={["frequency", "amount"]}
-            validate={["amount"]}
+            validate={["amount", "privacyPolicy"]}
             onSubmit={this.stripeCheckout}
           />
           <PayPalButton
             submitting={this.state.submitting}
             submit={["frequency", "amount"]}
-            validate={["amount"]}
+            validate={["amount", "privacyPolicy"]}
             onSubmit={this.paypal}
           />
         </span>
@@ -47,10 +51,13 @@ var SingleForm = React.createClass({
               <p>&nbsp;</p>
             </div>
           </SectionHeading>
+          <div className="row">
+            <PrivacyPolicyCheckbox name="privacyPolicy"/>
+          </div>
           <SubmitButton
             submitting={this.state.submitting}
             submit={["amount", "frequency"]}
-            validate={["amount"]}
+            validate={["amount", "privacyPolicy"]}
             onSubmit={this.stripeCheckout}
           >
             <DonateButton currency={this.state.currency}/>

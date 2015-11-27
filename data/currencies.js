@@ -44,6 +44,16 @@ module.exports = {
       monthly: ['10', '5', '3', '2']
     }
   },
+  'cny': {
+    code: 'cny',
+    minAmount: '12',
+    symbol: '¥',
+    disabled: "paypal",
+    presets: {
+      single: ['120','60','30','15'],
+      monthly: ['60','30','20','12']
+    }
+  },
   'czk': {
     code: 'czk',
     minAmount: '45',
@@ -97,6 +107,16 @@ module.exports = {
     presets: {
       single: ['4000', '2000', '1000', '600'],
       monthly: ['1500', '1000', '800', '500']
+    }
+  },
+  'idr': {
+    code: 'idr',
+    minAmount: '27000',
+    symbol: 'Rp',
+    disabled: "paypal",
+    presets: {
+      single: ['270000', '140000', '70000', '40000'],
+      monthly: ['140000', '70000', '40000', '27000']
     }
   },
   'ils': {

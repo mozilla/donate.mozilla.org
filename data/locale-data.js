@@ -17,7 +17,10 @@ module.exports = {
     'mr-IN': 'inr',
     'ml-IN': 'inr',
     'gu-IN': 'inr',
-    'en-IN': 'inr'
+    'en-IN': 'inr',
+    'id': 'idr',
+    'zh-CN': 'cny',
+    'zh-TW': 'twd'
   },
   localeCountryData: {
     'de': 'DE',
@@ -37,6 +40,9 @@ module.exports = {
     'mr-IN': 'IN',
     'ml-IN': 'IN',
     'gu-IN': 'IN',
-    'en-IN': 'IN'
+    'en-IN': 'IN',
+    'id': 'ID',
+    'zh-CN': 'CN',
+    'zh-TW': 'TW'
   }
 };

@@ -114,6 +114,9 @@ module.exports = React.createClass({
     if (!this.state.showCvcHint) {
       cvcHintClassName += " hidden";
     }
+
+    var cityClassName = this.state.fullWidthCity ? 'full' : 'half';
+
     return (
       <div className={className}>
         <Header locale={this.props.locales[0]} alt={this.getIntlMessage('donate_to_mozilla')}></Header>
@@ -206,7 +209,7 @@ module.exports = React.createClass({
                   <div className="full">
                     <Address name="address"/>
                   </div>
-                  <div className="half">
+                  <div className={cityClassName}>
                     <City name="city"/>
                   </div>
                   <div className="half">

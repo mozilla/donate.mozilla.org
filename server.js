@@ -81,7 +81,7 @@ module.exports = function() {
             country: Joi.string().required(),
             address: Joi.string().allow(''),
             city: Joi.string().allow(''),
-            code: Joi.string().required(),
+            code: Joi.string().optional(),
             province: Joi.string().allow(''),
             locale: Joi.string().min(2).max(12).required(),
             signup: Joi.boolean()

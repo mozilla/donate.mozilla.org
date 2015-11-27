@@ -269,13 +269,13 @@ module.exports = function() {
       path: '/assets/{params*}',
       handler: {
         directory: {
-          path: Path.join(__dirname, 'public')
+          path: Path.join(__dirname, 'assets')
         }
       },
       config: {
         security: securityConfig,
         cache: {
-          expiresIn: 1000 * 60 * 5,
+          expiresIn: 7 * 24 * 60 * 60 * 1000, // one week
           privacy: 'public'
         }
       }

@@ -13,7 +13,7 @@ We also want to track some additional information specific to our fundraising so
 
 ### Revenue Goal Tracking
 
-[analytics.js](https://github.com/mozilla/donate.mozilla.org/blob/master/public/js/analytics.js) is loaded on all of our 'thank you' pages, after a donation is complete. In this file we look for URL parameters provided by our various payment providers to extract:
+[analytics.js](https://github.com/mozilla/donate.mozilla.org/blob/master/assets/js/analytics.js) is loaded on all of our 'thank you' pages, after a donation is complete. In this file we look for URL parameters provided by our various payment providers to extract:
 
 * `transaction id`
 * `donation amount`
@@ -52,7 +52,7 @@ e.g.
 
 * We use [Optimizely](http://optimizely.com/) to run our A/B testing experiments.
   * Optimizely tracking is [the first tag to load on all our pages](https://github.com/mozilla/donate.mozilla.org/blob/master/pages/index.jsx#L8)
-  * We fire a custom [Optimizely conversion event on our thank you pages](https://github.com/mozilla/donate.mozilla.org/blob/master/public/js/analytics.js#L121-L126)
+  * We fire a custom [Optimizely conversion event on our thank you pages](https://github.com/mozilla/donate.mozilla.org/blob/master/assets/js/analytics.js#L121-L126)
   * [Learn more about Optimizely](https://learn.optimizely.com/hc/en-us)
 
 ### Types of tests
@@ -138,4 +138,4 @@ The build script for the website checks if we have a recent snapshot, and if not
 See code for exchange rates:
 
 * https://github.com/mozilla/donate.mozilla.org/blob/master/scripts/exchangerates.js
-* https://github.com/mozilla/donate.mozilla.org/blob/master/public/js/analytics.js#L87-L113
+* https://github.com/mozilla/donate.mozilla.org/blob/master/assets/js/analytics.js#L87-L113

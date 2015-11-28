@@ -21,7 +21,6 @@ var goodConfig = {
 
 if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
   goodConfig.events = {
-    ops: '*',
     error: '*',
     request: [
       'stripe',

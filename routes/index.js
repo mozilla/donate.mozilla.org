@@ -23,7 +23,7 @@ var routes = {
       email: transaction.email,
       locale: transaction.locale
     };
-    var request_id = request.headers['X-Request-ID'];
+    var request_id = request.headers['x-request-id'];
 
     stripe.customer({
       metadata,
@@ -171,7 +171,7 @@ var routes = {
       cancelUrl: request.server.info.uri + '/',
       returnUrl: request.server.info.uri + '/api/paypal-redirect/' + frequency + '/' + transaction.locale + '/'
     };
-    var request_id = request.headers['X-Request-ID'];
+    var request_id = request.headers['x-request-id'];
     var logTags = ['paypal', 'sale'];
     function callback(err, data) {
       var paypal_request_sale_service = data.paypal_request_sale_service;
@@ -211,7 +211,7 @@ var routes = {
       locale = '/' + locale;
     }
     var frequency = request.params.frequency || 'single';
-    var request_id = request.headers['X-Request-ID'];
+    var request_id = request.headers['x-request-id'];
     if (frequency !== 'monthly') {
       paypal.getSingleCheckoutDetails({
         token: request.url.query.token

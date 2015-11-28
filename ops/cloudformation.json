@@ -77,12 +77,25 @@
           },
           "CacheBehaviors": [
             {
-              "AllowedMethods": ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"],
+              "AllowedMethods": ["GET", "HEAD", "OPTIONS"],
               "ForwardedValues": {
                 "Cookies": {
                   "Forward": "none"
                 },
                 "Headers": ["User-Agent"],
+                "QueryString": true
+              },
+              "PathPattern": "/api/polyfill.js",
+              "TargetOriginId": "appserver",
+              "ViewerProtocolPolicy": "redirect-to-https"
+            },
+            {
+              "AllowedMethods": ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"],
+              "ForwardedValues": {
+                "Cookies": {
+                  "Forward": "none"
+                },
+                "Headers": [],
                 "QueryString": true
               },
               "PathPattern": "/api/*",

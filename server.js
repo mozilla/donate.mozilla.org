@@ -209,11 +209,15 @@ module.exports = function() {
         };
         params.uaString = request.plugins.scooter.source;
         polyfillio.getPolyfillString(params).then(function(bundleString) {
-          reply(bundleString).type('application/javascript; charset=utf-8');
+          reply(bundleString).type('application/javascript; charset=utf-8').vary('User-Agent');
         });
       },
       config: {
-        security: securityConfig
+        security: securityConfig,
+        cache: {
+          expiresIn: 7 * 24 * 60 * 60 * 1000, // one week
+          privacy: 'public'
+        }
       }
     }
   ]);

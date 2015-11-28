@@ -196,7 +196,7 @@ module.exports = {
   'rub': {
     code: 'rub',
     minAmount: '100',
-    symbol: 'руб',
+    symbol: '₽',
     presets: {
       single: ['1000', '500', '250', '140'],
       monthly: ['250', '180', '120', '100']

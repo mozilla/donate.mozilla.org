@@ -172,27 +172,26 @@ var routes = {
       returnUrl: request.server.info.uri + '/api/paypal-redirect/' + frequency + '/' + transaction.locale + '/'
     };
     var request_id = request.headers['x-request-id'];
-    var logTags = ['paypal', 'sale'];
     function callback(err, data) {
       var paypal_request_sale_service = data.paypal_request_sale_service;
-      var tags = logTags.slice();
-      tags.push(frequency === 'monthly' ? 'recurring' : 'single');
+      var log_details = {
+        request_id,
+        paypal_request_sale_service
+      };
+
       if (err) {
-        tags.push('error');
-        request.log(tags, {
-          request_id,
-          paypal_request_sale_service,
-          // https://developer.paypal.com/docs/api/#errors
-          error_name: data.response.name,
-          error_message: data.response.message,
-          details: data.response.details
-        });
+        log_details.error = err.toString();
+
+        if (data.response) {
+          log_details.error_name = data.response.name;
+          log_details.error_message = data.response.message;
+          log_details.details = data.response.details;
+        }
+
+        request.log(['paypal', 'sale', 'error', frequency], log_details);
         reply(boom.wrap(err, 500, 'Paypal donation failed'));
       } else {
-        request.log(tags, {
-          request_id,
-          paypal_request_sale_service
-        });
+        request.log(['paypal', 'sale', frequency], log_details);
         reply({
           endpoint: process.env.PAYPAL_ENDPOINT,
           token: data.response.TOKEN
@@ -236,22 +235,25 @@ var routes = {
 
         paypal.completeSingleCheckout(checkoutDetails.response, function(err, data) {
           var paypal_checkout_payment_service = data.paypal_checkout_payment_service;
+          var log_details = {
+            request_id,
+            paypal_checkout_payment_service
+          };
+
           if (err) {
-            request.log(['error', 'paypal', 'checkout-payment', frequency], {
-              request_id,
-              paypal_checkout_payment_service,
-              // https://developer.paypal.com/docs/api/#errors
-              error_name: data.response.name,
-              error_message: data.response.message,
-              details: data.response.details
-            });
+            log_details.error = err.toString();
+
+            if (data.response) {
+              log_details.error_name = data.response.name;
+              log_details.error_message = data.response.message;
+              log_details.details = data.response.details;
+            }
+
+            request.log(['error', 'paypal', 'checkout-payment', frequency], log_details);
             return reply(boom.badRequest('donation failed', err));
           }
 
-          request.log(['paypal', 'checkout', frequency], {
-            request_id,
-            paypal_checkout_payment_service
-          });
+          request.log(['paypal', 'checkout', frequency], log_details);
 
           reply.redirect(`${locale}/thank-you/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
         });
@@ -261,41 +263,47 @@ var routes = {
         token: request.url.query.token
       }, function(err, checkoutDetails) {
         var paypal_checkout_details_service = checkoutDetails.paypal_checkout_details_service;
+        var log_details = {
+          request_id,
+          paypal_checkout_details_service
+        };
+
         if (err) {
-          request.log(['error', 'paypal', 'checkout-details', frequency], {
-            request_id,
-            paypal_checkout_details_service,
-            // https://developer.paypal.com/docs/api/#errors
-            error_name: checkoutDetails.response.name,
-            error_message: checkoutDetails.response.message,
-            details: checkoutDetails.response.details
-          });
+          log_details.error = err.toString();
+
+          if (checkoutDetails.response) {
+            log_details.error_name = checkoutDetails.response.name;
+            log_details.error_message = checkoutDetails.response.message;
+            log_details.details = checkoutDetails.response.details;
+          }
+
+          request.log(['error', 'paypal', 'checkout-details', frequency], log_details);
           return reply(boom.badRequest('donation failed', err));
         }
 
-        request.log(['paypal', 'checkout-details', frequency], {
-          request_id,
-          paypal_checkout_details_service
-        });
+        request.log(['paypal', 'checkout-details', frequency], log_details);
 
         paypal.completeRecurringCheckout(checkoutDetails.response, function(err, data) {
           var paypal_checkout_payment_service = data.paypal_checkout_payment_service;
+          var log_details = {
+            request_id,
+            paypal_checkout_payment_service
+          };
+
           if (err) {
-            request.log(['error', 'paypal', 'checkout-payment', frequency], {
-              request_id,
-              paypal_checkout_payment_service,
-              // https://developer.paypal.com/docs/api/#errors
-              error_name: data.response.name,
-              error_message: data.response.message,
-              details: data.response.details
-            });
+            log_details.error = err.toString();
+
+            if (data.response) {
+              log_details.error_name = data.response.name;
+              log_details.error_message = data.response.message;
+              log_details.details = data.response.details;
+            }
+
+            request.log(['error', 'paypal', 'checkout-payment', frequency], log_details);
             return reply(boom.badRequest('donation failed', err));
           }
 
-          request.log(['paypal', 'checkout', frequency], {
-            request_id,
-            paypal_checkout_payment_service
-          });
+          request.log(['paypal', 'checkout', frequency], log_details);
 
           // Create unique tx id by combining PayerID and timestamp
           var stamp = Date.now() / 100;

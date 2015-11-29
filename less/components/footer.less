@@ -1,8 +1,7 @@
 footer {
   margin-top: 40px;
   background: #fff;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding: 40px 10px;
   color: #666;
   font-size: 12px;
   .footer {
@@ -19,5 +18,21 @@ footer {
   ul {
     padding-left: 0;
     list-style: none;
+  }
+
+  @media screen and (max-width: 480px) {
+    .footer {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .full,
+    .half,
+    .third,
+    .two-third,
+    .quarter {
+      width: 100%;
+    }
   }
 }

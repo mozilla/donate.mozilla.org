@@ -138,8 +138,9 @@ module.exports = {
     if (country) {
       params += "&country=" + country;
     }
-
-    this.transitionTo('/' + this.props.locales[0] + '/' + location + '/?' + params);
+    var page = '/' + this.props.locales[0] + '/' + location + '/';
+    reactGA.pageview(page);
+    this.transitionTo(page + '?' + params);
   },
   stripeError: function(errorCode, errorType) {
     var cardErrorCodes = {
@@ -331,7 +332,9 @@ module.exports = {
     this.setState({
       submitting: false
     });
-    this.transitionTo('/' + this.props.locales[0] + '/share/');
+    var page = '/' + this.props.locales[0] + '/share/';
+    reactGA.pageview(page);
+    this.transitionTo(page);
   },
   signupError: function(result) {
     this.setState({

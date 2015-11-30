@@ -64,7 +64,6 @@ var Index = React.createClass({
           <meta name="react-comment-hack"
               dangerouslySetInnerHTML={{__html: commentIE}}>
           </meta>
-          <script async src="https://checkout.stripe.com/checkout.js"></script>
         </body>
       </html>
     );

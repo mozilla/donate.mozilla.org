@@ -91,6 +91,7 @@ var SingleForm = React.createClass({
         </div>
         <SmallPrint stripeNotice={true} />
         <Footer/>
+        <script async src="https://checkout.stripe.com/checkout.js"></script>
       </div>
     );
   }

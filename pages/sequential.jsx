@@ -249,6 +249,7 @@ module.exports = React.createClass({
         </div>
         <SmallPrint stripeNotice={!this.state.hideCreditCardDetails}/>
         <Footer/>
+        <script async src="https://js.stripe.com/v2/"></script>
       </div>
     );
   }

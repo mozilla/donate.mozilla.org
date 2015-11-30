@@ -4,9 +4,17 @@ import Header from '../components/header.jsx';
 import Social from '../components/social.jsx';
 import ThankYouHeader from '../components/thank-you-header.jsx';
 import { IntlMixin } from 'react-intl';
+import reactGA from 'react-ga';
 
 var ThankYou = React.createClass({
   mixins: [IntlMixin],
+  componentDidMount: function() {
+    // We are using `transitionTo()` in /thank-you page, so when the user
+    // finished the signup and being redirect here it doesn't get track because
+    // react-router doesn't do a full page reload from /thank-you to /share page.
+    var currentPage = window.location.pathname;
+    reactGA.pageview(currentPage);
+  },
   render: function() {
     var className = "row";
     var language = this.props.locales[0];

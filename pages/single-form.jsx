@@ -89,7 +89,7 @@ var SingleForm = React.createClass({
             {this.renderPaymentOptions()}
           </div>
         </div>
-        <SmallPrint/>
+        <SmallPrint stripeNotice={true} />
         <Footer/>
       </div>
     );

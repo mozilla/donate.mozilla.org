@@ -8,11 +8,9 @@ Mozilla donation forms
 
 ## Requirements
 
-[node](https://nodejs.org/) with [`Intl` support](https://github.com/joyent/node/wiki/Intl).  To test if you have `Intl` support:
+[node 4+](https://nodejs.org/) with [`Intl` support](https://github.com/joyent/node/wiki/Intl).  To test if you have `Intl` support run this command:
 
-```
-$> node -e "require('Intl')"
-```
+`$ node -e "console.log(typeof Intl === 'object')"`
 
 ## Setup
 

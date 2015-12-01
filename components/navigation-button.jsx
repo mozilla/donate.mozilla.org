@@ -2,17 +2,24 @@ import React from 'react';
 import {FormattedNumber} from 'react-intl';
 import dispatcher from '../scripts/dispatcher.js';
 import listener from '../scripts/listener.js';
+import form from '../scripts/form.js';
 
 var NavigationButton = React.createClass({
   propTypes: {
     activePage: React.PropTypes.number.isRequired,
-    index: React.PropTypes.number.isRequired
+    index: React.PropTypes.number.isRequired,
+    validate: React.PropTypes.array
   },
   onClick: function(e) {
-    if (this.props.activePage > this.props.index) {
-      dispatcher.fire("toPage", {
-        page: this.props.index
-      });
+    var valid;
+    var validate = this.props.validate || [];
+    if ((this.props.activePage+1) >= this.props.index) {
+      valid = form.validate(validate);
+      if (valid) {
+        dispatcher.fire("toPage", {
+          page: this.props.index
+        });
+      }
     }
   },
   render: function() {
@@ -73,7 +80,7 @@ var AmountNavigationButton = React.createClass({
   },
   render: function() {
     return (
-      <NavigationButton activePage={this.props.activePage} index={this.props.index}>
+      <NavigationButton validate={this.props.validate} activePage={this.props.activePage} index={this.props.index}>
         {this.props.children}
         <div className="page-breadcrumb">
           { this.state.amount ?
@@ -97,7 +104,7 @@ var DisplayNavigationButton = React.createClass({
   },
   render: function() {
     return (
-      <NavigationButton activePage={this.props.activePage} index={this.props.index}>
+      <NavigationButton validate={this.props.validate} activePage={this.props.activePage} index={this.props.index}>
         {this.props.children}
         <div className="page-breadcrumb">
           {this.props.display}

@@ -1,0 +1,40 @@
+&.additional-info-container {
+  .additional-info-page {
+    border-radius: 6px;
+  }
+  .additional-page {
+    height: 491px;
+  }
+  .disclaimers {
+    text-align: left;
+    max-width: 840px;
+    margin: 30px auto 0;
+    padding: 0;
+    background: transparent;
+    .other-ways-to-give,
+    .need-help,
+    .donation-notice,
+    .stripe-notice {
+      width: 100%;
+      max-width: 420px;
+      text-align: left;
+      margin-left: auto;
+    }
+  }
+  @media screen and (min-width: 840px) {
+    .additional-info-page {
+      max-width: 840px;
+    }
+    .disclaimers {
+      max-width: 840px;
+      .other-ways-to-give,
+      .need-help,
+      .donation-notice,
+      .stripe-notice {
+        max-width: 530px;
+        padding-left: 30px;
+        margin-left: 0;
+      }
+    }
+  }
+}

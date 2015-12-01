@@ -1,0 +1,64 @@
+.additional-info-container {
+  .additional-info-page {
+    margin: 0 auto;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    background: #EAEFF2;
+    .container {
+      display: inline-block;
+      text-align: left;
+    }
+    .heart-image {
+      margin-bottom: 32px;
+    }
+    .additional-page {
+      background: transparent;
+      font-size: 20px;
+      font-color: #333333;
+      line-height: 1.4;
+      height: 471px;
+    }
+    h1 {
+      height: 40px;
+      width: 148px;
+      display: inline-block;
+      margin: 0 8px 0 0;
+      img {
+        margin-bottom: -2px;
+      }
+    }
+  }
+  .disclaimers {
+    text-align: left;
+    max-width: 420px;
+    margin: 30px auto 0;
+    padding: 0;
+    .other-ways-to-give,
+    .need-help,
+    .donation-notice,
+    .stripe-notice {
+      width: 100%;
+      max-width: 530px;
+      text-align: left;
+      padding-left: 10px;
+      padding-right: 10px;
+      margin-left: 0;
+    }
+  }
+  @media screen and (min-width: 840px) {
+    .additional-info-page {
+      margin-top: 60px;
+      max-width: 840px;
+    }
+    .disclaimers {
+      max-width: 840px;
+      .other-ways-to-give,
+      .need-help,
+      .donation-notice,
+      .stripe-notice {
+        padding-left: 30px;
+      }
+    }
+  }
+}

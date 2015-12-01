@@ -70,20 +70,13 @@ var SingleForm = React.createClass({
     if (this.props.test) {
       className += " " + this.props.test;
     }
-    var alt = "Mozilla";
-
-    if (/^(en)(\b|$)/.test(this.props.locales[0])) {
-      alt = this.getIntlMessage('donate_to_mozilla');
-    }
     return (
       <div className={className}>
         <div className="additional-info-page">
           <div className="container additional-page">
             <img className="heart-image" height="131" width="143" src="/assets/images/heart.d0a32f33d389050e90d4b50423a772b5.png"/>
             <div>
-              <h1>
-                <img alt={alt} src="/assets/images/mozilla.5e83dba715a0469b92071758876f0373.svg"/>
-              </h1>
+              <img className="mozilla-watermark" src="/assets/images/mozilla.5e83dba715a0469b92071758876f0373.svg"/>
               <span>{this.getIntlMessage('additional_info')}</span>
             </div>
           </div>

@@ -4,10 +4,10 @@ var pages = {
     path: '/:locale/',
     handler: require('../pages/single-form.jsx')
   },
-  '/additional-info/': {
-    name: 'additional-info',
-    path: '/:locale/additional-info/?',
-    handler: require('../pages/additional-info.jsx')
+  '/about/': {
+    name: 'about',
+    path: '/:locale/about/?',
+    handler: require('../pages/about.jsx')
   },
   '/thank-you/': {
     name: 'thank-you',

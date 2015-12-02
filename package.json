@@ -99,7 +99,7 @@
     "scooter": "2.0.1",
     "selenium-webdriver": "2.48.2",
     "should": "7.1.1",
-    "stripe": "4.0.0",
+    "stripe": "4.1.0",
     "style-loader": "0.13.0",
     "throng": "1.0.1",
     "webpack": "1.12.9",

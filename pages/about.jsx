@@ -3,6 +3,7 @@ import Footer from '../components/footer.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SectionHeading from '../components/section-heading.jsx';
 import CurrencyDropdown from '../components/currency-dropdown.jsx';
+import {ErrorListener} from '../components/error.jsx';
 
 import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
@@ -25,6 +26,7 @@ var SingleForm = React.createClass({
           <div className="row">
             <PrivacyPolicyCheckbox name="privacyPolicy"/>
           </div>
+          <ErrorListener errors={["cardNumber", "cvc", "expMonth", "expYear"]}/>
           <StripeButton
             submit={["frequency", "amount"]}
             validate={["amount", "privacyPolicy"]}
@@ -53,6 +55,7 @@ var SingleForm = React.createClass({
           <div className="row">
             <PrivacyPolicyCheckbox name="privacyPolicy"/>
           </div>
+          <ErrorListener errors={["cardNumber", "cvc", "expMonth", "expYear"]}/>
           <SubmitButton
             submitting={this.state.submitting}
             submit={["amount", "frequency"]}

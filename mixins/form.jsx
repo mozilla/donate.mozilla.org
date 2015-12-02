@@ -260,6 +260,7 @@ module.exports = {
   stripeCheckout: function(validate, props) {
     var submit = this.submit;
     var success = this.stripeSuccess;
+    var error = this.stripeError;
     var valid = form.validate(validate);
     var submitProps= {};
     if (!valid) {
@@ -283,7 +284,6 @@ module.exports = {
       billingAddress: true,
       locale: locale,
       token: function(response) {
-        // Where is this things error? Maybe it's not called at all for an error case.
         submit("/api/stripe-checkout", {
           frequency: submitProps.frequency,
           amount: submitProps.amount,
@@ -297,7 +297,13 @@ module.exports = {
           city: response.card.address_city,
           code: response.card.address_zip,
           description: description
-        }, success);
+        }, success, function(response) {
+          if (response.stripe) {
+            error(response.stripe.code, response.stripe.rawType);
+          } else {
+            error(response.statusCode, response.error);
+          }
+        });
       }
     });
 

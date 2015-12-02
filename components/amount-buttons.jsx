@@ -232,23 +232,34 @@ var AmountButtons = React.createClass({
       }
     }
   },
+  onCurrencyChange: function(value) {
+    this.setState({
+      currency: value
+    });
+    if (this.state.frequency) {
+      form.updateState("presets", value.presets[this.state.frequency]);
+    }
+    form.updateField("amount", "");
+  },
+  onPresetsChange: function(value) {
+    var selectedIndex = this.state.presets.indexOf(this.state.amount);
+    var newAmount = value[selectedIndex];
+    this.setState({
+      presets: value
+    });
+    if (newAmount) {
+      form.updateField("amount", newAmount);
+    }
+  },
   onStateUpdated: function(e) {
     var detail = e.detail;
     var state = detail.state;
     var value = detail.value;
     if (state === "currency") {
-      this.setState({
-        currency: value
-      });
-      if (this.state.frequency) {
-        form.updateState("presets", value.presets[this.state.frequency]);
-      }
-      form.updateField("amount", "");
+      this.onCurrencyChange(value);
     }
     if (state === "presets") {
-      this.setState({
-        presets: value
-      });
+      this.onPresetsChange(value);
     }
   },
   render: function() {

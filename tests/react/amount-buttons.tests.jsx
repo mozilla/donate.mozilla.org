@@ -147,4 +147,48 @@ describe('amount-buttons.jsx', function() {
   numberFormatTest('en-US', '110.504', '110504');
   numberFormatTest('pt-BR', '110,504', '110504');
   numberFormatTest('pt-BR', '110.504', '110504');
+  it('switching presets should keep preset position', function() {
+    should.doesNotThrow(() => {
+      var TestInput = stubContext(AmountButtons, IntlContext);
+      var Page = React.createElement(stubContext(TestInput, IntlContext),{
+        locales: ["pt-BR"],
+        name: "test"
+      });
+      var Document = TestUtils.renderIntoDocument(Page);
+
+      form.updateState('presets', ['1', '2', '3', '4']);
+      form.updateField('amount', '1');
+      function onFieldUpdated(e) {
+        var detail = e.detail;
+        var value = detail.value;
+        if (detail.field === "amount") {
+          listener.off('fieldUpdated', onFieldUpdated);
+          React.unmountComponentAtNode(Document.getDOMNode().parentNode);
+          should(value).equal('2');
+        }
+      }
+      listener.on('fieldUpdated', onFieldUpdated);
+      form.updateState('presets', ['2', '3', '4', '5']);
+    });
+  });
+  it('switching presets should keep other amount', function() {
+    should.doesNotThrow(() => {
+      var TestInput = stubContext(AmountButtons, IntlContext);
+      var Page = React.createElement(stubContext(TestInput, IntlContext),{
+        locales: ["pt-BR"],
+        name: "test"
+      });
+      var Document = TestUtils.renderIntoDocument(Page);
+
+      form.updateState('presets', ['1', '2', '3', '4']);
+
+      var testElement = Document.getDOMNode().querySelector('#amount-other-input');
+      form.updateField('amount', '5');
+      TestUtils.Simulate.change(testElement);
+      form.updateState('presets', ['2', '3', '4', '5']);
+      var value = testElement.value;
+      React.unmountComponentAtNode(Document.getDOMNode().parentNode);
+      should(value).equal('5');
+    });
+  });
 });

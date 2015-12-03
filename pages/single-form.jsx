@@ -87,7 +87,7 @@ var SingleForm = React.createClass({
             </h2>
           </SectionHeading>
           <AmountButtons name="amount" locale={this.props.locales[0]}/>
-          <Frequency name="frequency"/>
+          <Frequency locale={this.props.locales[0]} name="frequency"/>
           <div className="payment-section">
             {this.renderPaymentOptions()}
           </div>

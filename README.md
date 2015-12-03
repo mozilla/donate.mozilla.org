@@ -37,6 +37,7 @@ $> npm start
 - [Query Strings](docs/Query_Strings.md)
 - [Localization](docs/Localization.md)
 - [Tests](docs/Tests.md)
+- [Hashing](docs/Hashing.md)
 
 ## Environment Variables
 

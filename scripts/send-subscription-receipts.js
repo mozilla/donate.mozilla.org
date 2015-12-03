@@ -2,7 +2,7 @@
 
 require('habitat').load();
 
-var stripe = require('stripe')(process.env.STRIPE_API_KEY);
+var stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 var hatchet = require('hatchet');
 var async = require('async');
 var moment = require('moment');
@@ -11,17 +11,21 @@ var stripe_charge_list_opts = {
   created: {
     lte: moment.unix(new Date(process.env.BEFORE_DATE)).valueOf()
   },
-  limit: 100
+  limit: 100,
+  expand: ['data.customer']
 };
 
 var charges;
 
 function process_charge_data(charge, done) {
-  if (!charge.invoice) {
+  if (!charge.invoice || !charge.paid) {
     return done();
   }
 
   console.info(`Sending receipt for charge ${charge.id}`);
+
+  // jlolbuck
+  charge.customer_object = charge.customer;
 
   hatchet.send('stripe_charge_succeeded', charge, function(err, data) {
     if (err) {
@@ -54,7 +58,8 @@ async.doWhilst(function(done) {
     console.info('Fetching next page of charges...');
     stripe_charge_list_opts = {
       starting_after: charges.data[charges.data.length - 1].id,
-      limit: 100
+      limit: 100,
+      expand: ['data.customer']
     }
   }
   return charges.has_more;

@@ -18,7 +18,7 @@ var stripe_charge_list_opts = {
 var charges;
 
 function process_charge_data(charge, done) {
-  if (!charge.invoice || !charge.paid) {
+  if (!charge.invoice || !charge.paid || charge.refunded) {
     return done();
   }
 

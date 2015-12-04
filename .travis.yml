@@ -1,9 +1,6 @@
 language: node_js
 node_js:
-- '4'
-matrix:
-  allow_failures:
-  - node_js: 'iojs'
+- '4.2.3'
 sudo: false
 cache:
   directories:

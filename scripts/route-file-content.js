@@ -53,6 +53,8 @@ module.exports = function(outputPath, callback) {
       fs.writeFile(nameOfTheFile, contentOfTheFile, function(err) {
         callback(err, nameOfTheFile);
       });
+    }).catch(function(e) {
+      console.log(e);
     });
   });
 };

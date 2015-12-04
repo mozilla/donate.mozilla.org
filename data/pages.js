@@ -2,7 +2,7 @@ var pages = {
   '/': {
     name: 'one-page',
     path: '/:locale/',
-    handler: require('../pages/single-form.jsx')
+    handler: require('../pages/one-page.jsx')
   },
   '/about/': {
     name: 'about',

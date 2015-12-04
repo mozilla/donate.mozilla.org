@@ -1,3 +1,4 @@
+import React from 'react';
 import reactGA from 'react-ga';
 import {Navigation} from 'react-router';
 import amountModifier from '../scripts/amount-modifier';
@@ -7,6 +8,14 @@ import form from '../scripts/form.js';
 
 module.exports = {
   mixins: [Navigation],
+  propTypes: {
+    currency: React.PropTypes.object,
+    presets: React.PropTypes.array,
+    amount: React.PropTypes.string,
+    frequency: React.PropTypes.string,
+    country: React.PropTypes.string.isRequired,
+    locales: React.PropTypes.array.isRequired
+  },
   getInitialState: function() {
     return {
       paymentType: "",

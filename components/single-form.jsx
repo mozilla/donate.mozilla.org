@@ -1,7 +1,4 @@
 import React from 'react';
-import Footer from '../components/footer.jsx';
-import Header from '../components/header.jsx';
-import SmallPrint from '../components/small-print.jsx';
 import SectionHeading from '../components/section-heading.jsx';
 import CurrencyDropdown from '../components/currency-dropdown.jsx';
 import {ErrorListener} from '../components/error.jsx';
@@ -14,8 +11,14 @@ import SubmitButton from '../components/submit-button.jsx';
 import DonateButton from '../components/donate-button.jsx';
 import {PrivacyPolicyCheckbox} from '../components/checkbox.jsx';
 
-var SingleForm = React.createClass({
+module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],
+  propTypes: {
+    currency: React.PropTypes.object.isRequired,
+    presets: React.PropTypes.array.isRequired,
+    amount: React.PropTypes.string.isRequired,
+    frequency: React.PropTypes.string.isRequired
+  },
   renderPaymentOptions: function() {
     if (!this.state.currency.disabled) {
       return (
@@ -70,33 +73,22 @@ var SingleForm = React.createClass({
     }
   },
   render: function() {
-    var className = "row new-flow-test";
-    if (this.props.test) {
-      className += " " + this.props.test;
-    }
     return (
-      <div className={className}>
-        <Header locale={this.props.locales[0]} alt={this.getIntlMessage('donate_to_mozilla')}></Header>
-        <div className="container">
-          <SectionHeading>
-            <h2>
-              {this.getIntlMessage("donate_now")}
-              <span className="right">
-                <CurrencyDropdown/>
-              </span>
-            </h2>
-          </SectionHeading>
-          <AmountButtons name="amount" locale={this.props.locales[0]}/>
-          <Frequency locale={this.props.locales[0]} name="frequency"/>
-          <div className="payment-section">
-            {this.renderPaymentOptions()}
-          </div>
+      <div className="container">
+        <SectionHeading>
+          <h2>
+            {this.getIntlMessage("donate_now")}
+            <span className="right">
+              <CurrencyDropdown/>
+            </span>
+          </h2>
+        </SectionHeading>
+        <AmountButtons name="amount" locale={this.props.locales[0]}/>
+        <Frequency name="frequency"/>
+        <div className="payment-section">
+          {this.renderPaymentOptions()}
         </div>
-        <SmallPrint stripeNotice={true} />
-        <Footer/>
       </div>
     );
   }
 });
-
-module.exports = SingleForm;

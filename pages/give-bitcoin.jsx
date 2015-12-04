@@ -7,7 +7,7 @@ var giveBitcoin = React.createClass({
   mixins: [IntlMixin],
   render: function() {
     return (
-      <div className="coinbase-page row">
+      <div className="coinbase-page row new-flow-test">
         <Header>
           <h2>{this.getIntlMessage('help_protect_the_web')}</h2>
         </Header>

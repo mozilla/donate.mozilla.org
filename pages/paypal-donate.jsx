@@ -103,7 +103,7 @@ var simplePaypal = React.createClass({
     }
   },
   render: function() {
-    var className = "row";
+    var className = "row new-flow-test";
     if (this.props.test) {
       className += " " + this.props.test;
     }

@@ -11,6 +11,7 @@ if (process.env.NEW_RELIC_ENABLED === 'true') {
 
 var Path = require('path');
 var Hapi = require('hapi');
+var Hoek = require('hoek');
 var Joi = require('joi');
 var polyfillio = require('polyfill-service');
 var PolyfillSet = require('./scripts/PolyfillSet.js');
@@ -38,8 +39,8 @@ if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
   };
 }
 
-module.exports = function() {
-  var server = new Hapi.Server({
+module.exports = function(options) {
+  var serverOptions = Hoek.applyToDefaults({
     connections: {
       routes: {
         security: {
@@ -55,7 +56,10 @@ module.exports = function() {
         }
       }
     }
-  });
+  }, options);
+
+  var server = new Hapi.Server(serverOptions);
+
   server.connection({
     host: process.env.HOST,
     port: process.env.PORT,
@@ -263,9 +267,7 @@ module.exports = function() {
 
     // We have these routes specifically for production where it's possible that
     // a CDN index.html may refer to an outdated CSS/JS file that doesn't exist
-    if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
-      server.route(require('./lib/hashed-file-routes')());
-    }
+    server.route(require('./lib/hashed-file-routes')());
 
     server.route([{
       method: 'GET',

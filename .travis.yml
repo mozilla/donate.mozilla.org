@@ -1,12 +1,14 @@
 language: node_js
 node_js:
-- '4.2.3'
+- 4.2.3
 sudo: false
 cache:
   directories:
   - node_modules
 env:
-- APPLICATION_URI="http:\/\/example.com"
+  global:
+  - APPLICATION_URI="http:\/\/example.com"
+  - OPENEXCHANGERATES_KEY="33b336365601488e82c53c486d857a21"
 before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start

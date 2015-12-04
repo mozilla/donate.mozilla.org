@@ -103,7 +103,7 @@ module.exports = React.createClass({
   },
   render: function() {
     var creditCardDetailsClassName = "row credit-card-section";
-    var className = "row";
+    var className = "row new-flow-test";
     if (this.props.test) {
       className += " " + this.props.test;
     }

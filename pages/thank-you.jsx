@@ -18,7 +18,7 @@ var ThankYou = React.createClass({
     analytics();
   },
   render: function() {
-    var className = "row";
+    var className = "row new-flow-test";
     var locale = this.props.locales[0];
     var signUpOrSocial = (<Social language={locale}/>);
     if (this.props.params && /^(en|de)(\b|$)/.test(locale)) {

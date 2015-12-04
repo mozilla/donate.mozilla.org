@@ -69,7 +69,7 @@ var SingleForm = React.createClass({
     }
   },
   render: function() {
-    var className = "row additional-info-container";
+    var className = "row additional-info-container new-flow-test";
     if (this.props.test) {
       className += " " + this.props.test;
     }

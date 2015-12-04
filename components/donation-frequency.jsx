@@ -56,13 +56,13 @@ module.exports = React.createClass({
     return (
       <div>
         <div className="row donation-frequency">
-          <div className="half">
+          <div className="frequency-radio">
             <input name="recurring_acknowledge" checked={frequency !== "monthly"}
               onChange={this.onChange} type="radio" value="single" id="one-time-payment"
             />
             <label htmlFor="one-time-payment" className="medium-label-size">{this.getIntlMessage('one_time')}</label>
           </div>
-          <div className="half">
+          <div className="frequency-radio">
             <input name="recurring_acknowledge" checked={frequency === "monthly"}
               onChange={this.onChange} type="radio" value="monthly" id="monthly-payment"
             />

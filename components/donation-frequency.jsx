@@ -1,11 +1,13 @@
 import React from 'react';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
+import helpsImageData from '../data/helps-image-data.js';
 
 module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin],
   propTypes: {
-    name: React.PropTypes.string.isRequired
+    name: React.PropTypes.string.isRequired,
+    locale: React.PropTypes.string
   },
   getInitialState: function() {
     return {
@@ -37,6 +39,18 @@ module.exports = React.createClass({
   validate: function() {
     return true;
   },
+  renderArrow: function() {
+    var locale = this.props.locale;
+    var fileName = helpsImageData[locale];
+    if (fileName && this.state.frequency !== "monthly") {
+      return (
+        <img width="250" height="73" className="this-really-helps-img" src={"/assets/images/" + fileName}/>
+      );
+    }
+    return (
+      <span></span>
+    );
+  },
   render: function() {
     var frequency = this.state.frequency;
     return (
@@ -55,8 +69,8 @@ module.exports = React.createClass({
             <label htmlFor="monthly-payment" className="medium-label-size">{this.getIntlMessage('monthly')}</label>
           </div>
         </div>
+        {this.renderArrow()}
       </div>
     );
   }
-
 });

@@ -44,8 +44,8 @@ Stripe.plans.list({
 
   var plans_to_update = currencies.filter(function(currency) {
     return !!stripe_plans[currency] &&
-           ( stripe_plans[currency].name != local_plans[currency].name ||
-           stripe_plans[currency].statement_descriptor != local_plans[currency].statement_descriptor);
+           ( stripe_plans[currency].name !== local_plans[currency].name ||
+           stripe_plans[currency].statement_descriptor !== local_plans[currency].statement_descriptor);
   }).map(function(currency) {
     return {
       id: currency,

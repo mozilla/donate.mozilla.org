@@ -106,7 +106,8 @@
     "whatwg-fetch": "0.10.1"
   },
   "devDependencies": {
-    "aws-sdk": "2.2.20"
+    "aws-sdk": "2.2.20",
+    "moment": "2.10.6"
   },
   "engines": {
     "node": "4.2.3"

@@ -49,7 +49,7 @@
     "blankie": "1.1.1",
     "boom": "3.0.0",
     "buffer": "3.4.3",
-    "cross-spawn": "2.0.0",
+    "cross-spawn": "2.1.0",
     "css-loader": "0.22.0",
     "dependency-check": "2.5.1",
     "enhanced-require": "0.5.0-beta6",

@@ -48,7 +48,7 @@
     "babel-preset-react": "6.1.18",
     "blankie": "1.1.1",
     "boom": "3.0.0",
-    "buffer": "3.4.3",
+    "buffer": "3.5.4",
     "cross-spawn": "2.0.0",
     "css-loader": "0.22.0",
     "dependency-check": "2.5.1",

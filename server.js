@@ -39,24 +39,28 @@ if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
 }
 
 module.exports = function() {
-  var server = new Hapi.Server();
+  var server = new Hapi.Server({
+    connections: {
+      routes: {
+        security: {
+          hsts: {
+            maxAge: 15768000,
+            includeSubDomains: true,
+            preload: true
+          },
+          xframe: process.env.ENABLE_XFRAMEOPTIONS === 'true',
+          xss: true,
+          noOpen: true,
+          noSniff: true
+        }
+      }
+    }
+  });
   server.connection({
     host: process.env.HOST,
     port: process.env.PORT,
     uri: process.env.APPLICATION_URI
   });
-
-  var securityConfig = {
-    hsts: {
-      maxAge: 15768000,
-      includeSubDomains: true,
-      preload: true
-    },
-    xframe: process.env.ENABLE_XFRAMEOPTIONS === 'true',
-    xss: true,
-    noOpen: true,
-    noSniff: true
-  };
 
   server.route([
     {
@@ -68,7 +72,6 @@ module.exports = function() {
           maxBytes: 32000,
           allow: 'application/json'
         },
-        security: securityConfig,
         validate: {
           payload: {
             locale: Joi.string().min(2).max(12).required(),
@@ -89,7 +92,6 @@ module.exports = function() {
           maxBytes: 32000,
           allow: 'application/json'
         },
-        security: securityConfig,
         validate: {
           payload: {
             currency: Joi.string().min(3).max(3).required(),
@@ -131,7 +133,6 @@ module.exports = function() {
           maxBytes: 32000,
           allow: 'application/json'
         },
-        security: securityConfig,
         validate: {
           payload: {
             currency: Joi.string().min(3).max(3).required(),
@@ -170,7 +171,6 @@ module.exports = function() {
           maxBytes: 32000,
           allow: 'application/json'
         },
-        security: securityConfig,
         validate: {
           payload: {
             frequency: Joi.string().min(6).max(7).required(),
@@ -190,10 +190,7 @@ module.exports = function() {
     }, {
       method: 'GET',
       path: '/api/paypal-redirect/{frequency}/{locale}/',
-      handler: routes['paypal-redirect'],
-      config: {
-        security: securityConfig
-      }
+      handler: routes['paypal-redirect']
     }, {
       method: 'GET',
       path: '/api/polyfill.js',
@@ -213,7 +210,6 @@ module.exports = function() {
         });
       },
       config: {
-        security: securityConfig,
         cache: {
           expiresIn: 7 * 24 * 60 * 60 * 1000, // one week
           privacy: 'public'
@@ -267,7 +263,7 @@ module.exports = function() {
     // We have these routes specifically for production where it's possible that
     // a CDN index.html may refer to an outdated CSS/JS file that doesn't exist
     if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
-      server.route(require('./lib/hashed-file-routes')(securityConfig));
+      server.route(require('./lib/hashed-file-routes')());
     }
 
     server.route([{
@@ -279,7 +275,6 @@ module.exports = function() {
         }
       },
       config: {
-        security: securityConfig,
         cache: {
           expiresIn: 1000 * 60 * 5,
           privacy: 'public'
@@ -294,7 +289,6 @@ module.exports = function() {
         }
       },
       config: {
-        security: securityConfig,
         cache: {
           expiresIn: 7 * 24 * 60 * 60 * 1000, // one week
           privacy: 'public'

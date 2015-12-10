@@ -79,21 +79,20 @@ function doExpressCheckoutPayment(checkoutDetails, recurring, callback) {
     USER: process.env.PAYPAL_USER,
     PWD: process.env.PAYPAL_PWD,
     SIGNATURE: process.env.PAYPAL_SIGNATURE,
-    METHOD: 'DoExpressCheckoutPayment',
     VERSION: '106.0',
     TOKEN: checkoutDetails.TOKEN,
     PAYERID: checkoutDetails.PAYERID
   };
   if (recurring) {
+    details.METHOD = 'CreateRecurringPaymentsProfile';
     details.DESC = checkoutDetails.DESC;
     details.PROFILESTARTDATE = checkoutDetails.TIMESTAMP;
     details.BILLINGPERIOD = 'Month';
     details.BILLINGFREQUENCY = '12';
     details.AMT = checkoutDetails.AMT;
-    details.INITAMT = checkoutDetails.AMT;
     details.CURRENCYCODE = checkoutDetails.CURRENCYCODE;
-    details.PAYMENTACTION = 'Sale';
   } else {
+    METHOD: 'DoExpressCheckoutPayment',
     details.PAYMENTREQUEST_0_AMT = checkoutDetails.PAYMENTREQUEST_0_AMT;
     details.PAYMENTREQUEST_0_CURRENCYCODE = checkoutDetails.CURRENCYCODE;
   }

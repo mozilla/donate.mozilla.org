@@ -86,6 +86,7 @@ function doExpressCheckoutPayment(checkoutDetails, recurring, callback) {
   if (recurring) {
     details.METHOD = 'CreateRecurringPaymentsProfile';
     details.DESC = checkoutDetails.DESC;
+    details.MAXFAILEDPAYMENTS = '3';
     details.PROFILESTARTDATE = checkoutDetails.TIMESTAMP;
     details.BILLINGPERIOD = 'Month';
     details.BILLINGFREQUENCY = '1';

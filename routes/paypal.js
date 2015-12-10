@@ -92,7 +92,7 @@ function doExpressCheckoutPayment(checkoutDetails, recurring, callback) {
     details.AMT = checkoutDetails.AMT;
     details.CURRENCYCODE = checkoutDetails.CURRENCYCODE;
   } else {
-    METHOD: 'DoExpressCheckoutPayment',
+    details.METHOD = 'DoExpressCheckoutPayment';
     details.PAYMENTREQUEST_0_AMT = checkoutDetails.PAYMENTREQUEST_0_AMT;
     details.PAYMENTREQUEST_0_CURRENCYCODE = checkoutDetails.CURRENCYCODE;
   }

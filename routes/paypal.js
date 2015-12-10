@@ -88,7 +88,7 @@ function doExpressCheckoutPayment(checkoutDetails, recurring, callback) {
     details.DESC = checkoutDetails.DESC;
     details.PROFILESTARTDATE = checkoutDetails.TIMESTAMP;
     details.BILLINGPERIOD = 'Month';
-    details.BILLINGFREQUENCY = '12';
+    details.BILLINGFREQUENCY = '1';
     details.AMT = checkoutDetails.AMT;
     details.CURRENCYCODE = checkoutDetails.CURRENCYCODE;
   } else {

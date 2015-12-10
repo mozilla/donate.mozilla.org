@@ -291,7 +291,7 @@ var routes = {
           };
 
           if (err) {
-            log_details.error = err.toString();
+            log_details.error = err;
 
             if (data.response) {
               log_details.error_name = data.response.name;
@@ -300,7 +300,7 @@ var routes = {
             }
 
             request.log(['error', 'paypal', 'checkout-payment', frequency], log_details);
-            return reply(boom.badRequest('donation failed', err));
+            return reply(boom.wrap(err));
           }
 
           request.log(['paypal', 'checkout', frequency], log_details);

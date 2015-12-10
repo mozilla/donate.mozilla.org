@@ -1,3 +1,4 @@
+var Boom = require('boom');
 var request = require('request');
 var querystring = require('querystring');
 var paypalLocales = require('../intl-config.js').paypalLocales;
@@ -91,10 +92,12 @@ function doExpressCheckoutPayment(checkoutDetails, recurring, callback) {
     details.AMT = checkoutDetails.AMT;
     details.INITAMT = checkoutDetails.AMT;
     details.CURRENCYCODE = checkoutDetails.CURRENCYCODE;
+    details.PAYMENTACTION = 'Sale';
   } else {
     details.PAYMENTREQUEST_0_AMT = checkoutDetails.PAYMENTREQUEST_0_AMT;
     details.PAYMENTREQUEST_0_CURRENCYCODE = checkoutDetails.CURRENCYCODE;
   }
+
   httpRequest({
     url: process.env.PAYPAL_API_ENDPOINT,
     method: 'POST',
@@ -107,6 +110,16 @@ function doExpressCheckoutPayment(checkoutDetails, recurring, callback) {
       });
     }
     var txn = querystring.parse(body);
+
+    if (txn.ACK !== 'Success') {
+      return callback(Boom.badImplementation(txn.L_SHORTMESSAGE0, {
+        error_code: txn.L_ERRORCODE0,
+        error_message: txn.L_LONGMESSAGE0
+      }), {
+        paypal_checkout_payment_service
+      });
+    }
+
     txn.CURRENCYCODE = checkoutDetails.CURRENCYCODE;
     if (recurring) {
       txn.AMT = checkoutDetails.AMT;

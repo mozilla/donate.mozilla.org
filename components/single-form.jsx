@@ -19,8 +19,23 @@ module.exports = React.createClass({
     amount: React.PropTypes.string.isRequired,
     frequency: React.PropTypes.string.isRequired
   },
-  stripeCheckoutTest: function(validate, submit) {
+  checkMonthlyStripePopup: function(validate, submit) {
+    if (this.props.displayMonthlyPopup) {
+      this.props.displayMonthlyPopup(function() {
+        this.stripeCheckout(validate, submit, this.props.billingAddress);
+      });
+      return;
+    }
     this.stripeCheckout(validate, submit, this.props.billingAddress);
+  },
+  checkMonthlyPaypalPopup: function(validate, submit) {
+    if (this.props.displayMonthlyPopup) {
+      this.props.displayMonthlyPopup(function() {
+        this.paypal(validate, submit);
+      });
+      return;
+    }
+    this.paypal(validate, submit);
   },
   renderPaymentOptions: function() {
     if (!this.state.currency.disabled) {
@@ -39,14 +54,14 @@ module.exports = React.createClass({
               name="payment-type-test"
               submit={["frequency-test", "amount"]}
               validate={["amount", "privacyPolicy"]}
-              onSubmit={this.stripeCheckoutTest}
+              onSubmit={this.checkMonthlyStripePopup}
             />
             <PayPalButton
               name="payment-type-test"
               submitting={this.state.submitting}
               submit={["frequency-test", "amount"]}
               validate={["amount", "privacyPolicy"]}
-              onSubmit={this.paypal}
+              onSubmit={this.checkMonthlyPaypalPopup}
             />
           </div>
           <div className="frequency-move-baseline">
@@ -54,14 +69,14 @@ module.exports = React.createClass({
               name="payment-type"
               submit={["frequency", "amount"]}
               validate={["amount", "privacyPolicy"]}
-              onSubmit={this.stripeCheckoutTest}
+              onSubmit={this.checkMonthlyStripePopup}
             />
             <PayPalButton
               name="payment-type"
               submitting={this.state.submitting}
               submit={["frequency", "amount"]}
               validate={["amount", "privacyPolicy"]}
-              onSubmit={this.paypal}
+              onSubmit={this.checkMonthlyPaypalPopup}
             />
           </div>
         </span>
@@ -87,7 +102,7 @@ module.exports = React.createClass({
               submitting={this.state.submitting}
               submit={["amount", "frequency"]}
               validate={["amount", "privacyPolicy"]}
-              onSubmit={this.stripeCheckoutTest}
+              onSubmit={this.checkMonthlyStripePopup}
             >
               <DonateButton currency={this.state.currency}/>
             </SubmitButton>
@@ -97,7 +112,7 @@ module.exports = React.createClass({
               submitting={this.state.submitting}
               submit={["amount", "frequency-test"]}
               validate={["amount", "privacyPolicy"]}
-              onSubmit={this.stripeCheckoutTest}
+              onSubmit={this.checkMonthlyStripePopup}
             >
               <DonateButton currency={this.state.currency}/>
             </SubmitButton>

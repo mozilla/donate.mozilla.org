@@ -23,7 +23,6 @@ var Form = React.createClass({
           <div className="wrap">
             <div className="row">
               <Email name="email"/>
-              <input type="hidden" name="newsletters" value="mozilla-foundation"/>
               <div className="full country-signup">
                 <Country name="country"/>
               </div>

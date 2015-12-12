@@ -8,7 +8,7 @@ module.exports = function(transaction, callback) {
     form: {
       format: 'html',
       lang: transaction.locale,
-      newsletters: transaction.newsletters,
+      newsletters: 'mozilla-foundation',
       trigger_welcome: 'N',
       source_url: 'https://donate.mozilla.org/',
       email: transaction.email,

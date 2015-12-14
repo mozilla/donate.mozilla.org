@@ -99,7 +99,7 @@ module.exports = function(options) {
         },
         validate: {
           payload: {
-            currency: Joi.any().valid(currencyFor.stripe),
+            currency: Joi.any().valid(currencyFor.stripe).required(),
             amount: Joi.number().required(),
             frequency: Joi.string().min(6).max(7).required(),
             stripeToken: [Joi.string().required(), Joi.number().required()],
@@ -120,7 +120,7 @@ module.exports = function(options) {
           schema: {
             id: Joi.string(),
             frequency: Joi.string().valid("monthly", "one-time"),
-            currency: Joi.string().min(3).max(3),
+            currency: Joi.any().valid(currencyFor.stripe).required(),
             quantity: Joi.number(),
             amount: Joi.number(),
             signup: Joi.boolean(),
@@ -140,7 +140,7 @@ module.exports = function(options) {
         },
         validate: {
           payload: {
-            currency: Joi.any().valid(currencyFor.stripe),
+            currency: Joi.any().valid(currencyFor.stripe).required(),
             amount: Joi.number().required(),
             frequency: Joi.string().min(6).max(7).required(),
             stripeToken: [Joi.string().required(), Joi.number().required()],
@@ -158,7 +158,7 @@ module.exports = function(options) {
           schema: {
             id: Joi.string(),
             frequency: Joi.string().valid("monthly", "one-time"),
-            currency: Joi.string().min(3).max(3),
+            currency: Joi.any().valid(currencyFor.stripe).required(),
             quantity: Joi.number(),
             amount: Joi.number(),
             signup: Joi.boolean(),
@@ -182,7 +182,7 @@ module.exports = function(options) {
             description: Joi.string().required(),
             amount: Joi.number().required(),
             locale: Joi.string().min(2).max(12).required(),
-            currency: Joi.any().valid(currencyFor.paypal)
+            currency: Joi.any().valid(currencyFor.paypal).required()
           }
         },
         response: {

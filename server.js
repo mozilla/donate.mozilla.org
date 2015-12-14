@@ -19,6 +19,7 @@ var routes = require('./routes');
 var goodConfig = {
   reporter: require('good-console-logfmt')
 };
+var currencyFor = require('./lib/currency-for.js');
 
 if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
   goodConfig.events = {
@@ -98,7 +99,7 @@ module.exports = function(options) {
         },
         validate: {
           payload: {
-            currency: Joi.string().min(3).max(3).required(),
+            currency: Joi.any().valid(currencyFor.stripe),
             amount: Joi.number().required(),
             frequency: Joi.string().min(6).max(7).required(),
             stripeToken: [Joi.string().required(), Joi.number().required()],
@@ -139,7 +140,7 @@ module.exports = function(options) {
         },
         validate: {
           payload: {
-            currency: Joi.string().min(3).max(3).required(),
+            currency: Joi.any().valid(currencyFor.stripe),
             amount: Joi.number().required(),
             frequency: Joi.string().min(6).max(7).required(),
             stripeToken: [Joi.string().required(), Joi.number().required()],
@@ -181,7 +182,7 @@ module.exports = function(options) {
             description: Joi.string().required(),
             amount: Joi.number().required(),
             locale: Joi.string().min(2).max(12).required(),
-            currency: Joi.string().min(1).max(4).required()
+            currency: Joi.any().valid(currencyFor.paypal)
           }
         },
         response: {

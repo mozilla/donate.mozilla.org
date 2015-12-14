@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from '../components/footer.jsx';
 import Header from '../components/header.jsx';
-import { IntlMixin } from 'react-intl';
+import { IntlMixin, FormattedHTMLMessage } from 'react-intl';
 import assign from 'react/lib/Object.assign';
 
 var divStyle = {
@@ -59,7 +59,7 @@ module.exports = React.createClass({
         </Header>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy01.png" />
-          <h2 style={textStyle}>{heart.red} the web?</h2>
+          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} message={this.getIntlMessage('red_heart_the_web')}/></h2>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy02.png" />
@@ -67,7 +67,7 @@ module.exports = React.createClass({
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy03.png" />
-          <h2 style={textStyle}>{heart.darkRed} the web?</h2>
+          <h2 style={textStyle}><FormattedHTMLMessage darkRedHeart={heart.darkRed} message={this.getIntlMessage('darkRed_heart_the_web')}/></h2>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy04.png" />
@@ -78,7 +78,7 @@ module.exports = React.createClass({
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy05.png" />
-          <h2 style={textStyle}>{heart.red} mozilla?</h2>
+          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} message={this.getIntlMessage('red_heart_mozilla')}/></h2>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy06.png" />
@@ -86,7 +86,7 @@ module.exports = React.createClass({
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy07.png" />
-          <h2 style={textStyle}>{heart.red} mozilla?</h2>
+          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} message={this.getIntlMessage('red_heart_mozilla')}/></h2>
           <div style={btn}>
             {donateNow}
           </div>
@@ -97,7 +97,7 @@ module.exports = React.createClass({
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy09.png" />
-          <h2 style={rolloverStyle}>Support Mozilla</h2>
+          <h2 style={rolloverStyle}>{this.getIntlMessage('support_mozilla')}</h2>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy10.png" />

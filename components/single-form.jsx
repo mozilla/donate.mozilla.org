@@ -35,11 +35,13 @@ module.exports = React.createClass({
           </div>
           <ErrorListener errors={["cardNumber", "cvc", "expMonth", "expYear"]}/>
           <StripeButton
+            name="payment-type"
             submit={["frequency", "amount"]}
             validate={["amount", "privacyPolicy"]}
             onSubmit={this.stripeCheckoutTest}
           />
           <PayPalButton
+            name="payment-type"
             submitting={this.state.submitting}
             submit={["frequency", "amount"]}
             validate={["amount", "privacyPolicy"]}
@@ -95,3 +97,4 @@ module.exports = React.createClass({
     );
   }
 });
+

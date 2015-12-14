@@ -2,7 +2,7 @@ module.exports = function(driver, By, done) {
   driver.get('http://localhost:3000/en-US/');
   driver.findElement(By.id('amount-other-input')).sendKeys('10');
   driver.findElement(By.id('privacy-policy-checkbox')).click();
-  driver.findElement(By.id('payment-cc-label')).click();
+  driver.findElement(By.css('.payment-cc-label')).click();
 
   driver.switchTo().frame(driver.findElement(By.css(".stripe_checkout_app")));
   var windowHandle = driver.getWindowHandle();
@@ -54,7 +54,7 @@ module.exports = function(driver, By, done) {
   driver.get('http://localhost:3000/en-US/?billingAddress=partial');
   driver.findElement(By.id('amount-other-input')).sendKeys('10');
   driver.findElement(By.id('privacy-policy-checkbox')).click();
-  driver.findElement(By.id('payment-cc-label')).click();
+  driver.findElement(By.css('.payment-cc-label')).click();
 
   driver.switchTo().frame(driver.findElement(By.css(".stripe_checkout_app")));
   windowHandle = driver.getWindowHandle();

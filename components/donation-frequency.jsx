@@ -53,20 +53,23 @@ module.exports = React.createClass({
   },
   render: function() {
     var frequency = this.state.frequency;
+    var onTimeId = "one-time-payment-" + this.props.name;
+    var monthlyId = "monthly-payment-" + this.props.name;
+    var inputName = "recurring_acknowledge-" + this.props.name;
     return (
       <div>
         <div className="row donation-frequency">
           <div className="frequency-radio">
-            <input name="recurring_acknowledge" checked={frequency !== "monthly"}
-              onChange={this.onChange} type="radio" value="single" id="one-time-payment"
+            <input name={inputName} checked={frequency !== "monthly"} className="one-time-payment"
+              onChange={this.onChange} type="radio" value="single" id={onTimeId}
             />
-            <label htmlFor="one-time-payment" className="medium-label-size">{this.getIntlMessage('one_time')}</label>
+            <label htmlFor={onTimeId} className="medium-label-size">{this.getIntlMessage('one_time')}</label>
           </div>
           <div className="frequency-radio">
-            <input name="recurring_acknowledge" checked={frequency === "monthly"}
-              onChange={this.onChange} type="radio" value="monthly" id="monthly-payment"
+            <input name={inputName} checked={frequency === "monthly"} className="monthly-payment"
+              onChange={this.onChange} type="radio" value="monthly" id={monthlyId}
             />
-            <label htmlFor="monthly-payment" className="medium-label-size">{this.getIntlMessage('monthly')}</label>
+            <label htmlFor={monthlyId} className="medium-label-size">{this.getIntlMessage('monthly')}</label>
           </div>
         </div>
         {this.renderArrow()}

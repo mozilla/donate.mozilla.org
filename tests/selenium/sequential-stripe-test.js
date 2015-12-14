@@ -4,12 +4,12 @@ module.exports = function(driver, By, done) {
     driver.get(url);
     driver.findElement(By.id('amount-other-input')).sendKeys(amount);
     if (monthly) {
-      driver.findElement(By.id('monthly-payment')).click();
+      driver.findElement(By.css('.monthly-payment')).click();
     }
     driver.findElement(By.css('.page-active .next-button')).click();
     driver.wait(function() {
       if (url !== 'http://localhost:3000/pa-IN/sequential/') {
-        return driver.findElement(By.id('payment-cc-label')).isEnabled().then(function(enabled) {
+        return driver.findElement(By.css('.payment-cc-label')).isEnabled().then(function(enabled) {
           return enabled;
         });
       }
@@ -18,7 +18,7 @@ module.exports = function(driver, By, done) {
       });
     });
     if (url !== 'http://localhost:3000/pa-IN/sequential/') {
-      driver.findElement(By.id('payment-cc-label')).click();
+      driver.findElement(By.css('.payment-cc-label')).click();
     }
     driver.findElement(By.id('card-number-input')).clear();
     driver.findElement(By.id('card-number-input')).sendKeys('4242424242424242');

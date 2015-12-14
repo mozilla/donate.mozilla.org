@@ -75,8 +75,9 @@ module.exports = React.createClass({
             </p>
           </SectionHeading>
           <div className="row">
-            <CreditCardButton onClick={this.expandCreditCardInfo}/>
+            <CreditCardButton name="sequential-payment" onClick={this.expandCreditCardInfo}/>
             <PayPalButton
+              name="sequential-payment"
               submitting={this.state.submitting}
               submit={["frequency", "amount"]}
               onSubmit={this.paypal}

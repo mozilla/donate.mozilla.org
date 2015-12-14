@@ -265,12 +265,12 @@ input[type="tel"]:focus {
 }
 
 input[name="donation_amount"],
-input[name="payment-type"] {
+input.payment-type {
   display: none;
 }
 
 input[name="donation_amount"] + label,
-input[name="payment-type"] + label {
+input.payment-type + label {
   display: inline-block;
   width: 100%;
   padding: 6px 0;
@@ -286,13 +286,13 @@ input[name="payment-type"] + label {
 }
 
 input[name="donation_amount"] + label:hover,
-input[name="payment-type"] + label:hover {
+input.payment-type + label:hover {
   background: #43A6E2; /* Mozilla Button color */
   color: #fff;
 }
 
 input[name="donation_amount"]:checked + label,
-input[name="payment-type"]:checked + label {
+input.payment-type:checked + label {
   background: #277AC1; /*Mozilla Button color */
   color: #fff;
 }

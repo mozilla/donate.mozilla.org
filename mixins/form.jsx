@@ -276,11 +276,11 @@ module.exports = {
       return;
     }
     var description = this.getIntlMessage("mozilla_donation");
-    var handlerDesc = "";
+    var handlerDesc = this.getIntlMessage("donate_now");
     submitProps = form.buildProps(props);
     if (submitProps.frequency === "monthly") {
       description = this.getIntlMessage("mozilla_monthly_donation");
-      handlerDesc = this.getIntlMessage("monthly");
+      handlerDesc = this.getIntlMessage("donate_monthly");
     }
 
     var locale = this.props.locales[0];
@@ -288,7 +288,7 @@ module.exports = {
     var handler = StripeCheckout.configure({
       // Need to get this from .env
       key: process.env.STRIPE_PUBLIC_KEY,
-      image: '',
+      image: process.env.APPLICATION_URI + '/assets/images/mozilla-circular.911f4f7f4e6682c9893b8441d2e09df40cea80e2.png',
       zipCode: true,
       billingAddress: true,
       locale: locale,
@@ -318,7 +318,7 @@ module.exports = {
 
     // Open Checkout with further options
     handler.open({
-      name: this.getIntlMessage("mozilla_donation"),
+      name: this.getIntlMessage("mozilla_foundation"),
       description: handlerDesc,
       currency: currency,
       // Stripe wants cents.

@@ -47,6 +47,10 @@ describe('static files', () => {
       type: types.svg,
       cache: cache.long
     },
+    '/assets/images/mozilla-circular.911f4f7f4e6682c9893b8441d2e09df40cea80e2.png': {
+      type: types.png,
+      cache: cache.long
+    },
     '/assets/images/mozilla.5e83dba715a0469b92071758876f0373.svg': {
       type: types.svg,
       cache: cache.long

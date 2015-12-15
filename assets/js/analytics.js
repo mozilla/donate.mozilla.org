@@ -86,7 +86,7 @@ module.exports = function() {
   // Exchange rates for conversion metrics
   var rates = null;
   if (cc && cc !== 'USD') {
-    rates = loadJSON('/exchange-rates/latest.json');
+    rates = loadJSON('/api/exchange-rates/latest.json');
     if (!rates) {
       // if latest.json hasn't been generated at build, this is a static backup
       rates = loadJSON('/exchange-rates/rates-backup.json');

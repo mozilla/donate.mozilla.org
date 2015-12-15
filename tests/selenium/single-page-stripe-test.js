@@ -57,7 +57,7 @@ module.exports = function(driver, By, done) {
   driver.findElement(By.id('payment-cc-label')).click();
 
   driver.switchTo().frame(driver.findElement(By.css(".stripe_checkout_app")));
-  var windowHandle = driver.getWindowHandle();
+  windowHandle = driver.getWindowHandle();
   driver.wait(function() {
     return driver.switchTo().activeElement().getAttribute("id").then(function(id) {
       return id === "email";

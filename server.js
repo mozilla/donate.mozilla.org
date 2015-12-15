@@ -15,6 +15,7 @@ var Hoek = require('hoek');
 var Joi = require('joi');
 var polyfillio = require('polyfill-service');
 var PolyfillSet = require('./scripts/PolyfillSet.js');
+var exchangeRates = require('./public/exchange-rates/latest.json');
 var routes = require('./routes');
 var goodConfig = {
   reporter: require('good-console-logfmt')
@@ -217,6 +218,18 @@ module.exports = function(options) {
       config: {
         cache: {
           expiresIn: 7 * 24 * 60 * 60 * 1000, // one week
+          privacy: 'public'
+        }
+      }
+    }, {
+      'method': 'GET',
+      path: '/api/exchange-rates/latest.json',
+      handler: function(request, reply) {
+        reply(exchangeRates).type('application/json; charset=utf-8');
+      },
+      config: {
+        cache: {
+          expiresIn: 300 * 1000,
           privacy: 'public'
         }
       }

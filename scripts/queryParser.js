@@ -17,6 +17,10 @@ module.exports = function(queryString, pathname) {
   var country = queryString.country || localeCountryData[locale] || "US";
   var amount = "";
   var frequency = "single";
+  var billingAddress = "full";
+  if (queryString.billingAddress === "partial") {
+    billingAddress = "";
+  }
   var currency = currencies[queryStringCurrencyCode] || currencies[localeCurrencyCode] || currencies.usd;
 
   if (queryString.amount && !isNaN(queryString.amount)) {
@@ -35,6 +39,7 @@ module.exports = function(queryString, pathname) {
 
   return {
     test: queryString.test,
+    billingAddress: billingAddress,
     currency: currency,
     presets: presets,
     amount: amount,

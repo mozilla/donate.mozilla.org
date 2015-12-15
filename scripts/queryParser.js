@@ -17,9 +17,9 @@ module.exports = function(queryString, pathname) {
   var country = queryString.country || localeCountryData[locale] || "US";
   var amount = "";
   var frequency = "single";
-  var billingAddress = "";
-  if (queryString.billingAddress === "full") {
-    billingAddress = queryString.billingAddress;
+  var billingAddress = "full";
+  if (queryString.billingAddress === "partial") {
+    billingAddress = "";
   }
   var currency = currencies[queryStringCurrencyCode] || currencies[localeCurrencyCode] || currencies.usd;
 

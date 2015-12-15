@@ -19,6 +19,9 @@ module.exports = React.createClass({
     amount: React.PropTypes.string.isRequired,
     frequency: React.PropTypes.string.isRequired
   },
+  stripeCheckoutTest: function(validate, submit) {
+    this.stripeCheckout(validate, submit, this.props.billingAddress);
+  },
   renderPaymentOptions: function() {
     if (!this.state.currency.disabled) {
       return (
@@ -34,7 +37,7 @@ module.exports = React.createClass({
           <StripeButton
             submit={["frequency", "amount"]}
             validate={["amount", "privacyPolicy"]}
-            onSubmit={this.stripeCheckout}
+            onSubmit={this.stripeCheckoutTest}
           />
           <PayPalButton
             submitting={this.state.submitting}
@@ -64,7 +67,7 @@ module.exports = React.createClass({
             submitting={this.state.submitting}
             submit={["amount", "frequency"]}
             validate={["amount", "privacyPolicy"]}
-            onSubmit={this.stripeCheckout}
+            onSubmit={this.stripeCheckoutTest}
           >
             <DonateButton currency={this.state.currency}/>
           </SubmitButton>

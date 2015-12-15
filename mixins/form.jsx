@@ -266,7 +266,7 @@ module.exports = {
       }
     });
   },
-  stripeCheckout: function(validate, props) {
+  stripeCheckout: function(validate, props, billingAddress) {
     var submit = this.submit;
     var success = this.stripeSuccess;
     var error = this.stripeError;
@@ -290,23 +290,27 @@ module.exports = {
       key: process.env.STRIPE_PUBLIC_KEY,
       image: '',
       zipCode: true,
-      billingAddress: true,
+      billingAddress: billingAddress,
       locale: locale,
       token: function(response) {
-        submit("/api/stripe-checkout", {
+        var checkoutProps = {
           frequency: submitProps.frequency,
           amount: submitProps.amount,
           stripeToken: response.id,
           currency: currency,
           locale: submitProps.locale,
           email: response.email,
-          first: response.card.name,
-          country: response.card.address_country,
-          address: response.card.address_line1,
-          city: response.card.address_city,
           code: response.card.address_zip,
           description: description
-        }, success, function(response) {
+        };
+
+        if (billingAddress) {
+          checkoutProps.country = response.card.address_country;
+          checkoutProps.address = response.card.address_line1;
+          checkoutProps.city = response.card.address_city;
+          checkoutProps.first = response.card.name;
+        }
+        submit("/api/stripe-checkout", checkoutProps, success, function(response) {
           if (response.stripe) {
             error(response.stripe.code, response.stripe.rawType);
           } else {

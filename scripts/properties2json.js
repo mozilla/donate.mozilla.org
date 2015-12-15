@@ -4,6 +4,8 @@ var write = require('fs-writefile-promise');
 var path = require('path');
 var FS = require("q-io/fs");
 var Habitat = require('habitat');
+var Hoek = require('hoek');
+
 Habitat.load();
 var env = new Habitat();
 
@@ -43,11 +45,22 @@ function writeFile(entries) {
 
 function getContentMessages(locale) {
   return new Promise(function(resolve, reject) {
-    properties.read(path.join(process.cwd(), config.src, locale, 'messages.properties'), function(error, properties) {
-      if (error && error.code !== 'ENOENT') {
-        return reject(error);
+    properties.read(path.join(process.cwd(), config.src, locale, 'messages.properties'), function(message_error, message_properties) {
+      if (message_error && message_error.code !== 'ENOENT') {
+        return reject(message_error);
       }
-      resolve({content: properties || {}, locale: locale});
+
+      properties.read(path.join(process.cwd(), config.src, locale, 'email.properties'), function(email_error, email_properties) {
+        if (email_error && email_error.code !== 'ENOENT') {
+          return reject(email_error);
+        }
+
+        var merged_properties = {};
+        Hoek.merge(merged_properties, message_properties);
+        Hoek.merge(merged_properties, email_properties);
+
+        resolve({content: merged_properties || {}, locale: locale});
+      });
     });
   });
 }

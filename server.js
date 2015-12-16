@@ -15,7 +15,7 @@ var Hoek = require('hoek');
 var Joi = require('joi');
 var polyfillio = require('polyfill-service');
 var PolyfillSet = require('./scripts/PolyfillSet.js');
-var exchangeRates = require('./public/exchange-rates/latest.json');
+var exchangeRates = require('./assets/exchange-rates/latest.json');
 var routes = require('./routes');
 var goodConfig = {
   reporter: require('good-console-logfmt')

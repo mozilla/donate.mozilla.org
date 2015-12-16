@@ -87,10 +87,6 @@ module.exports = function() {
   var rates = null;
   if (cc && cc !== 'USD') {
     rates = loadJSON('/api/exchange-rates/latest.json');
-    if (!rates) {
-      // if latest.json hasn't been generated at build, this is a static backup
-      rates = loadJSON('/exchange-rates/rates-backup.json');
-    }
   }
 
   // 2 DP

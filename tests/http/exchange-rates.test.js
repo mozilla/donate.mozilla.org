@@ -11,10 +11,6 @@ describe('test exchange rates api', () => {
     '/api/exchange-rates/latest.json': {
       type,
       cache
-    },
-    '/exchange-rates/rates-backup.json': {
-      type,
-      cache
     }
   };
 

@@ -3,7 +3,7 @@ import Footer from '../components/footer.jsx';
 import Header from '../components/header.jsx';
 import { IntlMixin } from 'react-intl';
 
-var ThankYou = React.createClass({
+module.exports = React.createClass({
   mixins: [IntlMixin],
   render: function() {
     var className = "row new-flow-test";
@@ -23,5 +23,3 @@ var ThankYou = React.createClass({
     );
   }
 });
-
-module.exports = ThankYou;

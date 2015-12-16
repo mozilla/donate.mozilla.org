@@ -19,6 +19,11 @@ var pages = {
     path: '/:locale/share/?',
     handler: require('../pages/share.jsx')
   },
+  '/survey/': {
+    name: 'survey',
+    path: '/:locale/survey/?',
+    handler: require('../pages/survey.jsx')
+  },
   '/give-bitcoin/': {
     name: 'give-bitcoin',
     path: '/:locale/give-bitcoin/?',

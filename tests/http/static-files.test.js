@@ -103,6 +103,10 @@ describe('static files', () => {
       type: types.html,
       cache: cache.short
     },
+    '/exchange-rates/rates-backup.json': {
+      type: types.json,
+      cache: cache.short
+    },
     '/favicon.ico': {
       type: types.ico,
       cache: cache.long

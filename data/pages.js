@@ -4,6 +4,11 @@ var pages = {
     path: '/:locale/',
     handler: require('../pages/one-page.jsx')
   },
+  '/partial-page/': {
+    name: 'partial-page',
+    path: '/:locale/partial-page/?',
+    handler: require('../pages/partial-page.jsx')
+  },
   '/about/': {
     name: 'about',
     path: '/:locale/about/?',

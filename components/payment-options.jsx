@@ -53,7 +53,9 @@ var StripeButton = React.createClass({
   onChange: function() {
     this.props.onClick = this.props.onClick || function() {};
     this.props.onClick();
-    this.props.onSubmit(this.props.validate, this.props.submit);
+    setTimeout(() => {
+      this.props.onSubmit(this.props.validate, this.props.submit);
+    });
   },
   render: function() {
     return (

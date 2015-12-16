@@ -272,9 +272,13 @@ module.exports = {
     var error = this.stripeError;
     var valid = form.validate(validate);
     var submitProps= {};
-    if (!valid) {
+    if (!valid || this.state.submitting) {
       return;
     }
+    this.setState({
+      submitting: true
+    });
+
     var description = this.getIntlMessage("mozilla_donation");
     var handlerDesc = this.getIntlMessage("donate_now");
     submitProps = form.buildProps(props);
@@ -292,6 +296,11 @@ module.exports = {
       zipCode: true,
       billingAddress: billingAddress,
       locale: locale,
+      closed: function() {
+        this.setState({
+          submitting: false
+        });
+      },
       token: function(response) {
         var checkoutProps = {
           frequency: submitProps.frequency,

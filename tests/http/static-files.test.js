@@ -31,7 +31,83 @@ describe('static files', () => {
       type: types.png,
       cache: cache.long
     },
+    '/assets/images/EOY_Twitter_v8_EN.d1bb5d2a5ce35859d038df852d9e6a0a811beaac.png': {
+      type: types.png,
+      cache: cache.long
+    },
     '/assets/images/EOY_facebook_v1.a152496406bad899d1a920f6d6b9f507.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/TRHU-funnel-DE.3772cabe35339b6d73e3360cb4b275cd.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/TRHU-funnel-EN.817aaec5d50c7025d65ac4255bdab876.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/TRHU-funnel-ES.27c2c56cae275f9d58fb421679a05399.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/TRHU-funnel-FR.7a7acdd32ea3d145e3225cc19e39e730.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/TRHU-funnel-IT.aeb11a79ef173e7a5368c568d24ffd34.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/TRHU-funnel-pt-BR.763d3a9aa0b0bc8a6f699f62b52cb572.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/TRHU-snippet-DE.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/TRHU-snippet-EN.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/TRHU-snippet-ES.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/TRHU-snippet-FR.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/TRHU-snippet-IT.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/TRHU-snippet-pt-BR.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/email-ask-v1_EN.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/email-ask-v2_EN.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/email-ask-v3_EN.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/email-ask-v4_EN.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/email-ask-v5_EN.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/images/email-ask-v6_EN.png': {
       type: types.png,
       cache: cache.long
     },
@@ -67,16 +143,52 @@ describe('static files', () => {
       type: types.png,
       cache: cache.long
     },
-    '/assets/images/TRHU-funnel-EN.817aaec5d50c7025d65ac4255bdab876.png': {
-      type: types.png,
-      cache: cache.long
-    },
     '/assets/js/jquery.min.js': {
       type: types.js,
       cache: cache.long
     },
     '/assets/js/placeholder.min.js': {
       type: types.js,
+      cache: cache.long
+    },
+    '/assets/tiles/eoy01.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/tiles/eoy02.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/tiles/eoy03.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/tiles/eoy04.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/tiles/eoy05.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/tiles/eoy06.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/tiles/eoy07.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/tiles/eoy08.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/tiles/eoy09.png': {
+      type: types.png,
+      cache: cache.long
+    },
+    '/assets/tiles/eoy10.png': {
+      type: types.png,
       cache: cache.long
     },
     '/en-US/': {

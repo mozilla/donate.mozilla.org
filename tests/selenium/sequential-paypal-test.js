@@ -3,11 +3,11 @@ module.exports = function(driver, By, done) {
   driver.findElement(By.id('amount-other-input')).sendKeys('10');
   driver.findElement(By.css('.page-active .next-button')).click();
   driver.wait(function() {
-    return driver.findElement(By.css('.paypal-button .payment-submit-button')).isEnabled().then(function(enabled) {
+    return driver.findElement(By.css('.paypal-button .payment-paypal-label')).isEnabled().then(function(enabled) {
       return enabled;
     });
   });
-  driver.findElement(By.css('.paypal-button .payment-submit-button')).click();
+  driver.findElement(By.css('.paypal-button .payment-paypal-label')).click();
 
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {

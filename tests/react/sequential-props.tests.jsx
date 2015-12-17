@@ -51,7 +51,7 @@ describe('sequential page query ?amount=100&currency=cad&presets=1,2,3,4&frequen
     var aboutPresetButton2 = testElement.querySelector('#amount-2').value;
     var aboutPresetButton3 = testElement.querySelector('#amount-3').value;
     var aboutPresetButton4 = testElement.querySelector('#amount-4').value;
-    var frequency = testElement.querySelector('#monthly-payment').checked;
+    var frequency = testElement.querySelector('.monthly-payment').checked;
     var country = testElement.querySelector('select[name="country"]').value;
 
     it('#amount-other-input value is 100', function() {
@@ -72,7 +72,7 @@ describe('sequential page query ?amount=100&currency=cad&presets=1,2,3,4&frequen
     it('preset #amount-4 value 4', function() {
       should(aboutPresetButton4).equal('4');
     });
-    it('frequency #monthly-payment checked is true', function() {
+    it('frequency .monthly-payment checked is true', function() {
       should(frequency).equal(true);
     });
     it('select[name="country"] value is GB', function() {

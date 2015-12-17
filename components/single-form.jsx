@@ -34,17 +34,36 @@ module.exports = React.createClass({
             <PrivacyPolicyCheckbox name="privacyPolicy"/>
           </div>
           <ErrorListener errors={["cardNumber", "cvc", "expMonth", "expYear"]}/>
-          <StripeButton
-            submit={["frequency", "amount"]}
-            validate={["amount", "privacyPolicy"]}
-            onSubmit={this.stripeCheckoutTest}
-          />
-          <PayPalButton
-            submitting={this.state.submitting}
-            submit={["frequency", "amount"]}
-            validate={["amount", "privacyPolicy"]}
-            onSubmit={this.paypal}
-          />
+          <div className="frequency-move">
+            <StripeButton
+              name="payment-type-test"
+              submit={["frequency-test", "amount"]}
+              validate={["amount", "privacyPolicy"]}
+              onSubmit={this.stripeCheckoutTest}
+            />
+            <PayPalButton
+              name="payment-type-test"
+              submitting={this.state.submitting}
+              submit={["frequency-test", "amount"]}
+              validate={["amount", "privacyPolicy"]}
+              onSubmit={this.paypal}
+            />
+          </div>
+          <div className="frequency-move-baseline">
+            <StripeButton
+              name="payment-type"
+              submit={["frequency", "amount"]}
+              validate={["amount", "privacyPolicy"]}
+              onSubmit={this.stripeCheckoutTest}
+            />
+            <PayPalButton
+              name="payment-type"
+              submitting={this.state.submitting}
+              submit={["frequency", "amount"]}
+              validate={["amount", "privacyPolicy"]}
+              onSubmit={this.paypal}
+            />
+          </div>
         </span>
       );
     } else if (this.state.currency.disabled === "paypal") {
@@ -63,14 +82,26 @@ module.exports = React.createClass({
             <PrivacyPolicyCheckbox name="privacyPolicy"/>
           </div>
           <ErrorListener errors={["cardNumber", "cvc", "expMonth", "expYear"]}/>
-          <SubmitButton
-            submitting={this.state.submitting}
-            submit={["amount", "frequency"]}
-            validate={["amount", "privacyPolicy"]}
-            onSubmit={this.stripeCheckoutTest}
-          >
-            <DonateButton currency={this.state.currency}/>
-          </SubmitButton>
+          <div className="frequency-move">
+            <SubmitButton
+              submitting={this.state.submitting}
+              submit={["amount", "frequency"]}
+              validate={["amount", "privacyPolicy"]}
+              onSubmit={this.stripeCheckoutTest}
+            >
+              <DonateButton currency={this.state.currency}/>
+            </SubmitButton>
+          </div>
+          <div className="frequency-move-baseline">
+            <SubmitButton
+              submitting={this.state.submitting}
+              submit={["amount", "frequency-test"]}
+              validate={["amount", "privacyPolicy"]}
+              onSubmit={this.stripeCheckoutTest}
+            >
+              <DonateButton currency={this.state.currency}/>
+            </SubmitButton>
+          </div>
         </span>
       );
     }
@@ -86,8 +117,13 @@ module.exports = React.createClass({
             </span>
           </h2>
         </SectionHeading>
+        <div className="frequency-move">
+          <Frequency name="frequency-test"/>
+        </div>
         <AmountButtons name="amount" locale={this.props.locales[0]}/>
-        <Frequency name="frequency"/>
+        <div className="frequency-move-baseline">
+          <Frequency name="frequency"/>
+        </div>
         <div className="payment-section">
           {this.renderPaymentOptions()}
         </div>

@@ -2,7 +2,7 @@ module.exports = function(driver, By, done) {
   driver.get('http://localhost:3000/en-US/');
   driver.findElement(By.id('amount-other-input')).sendKeys('10');
   driver.findElement(By.id('privacy-policy-checkbox')).click();
-  driver.findElement(By.css('.paypal-button .payment-submit-button')).click();
+  driver.findElement(By.css('.frequency-move-baseline .paypal-button .payment-paypal-label')).click();
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
       return url.indexOf('https://www.sandbox.paypal.com/cgi-bin/webscr') === 0;

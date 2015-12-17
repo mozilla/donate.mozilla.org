@@ -18,7 +18,7 @@ if (!openexachangeratesKey) {
   console.error('Please set OPENEXCHANGERATES_KEY in your environment variables');
 }
 
-var pathForLatestRates = './public/exchange-rates/latest.json';
+var pathForLatestRates = './assets/exchange-rates/latest.json';
 
 
 function warn(s) {

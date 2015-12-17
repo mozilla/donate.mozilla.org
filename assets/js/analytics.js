@@ -1,3 +1,5 @@
+var rates = require('../exchange-rates/latest.json');
+
 module.exports = function() {
   var queryString = decodeURIComponent(window.location.search);
   var tx = null; // transaction id
@@ -64,35 +66,6 @@ module.exports = function() {
     amt = amt * 12;
   }
 
-  /**
-   * Function to load JSON file
-   * @param  {String} pathToFile
-   * @return {JSON}
-   */
-  function loadJSON(pathToFile) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.overrideMimeType('application/json');
-    xhttp.open('GET', pathToFile, false); // async = false
-    xhttp.send();
-    if (xhttp.status === 200) {
-      var file = xhttp.responseText;
-      try {
-        return JSON.parse(file);
-      } catch(e) {}
-    }
-    return null;
-  }
-
-  // Exchange rates for conversion metrics
-  var rates = null;
-  if (cc && cc !== 'USD') {
-    rates = loadJSON('/api/exchange-rates/latest.json');
-    if (!rates) {
-      // if latest.json hasn't been generated at build, this is a static backup
-      rates = loadJSON('/exchange-rates/rates-backup.json');
-    }
-  }
-
   // 2 DP
   function toTwoDP (i) {
     return Math.round(i * 100) / 100;
@@ -103,11 +76,9 @@ module.exports = function() {
     var exchangeRate = 1;
     var amtUSD = amt;
 
-    if (cc !== 'USD') {
-      if (rates && rates.rates && rates.rates[cc]) {
-        exchangeRate = rates.rates[cc];
-        amtUSD = toTwoDP(amt / exchangeRate);
-      }
+    if (cc !== 'USD' && rates.rates[cc]) {
+      exchangeRate = rates.rates[cc];
+      amtUSD = toTwoDP(amt / exchangeRate);
     }
 
     // Filter out impact of major gifts on conversion analysis

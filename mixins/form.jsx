@@ -296,7 +296,7 @@ module.exports = {
       zipCode: true,
       billingAddress: billingAddress,
       locale: locale,
-      closed: function() {
+      closed: () => {
         this.setState({
           submitting: false
         });

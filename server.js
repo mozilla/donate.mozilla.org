@@ -86,7 +86,15 @@ module.exports = function(options) {
           }
         },
         response: {
-          schema: false
+          schema: {
+            format: Joi.any().valid('html').required(),
+            lang: Joi.string().min(2).max(12).required(),
+            newsletters: Joi.string().required(),
+            trigger_welcome: Joi.any().valid('N').required(),
+            source_url: Joi.any().valid('https://donate.mozilla.org/').required(),
+            email: Joi.string().email().required(),
+            country: Joi.string().allow('')
+          }
         }
       }
     }, {

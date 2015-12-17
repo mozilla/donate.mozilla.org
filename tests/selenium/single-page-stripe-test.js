@@ -51,7 +51,7 @@ module.exports = function(driver, By, done) {
     });
   });
 
-  driver.get('http://localhost:3000/en-US/?billingAddress=partial');
+  driver.get('http://localhost:3000/en-US/partial-page/');
   driver.findElement(By.id('amount-other-input')).sendKeys('10');
   driver.findElement(By.id('privacy-policy-checkbox')).click();
   driver.findElement(By.css('.frequency-move-baseline .payment-cc-label')).click();

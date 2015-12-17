@@ -27,6 +27,10 @@ describe('static files', () => {
       cache: cache.long,
       vary: 'User-Agent'
     },
+    '/assets/images/CVC-illustration.70d7262b2227d24a2f440cc0d560b7da.png': {
+      type: types.png,
+      cache: cache.long
+    },
     '/assets/images/EOY_facebook_v1.a152496406bad899d1a920f6d6b9f507.png': {
       type: types.png,
       cache: cache.long

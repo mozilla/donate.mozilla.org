@@ -248,7 +248,7 @@ module.exports = React.createClass({
           </NavigationContainer>
 
         </div>
-        <SmallPrint locale={this.props.locales[0]} stripeNotice={!this.state.hideCreditCardDetails}/>
+        <SmallPrint stripeNotice={!this.state.hideCreditCardDetails}/>
         <Footer/>
       </div>
     );

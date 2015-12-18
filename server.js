@@ -247,18 +247,10 @@ module.exports = function(options) {
   // This will catch all 404s and redirect them to root URL
   // with preserving the pathname for client-side to handle.
   server.ext('onPreResponse', function(request, reply) {
-    var query = '';
-    if (request.url.search) {
-      query = request.url.search;
-    }
     if (request.response.output && request.response.output.statusCode === 404) {
-      if (server.match(request.method, request.path + '/')) {
-        return reply.redirect(request.path + '/' + query);
-      }
-      return reply.redirect('/' + query);
+      return reply.redirect('/?redirect=' + request.url.pathname);
     }
-    reply.continue();
-
+    return reply.continue();
   });
 
   server.register([
@@ -295,9 +287,25 @@ module.exports = function(options) {
       throw err;
     }
 
+    // We have these routes specifically for production where it's possible that
+    // a CDN index.html may refer to an outdated CSS/JS file that doesn't exist
     server.route(require('./lib/hashed-file-routes')());
-    server.route(require('./lib/build-urls.js')());
+
     server.route([{
+      method: 'GET',
+      path: '/{params*}',
+      handler: {
+        directory: {
+          path: Path.join(__dirname, 'public')
+        }
+      },
+      config: {
+        cache: {
+          expiresIn: 1000 * 60 * 5,
+          privacy: 'public'
+        }
+      }
+    }, {
       method: 'GET',
       path: '/assets/{params*}',
       handler: {

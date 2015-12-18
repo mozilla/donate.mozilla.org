@@ -23,7 +23,7 @@ var OnePage = React.createClass({
           country={this.props.country}
           locales={this.props.locales}
         />
-        <SmallPrint locale={this.props.locales[0]} stripeNotice={true}/>
+        <SmallPrint stripeNotice={true}/>
         <Footer/>
       </div>
     );

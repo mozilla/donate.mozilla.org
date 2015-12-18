@@ -1,36 +1,54 @@
-/*
-* key name = URL to the page
-* `filename` = file name which should be under `pages` directory
-*/
-module.exports = {
+var pages = {
   '/': {
-    filename: 'one-page.jsx'
+    name: 'one-page',
+    path: '/:locale/',
+    handler: require('../pages/one-page.jsx')
   },
   '/partial-page/': {
-    filename: 'partial-page.jsx'
+    name: 'partial-page',
+    path: '/:locale/partial-page/?',
+    handler: require('../pages/partial-page.jsx')
   },
   '/about/': {
-    filename: 'about.jsx'
+    name: 'about',
+    path: '/:locale/about/?',
+    handler: require('../pages/about.jsx')
   },
   '/thank-you/': {
-    filename: 'thank-you.jsx'
+    name: 'thank-you',
+    path: '/:locale/thank-you/?',
+    handler: require('../pages/thank-you.jsx')
   },
   '/share/': {
-    filename: 'share.jsx'
+    name: 'share',
+    path: '/:locale/share/?',
+    handler: require('../pages/share.jsx')
   },
   '/survey/': {
-    filename: 'survey.jsx'
+    name: 'survey',
+    path: '/:locale/survey/?',
+    handler: require('../pages/survey.jsx')
   },
   '/give-bitcoin/': {
-    filename: 'give-bitcoin.jsx'
+    name: 'give-bitcoin',
+    path: '/:locale/give-bitcoin/?',
+    handler: require('../pages/give-bitcoin.jsx')
   },
   '/sequential/': {
-    filename: 'sequential.jsx'
+    name: 'sequential',
+    path: '/:locale/sequential/?',
+    handler: require('../pages/sequential.jsx')
   },
   '/paypal-donate/': {
-    filename: 'paypal-donate.jsx'
+    name: 'paypal-donate',
+    path: '/:locale/paypal-donate/?',
+    handler: require('../pages/paypal-donate.jsx')
   },
   '/directory-tiles/': {
-    filename: 'directory-tiles.jsx'
+    name: 'directory-tiles',
+    path: '/:locale/directory-tiles/?',
+    handler: require('../pages/directory-tiles.jsx')
   }
 };
+
+module.exports = pages;

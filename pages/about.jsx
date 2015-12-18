@@ -29,7 +29,7 @@ module.exports = React.createClass({
             locales={this.props.locales}
           />
         </div>
-        <SmallPrint locale={this.props.locales[0]} stripeNotice={true} />
+        <SmallPrint stripeNotice={true} />
         <Footer/>
       </div>
     );

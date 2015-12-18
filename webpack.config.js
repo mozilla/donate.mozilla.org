@@ -3,7 +3,7 @@ require('babel-core/register');
 var webpack = require('webpack');
 var SimpleHtmlPrecompiler = require('./scripts/simple-html-plugin.js');
 var Path = require('path');
-var paths = require('./data/paths.js');
+var paths = require('./scripts/paths.js');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var AssetsPlugin = require('assets-webpack-plugin');
 
@@ -34,9 +34,6 @@ module.exports = {
     emitError: true,
     emitWarning: true
   },
-  node: {
-    fs: "empty"
-  },
   plugins: [
     new AssetsPlugin({
       path: Path.join(__dirname, "public")
@@ -59,6 +56,6 @@ module.exports = {
     new ExtractTextPlugin("style.[hash].css", {
       allChunks: true
     }),
-    new SimpleHtmlPrecompiler(paths.map(function(path) { return path.pathname; }))
+    new SimpleHtmlPrecompiler(paths)
   ]
 };

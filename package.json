@@ -105,7 +105,7 @@
     "mocha": "2.3.4",
     "react-test-context": "0.1.0",
     "selenium-webdriver": "2.48.2",
-    "should": "8.0.1"
+    "should": "8.0.2"
   },
   "engines": {
     "node": "4.2.3"

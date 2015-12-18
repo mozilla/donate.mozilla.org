@@ -4,5 +4,10 @@ node_modules/
 .env
 npm-debug*
 
+public/css/*
+public/**/*.html
+public/main.js
 locales/*.json
-public/*
+public/main.*.js
+public/style.*.css
+public/webpack-assets.json

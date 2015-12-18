@@ -10,11 +10,11 @@ Use the `npm install` command to trigger or update the precompile.
 
 In our webpack.config file, we create static HTML pages from a list of react routes.
 
-First we get an array of all our paths from `/data/paths.js`.
+First we get an array of all our paths from `/scripts/paths.js`.
 
-`/data/paths.js` starts with basic pages from `/data/pages.js`.
+`/scripts/paths.js` starts with basic pages from `/data/pages.js`.
 
-`/data/pages.js` is a simple list of pages, it doesn't deal with locale or currency pages. `/data/paths.js` then compiles a list of all possible paths based on our pages.
+`/data/pages.js` is a simple list of pages, it doesn't deal with locale or currency pages. `/scripts/paths.js` then compiles a list of all possible paths based on our pages.
 
 Webpack then uses [SimpleHtmlPrecompiler](https://www.npmjs.com/package/simple-html-precompiler) plugin to turn those paths into static HTML files.
 

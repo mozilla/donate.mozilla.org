@@ -47,6 +47,7 @@ module.exports = function(outputPath, callback) {
         },
         markup: React.renderToString(page(values))
       }));
+
       var nameOfTheFile = Path.join(__dirname, '..', 'public', outputPath, 'index.html');
 
       fs.writeFile(nameOfTheFile, contentOfTheFile, function(err) {

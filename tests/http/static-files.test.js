@@ -18,6 +18,10 @@ var cache = {
 
 describe('static files', () => {
   var files = {
+    '/': {
+      type: types.html,
+      cache: cache.short
+    },
     '/api/polyfill.js': {
       type: types.js,
       cache: cache.long,

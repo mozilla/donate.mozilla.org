@@ -9,6 +9,7 @@ if (process.env.NEW_RELIC_ENABLED === 'true') {
   newrelic = {};
 }
 
+var Boom = require('boom');
 var Path = require('path');
 var Hapi = require('hapi');
 var Hoek = require('hoek');
@@ -244,10 +245,18 @@ module.exports = function(options) {
     }
   ]);
 
+  var nonASCIICharacters = /[^\x00-\x7F]/g;
+
   // This will catch all 404s and redirect them to root URL
   // with preserving the pathname for client-side to handle.
   server.ext('onPreResponse', function(request, reply) {
     if (request.response.output && request.response.output.statusCode === 404) {
+      if (nonASCIICharacters.test(request.path)) {
+        return reply(
+          new Boom.badRequest('Location cannot contain or convert into non-ascii characters', { path: request.path })
+        );
+      }
+
       return reply.redirect('/?redirect=' + request.url.pathname);
     }
     return reply.continue();

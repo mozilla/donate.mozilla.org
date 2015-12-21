@@ -47,9 +47,9 @@ var Index = React.createClass({
           <meta name="twitter:description" content={metaData.desc} />
           <meta name="twitter:image" content={metaData.APPLICATION_URI + "/assets/images/EOY_Twitter_v8_EN.d1bb5d2a5ce35859d038df852d9e6a0a811beaac.png"} />
 
-          <link rel="preconnect" href="https://www.google-analytics.com">
-          <link rel="preconnect" href="https://fonts.gstatic.com">
-          <link rel="preconnect" href="https://206878104.log.optimizely.com">
+          <link rel="preconnect" href="https://www.google-analytics.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link rel="preconnect" href="https://206878104.log.optimizely.com" />
           <title>donate.mozilla.org | {metaData.site_title}</title>
           <OptimizelySubdomain/>
           <Optimizely/>

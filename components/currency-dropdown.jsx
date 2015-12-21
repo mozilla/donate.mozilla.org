@@ -37,7 +37,7 @@ module.exports = React.createClass({
         {Object.keys(currencyData).map(function(currency, i) {
           return (
             <option value={currency} key={i}>
-              {currency}
+              {currencyData[currency].symbol} &nbsp; {currency}
             </option>
           );
         })}

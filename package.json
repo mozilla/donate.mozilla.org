@@ -50,7 +50,7 @@
     "blankie": "1.1.1",
     "boom": "3.0.0",
     "buffer": "3.4.3",
-    "css-loader": "0.23.0",
+    "css-loader": "0.23.1",
     "enhanced-require": "0.5.0-beta6",
     "eslint": "1.10.3",
     "eslint-loader": "1.1.1",

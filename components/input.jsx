@@ -16,7 +16,7 @@ module.exports = React.createClass({
   },
   getInitialState: function() {
     return {
-      value: "",
+      value: this.props.value || "",
       valid: true,
       error: ""
     };
@@ -81,7 +81,7 @@ module.exports = React.createClass({
     return (
       <input
         autoComplete={this.props.autoComplete} autoCorrect={this.props.autoCorrect} autoCapitalize={this.props.autoCapitalize} spellCheck={this.props.spellCheck}
-        className={className} type="text" name={this.props.name}
+        className={className} type={this.props.type || "text"} name={this.props.name}
         onChange={this.onInputChange} value={this.state.value}
         placeholder={this.props.placeholder}
       />

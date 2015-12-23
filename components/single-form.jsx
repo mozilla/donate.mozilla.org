@@ -18,6 +18,7 @@ module.exports = React.createClass({
     currency: React.PropTypes.object.isRequired,
     presets: React.PropTypes.array.isRequired,
     amount: React.PropTypes.string.isRequired,
+    privacyPolicyTest: React.PropTypes.string,
     frequency: React.PropTypes.string.isRequired
   },
   getInitialState: function() {
@@ -134,6 +135,16 @@ module.exports = React.createClass({
     }
     this.stripeCheckout(validate, submit, this.props.billingAddress);
   },
+  renderPrivacyPolicy: function() {
+    if (this.props.privacyPolicyTest) {
+      return (
+        <p className="full">{this.props.privacyPolicyTest}</p>
+      );
+    }
+    return (
+      <PrivacyPolicyCheckbox name="privacyPolicy"/>
+    );
+  },
   checkMonthlyPaypalPopup: function(validate, submit) {
     var amount = parseInt(this.state.amount, 10);
     if (this.props.monthlyPopup && this.state.currency.code === "usd" &&
@@ -146,6 +157,10 @@ module.exports = React.createClass({
     this.paypal(validate, submit);
   },
   renderPaymentOptions: function() {
+    var validateArray = ["amount", "privacyPolicy"];
+    if (this.props.privacyPolicyTest) {
+      validateArray = ["amount"];
+    }
     if (!this.state.currency.disabled) {
       return (
         <span>
@@ -154,21 +169,21 @@ module.exports = React.createClass({
             <p id="secure-label"><i className="fa fa-lock"></i>{this.getIntlMessage('secure')}</p>
           </SectionHeading>
           <div className="row">
-            <PrivacyPolicyCheckbox name="privacyPolicy"/>
+            {this.renderPrivacyPolicy()}
           </div>
           <ErrorListener errors={["cardNumber", "cvc", "expMonth", "expYear"]}/>
           <div className="frequency-move">
             <StripeButton
               name="payment-type-test"
               submit={["frequency-test", "amount"]}
-              validate={["amount", "privacyPolicy"]}
+              validate={validateArray}
               onSubmit={this.checkMonthlyStripePopup}
             />
             <PayPalButton
               name="payment-type-test"
               submitting={this.state.submitting}
               submit={["frequency-test", "amount"]}
-              validate={["amount", "privacyPolicy"]}
+              validate={validateArray}
               onSubmit={this.checkMonthlyPaypalPopup}
             />
           </div>
@@ -176,14 +191,14 @@ module.exports = React.createClass({
             <StripeButton
               name="payment-type"
               submit={["frequency", "amount"]}
-              validate={["amount", "privacyPolicy"]}
+              validate={validateArray}
               onSubmit={this.checkMonthlyStripePopup}
             />
             <PayPalButton
               name="payment-type"
               submitting={this.state.submitting}
               submit={["frequency", "amount"]}
-              validate={["amount", "privacyPolicy"]}
+              validate={validateArray}
               onSubmit={this.checkMonthlyPaypalPopup}
             />
           </div>
@@ -202,14 +217,14 @@ module.exports = React.createClass({
             </div>
           </SectionHeading>
           <div className="row">
-            <PrivacyPolicyCheckbox name="privacyPolicy"/>
+            {this.renderPrivacyPolicy()}
           </div>
           <ErrorListener errors={["cardNumber", "cvc", "expMonth", "expYear"]}/>
           <div className="frequency-move">
             <SubmitButton
               submitting={this.state.submitting}
               submit={["amount", "frequency"]}
-              validate={["amount", "privacyPolicy"]}
+              validate={validateArray}
               onSubmit={this.checkMonthlyStripePopup}
             >
               <DonateButton currency={this.state.currency}/>
@@ -219,7 +234,7 @@ module.exports = React.createClass({
             <SubmitButton
               submitting={this.state.submitting}
               submit={["amount", "frequency-test"]}
-              validate={["amount", "privacyPolicy"]}
+              validate={validateArray}
               onSubmit={this.checkMonthlyStripePopup}
             >
               <DonateButton currency={this.state.currency}/>

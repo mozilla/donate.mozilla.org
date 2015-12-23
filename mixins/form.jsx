@@ -22,18 +22,18 @@ module.exports = {
       submitting: false,
       showCvcHint: false,
       currency: this.props.currency,
-      frequency: "",
+      frequency: this.props.frequency || "",
       amount: ""
     };
   },
   componentDidMount: function() {
-    listener.on("fieldUpdated", this.onFieldUpdated);
     form.updateState("currency", this.state.currency);
     form.updateState("presets", this.props.presets);
     form.updateField("amount", this.props.amount);
     form.updateField("frequency", this.props.frequency);
     form.updateField("country", this.props.country);
 
+    listener.on("fieldUpdated", this.onFieldUpdated);
     listener.on("stateUpdated", this.onStateUpdated);
     listener.on("toggleCvcHint", this.onToggleCvcHint);
     listener.on("toPage", this.toThisPage);

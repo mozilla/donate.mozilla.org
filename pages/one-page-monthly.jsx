@@ -16,6 +16,7 @@ module.exports = React.createClass({
         <Header locale={this.props.locales[0]} alt={this.getIntlMessage('donate_to_mozilla')}></Header>
         <SingleForm
           billingAddress={true}
+          monthlyPopup={true}
           currency={this.props.currency}
           presets={this.props.presets}
           amount={this.props.amount}

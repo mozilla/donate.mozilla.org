@@ -1,0 +1,78 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity 500ms;
+  opacity: 0;
+  visibility: visible;
+  opacity: 1;
+  z-index: 1;
+  .popup {
+    margin: 70px auto;
+    padding: 20px 20px 25px;
+    background: #fff;
+    border-radius: 5px;
+    width: 100%;
+    position: relative;
+    max-width: 420px;
+    h2 {
+      font-size: 25px;
+      margin: 25px 0 40px;
+      line-height: 30px;
+      text-align: center;
+    }
+    .close {
+      position: absolute;
+      top: 13px;
+      right: 13px;
+      height: 24px;
+      width: 24px;
+      font-size: 15px;
+      color: #737373;
+      background: transparent;
+      border-radius: 50%;
+      border: 1px solid #CACACA;
+      cursor: pointer;
+      padding: 0 0 1px 1px;
+      &:hover {
+        color: #FF7B87;
+      }
+    }
+    .popup-btn {
+      padding: 18px 18px 22px;
+      border-color: #F45968;
+      border-radius: 3px;
+      color: #FFFFFF;
+      margin: 14px 20px;
+      font-size: 17px;
+      cursor: pointer;
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        border-radius: 3px;
+        top: 1px;
+        right: 1px;
+        bottom: 1px;
+        left: 1px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2))
+    }
+    .yes {
+      background-color: #F65E6C;
+      &:hover {
+        background-color: #FF7B87;
+      }
+    }
+    .no {
+      background-color: #A7AAB3;
+      &:hover {
+        background-color: #B3B6BF;
+      }
+    }
+  }
+}

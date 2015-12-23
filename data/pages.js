@@ -14,6 +14,11 @@ var pages = {
     path: '/:locale/about/?',
     handler: require('../pages/about.jsx')
   },
+  '/one-page-monthly/': {
+    name: 'one-page-monthly',
+    path: '/:locale/one-page-monthly/?',
+    handler: require('../pages/one-page-monthly.jsx')
+  },
   '/thank-you/': {
     name: 'thank-you',
     path: '/:locale/thank-you/?',

@@ -21,10 +21,13 @@ module.exports = {
       paymentType: "",
       submitting: false,
       showCvcHint: false,
-      currency: this.props.currency
+      currency: this.props.currency,
+      frequency: "",
+      amount: ""
     };
   },
   componentDidMount: function() {
+    listener.on("fieldUpdated", this.onFieldUpdated);
     form.updateState("currency", this.state.currency);
     form.updateState("presets", this.props.presets);
     form.updateField("amount", this.props.amount);
@@ -41,6 +44,22 @@ module.exports = {
     listener.off("toggleCvcHint", this.onToggleCvcHint);
     listener.off("toPage", this.toThisPage);
     listener.off("nextPage", this.nextPage);
+    listener.off("fieldUpdated", this.onFieldUpdated);
+  },
+  onFieldUpdated: function(e) {
+    var detail = e.detail;
+    var field = detail.field;
+    var value = detail.value;
+    if (field === "frequency") {
+      this.setState({
+        frequency: value
+      });
+    }
+    if (field === "amount") {
+      this.setState({
+        amount: value
+      });
+    }
   },
   onStateUpdated: function(e) {
     var detail = e.detail;

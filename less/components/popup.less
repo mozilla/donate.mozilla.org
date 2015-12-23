@@ -1,10 +1,10 @@
 .overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.5);
   transition: opacity 500ms;
   opacity: 0;
   visibility: visible;
@@ -12,55 +12,67 @@
   z-index: 1;
   .popup {
     margin: 70px auto;
-    padding: 20px;
+    padding: 20px 20px 25px;
     background: #fff;
     border-radius: 5px;
     width: 100%;
     position: relative;
     max-width: 420px;
     h2 {
-      margin-top: 0;
-      color: #333;
-      font-size: 27px;
-      letter-spacing: -0.5px;
-      margin: 35px 0;
-      line-height: 32px;
-      font-weight: lighter;
+      font-size: 25px;
+      margin: 25px 0 40px;
+      line-height: 30px;
       text-align: center;
     }
     .close {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      transition: all 200ms;
+      top: 13px;
+      right: 13px;
+      height: 24px;
+      width: 24px;
       font-size: 15px;
-      text-decoration: none;
-      color: #333;
+      color: #737373;
+      background: transparent;
       border-radius: 50%;
-      border: 1px solid;
-      padding: 4px;
-      font-weight: lighter;
+      border: 1px solid #CACACA;
       cursor: pointer;
-    }
-    .content {
-      max-height: 30%;
-      overflow: auto;
+      padding: 0 0 1px 1px;
+      &:hover {
+        color: #FF7B87;
+      }
     }
     .popup-btn {
-      padding: 10px;
+      padding: 18px 18px 22px;
       border-color: #F45968;
-      border-radius: 5px;
+      border-radius: 3px;
       color: #FFFFFF;
-      margin-bottom: 15px;
+      margin: 14px 20px;
       font-size: 17px;
-      font-weight: lighter;
       cursor: pointer;
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        border-radius: 3px;
+        top: 1px;
+        right: 1px;
+        bottom: 1px;
+        left: 1px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2))
     }
     .yes {
-      background: #E6354A;
+      background-color: #F65E6C;
+      &:hover {
+        background-color: #FF7B87;
+      }
     }
     .no {
-      background: #9799A3;
+      background-color: #A7AAB3;
+      &:hover {
+        background-color: #B3B6BF;
+      }
     }
   }
 }

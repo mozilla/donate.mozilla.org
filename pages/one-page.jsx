@@ -4,7 +4,7 @@ import Header from '../components/header.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SingleForm from '../components/single-form.jsx';
 
-var OnePage = React.createClass({
+module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin],
   render: function() {
     var className = "row new-flow-test";
@@ -29,5 +29,3 @@ var OnePage = React.createClass({
     );
   }
 });
-
-module.exports = OnePage;

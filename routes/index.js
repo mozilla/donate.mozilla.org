@@ -121,7 +121,7 @@ var routes = {
                     service: Date.now() - signup_service
                   });
                 });
-              };
+              }
               request.log(['stripe', 'single'], {
                 request_id,
                 stripe_charge_create_service,

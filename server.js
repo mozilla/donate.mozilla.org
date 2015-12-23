@@ -27,6 +27,7 @@ if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
   goodConfig.events = {
     error: '*',
     request: [
+      'signup',
       'stripe',
       'paypal'
     ]
@@ -36,6 +37,7 @@ if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
     response: '*',
     log: '*',
     request: [
+      'signup',
       'stripe',
       'paypal'
     ]

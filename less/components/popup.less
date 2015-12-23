@@ -1,0 +1,66 @@
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  opacity: 0;
+  visibility: visible;
+  opacity: 1;
+  z-index: 1;
+  .popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 100%;
+    position: relative;
+    max-width: 420px;
+    h2 {
+      margin-top: 0;
+      color: #333;
+      font-size: 27px;
+      letter-spacing: -0.5px;
+      margin: 35px 0;
+      line-height: 32px;
+      font-weight: lighter;
+      text-align: center;
+    }
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      transition: all 200ms;
+      font-size: 15px;
+      text-decoration: none;
+      color: #333;
+      border-radius: 50%;
+      border: 1px solid;
+      padding: 4px;
+      font-weight: lighter;
+      cursor: pointer;
+    }
+    .content {
+      max-height: 30%;
+      overflow: auto;
+    }
+    .popup-btn {
+      padding: 10px;
+      border-color: #F45968;
+      border-radius: 5px;
+      color: #FFFFFF;
+      margin-bottom: 15px;
+      font-size: 17px;
+      font-weight: lighter;
+      cursor: pointer;
+    }
+    .yes {
+      background: #E6354A;
+    }
+    .no {
+      background: #9799A3;
+    }
+  }
+}

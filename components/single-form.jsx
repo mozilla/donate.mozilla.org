@@ -6,10 +6,11 @@ import {ErrorListener} from '../components/error.jsx';
 import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
 import {PayPalButton, StripeButton} from '../components/payment-options.jsx';
-
 import SubmitButton from '../components/submit-button.jsx';
 import DonateButton from '../components/donate-button.jsx';
 import {PrivacyPolicyCheckbox} from '../components/checkbox.jsx';
+import form from '../scripts/form.js';
+import {FormattedMessage, FormattedNumber} from 'react-intl';
 
 module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],
@@ -19,20 +20,126 @@ module.exports = React.createClass({
     amount: React.PropTypes.string.isRequired,
     frequency: React.PropTypes.string.isRequired
   },
+  getInitialState: function() {
+    return {
+      displayPopup: false,
+      submit: '',
+      validate: '',
+      payment: ''
+    };
+  },
+  displayMonthlyPopup: function(options) {
+    this.setState({
+      displayPopup: true,
+      submit: options.submit,
+      payment: options.payment,
+      validate: options.validate
+    });
+  },
+  closeMonthlyPopup: function() {
+    this.setState({
+      displayPopup: false
+    });
+  },
+  onPopupYes: function() {
+    if (this.state.payment === 'stripe') {
+      this.closeMonthlyPopup();
+      form.updateField("frequency", 'monthly');
+      form.updateField("amount", 5);
+      this.stripeCheckout(this.state.validate, this.state.submit, this.props.billingAddress);
+    }
+    if (this.state.payment === 'paypal') {
+      this.closeMonthlyPopup();
+      form.updateField("frequency", 'monthly');
+      form.updateField("amount", 5);
+      this.paypal(this.state.validate, this.state.submit);
+    }
+  },
+  onPopupNo: function() {
+    if (this.state.payment === 'stripe') {
+      this.closeMonthlyPopup();
+      this.stripeCheckout(this.state.validate, this.state.submit, this.props.billingAddress);
+    }
+    if (this.state.payment === 'paypal') {
+      this.closeMonthlyPopup();
+      this.paypal(this.state.validate, this.state.submit);
+    }
+  },
+  renderPopup: function() {
+    var amount = this.state.amount;
+    var newAmount = 5;
+    if (this.state.displayPopup) {
+      return (
+        <div id="popup1" className="overlay">
+          <div className="popup">
+            <h2>
+              <FormattedMessage
+                message={this.getIntlMessage('h1_popup_further_monlth')}
+                amount={<span>
+                  { this.state.currency.code ?
+                  <FormattedNumber
+                    maximumFractionDigits={2}
+                    value={amount}
+                    style="currency"
+                    currency={this.state.currency.code}
+                  /> : "" }
+                </span>}
+              />
+
+          </h2>
+            <a className="close fa fa-close" onClick={this.closeMonthlyPopup}></a>
+            <div className="content">
+              <div className="popup-btn yes" onClick={this.onPopupYes}>
+                <FormattedMessage
+                  message={this.getIntlMessage('popup_answer_yes')}
+                  newAmount={<span>
+                    { this.state.currency.code ?
+                    <FormattedNumber
+                      maximumFractionDigits={2}
+                      value={newAmount}
+                      style="currency"
+                      currency={this.state.currency.code}
+                    /> : "" }
+                  </span>}
+                />
+            </div>
+              <div className="popup-btn no" onClick={this.onPopupNo}>
+                <FormattedMessage
+                  message={this.getIntlMessage('popup_answer_no')}
+                  amount={<span>
+                    { this.state.currency.code ?
+                    <FormattedNumber
+                      maximumFractionDigits={2}
+                      value={amount}
+                      style="currency"
+                      currency={this.state.currency.code}
+                    /> : "" }
+                  </span>}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <span></span>
+    );
+  },
   checkMonthlyStripePopup: function(validate, submit) {
-    if (this.props.displayMonthlyPopup) {
-      this.props.displayMonthlyPopup(function() {
-        this.stripeCheckout(validate, submit, this.props.billingAddress);
-      });
+    var amount = parseInt(this.state.amount, 10);
+    if (this.displayMonthlyPopup && this.state.currency.code === "usd" &&
+        this.state.frequency === "single" && amount >= 5 && amount <= 50) {
+      this.displayMonthlyPopup({payment: 'stripe', validate: validate, submit: submit});
       return;
     }
     this.stripeCheckout(validate, submit, this.props.billingAddress);
   },
   checkMonthlyPaypalPopup: function(validate, submit) {
-    if (this.props.displayMonthlyPopup) {
-      this.props.displayMonthlyPopup(function() {
-        this.paypal(validate, submit);
-      });
+    var amount = parseInt(this.state.amount, 10);
+    if (this.displayMonthlyPopup && this.state.currency.code === "usd" &&
+        this.state.frequency === "single" && amount >= 5 && amount <= 50) {
+      this.displayMonthlyPopup({payment: 'paypal', validate: validate, submit: submit});
       return;
     }
     this.paypal(validate, submit);
@@ -132,6 +239,7 @@ module.exports = React.createClass({
             </span>
           </h2>
         </SectionHeading>
+        {this.renderPopup()}
         <div className="frequency-move">
           <Frequency name="frequency-test"/>
         </div>

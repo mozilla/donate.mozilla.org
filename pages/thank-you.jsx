@@ -51,6 +51,10 @@ var DonationMessage = React.createClass({
 
 var ThankYou = React.createClass({
   mixins: [IntlMixin],
+  panelPositions: {
+    donationMessage: 0,
+    signUpOrSocial:  1
+  },
   componentDidMount: function() {
     form.updateField("email", this.props.email || "");
     analytics();
@@ -60,9 +64,14 @@ var ThankYou = React.createClass({
   },
   renderSignupOrSocial: function() {
     var locale = this.props.locales[0];
-    var signUpOrSocial = (<Social language={locale} isHidden={this.state.currentPanelPos !== 1}/>);
+    var signUpOrSocial = (<Social language={locale} isHidden={this.state.currentPanelPos !== this.panelPositions.signUpOrSocial}/>);
     if (this.props.params && /^(en|de)(\b|$)/.test(locale)) {
-      signUpOrSocial = (<Signup country={this.props.country} email={this.props.email} locales={this.props.locales} isHidden={this.state.currentPanelPos !== 1}/>);
+      signUpOrSocial = (<Signup
+        country={this.props.country}
+        email={this.props.email}
+        locales={this.props.locales}
+        isHidden={this.state.currentPanelPos !== this.panelPositions.signUpOrSocial}
+      />);
     }
     return signUpOrSocial;
   },
@@ -93,11 +102,11 @@ var ThankYou = React.createClass({
           </span>
           <div>
             <DonationMessage
-              name="donationMmessage"
+              name="donationMessage"
               locales={this.props.locales || []}
               country={this.props.country || ""}
               whenFinished={this.incrementPanelPos}
-              isHidden={this.state.currentPanelPos !== 0}
+              isHidden={this.state.currentPanelPos !== this.panelPositions.donationMessage}
             />
             {this.renderSignupOrSocial()}
             <Footer/>

@@ -138,7 +138,7 @@ module.exports = React.createClass({
   renderPrivacyPolicy: function() {
     if (this.props.privacyPolicyTest) {
       return (
-        <p className="full">{this.props.privacyPolicyTest}</p>
+        <p className="full"><FormattedHTMLMessage message={this.props.privacyPolicyTest}/></p>
       );
     }
     return (

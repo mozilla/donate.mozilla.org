@@ -6,8 +6,7 @@ module.exports = React.createClass({
     var appURL = process.env.APPLICATION_URI;
     var twitterShareURL = 'https://twitter.com/share?url=' + appURL +'/' + this.props.language + '/&text=' + encodeURIComponent(this.getIntlMessage('i_donated_to_mozilla'));
     var facebookShareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + appURL + '/' + this.props.language + '/';
-    var shouldDisplay = this.props.shouldDisplay === undefined ? true : this.props.shouldDisplay;
-    return shouldDisplay ? (
+    return this.props.isHidden ? null : (
       <div className="share-page">
         <div className="container">
           <span className="base-line-thank-you">
@@ -51,7 +50,7 @@ module.exports = React.createClass({
           </span>
         </div>
       </div>
-    ) : null;
+    );
   }
 
 });

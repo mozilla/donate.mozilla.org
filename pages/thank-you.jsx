@@ -20,14 +20,14 @@ var DonationMessage = React.createClass({
   },
   sendMessage: function() {
     this.setState({submitting: true});
-    console.log('sending message');
+    this.props.whenFinished();
   },
   render: function() {
     var className = "row new-flow-test";
     if (this.props.test) {
       className += " " + this.props.test;
     }
-    return (
+    return this.props.isHidden ? null : (
       <div>
         <div className="container">
           <div className="row new-flow-thank-you">
@@ -41,8 +41,8 @@ var DonationMessage = React.createClass({
             >
             Send Message
             </SubmitButton>
+            <div className="skip-msg" onClick={this.props.whenFinished}>No thanks.</div>
           </div>
-          <a className="skip-msg">No thanks.</a>
         </div>
       </div>
     );
@@ -55,13 +55,23 @@ var ThankYou = React.createClass({
     form.updateField("email", this.props.email || "");
     analytics();
   },
+  getInitialState: function() {
+    return {currentPanelPos: 0};
+  },
+  renderSignupOrSocial: function() {
+    var locale = this.props.locales[0];
+    var signUpOrSocial = (<Social language={locale} isHidden={this.state.currentPanelPos !== 1}/>);
+    if (this.props.params && /^(en|de)(\b|$)/.test(locale)) {
+      signUpOrSocial = (<Signup country={this.props.country} email={this.props.email} locales={this.props.locales} isHidden={this.state.currentPanelPos !== 1}/>);
+    }
+    return signUpOrSocial;
+  },
+  incrementPanelPos: function(component) {
+    var nextPos = this.state.currentPanelPos += 1;
+    this.setState({currentPanelPos: nextPos});
+  },
   render: function() {
     var className = "row new-flow-test";
-    var locale = this.props.locales[0];
-    var signUpOrSocial = (<Social language={locale} shouldDisplay={false} />);
-    if (this.props.params && /^(en|de)(\b|$)/.test(locale)) {
-      signUpOrSocial = (<Signup country={this.props.country} email={this.props.email} locales={this.props.locales} shouldDisplay={false} />);
-    }
     if (this.props.test) {
       className += " " + this.props.test;
     }
@@ -82,8 +92,14 @@ var ThankYou = React.createClass({
             <ThankYouHeader/>
           </span>
           <div>
-            <DonationMessage name="donationMmessage" locales={this.props.locales} country={this.props.country} />
-            {signUpOrSocial}
+            <DonationMessage
+              name="donationMmessage"
+              locales={this.props.locales || []}
+              country={this.props.country || ""}
+              whenFinished={this.incrementPanelPos}
+              isHidden={this.state.currentPanelPos !== 0}
+            />
+            {this.renderSignupOrSocial()}
             <Footer/>
           </div>
         </div>

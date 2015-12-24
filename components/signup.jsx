@@ -8,7 +8,9 @@ import SubmitButton from '../components/submit-button.jsx';
 var Form = React.createClass({
   mixins: [IntlMixin, require('../mixins/form.jsx')],
   render: function() {
-    return (
+    // Display unless told otherwise
+    var shouldDisplay = this.props.shouldDisplay === undefined ? true : this.props.shouldDisplay;
+    return shouldDisplay ? (
       <div>
         <div className="container">
           <div className="wrap">
@@ -53,7 +55,7 @@ var Form = React.createClass({
           </div>
         </div>
       </div>
-    );
+    ) : null;
   }
 
 });

@@ -8,7 +8,6 @@ import Frequency from '../components/donation-frequency.jsx';
 import {PayPalButton, StripeButton} from '../components/payment-options.jsx';
 import SubmitButton from '../components/submit-button.jsx';
 import DonateButton from '../components/donate-button.jsx';
-import {PrivacyPolicyCheckbox} from '../components/checkbox.jsx';
 import form from '../scripts/form.js';
 import {FormattedMessage, FormattedHTMLMessage, FormattedNumber} from 'react-intl';
 
@@ -18,7 +17,6 @@ module.exports = React.createClass({
     currency: React.PropTypes.object.isRequired,
     presets: React.PropTypes.array.isRequired,
     amount: React.PropTypes.string.isRequired,
-    privacyPolicyTest: React.PropTypes.string,
     frequency: React.PropTypes.string.isRequired
   },
   getInitialState: function() {
@@ -136,13 +134,8 @@ module.exports = React.createClass({
     this.stripeCheckout(validate, submit, this.props.billingAddress);
   },
   renderPrivacyPolicy: function() {
-    if (this.props.privacyPolicyTest) {
-      return (
-        <p className="full"><FormattedHTMLMessage message={this.props.privacyPolicyTest}/></p>
-      );
-    }
     return (
-      <PrivacyPolicyCheckbox name="privacyPolicy"/>
+      <p className="full"><FormattedHTMLMessage message={this.getIntlMessage("privacy_policy_var_b")}/></p>
     );
   },
   checkMonthlyPaypalPopup: function(validate, submit) {
@@ -157,10 +150,6 @@ module.exports = React.createClass({
     this.paypal(validate, submit);
   },
   renderPaymentOptions: function() {
-    var validateArray = ["amount", "privacyPolicy"];
-    if (this.props.privacyPolicyTest) {
-      validateArray = ["amount"];
-    }
     if (!this.state.currency.disabled) {
       return (
         <span>
@@ -176,14 +165,14 @@ module.exports = React.createClass({
             <StripeButton
               name="payment-type-test"
               submit={["frequency-test", "amount"]}
-              validate={validateArray}
+              validate={["amount"]}
               onSubmit={this.checkMonthlyStripePopup}
             />
             <PayPalButton
               name="payment-type-test"
               submitting={this.state.submitting}
               submit={["frequency-test", "amount"]}
-              validate={validateArray}
+              validate={["amount"]}
               onSubmit={this.checkMonthlyPaypalPopup}
             />
           </div>
@@ -191,14 +180,14 @@ module.exports = React.createClass({
             <StripeButton
               name="payment-type"
               submit={["frequency", "amount"]}
-              validate={validateArray}
+              validate={["amount"]}
               onSubmit={this.checkMonthlyStripePopup}
             />
             <PayPalButton
               name="payment-type"
               submitting={this.state.submitting}
               submit={["frequency", "amount"]}
-              validate={validateArray}
+              validate={["amount"]}
               onSubmit={this.checkMonthlyPaypalPopup}
             />
           </div>
@@ -224,7 +213,7 @@ module.exports = React.createClass({
             <SubmitButton
               submitting={this.state.submitting}
               submit={["amount", "frequency"]}
-              validate={validateArray}
+              validate={["amount"]}
               onSubmit={this.checkMonthlyStripePopup}
             >
               <DonateButton currency={this.state.currency}/>
@@ -234,7 +223,7 @@ module.exports = React.createClass({
             <SubmitButton
               submitting={this.state.submitting}
               submit={["amount", "frequency-test"]}
-              validate={validateArray}
+              validate={["amount"]}
               onSubmit={this.checkMonthlyStripePopup}
             >
               <DonateButton currency={this.state.currency}/>

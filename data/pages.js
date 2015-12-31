@@ -19,16 +19,6 @@ var pages = {
     path: '/:locale/one-page-monthly/?',
     handler: require('../pages/one-page-monthly.jsx')
   },
-  '/one-page-policy-a/': {
-    name: 'one-page-policy-a',
-    path: '/:locale/one-page-policy-a/?',
-    handler: require('../pages/one-page-policy-a.jsx')
-  },
-  '/one-page-policy-b/': {
-    name: 'one-page-policy-b',
-    path: '/:locale/one-page-policy-b/?',
-    handler: require('../pages/one-page-policy-b.jsx')
-  },
   '/thank-you/': {
     name: 'thank-you',
     path: '/:locale/thank-you/?',

@@ -8,7 +8,7 @@ import SubmitButton from '../components/submit-button.jsx';
 var Form = React.createClass({
   mixins: [IntlMixin, require('../mixins/form.jsx')],
   render: function() {
-    return (
+    return this.props.isHidden ? null : (
       <div>
         <div className="container">
           <div className="wrap">

@@ -1,7 +1,6 @@
 module.exports = function(driver, By, done) {
   driver.get('http://localhost:3000/en-US/');
   driver.findElement(By.id('amount-other-input')).sendKeys('10');
-  driver.findElement(By.id('privacy-policy-checkbox')).click();
   driver.findElement(By.css('.frequency-move-baseline .payment-cc-label')).click();
 
   driver.switchTo().frame(driver.findElement(By.css(".stripe_checkout_app")));
@@ -53,7 +52,6 @@ module.exports = function(driver, By, done) {
 
   driver.get('http://localhost:3000/en-US/partial-page/');
   driver.findElement(By.id('amount-other-input')).sendKeys('10');
-  driver.findElement(By.id('privacy-policy-checkbox')).click();
   driver.findElement(By.css('.frequency-move-baseline .payment-cc-label')).click();
 
   driver.switchTo().frame(driver.findElement(By.css(".stripe_checkout_app")));
@@ -98,7 +96,6 @@ module.exports = function(driver, By, done) {
 
   driver.get('http://localhost:3000/pa-IN/');
   driver.findElement(By.id('amount-other-input')).sendKeys('200');
-  driver.findElement(By.id('privacy-policy-checkbox')).click();
   driver.findElement(By.css('.frequency-move-baseline .submit-btn')).click();
 
   driver.switchTo().frame(driver.findElement(By.css(".stripe_checkout_app")));
@@ -148,10 +145,9 @@ module.exports = function(driver, By, done) {
     });
   });
 
-  driver.get('http://localhost:3000/pa-IN/?test=frequency-move-test&billingAddress=partial');
+  driver.get('http://localhost:3000/pa-IN/partial-page/?test=frequency-move-test');
   driver.findElement(By.css('.frequency-move .monthly-payment')).click();
   driver.findElement(By.id('amount-other-input')).sendKeys('200');
-  driver.findElement(By.id('privacy-policy-checkbox')).click();
   driver.findElement(By.css('.frequency-move-test .submit-btn')).click();
 
   driver.switchTo().frame(driver.findElement(By.css(".stripe_checkout_app")));

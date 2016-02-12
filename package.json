@@ -103,7 +103,7 @@
     "karma-webpack": "1.7.0",
     "mocha": "2.3.4",
     "react-test-context": "0.1.0",
-    "selenium-webdriver": "2.48.2",
+    "selenium-webdriver": "2.52.0",
     "should": "8.0.2"
   },
   "engines": {

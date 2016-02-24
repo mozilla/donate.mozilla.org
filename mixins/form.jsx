@@ -285,7 +285,7 @@ module.exports = {
       }
     });
   },
-  stripeCheckout: function(validate, props, billingAddress) {
+  stripeCheckout: function(validate, props, billingAddress, appName) {
     var submit = this.submit;
     var success = this.stripeSuccess;
     var error = this.stripeError;
@@ -304,6 +304,10 @@ module.exports = {
     if (submitProps.frequency === "monthly") {
       description = this.getIntlMessage("mozilla_monthly_donation");
       handlerDesc = this.getIntlMessage("donate_monthly");
+    }
+
+    if (appName === "thunderbird") {
+      description = "Thunderbird";
     }
 
     var locale = this.props.locales[0];
@@ -350,14 +354,14 @@ module.exports = {
 
     // Open Checkout with further options
     handler.open({
-      name: this.getIntlMessage("mozilla_foundation"),
+      name: appName || this.getIntlMessage("mozilla_foundation"),
       description: handlerDesc,
       currency: currency,
       // Stripe wants cents.
       amount: amountModifier.stripe(submitProps.amount, currency)
     });
   },
-  paypal: function(validate, props) {
+  paypal: function(validate, props, appName) {
     var valid = form.validate(validate);
     var submitProps = {};
     var description = this.getIntlMessage("mozilla_donation");
@@ -366,8 +370,15 @@ module.exports = {
         submitting: true
       });
       submitProps = form.buildProps(props);
+
+      if (appName === "thunderbird") {
+        description = "Thunderbird";
+      }
       if (submitProps.frequency === "monthly") {
         description = this.getIntlMessage("mozilla_monthly_donation");
+        if (appName === "thunderbird") {
+          description = "Thunderbird monthly";
+        }
       }
       submitProps.description = description;
       this.submit("/api/paypal", submitProps, function(json) {

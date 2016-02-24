@@ -53,6 +53,16 @@ var pages = {
     name: 'directory-tiles',
     path: '/:locale/directory-tiles/?',
     handler: require('../pages/directory-tiles.jsx')
+  },
+  '/thunderbird/': {
+    name: 'thunderbird-onepage',
+    path: '/:locale/thunderbird/?',
+    handler: require('../pages/thunderbird/one-page.jsx')
+  },
+  '/thunderbird/about/': {
+    name: 'thunderbird-about',
+    path: '/:locale/thunderbird/about/?',
+    handler: require('../pages/thunderbird/about.jsx')
   }
 };
 

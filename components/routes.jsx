@@ -24,11 +24,11 @@ var routes = (
       })
     }
     {
-      Object.keys(pages).map(function(key) {
+      Object.keys(pages).map(function(key, i) {
         var routeOBJ = {
           key:  pages[key].name,
           name: pages[key].name,
-          path: '/' + pages[key].name + '/?',
+          path: Object.keys(pages)[i],
           handler: pages[key].handler
         };
         return (

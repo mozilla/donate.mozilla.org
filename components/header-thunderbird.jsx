@@ -16,7 +16,7 @@ module.exports = React.createClass({
     return (
       <div className="header">
         <h1>
-          <img alt={alt} src="/assets/images/mozilla.5e83dba715a0469b92071758876f0373.svg" />
+          <img alt={alt} src="/assets/images/thunderbird_logo-wordmark.png" />
         </h1>
         <div className="header-copy">
           <div className="row">

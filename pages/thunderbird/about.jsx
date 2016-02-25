@@ -1,23 +1,19 @@
 import React from 'react';
 import Footer from '../../components/footer.jsx';
-import SmallPrint from '../../components/small-print.jsx';
+import SmallPrint from '../../components/small-print-thunderbird.jsx';
 import SingleForm from '../../components/single-form.jsx';
 
 module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin],
   render: function() {
-    var className = "row additional-info-container new-flow-test";
-    if (this.props.test) {
-      className += " " + this.props.test;
-    }
+    var className = "row additional-info-container thunderbird";
     return (
       <div className={className}>
         <div className="additional-info-page">
           <div className="container additional-page">
-            <img className="heart-image" height="100" width="107" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
+            <img className="internet-graphic" height="100" width="107" src="/assets/images/thunderbird-logo.png"/>
             <div>
-              <img className="mozilla-watermark" src="/assets/images/mozilla.5e83dba715a0469b92071758876f0373.svg"/>
-              <span>Thunderbird MTF</span>
+              We're the leading open source cross-platform email and calendaring client, free for business and personal use. By donating you'll help ensure it stays that way and contribute towards future development. Will you give today?
             </div>
           </div>
           <SingleForm

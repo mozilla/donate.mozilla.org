@@ -1,16 +1,13 @@
 import React from 'react';
 import Footer from '../../components/footer.jsx';
-import Header from '../../components/header.jsx';
-import SmallPrint from '../../components/small-print.jsx';
+import Header from '../../components/header-thunderbird.jsx';
+import SmallPrint from '../../components/small-print-thunderbird.jsx';
 import SingleForm from '../../components/single-form.jsx';
 
 module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin],
   render: function() {
-    var className = "row new-flow-test";
-    if (this.props.test) {
-      className += " " + this.props.test;
-    }
+    var className = "row thunderbird";
     return (
       <div className={className}>
         <Header locale={this.props.locales[0]} alt={this.getIntlMessage('donate_to_mozilla')}></Header>

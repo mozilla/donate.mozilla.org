@@ -12,9 +12,7 @@ module.exports = React.createClass({
         <div className="additional-info-page">
           <div className="container additional-page">
             <img className="internet-graphic" height="100" width="107" src="/assets/images/thunderbird-logo.png"/>
-            <div>
-              We're the leading open source cross-platform email and calendaring client, free for business and personal use. By donating you'll help ensure it stays that way and contribute towards future development. Will you give today?
-            </div>
+            <div>{this.getIntlMessage('additional_info_thunderbird')}</div>
           </div>
           <SingleForm
             appName="thunderbird"

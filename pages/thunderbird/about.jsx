@@ -11,7 +11,7 @@ module.exports = React.createClass({
       <div className={className}>
         <div className="additional-info-page">
           <div className="container additional-page">
-            <img className="internet-graphic" height="100" width="107" src="/assets/images/thunderbird-logo.png"/>
+            <img className="internet-graphic" width="224" src="/assets/images/thunderbird-logo-wordmark-small.png"/>
             <div>{this.getIntlMessage('additional_info_thunderbird')}</div>
           </div>
           <SingleForm

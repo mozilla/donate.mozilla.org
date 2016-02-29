@@ -1,16 +1,19 @@
 import React from 'react';
 
-module.exports = React.createClass({
+var Header = React.createClass({
   propTypes: {
     alt: React.PropTypes.string,
-    locale: React.PropTypes.string
+    children: React.PropTypes.any
+  },
+  contextTypes: {
+    intl: React.PropTypes.object
   },
   render: function() {
     var alt = "Mozilla";
 
     // FIXME: Should update the list in the regex for locales that did the translation
     // for whatever `alt` that has been translated.
-    if (/^(en)(\b|$)/.test(this.props.locale)) {
+    if (/^(en)(\b|$)/.test(this.context.intl.locale)) {
       alt = this.props.alt;
     }
     return (
@@ -27,3 +30,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = Header;

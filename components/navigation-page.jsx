@@ -5,7 +5,8 @@ var NavigationPage = React.createClass({
   propTypes: {
     activePage: React.PropTypes.number.isRequired,
     index: React.PropTypes.number.isRequired,
-    errors: React.PropTypes.array
+    errors: React.PropTypes.array,
+    children: React.PropTypes.any
   },
   componentDidMount: function() {
     if (this.props.errors) {

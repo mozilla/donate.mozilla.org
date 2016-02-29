@@ -16,10 +16,6 @@ First we get an array of all our paths from `/scripts/paths.js`.
 
 `/data/pages.js` is a simple list of pages, it doesn't deal with locale or currency pages. `/scripts/paths.js` then compiles a list of all possible paths based on our pages.
 
-Webpack then uses [SimpleHtmlPrecompiler](https://www.npmjs.com/package/simple-html-precompiler) plugin to turn those paths into static HTML files.
-
-`SimpleHtmlPrecompiler` calls `React.renderToStaticMarkup` for each path, building in locale and currency data, and returns the resulting HTML from `renderToStaticMarkup` to Webpack.
-
 ## React Client Side
 
 Once the static page is served up, React checks for any changes, it shouldn't find any, and should do nothing. From here React works as normal.

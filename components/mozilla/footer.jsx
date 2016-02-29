@@ -1,12 +1,13 @@
 import React from 'react';
 import Footer from '../footer.jsx';
-import { IntlMixin } from 'react-intl';
 
 var MozillaFooter = React.createClass({
-  mixins: [IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   render: function() {
     return (
-      <Footer message={ this.getIntlMessage("firefox_footer") } {...this.props}/>
+      <Footer message={ this.context.intl.formatMessage({id: "firefox_footer"}) } {...this.props}/>
     );
   }
 });

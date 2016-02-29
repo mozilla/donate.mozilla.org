@@ -1,7 +1,7 @@
 import React from 'react';
 import MozillaFooter from '../components/footer-mozilla.jsx';
 import Header from '../components/header.jsx';
-import { IntlMixin, FormattedHTMLMessage } from 'react-intl';
+import { injectIntl, FormattedHTMLMessage } from 'react-intl';
 import assign from 'react/lib/Object.assign';
 
 var divStyle = {
@@ -48,10 +48,9 @@ var heart = {
   darkRed: (<i style={darkRed} className={heartClassName}></i>)
 };
 
-module.exports = React.createClass({
-  mixins: [IntlMixin],
+var DirectoryTiles = injectIntl(React.createClass({
   render: function() {
-    var donateNow = this.getIntlMessage('donate_now');
+    var donateNow = this.props.intl.formatMessage({id: 'donate_now'});
     return (
       <div className="coinbase-page row">
         <Header>
@@ -59,49 +58,49 @@ module.exports = React.createClass({
         </Header>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy01.png" />
-          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} message={this.getIntlMessage('red_heart_the_web')}/></h2>
+          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} message={this.props.intl.formatMessage({id: 'red_heart_the_web'})}/></h2>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy02.png" />
-          <h2 style={textStyle}>{this.getIntlMessage('give_before_31')}</h2>
+          <h2 style={textStyle}>{this.props.intl.formatMessage({id: 'give_before_31'})}</h2>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy03.png" />
-          <h2 style={textStyle}><FormattedHTMLMessage darkRedHeart={heart.darkRed} message={this.getIntlMessage('darkRed_heart_the_web')}/></h2>
+          <h2 style={textStyle}><FormattedHTMLMessage darkRedHeart={heart.darkRed} message={this.props.intl.formatMessage({id: 'darkRed_heart_the_web'})}/></h2>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy04.png" />
-          <h2 style={textStyle}>{this.getIntlMessage('give_before_31')}</h2>
+          <h2 style={textStyle}>{this.props.intl.formatMessage({id: 'give_before_31'})}</h2>
           <div style={btn}>
             {donateNow}
           </div>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy05.png" />
-          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} message={this.getIntlMessage('red_heart_mozilla')}/></h2>
+          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} message={this.props.intl.formatMessage({id: 'red_heart_mozilla'})}/></h2>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy06.png" />
-          <h2 style={textStyle}>{this.getIntlMessage('give_before_31')}</h2>
+          <h2 style={textStyle}>{this.props.intl.formatMessage({id: 'give_before_31'})}</h2>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy07.png" />
-          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} message={this.getIntlMessage('red_heart_mozilla')}/></h2>
+          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} message={this.props.intl.formatMessage({id: 'red_heart_mozilla'})}/></h2>
           <div style={btn}>
             {donateNow}
           </div>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy08.png" />
-          <h2 style={textStyle}>{this.getIntlMessage('give_before_31')}</h2>
+          <h2 style={textStyle}>{this.props.intl.formatMessage({id: 'give_before_31'})}</h2>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy09.png" />
-          <h2 style={rolloverStyle}>{this.getIntlMessage('support_mozilla')}</h2>
+          <h2 style={rolloverStyle}>{this.props.intl.formatMessage({id: 'support_mozilla'})}</h2>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy10.png" />
-          <h2 style={rolloverStyle}>{this.getIntlMessage('give_before_31')}</h2>
+          <h2 style={rolloverStyle}>{this.props.intl.formatMessage({id: 'give_before_31'})}</h2>
           <div style={btn}>
             {donateNow}
           </div>
@@ -110,4 +109,6 @@ module.exports = React.createClass({
       </div>
     );
   }
-});
+}));
+
+module.exports = DirectoryTiles;

@@ -1,66 +1,75 @@
-import React from 'react';
-import Router from 'react-router';
-import routes from '../components/routes.jsx';
-import currencies from '../data/currencies.js';
-import {localeCurrencyData, localeCountryData} from '../data/locale-data.js';
 import url from 'url';
-import locales from '../public/locales.json';
-var Path = require('path');
-var FS = require("q-io/fs");
-var englishStrings = locales["en-US"] || {};
+import React from 'react';
+import Parser from "accept-language-parser";
+import bestLang from 'bestlang';
+import ReactDOM, { renderToString } from 'react-dom/server';
+import { match, RouterContext } from 'react-router';
+import {IntlProvider} from 'react-intl';
+import routes from '../components/routes.jsx';
+import listPages from './paths.js';
+import listLocales from '../locales/index.js';
+import queryParser from './queryParser.js';
 
-module.exports = function(outputPath, callback) {
-  Router.run(routes, outputPath, function(Handler) {
-    var locale = url.parse(outputPath).pathname.split('/')[1];
-    var currencyCode = localeCurrencyData[locale] || 'usd';
-    var country = localeCountryData[locale] || 'US';
-    var favicon = "/assets/images/favicon.8af3a74ede48e250ceb935c026242483.ico";
-    var values = {
-      currency: currencies[currencyCode],
-      presets: currencies.usd.presets.single,
-      amount: '',
-      frequency: 'single',
-      country: country
-    };
-    var index = React.createFactory(require('../pages/index.jsx'));
-    var page = React.createFactory(Handler);
-    var currentStrings, mergedStrings;
-    if (outputPath.indexOf('thunderbird') !== -1) {
-      favicon = "/assets/images/thunderbird/favicon.ico";
+function makeFile(renderProps, query, callback) {
+  var values = queryParser(query, renderProps.location.pathname);
+  var intlData = {messages: values.messages, locale: values.locale};
+  var Index = React.createFactory(require('../pages/index.jsx'));
+  var favicon = "/assets/images/favicon.8af3a74ede48e250ceb935c026242483.ico";
+
+  function createElement(Component, props) {
+    // make sure you pass all the props in!
+    return <Component {...props} {...values} />;
+  }
+
+  var props = {
+    metaData: {
+      favicon,
+      current_url: renderProps.location.pathname,
+      site_name: 'mozilla.org',
+      site_url: url.resolve(process.env.APPLICATION_URI, values.locale + '/'),
+      APPLICATION_URI: process.env.APPLICATION_URI
     }
-    if (locale && locales[locale]) {
-      currentStrings = locales[locale];
-      mergedStrings = Object.assign({}, englishStrings, currentStrings);
-      values = Object.assign({}, {locales : [locale], messages: mergedStrings}, values);
-    } else {
-      locale = 'en-US';
-      values = Object.assign({}, {locales : [locale], messages: englishStrings}, values);
+  };
+
+  return ReactDOM.renderToString(<IntlProvider key="intl" {...intlData}><Index {...props}>{renderToString(<IntlProvider key="intl" {...intlData} ><RouterContext createElement={createElement} {...renderProps} /></IntlProvider>)}</Index></IntlProvider>);
+}
+module.exports = (request, reply) => {
+  function replyContent(redirect, content) {
+    let query = '';
+    if (request.url.search) {
+      query = request.url.search;
     }
-    FS.makeTree(Path.join(__dirname, '..', 'public', outputPath)).then(function() {
-      var contentOfTheFile = React.renderToStaticMarkup(index({
-        localeInfo: locale,
-        favicon,
-        metaData: {
-          current_url: outputPath,
-          desc: values.messages.i_donated_to_mozilla,
-          title: values.messages.support_mozilla,
-          site_name: 'mozilla.org',
-          site_url: url.resolve(process.env.APPLICATION_URI, locale + '/'),
-          site_title: values.messages.give_to_mozilla,
-          APPLICATION_URI: process.env.APPLICATION_URI
-        },
-        markup: React.renderToString(page(values))
-      }));
-
-      var nameOfTheFile = Path.join(__dirname, '..', 'public', outputPath, 'index.html');
-
-      FS.write(nameOfTheFile, contentOfTheFile).then(function() {
-        callback(undefined, nameOfTheFile);
-      }).catch(function(err) {
-        callback(err);
+    if (redirect) {
+      return reply.redirect(`${redirect}${query}`);
+    }
+    reply(content).type('text/html; charset=utf-8').vary('User-Agent');
+  }
+  match({ routes, location: request.url.pathname }, (error, redirectLocation, renderProps) => {
+    if (!renderProps) {
+      let header = Parser.parse(request.headers["accept-language"]);
+      let languages_array = header.map(function(l) {
+        return l.code + (l.region ? "-" + l.region : "");
       });
-    }).catch(function(e) {
-      console.log(e);
-    });
+      let locale = bestLang(languages_array, listLocales, 'en-US');
+      let pathname = redirectLocation && redirectLocation.pathname;
+      let localeInPath = pathname.split('/')[1];
+      let supportedLocale = listLocales.indexOf(localeInPath) !== -1;
+      let pageFound = listPages.indexOf(pathname) !== -1;
+
+      if (pageFound) {
+        if (localeInPath && supportedLocale) {
+          return reply(`${pathname}`);
+        }
+        return replyContent(`/${locale}${pathname}`);
+      }
+      if (!pageFound) {
+        if (supportedLocale) {
+          return replyContent(`/${localeInPath}/`);
+        }
+        return replyContent(`/${locale}/`);
+      }
+    } else if (renderProps) {
+      replyContent(null, makeFile(renderProps, request.url.query || {}));
+    }
   });
 };

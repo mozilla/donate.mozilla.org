@@ -1,4 +1,7 @@
+"use strict";
+
 require('habitat').load();
+require('babel-core/register');
 
 /*eslint-disable no-unused-vars*/
 var newrelic;
@@ -18,6 +21,7 @@ var polyfillio = require('polyfill-service');
 var PolyfillSet = require('./scripts/PolyfillSet.js');
 var exchangeRates = require('./assets/exchange-rates/latest.json');
 var routes = require('./routes');
+var reactify = require('./scripts/route-file-content');
 var goodConfig = {
   reporter: require('good-console-logfmt')
 };
@@ -259,7 +263,7 @@ module.exports = function(options) {
         );
       }
 
-      return reply.redirect('/?redirect=' + request.url.pathname);
+      return reply.redirect('/');
     }
     return reply.continue();
   });
@@ -305,10 +309,17 @@ module.exports = function(options) {
     server.route([{
       method: 'GET',
       path: '/{params*}',
-      handler: {
-        directory: {
-          path: Path.join(__dirname, 'public')
-        }
+      handler: function(request, reply) {
+        reactify(request, (redirect, content) => {
+          let query = '';
+          if (request.url.search) {
+            query = request.url.search;
+          }
+          if (redirect) {
+            return reply.redirect(`${redirect}${query}`);
+          }
+          reply(content).type('text/html; charset=utf-8').vary('User-Agent');
+        });
       },
       config: {
         cache: {

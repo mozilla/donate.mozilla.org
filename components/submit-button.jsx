@@ -1,9 +1,8 @@
 import React from 'react';
-import {IntlMixin} from 'react-intl';
+import {injectIntl} from 'react-intl';
 import {ErrorListener} from './error.jsx';
 
-var DonateButton = React.createClass({
-  mixins: [IntlMixin],
+var DonateButton = injectIntl(React.createClass({
   propTypes: {
     onClick: React.PropTypes.func,
     submitting: React.PropTypes.bool,
@@ -20,7 +19,7 @@ var DonateButton = React.createClass({
   renderButton: function() {
     if (this.props.submitting) {
       return (
-        <span><i className="fa fa-cog fa-spin"/>{this.getIntlMessage('submitting')}</span>
+        <span><i className="fa fa-cog fa-spin"/>{this.props.intl.formatMessage({id: 'submitting'})}</span>
       );
     }
     return this.props.children;
@@ -37,6 +36,6 @@ var DonateButton = React.createClass({
       </div>
     );
   }
-});
+}));
 
 module.exports = DonateButton;

@@ -23,10 +23,10 @@ import {Country, Address, Province, City, Code} from '../components/address-inpu
 import Email from '../components/email-input.jsx';
 import {PrivacyPolicyCheckbox, SignupCheckbox} from '../components/checkbox.jsx';
 
-import IntlMixin from 'react-intl';
+import {injectIntl} from 'react-intl';
 
-module.exports = React.createClass({
-  mixins: [IntlMixin, require('../mixins/form.jsx')],
+var Sequential = injectIntl(React.createClass({
+  mixins: [require('../mixins/form.jsx')],
   getInitialState() {
     return {
       activePage: 0,
@@ -38,9 +38,9 @@ module.exports = React.createClass({
       hideCreditCardDetails: false
     });
     this.setState({
-      paymentType: this.getIntlMessage('credit_card')
+      paymentType: this.props.intl.formatMessage({id: 'credit_card'})
     });
-    window.setTimeout(this.refs.creditCardInfoField.focus, 500);
+    window.setTimeout(this.refs.creditCardInfoField.refs.wrappedElement.focus, 500);
   },
   collapseCreditCardInfo: function() {
     this.setState({
@@ -69,9 +69,9 @@ module.exports = React.createClass({
       return (
         <span>
           <SectionHeading>
-            <h3>{this.getIntlMessage("choose_payment")}</h3>
+            <h3>{this.props.intl.formatMessage({id: "choose_payment"})}</h3>
             <p id="secure-label">
-              <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
+              <i className="fa fa-lock"></i>{this.props.intl.formatMessage({id: 'secure'})}
             </p>
           </SectionHeading>
           <div className="row">
@@ -90,9 +90,9 @@ module.exports = React.createClass({
       return (
         <span className="paypal-disabled">
           <SectionHeading>
-            <h3>{this.getIntlMessage("credit_card")}</h3>
+            <h3>{this.props.intl.formatMessage({id: "credit_card"})}</h3>
             <p id="secure-label">
-              <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
+              <i className="fa fa-lock"></i>{this.props.intl.formatMessage({id: 'secure'})}
             </p>
             <div className="row payment-logos credit-card-logos">
               <p>&nbsp;</p>
@@ -117,18 +117,18 @@ module.exports = React.createClass({
     }
     return (
       <div className={className}>
-        <Header locale={this.props.locales[0]} alt={this.getIntlMessage('donate_to_mozilla')}></Header>
+        <Header locale={this.props.intl.locale} alt={this.props.intl.formatMessage({id: 'donate_to_mozilla'})}></Header>
         <div className="container">
 
           <NavigationMenu>
             <AmountNavigationButton activePage={this.state.activePage} index={0}>
-              <div>{this.getIntlMessage("amount")}</div>
+              <div>{this.props.intl.formatMessage({id: "amount"})}</div>
             </AmountNavigationButton>
             <DisplayNavigationButton display={this.state.paymentType} activePage={this.state.activePage} index={1} validate={["amount"]}>
-              <div>{this.getIntlMessage("payment")}</div>
+              <div>{this.props.intl.formatMessage({id: "payment"})}</div>
             </DisplayNavigationButton>
             <NavigationButton activePage={this.state.activePage} index={2} validate={["cardNumber", "cvc", "expMonth", "expYear"]}>
-              <div>{this.getIntlMessage("personal")}</div>
+              <div>{this.props.intl.formatMessage({id: "personal"})}</div>
             </NavigationButton>
           </NavigationMenu>
 
@@ -136,13 +136,13 @@ module.exports = React.createClass({
             <Page activePage={this.state.activePage} index={0}>
               <SectionHeading>
                 <h3>
-                  {this.getIntlMessage("donate_now")}
+                  {this.props.intl.formatMessage({id: "donate_now"})}
                   <span className="right">
                     <CurrencyDropdown/>
                   </span>
                 </h3>
               </SectionHeading>
-              <AmountButtons name="amount" locale={this.props.locales[0]}/>
+              <AmountButtons name="amount" locale={this.props.intl.locale}/>
               <Frequency name="frequency"/>
               <NextButton validate={["amount"]}/>
             </Page>
@@ -177,7 +177,7 @@ module.exports = React.createClass({
                     <div className="full">
                       <div className={cvcHintClassName}>
                         <img src="/assets/images/CVC-illustration.70d7262b2227d24a2f440cc0d560b7da.png" className="left"/>
-                        <div className="">{this.getIntlMessage('cvc_info')}</div>
+                        <div className="">{this.props.intl.formatMessage({id: 'cvc_info'})}</div>
                       </div>
                     </div>
                   </div>
@@ -189,7 +189,7 @@ module.exports = React.createClass({
 
             <Page activePage={this.state.activePage} index={2} errors={["other", "firstName", "lastName", "address", "country", "province", "city", "email", "code"]}>
               <SectionHeading>
-                <h3>{this.getIntlMessage("personal")}</h3>
+                <h3>{this.props.intl.formatMessage({id: "personal"})}</h3>
               </SectionHeading>
               <div className="row name-input">
                 <div className="half">
@@ -226,7 +226,7 @@ module.exports = React.createClass({
                   </div>
                 </div>
               </div>
-              <Email name="email" info={this.getIntlMessage("email_info")}/>
+              <Email name="email" info={this.props.intl.formatMessage({id: "email_info"})}/>
               <PrivacyPolicyCheckbox name="privacyPolicy"/>
               <SignupCheckbox name="signup"/>
 
@@ -254,4 +254,6 @@ module.exports = React.createClass({
       </div>
     );
   }
-});
+}));
+
+module.exports = Sequential;

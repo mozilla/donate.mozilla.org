@@ -1,7 +1,7 @@
 import React from 'react';
+import {injectIntl} from 'react-intl';
 
-var PayPalButton = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+var PayPalButton = injectIntl(React.createClass({
   propTypes: {
     onClick: React.PropTypes.func,
     submitting: React.PropTypes.bool,
@@ -10,8 +10,9 @@ var PayPalButton = React.createClass({
     name: React.PropTypes.string.isRequired
   },
   onChange: function() {
-    this.props.onClick = this.props.onClick || function() {};
-    this.props.onClick();
+    if (this.props.onClick) {
+      this.props.onClick();
+    }
     if (!this.props.submitting) {
       this.props.onSubmit(this.props.validate, this.props.submit);
     }
@@ -19,7 +20,7 @@ var PayPalButton = React.createClass({
   renderButton: function() {
     if (this.props.submitting) {
       return (
-        <div className="submitting-container"><i className="fa fa-cog fa-spin"/>{this.getIntlMessage('submitting')}</div>
+        <div className="submitting-container"><i className="fa fa-cog fa-spin"/>{this.props.intl.formatMessage({id: 'submitting'})}</div>
       );
     }
     return (
@@ -40,14 +41,13 @@ var PayPalButton = React.createClass({
         <label className="payment-paypal-label" htmlFor={labelId}>
           {this.renderButton()}
         </label>
-        <input type="hidden" name="item_name_monthly" value={this.getIntlMessage("mozilla_donation")}/>
+        <input type="hidden" name="item_name_monthly" value={this.props.intl.formatMessage({id: "mozilla_donation"})}/>
       </div>
     );
   }
-});
+}));
 
-var StripeButton = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+var StripeButton = injectIntl(React.createClass({
   propTypes: {
     onClick: React.PropTypes.func,
     submitting: React.PropTypes.bool,
@@ -55,8 +55,9 @@ var StripeButton = React.createClass({
     name: React.PropTypes.string.isRequired
   },
   onChange: function() {
-    this.props.onClick = this.props.onClick || function() {};
-    this.props.onClick();
+    if (this.props.onClick) {
+      this.props.onClick();
+    }
     setTimeout(() => {
       this.props.onSubmit(this.props.validate, this.props.submit);
     });
@@ -71,15 +72,14 @@ var StripeButton = React.createClass({
           <div className="row payment-logos credit-card-logos">
             <p>&nbsp;</p>
           </div>
-          <div className="row medium-label-size">{this.getIntlMessage('credit_card')}</div>
+          <div className="row medium-label-size">{this.props.intl.formatMessage({id: 'credit_card'})}</div>
         </label>
       </div>
     );
   }
-});
+}));
 
-var CreditCardButton = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+var CreditCardButton = injectIntl(React.createClass({
   propTypes: {
     onClick: React.PropTypes.func.isRequired,
     name: React.PropTypes.string.isRequired
@@ -94,12 +94,12 @@ var CreditCardButton = React.createClass({
           <div className="row payment-logos credit-card-logos">
             <p>&nbsp;</p>
           </div>
-          <div className="row medium-label-size">{this.getIntlMessage('credit_card')}</div>
+          <div className="row medium-label-size">{this.props.intl.formatMessage({id: 'credit_card'})}</div>
         </label>
       </div>
     );
   }
-});
+}));
 
 module.exports = {
   PayPalButton: PayPalButton,

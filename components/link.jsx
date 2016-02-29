@@ -1,6 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
-var Link = Router.Link;
+import {Link} from 'react-router';
 
 var Linker = React.createClass({
   propTypes: {

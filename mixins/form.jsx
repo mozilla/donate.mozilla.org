@@ -13,8 +13,10 @@ module.exports = {
     presets: React.PropTypes.array,
     amount: React.PropTypes.string,
     frequency: React.PropTypes.string,
-    country: React.PropTypes.string.isRequired,
-    locales: React.PropTypes.array.isRequired
+    country: React.PropTypes.string.isRequired
+  },
+  contextTypes: {
+    router: React.PropTypes.object
   },
   getInitialState: function() {
     return {
@@ -98,7 +100,7 @@ module.exports = {
     reactGA.pageview(currentPage);
   },
   submit: function(action, props, success, error) {
-    props.locale = this.props.locales[0];
+    props.locale = this.props.intl.locale;
     var currency = this.state.currency;
     if (currency) {
       props.currency = currency.code;
@@ -134,7 +136,7 @@ module.exports = {
     var transactionId = data.id;
     var amount;
     var currency;
-    var email = data.email || "";
+    var email = data.email;
     var country = data.country || "";
     var donationFrequency = data.frequency;
     this.setState({
@@ -158,7 +160,7 @@ module.exports = {
       country = "";
     }
 
-    var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' + donationFrequency;
+    var params = 'payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' + donationFrequency;
 
     if (email) {
       params += "&email=" + email;
@@ -166,51 +168,51 @@ module.exports = {
     if (country) {
       params += "&country=" + country;
     }
-    var page = '/' + this.props.locales[0] + '/' + location + '/';
+    var page = `/${this.props.intl.locale}/${location}/`;
     reactGA.pageview(page);
-    this.transitionTo(page + '?' + params);
+    this.context.router.push(`${page}?${params}`);
   },
   stripeError: function(errorCode, errorType) {
     var cardErrorCodes = {
       "invalid_number": {
         field: "cardNumber",
-        message: this.getIntlMessage('invalid_number')
+        message: this.props.intl.formatMessage({id: 'invalid_number'})
       },
       "invalid_expiry_month": {
         field: "expMonth",
-        message: this.getIntlMessage('invalid_expiry_month')
+        message: this.props.intl.formatMessage({id: 'invalid_expiry_month'})
       },
       "invalid_expiry_year": {
         field: "expYear",
-        message: this.getIntlMessage('invalid_expiry_year')
+        message: this.props.intl.formatMessage({id: 'invalid_expiry_year'})
       },
       "invalid_cvc": {
         field: "cvc",
-        message: this.getIntlMessage('invalid_CVC')
+        message: this.props.intl.formatMessage({id: 'invalid_CVC'})
       },
       "incorrect_number": {
         field: "cardNumber",
-        message: this.getIntlMessage('incorrect_number')
+        message: this.props.intl.formatMessage({id: 'incorrect_number'})
       },
       "expired_card": {
         field: "cardNumber",
-        message: this.getIntlMessage('expired_card')
+        message: this.props.intl.formatMessage({id: 'expired_card'})
       },
       "incorrect_cvc": {
         field: "cvc",
-        message: this.getIntlMessage('incorrect_CVC')
+        message: this.props.intl.formatMessage({id: 'incorrect_CVC'})
       },
       "incorrect_zip": {
         field: "code",
-        message: this.getIntlMessage('invalid_zip')
+        message: this.props.intl.formatMessage({id: 'invalid_zip'})
       },
       "card_declined": {
         field: "cardNumber",
-        message: this.getIntlMessage('declined_card')
+        message: this.props.intl.formatMessage({id: 'declined_card'})
       },
       "processing_error": {
         field: "cardNumber",
-        message: this.getIntlMessage('transaction_try_another')
+        message: this.props.intl.formatMessage({id: 'transaction_try_another'})
       }
     };
 
@@ -218,7 +220,7 @@ module.exports = {
     if (errorType === "card_error" && cardError) {
       form.error(cardError.field, cardError.message);
     } else {
-      form.error("other", this.getIntlMessage('try_again_later') + " [" + errorType + "]");
+      form.error("other", this.props.intl.formatMessage({id: 'try_again_later'}) + " [" + errorType + "]");
     }
     this.setState({
       submitting: false
@@ -233,13 +235,13 @@ module.exports = {
     if (!valid || this.state.submitting) {
       return;
     }
-    var description = this.getIntlMessage("mozilla_donation");
+    var description = this.props.intl.formatMessage({id: "mozilla_donation"});
     this.setState({
       submitting: true
     });
     submitProps = form.buildProps(props);
     if (submitProps.frequency === "monthly") {
-      description = this.getIntlMessage("mozilla_monthly_donation");
+      description = this.props.intl.formatMessage({id: "mozilla_monthly_donation"});
     }
     Stripe.setPublishableKey(process.env.STRIPE_PUBLIC_KEY);
     Stripe.card.createToken({
@@ -290,8 +292,8 @@ module.exports = {
     var success = this.stripeSuccess;
     var error = this.stripeError;
     var valid = form.validate(validate);
-    var description = this.getIntlMessage("mozilla_donation");
-    var handlerDesc = this.getIntlMessage("donate_now");
+    var description = this.props.intl.formatMessage({id: "mozilla_donation"});
+    var handlerDesc = this.props.intl.formatMessage({id: "donate_now"});
     var submitProps= {};
     if (!valid || this.state.submitting) {
       return;
@@ -305,8 +307,8 @@ module.exports = {
       description = "Thunderbird";
     }
     if (submitProps.frequency === "monthly") {
-      description = this.getIntlMessage("mozilla_monthly_donation");
-      handlerDesc = this.getIntlMessage("donate_monthly");
+      description = this.props.intl.formatMessage({id: "mozilla_monthly_donation"});
+      handlerDesc = this.props.intl.formatMessage({id: "donate_monthly"});
       if (appName === "thunderbird") {
         description = "Thunderbird monthly";
       }
@@ -357,7 +359,7 @@ module.exports = {
 
     // Open Checkout with further options
     handler.open({
-      name: appName || this.getIntlMessage("mozilla_foundation"),
+      name: appName || this.props.intl.formatMessage({id: "mozilla_foundation"}),
       description: handlerDesc,
       currency: currency,
       // Stripe wants cents.
@@ -367,7 +369,7 @@ module.exports = {
   paypal: function(validate, props, appName) {
     var valid = form.validate(validate);
     var submitProps = {};
-    var description = this.getIntlMessage("mozilla_donation");
+    var description = this.props.intl.formatMessage({id: "mozilla_donation"});
     if (valid) {
       this.setState({
         submitting: true
@@ -378,7 +380,7 @@ module.exports = {
         description = "Thunderbird";
       }
       if (submitProps.frequency === "monthly") {
-        description = this.getIntlMessage("mozilla_monthly_donation");
+        description = this.props.intl.formatMessage({id: "mozilla_monthly_donation"});
         if (appName === "thunderbird") {
           description = "Thunderbird monthly";
         }
@@ -393,15 +395,15 @@ module.exports = {
     this.setState({
       submitting: false
     });
-    var page = '/' + this.props.locales[0] + '/share/';
+    var page = '/' + this.props.intl.locale + '/share/';
     reactGA.pageview(page);
-    this.transitionTo(page);
+    this.context.router.push(page);
   },
   signupError: function(result) {
     this.setState({
       submitting: false
     });
-    form.error("other", this.getIntlMessage('try_again_later'));
+    form.error("other", this.props.intl.formatMessage({id: 'try_again_later'}));
   },
   signup: function(validate, props) {
     var valid = form.validate(validate);

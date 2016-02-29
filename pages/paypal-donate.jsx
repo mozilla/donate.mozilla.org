@@ -7,13 +7,12 @@ import SubmitButton from '../components/submit-button.jsx';
 import DonateButton from '../components/donate-button.jsx';
 import {paypalLocales} from '../intl-config.js';
 import amountModifier from '../scripts/amount-modifier.js';
-import { IntlMixin } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 
-var PaypalForm = React.createClass({
-  mixins: [IntlMixin],
+var PaypalForm = injectIntl(React.createClass({
   getInitialState: function() {
     return {
       amount: "",
@@ -46,9 +45,9 @@ var PaypalForm = React.createClass({
   },
   submit: function(frequency) {
     if (frequency === "monthly") {
-      this.refs.paypalRecurring.getDOMNode().submit();
+      this.refs.paypalRecurring.refs.wrappedElement.submit();
     } else {
-      this.refs.paypalOneTime.getDOMNode().submit();
+      this.refs.paypalOneTime.refs.wrappedElement.submit();
     }
   },
   render: function() {
@@ -59,24 +58,24 @@ var PaypalForm = React.createClass({
         <form action={process.env.PAYPAL_ENDPOINT + "/cgi-bin/webscr"} method="post" target="_top" ref="paypalOneTime">
           <input type="hidden" name="cmd" value="_donations"/>
           <input type="hidden" name="business" value={process.env.PAYPAL_EMAIL}/>
-          <input type="hidden" name="lc" value={paypalLocales[this.props.locale]}/>
-          <input type="hidden" name="item_name" value={this.getIntlMessage("mozilla_donation")}/>
+          <input type="hidden" name="lc" value={paypalLocales[this.props.intl.locale]}/>
+          <input type="hidden" name="item_name" value={this.props.intl.formatMessage({id: "mozilla_donation"})}/>
           <input type="hidden" name="no_note" value="1"/>
           <input type="hidden" name="no_shipping" value="1"/>
           <input type="hidden" name="rm" value="1"/>
           {/* Donation Amount */}
           <input type="hidden" name="amount" value={amountModifier.paypal(amount, currencyCode)}/>
-          <input type="hidden" name="return" value={process.env.APPLICATION_URI + "/" + this.props.locale + "/thank-you/"}/>
+          <input type="hidden" name="return" value={process.env.APPLICATION_URI + "/" + this.props.intl.locale + "/thank-you/"}/>
           <input type="hidden" name="currency_code" value={currencyCode.toUpperCase()}/>
         </form>
         <form action={process.env.PAYPAL_ENDPOINT + "/cgi-bin/webscr"} method="post" ref="paypalRecurring">
           <input type="hidden" name="cmd" value="_xclick-subscriptions"/>
           <input type="hidden" name="business" value={process.env.PAYPAL_EMAIL}/>
-          <input type="hidden" name="lc" value={paypalLocales[this.props.locale]}/>
-          <input type="hidden" name="item_name" value={this.getIntlMessage("mozilla_monthly_donation")}/>
+          <input type="hidden" name="lc" value={paypalLocales[this.props.intl.locale]}/>
+          <input type="hidden" name="item_name" value={this.props.intl.formatMessage({id: "mozilla_monthly_donation"})}/>
           <input type="hidden" name="no_note" value="1"/>
           <input type="hidden" name="no_shipping" value="2"/>
-          <input type="hidden" name="return" value={process.env.APPLICATION_URI + "/" + this.props.locale + "/thank-you/"}/>
+          <input type="hidden" name="return" value={process.env.APPLICATION_URI + "/" + this.props.intl.locale + "/thank-you/"}/>
           <input type="hidden" name="src" value="1"/>
           <input type="hidden" name="p3" value="1"/>
           <input type="hidden" name="currency_code" value={currencyCode.toUpperCase()}/>
@@ -87,10 +86,10 @@ var PaypalForm = React.createClass({
       </span>
     );
   }
-});
+}));
 
-var simplePaypal = React.createClass({
-  mixins: [IntlMixin, require('../mixins/form.jsx')],
+var simplePaypal = injectIntl(React.createClass({
+  mixins: [require('../mixins/form.jsx')],
   simplePaypal: function(validate, props) {
     var valid = form.validate(validate);
     var submitProps = {};
@@ -99,7 +98,7 @@ var simplePaypal = React.createClass({
         submitting: true
       });
       submitProps = form.buildProps(props);
-      this.refs.paypalForm.submit(submitProps.frequency);
+      this.refs.paypalForm.refs.wrappedElement.submit(submitProps.frequency);
     }
   },
   render: function() {
@@ -111,7 +110,7 @@ var simplePaypal = React.createClass({
       <div className={className}>
         <Header>
           <h3>
-            {this.getIntlMessage("donate_now")}
+            {this.props.intl.formatMessage({id: "donate_now"})}
           </h3>
         </Header>
         <div className="simple-paypal">
@@ -122,17 +121,17 @@ var simplePaypal = React.createClass({
 
                 <p id="secure-label">
                   <i className="fa fa-lock"></i>
-                  {this.getIntlMessage("secure")}
+                  {this.props.intl.formatMessage({id: "secure"})}
                 </p>
               </div>
               <div className="row">
                 <div className="full">
-                  <h4>{this.getIntlMessage("select_donation")}</h4>
+                  <h4>{this.props.intl.formatMessage({id: "select_donation"})}</h4>
                 </div>
               </div>
               <div className="row">
                 <div className="full">
-                  <AmountButtons name="amount" locale={this.props.locales[0]}/>
+                  <AmountButtons name="amount" locale={this.props.intl.locale}/>
                   <Frequency name="frequency"/>
                   <SubmitButton
                     submitting={this.state.submitting}
@@ -150,17 +149,17 @@ var simplePaypal = React.createClass({
 
           <div className="row">
             <p className="donation-notice">
-              {this.getIntlMessage("donation_notice")}
+              {this.props.intl.formatMessage({id: "donation_notice"})}
             </p>
           </div>
           <PaypalForm ref="paypalForm"
-            locale={this.props.locales[0]}
+            locale={this.props.intl.locale}
           />
         </div>
         <MozillaFooter/>
       </div>
     );
   }
-});
+}));
 
 module.exports = simplePaypal;

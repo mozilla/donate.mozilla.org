@@ -1,12 +1,20 @@
 require('habitat').load();
 require('babel-core/register');
 var webpack = require('webpack');
-var SimpleHtmlPrecompiler = require('./scripts/simple-html-plugin.js');
 var Path = require('path');
-var paths = require('./scripts/paths.js');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var AssetsPlugin = require('assets-webpack-plugin');
+var moduleDetectRegEx = new RegExp(`.jsx$`);
 
+if (process.env.NPM_CONFIG_PRODUCTION !== `true`) {
+  // Remove all files from the module cache that are in the view folder.
+  Object.keys(require.cache).map((module) => {
+    if (moduleDetectRegEx.test(require.cache[module].filename)) {
+      console.log(`Clear cache file for: `, require.cache[module].filename);
+      delete require.cache[module];
+    }
+  });
+}
 module.exports = {
   entry: ['./components/client.jsx','./less/index.less'],
   output: {
@@ -54,7 +62,6 @@ module.exports = {
     }),
     new ExtractTextPlugin("style.[hash].css", {
       allChunks: true
-    }),
-    new SimpleHtmlPrecompiler(paths)
+    })
   ]
 };

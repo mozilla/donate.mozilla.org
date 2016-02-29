@@ -1,6 +1,6 @@
 import React from 'react';
 
-module.exports = React.createClass({
+var SectionHeader = React.createClass({
 
   render: function() {
     return (
@@ -11,3 +11,5 @@ module.exports = React.createClass({
   }
 
 });
+
+module.exports = SectionHeader;

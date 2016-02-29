@@ -1,42 +1,35 @@
 /*eslint-disable no-unused-vars*/
-import React from 'react';
+import React, {Component} from 'react';
 /*eslint-disable no-unused-vars*/
-
-import { Route } from 'react-router';
+import { Router, Route, browserHistory, Redirect } from 'react-router';
 import pages from '../data/pages.js';
 import locales from '../public/locales.json';
 
-var routes = (
-  <Route>
-    {
-      Object.keys(locales).map(function(locale) {
-        return Object.keys(pages).map(function(key) {
-          var routeOBJ = {
-            key:  pages[key].name + '-' + locale,
-            name: pages[key].name + '-' + locale,
-            path: pages[key].path.replace(':locale', locale),
-            handler: pages[key].handler
-          };
-          return (
-            <Route {...routeOBJ}/>
-          );
-        });
-      })
-    }
-    {
-      Object.keys(pages).map(function(key, i) {
-        var routeOBJ = {
-          key:  pages[key].name,
-          name: pages[key].name,
-          path: Object.keys(pages)[i],
-          handler: pages[key].handler
-        };
-        return (
-          <Route {...routeOBJ} />
-        );
-      })
-    }
-  </Route>
-);
+function redirect(state, replace) {
+  // This is done so that we can inject the locale in server side rendering
+  if (state.location.pathname === '/') {
+    replace('/');
+  }
+}
 
-module.exports = routes;
+export default (
+  (<Router history={browserHistory}>
+    <Route path="/" onEnter={redirect}>
+      {
+        locales.map(function(locale) {
+          return Object.keys(pages).map(function(key) {
+            var routeOBJ = {
+              path: `/${locale}${key}`,
+              component: pages[key].component
+            };
+            return (
+              <Route {...routeOBJ}/>
+            );
+          });
+        })
+      }
+    </Route>
+    <Redirect from="/**/*" to="/**/*/" />
+    <Redirect from="/*" to="/*/" />
+  </Router>)
+);

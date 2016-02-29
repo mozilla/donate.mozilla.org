@@ -2,6 +2,7 @@ import React from 'react';
 import listener from '../scripts/listener.js';
 import dispatcher from '../scripts/dispatcher.js';
 import form from '../scripts/form.js';
+import {injectIntl} from 'react-intl';
 
 var regVisa = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
 var regMC = /^(?:5[1-5][0-9]{14})$/;
@@ -56,7 +57,7 @@ var cardInfoMixin = {
     var valid = true;
     var value = this.state.value;
     if (!value || !value.trim()) {
-      form.error(this.props.field, this.getIntlMessage("please_complete"));
+      form.error(this.props.field, this.props.intl.formatMessage({id: "please_complete"}));
     }
     if (!this.validateTest(value) || this.state.error) {
       valid = false;
@@ -80,8 +81,8 @@ var cardInfoMixin = {
   }
 };
 
-var CardNumber = React.createClass({
-  mixins: [require('react-intl').IntlMixin, cardInfoMixin],
+var CardNumber = injectIntl(React.createClass({
+  mixins: [cardInfoMixin],
   validateTest: function(cardNumber) {
     cardNumber = cardNumber.replace(/ /g, "");
     if ((cardNumber.match(regVisa) && cardNumber.match(regVisa).length > 0) ||
@@ -105,14 +106,14 @@ var CardNumber = React.createClass({
     return (
       <div className="field-container">
         <i className="fa fa-credit-card field-icon"></i>
-        <input type="tel" className={className} id="card-number-input" name={this.props.name} onChange={this.onInput} value={this.state.value} placeholder={this.getIntlMessage('credit_card_number')} autoComplete="off"/>
+        <input type="tel" className={className} id="card-number-input" name={this.props.name} onChange={this.onInput} value={this.state.value} placeholder={this.props.intl.formatMessage({id: 'credit_card_number'})} autoComplete="off"/>
       </div>
     );
   }
-});
+}));
 
-var CardCvc = React.createClass({
-  mixins: [require('react-intl').IntlMixin, cardInfoMixin],
+var CardCvc = injectIntl(React.createClass({
+  mixins: [cardInfoMixin],
   validateTest: function(value) {
     return /^[0-9]{3,4}$/.test(this.state.value);
   },
@@ -134,15 +135,15 @@ var CardCvc = React.createClass({
     return (
       <div className="field-container">
         <i className="fa fa-lock field-icon"></i>
-        <input id="cvc-input" type="tel" className={className} name={this.props.name} maxLength="4" onChange={this.onInput} value={this.state.value} placeholder={this.getIntlMessage('CVC')} autoComplete="off"/>
+        <input id="cvc-input" type="tel" className={className} name={this.props.name} maxLength="4" onChange={this.onInput} value={this.state.value} placeholder={this.props.intl.formatMessage({id: 'CVC'})} autoComplete="off"/>
         <i onClick={this.hintClicked} className={hintClassIconName}></i>
       </div>
     );
   }
-});
+}));
 
-var CardExpMonth = React.createClass({
-  mixins: [require('react-intl').IntlMixin, cardInfoMixin],
+var CardExpMonth = injectIntl(React.createClass({
+  mixins: [cardInfoMixin],
   validateTest: function(value) {
     var month = parseInt(this.state.value, 10);
     if (!month || month < 1 || month > 12) {
@@ -161,14 +162,14 @@ var CardExpMonth = React.createClass({
     return (
       <span className="exp-month-container">
         <i className="fa fa-calendar-o field-icon"></i>
-        <input id="exp-month-input" className={className} aria-label={this.getIntlMessage('credit_card_expiration_month')} onChange={this.onInput} value={this.state.expMonth} type="tel" placeholder={this.getIntlMessage('MM')} maxLength="2" name={this.props.name} autoComplete="off"/>
+        <input id="exp-month-input" className={className} aria-label={this.props.intl.formatMessage({id: 'credit_card_expiration_month'})} onChange={this.onInput} value={this.state.expMonth} type="tel" placeholder={this.props.intl.formatMessage({id: 'MM'})} maxLength="2" name={this.props.name} autoComplete="off"/>
       </span>
     );
   }
-});
+}));
 
-var CardExpYear = React.createClass({
-  mixins: [require('react-intl').IntlMixin, cardInfoMixin],
+var CardExpYear = injectIntl(React.createClass({
+  mixins: [cardInfoMixin],
   validateTest: function(value) {
     var year = parseInt(this.state.value, 10);
     if (!year || year < 15) {
@@ -186,42 +187,42 @@ var CardExpYear = React.createClass({
     }
     return (
       <span className="exp-year-container">
-        <input id="exp-year-input" className={className} aria-label={this.getIntlMessage('credit_card_expiration_year')} onChange={this.onInput} value={this.state.value} type="tel" placeholder={this.getIntlMessage('YY')} maxLength="2" name={this.props.name} autoComplete="off"/>
+        <input id="exp-year-input" className={className} aria-label={this.props.intl.formatMessage({id: 'credit_card_expiration_year'})} onChange={this.onInput} value={this.state.value} type="tel" placeholder={this.props.intl.formatMessage({id: 'YY'})} maxLength="2" name={this.props.name} autoComplete="off"/>
       </span>
     );
   }
-});
+}));
 
 module.exports = {
-  CardNumber: React.createClass({
+  CardNumber: injectIntl(React.createClass({
     focus: function() {
-      this.refs.cardNumber.focus();
+      this.refs.ccNumber.refs.wrappedElement.focus();
     },
     render: function() {
       return (
-        <CardNumber ref="cardNumber" {...this.props} field="cardNumber"/>
+        <CardNumber ref="ccNumber" {...this.props} field="cardNumber"/>
       );
     }
-  }),
-  CardCvc: React.createClass({
+  })),
+  CardCvc: injectIntl(React.createClass({
     render: function() {
       return (
         <CardCvc {...this.props} field="cvc"/>
       );
     }
-  }),
-  CardExpMonth: React.createClass({
+  })),
+  CardExpMonth: injectIntl(React.createClass({
     render: function() {
       return (
         <CardExpMonth {...this.props} field="expMonth"/>
       );
     }
-  }),
-  CardExpYear: React.createClass({
+  })),
+  CardExpYear: injectIntl(React.createClass({
     render: function() {
       return (
         <CardExpYear {...this.props} field="expYear"/>
       );
     }
-  })
+  }))
 };

@@ -4,32 +4,31 @@ In this project we're using [React-Intl](https://github.com/yahoo/react-intl) to
 
 #### Localize a component or page
 
-To localize a component or page you have to include `IntlMixin` in your class `mixins`, for example:
+To localize a component or page you have to import and `injectIntl` when you create class, for example:
 
 ``` typescript
 var React = require('react');
-var IntlMixin = require('react-intl').IntlMixin;
+var injectIntl = require('react-intl').injectIntl;
 
-var Example = React.createClass({
-  mixins: [IntlMixin],
+var Example = injectIntl(React.createClass({
   render: function() {
     return (
       <div>
-        <h1>{this.getIntlMessage('key_name_here')}
+        <h1>{this.props.intl.formatMessage({id: 'key_name_here'})}
       </div>
     );
   }
 
-});
+}));
 ```
 
 If the strings include HTML, use the `FormattedHTMLMessage` element:
 
 ``` typescript
-import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 
 <FormattedHTMLMessage
-  message={ this.getIntlMessage("key_name_here") }
+  message={ this.props.intl.formatMessage({id: "key_name_here"}) }
 />
 ```
 
@@ -61,48 +60,6 @@ second=This is your second message
 ```
 
 You have to make sure you match your language code in the directory structure with what you include in your config file for the converting part otherwise it will fail.
-
-### I18N Methods
-
-`i18n.js` file exposes different methods to help with localization. These are the list of available methods when you required the module.
-
-``` js
-{
-  intlData: [Object],
-  defaultLang: [String],
-  currentLanguage: [String],
-  isSupportedLanguage: [function],
-  intlDataFor: [function],
-  urlOverrideLang: [function]
-}
-```
-
-1. `intlData`
-  This object consist of two properties. `locales` and `messages`. We use this object to pass it to React-Router in order for `getIntlMessage` to work properly.
-
-2. `defaultLang`
-  This will return default language of the application.
-
-3. `currentLanguage`
-  This will return current language of the client that visiting our site.
-
-4. `isSupportedLanguage`
-  This method expect a valid language code, and it's used to validate if we support that given language or not.
-  The return value is boolean.
-
-5. `intlDataFor`
-  This method expect a valid language code, and it will return `intlData` for the given language.
-
-6. `urlOverrideLang`
-  This method expects a path to match a language code and will return an object with the following properties:
-  ```
-  {
-    test: [boolean]
-    pathname: [String],
-    lang: [String]
-  }
-  ```
-  If there is a valid language code in the path `test` will return `true` and you can inspect the language code from `lang` property.
 
 ### Translation
 

@@ -1,8 +1,8 @@
 import React from 'react';
-import {FormattedMessage, IntlMixin, FormattedNumber} from 'react-intl';
+import {FormattedMessage, injectIntl, FormattedNumber} from 'react-intl';
 import listener from '../scripts/listener.js';
 
-module.exports = React.createClass({
+module.exports = injectIntl(React.createClass({
   getInitialState: function() {
     return {
       amount: "",
@@ -35,25 +35,24 @@ module.exports = React.createClass({
       });
     }
   },
-  mixins: [IntlMixin],
   render: function() {
     if (this.state.amount) {
       return (
         <FormattedMessage
-          message={this.getIntlMessage('donate_now_amount')}
-          donationAmount={
+          id='donate_now_amount'
+          values={{donationAmount:
             <FormattedNumber
               maximumFractionDigits={2}
               value={this.state.amount}
               style="currency"
               currency={this.state.currency.code}
             />
-          }
+          }}
         />
       );
     }
     return (
-      <span>{this.getIntlMessage("donate_now")}</span>
+      <span>{this.props.intl.formatMessage({id: "donate_now"})}</span>
     );
   }
-});
+}));

@@ -3,9 +3,9 @@ import MozillaFooter from '../components/footer-mozilla.jsx';
 import Header from '../components/header.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SingleForm from '../components/single-form.jsx';
+import {injectIntl} from 'react-intl';
 
-var OnePage = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+var OnePage = injectIntl(React.createClass({
   render: function() {
     var className = "row";
     if (this.props.test) {
@@ -13,7 +13,7 @@ var OnePage = React.createClass({
     }
     return (
       <div className={className}>
-        <Header locale={this.props.locales[0]} alt={this.getIntlMessage('donate_to_mozilla')}></Header>
+        <Header locale={this.props.intl.locale} alt={this.props.intl.formatMessage({id: 'donate_to_mozilla'})}></Header>
         <SingleForm
           billingAddress={false}
           currency={this.props.currency}
@@ -21,13 +21,13 @@ var OnePage = React.createClass({
           amount={this.props.amount}
           frequency={this.props.frequency}
           country={this.props.country}
-          locales={this.props.locales}
+          locales={this.props.intl.locales}
         />
         <SmallPrint stripeNotice={true}/>
         <MozillaFooter/>
       </div>
     );
   }
-});
+}));
 
 module.exports = OnePage;

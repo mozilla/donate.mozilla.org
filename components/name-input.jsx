@@ -1,8 +1,7 @@
 import React from 'react';
 import Input from './input.jsx';
-
-var FirstName = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+import {injectIntl} from 'react-intl';
+var FirstName = injectIntl(React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired
   },
@@ -12,17 +11,16 @@ var FirstName = React.createClass({
         <i className="fa fa-user field-icon"></i>
         <Input
           {...this.props}
-          placeholder={this.getIntlMessage('first_name')}
+          placeholder={this.props.intl.formatMessage({id: 'first_name'})}
           field="firstName"
           autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
         />
       </div>
     );
   }
-});
+}));
 
-var LastName = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+var LastName = injectIntl(React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired
   },
@@ -31,14 +29,14 @@ var LastName = React.createClass({
       <div className="field-container">
         <Input
           {...this.props}
-          placeholder={this.getIntlMessage('last_name')}
+          placeholder={this.props.intl.formatMessage({id: 'last_name'})}
           field="lastName"
           autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
         />
       </div>
     );
   }
-});
+}));
 
 module.exports = {
   FirstName: FirstName,

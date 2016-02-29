@@ -1,13 +1,12 @@
 import React from 'react';
-import { IntlMixin } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import dispatcher from '../scripts/dispatcher.js';
 import form from '../scripts/form.js';
 
-var NextButton = React.createClass({
+var NextButton = injectIntl(React.createClass({
   propTypes: {
     validate: React.PropTypes.array.isRequired
   },
-  mixins: [IntlMixin],
   onClick: function() {
     var valid = form.validate(this.props.validate);
     if (valid) {
@@ -17,11 +16,11 @@ var NextButton = React.createClass({
   render: function() {
     return (
       <button onClick={this.onClick} className="next-button">
-        {this.getIntlMessage('next')}
+        {this.props.intl.formatMessage({id: 'next'})}
         <div className="button-arrow"></div>
       </button>
     );
   }
-});
+}));
 
 module.exports = NextButton;

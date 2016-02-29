@@ -1,11 +1,10 @@
 import React from 'react';
-import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 import { ErrorMessage } from './error.jsx';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 
-var Checkbox = React.createClass({
-  mixins: [IntlMixin],
+var Checkbox = injectIntl(React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
     field: React.PropTypes.string.isRequired,
@@ -62,7 +61,7 @@ var Checkbox = React.createClass({
           <div className="full">
             <input type="checkbox" onChange={this.onCheck} checked={this.state.value} name="legal_confirm" id={this.props.id}/>
             <label htmlFor={this.props.id}>
-              <FormattedHTMLMessage message={ this.props.message } />
+              <FormattedHTMLMessage defaultMessage={ this.props.message } />
             </label>
           </div>
         </div>
@@ -71,29 +70,27 @@ var Checkbox = React.createClass({
       </div>
     );
   }
-});
+}));
 
 module.exports = {
-  PrivacyPolicyCheckbox: React.createClass({
-    mixins: [IntlMixin],
+  PrivacyPolicyCheckbox: injectIntl(React.createClass({
     propTypes: {
       name: React.PropTypes.string.isRequired
     },
     render: function() {
-      var message = this.props.message || this.getIntlMessage("privacy_policy");
+      var message = this.props.message || this.props.intl.formatMessage({id: "privacy_policy"});
       return (
         <Checkbox
           {...this.props}
           message={message}
-          error={this.getIntlMessage('pp_acknowledge')}
+          error={this.props.intl.formatMessage({id: 'pp_acknowledge'})}
           id="privacy-policy-checkbox"
           field="privacyPolicy"
         />
       );
     }
-  }),
-  SignupCheckbox: React.createClass({
-    mixins: [IntlMixin],
+  })),
+  SignupCheckbox: injectIntl(React.createClass({
     propTypes: {
       name: React.PropTypes.string.isRequired
     },
@@ -102,12 +99,12 @@ module.exports = {
         <div className="signup-checkbox">
           <Checkbox
             {...this.props}
-            message={this.getIntlMessage("yes_i_want_to_keep_in_touch")}
+            message={this.props.intl.formatMessage({id: "yes_i_want_to_keep_in_touch"})}
             id="signup-checkbox"
             field="signup"
           />
         </div>
       );
     }
-  })
+  }))
 };

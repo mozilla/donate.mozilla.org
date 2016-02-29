@@ -256,7 +256,7 @@ var routes = {
   'paypal-redirect': function(request, reply) {
     var locale = request.params.locale || '';
     if (locale) {
-      locale = '/' + locale;
+      locale = `/${locale}`;
     }
     var frequency = request.params.frequency || 'single';
     var request_id = request.headers['x-request-id'];

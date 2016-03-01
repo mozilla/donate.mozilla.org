@@ -63,6 +63,11 @@ var pages = {
     name: 'thunderbird-about',
     path: '/:locale/thunderbird/about/?',
     handler: require('../pages/thunderbird/about.jsx')
+  },
+  '/thunderbird/thank-you/': {
+    name: 'thunderbird-thank-you',
+    path: '/:locale/thunderbird/thank-you/?',
+    handler: require('../pages/thunderbird/thank-you.jsx')
   }
 };
 

@@ -14,7 +14,7 @@ var Footer = React.createClass({
           <FormattedHTMLMessage message={ this.getIntlMessage("problems_donating_thunderbird") } />
         </p>
         <p className="donation-notice">
-          {this.getIntlMessage('donation_notice')}
+          {this.getIntlMessage('donation_notice_thunderbird')}
         </p>
         <p className={stripeNotice}>
           <FormattedHTMLMessage message={ this.getIntlMessage("stripe_notice") } />

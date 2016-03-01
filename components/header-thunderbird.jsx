@@ -6,7 +6,7 @@ module.exports = React.createClass({
     locale: React.PropTypes.string
   },
   render: function() {
-    var alt = "Mozilla";
+    var alt = "Thunderbird";
 
     // FIXME: Should update the list in the regex for locales that did the translation
     // for whatever `alt` that has been translated.

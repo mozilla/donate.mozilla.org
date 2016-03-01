@@ -25,7 +25,7 @@ module.exports = function(driver, By, done) {
     driver.findElement(By.id('exp-month-input')).clear();
     driver.findElement(By.id('exp-month-input')).sendKeys('01');
     driver.findElement(By.id('exp-year-input')).clear();
-    driver.findElement(By.id('exp-year-input')).sendKeys('16');
+    driver.findElement(By.id('exp-year-input')).sendKeys('19');
     driver.findElement(By.id('cvc-input')).clear();
     driver.findElement(By.id('cvc-input')).sendKeys('123');
     driver.findElement(By.css('.page-active .next-button')).click();

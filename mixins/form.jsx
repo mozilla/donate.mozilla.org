@@ -285,11 +285,13 @@ module.exports = {
       }
     });
   },
-  stripeCheckout: function(validate, props, billingAddress) {
+  stripeCheckout: function(validate, props, billingAddress, appName) {
     var submit = this.submit;
     var success = this.stripeSuccess;
     var error = this.stripeError;
     var valid = form.validate(validate);
+    var description = this.getIntlMessage("mozilla_donation");
+    var handlerDesc = this.getIntlMessage("donate_now");
     var submitProps= {};
     if (!valid || this.state.submitting) {
       return;
@@ -298,13 +300,18 @@ module.exports = {
       submitting: true
     });
 
-    var description = this.getIntlMessage("mozilla_donation");
-    var handlerDesc = this.getIntlMessage("donate_now");
     submitProps = form.buildProps(props);
+    if (appName === "thunderbird") {
+      description = "Thunderbird";
+    }
     if (submitProps.frequency === "monthly") {
       description = this.getIntlMessage("mozilla_monthly_donation");
       handlerDesc = this.getIntlMessage("donate_monthly");
+      if (appName === "thunderbird") {
+        description = "Thunderbird monthly";
+      }
     }
+
 
     var locale = this.props.locales[0];
     var currency = this.state.currency && this.state.currency.code;
@@ -350,14 +357,14 @@ module.exports = {
 
     // Open Checkout with further options
     handler.open({
-      name: this.getIntlMessage("mozilla_foundation"),
+      name: appName || this.getIntlMessage("mozilla_foundation"),
       description: handlerDesc,
       currency: currency,
       // Stripe wants cents.
       amount: amountModifier.stripe(submitProps.amount, currency)
     });
   },
-  paypal: function(validate, props) {
+  paypal: function(validate, props, appName) {
     var valid = form.validate(validate);
     var submitProps = {};
     var description = this.getIntlMessage("mozilla_donation");
@@ -366,8 +373,15 @@ module.exports = {
         submitting: true
       });
       submitProps = form.buildProps(props);
+
+      if (appName === "thunderbird") {
+        description = "Thunderbird";
+      }
       if (submitProps.frequency === "monthly") {
         description = this.getIntlMessage("mozilla_monthly_donation");
+        if (appName === "thunderbird") {
+          description = "Thunderbird monthly";
+        }
       }
       submitProps.description = description;
       this.submit("/api/paypal", submitProps, function(json) {

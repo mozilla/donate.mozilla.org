@@ -18,7 +18,6 @@ var Index = React.createClass({
     }
     var fileHashes = JSON.parse(fs.readFileSync(Path.join(__dirname, '../public/webpack-assets.json')));
     var commentIE = '<!-- [if lt IE 10]><script src="/assets/js/jquery.min.js"></script><script src="/assets/js/placeholder.min.js"></script><![endif]-->';
-
     var ga = `
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -53,7 +52,7 @@ var Index = React.createClass({
           <title>donate.mozilla.org | {metaData.site_title}</title>
           <OptimizelySubdomain/>
           <Optimizely/>
-          <link rel="icon" href="/assets/images/favicon.8af3a74ede48e250ceb935c026242483.ico" type="image/x-icon"/>
+          <link rel="icon" href={this.props.favicon} type="image/x-icon"/>
           <link rel="stylesheet" href={'/' + fileHashes.main.css}/>
            <script dangerouslySetInnerHTML={{__html: ga}}></script>
         </head>

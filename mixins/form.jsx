@@ -290,6 +290,8 @@ module.exports = {
     var success = this.stripeSuccess;
     var error = this.stripeError;
     var valid = form.validate(validate);
+    var description = this.getIntlMessage("mozilla_donation");
+    var handlerDesc = this.getIntlMessage("donate_now");
     var submitProps= {};
     if (!valid || this.state.submitting) {
       return;
@@ -298,17 +300,18 @@ module.exports = {
       submitting: true
     });
 
-    var description = this.getIntlMessage("mozilla_donation");
-    var handlerDesc = this.getIntlMessage("donate_now");
     submitProps = form.buildProps(props);
-    if (submitProps.frequency === "monthly") {
-      description = this.getIntlMessage("mozilla_monthly_donation");
-      handlerDesc = this.getIntlMessage("donate_monthly");
-    }
-
     if (appName === "thunderbird") {
       description = "Thunderbird";
     }
+    if (submitProps.frequency === "monthly") {
+      description = this.getIntlMessage("mozilla_monthly_donation");
+      handlerDesc = this.getIntlMessage("donate_monthly");
+      if (appName === "thunderbird") {
+        description = "Thunderbird monthly";
+      }
+    }
+
 
     var locale = this.props.locales[0];
     var currency = this.state.currency && this.state.currency.code;

@@ -14,6 +14,7 @@ module.exports = function(outputPath, callback) {
     var locale = url.parse(outputPath).pathname.split('/')[1];
     var currencyCode = localeCurrencyData[locale] || 'usd';
     var country = localeCountryData[locale] || 'US';
+    var favicon = "/assets/images/favicon.8af3a74ede48e250ceb935c026242483.ico";
     var values = {
       currency: currencies[currencyCode],
       presets: currencies.usd.presets.single,
@@ -24,7 +25,9 @@ module.exports = function(outputPath, callback) {
     var index = React.createFactory(require('../pages/index.jsx'));
     var page = React.createFactory(Handler);
     var currentString, mergedStrings;
-
+    if (outputPath.indexOf('thunderbird') !== -1) {
+      favicon = "/assets/images/thunderbird/favicon.ico";
+    }
     if (locale && require('../locales/index.js').indexOf(locale) !== -1) {
       currentString = require('../locales/' + locale +'.json');
       mergedStrings = Object.assign({}, englishStrings, currentString);
@@ -36,6 +39,7 @@ module.exports = function(outputPath, callback) {
     FS.makeTree(Path.join(__dirname, '..', 'public', outputPath)).then(function() {
       var contentOfTheFile = React.renderToStaticMarkup(index({
         localeInfo: locale,
+        favicon,
         metaData: {
           current_url: outputPath,
           desc: values.messages.i_donated_to_mozilla,

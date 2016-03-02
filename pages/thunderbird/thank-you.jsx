@@ -5,7 +5,6 @@ import React from 'react';
 import Footer from '../../components/footer.jsx';
 import Header from '../../components/header.jsx';
 import Signup from '../../components/signup-thunderbird.jsx';
-// import Social from '../../components/social.jsx';
 import ThankYouHeader from '../../components/thank-you-header-thunderbird.jsx';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
 import analytics from '../../assets/js/analytics.js';

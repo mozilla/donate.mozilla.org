@@ -4,6 +4,10 @@ import { IntlMixin, FormattedHTMLMessage } from 'react-intl';
 var Footer = React.createClass({
   mixins: [IntlMixin],
   render: function() {
+    var firefox_footer = this.getIntlMessage('firefox_footer');
+    if (window.location.pathname.indexOf('thunderbird') !== -1) {
+      firefox_footer = this.getIntlMessage('firefox_thunderbird_footer');
+    }
     return (
       <footer>
         <div className="footer">
@@ -16,7 +20,7 @@ var Footer = React.createClass({
                 />
               </p>
               <p>
-                { this.getIntlMessage('firefox_footer') }
+                {firefox_footer}
               </p>
             </div>
             <div className="quarter">

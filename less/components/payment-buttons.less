@@ -8,6 +8,28 @@
   background-image: url('/assets/images/payment_logos_updated.4ca531c0b90d3635aef0c1fc78d5967e.png');
 }
 
+input.payment-type + label {
+  background-color: #EBEBEB;
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+  color: #65656D;
+}
+
+input.payment-type + label:hover {
+  background-color: #F2F2F2;
+  // This is needed to override the baseline background.
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+}
+input.payment-type + label:hover {
+  // This is needed to override the baseline background.
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+}
+
+input.payment-type:checked + label {
+  background-color: #49AFFD;
+  color: white;
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+}
+
 .credit-card-logos {
   background-position: center -36px;
 }
@@ -16,17 +38,28 @@
   background-position: center -104px;
 }
 
-label.payment-cc-label:hover .payment-logos {
-  background-position: center -3px;
-}
-
-label.for-payment-paypal:hover .payment-logos {
-  background-position: center -70px;
-}
-
-label.for-payment-paypal,
+label.payment-paypal-label,
 label.payment-cc-label {
-  height: 83px;
+  height: 89px;
+}
+
+label.payment-cc-label:hover .payment-logos {
+  background-position: center -36px;
+}
+label.payment-paypal-label:hover .payment-logos {
+  background-position: center -104px;
+}
+.payment-cc-label:checked + .payment-cc-label {
+  .credit-card-logos {
+    background-position: center -3px;
+  }
+}
+
+.payment-paypal-input:checked + .payment-paypal-label {
+  .payment-logos {
+    background-position: center -70px;
+    color: white;
+  }
 }
 
 @media screen and (min-width: 480px) {
@@ -34,20 +67,30 @@ label.payment-cc-label {
     width: 165px;
     height: 45px;
   }
-
   .credit-card-logos {
-    background-position: -1px -55px, center;
+    background-position: -2px -55px, center;
   }
 
   label.payment-cc-label:hover .payment-logos {
-    background-position: -1px -5px, center;
+    background-position: -2px -55px, center;
   }
-
   .paypal-logo {
-    background-position: -6px -160px, center;
+    background-position: -4px -160px, center;
   }
 
-  label.for-payment-paypal:hover .payment-logos {
-    background-position: -6px -111px, center;
+  label.payment-paypal-label:hover .payment-logos {
+    background-position: -4px -160px, center;
+  }
+
+  .payment-cc-input:checked + .payment-cc-label {
+    .credit-card-logos {
+      background-position: -4px -5px, center;
+    }
+  }
+
+  .payment-paypal-input:checked + .payment-paypal-label {
+    .payment-logos {
+      background-position: -6px -111px, center;
+    }
   }
 }

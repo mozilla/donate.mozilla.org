@@ -3,10 +3,9 @@
 
 import React from 'react';
 import ThunderbirdFooter from '../../components/footer-thunderbird.jsx';
-import Header from '../../components/header.jsx';
 import Signup from '../../components/signup-thunderbird.jsx';
 import ThankYouHeader from '../../components/thank-you-header-thunderbird.jsx';
-import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import { IntlMixin } from 'react-intl';
 import analytics from '../../assets/js/analytics.js';
 import form from '../../scripts/form.js';
 
@@ -17,26 +16,14 @@ var ThankYou = React.createClass({
     analytics();
   },
   render: function() {
-    var className = "row new-flow-test thunderbird";
+    var className = "row thank-you-page thunderbird";
     if (this.props.test) {
       className += " " + this.props.test;
     }
     return (
       <div>
         <div className={className}>
-          <span className="base-line-thank-you">
-            <Header>
-              <h1>{ this.getIntlMessage("from_all_of_us_at_mozilla") }</h1>
-              <h2>
-                <FormattedHTMLMessage
-                  message={ this.getIntlMessage("thank_you_for_your_donation") }
-                />
-              </h2>
-            </Header>
-          </span>
-          <span className="new-flow-thank-you">
-            <ThankYouHeader/>
-          </span>
+          <ThankYouHeader/>
           <div>
             <Signup country={this.props.country} email={this.props.email} />
             <ThunderbirdFooter/>

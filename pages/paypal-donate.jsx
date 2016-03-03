@@ -103,16 +103,16 @@ var simplePaypal = React.createClass({
     }
   },
   render: function() {
-    var className = "row new-flow-test";
+    var className = "row";
     if (this.props.test) {
       className += " " + this.props.test;
     }
     return (
       <div className={className}>
         <Header>
-          <h2>
+          <h3>
             {this.getIntlMessage("donate_now")}
-          </h2>
+          </h3>
         </Header>
         <div className="simple-paypal">
           <div className="container">

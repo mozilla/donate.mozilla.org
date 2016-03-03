@@ -71,7 +71,7 @@ module.exports = React.createClass({
       return (
         <div className="overlay">
           <div className="popup">
-            <h2>
+            <h3>
               <FormattedMessage
                 message={this.getIntlMessage('h1_popup_further_monlth')}
                 amount={<span>
@@ -84,7 +84,7 @@ module.exports = React.createClass({
                   /> : "" }
                 </span>}
               />
-            </h2>
+            </h3>
             <button className="close fa fa-close" onClick={this.closeMonthlyPopup}></button>
             <div className="popup-btn yes" onClick={this.onPopupYes}>
               <FormattedHTMLMessage
@@ -197,7 +197,7 @@ module.exports = React.createClass({
       return (
         <span className="paypal-disabled">
           <SectionHeading>
-            <h2>{this.getIntlMessage("credit_card")}</h2>
+            <h3>{this.getIntlMessage("credit_card")}</h3>
             <p id="secure-label">
               <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
             </p>
@@ -237,12 +237,12 @@ module.exports = React.createClass({
     return (
       <div className="container">
         <SectionHeading>
-          <h2>
+          <h3>
             {this.getIntlMessage("donate_now")}
             <span className="right">
               <CurrencyDropdown/>
             </span>
-          </h2>
+          </h3>
         </SectionHeading>
         {this.renderPopup()}
         <div className="frequency-move">

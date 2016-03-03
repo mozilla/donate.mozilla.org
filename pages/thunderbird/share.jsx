@@ -1,14 +1,14 @@
 import React  from 'react';
-import MozillaFooter from '../components/footer-mozilla.jsx';
-import Header from '../components/header.jsx';
-import Social from '../components/social.jsx';
-import ThankYouHeader from '../components/thank-you-header.jsx';
+import ThunderbirdFooter from '../../components/footer-thunderbird.jsx';
+import Header from '../../components/header-thunderbird.jsx';
+import Social from '../../components/social.jsx';
+import ThankYouHeader from '../../components/thank-you-header-thunderbird.jsx';
 import { IntlMixin } from 'react-intl';
 
 var ThankYou = React.createClass({
   mixins: [IntlMixin],
   render: function() {
-    var className = "row new-flow-test";
+    var className = "row new-flow-test thunderbird";
     var language = this.props.locales[0];
     if (this.props.test) {
       className += " " + this.props.test;
@@ -25,7 +25,7 @@ var ThankYou = React.createClass({
           <ThankYouHeader/>
         </span>
         <Social language={language}/>
-        <MozillaFooter/>
+        <ThunderbirdFooter/>
       </div>
     );
   }

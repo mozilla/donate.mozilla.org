@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from '../../components/footer.jsx';
+import ThunderbirdFooter from '../../components/footer-thunderbird.jsx';
 import Header from '../../components/header-thunderbird.jsx';
 import SmallPrint from '../../components/small-print-thunderbird.jsx';
 import SingleForm from '../../components/single-form.jsx';
@@ -22,7 +22,7 @@ module.exports = React.createClass({
           locales={this.props.locales}
         />
         <SmallPrint stripeNotice={true}/>
-        <Footer/>
+        <ThunderbirdFooter/>
       </div>
     );
   }

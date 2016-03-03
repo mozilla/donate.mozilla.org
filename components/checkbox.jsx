@@ -80,10 +80,11 @@ module.exports = {
       name: React.PropTypes.string.isRequired
     },
     render: function() {
+      var message = this.props.message || this.getIntlMessage("privacy_policy");
       return (
         <Checkbox
           {...this.props}
-          message={this.getIntlMessage("privacy_policy")}
+          message={message}
           error={this.getIntlMessage('pp_acknowledge')}
           id="privacy-policy-checkbox"
           field="privacyPolicy"

@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from '../components/footer.jsx';
+import MozillaFooter from '../components/footer-mozilla.jsx';
 import Header from '../components/header.jsx';
 import AmountButtons from '../components/amount-buttons.jsx';
 import Frequency from '../components/donation-frequency.jsx';
@@ -157,7 +157,7 @@ var simplePaypal = React.createClass({
             locale={this.props.locales[0]}
           />
         </div>
-        <Footer/>
+        <MozillaFooter/>
       </div>
     );
   }

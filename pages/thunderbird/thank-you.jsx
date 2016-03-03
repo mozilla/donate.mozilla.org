@@ -2,14 +2,13 @@
 /* jshint -W067 */
 
 import React from 'react';
-import MozillaFooter from '../components/footer-mozilla.jsx';
-import Header from '../components/header.jsx';
-import Signup from '../components/signup.jsx';
-import Social from '../components/social.jsx';
-import ThankYouHeader from '../components/thank-you-header.jsx';
+import ThunderbirdFooter from '../../components/footer-thunderbird.jsx';
+import Header from '../../components/header.jsx';
+import Signup from '../../components/signup-thunderbird.jsx';
+import ThankYouHeader from '../../components/thank-you-header-thunderbird.jsx';
 import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
-import analytics from '../assets/js/analytics.js';
-import form from '../scripts/form.js';
+import analytics from '../../assets/js/analytics.js';
+import form from '../../scripts/form.js';
 
 var ThankYou = React.createClass({
   mixins: [IntlMixin],
@@ -18,12 +17,7 @@ var ThankYou = React.createClass({
     analytics();
   },
   render: function() {
-    var className = "row new-flow-test";
-    var locale = this.props.locales[0];
-    var signUpOrSocial = (<Social language={locale}/>);
-    if (this.props.params && /^(en|de)(\b|$)/.test(locale)) {
-      signUpOrSocial = (<Signup country={this.props.country} email={this.props.email} locales={this.props.locales} />);
-    }
+    var className = "row new-flow-test thunderbird";
     if (this.props.test) {
       className += " " + this.props.test;
     }
@@ -44,8 +38,8 @@ var ThankYou = React.createClass({
             <ThankYouHeader/>
           </span>
           <div>
-            {signUpOrSocial}
-            <MozillaFooter/>
+            <Signup country={this.props.country} email={this.props.email} />
+            <ThunderbirdFooter/>
           </div>
         </div>
       </div>

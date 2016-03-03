@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from '../components/footer.jsx';
+import MozillaFooter from '../components/footer-mozilla.jsx';
 import Header from '../components/header.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SectionHeading from '../components/section-heading.jsx';
@@ -249,7 +249,7 @@ module.exports = React.createClass({
 
         </div>
         <SmallPrint stripeNotice={!this.state.hideCreditCardDetails}/>
-        <Footer/>
+        <MozillaFooter/>
         <script src="https://js.stripe.com/v2/"></script>
       </div>
     );

@@ -16,7 +16,7 @@ var Footer = React.createClass({
                 />
               </p>
               <p>
-                { this.getIntlMessage('firefox_footer') }
+                {this.props.message}
               </p>
             </div>
             <div className="quarter">

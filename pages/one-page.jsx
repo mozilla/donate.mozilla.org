@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from '../components/footer.jsx';
+import MozillaFooter from '../components/footer-mozilla.jsx';
 import Header from '../components/header.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SingleForm from '../components/single-form.jsx';
@@ -24,7 +24,7 @@ module.exports = React.createClass({
           locales={this.props.locales}
         />
         <SmallPrint stripeNotice={true}/>
-        <Footer/>
+        <MozillaFooter/>
       </div>
     );
   }

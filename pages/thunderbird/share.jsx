@@ -1,5 +1,5 @@
 import React  from 'react';
-import Footer from '../../components/footer.jsx';
+import ThunderbirdFooter from '../../components/footer-thunderbird.jsx';
 import Header from '../../components/header-thunderbird.jsx';
 import Social from '../../components/social.jsx';
 import ThankYouHeader from '../../components/thank-you-header-thunderbird.jsx';
@@ -25,7 +25,7 @@ var ThankYou = React.createClass({
           <ThankYouHeader/>
         </span>
         <Social language={language}/>
-        <Footer/>
+        <ThunderbirdFooter/>
       </div>
     );
   }

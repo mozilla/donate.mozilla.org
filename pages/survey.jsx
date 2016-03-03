@@ -1,5 +1,5 @@
 import React  from 'react';
-import Footer from '../components/footer.jsx';
+import MozillaFooter from '../components/footer-mozilla.jsx';
 import Header from '../components/header.jsx';
 import { IntlMixin } from 'react-intl';
 
@@ -18,7 +18,7 @@ module.exports = React.createClass({
             <iframe src="https://www.surveygizmo.com/s3/2472227/Mozilla-Donor-Survey" frameBorder="0" width="100%" height="600"></iframe>
           </div>
         </div>
-        <Footer/>
+        <MozillaFooter/>
       </div>
     );
   }

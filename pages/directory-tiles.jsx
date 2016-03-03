@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from '../components/footer.jsx';
+import MozillaFooter from '../components/footer-mozilla.jsx';
 import Header from '../components/header.jsx';
 import { IntlMixin, FormattedHTMLMessage } from 'react-intl';
 import assign from 'react/lib/Object.assign';
@@ -106,7 +106,7 @@ module.exports = React.createClass({
             {donateNow}
           </div>
         </div>
-        <Footer/>
+        <MozillaFooter/>
       </div>
     );
   }

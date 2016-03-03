@@ -2,7 +2,7 @@
 /* jshint -W067 */
 
 import React from 'react';
-import Footer from '../../components/footer.jsx';
+import ThunderbirdFooter from '../../components/footer-thunderbird.jsx';
 import Header from '../../components/header.jsx';
 import Signup from '../../components/signup-thunderbird.jsx';
 import ThankYouHeader from '../../components/thank-you-header-thunderbird.jsx';
@@ -39,7 +39,7 @@ var ThankYou = React.createClass({
           </span>
           <div>
             <Signup country={this.props.country} email={this.props.email} />
-            <Footer/>
+            <ThunderbirdFooter/>
           </div>
         </div>
       </div>

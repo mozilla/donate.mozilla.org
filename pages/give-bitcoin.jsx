@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from '../components/footer.jsx';
+import MozillaFooter from '../components/footer-mozilla.jsx';
 import Header from '../components/header.jsx';
 import { IntlMixin, FormattedHTMLMessage } from 'react-intl';
 
@@ -26,7 +26,7 @@ var giveBitcoin = React.createClass({
             </p>
           </div>
         </div>
-        <Footer/>
+        <MozillaFooter/>
       </div>
     );
   }

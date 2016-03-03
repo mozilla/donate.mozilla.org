@@ -2,7 +2,7 @@
 /* jshint -W067 */
 
 import React from 'react';
-import Footer from '../components/footer.jsx';
+import MozillaFooter from '../components/footer-mozilla.jsx';
 import Header from '../components/header.jsx';
 import Signup from '../components/signup.jsx';
 import Social from '../components/social.jsx';
@@ -45,7 +45,7 @@ var ThankYou = React.createClass({
           </span>
           <div>
             {signUpOrSocial}
-            <Footer/>
+            <MozillaFooter/>
           </div>
         </div>
       </div>

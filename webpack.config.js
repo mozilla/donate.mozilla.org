@@ -46,7 +46,8 @@ module.exports = {
         OPTIMIZELY_ACTIVE: process.env.OPTIMIZELY_ACTIVE,
         FULL_SUBDOMAIN_FOR_COOKIE: process.env.FULL_SUBDOMAIN_FOR_COOKIE,
         PAYPAL_EMAIL: process.env.PAYPAL_EMAIL,
-        PAYPAL_ENDPOINT: process.env.PAYPAL_ENDPOINT
+        PAYPAL_ENDPOINT: process.env.PAYPAL_ENDPOINT,
+        SUPPORTED_LOCALES: process.env.SUPPORTED_LOCALES
       })
     }),
     new webpack.ProvidePlugin({

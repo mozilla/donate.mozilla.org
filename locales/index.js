@@ -11,7 +11,6 @@ if (!req.context) {
 }
 var supportedLocales = process.env.SUPPORTED_LOCALES || "*";
 
-var arr;
 if (supportedLocales === "*") {
   supportedLocales = getLocales(req.context('./', true, /\.json$/).keys());
 } else {

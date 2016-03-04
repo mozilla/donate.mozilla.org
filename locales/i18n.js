@@ -4,7 +4,7 @@ import locales from '../locales/index.js';
 var supportedLocales = process.env.SUPPORTED_LOCALES || "*";
 
 // This is essentially bulk require
-var req = require.context('./', true, /\.json.*$/);
+var req = require.context('./', false, /\.json$/);
 if (supportedLocales === "*") {
   supportedLocales = req.keys();
 } else {

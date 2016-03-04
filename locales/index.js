@@ -12,7 +12,7 @@ if (!req.context) {
 var supportedLocales = process.env.SUPPORTED_LOCALES || "*";
 
 if (supportedLocales === "*") {
-  supportedLocales = getLocales(req.context('./', true, /\.json$/).keys());
+  supportedLocales = getLocales(req.context('./', false, /\.json$/).keys());
 } else {
   supportedLocales = JSON.parse(supportedLocales);
 }

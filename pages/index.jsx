@@ -17,7 +17,6 @@ var Index = React.createClass({
       robots = 'noindex, nofollow';
     }
     var fileHashes = JSON.parse(fs.readFileSync(Path.join(__dirname, '../public/webpack-assets.json')));
-    var commentIE = '<!-- [if lt IE 10]><script src="/assets/js/jquery.min.js"></script><script src="/assets/js/placeholder.min.js"></script><![endif]-->';
     var ga = `
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -63,9 +62,6 @@ var Index = React.createClass({
           <script src={'/api/polyfill.js?features=Event,CustomEvent,Promise,Intl.~locale.' + this.props.localeInfo}></script>
           <script src={'/' + fileHashes.main.js} ></script>
           <Pontoon/>
-          <meta name="react-comment-hack"
-              dangerouslySetInnerHTML={{__html: commentIE}}>
-          </meta>
           <script src="https://checkout.stripe.com/checkout.js"></script>
         </body>
       </html>

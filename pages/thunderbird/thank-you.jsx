@@ -38,7 +38,7 @@ var ThankYou = React.createClass({
             <ThankYouHeader/>
           </span>
           <div>
-            <Signup country={this.props.country} email={this.props.email} />
+            <Signup locales={this.props.locales} country={this.props.country} email={this.props.email} />
             <ThunderbirdFooter/>
           </div>
         </div>

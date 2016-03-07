@@ -101,7 +101,7 @@
     "karma-mocha-reporter": "1.1.5",
     "karma-sourcemap-loader": "0.3.6",
     "karma-webpack": "1.7.0",
-    "mocha": "2.3.4",
+    "mocha": "2.4.3",
     "react-test-context": "0.1.0",
     "selenium-webdriver": "2.48.2",
     "should": "8.0.2"

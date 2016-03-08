@@ -1,5 +1,5 @@
 module.exports = {
-  "dest": "locales",
+  "dest": "public",
   "src": "locales",
   "paypalLocales": {
     "en-US": "US",

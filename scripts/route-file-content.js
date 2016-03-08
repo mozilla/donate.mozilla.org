@@ -1,13 +1,13 @@
 import React from 'react';
 import Router from 'react-router';
 import routes from '../components/routes.jsx';
-import englishStrings from '../locales/en-US.json';
 import currencies from '../data/currencies.js';
 import {localeCurrencyData, localeCountryData} from '../data/locale-data.js';
 import url from 'url';
-var fs = require('fs');
+import locales from '../public/locales.json';
 var Path = require('path');
 var FS = require("q-io/fs");
+var englishStrings = locales["en-US"] || {};
 
 module.exports = function(outputPath, callback) {
   Router.run(routes, outputPath, function(Handler) {
@@ -24,13 +24,13 @@ module.exports = function(outputPath, callback) {
     };
     var index = React.createFactory(require('../pages/index.jsx'));
     var page = React.createFactory(Handler);
-    var currentString, mergedStrings;
+    var currentStrings, mergedStrings;
     if (outputPath.indexOf('thunderbird') !== -1) {
       favicon = "/assets/images/thunderbird/favicon.ico";
     }
-    if (locale && require('../locales/index.js').indexOf(locale) !== -1) {
-      currentString = require('../locales/' + locale +'.json');
-      mergedStrings = Object.assign({}, englishStrings, currentString);
+    if (locale && locales[locale]) {
+      currentStrings = locales[locale];
+      mergedStrings = Object.assign({}, englishStrings, currentStrings);
       values = Object.assign({}, {locales : [locale], messages: mergedStrings}, values);
     } else {
       locale = 'en-US';
@@ -54,8 +54,10 @@ module.exports = function(outputPath, callback) {
 
       var nameOfTheFile = Path.join(__dirname, '..', 'public', outputPath, 'index.html');
 
-      fs.writeFile(nameOfTheFile, contentOfTheFile, function(err) {
-        callback(err, nameOfTheFile);
+      FS.write(nameOfTheFile, contentOfTheFile).then(function() {
+        callback(undefined, nameOfTheFile);
+      }).catch(function(err) {
+        callback(err);
       });
     }).catch(function(e) {
       console.log(e);

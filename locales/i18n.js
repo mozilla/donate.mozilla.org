@@ -1,23 +1,11 @@
 import assign from 'react/lib/Object.assign';
-import locales from '../locales/index.js';
+import locales from '../public/locales.json';
 
-// This is essentially bulk require
-var req = require.context('./', true, /\.json.*$/);
-var directories = getAllMessages(req);
 //This is an easy cross browser way to get the preferred language
 /** @const */ var DEFAULT_VALUE = 'en';
 /** @const */ var PREFERRED_LANGUAGE = navigator.language || navigator.userLanguage ||
                   navigator.browserLanguage || navigator.systemLanguage || DEFAULT_VALUE;
 var locale = formatLocale(PREFERRED_LANGUAGE);
-
-function getAllMessages(req) {
-  var messages = {};
-  req.keys().forEach(function(file) {
-    var locale = file.replace('./', '').replace('.json', '');
-    messages[locale] = req(file);
-  });
-  return messages;
-}
 
 // we need to make sure we transform the given locale to the right format first
 // so we can access the right locale in our directories for example: pt-br should be transformed to pt-BR
@@ -33,15 +21,15 @@ function urlOverrideLang(path) {
   var localeCode = localPath.split('/')[1];
   var pathname = localPath.split('/')[2];
   return {
-    test: locales.indexOf(localeCode) !== -1,
+    test: !!locales[localeCode],
     pathname: pathname,
-    lang: locales.indexOf(localeCode) !== -1 ? localeCode : null
+    lang: locales[localeCode] ? localeCode : null
   };
 }
 
 function getMessages(locale) {
-  var messages = directories[locale] ? directories[locale] : directories['en-US'];
-  return assign({}, directories['en-US'], messages);
+  var messages = locales[locale] ? locales[locale] : locales['en-US'];
+  return assign({}, locales['en-US'], messages);
 }
 
 module.exports = {
@@ -55,7 +43,7 @@ module.exports = {
   defaultLang: 'en-US',
   currentLanguage: locale,
   isSupportedLanguage: function(lang) {
-    return !!directories[lang];
+    return !!locales[lang];
   },
   // This method will check if we have language code in the URL
   // by extracting the pathname from `window.location` and split

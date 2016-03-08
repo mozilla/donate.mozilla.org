@@ -1,6 +1,5 @@
 var config = require('../intl-config.js');
 var properties = require('properties-parser');
-var write = require('fs-writefile-promise');
 var path = require('path');
 var FS = require("q-io/fs");
 var Habitat = require('habitat');
@@ -13,34 +12,43 @@ var supportedLocales = env.get('SUPPORTED_LOCALES') || "*";
 
 function getListLocales() {
   return new Promise(function(resolve, reject) {
-    if (Array.isArray(supportedLocales)) {
-      return resolve(supportedLocales);
-    }
-    FS.listDirectoryTree(path.join(process.cwd(), config.src)).then(function(dirTree) {
-      var list = [];
-      dirTree.forEach(function(i) {
-        var that = i.split(config.src + '/');
-        if (that[1]) {
-          list.push(that[1]);
-        }
+    if (supportedLocales === "*") {
+      FS.listDirectoryTree(path.join(process.cwd(), config.src)).then(function(dirTree) {
+        var list = [];
+        dirTree.forEach(function(i) {
+          var that = i.split(config.src + '/');
+          if (that[1]) {
+            list.push(that[1]);
+          }
+        });
+        return resolve(list);
+      }).catch(function(e) {
+        console.log(e);
+        reject(e);
       });
-      return resolve(list);
-    }).catch(function(e) {
-      console.log(e);
-      reject(e);
-    });
+    } else {
+      resolve(supportedLocales);
+    }
   });
 }
 
 function writeFile(entries) {
-  entries.reduce(function(prevEntry, entry) {
-    write(path.join(process.cwd(), config.dest, entry.locale + '.json'), JSON.stringify(entry.content, null, 2), 'utf-8')
-    .then(function(filename) {
-      console.log('Done writing: ' + filename);
+  var dictionary = entries.reduce(function(prevEntry, entry) {
+    prevEntry[entry.locale] = entry.content;
+    return prevEntry;
+  }, {});
+  var publicPath = path.join(process.cwd(), config.dest);
+  var localesPath = path.join(publicPath, 'locales.json');
+  FS.makeTree(publicPath).then(function() {
+    FS.write(localesPath, JSON.stringify(dictionary, null, 2))
+    .then(function() {
+      console.log('Done writing: ' + localesPath);
     }).catch(function(e) {
       console.log(e);
     });
-  }, {});
+  }).catch(function(e) {
+    console.log(e);
+  });
 }
 
 function getContentMessages(locale) {

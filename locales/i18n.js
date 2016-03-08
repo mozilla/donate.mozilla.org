@@ -1,20 +1,30 @@
 import assign from 'react/lib/Object.assign';
 import locales from '../locales/index.js';
 
+var supportedLocales = process.env.SUPPORTED_LOCALES || "*";
+
 // This is essentially bulk require
-var req = require.context('./', true, /\.json.*$/);
-var directories = getAllMessages(req);
+var req = require.context('./', false, /\.json$/);
+if (supportedLocales === "*") {
+  supportedLocales = req.keys();
+} else {
+  supportedLocales = JSON.parse(supportedLocales);
+}
+
+var directories = getAllMessages(req, supportedLocales);
 //This is an easy cross browser way to get the preferred language
 /** @const */ var DEFAULT_VALUE = 'en';
 /** @const */ var PREFERRED_LANGUAGE = navigator.language || navigator.userLanguage ||
                   navigator.browserLanguage || navigator.systemLanguage || DEFAULT_VALUE;
 var locale = formatLocale(PREFERRED_LANGUAGE);
 
-function getAllMessages(req) {
+function getAllMessages(req, keys) {
   var messages = {};
-  req.keys().forEach(function(file) {
-    var locale = file.replace('./', '').replace('.json', '');
-    messages[locale] = req(file);
+  keys.forEach(function(key) {
+    // key can be either a file name if we're a bulk require,
+    // or a locale string if we're using supportedLocales array.
+    var locale = key.replace('./', '').replace('.json', '');
+    messages[locale] = req('./' + locale + '.json');
   });
   return messages;
 }

@@ -6,6 +6,15 @@ function getLocales(arr) {
 
 var reqF = require('enhanced-require');
 var req = reqF(module);
-var arr = !req.context ? require.context('./', true, /\.json$/).keys() : req.context('./', true, /\.json$/).keys();
+if (!req.context) {
+  req = require;
+}
+var supportedLocales = process.env.SUPPORTED_LOCALES || "*";
 
-module.exports = getLocales(arr);
+if (supportedLocales === "*") {
+  supportedLocales = getLocales(req.context('./', false, /\.json$/).keys());
+} else {
+  supportedLocales = JSON.parse(supportedLocales);
+}
+
+module.exports = supportedLocales;

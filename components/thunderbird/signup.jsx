@@ -1,12 +1,12 @@
 import React from 'react';
 import IntlMixin from 'react-intl';
-import Email from '../components/email-input.jsx';
-import {PrivacyPolicyCheckbox} from '../components/checkbox.jsx';
-import {Country} from '../components/address-input.jsx';
-import SubmitButton from '../components/submit-button.jsx';
+import Email from '../../components/email-input.jsx';
+import {PrivacyPolicyCheckbox} from '../../components/checkbox.jsx';
+import {Country} from '../../components/address-input.jsx';
+import SubmitButton from '../../components/submit-button.jsx';
 
 var Form = React.createClass({
-  mixins: [IntlMixin, require('../mixins/form.jsx')],
+  mixins: [IntlMixin, require('../../mixins/form.jsx')],
   render: function() {
     return (
       <div>

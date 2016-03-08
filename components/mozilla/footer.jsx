@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from './footer.jsx';
+import Footer from '../footer.jsx';
 import { IntlMixin } from 'react-intl';
 
 var MozillaFooter = React.createClass({

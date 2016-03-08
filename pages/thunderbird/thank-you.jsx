@@ -2,10 +2,10 @@
 /* jshint -W067 */
 
 import React from 'react';
-import ThunderbirdFooter from '../../components/footer-thunderbird.jsx';
-import Signup from '../../components/signup-thunderbird.jsx';
 import Social from '../../components/social.jsx';
-import ThankYouHeader from '../../components/thank-you-header-thunderbird.jsx';
+import ThunderbirdFooter from '../../components/thunderbird/footer.jsx';
+import Signup from '../../components/thunderbird/signup.jsx';
+import ThankYouHeader from '../../components/thunderbird/thank-you-header.jsx';
 import { IntlMixin } from 'react-intl';
 import analytics from '../../assets/js/analytics.js';
 import form from '../../scripts/form.js';

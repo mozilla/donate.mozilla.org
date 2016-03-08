@@ -1,7 +1,7 @@
 import React  from 'react';
-import ThunderbirdFooter from '../../components/footer-thunderbird.jsx';
+import ThunderbirdFooter from '../../components/thunderbird/footer.jsx';
 import Social from '../../components/social.jsx';
-import ThankYouHeader from '../../components/thank-you-header-thunderbird.jsx';
+import ThankYouHeader from '../../components/thunderbird/thank-you-header.jsx';
 import { IntlMixin } from 'react-intl';
 
 var ThankYou = React.createClass({

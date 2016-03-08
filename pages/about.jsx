@@ -6,7 +6,7 @@ import SingleForm from '../components/single-form.jsx';
 module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin],
   render: function() {
-    var className = "row additional-info-container new-flow-test";
+    var className = "row additional-info-container";
     if (this.props.test) {
       className += " " + this.props.test;
     }

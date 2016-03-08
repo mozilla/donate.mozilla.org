@@ -6,7 +6,7 @@ import { IntlMixin } from 'react-intl';
 module.exports = React.createClass({
   mixins: [IntlMixin],
   render: function() {
-    var className = "row new-flow-test";
+    var className = "row";
     if (this.props.test) {
       className += " " + this.props.test;
     }

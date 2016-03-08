@@ -69,7 +69,7 @@ module.exports = React.createClass({
       return (
         <span>
           <SectionHeading>
-            <h2>{this.getIntlMessage("choose_payment")}</h2>
+            <h3>{this.getIntlMessage("choose_payment")}</h3>
             <p id="secure-label">
               <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
             </p>
@@ -90,7 +90,7 @@ module.exports = React.createClass({
       return (
         <span className="paypal-disabled">
           <SectionHeading>
-            <h2>{this.getIntlMessage("credit_card")}</h2>
+            <h3>{this.getIntlMessage("credit_card")}</h3>
             <p id="secure-label">
               <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
             </p>
@@ -104,7 +104,7 @@ module.exports = React.createClass({
   },
   render: function() {
     var creditCardDetailsClassName = "row credit-card-section";
-    var className = "row new-flow-test";
+    var className = "row";
     if (this.props.test) {
       className += " " + this.props.test;
     }
@@ -135,12 +135,12 @@ module.exports = React.createClass({
           <NavigationContainer>
             <Page activePage={this.state.activePage} index={0}>
               <SectionHeading>
-                <h2>
+                <h3>
                   {this.getIntlMessage("donate_now")}
                   <span className="right">
                     <CurrencyDropdown/>
                   </span>
-                </h2>
+                </h3>
               </SectionHeading>
               <AmountButtons name="amount" locale={this.props.locales[0]}/>
               <Frequency name="frequency"/>
@@ -189,7 +189,7 @@ module.exports = React.createClass({
 
             <Page activePage={this.state.activePage} index={2} errors={["other", "firstName", "lastName", "address", "country", "province", "city", "email", "code"]}>
               <SectionHeading>
-                <h2>{this.getIntlMessage("personal")}</h2>
+                <h3>{this.getIntlMessage("personal")}</h3>
               </SectionHeading>
               <div className="row name-input">
                 <div className="half">

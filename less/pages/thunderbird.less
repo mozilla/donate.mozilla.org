@@ -1,4 +1,8 @@
 .thunderbird {
+  &.thank-you-page,
+  &.share-page {
+    display: block;
+  }
   background: #EAEFF2;
   background: -ms-radial-gradient(center,ellipse cover,#eaeff2 0,rgba(212,221,228,0.5) 60%),-ms-linear-gradient(top,#cae1f4 0,rgba(125,185,232,0) 100%);
   background: radial-gradient(ellipse at center,#eaeff2 0,rgba(212,221,228,0.5) 50%),linear-gradient(to bottom,#cae1f4 0,rgba(125,185,232,0) 100%);
@@ -22,9 +26,44 @@
     }
   }
   .submit-btn {
-    background-color: #3D99F9 !important;
+    background-color: #3D99F9;
     &:hover {
-      background-color: #53A0F0 !important;
+      background-color: #53A0F0;
+    }
+  }
+  .payment-type + label,
+  input[name="donation_amount"] + label {
+    color: #333333;
+    background: #EAEFF2;
+    transition: all .3s ease 0s;
+    &:before {
+      display: none;
+    }
+    &:hover {
+      background: #43A6E2;
+      color: #fff;
+      .credit-card-logos {
+        background-position: -4px -5px, center;
+      }
+      .paypal-logo {
+        background-position: -6px -111px,center;
+      }
+    }
+  }
+  .payment-type:checked + label,
+  input[name="donation_amount"]:checked + label {
+    background: #277AC1;
+    color: #fff;
+  }
+  .disclaimers {
+    padding: 0 5px;
+    margin: 0 auto;
+    border-radius: 0;
+    background: transparent;
+    p {
+      color: #999;
+      font-size: 12px;
+      line-height: normal;
     }
   }
 }

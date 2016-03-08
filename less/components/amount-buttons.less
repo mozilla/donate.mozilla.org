@@ -1,6 +1,17 @@
 .amount-buttons {
   .amount-other-container {
     position: relative;
+    input[name="donation_amount"] + label {
+      padding: 5px 0;
+      background-color: #EAEFF2;
+    }
+    input[name="donation_amount"] + label:hover {
+      background: #43A6E2; /* Mozilla Button color */
+      color: #fff;
+    }
+    input[name="donation_amount"]:checked + label {
+      background: #0095DD;
+    }
   }
 
   .donation-amount-row {
@@ -14,12 +25,30 @@
     display: block;
   }
 
+  .amount-radio + label {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .amount-radio + label {
+    background-color: #A7AAB3;
+    color: rgb(255, 255, 255);
+  }
+  .amount-radio + label:hover {
+    background-color: #B3B6BF;
+  }
+
+  .amount-radio:checked + label {
+    background-color: #49AFFD;
+    background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+  }
+
   .amount-other-wrapper {
     position: absolute;
-    top: 2px;
+    top: 3px;
     left: 60px;
-    right: 6px;
-    height: 42px;
+    right: 3px;
+    height: 38px;
   }
 
   .amount-button {

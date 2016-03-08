@@ -3,11 +3,10 @@
 
 import React from 'react';
 import MozillaFooter from '../components/footer-mozilla.jsx';
-import Header from '../components/header.jsx';
 import Signup from '../components/signup.jsx';
 import Social from '../components/social.jsx';
 import ThankYouHeader from '../components/thank-you-header.jsx';
-import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import { IntlMixin } from 'react-intl';
 import analytics from '../assets/js/analytics.js';
 import form from '../scripts/form.js';
 
@@ -18,7 +17,7 @@ var ThankYou = React.createClass({
     analytics();
   },
   render: function() {
-    var className = "row new-flow-test";
+    var className = "row thank-you-page";
     var locale = this.props.locales[0];
     var signUpOrSocial = (<Social language={locale}/>);
     if (this.props.params && /^(en|de)(\b|$)/.test(locale)) {
@@ -30,19 +29,7 @@ var ThankYou = React.createClass({
     return (
       <div>
         <div className={className}>
-          <span className="base-line-thank-you">
-            <Header>
-              <h1>{ this.getIntlMessage("from_all_of_us_at_mozilla") }</h1>
-              <h2>
-                <FormattedHTMLMessage
-                  message={ this.getIntlMessage("thank_you_for_your_donation") }
-                />
-              </h2>
-            </Header>
-          </span>
-          <span className="new-flow-thank-you">
-            <ThankYouHeader/>
-          </span>
+          <ThankYouHeader/>
           <div>
             {signUpOrSocial}
             <MozillaFooter/>

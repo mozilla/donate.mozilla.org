@@ -16,7 +16,7 @@ body {
   line-height: 20px;
   color: #333;
   margin: 0;
-  background: linear-gradient(to bottom, #D7D3C8, #F6F4EC);
+  background-color: #D8D5CC;
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#d7d3c8', endColorstr='#f6f4ec');/*For IE7-8-9*/
 }
 
@@ -44,7 +44,7 @@ h5,
 h6,
 input[type="radio"] + label,
 input[type="checkbox"] + label {
-  font-weight: 300;
+  font-weight: normal;
 }
 
 h1 {
@@ -63,6 +63,7 @@ h3 {
   font-size: 28px;
   letter-spacing: -0.5px;
   line-height: 100%;
+  margin-bottom: 32px;
 }
 
 h4 {
@@ -112,7 +113,7 @@ textarea {
 
 a {
   background: none repeat scroll 0% 0% transparent;
-  color: #27AAE1;
+  color: #0485B7;
   text-decoration: none;
 }
 
@@ -132,8 +133,9 @@ input[type="submit"] {
   max-width: 420px;
   width: 100%;
   overflow-x: hidden;
-  padding: 30px;
+  padding: 35px;
   background: #fff;
+  border-radius: 6px;
 }
 
 .wrap {
@@ -242,10 +244,11 @@ input[type="tel"],
 select,
 input[type="email"] {
   width: 100%;
-  margin-bottom: 5px;
-  border: 1px solid #EAEFF2;
+  margin-bottom: 12px;
+  border: 3px solid #EAEFF2;
   border-radius: 3px;
-  padding: 7px 7px 7px 33px;
+  padding: 6px 7px 6px 33px;
+  background-color: #F7F9FA;
 }
 
 input[type="email"] {
@@ -261,7 +264,8 @@ select:focus,
 input[type="number"]:focus,
 input[type="email"]:focus,
 input[type="tel"]:focus {
-  border-color: #38A9ED;
+  border-color: #06AAEA;
+  background-color: #FFF;
 }
 
 input[name="donation_amount"],
@@ -276,24 +280,15 @@ input.payment-type + label {
   padding: 6px 0;
   margin-left: 0;
   border-radius: 3px;
-  background-color: #EAEFF2;
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
   white-space: nowrap;
   line-height: 1.42857;
-  transition: all 0.3s ease 0s;
-}
-
-input[name="donation_amount"] + label:hover,
-input.payment-type + label:hover {
-  background: #43A6E2; /* Mozilla Button color */
-  color: #fff;
 }
 
 input[name="donation_amount"]:checked + label,
 input.payment-type:checked + label {
-  background: #277AC1; /*Mozilla Button color */
   color: #fff;
 }
 
@@ -303,9 +298,90 @@ input[type=number] {
   appearance: textfield;
 }
 
+.next-button,
+.button-arrow,
+.submit-btn {
+  background-color: #F65E6C;
+  font-size: 22px;
+  font-weight: 400;
+}
+.amount-radio + label,
+.next-button,
+.button-arrow,
+.submit-btn,
+#facebook,
+#twitter {
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+  border-radius: 3px;
+}
+.amount-radio + label,
+.next-button,
+.button-arrow,
+.submit-btn,
+.social-button,
+input.payment-type + label {
+  position: relative;
+  border-radius: 3px;
+  &::before {
+    content: '';
+    position: absolute;
+    border-radius: 3px;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    left: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
+.amount-radio + label:hover,
+.next-button:hover,
+.submit-btn:hover {
+  // This is needed to override the baseline background.
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+}
+
+.submit-btn {
+  padding-top: 3px;
+  padding-bottom: 7px;
+}
+
+.next-button:hover,
+.submit-btn:hover {
+  background-color: #FF7B87;
+}
+
+.next-button,
+.button-arrow {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.button-arrow {
+  border-radius: 0 3px 0 100%;
+  &::before {
+    border-radius: 0 0 0 0;
+    left: 0;
+    bottom: 0;
+  }
+  position: absolute;
+  background-image: linear-gradient(135deg, transparent, rgba(0, 0, 0, 0.2));
+  height: 32px;
+  width: 32px;
+  top: 6px;
+  right: -16px;
+  padding: 0;
+  transform: rotate(45deg);
+  margin: 1px 0 0 1px;
+  &::before {
+    border-left: none;
+    border-bottom: none;
+  }
+}
+
 .paypal-disabled {
   #secure-label {
-    bottom: 0;
+    bottom: 10px;
     top: auto;
     margin-bottom: 7px;
     top: auto;
@@ -340,7 +416,6 @@ select {
   padding-right: 10px;
   height: 38px;
   cursor: pointer;
-  background: #fff;
 }
 
 select * {
@@ -359,6 +434,10 @@ i.fa.field-icon {
   color: #4D4E53; /*Mozilla charcoal*/
   top: 12px;
   left: 12px;
+  &.fa-lock {
+    top: 13px;
+    font-size: 15px;
+  }
 }
 
 i.fa.hint {
@@ -386,19 +465,23 @@ i.fa.hint {
 
 .name-input,
 .address-input,
-.credit-card-section,
 .email-input {
   margin-top: 15px;
+}
+
+.credit-card-section {
+  margin-top: 27px;
 }
 
 #secure-label {
   display: inline-block;
   position: absolute;
+  margin: 9px 0 0 0;
   right: 1px;
   top: 0;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
-  color: #939597;
+  color: #D0D0D0;
   text-transform: uppercase;
   letter-spacing: 0.1px;
   i.fa {
@@ -428,7 +511,7 @@ input.parsley-error,
 input.parsley-error:focus,
 select.parsley-error,
 select.parsley-error:focus {
-  border-color: #C13832;
+  border-color: #FB707D;
 }
 
 .parsley-errors-list *,

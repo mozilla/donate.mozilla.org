@@ -12,12 +12,8 @@ var Form = React.createClass({
       <div>
         <div className="container">
           <div className="wrap">
-            <div className="row base-line-thank-you">
-              <h2>{this.getIntlMessage('sign_up_for_email')}</h2>
-              <h5>{this.getIntlMessage('dont_miss_important_news')}</h5>
-            </div>
-            <div className="row new-flow-thank-you">
-              <h2>{this.getIntlMessage('sign_up_thunderbird')}</h2>
+            <div className="row">
+              <h3>{this.getIntlMessage('sign_up_thunderbird')}</h3>
             </div>
           </div>
           <div className="wrap">

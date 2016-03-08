@@ -4,12 +4,12 @@ import React from 'react';
 
 import { Route } from 'react-router';
 import pages from '../data/pages.js';
-import locales from '../locales/index.js';
+import locales from '../public/locales.json';
 
 var routes = (
   <Route>
     {
-      locales.map(function(locale) {
+      Object.keys(locales).map(function(locale) {
         return Object.keys(pages).map(function(key) {
           var routeOBJ = {
             key:  pages[key].name + '-' + locale,

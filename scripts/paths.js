@@ -1,4 +1,4 @@
-import locales from '../locales/index.js';
+import locales from '../public/locales.json';
 import pages from '../data/pages.js';
 var localeString = ':locale';
 
@@ -23,6 +23,6 @@ Object.keys(pages).forEach(function(item) {
 });
 
 var paths = Object.keys(pages);
-paths = paths.concat(createPaths(pathWithOptional, locales, true));
+paths = paths.concat(createPaths(pathWithOptional, Object.keys(locales), true));
 
 module.exports = paths;

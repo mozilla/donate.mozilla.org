@@ -3,7 +3,7 @@ var TestUtils = require('react/lib/ReactTestUtils');
 var should = require('should');
 var assign = require('react/lib/Object.assign');
 var Context = {
-  messages: require('../../locales/en-US.json'),
+  messages: require('../../public/locales.json')["en-US"],
   router: function() {}
 };
 assign(Context.router, {

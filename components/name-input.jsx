@@ -1,8 +1,9 @@
 import React from 'react';
 import Input from './input.jsx';
+import {IntlMixin} from 'react-intl';
 
 var FirstName = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  mixins: [IntlMixin],
   propTypes: {
     name: React.PropTypes.string.isRequired
   },
@@ -22,7 +23,7 @@ var FirstName = React.createClass({
 });
 
 var LastName = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  mixins: [IntlMixin],
   propTypes: {
     name: React.PropTypes.string.isRequired
   },

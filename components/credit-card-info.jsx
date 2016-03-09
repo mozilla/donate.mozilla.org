@@ -2,6 +2,7 @@ import React from 'react';
 import listener from '../scripts/listener.js';
 import dispatcher from '../scripts/dispatcher.js';
 import form from '../scripts/form.js';
+import {IntlMixin} from 'react-intl';
 
 var regVisa = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
 var regMC = /^(?:5[1-5][0-9]{14})$/;
@@ -81,7 +82,7 @@ var cardInfoMixin = {
 };
 
 var CardNumber = React.createClass({
-  mixins: [require('react-intl').IntlMixin, cardInfoMixin],
+  mixins: [IntlMixin, cardInfoMixin],
   validateTest: function(cardNumber) {
     cardNumber = cardNumber.replace(/ /g, "");
     if ((cardNumber.match(regVisa) && cardNumber.match(regVisa).length > 0) ||
@@ -112,7 +113,7 @@ var CardNumber = React.createClass({
 });
 
 var CardCvc = React.createClass({
-  mixins: [require('react-intl').IntlMixin, cardInfoMixin],
+  mixins: [IntlMixin, cardInfoMixin],
   validateTest: function(value) {
     return /^[0-9]{3,4}$/.test(this.state.value);
   },
@@ -142,7 +143,7 @@ var CardCvc = React.createClass({
 });
 
 var CardExpMonth = React.createClass({
-  mixins: [require('react-intl').IntlMixin, cardInfoMixin],
+  mixins: [IntlMixin, cardInfoMixin],
   validateTest: function(value) {
     var month = parseInt(this.state.value, 10);
     if (!month || month < 1 || month > 12) {
@@ -168,7 +169,7 @@ var CardExpMonth = React.createClass({
 });
 
 var CardExpYear = React.createClass({
-  mixins: [require('react-intl').IntlMixin, cardInfoMixin],
+  mixins: [IntlMixin, cardInfoMixin],
   validateTest: function(value) {
     var year = parseInt(this.state.value, 10);
     if (!year || year < 15) {

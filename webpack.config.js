@@ -34,10 +34,15 @@ module.exports = {
     emitError: true,
     emitWarning: true
   },
+  devtool: 'inline-eval-cheap-source-map',
   plugins: [
     new AssetsPlugin({
       path: Path.join(__dirname, "public")
     }),
+    new webpack.PrefetchPlugin("react"),
+    new webpack.PrefetchPlugin("react-intl"),
+    new webpack.PrefetchPlugin("react-router"),
+    new webpack.PrefetchPlugin("./mixins/form.jsx"),
     new webpack.DefinePlugin({
       'process.env': JSON.stringify({
         APPLICATION_URI: process.env.APPLICATION_URI,
@@ -46,7 +51,8 @@ module.exports = {
         OPTIMIZELY_ACTIVE: process.env.OPTIMIZELY_ACTIVE,
         FULL_SUBDOMAIN_FOR_COOKIE: process.env.FULL_SUBDOMAIN_FOR_COOKIE,
         PAYPAL_EMAIL: process.env.PAYPAL_EMAIL,
-        PAYPAL_ENDPOINT: process.env.PAYPAL_ENDPOINT
+        PAYPAL_ENDPOINT: process.env.PAYPAL_ENDPOINT,
+        NODE_ENV: '"production"'
       })
     }),
     new webpack.ProvidePlugin({

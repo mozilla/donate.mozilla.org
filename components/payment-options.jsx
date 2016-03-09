@@ -1,7 +1,8 @@
 import React from 'react';
+import {IntlMixin} from 'react-intl';
 
 var PayPalButton = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  mixins: [IntlMixin],
   propTypes: {
     onClick: React.PropTypes.func,
     submitting: React.PropTypes.bool,
@@ -47,7 +48,7 @@ var PayPalButton = React.createClass({
 });
 
 var StripeButton = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  mixins: [IntlMixin],
   propTypes: {
     onClick: React.PropTypes.func,
     submitting: React.PropTypes.bool,
@@ -79,7 +80,7 @@ var StripeButton = React.createClass({
 });
 
 var CreditCardButton = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  mixins: [IntlMixin],
   propTypes: {
     onClick: React.PropTypes.func.isRequired,
     name: React.PropTypes.string.isRequired

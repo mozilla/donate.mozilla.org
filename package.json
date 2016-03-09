@@ -68,7 +68,7 @@
     "json-loader": "0.5.4",
     "less": "2.5.3",
     "less-loader": "2.2.2",
-    "newrelic": "1.24.0",
+    "newrelic": "1.25.5",
     "npm-run-all": "1.4.0",
     "polyfill-service": "2.2.0",
     "properties-parser": "0.3.1",

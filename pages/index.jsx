@@ -4,10 +4,13 @@ import Optimizely from '../components/optimizely.jsx';
 import OptimizelySubdomain from '../components/optimizelysubdomain.jsx';
 import Path from 'path';
 import Pontoon from '../components/pontoon.jsx';
-import {injectIntl} from 'react-intl';
 
-var Index = injectIntl(React.createClass({
+var Index = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   render: function() {
+    console.log(this)
     var metaData = this.props.metaData;
     var robots = 'index, follow';
     var googleFonts = "https://fonts.googleapis.com/css?family=Open+Sans:600,400,300,300italic";
@@ -21,7 +24,7 @@ var Index = injectIntl(React.createClass({
       ga('send', 'pageview');
     `;
 
-    if (this.props.intl.locale === "cs") {
+    if (this.props.locale === "cs") {
       googleFonts += "&subset=latin-ext";
     }
     if (metaData.current_url.indexOf('thank-you') !== -1) {
@@ -36,21 +39,21 @@ var Index = injectIntl(React.createClass({
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <meta name='robots' content={robots}/>
           <meta property="og:type" content="website" />
-          <meta property="og:title" content={`${this.props.intl.formatMessage({id: 'support_mozilla'})}`} />
+          <meta property="og:title" content={`{id: 'support_mozilla'})}`} />
           <meta property="og:site_name" content={metaData.site_name} />
           <meta property="og:url" content={metaData.site_url} />
-          <meta property="og:description" content={`${this.props.intl.formatMessage({id: 'i_donated_to_mozilla'})}`} />
+          <meta property="og:description" content={`{id: 'i_donated_to_mozilla'})}`} />
           <meta property="og:image" content={`${metaData.APPLICATION_URI}/assets/images/EOY_facebook_v1.a152496406bad899d1a920f6d6b9f507.png`} />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@mozilla" />
-          <meta name="twitter:title" content={`${this.props.intl.formatMessage({id: 'support_mozilla'})}`} />
-          <meta name="twitter:description" content={`${this.props.intl.formatMessage({id: 'i_donated_to_mozilla'})}`} />
+          <meta name="twitter:title" content={`{id: 'support_mozilla'})}`} />
+          <meta name="twitter:description" content={`{id: 'i_donated_to_mozilla'})}`} />
           <meta name="twitter:image" content={`${metaData.APPLICATION_URI}/assets/images/EOY_Twitter_v8_EN.d1bb5d2a5ce35859d038df852d9e6a0a811beaac.png`} />
 
           <link rel="preconnect" href="https://www.google-analytics.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link rel="preconnect" href="https://206878104.log.optimizely.com" />
-          <title>{`donate.mozilla.org | ${this.props.intl.formatMessage({id: 'give_to_mozilla'})}`}</title>
+          <title>{`donate.mozilla.org | {id: 'give_to_mozilla'})}`}</title>
           <OptimizelySubdomain/>
           <Optimizely/>
           <link rel="icon" href={this.props.favicon} type="image/x-icon"/>
@@ -58,10 +61,12 @@ var Index = injectIntl(React.createClass({
            <script dangerouslySetInnerHTML={{__html: ga}}></script>
         </head>
         <body>
-          <div id="my-app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
+          <div id="my-app">
+            {this.props.children[0][1]}
+          </div>
           <link rel="stylesheet" href={googleFonts}/>
           <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
-          <script src={`/api/polyfill.js?features=Event,CustomEvent,Promise,Intl.~locale.${this.props.intl.locale}`}></script>
+          <script src={`/api/polyfill.js?features=Event,CustomEvent,Promise,Intl.~locale.${this.props.locale}`}></script>
           <script src={`/${fileHashes.main.js}`} ></script>
           <Pontoon/>
           <script src="https://checkout.stripe.com/checkout.js"></script>
@@ -69,6 +74,6 @@ var Index = injectIntl(React.createClass({
       </html>
     );
   }
-}));
+});
 
 module.exports = Index;

@@ -309,18 +309,7 @@ module.exports = function(options) {
     server.route([{
       method: 'GET',
       path: '/{params*}',
-      handler: function(request, reply) {
-        reactify(request, (redirect, content) => {
-          let query = '';
-          if (request.url.search) {
-            query = request.url.search;
-          }
-          if (redirect) {
-            return reply.redirect(`${redirect}${query}`);
-          }
-          reply(content).type('text/html; charset=utf-8').vary('User-Agent');
-        });
-      },
+      handler: reactify,
       config: {
         cache: {
           expiresIn: 1000 * 60 * 5,

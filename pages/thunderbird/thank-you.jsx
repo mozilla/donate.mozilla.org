@@ -5,12 +5,13 @@ import React from 'react';
 import ThunderbirdFooter from '../../components/footer-thunderbird.jsx';
 import Signup from '../../components/signup-thunderbird.jsx';
 import ThankYouHeader from '../../components/thank-you-header-thunderbird.jsx';
-import { IntlMixin } from 'react-intl';
 import analytics from '../../assets/js/analytics.js';
 import form from '../../scripts/form.js';
 
 var ThankYou = React.createClass({
-  mixins: [IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   componentDidMount: function() {
     form.updateField("email", this.props.email || "");
     analytics();
@@ -25,7 +26,7 @@ var ThankYou = React.createClass({
         <div className={className}>
           <ThankYouHeader/>
           <div>
-            <Signup locales={this.props.locales} country={this.props.country} email={this.props.email} />
+            <Signup country={this.props.country} email={this.props.email} />
             <ThunderbirdFooter/>
           </div>
         </div>

@@ -23,9 +23,7 @@ import {Country, Address, Province, City, Code} from '../components/address-inpu
 import Email from '../components/email-input.jsx';
 import {PrivacyPolicyCheckbox, SignupCheckbox} from '../components/checkbox.jsx';
 
-import {injectIntl} from 'react-intl';
-
-var Sequential = injectIntl(React.createClass({
+var Sequential = React.createClass({
   mixins: [require('../mixins/form.jsx')],
   getInitialState() {
     return {
@@ -38,7 +36,7 @@ var Sequential = injectIntl(React.createClass({
       hideCreditCardDetails: false
     });
     this.setState({
-      paymentType: this.props.intl.formatMessage({id: 'credit_card'})
+      paymentType: this.context.intl.formatMessage({id: 'credit_card'})
     });
     window.setTimeout(this.refs.creditCardInfoField.refs.wrappedElement.focus, 500);
   },
@@ -69,9 +67,9 @@ var Sequential = injectIntl(React.createClass({
       return (
         <span>
           <SectionHeading>
-            <h3>{this.props.intl.formatMessage({id: "choose_payment"})}</h3>
+            <h3>{this.context.intl.formatMessage({id: "choose_payment"})}</h3>
             <p id="secure-label">
-              <i className="fa fa-lock"></i>{this.props.intl.formatMessage({id: 'secure'})}
+              <i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}
             </p>
           </SectionHeading>
           <div className="row">
@@ -90,9 +88,9 @@ var Sequential = injectIntl(React.createClass({
       return (
         <span className="paypal-disabled">
           <SectionHeading>
-            <h3>{this.props.intl.formatMessage({id: "credit_card"})}</h3>
+            <h3>{this.context.intl.formatMessage({id: "credit_card"})}</h3>
             <p id="secure-label">
-              <i className="fa fa-lock"></i>{this.props.intl.formatMessage({id: 'secure'})}
+              <i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}
             </p>
             <div className="row payment-logos credit-card-logos">
               <p>&nbsp;</p>
@@ -117,18 +115,18 @@ var Sequential = injectIntl(React.createClass({
     }
     return (
       <div className={className}>
-        <Header locale={this.props.intl.locale} alt={this.props.intl.formatMessage({id: 'donate_to_mozilla'})}></Header>
+        <Header alt={this.context.intl.formatMessage({id: 'donate_to_mozilla'})}></Header>
         <div className="container">
 
           <NavigationMenu>
             <AmountNavigationButton activePage={this.state.activePage} index={0}>
-              <div>{this.props.intl.formatMessage({id: "amount"})}</div>
+              <div>{this.context.intl.formatMessage({id: "amount"})}</div>
             </AmountNavigationButton>
             <DisplayNavigationButton display={this.state.paymentType} activePage={this.state.activePage} index={1} validate={["amount"]}>
-              <div>{this.props.intl.formatMessage({id: "payment"})}</div>
+              <div>{this.context.intl.formatMessage({id: "payment"})}</div>
             </DisplayNavigationButton>
             <NavigationButton activePage={this.state.activePage} index={2} validate={["cardNumber", "cvc", "expMonth", "expYear"]}>
-              <div>{this.props.intl.formatMessage({id: "personal"})}</div>
+              <div>{this.context.intl.formatMessage({id: "personal"})}</div>
             </NavigationButton>
           </NavigationMenu>
 
@@ -136,13 +134,13 @@ var Sequential = injectIntl(React.createClass({
             <Page activePage={this.state.activePage} index={0}>
               <SectionHeading>
                 <h3>
-                  {this.props.intl.formatMessage({id: "donate_now"})}
+                  {this.context.intl.formatMessage({id: "donate_now"})}
                   <span className="right">
                     <CurrencyDropdown/>
                   </span>
                 </h3>
               </SectionHeading>
-              <AmountButtons name="amount" locale={this.props.intl.locale}/>
+              <AmountButtons name="amount" />
               <Frequency name="frequency"/>
               <NextButton validate={["amount"]}/>
             </Page>
@@ -177,7 +175,7 @@ var Sequential = injectIntl(React.createClass({
                     <div className="full">
                       <div className={cvcHintClassName}>
                         <img src="/assets/images/CVC-illustration.70d7262b2227d24a2f440cc0d560b7da.png" className="left"/>
-                        <div className="">{this.props.intl.formatMessage({id: 'cvc_info'})}</div>
+                        <div className="">{this.context.intl.formatMessage({id: 'cvc_info'})}</div>
                       </div>
                     </div>
                   </div>
@@ -189,7 +187,7 @@ var Sequential = injectIntl(React.createClass({
 
             <Page activePage={this.state.activePage} index={2} errors={["other", "firstName", "lastName", "address", "country", "province", "city", "email", "code"]}>
               <SectionHeading>
-                <h3>{this.props.intl.formatMessage({id: "personal"})}</h3>
+                <h3>{this.context.intl.formatMessage({id: "personal"})}</h3>
               </SectionHeading>
               <div className="row name-input">
                 <div className="half">
@@ -226,7 +224,7 @@ var Sequential = injectIntl(React.createClass({
                   </div>
                 </div>
               </div>
-              <Email name="email" info={this.props.intl.formatMessage({id: "email_info"})}/>
+              <Email name="email" info={this.context.intl.formatMessage({id: "email_info"})}/>
               <PrivacyPolicyCheckbox name="privacyPolicy"/>
               <SignupCheckbox name="signup"/>
 
@@ -254,6 +252,6 @@ var Sequential = injectIntl(React.createClass({
       </div>
     );
   }
-}));
+});
 
 module.exports = Sequential;

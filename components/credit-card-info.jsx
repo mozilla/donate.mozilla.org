@@ -2,7 +2,6 @@ import React from 'react';
 import listener from '../scripts/listener.js';
 import dispatcher from '../scripts/dispatcher.js';
 import form from '../scripts/form.js';
-import {injectIntl} from 'react-intl';
 
 var regVisa = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
 var regMC = /^(?:5[1-5][0-9]{14})$/;
@@ -12,6 +11,9 @@ var cardInfoMixin = {
   propTypes: {
     name: React.PropTypes.string.isRequired,
     field: React.PropTypes.string.isRequired
+  },
+  contextTypes: {
+    intl: React.PropTypes.object
   },
   getInitialState: function() {
     return {
@@ -57,7 +59,7 @@ var cardInfoMixin = {
     var valid = true;
     var value = this.state.value;
     if (!value || !value.trim()) {
-      form.error(this.props.field, this.props.intl.formatMessage({id: "please_complete"}));
+      form.error(this.props.field, this.context.intl.formatMessage({id: "please_complete"}));
     }
     if (!this.validateTest(value) || this.state.error) {
       valid = false;
@@ -81,7 +83,10 @@ var cardInfoMixin = {
   }
 };
 
-var CardNumber = injectIntl(React.createClass({
+var CardNumber = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   mixins: [cardInfoMixin],
   validateTest: function(cardNumber) {
     cardNumber = cardNumber.replace(/ /g, "");
@@ -106,13 +111,16 @@ var CardNumber = injectIntl(React.createClass({
     return (
       <div className="field-container">
         <i className="fa fa-credit-card field-icon"></i>
-        <input type="tel" className={className} id="card-number-input" name={this.props.name} onChange={this.onInput} value={this.state.value} placeholder={this.props.intl.formatMessage({id: 'credit_card_number'})} autoComplete="off"/>
+        <input type="tel" className={className} id="card-number-input" name={this.props.name} onChange={this.onInput} value={this.state.value} placeholder={this.context.intl.formatMessage({id: 'credit_card_number'})} autoComplete="off"/>
       </div>
     );
   }
-}));
+});
 
-var CardCvc = injectIntl(React.createClass({
+var CardCvc = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   mixins: [cardInfoMixin],
   validateTest: function(value) {
     return /^[0-9]{3,4}$/.test(this.state.value);
@@ -135,14 +143,17 @@ var CardCvc = injectIntl(React.createClass({
     return (
       <div className="field-container">
         <i className="fa fa-lock field-icon"></i>
-        <input id="cvc-input" type="tel" className={className} name={this.props.name} maxLength="4" onChange={this.onInput} value={this.state.value} placeholder={this.props.intl.formatMessage({id: 'CVC'})} autoComplete="off"/>
+        <input id="cvc-input" type="tel" className={className} name={this.props.name} maxLength="4" onChange={this.onInput} value={this.state.value} placeholder={this.context.intl.formatMessage({id: 'CVC'})} autoComplete="off"/>
         <i onClick={this.hintClicked} className={hintClassIconName}></i>
       </div>
     );
   }
-}));
+});
 
-var CardExpMonth = injectIntl(React.createClass({
+var CardExpMonth = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   mixins: [cardInfoMixin],
   validateTest: function(value) {
     var month = parseInt(this.state.value, 10);
@@ -162,13 +173,16 @@ var CardExpMonth = injectIntl(React.createClass({
     return (
       <span className="exp-month-container">
         <i className="fa fa-calendar-o field-icon"></i>
-        <input id="exp-month-input" className={className} aria-label={this.props.intl.formatMessage({id: 'credit_card_expiration_month'})} onChange={this.onInput} value={this.state.expMonth} type="tel" placeholder={this.props.intl.formatMessage({id: 'MM'})} maxLength="2" name={this.props.name} autoComplete="off"/>
+        <input id="exp-month-input" className={className} aria-label={this.context.intl.formatMessage({id: 'credit_card_expiration_month'})} onChange={this.onInput} value={this.state.expMonth} type="tel" placeholder={this.context.intl.formatMessage({id: 'MM'})} maxLength="2" name={this.props.name} autoComplete="off"/>
       </span>
     );
   }
-}));
+});
 
-var CardExpYear = injectIntl(React.createClass({
+var CardExpYear = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   mixins: [cardInfoMixin],
   validateTest: function(value) {
     var year = parseInt(this.state.value, 10);
@@ -187,14 +201,14 @@ var CardExpYear = injectIntl(React.createClass({
     }
     return (
       <span className="exp-year-container">
-        <input id="exp-year-input" className={className} aria-label={this.props.intl.formatMessage({id: 'credit_card_expiration_year'})} onChange={this.onInput} value={this.state.value} type="tel" placeholder={this.props.intl.formatMessage({id: 'YY'})} maxLength="2" name={this.props.name} autoComplete="off"/>
+        <input id="exp-year-input" className={className} aria-label={this.context.intl.formatMessage({id: 'credit_card_expiration_year'})} onChange={this.onInput} value={this.state.value} type="tel" placeholder={this.context.intl.formatMessage({id: 'YY'})} maxLength="2" name={this.props.name} autoComplete="off"/>
       </span>
     );
   }
-}));
+});
 
 module.exports = {
-  CardNumber: injectIntl(React.createClass({
+  CardNumber: React.createClass({
     focus: function() {
       this.refs.ccNumber.refs.wrappedElement.focus();
     },
@@ -203,26 +217,26 @@ module.exports = {
         <CardNumber ref="ccNumber" {...this.props} field="cardNumber"/>
       );
     }
-  })),
-  CardCvc: injectIntl(React.createClass({
+  }),
+  CardCvc: React.createClass({
     render: function() {
       return (
         <CardCvc {...this.props} field="cvc"/>
       );
     }
-  })),
-  CardExpMonth: injectIntl(React.createClass({
+  }),
+  CardExpMonth: React.createClass({
     render: function() {
       return (
         <CardExpMonth {...this.props} field="expMonth"/>
       );
     }
-  })),
-  CardExpYear: injectIntl(React.createClass({
+  }),
+  CardExpYear: React.createClass({
     render: function() {
       return (
         <CardExpYear {...this.props} field="expYear"/>
       );
     }
-  }))
+  })
 };

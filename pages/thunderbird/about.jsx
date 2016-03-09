@@ -4,7 +4,9 @@ import SmallPrint from '../../components/small-print-thunderbird.jsx';
 import SingleForm from '../../components/single-form.jsx';
 
 module.exports = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   render: function() {
     var className = "row additional-info-container thunderbird";
     return (
@@ -12,7 +14,7 @@ module.exports = React.createClass({
         <div className="additional-info-page">
           <div className="container additional-page">
             <img className="internet-graphic" width="224" src="/assets/images/thunderbird/thunderbird-logo-wordmark-small.png"/>
-            <div>{this.getIntlMessage('additional_info_thunderbird')}</div>
+            <div>{this.context.formatMessage({id: 'additional_info_thunderbird'})}</div>
           </div>
           <SingleForm
             appName="thunderbird"
@@ -21,7 +23,6 @@ module.exports = React.createClass({
             amount={this.props.amount}
             frequency={this.props.frequency}
             country={this.props.country}
-            locales={this.props.locales}
           />
         </div>
         <SmallPrint stripeNotice={true} />

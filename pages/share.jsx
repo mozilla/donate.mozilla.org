@@ -2,12 +2,14 @@ import React  from 'react';
 import MozillaFooter from '../components/footer-mozilla.jsx';
 import Social from '../components/social.jsx';
 import ThankYouHeader from '../components/thank-you-header.jsx';
-import { injectIntl } from 'react-intl';
 
-var ThankYou = injectIntl(React.createClass({
+var ThankYou = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   render: function() {
     var className = "row share-page";
-    var language = this.props.intl.locale;
+    var language = this.context.intl.locale;
 
     if (this.props.test) {
       className += " " + this.props.test;
@@ -20,6 +22,6 @@ var ThankYou = injectIntl(React.createClass({
       </div>
     );
   }
-}));
+});
 
 module.exports = ThankYou;

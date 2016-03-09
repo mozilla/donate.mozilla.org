@@ -4,31 +4,33 @@ In this project we're using [React-Intl](https://github.com/yahoo/react-intl) to
 
 #### Localize a component or page
 
-To localize a component or page you have to import and `injectIntl` when you create class, for example:
+To localize a component or page you have to include `contextTypes` for `intl` when you create class, for example:
 
 ``` typescript
 var React = require('react');
-var injectIntl = require('react-intl').injectIntl;
 
-var Example = injectIntl(React.createClass({
+var Example = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   render: function() {
     return (
       <div>
-        <h1>{this.props.intl.formatMessage({id: 'key_name_here'})}
+        <h1>{this.context.intl.formatMessage({id: 'key_name_here'})}
       </div>
     );
   }
 
-}));
+});
 ```
 
 If the strings include HTML, use the `FormattedHTMLMessage` element:
 
 ``` typescript
-import { FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedHTMLMessage } from 'react-intl';
 
 <FormattedHTMLMessage
-  message={ this.props.intl.formatMessage({id: "key_name_here"}) }
+  message={ this.context.intl.formatMessage({id: "key_name_here"}) }
 />
 ```
 

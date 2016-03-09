@@ -2,15 +2,17 @@ import React from 'react';
 
 module.exports = React.createClass({
   propTypes: {
-    alt: React.PropTypes.string,
-    locale: React.PropTypes.string
+    alt: React.PropTypes.string
+  },
+  contextTypes: {
+    intl: React.PropTypes.object
   },
   render: function() {
     var alt = "Thunderbird";
 
     // FIXME: Should update the list in the regex for locales that did the translation
     // for whatever `alt` that has been translated.
-    if (/^(en)(\b|$)/.test(this.props.locale)) {
+    if (/^(en)(\b|$)/.test(this.context.intl.locale)) {
       alt = this.props.alt;
     }
     return (

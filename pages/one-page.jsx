@@ -3,9 +3,11 @@ import MozillaFooter from '../components/footer-mozilla.jsx';
 import Header from '../components/header.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SingleForm from '../components/single-form.jsx';
-import {injectIntl} from 'react-intl';
 
-module.exports = injectIntl(React.createClass({
+module.exports = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   render: function() {
     var className = "row";
     if (this.props.test) {
@@ -13,7 +15,7 @@ module.exports = injectIntl(React.createClass({
     }
     return (
       <div className={className}>
-        <Header locale={this.props.intl.locale} alt={this.props.intl.formatMessage({id: 'donate_to_mozilla'})}></Header>
+        <Header alt={this.context.intl.formatMessage({id: 'donate_to_mozilla'})}></Header>
         <SingleForm
           billingAddress={true}
           currency={this.props.currency}
@@ -21,11 +23,10 @@ module.exports = injectIntl(React.createClass({
           amount={this.props.amount}
           frequency={this.props.frequency}
           country={this.props.country}
-          locales={this.props.intl.locales}
         />
         <SmallPrint stripeNotice={true}/>
         <MozillaFooter/>
       </div>
     );
   }
-}));
+});

@@ -1,8 +1,11 @@
 import React from 'react';
-import {FormattedMessage, injectIntl, FormattedNumber} from 'react-intl';
+import {FormattedMessage, FormattedNumber} from 'react-intl';
 import listener from '../scripts/listener.js';
 
-module.exports = injectIntl(React.createClass({
+module.exports = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   getInitialState: function() {
     return {
       amount: "",
@@ -52,7 +55,7 @@ module.exports = injectIntl(React.createClass({
       );
     }
     return (
-      <span>{this.props.intl.formatMessage({id: "donate_now"})}</span>
+      <span>{this.context.intl.formatMessage({id: "donate_now"})}</span>
     );
   }
-}));
+});

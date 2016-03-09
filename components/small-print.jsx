@@ -1,11 +1,14 @@
 import React from 'react';
 import Link from './link.jsx';
-import { FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 
-module.exports = injectIntl(React.createClass({
+module.exports = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   render: function() {
-    var bitcoinLink = (<Link to='give-bitcoin'>{this.props.intl.formatMessage({id: 'Bitcoin'})}</Link>);
-    var checkLink = (<a target='_blank' href='https://wiki.mozilla.org/Ways_to_Give#Check_.28via_postal_service.29'>{this.props.intl.formatMessage({id: 'check'})}</a>);
+    var bitcoinLink = (<Link to='give-bitcoin'>{this.context.intl.formatMessage({id: 'Bitcoin'})}</Link>);
+    var checkLink = (<a target='_blank' href='https://wiki.mozilla.org/Ways_to_Give#Check_.28via_postal_service.29'>{this.context.intl.formatMessage({id: 'check'})}</a>);
     var stripeNotice = "stripe-notice";
     if (!this.props.stripeNotice) {
       stripeNotice += " hidden";
@@ -13,13 +16,13 @@ module.exports = injectIntl(React.createClass({
     return (
       <div className="row disclaimers">
         <p className="other-ways-to-give">
-            <FormattedHTMLMessage id='other_way_to_give' values={{bitcoinLink, checkLink}}/>
+            <FormattedMessage id='other_way_to_give' values={{bitcoinLink: bitcoinLink, checkLink: checkLink}}/>
         </p>
         <p className="need-help">
           <FormattedHTMLMessage id="problems_donating" />
         </p>
         <p className="donation-notice">
-          {this.props.intl.formatMessage({id: 'donation_notice'})}
+          {this.context.intl.formatMessage({id: 'donation_notice'})}
         </p>
         <p className={stripeNotice}>
           <FormattedHTMLMessage id="stripe_notice" />
@@ -27,5 +30,5 @@ module.exports = injectIntl(React.createClass({
       </div>
     );
   }
-}));
+});
 

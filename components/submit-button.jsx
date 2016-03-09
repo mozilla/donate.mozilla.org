@@ -1,8 +1,7 @@
 import React from 'react';
-import {injectIntl} from 'react-intl';
 import {ErrorListener} from './error.jsx';
 
-var DonateButton = injectIntl(React.createClass({
+var DonateButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func,
     submitting: React.PropTypes.bool,
@@ -10,6 +9,9 @@ var DonateButton = injectIntl(React.createClass({
     submit: React.PropTypes.array.isRequired,
     errors: React.PropTypes.array,
     name: React.PropTypes.string
+  },
+  contextTypes: {
+    intl: React.PropTypes.object
   },
   onClick: function() {
     if (!this.props.submitting) {
@@ -19,7 +21,7 @@ var DonateButton = injectIntl(React.createClass({
   renderButton: function() {
     if (this.props.submitting) {
       return (
-        <span><i className="fa fa-cog fa-spin"/>{this.props.intl.formatMessage({id: 'submitting'})}</span>
+        <span><i className="fa fa-cog fa-spin"/>{this.context.intl.formatMessage({id: 'submitting'})}</span>
       );
     }
     return this.props.children;
@@ -36,6 +38,6 @@ var DonateButton = injectIntl(React.createClass({
       </div>
     );
   }
-}));
+});
 
 module.exports = DonateButton;

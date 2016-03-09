@@ -1,9 +1,8 @@
 import React from 'react';
-import {injectIntl} from 'react-intl';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 
-var Input = injectIntl(React.createClass({
+var Input = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
     field: React.PropTypes.string.isRequired,
@@ -12,6 +11,9 @@ var Input = injectIntl(React.createClass({
     autoCorrect: React.PropTypes.string,
     spellCheck: React.PropTypes.string,
     autoCapitalize: React.PropTypes.string
+  },
+  contextTypes: {
+    intl: React.PropTypes.object
   },
   getInitialState: function() {
     return {
@@ -64,7 +66,7 @@ var Input = injectIntl(React.createClass({
     var value = this.state.value || "";
     value = value.trim();
     if (!value) {
-      form.error(this.props.field, this.props.intl.formatMessage({id: "please_complete"}));
+      form.error(this.props.field, this.context.intl.formatMessage({id: "please_complete"}));
     }
     valid = !!value;
     this.setState({
@@ -86,6 +88,6 @@ var Input = injectIntl(React.createClass({
       />
     );
   }
-}));
+});
 
 module.exports = Input;

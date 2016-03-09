@@ -1,5 +1,4 @@
 import React from 'react';
-import {injectIntl} from 'react-intl';
 import {FormattedMessage, FormattedNumber} from 'react-intl';
 import {ErrorMessage} from './error.jsx';
 import listener from '../scripts/listener.js';
@@ -34,7 +33,10 @@ var AmountButton = React.createClass({
   }
 });
 
-var AmountOtherButton = injectIntl(React.createClass({
+var AmountOtherButton = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   propTypes: {
     checked: React.PropTypes.bool.isRequired,
     onRadioChange: React.PropTypes.func,
@@ -62,7 +64,7 @@ var AmountOtherButton = injectIntl(React.createClass({
     }
   },
   testNumberFormat: function() {
-    return this.props.intl.formatNumber( "1.50").indexOf(",") === -1;
+    return this.context.intl.formatNumber("1.50").indexOf(",") === -1;
   },
   onInputChange: function(e) {
     var inputValue = e.currentTarget.value;
@@ -95,7 +97,7 @@ var AmountOtherButton = injectIntl(React.createClass({
     } else if (!this.props.userInputting) {
       // We only need this for initial display before the user starts inputting,
       // once they start inputting, we can adapt.
-      inputValue = this.props.intl.formatNumber( amount);
+      inputValue = this.context.intl.formatNumber( amount);
     }
     return (
       <div className="two-third">
@@ -126,9 +128,12 @@ var AmountOtherButton = injectIntl(React.createClass({
       </div>
     );
   }
-}));
+});
 
-var AmountButtons = injectIntl(React.createClass({
+var AmountButtons = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   propTypes: {
     name: React.PropTypes.string
   },
@@ -167,12 +172,12 @@ var AmountButtons = injectIntl(React.createClass({
     var errorMessage = "";
     if (this.state.amount) {
       if (parseInt(this.state.amount, 10) < parseInt(this.state.currency.minAmount, 10)) {
-        errorMessage = this.props.intl.formatMessage({id: 'donation_min_error'}, {minAmount: '2'});
+        errorMessage = this.context.intl.formatMessage({id: 'donation_min_error'}, {minAmount: '2'});
       } else {
         valid = true;
       }
     } else {
-      errorMessage = this.props.intl.formatMessage({id: 'please_select_an_amount'});
+      errorMessage = this.context.intl.formatMessage({id: 'please_select_an_amount'});
     }
     this.setState({
       valid: valid,
@@ -181,7 +186,7 @@ var AmountButtons = injectIntl(React.createClass({
     return valid;
   },
   renderErrorMessage: function() {
-    if (this.state.errorMessage === this.props.intl.formatMessage({id: 'donation_min_error'}, {minAmount: '2'})) {
+    if (this.state.errorMessage === this.context.intl.formatMessage({id: 'donation_min_error'}, {minAmount: '2'})) {
       return (
         <FormattedMessage
           defaultMessage={this.state.errorMessage}
@@ -291,19 +296,18 @@ var AmountButtons = injectIntl(React.createClass({
           <AmountButton value={presets[3]} currencyCode={currency.code} amount={amount}
             onChange={this.onChange}/>
           <AmountOtherButton amount={otherAmount}
-            locale={this.props.intl.locale}
             currencySymbol={currency.symbol}
             userInputting={userInputting}
             checked={otherChecked}
             onRadioChange={this.otherRadioChange}
             onInputChange={this.otherInputChange}
-            placeholder={this.props.intl.formatMessage({id: 'other_amount'})}
+            placeholder={this.context.intl.formatMessage({id: 'other_amount'})}
           />
         </div>
         <ErrorMessage message={this.renderErrorMessage()}/>
       </div>
     );
   }
-}));
+});
 
 module.exports = AmountButtons;

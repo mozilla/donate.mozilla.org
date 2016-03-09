@@ -1,9 +1,8 @@
 import React  from 'react';
 import MozillaFooter from '../components/footer-mozilla.jsx';
 import Header from '../components/header.jsx';
-import { injectIntl } from 'react-intl';
 
-var Survey = injectIntl(React.createClass({
+var Survey = React.createClass({
   render: function() {
     var className = "row";
     if (this.props.test) {
@@ -21,6 +20,6 @@ var Survey = injectIntl(React.createClass({
       </div>
     );
   }
-}));
+});
 
 module.exports = Survey;

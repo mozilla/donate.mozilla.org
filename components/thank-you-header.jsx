@@ -1,7 +1,10 @@
 import React from 'react';
-import { injectIntl, FormattedHTMLMessage } from 'react-intl';
+import { FormattedHTMLMessage } from 'react-intl';
 
-var ThankYouHeader  = injectIntl(React.createClass({
+var ThankYouHeader  = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   renderMessage: function() {
     var name = this.props.name;
     if (name) {
@@ -9,7 +12,7 @@ var ThankYouHeader  = injectIntl(React.createClass({
         <h1>
           <FormattedHTMLMessage
             name={name}
-            message={ this.props.intl.formatMessage({id: "from_all_of_us_with_ty_name"}) }
+            message={ this.context.intl.formatMessage({id: "from_all_of_us_with_ty_name"}) }
           />
         </h1>
       );
@@ -17,8 +20,8 @@ var ThankYouHeader  = injectIntl(React.createClass({
     return (
       <span>
         <h1>
-          <div>{ this.props.intl.formatMessage({id: "from_all_of_us_at_mozilla"}) }</div>
-          <div><b>{ this.props.intl.formatMessage({id: "thank_you"}) }</b></div>
+          <div>{ this.context.intl.formatMessage({id: "from_all_of_us_at_mozilla"}) }</div>
+          <div><b>{ this.context.intl.formatMessage({id: "thank_you"}) }</b></div>
         </h1>
       </span>
     );
@@ -33,6 +36,6 @@ var ThankYouHeader  = injectIntl(React.createClass({
     );
   }
 
-}));
+});
 
 module.exports = ThankYouHeader;

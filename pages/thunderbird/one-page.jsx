@@ -5,12 +5,14 @@ import SmallPrint from '../../components/small-print-thunderbird.jsx';
 import SingleForm from '../../components/single-form.jsx';
 
 module.exports = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   render: function() {
     var className = "row thunderbird";
     return (
       <div className={className}>
-        <Header locale={this.props.locales[0]} alt={this.getIntlMessage('donate_to_thunderbird')}></Header>
+        <Header alt={this.context.intl.formatMessage({id: 'donate_to_thunderbird'})}></Header>
         <SingleForm
           appName="thunderbird"
           billingAddress={true}
@@ -19,7 +21,6 @@ module.exports = React.createClass({
           amount={this.props.amount}
           frequency={this.props.frequency}
           country={this.props.country}
-          locales={this.props.locales}
         />
         <SmallPrint stripeNotice={true}/>
         <ThunderbirdFooter/>

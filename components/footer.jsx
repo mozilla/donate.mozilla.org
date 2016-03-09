@@ -1,7 +1,10 @@
 import React from 'react';
-import {injectIntl, FormattedHTMLMessage } from 'react-intl';
+import { FormattedHTMLMessage } from 'react-intl';
 
-var Footer = injectIntl(React.createClass({
+var Footer = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   render: function() {
     return (
       <footer>
@@ -18,13 +21,13 @@ var Footer = injectIntl(React.createClass({
             </div>
             <div className="quarter">
               <ul>
-                <li><a href="https://www.mozilla.org/mission/" target="_blank">{this.props.intl.formatMessage({id: 'Mission'})}</a></li>
-                <li><a href="https://www.mozilla.org/about/" target="_blank">{this.props.intl.formatMessage({id: 'About'})}</a></li>
-                <li><a href="https://www.mozilla.org/contact/spaces/" target="_blank">{this.props.intl.formatMessage({id: 'Contact'})}</a>
+                <li><a href="https://www.mozilla.org/mission/" target="_blank">{this.context.intl.formatMessage({id: 'Mission'})}</a></li>
+                <li><a href="https://www.mozilla.org/about/" target="_blank">{this.context.intl.formatMessage({id: 'About'})}</a></li>
+                <li><a href="https://www.mozilla.org/contact/spaces/" target="_blank">{this.context.intl.formatMessage({id: 'Contact'})}</a>
                 </li>
-                <li><a href="https://www.mozilla.org/privacy/" target="_blank">{this.props.intl.formatMessage({id: 'privacyPolicyFooter'})}</a>
+                <li><a href="https://www.mozilla.org/privacy/" target="_blank">{this.context.intl.formatMessage({id: 'privacyPolicyFooter'})}</a>
                 </li>
-                <li><a href="https://www.mozilla.org/about/legal/" target="_blank">{this.props.intl.formatMessage({id: 'legalNotices'})}</a>
+                <li><a href="https://www.mozilla.org/about/legal/" target="_blank">{this.context.intl.formatMessage({id: 'legalNotices'})}</a>
                 </li>
               </ul>
             </div>
@@ -33,6 +36,6 @@ var Footer = injectIntl(React.createClass({
       </footer>
     );
   }
-}));
+});
 
 module.exports = Footer;

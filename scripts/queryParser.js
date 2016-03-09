@@ -1,7 +1,7 @@
 import url from 'url';
 import currencies from '../data/currencies.js';
 import {localeCurrencyData, localeCountryData} from '../data/locale-data.js';
-import englishStrings from '../locales/en-US.json';
+import locales from '../public/locales.json';
 
 function isNumber(item) {
   return !isNaN(parseInt(item, 10));
@@ -33,12 +33,12 @@ module.exports = function(queryString, pathname) {
     presets = currency.presets[frequency];
   }
 
-  if (locale && require('../locales/index.js').indexOf(locale) !== -1) {
-    currentString = require('../locales/' + locale +'.json');
-    messages = Object.assign({}, englishStrings, currentString);
+  if (locale && locales[locale]) {
+    currentString = locales[locale];
+    messages = Object.assign({}, locales['en-US'], currentString);
   } else {
     locale = 'en-US';
-    messages = englishStrings;
+    messages = locales['en-US'];
   }
 
   return {

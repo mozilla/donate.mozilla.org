@@ -1,16 +1,18 @@
 import React from 'react';
-import {injectIntl} from 'react-intl';
 
-var Header = injectIntl(React.createClass({
+var Header = React.createClass({
   propTypes: {
     alt: React.PropTypes.string
+  },
+  contextTypes: {
+    intl: React.PropTypes.object
   },
   render: function() {
     var alt = "Mozilla";
 
     // FIXME: Should update the list in the regex for locales that did the translation
     // for whatever `alt` that has been translated.
-    if (/^(en)(\b|$)/.test(this.props.intl.locale)) {
+    if (/^(en)(\b|$)/.test(this.context.intl.locale)) {
       alt = this.props.alt;
     }
     return (
@@ -26,6 +28,6 @@ var Header = injectIntl(React.createClass({
       </div>
     );
   }
-}));
+});
 
 module.exports = Header;

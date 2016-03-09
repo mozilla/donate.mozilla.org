@@ -9,15 +9,18 @@ import {PayPalButton, StripeButton} from '../components/payment-options.jsx';
 import SubmitButton from '../components/submit-button.jsx';
 import DonateButton from '../components/donate-button.jsx';
 import form from '../scripts/form.js';
-import {injectIntl, FormattedMessage, FormattedHTMLMessage, FormattedNumber} from 'react-intl';
+import {FormattedMessage, FormattedHTMLMessage, FormattedNumber} from 'react-intl';
 
-module.exports = injectIntl(React.createClass({
+module.exports = React.createClass({
   mixins: [require('../mixins/form.jsx')],
   propTypes: {
     currency: React.PropTypes.object.isRequired,
     presets: React.PropTypes.array.isRequired,
     amount: React.PropTypes.string.isRequired,
     frequency: React.PropTypes.string.isRequired
+  },
+  contextTypes: {
+    intl: React.PropTypes.object
   },
   getInitialState: function() {
     return {
@@ -154,8 +157,8 @@ module.exports = injectIntl(React.createClass({
       return (
         <span>
           <SectionHeading>
-            <h4>{this.props.intl.formatMessage({id: 'choose_payment'})}</h4>
-            <p id="secure-label"><i className="fa fa-lock"></i>{this.props.intl.formatMessage({id: 'secure'})}</p>
+            <h4>{this.context.intl.formatMessage({id: 'choose_payment'})}</h4>
+            <p id="secure-label"><i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}</p>
           </SectionHeading>
           <div className="row">
             {this.renderPrivacyPolicy()}
@@ -197,9 +200,9 @@ module.exports = injectIntl(React.createClass({
       return (
         <span className="paypal-disabled">
           <SectionHeading>
-            <h3>{this.props.intl.formatMessage({id: 'credit_card'})}</h3>
+            <h3>{this.context.intl.formatMessage({id: 'credit_card'})}</h3>
             <p id="secure-label">
-              <i className="fa fa-lock"></i>{this.props.intl.formatMessage({id: 'secure'})}
+              <i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}
             </p>
             <div className="row payment-logos credit-card-logos">
               <p>&nbsp;</p>
@@ -238,7 +241,7 @@ module.exports = injectIntl(React.createClass({
       <div className="container">
         <SectionHeading>
           <h3>
-            {this.props.intl.formatMessage({id: 'donate_now'})}
+            {this.context.intl.formatMessage({id: 'donate_now'})}
             <span className="right">
               <CurrencyDropdown/>
             </span>
@@ -248,7 +251,7 @@ module.exports = injectIntl(React.createClass({
         <div className="frequency-move">
           <Frequency name="frequency-test"/>
         </div>
-        <AmountButtons name="amount" locale={this.props.intl.locale}/>
+        <AmountButtons name="amount" />
         <div className="frequency-move-baseline">
           <Frequency name="frequency"/>
         </div>
@@ -258,4 +261,4 @@ module.exports = injectIntl(React.createClass({
       </div>
     );
   }
-}));
+});

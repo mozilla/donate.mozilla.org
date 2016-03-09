@@ -2,9 +2,11 @@ import React from 'react';
 import MozillaFooter from '../components/footer-mozilla.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SingleForm from '../components/single-form.jsx';
-import {injectIntl} from 'react-intl';
 
-var About = injectIntl(React.createClass({
+var About = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   render: function() {
     var className = "row additional-info-container";
     if (this.props.test) {
@@ -17,7 +19,7 @@ var About = injectIntl(React.createClass({
             <img className="heart-image" height="100" width="107" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
             <div>
               <img className="mozilla-watermark" src="/assets/images/mozilla.5e83dba715a0469b92071758876f0373.svg"/>
-              <span>{this.props.intl.formatMessage({id: 'additional_info'})}</span>
+              <span>{this.context.intl.formatMessage({id: 'additional_info'})}</span>
             </div>
           </div>
           <SingleForm
@@ -26,7 +28,6 @@ var About = injectIntl(React.createClass({
             amount={this.props.amount}
             frequency={this.props.frequency}
             country={this.props.country}
-            locales={this.props.intl.locales}
           />
         </div>
         <SmallPrint stripeNotice={true} />
@@ -34,6 +35,6 @@ var About = injectIntl(React.createClass({
       </div>
     );
   }
-}));
+});
 
 module.exports = About;

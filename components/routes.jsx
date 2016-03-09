@@ -16,7 +16,7 @@ export default (
   (<Router history={browserHistory}>
     <Route path="/" onEnter={redirect}>
       {
-        locales.map(function(locale) {
+        Object.keys(locales).map(function(locale) {
           return Object.keys(pages).map(function(key) {
             var routeOBJ = {
               path: `/${locale}${key}`,

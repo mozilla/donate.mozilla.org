@@ -1,6 +1,5 @@
 import React from 'react';
-import IntlMixin from 'react-intl';
-import {FormattedMessage, FormattedNumber} from 'react-intl';
+import {FormattedMessage, FormattedNumber, IntlMixin} from 'react-intl';
 import {ErrorMessage} from './error.jsx';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
@@ -130,7 +129,7 @@ var AmountOtherButton = React.createClass({
 });
 
 var AmountButtons = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  mixins: [IntlMixin],
   propTypes: {
     name: React.PropTypes.string
   },

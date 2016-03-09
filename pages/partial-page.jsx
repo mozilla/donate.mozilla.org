@@ -3,9 +3,10 @@ import MozillaFooter from '../components/footer-mozilla.jsx';
 import Header from '../components/header.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SingleForm from '../components/single-form.jsx';
+import {IntlMixin} from 'react-intl';
 
 var OnePage = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  mixins: [IntlMixin],
   render: function() {
     var className = "row";
     if (this.props.test) {

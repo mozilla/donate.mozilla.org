@@ -12,6 +12,7 @@ if (process.env.NEW_RELIC_ENABLED === 'true') {
   newrelic = {};
 }
 
+var fs = require('fs');
 var Boom = require('boom');
 var Path = require('path');
 var Hapi = require('hapi');
@@ -323,6 +324,44 @@ module.exports = function(options) {
         directory: {
           path: Path.join(__dirname, 'assets')
         }
+      },
+      config: {
+        cache: {
+          expiresIn: 7 * 24 * 60 * 60 * 1000, // one week
+          privacy: 'public'
+        }
+      }
+    }, {
+      method: 'GET',
+      path: '/intl/data/{locale}.js',
+      handler: function(request, reply) {
+        var locale = request.params.locale.replace('.js', '');
+        var path = Path.join(__dirname, `node_modules/react-intl/locale-data/${locale}.js`);
+        fs.stat(path, (err, stats) => {
+          if (!err) {
+            return reply.file(path);
+          }
+          locale = locale.split('-')[0];
+          path = Path.join(__dirname, `node_modules/react-intl/locale-data/${locale}.js`);
+          fs.stat(path, (err, stats) => {
+            if (!err) {
+              return reply.file(path);
+            }
+            return reply.file(Path.join(__dirname, `node_modules/react-intl/locale-data/en.js`));
+          });
+        });
+      },
+      config: {
+        cache: {
+          expiresIn: 7 * 24 * 60 * 60 * 1000, // one week
+          privacy: 'public'
+        }
+      }
+    }, {
+      method: 'GET',
+      path: '/react-intl.js',
+      handler: function(request, reply) {
+        reply.file(Path.join(__dirname, 'node_modules/react-intl/dist/react-intl.js'));
       },
       config: {
         cache: {

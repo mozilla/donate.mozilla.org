@@ -75,42 +75,46 @@ var Checkbox = React.createClass({
   }
 });
 
-module.exports = {
-  PrivacyPolicyCheckbox: React.createClass({
-    propTypes: {
-      name: React.PropTypes.string.isRequired
-    },
-    contextTypes: {
-      intl: React.PropTypes.object
-    },
-    render: function() {
-      var intlId = this.props.intlId || "privacy_policy";
-      return (
+var PrivacyPolicyCheckbox =  React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired,
+    intlId: React.PropTypes.string
+  },
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
+  render: function() {
+    var intlId = this.props.intlId || "privacy_policy";
+    return (
+      <Checkbox
+        {...this.props}
+        intlId={intlId}
+        error={this.context.intl.formatMessage({id: 'pp_acknowledge'})}
+        id="privacy-policy-checkbox"
+        field="privacyPolicy"
+      />
+    );
+  }
+});
+var SignupCheckbox = React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    return (
+      <div className="signup-checkbox">
         <Checkbox
           {...this.props}
-          intlId={intlId}
-          error={this.context.intl.formatMessage({id: 'pp_acknowledge'})}
-          id="privacy-policy-checkbox"
-          field="privacyPolicy"
+          intlId="yes_i_want_to_keep_in_touch"
+          id="signup-checkbox"
+          field="signup"
         />
-      );
-    }
-  }),
-  SignupCheckbox: React.createClass({
-    propTypes: {
-      name: React.PropTypes.string.isRequired
-    },
-    render: function() {
-      return (
-        <div className="signup-checkbox">
-          <Checkbox
-            {...this.props}
-            intlId="yes_i_want_to_keep_in_touch"
-            id="signup-checkbox"
-            field="signup"
-          />
-        </div>
-      );
-    }
-  })
+      </div>
+    );
+  }
+});
+
+module.exports = {
+  SignupCheckbox,
+  PrivacyPolicyCheckbox
 };

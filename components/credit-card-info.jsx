@@ -84,6 +84,9 @@ var cardInfoMixin = {
 };
 
 var CardNumber = React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
   contextTypes: {
     intl: React.PropTypes.object
   },
@@ -121,6 +124,10 @@ var CardCvc = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
+  propTypes: {
+    showHint: React.PropTypes.bool,
+    name: React.PropTypes.string.isRequired
+  },
   mixins: [cardInfoMixin],
   validateTest: function(value) {
     return /^[0-9]{3,4}$/.test(this.state.value);
@@ -154,6 +161,9 @@ var CardExpMonth = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
   mixins: [cardInfoMixin],
   validateTest: function(value) {
     var month = parseInt(this.state.value, 10);
@@ -183,6 +193,9 @@ var CardExpYear = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
   mixins: [cardInfoMixin],
   validateTest: function(value) {
     var year = parseInt(this.state.value, 10);
@@ -207,36 +220,44 @@ var CardExpYear = React.createClass({
   }
 });
 
+var CardNumberComponent = React.createClass({
+  focus: function() {
+    this.refs.ccNumber.focus();
+  },
+  render: function() {
+    return (
+      <CardNumber ref="ccNumber" {...this.props} field="cardNumber"/>
+    );
+  }
+});
+
+var CardCvcComponent = React.createClass({
+  render: function() {
+    return (
+      <CardCvc {...this.props} field="cvc"/>
+    );
+  }
+});
+
+var CardExpMonthComponent = React.createClass({
+  render: function() {
+    return (
+      <CardExpMonth {...this.props} field="expMonth"/>
+    );
+  }
+});
+
+var CardExpYearComponent = React.createClass({
+  render: function() {
+    return (
+      <CardExpYear {...this.props} field="expYear"/>
+    );
+  }
+});
+
 module.exports = {
-  CardNumber: React.createClass({
-    focus: function() {
-      this.refs.ccNumber.refs.wrappedElement.focus();
-    },
-    render: function() {
-      return (
-        <CardNumber ref="ccNumber" {...this.props} field="cardNumber"/>
-      );
-    }
-  }),
-  CardCvc: React.createClass({
-    render: function() {
-      return (
-        <CardCvc {...this.props} field="cvc"/>
-      );
-    }
-  }),
-  CardExpMonth: React.createClass({
-    render: function() {
-      return (
-        <CardExpMonth {...this.props} field="expMonth"/>
-      );
-    }
-  }),
-  CardExpYear: React.createClass({
-    render: function() {
-      return (
-        <CardExpYear {...this.props} field="expYear"/>
-      );
-    }
-  })
+  CardNumber: CardNumberComponent,
+  CardCvc: CardCvcComponent,
+  CardExpMonth: CardExpMonthComponent,
+  CardExpYear: CardExpYearComponent
 };

@@ -2,7 +2,8 @@ import React from 'react';
 
 var Header = React.createClass({
   propTypes: {
-    alt: React.PropTypes.string
+    alt: React.PropTypes.string,
+    children: React.PropTypes.any
   },
   contextTypes: {
     intl: React.PropTypes.object

@@ -3,7 +3,7 @@ import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 import helpsImageData from '../data/helps-image-data.js';
 
-module.exports = React.createClass({
+var DonationFrequency = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
     locale: React.PropTypes.string
@@ -79,3 +79,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = DonationFrequency;

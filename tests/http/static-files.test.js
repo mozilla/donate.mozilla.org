@@ -207,11 +207,6 @@ describe('static files', () => {
       cache: cache.short,
       vary: 'User-Agent'
     },
-    '/en-US/sequential/': {
-      type: types.html,
-      cache: cache.short,
-      vary: 'User-Agent'
-    },
     '/en-US/share/': {
       type: types.html,
       cache: cache.short,

@@ -2,9 +2,12 @@ import React from 'react';
 import Link from './link.jsx';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 
-module.exports = React.createClass({
+var SmallPrint = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
+  },
+  propTypes: {
+    stripeNotice: React.PropTypes.bool
   },
   render: function() {
     var bitcoinLink = (<Link to='give-bitcoin'>{this.context.intl.formatMessage({id: 'Bitcoin'})}</Link>);
@@ -32,3 +35,4 @@ module.exports = React.createClass({
   }
 });
 
+module.exports = SmallPrint;

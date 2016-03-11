@@ -3,6 +3,9 @@ import MozillaFooter from '../components/footer-mozilla.jsx';
 import Header from '../components/header.jsx';
 
 var Survey = React.createClass({
+  propTypes: {
+    test: React.PropTypes.string
+  },
   render: function() {
     var className = "row";
     if (this.props.test) {

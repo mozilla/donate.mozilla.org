@@ -11,13 +11,12 @@ import DonateButton from '../components/donate-button.jsx';
 import form from '../scripts/form.js';
 import {FormattedMessage, FormattedHTMLMessage, FormattedNumber} from 'react-intl';
 
-module.exports = React.createClass({
+var SingleForm = React.createClass({
   mixins: [require('../mixins/form.jsx')],
   propTypes: {
-    currency: React.PropTypes.object.isRequired,
-    presets: React.PropTypes.array.isRequired,
-    amount: React.PropTypes.string.isRequired,
-    frequency: React.PropTypes.string.isRequired
+    monthlyPopup: React.PropTypes.bool,
+    billingAddress: React.PropTypes.bool,
+    appName: React.PropTypes.string
   },
   contextTypes: {
     intl: React.PropTypes.object
@@ -262,3 +261,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = SingleForm;

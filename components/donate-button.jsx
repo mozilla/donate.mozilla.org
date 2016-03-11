@@ -2,9 +2,12 @@ import React from 'react';
 import {FormattedMessage, FormattedNumber} from 'react-intl';
 import listener from '../scripts/listener.js';
 
-module.exports = React.createClass({
+var DonateButton = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
+  },
+  propTypes: {
+    currency: React.PropTypes.object
   },
   getInitialState: function() {
     return {
@@ -59,3 +62,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = DonateButton;

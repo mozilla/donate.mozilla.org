@@ -4,11 +4,13 @@ import {ErrorListener} from './error.jsx';
 var DonateButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func,
+    onSubmit: React.PropTypes.func,
     submitting: React.PropTypes.bool,
     validate: React.PropTypes.array.isRequired,
     submit: React.PropTypes.array.isRequired,
     errors: React.PropTypes.array,
-    name: React.PropTypes.string
+    name: React.PropTypes.string,
+    children: React.PropTypes.any
   },
   contextTypes: {
     intl: React.PropTypes.object

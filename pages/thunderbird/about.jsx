@@ -3,9 +3,17 @@ import ThunderbirdFooter from '../../components/footer-thunderbird.jsx';
 import SmallPrint from '../../components/small-print-thunderbird.jsx';
 import SingleForm from '../../components/single-form.jsx';
 
-module.exports = React.createClass({
+var About = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
+  },
+  propTypes: {
+    country: React.PropTypes.string.isRequired,
+    currency: React.PropTypes.object.isRequired,
+    amount: React.PropTypes.string.isRequired,
+    presets: React.PropTypes.array.isRequired,
+    test: React.PropTypes.string,
+    frequency: React.PropTypes.string.isRequired
   },
   render: function() {
     var className = "row additional-info-container thunderbird";
@@ -31,3 +39,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = About;

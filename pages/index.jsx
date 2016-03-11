@@ -9,6 +9,11 @@ var Index = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
+  propTypes: {
+    favicon: React.PropTypes.string.isRequired,
+    metaData: React.PropTypes.object.isRequired,
+    children: React.PropTypes.any
+  },
   render: function() {
     var metaData = this.props.metaData;
     var robots = 'index, follow';
@@ -52,7 +57,7 @@ var Index = React.createClass({
           <link rel="preconnect" href="https://www.google-analytics.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link rel="preconnect" href="https://206878104.log.optimizely.com" />
-          <title>{`donate.mozilla.org | {id: 'give_to_mozilla'})}`}</title>
+          <title>{`donate.mozilla.org | ${this.context.intl.formatMessage({id: 'give_to_mozilla'})}`}</title>
           <OptimizelySubdomain/>
           <Optimizely/>
           <link rel="icon" href={this.props.favicon} type="image/x-icon"/>
@@ -60,6 +65,7 @@ var Index = React.createClass({
            <script dangerouslySetInnerHTML={{__html: ga}}></script>
         </head>
         <body>
+          <script src={`/intl/data/${this.context.intl.locale}.js`}></script>
           <div id="my-app">
             {this.props.children[0][1]}
           </div>

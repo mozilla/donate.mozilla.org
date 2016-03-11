@@ -5,6 +5,9 @@ var Footer = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
+  propTypes: {
+    stripeNotice: React.PropTypes.bool
+  },
   render: function() {
     var stripeNotice = "stripe-notice";
     if (!this.props.stripeNotice) {

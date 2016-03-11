@@ -61,7 +61,7 @@ var DirectoryTiles = React.createClass({
         </Header>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy01.png" />
-          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} message={this.context.intl.formatMessage({id: 'red_heart_the_web'})}/></h2>
+          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} id='red_heart_the_web' /></h2>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy02.png" />
@@ -69,7 +69,7 @@ var DirectoryTiles = React.createClass({
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy03.png" />
-          <h2 style={textStyle}><FormattedHTMLMessage darkRedHeart={heart.darkRed} message={this.context.intl.formatMessage({id: 'darkRed_heart_the_web'})}/></h2>
+          <h2 style={textStyle}><FormattedHTMLMessage darkRedHeart={heart.darkRed} id='darkRed_heart_the_web' /></h2>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy04.png" />
@@ -80,7 +80,7 @@ var DirectoryTiles = React.createClass({
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy05.png" />
-          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} message={this.context.intl.formatMessage({id: 'red_heart_mozilla'})}/></h2>
+          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} id='red_heart_mozilla' /></h2>
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy06.png" />
@@ -88,7 +88,7 @@ var DirectoryTiles = React.createClass({
         </div>
         <div style={divStyle}>
           <img src="/assets/tiles/eoy07.png" />
-          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} message={this.context.intl.formatMessage({id: 'red_heart_mozilla'})}/></h2>
+          <h2 style={textStyle}><FormattedHTMLMessage redHeart={heart.red} id='red_heart_mozilla' /></h2>
           <div style={btn}>
             {donateNow}
           </div>

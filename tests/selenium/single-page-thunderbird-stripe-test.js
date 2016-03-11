@@ -40,7 +40,7 @@ module.exports = function(driver, By, done) {
       if (url.indexOf('&str_frequency=one-time') === -1) {
         result = false;
       }
-      if (url.indexOf('&email=send-donation%40test.com') === -1) {
+      if (url.indexOf('&email=send-donation@test.com') === -1) {
         result = false;
       }
       if (url.indexOf('&country=Canada') === -1) {
@@ -91,7 +91,7 @@ module.exports = function(driver, By, done) {
       if (url.indexOf('&str_frequency=one-time') === -1) {
         result = false;
       }
-      if (url.indexOf('&email=send-donation%40test.com') === -1) {
+      if (url.indexOf('&email=send-donation@test.com') === -1) {
         result = false;
       }
       if (url.indexOf('&country=Canada') === -1) {

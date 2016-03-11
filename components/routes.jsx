@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import { Router, Route, browserHistory, Redirect } from 'react-router';
 import pages from '../data/pages.js';
 import locales from '../public/locales.json';
+import { render } from 'react-dom';
 
 function redirect(state, replace) {
   // This is done so that we can inject the locale in server side rendering
@@ -19,7 +20,7 @@ export default (
         Object.keys(locales).map(function(locale) {
           return Object.keys(pages).map(function(key) {
             var routeOBJ = {
-              path: `/${locale}${key}`,
+              path: `${locale}${key}`,
               component: pages[key].component
             };
             return (

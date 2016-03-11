@@ -5,6 +5,9 @@ var Footer = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
+  propTypes: {
+    message: React.PropTypes.string
+  },
   render: function() {
     return (
       <footer>

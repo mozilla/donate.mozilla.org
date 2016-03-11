@@ -5,6 +5,9 @@ var ThankYouHeader  = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
+  propTypes: {
+    name: React.PropTypes.string
+  },
   renderMessage: function() {
     var name = this.props.name;
     if (name) {
@@ -12,7 +15,7 @@ var ThankYouHeader  = React.createClass({
         <h1>
           <FormattedHTMLMessage
             name={name}
-            message={ this.context.intl.formatMessage({id: "from_all_of_us_with_ty_name"}) }
+            id="from_all_of_us_with_ty_name"
           />
         </h1>
       );

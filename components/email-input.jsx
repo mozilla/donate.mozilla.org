@@ -7,7 +7,8 @@ import form from '../scripts/form.js';
 var EmailInput = React.createClass({
   propTypes: {
     info: React.PropTypes.string,
-    name: React.PropTypes.string.isRequired
+    name: React.PropTypes.string.isRequired,
+    intlID: React.PropTypes.string
   },
   contextTypes: {
     intl: React.PropTypes.object
@@ -70,18 +71,18 @@ var EmailInput = React.createClass({
   renderHint: function() {
     var hintClassIconName = "fa fa-question-circle hint";
     var hintClassName = "hint-msg small";
-    var info = this.props.info;
+    var intlID = this.props.intlID;
     if (this.state.showHint) {
       hintClassIconName += " on";
     } else {
       hintClassName += " hidden";
     }
-    if (info) {
+    if (intlID) {
       return (
         <span>
           <i onClick={this.hintClicked} className={hintClassIconName}></i>
           <div className={hintClassName}>
-            <FormattedHTMLMessage defaultMessage={info}/>
+            <FormattedHTMLMessage id={intlID}/>
           </div>
         </span>
       );

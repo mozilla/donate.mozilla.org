@@ -1,8 +1,9 @@
 import React from 'react';
 
-module.exports = React.createClass({
+var HeaderThunderbird = React.createClass({
   propTypes: {
-    alt: React.PropTypes.string
+    alt: React.PropTypes.string,
+    children: React.PropTypes.any
   },
   contextTypes: {
     intl: React.PropTypes.object
@@ -29,3 +30,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = HeaderThunderbird;

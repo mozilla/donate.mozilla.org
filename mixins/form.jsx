@@ -26,7 +26,8 @@ module.exports = {
       showCvcHint: false,
       currency: this.props.currency,
       frequency: this.props.frequency || "",
-      amount: ""
+      amount: "",
+      thunderbird: false
     };
   },
   componentDidMount: function() {
@@ -169,6 +170,9 @@ module.exports = {
     if (country) {
       params += "&country=" + country;
     }
+    if (this.state.thunderbird) {
+      location = `thunderbird/${location}`;
+    }
     var page = `/${this.context.intl.locale}/${location}/`;
     reactGA.pageview(page);
     this.context.router.push(`${page}?${params}`);
@@ -305,6 +309,7 @@ module.exports = {
 
     submitProps = form.buildProps(props);
     if (appName === "thunderbird") {
+      this.setState({thunderbird: true});
       description = "Thunderbird";
     }
     if (submitProps.frequency === "monthly") {
@@ -378,6 +383,7 @@ module.exports = {
       submitProps = form.buildProps(props);
 
       if (appName === "thunderbird") {
+        this.setState({thunderbird: true});
         description = "Thunderbird";
       }
       if (submitProps.frequency === "monthly") {

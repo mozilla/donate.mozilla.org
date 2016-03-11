@@ -47,9 +47,9 @@ var PaypalForm = React.createClass({
   },
   submit: function(frequency) {
     if (frequency === "monthly") {
-      this.refs.paypalRecurring.refs.wrappedElement.submit();
+      this.refs.paypalRecurring.submit();
     } else {
-      this.refs.paypalOneTime.refs.wrappedElement.submit();
+      this.refs.paypalOneTime.submit();
     }
   },
   render: function() {
@@ -95,6 +95,9 @@ var simplePaypal = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
+  propTypes: {
+    test: React.PropTypes.string
+  },
   simplePaypal: function(validate, props) {
     var valid = form.validate(validate);
     var submitProps = {};
@@ -103,7 +106,7 @@ var simplePaypal = React.createClass({
         submitting: true
       });
       submitProps = form.buildProps(props);
-      this.refs.paypalForm.refs.wrappedElement.submit(submitProps.frequency);
+      this.refs.paypalForm.submit(submitProps.frequency);
     }
   },
   render: function() {

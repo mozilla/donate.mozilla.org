@@ -8,6 +8,14 @@ var OnePage = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
+  propTypes: {
+    country: React.PropTypes.string.isRequired,
+    currency: React.PropTypes.object.isRequired,
+    amount: React.PropTypes.string.isRequired,
+    presets: React.PropTypes.array.isRequired,
+    test: React.PropTypes.string,
+    frequency: React.PropTypes.string.isRequired
+  },
   render: function() {
     var className = "row";
     if (this.props.test) {

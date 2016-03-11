@@ -29,9 +29,7 @@ If the strings include HTML, use the `FormattedHTMLMessage` element:
 ``` typescript
 import { FormattedHTMLMessage } from 'react-intl';
 
-<FormattedHTMLMessage
-  message={ this.context.intl.formatMessage({id: "key_name_here"}) }
-/>
+<FormattedHTMLMessage id="key_name_here" />
 ```
 
 Once you add the mixin it will expose `getIntlMessage` method to your component to get the localized message for the given key.

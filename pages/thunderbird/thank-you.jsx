@@ -12,6 +12,11 @@ var ThankYou = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
+  propTypes: {
+    email: React.PropTypes.string,
+    test: React.PropTypes.string,
+    country: React.PropTypes.string.isRequired
+  },
   componentDidMount: function() {
     form.updateField("email", this.props.email || "");
     analytics();

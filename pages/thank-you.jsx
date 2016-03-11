@@ -1,6 +1,3 @@
-// this will ignore that Bad Invocation error which is a bug in JSXHint
-/* jshint -W067 */
-
 import React from 'react';
 import MozillaFooter from '../components/footer-mozilla.jsx';
 import Signup from '../components/signup.jsx';
@@ -15,6 +12,11 @@ var ThankYou = React.createClass({
     location: React.PropTypes.object,
     router: React.PropTypes.object,
     intl: React.PropTypes.object
+  },
+  propTypes: {
+    country: React.PropTypes.string.isRequired,
+    test: React.PropTypes.string,
+    location: React.PropTypes.object
   },
   getInitialState: function() {
     let query = qs.parse(this.props.location.search.replace("?", ""));
@@ -31,7 +33,7 @@ var ThankYou = React.createClass({
     var locale = this.context.intl.locale;
     var signUpOrSocial = (<Social />);
 
-    if (this.props.params && /^(en|de)(\b|$)/.test(locale)) {
+    if (/^(en|de)(\b|$)/.test(locale)) {
       signUpOrSocial = (<Signup country={this.props.country} email={this.state.email} />);
     }
     if (this.props.test) {

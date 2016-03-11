@@ -7,6 +7,9 @@ var ThankYou = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
+  propTypes: {
+    test: React.PropTypes.string
+  },
   render: function() {
     var className = "row share-page";
     var language = this.context.intl.locale;

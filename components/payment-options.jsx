@@ -3,6 +3,7 @@ import React from 'react';
 var PayPalButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func,
+    onSubmit: React.PropTypes.func,
     submitting: React.PropTypes.bool,
     validate: React.PropTypes.array,
     submit: React.PropTypes.array.isRequired,
@@ -52,6 +53,8 @@ var PayPalButton = React.createClass({
 var StripeButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func,
+    onSubmit: React.PropTypes.func,
+    submit: React.PropTypes.array,
     submitting: React.PropTypes.bool,
     validate: React.PropTypes.array.isRequired,
     name: React.PropTypes.string.isRequired

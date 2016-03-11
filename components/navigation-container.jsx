@@ -1,6 +1,9 @@
 import React from 'react';
 
 var NavigationContainer = React.createClass({
+  propTypes: {
+    children: React.PropTypes.any
+  },
   componentDidMount: function() {
     window.addEventListener("resize", this.onResize);
   },

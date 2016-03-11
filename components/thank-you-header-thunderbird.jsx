@@ -1,9 +1,12 @@
 import React from 'react';
 import { FormattedHTMLMessage } from 'react-intl';
 
-module.exports = React.createClass({
+var ThankYouHeaderThunder = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
+  },
+  propTypes: {
+    name: React.PropTypes.string
   },
   renderMessage: function() {
     var name = this.props.name;
@@ -36,3 +39,6 @@ module.exports = React.createClass({
   }
 
 });
+
+module.exports = ThankYouHeaderThunder;
+

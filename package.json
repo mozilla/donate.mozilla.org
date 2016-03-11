@@ -74,6 +74,7 @@
     "polyfill-service": "2.2.0",
     "properties-parser": "0.3.1",
     "q-io": "1.13.2",
+    "qs": "^6.1.0",
     "react": "0.14.7",
     "react-dom": "0.14.7",
     "react-ga": "1.2.0",

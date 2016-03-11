@@ -20,7 +20,8 @@
     "test:server": "node tests/start.js",
     "test:selenium": "node tests/selenium/start.js",
     "test:lint": "eslint --ext .js,.jsx .",
-    "imagemin": "imagemin assets/images/* assets/images"
+    "imagemin": "imagemin assets/images/* assets/images",
+    "postinstall": "npm-run-all build:*"
   },
   "repository": {
     "type": "git",

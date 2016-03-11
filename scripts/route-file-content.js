@@ -61,6 +61,10 @@ module.exports = (request, reply) => {
       let supportedLocale = locales[localeInPath];
       if (localeInPath && supportedLocale) {
         pathname = `/${localeInPath}/`;
+      } else if (localeInPath && !supportedLocale) {console.log('here at least?');
+        let newPath = [];
+        pathname = pathname.split('/').forEach((x)=>{ if (x && x !== localeInPath) newPath.push(x); });
+        pathname = `/${locale}/${newPath.join('/')}`;
       } else {
         pathname = `/${locale}${pathname}`;
       }

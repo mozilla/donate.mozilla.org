@@ -357,18 +357,6 @@ module.exports = function(options) {
           privacy: 'public'
         }
       }
-    }, {
-      method: 'GET',
-      path: '/react-intl.js',
-      handler: function(request, reply) {
-        reply.file(Path.join(__dirname, 'node_modules/react-intl/dist/react-intl.js'));
-      },
-      config: {
-        cache: {
-          expiresIn: 7 * 24 * 60 * 60 * 1000, // one week
-          privacy: 'public'
-        }
-      }
     }]);
   });
 

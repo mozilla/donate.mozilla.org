@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
-/* eslint-disable no-unused-vars */
 import { render } from 'react-dom';
 import { match, Router } from 'react-router';
 import {IntlProvider,addLocaleData} from 'react-intl';

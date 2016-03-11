@@ -1,10 +1,7 @@
-/*eslint-disable no-unused-vars*/
-import React, {Component} from 'react';
-/*eslint-disable no-unused-vars*/
+import React from 'react';
 import { Router, Route, browserHistory, Redirect } from 'react-router';
 import pages from '../data/pages.js';
 import locales from '../public/locales.json';
-import { render } from 'react-dom';
 
 function redirect(state, replace) {
   // This is done so that we can inject the locale in server side rendering

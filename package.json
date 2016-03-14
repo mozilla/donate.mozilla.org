@@ -60,7 +60,7 @@
     "good": "6.4.0",
     "good-console-logfmt": "1.0.2",
     "habitat": "3.1.2",
-    "hapi": "11.1.4",
+    "hapi": "13.2.1",
     "hatchet": "0.3.2",
     "history": "^2.0.0",
     "hoek": "3.0.4",
@@ -106,7 +106,7 @@
     "mocha": "2.4.5",
     "react-test-context": "0.1.0",
     "selenium-webdriver": "2.48.2",
-    "should": "8.0.2"
+    "should": "8.2.2"
   },
   "engines": {
     "node": "4.3.0"

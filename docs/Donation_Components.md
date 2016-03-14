@@ -14,10 +14,6 @@ Gets a donation amount from the user. Four static donation amount buttons, and a
 
 Gets the donation frequency from the user, like montly or one-time.
 
-### credit-card-info.jsx
-
-Inputs for credit card number, expiration date, and cvc code.
-
 ### name-input.jsx
 
 Inputs for first and last name.

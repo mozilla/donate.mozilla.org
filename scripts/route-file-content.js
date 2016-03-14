@@ -57,11 +57,11 @@ module.exports = (request, reply) => {
       });
       let locale = bestLang(languages_array, Object.keys(locales), 'en-US');
       let pathname = redirectLocation && redirectLocation.pathname;
-      let localeInPath = pathname.split('/')[1];
+      let localeInPath = pathname.split('/')[2] ? pathname.split('/')[1] : false;
       let supportedLocale = locales[localeInPath];
       if (localeInPath && supportedLocale) {
         pathname = `/${localeInPath}/`;
-      } else if (localeInPath && !supportedLocale) {console.log('here at least?');
+      } else if (localeInPath && !supportedLocale) {
         let newPath = [];
         pathname = pathname.split('/').forEach((x)=>{ if (x && x !== localeInPath) newPath.push(x); });
         pathname = `/${locale}/${newPath.join('/')}`;

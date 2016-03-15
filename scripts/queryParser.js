@@ -2,6 +2,7 @@ import url from 'url';
 import currencies from '../data/currencies.js';
 import {localeCurrencyData, localeCountryData} from '../data/locale-data.js';
 import locales from '../public/locales.json';
+import assign from 'react/lib/Object.assign';
 
 function isNumber(item) {
   return !isNaN(parseInt(item, 10));
@@ -35,7 +36,7 @@ module.exports = function(queryString, pathname) {
 
   if (locale && locales[locale]) {
     currentString = locales[locale];
-    messages = Object.assign({}, locales['en-US'], currentString);
+    messages = assign({}, locales['en-US'], currentString);
   } else {
     locale = 'en-US';
     messages = locales['en-US'];

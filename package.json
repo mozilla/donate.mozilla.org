@@ -16,7 +16,7 @@
     "test:karma": "karma start",
     "test:coverage": "KARMA_ENV=coverage karma start --reporters coverage,coveralls",
     "watch:test": "karma start --no-single-run --browsers Firefox",
-    "test:http": "mocha tests/http/*.test.js",
+    "test:http": "mocha tests/http/*.test.js --timeout 5000",
     "test:server": "node tests/start.js",
     "test:selenium": "node tests/selenium/start.js",
     "test:lint": "eslint --ext .js,.jsx .",

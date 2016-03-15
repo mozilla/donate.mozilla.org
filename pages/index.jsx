@@ -12,7 +12,8 @@ var Index = React.createClass({
   propTypes: {
     favicon: React.PropTypes.string.isRequired,
     metaData: React.PropTypes.object.isRequired,
-    children: React.PropTypes.any
+    children: React.PropTypes.any,
+    markup: React.PropTypes.object
   },
   render: function() {
     var metaData = this.props.metaData;
@@ -66,9 +67,7 @@ var Index = React.createClass({
         </head>
         <body>
           <script src={`/intl/data/${this.context.intl.locale}.js`}></script>
-          <div id="my-app">
-            {this.props.children[0][1]}
-          </div>
+          <div id="my-app" dangerouslySetInnerHTML={{__html: this.props.markup}}/>
           <link rel="stylesheet" href={googleFonts}/>
           <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
           <script src={`/api/polyfill.js?features=Event,CustomEvent,Promise,Intl.~locale.${this.context.intl.locale}`}></script>

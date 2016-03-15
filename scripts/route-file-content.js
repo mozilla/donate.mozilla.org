@@ -30,10 +30,11 @@ function makeFile(renderProps, query) {
       site_name: 'mozilla.org',
       site_url: url.resolve(process.env.APPLICATION_URI, values.locale + '/'),
       APPLICATION_URI: process.env.APPLICATION_URI
-    }
+    },
+    markup: renderToString(<IntlProvider key="intl" {...intlData} ><RouterContext createElement={createElement} {...renderProps} /></IntlProvider>)
   };
 
-  return ReactDOM.renderToString(<IntlProvider key="intl" {...intlData}><Index {...props}>{renderToString(<IntlProvider key="intl" {...intlData} ><RouterContext createElement={createElement} {...renderProps} /></IntlProvider>)}</Index></IntlProvider>);
+  return ReactDOM.renderToString(<IntlProvider key="intl" {...intlData}><Index {...props}></Index></IntlProvider>);
 }
 module.exports = (request, reply) => {
   function replyContent(redirect, content) {

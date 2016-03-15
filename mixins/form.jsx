@@ -1,13 +1,11 @@
 import React from 'react';
 import reactGA from 'react-ga';
-import {Navigation} from 'react-router';
 import amountModifier from '../scripts/amount-modifier';
 import listener from '../scripts/listener.js';
 import dispatcher from '../scripts/dispatcher.js';
 import form from '../scripts/form.js';
 
 module.exports = {
-  mixins: [Navigation],
   propTypes: {
     currency: React.PropTypes.object,
     presets: React.PropTypes.array,

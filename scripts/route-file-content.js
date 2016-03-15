@@ -8,7 +8,7 @@ import {IntlProvider} from 'react-intl';
 import routes from '../components/routes.jsx';
 import locales from '../public/locales.json';
 import queryParser from './queryParser.js';
-function makeFile(renderProps, query, callback) {
+function makeFile(renderProps, query) {
   var values = queryParser(query, renderProps.location.pathname);
   var intlData = {defaultMessage: values.messages, messages: values.messages, locale: values.locale};
   var Index = React.createFactory(require('../pages/index.jsx'));

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, browserHistory, Redirect } from 'react-router';
+import { Route, Redirect } from 'react-router';
 import pages from '../data/pages.js';
 import locales from '../public/locales.json';
 
@@ -11,8 +11,7 @@ function redirect(state, replace) {
 }
 
 export default (
-  (<Router history={browserHistory}>
-    <Route path="/" onEnter={redirect}>
+  (<Route path="/" onEnter={redirect}>
       {
         Object.keys(locales).map(function(locale) {
           return Object.keys(pages).map(function(key) {
@@ -26,8 +25,8 @@ export default (
           });
         })
       }
+      <Redirect from="*/*" to="*/*/" />
+      <Redirect from="*" to="*/" />
     </Route>
-    <Redirect from="/**/*" to="/**/*/" />
-    <Redirect from="/*" to="/*/" />
-  </Router>)
+    )
 );

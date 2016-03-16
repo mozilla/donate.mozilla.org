@@ -68,6 +68,7 @@
     "inert": "3.2.0",
     "joi": "7.1.0",
     "json-loader": "0.5.4",
+    "langmap": "0.0.12",
     "less": "2.5.3",
     "less-loader": "2.2.2",
     "newrelic": "1.24.0",

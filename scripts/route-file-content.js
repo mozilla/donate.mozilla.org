@@ -8,6 +8,60 @@ import {IntlProvider} from 'react-intl';
 import routes from '../components/routes.jsx';
 import locales from '../public/locales.json';
 import queryParser from './queryParser.js';
+import langmap from 'langmap';
+
+function addTrailingSlash(pathname) {
+  // If there is a trailing slash this should do nothing.
+  return pathname.replace(/\/?$/, '/');
+}
+
+function redirectMatch(error, redirectLocation, renderProps, pathname, request, reply) {
+  if (renderProps) {
+    replyContent(request, reply, pathname);
+    return;
+  }
+
+  let header = Parser.parse(request.headers["accept-language"]);
+  let languages_array = header.map(l => l.code + (l.region ? "-" + l.region : ""));
+  let locale = bestLang(languages_array, Object.keys(locales), 'en-US');
+  let localeInPath = langmap[pathname.split('/')[1]];
+  let supportedLocale = false;
+
+  if (localeInPath && locales[pathname.split('/')[1]]) {
+    supportedLocale = true;
+  }
+
+  if (localeInPath && !supportedLocale) {
+    // e.g. /xx/thank-you/ we want to redirect to /en-US/thank-you/
+    pathname = pathname.replace(pathname.split('/')[1], locale);
+    pathname = addTrailingSlash(pathname);
+  } else if (!localeInPath) {
+    // if locale is not in path or the first section of the URL is not an actual locale
+    // let's cache the old path first...
+    let oldPath = pathname;
+    // we are going to add a locale to see if this path does exists in our routes object
+    pathname = `/${locale}${pathname}`;
+    match({ routes, location: pathname }, (error, redirectLocation, renderProps) => {
+      if (!renderProps) {
+        // the path doesn't exist, let's try and replace it with our own locale, and proceed to the next match
+        pathname = oldPath.replace(oldPath.split('/')[1], locale);
+      }
+    });
+  }
+
+  pathname = addTrailingSlash(pathname);
+  // this should be our final match, and if we don't have the path in our routes, we will redirect to homepage
+  match({ routes, location: pathname }, (error, redirectLocation, renderProps) => {
+    if (!renderProps) {
+      replyContent(request, reply, `/${locale}/`);
+      return;
+    }
+
+    replyContent(request, reply, pathname);
+    return;
+  });
+}
+
 function makeFile(renderProps, query) {
   var values = queryParser(query, renderProps.location.pathname);
   var intlData = {defaultMessage: values.messages, messages: values.messages, locale: values.locale};
@@ -36,45 +90,35 @@ function makeFile(renderProps, query) {
 
   return ReactDOM.renderToString(<IntlProvider key="intl" {...intlData}><Index {...props}></Index></IntlProvider>);
 }
-module.exports = (request, reply) => {
-  function replyContent(redirect, content) {
-    let query = '';
-    if (request.url.search) {
-      query = request.url.search;
-    }
-    if (redirect) {
-      return reply.redirect(`${redirect}${query}`);
-    }
-    reply(content).type('text/html; charset=utf-8').vary('User-Agent');
+
+function replyContent(request, reply, redirect, content) {
+  let query = '';
+  if (request.url.search) {
+    query = request.url.search;
   }
-  match({ routes, location: request.url.pathname }, (error, redirectLocation, renderProps) => {
+
+  if (redirect) {
+    return reply.redirect(`${redirect}${query}`);
+  }
+  reply(content).type('text/html; charset=utf-8').vary('User-Agent');
+}
+
+module.exports = (request, reply) => {
+  let pathname = request.url.pathname;
+  // console.log(pathname)
+  match({ routes, location: pathname }, (error, redirectLocation, renderProps) => {
     if (renderProps) {
-      replyContent(null, makeFile(renderProps, request.url.query || {}));
+      replyContent(request, reply, null, makeFile(renderProps, request.url.query || {}));
+      return;
     }
-    else {
-      let header = Parser.parse(request.headers["accept-language"]);
-      let languages_array = header.map(function(l) {
-        return l.code + (l.region ? "-" + l.region : "");
-      });
-      let locale = bestLang(languages_array, Object.keys(locales), 'en-US');
-      let pathname = redirectLocation && redirectLocation.pathname;
-      let localeInPath = pathname.split('/')[2] ? pathname.split('/')[1] : false;
-      let supportedLocale = locales[localeInPath];
-      if (localeInPath && supportedLocale) {
-        pathname = `/${localeInPath}/`;
-      } else if (localeInPath && !supportedLocale) {
-        let newPath = [];
-        pathname = pathname.split('/').forEach((x)=>{ if (x && x !== localeInPath) newPath.push(x); });
-        pathname = `/${locale}/${newPath.join('/')}`;
-      } else {
-        pathname = `/${locale}${pathname}`;
-      }
-      match({ routes, location: pathname }, (error, redirectLocation, renderProps) => {
-        if (!renderProps) {
-          return replyContent(`/${locale}/`);
-        }
-        return replyContent(pathname);
-      });
+    if (!redirectLocation || !redirectLocation.pathname) {
+      return;
     }
+    let pathname = redirectLocation.pathname;
+
+    // We need to redirect, but before redirecting them, let's see if we have this pathname in the routes.
+    match({ routes, location: pathname }, function(error, redirectLocation, renderProps) {
+      redirectMatch(error, redirectLocation, renderProps, pathname, request, reply);
+    });
   });
 };

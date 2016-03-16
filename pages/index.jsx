@@ -13,7 +13,7 @@ var Index = React.createClass({
     favicon: React.PropTypes.string.isRequired,
     metaData: React.PropTypes.object.isRequired,
     children: React.PropTypes.any,
-    markup: React.PropTypes.object
+    markup: React.PropTypes.string
   },
   render: function() {
     var metaData = this.props.metaData;

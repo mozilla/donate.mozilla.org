@@ -53,7 +53,7 @@ var routes = {
         service: Date.now() - signup_service
       });
 
-      reply(payload).code(201);
+      reply(JSON.parse(payload.body)).code(201);
     });
   },
   'stripe': function(request, reply) {

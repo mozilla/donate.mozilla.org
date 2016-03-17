@@ -389,13 +389,19 @@ module.exports = {
       });
     }
   },
-  signupSuccess: function(result) {
+  doSignupSuccess: function(result, location) {
     this.setState({
       submitting: false
     });
-    var page = '/' + this.props.locales[0] + '/share/';
+    var page = '/' + this.props.locales[0] + location;
     reactGA.pageview(page);
     this.transitionTo(page);
+  },
+  signupSuccess: function(result) {
+    this.doSignupSuccess(result, '/share/');
+  },
+  thundebirdSignupSuccess: function(result) {
+    this.doSignupSuccess(result, '/thunderbird/share/');
   },
   signupError: function(result) {
     this.setState({
@@ -403,7 +409,7 @@ module.exports = {
     });
     form.error("other", this.getIntlMessage('try_again_later'));
   },
-  doSignup: function(url, validate, props) {
+  doSignup: function(url, validate, props, success, error) {
     var valid = form.validate(validate);
     var submitProps = {};
     if (valid) {
@@ -411,13 +417,13 @@ module.exports = {
         submitting: true
       });
       submitProps = form.buildProps(props);
-      this.submit(url, submitProps, this.signupSuccess, this.signupError);
+      this.submit(url, submitProps, success, error);
     }
   },
   signup: function(validate, props) {
-    this.doSignup("/api/signup", validate, props);
+    this.doSignup("/api/signup", validate, props, this.signupSuccess, this.signupError);
   },
   mailchimp: function(validate, props) {
-    this.doSignup("/api/mailchimp", validate, props);
+    this.doSignup("/api/mailchimp", validate, props, this.thundebirdSignupSuccess, this.signupError);
   }
 };

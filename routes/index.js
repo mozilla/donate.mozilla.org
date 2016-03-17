@@ -1,4 +1,5 @@
 var signup = require('./signup');
+var mailchimp = require('./mailchimp');
 var stripe = require('./stripe');
 var paypal = require('./paypal');
 var boom = require('boom');
@@ -23,6 +24,31 @@ var routes = {
       }
 
       request.log(['signup'], {
+        request_id: request.headers['x-request-id'],
+        service: Date.now() - signup_service
+      });
+
+      reply(payload).code(201);
+    });
+  },
+  'mailchimp': function(request, reply) {
+    var transaction = request.payload;
+    const signup_service = Date.now();
+
+    mailchimp(transaction, function(err, payload) {
+      if (err) {
+        request.log(['error', 'mailchimp'], {
+          request_id: request.headers['x-request-id'],
+          service: Date.now() - signup_service,
+          code: err.code,
+          type: err.type,
+          param: err.param
+        });
+
+        return reply(boom.wrap(err, 500, 'Unable to complete Mailchimp signup'));
+      }
+
+      request.log(['mailchimp'], {
         request_id: request.headers['x-request-id'],
         service: Date.now() - signup_service
       });

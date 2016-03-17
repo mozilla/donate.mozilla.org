@@ -413,5 +413,16 @@ module.exports = {
       submitProps = form.buildProps(props);
       this.submit("/api/signup", submitProps, this.signupSuccess, this.signupError);
     }
+  },
+  mailchimp: function(validate, props) {
+    var valid = form.validate(validate);
+    var submitProps = {};
+    if (valid) {
+      this.setState({
+        submitting: true
+      });
+      submitProps = form.buildProps(props);
+      this.submit("/api/mailchimp", submitProps, this.signupSuccess, this.signupError);
+    }
   }
 };

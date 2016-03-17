@@ -27,7 +27,7 @@ var Form = React.createClass({
                 <SubmitButton
                   submitting={this.state.submitting}
                   validate={["email", "privacyPolicy"]}
-                  onSubmit={this.signup}
+                  onSubmit={this.mailchimp}
                   submit={["email"]}
                   errors={["email"]}
                 >
@@ -38,7 +38,7 @@ var Form = React.createClass({
                 <SubmitButton
                   submitting={this.state.submitting}
                   validate={["email", "privacyPolicy"]}
-                  onSubmit={this.signup}
+                  onSubmit={this.mailchimp}
                   submit={["email", "country"]}
                   errors={["email", "country"]}
                 >

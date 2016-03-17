@@ -28,6 +28,7 @@ if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
     error: '*',
     request: [
       'signup',
+      'mailchimp',
       'stripe',
       'paypal'
     ]
@@ -38,6 +39,7 @@ if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
     log: '*',
     request: [
       'signup',
+      'mailchimp',
       'stripe',
       'paypal'
     ]
@@ -99,6 +101,34 @@ module.exports = function(options) {
             country: Joi.string().allow('')
           }
         }
+      }
+    }, {
+      method: 'POST',
+      path: '/api/mailchimp',
+      handler: routes.mailchimp,
+      config: {
+        payload: {
+          maxBytes: 32000,
+          allow: 'application/json'
+        },
+        validate: {
+          payload: {
+            locale: Joi.string().min(2).max(12).required(),
+            email: Joi.string().email().required(),
+            country: Joi.string().allow('')
+          }
+        }/*,
+        response: {
+          schema: {
+            format: Joi.any().valid('html').required(),
+            lang: Joi.string().min(2).max(12).required(),
+            newsletters: Joi.string().required(),
+            trigger_welcome: Joi.any().valid('N').required(),
+            source_url: Joi.any().valid('https://donate.mozilla.org/').required(),
+            email: Joi.string().email().required(),
+            country: Joi.string().allow('')
+          }
+        }*/
       }
     }, {
       method: 'POST',

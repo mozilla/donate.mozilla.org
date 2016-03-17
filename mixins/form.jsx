@@ -403,7 +403,7 @@ module.exports = {
     });
     form.error("other", this.getIntlMessage('try_again_later'));
   },
-  signup: function(validate, props) {
+  doSignup: function(url, validate, props) {
     var valid = form.validate(validate);
     var submitProps = {};
     if (valid) {
@@ -411,18 +411,13 @@ module.exports = {
         submitting: true
       });
       submitProps = form.buildProps(props);
-      this.submit("/api/signup", submitProps, this.signupSuccess, this.signupError);
+      this.submit(url, submitProps, this.signupSuccess, this.signupError);
     }
   },
+  signup: function(validate, props) {
+    this.doSignup("/api/signup", validate, props);
+  },
   mailchimp: function(validate, props) {
-    var valid = form.validate(validate);
-    var submitProps = {};
-    if (valid) {
-      this.setState({
-        submitting: true
-      });
-      submitProps = form.buildProps(props);
-      this.submit("/api/mailchimp", submitProps, this.signupSuccess, this.signupError);
-    }
+    this.doSignup("/api/mailchimp", validate, props);
   }
 };

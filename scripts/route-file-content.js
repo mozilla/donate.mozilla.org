@@ -16,24 +16,35 @@ function addTrailingSlash(pathname) {
 }
 
 function redirectMatch(error, redirectLocation, renderProps, pathname, request, reply) {
-  if (renderProps) {
+  if (renderProps && !renderProps.params.locale) {
     replyContent(request, reply, pathname);
     return;
   }
 
+  let localeParam = '';
+  if (redirectLocation && pathname !== '/') {
+    localeParam = redirectLocation && redirectLocation.pathname.split('/')[1];
+  } else if (!redirectLocation && renderProps.params && renderProps.params.locale) {
+    localeParam = renderProps.params.locale;
+  }
+
+  // sometime people trying to pass in some garbage and intentionally want to break our code
+  // check `bad-actors-test.js` file for example. This will at least prevent that from happening
+  // without throwing an error or redirect loop.
+  localeParam = encodeURI(localeParam);
   let header = Parser.parse(request.headers["accept-language"]);
   let languages_array = header.map(l => l.code + (l.region ? "-" + l.region : ""));
   let locale = bestLang(languages_array, Object.keys(locales), 'en-US');
-  let localeInPath = langmap[pathname.split('/')[1]];
+  let localeInPath = langmap[localeParam];
   let supportedLocale = false;
 
-  if (localeInPath && locales[pathname.split('/')[1]]) {
+  if (localeInPath && locales[localeParam]) {
     supportedLocale = true;
   }
 
   if (localeInPath && !supportedLocale) {
     // e.g. /xx/thank-you/ we want to redirect to /en-US/thank-you/
-    pathname = pathname.replace(pathname.split('/')[1], locale);
+    pathname = pathname.replace(localeParam, locale);
     pathname = addTrailingSlash(pathname);
   } else if (!localeInPath) {
     // if locale is not in path or the first section of the URL is not an actual locale
@@ -44,7 +55,7 @@ function redirectMatch(error, redirectLocation, renderProps, pathname, request, 
     match({ routes, location: pathname }, (error, redirectLocation, renderProps) => {
       if (!renderProps) {
         // the path doesn't exist, let's try and replace it with our own locale, and proceed to the next match
-        pathname = oldPath.replace(oldPath.split('/')[1], locale);
+        pathname = oldPath.replace(localeParam, locale);
       }
     });
   }
@@ -105,16 +116,17 @@ function replyContent(request, reply, redirect, content) {
 
 module.exports = (request, reply) => {
   let pathname = request.url.pathname;
-  // console.log(pathname)
+
   match({ routes, location: pathname }, (error, redirectLocation, renderProps) => {
-    if (renderProps) {
+    if (renderProps && !renderProps.params.locale) {
       replyContent(request, reply, null, makeFile(renderProps, request.url.query || {}));
       return;
     }
-    if (!redirectLocation || !redirectLocation.pathname) {
+
+    if ((!redirectLocation || !redirectLocation.pathname) && renderProps && renderProps.params && !renderProps.params.locale) {
       return;
     }
-    let pathname = redirectLocation.pathname;
+    let pathname = redirectLocation && redirectLocation.pathname || renderProps && renderProps.location.pathname;
 
     // We need to redirect, but before redirecting them, let's see if we have this pathname in the routes.
     match({ routes, location: pathname }, function(error, redirectLocation, renderProps) {

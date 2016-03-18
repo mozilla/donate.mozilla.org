@@ -25,6 +25,19 @@ export default (
           });
         })
       }
+      {
+        Object.keys(locales).map(function(locale) {
+          return Object.keys(pages).map(function(key) {
+            var routeOBJ = {
+              path: `/:locale${key}`,
+              component: pages[key].component
+            };
+            return (
+              <Route {...routeOBJ}/>
+            );
+          });
+        })
+      }
       <Redirect from="*/*" to="*/*/" />
       <Redirect from="*" to="*/" />
     </Route>

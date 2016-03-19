@@ -104,7 +104,7 @@ module.exports = function(options) {
       }
     }, {
       method: 'POST',
-      path: '/api/mailchimp',
+      path: '/api/signup/mailchimp',
       handler: routes.mailchimp,
       config: {
         payload: {

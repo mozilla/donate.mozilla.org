@@ -424,6 +424,6 @@ module.exports = {
     this.doSignup("/api/signup", validate, props, this.signupSuccess, this.signupError);
   },
   mailchimp: function(validate, props) {
-    this.doSignup("/api/mailchimp", validate, props, this.thundebirdSignupSuccess, this.signupError);
+    this.doSignup("/api/signup/mailchimp", validate, props, this.thundebirdSignupSuccess, this.signupError);
   }
 };

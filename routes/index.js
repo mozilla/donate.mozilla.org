@@ -47,13 +47,23 @@ var routes = {
 
         return reply(boom.wrap(err, 500, 'Unable to complete Mailchimp signup'));
       }
+      var body = JSON.parse(payload.body);
+      if (payload.statusCode !== 200) {
+        request.log(['error', 'mailchimp'], {
+          request_id: request.headers['x-request-id'],
+          service: Date.now() - signup_service,
+          code: payload.statusCode,
+          message: body.title
+        });
+
+        return reply(boom.create(payload.statusCode, 'Unable to complete Mailchimp signup', body));
+      }
 
       request.log(['mailchimp'], {
         request_id: request.headers['x-request-id'],
         service: Date.now() - signup_service
       });
-
-      reply(JSON.parse(payload.body)).code(201);
+      reply(body).code(201);
     });
   },
   'stripe': function(request, reply) {

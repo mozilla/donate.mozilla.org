@@ -11,13 +11,15 @@ import DonateButton from '../components/donate-button.jsx';
 import form from '../scripts/form.js';
 import {FormattedMessage, FormattedHTMLMessage, FormattedNumber} from 'react-intl';
 
-module.exports = React.createClass({
-  mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],
+var SingleForm = React.createClass({
+  mixins: [require('../mixins/form.jsx')],
   propTypes: {
-    currency: React.PropTypes.object.isRequired,
-    presets: React.PropTypes.array.isRequired,
-    amount: React.PropTypes.string.isRequired,
-    frequency: React.PropTypes.string.isRequired
+    monthlyPopup: React.PropTypes.bool,
+    billingAddress: React.PropTypes.bool,
+    appName: React.PropTypes.string
+  },
+  contextTypes: {
+    intl: React.PropTypes.object
   },
   getInitialState: function() {
     return {
@@ -73,7 +75,7 @@ module.exports = React.createClass({
           <div className="popup">
             <h3>
               <FormattedMessage
-                message={this.getIntlMessage('h1_popup_further_monlth')}
+                id='h1_popup_further_monlth'
                 amount={<span>
                   { this.state.currency.code ?
                   <FormattedNumber
@@ -88,7 +90,7 @@ module.exports = React.createClass({
             <button className="close fa fa-close" onClick={this.closeMonthlyPopup}></button>
             <div className="popup-btn yes" onClick={this.onPopupYes}>
               <FormattedHTMLMessage
-                message={this.getIntlMessage('popup_answer_yes')}
+                id='popup_answer_yes'
                 newAmount={<span>
                   { this.state.currency.code ?
                   <FormattedNumber
@@ -102,7 +104,7 @@ module.exports = React.createClass({
             </div>
             <div className="popup-btn no" onClick={this.onPopupNo}>
               <FormattedHTMLMessage
-                message={this.getIntlMessage('popup_answer_no')}
+                id='popup_answer_no'
                 amount={<span>
                   { this.state.currency.code ?
                   <FormattedNumber
@@ -135,7 +137,7 @@ module.exports = React.createClass({
   },
   renderPrivacyPolicy: function() {
     return (
-      <p className="full"><FormattedHTMLMessage message={this.getIntlMessage("privacy_policy_var_b")}/></p>
+      <p className="full"><FormattedHTMLMessage id='privacy_policy_var_b'/></p>
     );
   },
   checkMonthlyPaypalPopup: function(validate, submit) {
@@ -154,8 +156,8 @@ module.exports = React.createClass({
       return (
         <span>
           <SectionHeading>
-            <h4>{this.getIntlMessage("choose_payment")}</h4>
-            <p id="secure-label"><i className="fa fa-lock"></i>{this.getIntlMessage('secure')}</p>
+            <h4>{this.context.intl.formatMessage({id: 'choose_payment'})}</h4>
+            <p id="secure-label"><i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}</p>
           </SectionHeading>
           <div className="row">
             {this.renderPrivacyPolicy()}
@@ -197,9 +199,9 @@ module.exports = React.createClass({
       return (
         <span className="paypal-disabled">
           <SectionHeading>
-            <h3>{this.getIntlMessage("credit_card")}</h3>
+            <h3>{this.context.intl.formatMessage({id: 'credit_card'})}</h3>
             <p id="secure-label">
-              <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
+              <i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}
             </p>
             <div className="row payment-logos credit-card-logos">
               <p>&nbsp;</p>
@@ -238,7 +240,7 @@ module.exports = React.createClass({
       <div className="container">
         <SectionHeading>
           <h3>
-            {this.getIntlMessage("donate_now")}
+            {this.context.intl.formatMessage({id: 'donate_now'})}
             <span className="right">
               <CurrencyDropdown/>
             </span>
@@ -248,7 +250,7 @@ module.exports = React.createClass({
         <div className="frequency-move">
           <Frequency name="frequency-test"/>
         </div>
-        <AmountButtons name="amount" locale={this.props.locales[0]}/>
+        <AmountButtons name="amount" />
         <div className="frequency-move-baseline">
           <Frequency name="frequency"/>
         </div>
@@ -259,3 +261,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = SingleForm;

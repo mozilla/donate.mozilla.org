@@ -2,13 +2,18 @@ import React  from 'react';
 import MozillaFooter from '../components/footer-mozilla.jsx';
 import Social from '../components/social.jsx';
 import ThankYouHeader from '../components/thank-you-header.jsx';
-import { IntlMixin } from 'react-intl';
 
 var ThankYou = React.createClass({
-  mixins: [IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
+  propTypes: {
+    test: React.PropTypes.string
+  },
   render: function() {
     var className = "row share-page";
-    var language = this.props.locales[0];
+    var language = this.context.intl.locale;
+
     if (this.props.test) {
       className += " " + this.props.test;
     }

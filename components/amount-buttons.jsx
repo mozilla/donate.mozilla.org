@@ -1,5 +1,4 @@
 import React from 'react';
-import IntlMixin from 'react-intl';
 import {FormattedMessage, FormattedNumber} from 'react-intl';
 import {ErrorMessage} from './error.jsx';
 import listener from '../scripts/listener.js';
@@ -35,7 +34,9 @@ var AmountButton = React.createClass({
 });
 
 var AmountOtherButton = React.createClass({
-  mixins: [IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   propTypes: {
     checked: React.PropTypes.bool.isRequired,
     onRadioChange: React.PropTypes.func,
@@ -63,7 +64,7 @@ var AmountOtherButton = React.createClass({
     }
   },
   testNumberFormat: function() {
-    return this.formatNumber("1.50").indexOf(",") === -1;
+    return this.context.intl.formatNumber("1.50").indexOf(",") === -1;
   },
   onInputChange: function(e) {
     var inputValue = e.currentTarget.value;
@@ -96,7 +97,7 @@ var AmountOtherButton = React.createClass({
     } else if (!this.props.userInputting) {
       // We only need this for initial display before the user starts inputting,
       // once they start inputting, we can adapt.
-      inputValue = this.formatNumber(amount);
+      inputValue = this.context.intl.formatNumber(amount);
     }
     return (
       <div className="two-third">
@@ -130,7 +131,9 @@ var AmountOtherButton = React.createClass({
 });
 
 var AmountButtons = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   propTypes: {
     name: React.PropTypes.string
   },
@@ -169,12 +172,12 @@ var AmountButtons = React.createClass({
     var errorMessage = "";
     if (this.state.amount) {
       if (parseInt(this.state.amount, 10) < parseInt(this.state.currency.minAmount, 10)) {
-        errorMessage = this.getIntlMessage('donation_min_error');
+        errorMessage = this.context.intl.formatMessage({id: 'donation_min_error'}, {minAmount: '2'});
       } else {
         valid = true;
       }
     } else {
-      errorMessage = this.getIntlMessage('please_select_an_amount');
+      errorMessage = this.context.intl.formatMessage({id: 'please_select_an_amount'});
     }
     this.setState({
       valid: valid,
@@ -183,10 +186,10 @@ var AmountButtons = React.createClass({
     return valid;
   },
   renderErrorMessage: function() {
-    if (this.state.errorMessage === this.getIntlMessage('donation_min_error')) {
+    if (this.state.errorMessage === this.context.intl.formatMessage({id: 'donation_min_error'}, {minAmount: '2'})) {
       return (
         <FormattedMessage
-          message={this.state.errorMessage}
+          defaultMessage={this.state.errorMessage}
           minAmount={<span>
             { this.state.currency.code ?
             <FormattedNumber
@@ -293,13 +296,12 @@ var AmountButtons = React.createClass({
           <AmountButton value={presets[3]} currencyCode={currency.code} amount={amount}
             onChange={this.onChange}/>
           <AmountOtherButton amount={otherAmount}
-            locale={this.props.locale}
             currencySymbol={currency.symbol}
             userInputting={userInputting}
             checked={otherChecked}
             onRadioChange={this.otherRadioChange}
             onInputChange={this.otherInputChange}
-            placeholder={this.getIntlMessage('other_amount')}
+            placeholder={this.context.intl.formatMessage({id: 'other_amount'})}
           />
         </div>
         <ErrorMessage message={this.renderErrorMessage()}/>

@@ -1,8 +1,13 @@
 import React from 'react';
-import { IntlMixin, FormattedHTMLMessage } from 'react-intl';
+import { FormattedHTMLMessage } from 'react-intl';
 
-module.exports = React.createClass({
-  mixins: [IntlMixin],
+var ThankYouHeader  = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
+  propTypes: {
+    name: React.PropTypes.string
+  },
   renderMessage: function() {
     var name = this.props.name;
     if (name) {
@@ -10,7 +15,7 @@ module.exports = React.createClass({
         <h1>
           <FormattedHTMLMessage
             name={name}
-            message={ this.getIntlMessage("from_all_of_us_with_ty_name") }
+            id="from_all_of_us_with_ty_name"
           />
         </h1>
       );
@@ -18,8 +23,8 @@ module.exports = React.createClass({
     return (
       <span>
         <h1>
-          <div>{ this.getIntlMessage("from_all_of_us_at_mozilla") }</div>
-          <div><b>{ this.getIntlMessage("thank_you") }</b></div>
+          <div>{ this.context.intl.formatMessage({id: "from_all_of_us_at_mozilla"}) }</div>
+          <div><b>{ this.context.intl.formatMessage({id: "thank_you"}) }</b></div>
         </h1>
       </span>
     );
@@ -35,3 +40,5 @@ module.exports = React.createClass({
   }
 
 });
+
+module.exports = ThankYouHeader;

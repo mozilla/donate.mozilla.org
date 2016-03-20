@@ -3,8 +3,18 @@ import MozillaFooter from '../components/footer-mozilla.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SingleForm from '../components/single-form.jsx';
 
-module.exports = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+var About = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
+  propTypes: {
+    country: React.PropTypes.string.isRequired,
+    currency: React.PropTypes.object.isRequired,
+    amount: React.PropTypes.string.isRequired,
+    presets: React.PropTypes.array.isRequired,
+    test: React.PropTypes.string,
+    frequency: React.PropTypes.string.isRequired
+  },
   render: function() {
     var className = "row additional-info-container";
     if (this.props.test) {
@@ -17,7 +27,7 @@ module.exports = React.createClass({
             <img className="heart-image" height="100" width="107" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
             <div>
               <img className="mozilla-watermark" src="/assets/images/mozilla.5e83dba715a0469b92071758876f0373.svg"/>
-              <span>{this.getIntlMessage('additional_info')}</span>
+              <span>{this.context.intl.formatMessage({id: 'additional_info'})}</span>
             </div>
           </div>
           <SingleForm
@@ -26,7 +36,6 @@ module.exports = React.createClass({
             amount={this.props.amount}
             frequency={this.props.frequency}
             country={this.props.country}
-            locales={this.props.locales}
           />
         </div>
         <SmallPrint stripeNotice={true} />
@@ -35,3 +44,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = About;

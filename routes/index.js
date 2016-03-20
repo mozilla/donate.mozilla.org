@@ -218,7 +218,7 @@ var routes = {
       locale: transaction.locale,
       item_name: transaction.description,
       cancelUrl: request.server.info.uri + '/',
-      returnUrl: request.server.info.uri + '/api/paypal-redirect/' + frequency + '/' + transaction.locale + '/'
+      returnUrl: `${request.server.info.uri}/api/paypal-redirect/${frequency}/${transaction.locale}/?item_name=${transaction.description}`
     };
     var request_id = request.headers['x-request-id'];
     function callback(err, data) {
@@ -256,7 +256,7 @@ var routes = {
   'paypal-redirect': function(request, reply) {
     var locale = request.params.locale || '';
     if (locale) {
-      locale = '/' + locale;
+      locale = `/${locale}`;
     }
     var frequency = request.params.frequency || 'single';
     var request_id = request.headers['x-request-id'];
@@ -303,7 +303,9 @@ var routes = {
           }
 
           request.log(['paypal', 'checkout', frequency], log_details);
-
+          if (request.url.query.item_name.toLowerCase().indexOf('thunderbird') !== -1) {
+            return reply.redirect(`${locale}/thunderbird/thank-you/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
+          }
           reply.redirect(`${locale}/thank-you/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
         });
       });
@@ -357,6 +359,9 @@ var routes = {
           // Create unique tx id by combining PayerID and timestamp
           var stamp = Date.now() / 100;
           var txId = data.txn.PAYERID + stamp;
+          if (request.url.query.item_name.toLowerCase().indexOf('thunderbird') !== -1) {
+            return reply.redirect(`${locale}/thunderbird/thank-you/?frequency=${frequency}&tx=${txId}&amt=${data.txn.AMT}&cc=${data.txn.CURRENCYCODE}`);
+          }
           reply.redirect(`${locale}/thank-you/?frequency=${frequency}&tx=${txId}&amt=${data.txn.AMT}&cc=${data.txn.CURRENCYCODE}`);
         });
       });

@@ -1,10 +1,8 @@
 import React from 'react';
-import IntlMixin from 'react-intl';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 
-module.exports = React.createClass({
-  mixins: [IntlMixin],
+var Input = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
     field: React.PropTypes.string.isRequired,
@@ -13,6 +11,9 @@ module.exports = React.createClass({
     autoCorrect: React.PropTypes.string,
     spellCheck: React.PropTypes.string,
     autoCapitalize: React.PropTypes.string
+  },
+  contextTypes: {
+    intl: React.PropTypes.object
   },
   getInitialState: function() {
     return {
@@ -65,7 +66,7 @@ module.exports = React.createClass({
     var value = this.state.value || "";
     value = value.trim();
     if (!value) {
-      form.error(this.props.field, this.getIntlMessage("please_complete"));
+      form.error(this.props.field, this.context.intl.formatMessage({id: "please_complete"}));
     }
     valid = !!value;
     this.setState({
@@ -88,3 +89,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = Input;

@@ -4,11 +4,11 @@ var should = require('should');
 var instance = server({ useDomains: false });
 process.env.HATCHET_NO_LOG = true;
 
-describe('/api/signup', () => {
+describe('/api/signup/basket', () => {
   it('should return okay', (done) => {
     instance.inject({
       method: 'POST',
-      url: '/api/signup',
+      url: '/api/signup/basket',
       payload: {
         locale: 'en-CA',
         email: 'test@example.org',

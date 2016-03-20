@@ -76,7 +76,7 @@ module.exports = function(options) {
   server.route([
     {
       method: 'POST',
-      path: '/api/signup',
+      path: '/api/signup/basket',
       handler: routes.signup,
       config: {
         payload: {

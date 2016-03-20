@@ -4,6 +4,7 @@
 import React from 'react';
 import ThunderbirdFooter from '../../components/footer-thunderbird.jsx';
 import Signup from '../../components/signup-thunderbird.jsx';
+import Social from '../../components/social.jsx';
 import ThankYouHeader from '../../components/thank-you-header-thunderbird.jsx';
 import { IntlMixin } from 'react-intl';
 import analytics from '../../assets/js/analytics.js';
@@ -17,6 +18,11 @@ var ThankYou = React.createClass({
   },
   render: function() {
     var className = "row thank-you-page thunderbird";
+    var locale = this.props.locales[0];
+    var signUpOrSocial = (<Social language={locale}/>);
+    if (this.props.params && /^(en)(\b|$)/.test(locale)) {
+      signUpOrSocial = (<Signup country={this.props.country} email={this.props.email} locales={this.props.locales} />);
+    }
     if (this.props.test) {
       className += " " + this.props.test;
     }
@@ -25,7 +31,7 @@ var ThankYou = React.createClass({
         <div className={className}>
           <ThankYouHeader/>
           <div>
-            <Signup locales={this.props.locales} country={this.props.country} email={this.props.email} />
+            {signUpOrSocial}
             <ThunderbirdFooter/>
           </div>
         </div>

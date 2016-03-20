@@ -5,7 +5,7 @@ import {PrivacyPolicyCheckbox} from '../components/checkbox.jsx';
 import {Country} from '../components/address-input.jsx';
 import SubmitButton from '../components/submit-button.jsx';
 
-var Form = React.createClass({
+var Signup = React.createClass({
   mixins: [IntlMixin, require('../mixins/form.jsx')],
   render: function() {
     return (
@@ -54,4 +54,4 @@ var Form = React.createClass({
 
 });
 
-module.exports = Form;
+module.exports = Signup;

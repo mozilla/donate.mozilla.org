@@ -70,5 +70,8 @@ module.exports = {
         });
       }
     );
+  },
+  closeDispute: function(disputeId, callback) {
+    stripe.disputes.close(disputeId, callback);
   }
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import MozillaFooter from '../components/footer-mozilla.jsx';
+import MozillaFooter from '../components/mozilla/footer.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SingleForm from '../components/single-form.jsx';
 

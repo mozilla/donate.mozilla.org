@@ -1,5 +1,5 @@
 import React from 'react';
-import MozillaFooter from '../components/footer-mozilla.jsx';
+import MozillaFooter from '../components/mozilla/footer.jsx';
 import Header from '../components/header.jsx';
 import { IntlMixin, FormattedHTMLMessage } from 'react-intl';
 import assign from 'react/lib/Object.assign';

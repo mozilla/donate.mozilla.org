@@ -1,7 +1,7 @@
 import React from 'react';
-import ThunderbirdFooter from '../../components/footer-thunderbird.jsx';
-import Header from '../../components/header-thunderbird.jsx';
-import SmallPrint from '../../components/small-print-thunderbird.jsx';
+import ThunderbirdFooter from '../../components/thunderbird/footer.jsx';
+import Header from '../../components/thunderbird/header.jsx';
+import SmallPrint from '../../components/thunderbird/small-print.jsx';
 import SingleForm from '../../components/single-form.jsx';
 
 module.exports = React.createClass({

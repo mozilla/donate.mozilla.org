@@ -75,7 +75,6 @@ module.exports = function(options) {
 
   server.auth.strategy("stripe", "bearer-access-token", {
     validateFunc: function(token, callback) {
-      // this = request
       callback(null, token === process.env.STRIPE_WEBHOOK_SECRET, { token: token });
     }
   });

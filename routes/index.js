@@ -373,7 +373,7 @@ var routes = {
       event.data.object.id,
       function(closeDisputeError, dispute) {
         if (closeDisputeError) {
-          return reply(Boom.badImplementation('An error occurred while closing the dispute', closeDisputeError));
+          return reply(boom.badImplementation('An error occurred while closing the dispute', closeDisputeError));
         }
 
         reply('Dispute closed');

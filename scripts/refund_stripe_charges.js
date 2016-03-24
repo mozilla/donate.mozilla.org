@@ -35,7 +35,7 @@ function refund_charge(charge, done) {
   });
 }
 
-var charged_to_email = (charge) => filter_email.indexOf(charge.customer.email) >= 0;
+var charged_to_email = (charge) => filter_emails.indexOf(charge.customer.email) >= 0;
 
 var charge_was_paid = (charge) => charge.paid
 

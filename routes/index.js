@@ -397,6 +397,24 @@ var routes = {
         });
       });
     }
+  },
+  'stripe-dispute': function(request, reply) {
+    var event = request.payload;
+
+    if (event.type !== 'charge.dispute.created') {
+      return reply('This hook only processes newly created disputes');
+    }
+
+    stripe.closeDispute(
+      event.data.object.id,
+      function(closeDisputeError, dispute) {
+        if (closeDisputeError) {
+          return reply(boom.badImplementation('An error occurred while closing the dispute', closeDisputeError));
+        }
+
+        reply('Dispute closed');
+      }
+    );
   }
 };
 

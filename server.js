@@ -73,6 +73,18 @@ module.exports = function(options) {
     uri: process.env.APPLICATION_URI
   });
 
+  server.register(require("hapi-auth-bearer-token"), function(err) {
+    if (err) {
+      throw err;
+    }
+  });
+
+  server.auth.strategy("stripe", "bearer-access-token", {
+    validateFunc: function(token, callback) {
+      callback(null, token === process.env.STRIPE_WEBHOOK_SECRET, { token: token });
+    }
+  });
+
   server.route([
     {
       method: 'POST',
@@ -263,6 +275,13 @@ module.exports = function(options) {
           privacy: 'public'
         }
       }
+    }, {
+      method: "POST",
+      path: "/stripe/dispute-callback",
+      config: {
+        auth: "stripe"
+      },
+      handler: routes['stripe-dispute']
     }
   ]);
 
@@ -354,4 +373,3 @@ module.exports = function(options) {
 
   return server;
 };
-

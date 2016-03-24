@@ -60,6 +60,7 @@
     "good-console-logfmt": "1.0.2",
     "habitat": "3.1.2",
     "hapi": "11.1.4",
+    "hapi-auth-bearer-token": "4.0.2",
     "hatchet": "0.3.2",
     "hoek": "3.0.4",
     "imports-loader": "0.6.5",
@@ -101,6 +102,7 @@
     "karma-sourcemap-loader": "0.3.6",
     "karma-webpack": "1.7.0",
     "mocha": "2.3.4",
+    "moment": "2.12.0",
     "react-test-context": "0.1.0",
     "selenium-webdriver": "2.48.2",
     "should": "8.0.2"

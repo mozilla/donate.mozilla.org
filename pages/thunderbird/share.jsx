@@ -1,6 +1,6 @@
 import React  from 'react';
 import ThunderbirdFooter from '../../components/thunderbird/footer.jsx';
-import Social from '../../components/social.jsx';
+import Social from '../../components/thunderbird/social.jsx';
 import ThankYouHeader from '../../components/thunderbird/thank-you-header.jsx';
 import { IntlMixin } from 'react-intl';
 

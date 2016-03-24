@@ -2,7 +2,7 @@
 /* jshint -W067 */
 
 import React from 'react';
-import Social from '../../components/social.jsx';
+import Social from '../../components/thunderbird/social.jsx';
 import ThunderbirdFooter from '../../components/thunderbird/footer.jsx';
 import Signup from '../../components/thunderbird/signup.jsx';
 import ThankYouHeader from '../../components/thunderbird/thank-you-header.jsx';

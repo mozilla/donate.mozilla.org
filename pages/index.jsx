@@ -38,12 +38,12 @@ var Index = React.createClass({
           <meta property="og:site_name" content={metaData.site_name} />
           <meta property="og:url" content={metaData.site_url} />
           <meta property="og:description" content={metaData.desc} />
-          <meta property="og:image" content={metaData.APPLICATION_URI + "/assets/images/EOY_facebook_v1.a152496406bad899d1a920f6d6b9f507.png"} />
+          <meta property="og:image" content={metaData.facebook_image} />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@mozilla" />
           <meta name="twitter:title" content={metaData.title} />
           <meta name="twitter:description" content={metaData.desc} />
-          <meta name="twitter:image" content={metaData.APPLICATION_URI + "/assets/images/EOY_Twitter_v8_EN.d1bb5d2a5ce35859d038df852d9e6a0a811beaac.png"} />
+          <meta name="twitter:image" content={metaData.twitter_image} />
 
           <link rel="preconnect" href="https://www.google-analytics.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />

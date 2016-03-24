@@ -71,7 +71,11 @@ module.exports = function(options) {
     uri: process.env.APPLICATION_URI
   });
 
-  server.register(require("hapi-auth-bearer-token"), function(err) {});
+  server.register(require("hapi-auth-bearer-token"), function(err) {
+    if (err) {
+      throw err;
+    }
+  });
 
   server.auth.strategy("stripe", "bearer-access-token", {
     validateFunc: function(token, callback) {

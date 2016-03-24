@@ -14,7 +14,7 @@ var before_day_count = process.env.BEFORE_DAY_COUNT || 0;
 var stripe_charge_list_opts = {
   created: {
     gte: moment(Date.now()).subtract(after_day_count, 'days').unix().valueOf(),
-    lte: moment(Date.now()).subtract(before_day_count, 'days').unix().valueOf(),
+    lte: moment(Date.now()).subtract(before_day_count, 'days').unix().valueOf()
   },
   limit: 100,
   expand: ["data.customer"]
@@ -37,11 +37,11 @@ function refund_charge(charge, done) {
 
 var charged_to_email = (charge) => filter_emails.indexOf(charge.customer.email) >= 0;
 
-var charge_was_paid = (charge) => charge.paid
+var charge_was_paid = (charge) => charge.paid;
 
-var charge_not_disputed = (charge) => !charge.dispute
+var charge_not_disputed = (charge) => !charge.dispute;
 
-var charge_not_refunded = (charge) => !charge.refunded
+var charge_not_refunded = (charge) => !charge.refunded;
 
 async.doWhilst(function(done) {
   stripe.charges.list(
@@ -69,7 +69,7 @@ async.doWhilst(function(done) {
       starting_after: charges.data[charges.data.length - 1].id,
       limit: 100,
       expand: ["data.customer"]
-    }
+    };
   }
   return charges.has_more;
 }, function(err) {

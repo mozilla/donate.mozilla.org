@@ -8,7 +8,7 @@ Habitat.load();
 var stripe = require('stripe')(process.env.STRIPE_API_KEY);
 var async = require('async');
 var moment = require('moment');
-var filter_email = process.env.CUSTOMER_EMAIL;
+var filter_emails = process.env.CUSTOMER_EMAIL.split(',');
 var after_day_count = process.env.AFTER_DAY_COUNT || 60;
 var before_day_count = process.env.BEFORE_DAY_COUNT || 0;
 var stripe_charge_list_opts = {
@@ -35,7 +35,7 @@ function refund_charge(charge, done) {
   });
 }
 
-var charged_to_email = (charge) => charge.customer.email === filter_email;
+var charged_to_email = (charge) => filter_email.indexOf(charge.customer.email) >= 0;
 
 var charge_was_paid = (charge) => charge.paid
 

@@ -45,23 +45,23 @@ module.exports = React.createClass({
       this.closeMonthlyPopup();
       form.updateField("frequency", 'monthly');
       form.updateField("amount", 5);
-      this.stripeCheckout(this.state.validate, this.state.submit, this.props.billingAddress, this.props.appName);
+      this.stripeCheckout(this.state.validate, this.state.submit);
     }
     if (this.state.payment === 'paypal') {
       this.closeMonthlyPopup();
       form.updateField("frequency", 'monthly');
       form.updateField("amount", 5);
-      this.paypal(this.state.validate, this.state.submit, this.props.appName);
+      this.paypal(this.state.validate, this.state.submit);
     }
   },
   onPopupNo: function() {
     if (this.state.payment === 'stripe') {
       this.closeMonthlyPopup();
-      this.stripeCheckout(this.state.validate, this.state.submit, this.props.billingAddress, this.props.appName);
+      this.stripeCheckout(this.state.validate, this.state.submit);
     }
     if (this.state.payment === 'paypal') {
       this.closeMonthlyPopup();
-      this.paypal(this.state.validate, this.state.submit, this.props.appName);
+      this.paypal(this.state.validate, this.state.submit);
     }
   },
   renderPopup: function() {
@@ -131,7 +131,7 @@ module.exports = React.createClass({
       }
       return;
     }
-    this.stripeCheckout(validate, submit, this.props.billingAddress, this.props.appName);
+    this.stripeCheckout(validate, submit);
   },
   renderPrivacyPolicy: function() {
     return (
@@ -147,7 +147,7 @@ module.exports = React.createClass({
       }
       return;
     }
-    this.paypal(validate, submit, this.props.appName);
+    this.paypal(validate, submit);
   },
   renderPaymentOptions: function() {
     if (!this.state.currency.disabled) {

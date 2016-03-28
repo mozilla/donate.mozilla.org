@@ -131,6 +131,12 @@ module.exports = {
     });
   },
   stripeSuccess: function(data) {
+    this.doStripeSuccess(data, "thank-you");
+  },
+  thunderbirdStripeSuccess: function(data) {
+    this.doStripeSuccess(data, "thunderbird/thank-you");
+  },
+  doStripeSuccess: function(data, location) {
     var transactionId = data.id;
     var amount;
     var currency;
@@ -150,7 +156,7 @@ module.exports = {
       currency = data.currency;
     }
 
-    var location = "thank-you";
+    location = location || "thank-you";
     // If we are already signed up, send to share.
     if (data.signup) {
       location = "share";
@@ -234,12 +240,20 @@ module.exports = {
       return;
     }
     var description = this.getIntlMessage("mozilla_donation");
+    var appName = this.props.appName;
+    if (appName === "thunderbird") {
+      description = "Thunderbird";
+      success = this.thunderbirdStripeSuccess;
+    }
     this.setState({
       submitting: true
     });
     submitProps = form.buildProps(props);
     if (submitProps.frequency === "monthly") {
       description = this.getIntlMessage("mozilla_monthly_donation");
+      if (appName === "thunderbird") {
+        description = "Thunderbird monthly";
+      }
     }
     Stripe.setPublishableKey(process.env.STRIPE_PUBLIC_KEY);
     Stripe.card.createToken({
@@ -285,13 +299,15 @@ module.exports = {
       }
     });
   },
-  stripeCheckout: function(validate, props, billingAddress, appName) {
+  stripeCheckout: function(validate, props) {
     var submit = this.submit;
     var success = this.stripeSuccess;
     var error = this.stripeError;
     var valid = form.validate(validate);
     var description = this.getIntlMessage("mozilla_donation");
     var handlerDesc = this.getIntlMessage("donate_now");
+    var appName = this.props.appName;
+    var billingAddress = this.props.billingAddress;
     var submitProps= {};
     if (!valid || this.state.submitting) {
       return;
@@ -303,6 +319,7 @@ module.exports = {
     submitProps = form.buildProps(props);
     if (appName === "thunderbird") {
       description = "Thunderbird";
+      success = this.thunderbirdStripeSuccess;
     }
     if (submitProps.frequency === "monthly") {
       description = this.getIntlMessage("mozilla_monthly_donation");
@@ -311,7 +328,6 @@ module.exports = {
         description = "Thunderbird monthly";
       }
     }
-
 
     var locale = this.props.locales[0];
     var currency = this.state.currency && this.state.currency.code;
@@ -364,10 +380,11 @@ module.exports = {
       amount: amountModifier.stripe(submitProps.amount, currency)
     });
   },
-  paypal: function(validate, props, appName) {
+  paypal: function(validate, props) {
     var valid = form.validate(validate);
     var submitProps = {};
     var description = this.getIntlMessage("mozilla_donation");
+    var appName = this.props.appName;
     if (valid) {
       this.setState({
         submitting: true

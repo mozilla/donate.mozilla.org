@@ -73,5 +73,16 @@ module.exports = {
   },
   closeDispute: function(disputeId, callback) {
     stripe.disputes.close(disputeId, callback);
+  },
+  updateCharge: function(chargeId, updateData, callback) {
+    stripe.charges.update(chargeId, updateData, callback);
+  },
+  retrieveCharge: function(chargeId, callback) {
+    stripe.charges.retrieve(chargeId, {
+      expand: ["invoice"]
+    }, callback);
+  },
+  retrieveSubscription: function(customerId, subscriptionId, callback) {
+    stripe.customers.retrieveSubscription(customerId, subscriptionId, callback);
   }
 };

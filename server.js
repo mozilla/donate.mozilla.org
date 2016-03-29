@@ -283,6 +283,13 @@ module.exports = function(options) {
         auth: "stripe"
       },
       handler: routes['stripe-dispute']
+    }, {
+      method: "POST",
+      path: "/stripe/charge-succeeded",
+      config: {
+        auth: "stripe"
+      },
+      handler: routes['stripe-charge-succeeded']
     }
   ]);
 

@@ -251,14 +251,21 @@ var routes = {
     var transaction = request.payload || {};
     var frequency = transaction.frequency || "";
     var currency = transaction.currency;
+    var appName = transaction.appName;
     var amount = amountModifier.paypal(transaction.amount, currency);
+    var returnUrl = request.server.info.uri + '/api/paypal-redirect/' + frequency + '/' + transaction.locale + '/';
+    if (appName === "thunderbird") {
+      returnUrl += "thunderbird/";
+    } else {
+      returnUrl += "mozillafoundation/";
+    }
     var details = {
       amount: amount,
       currency: currency,
       locale: transaction.locale,
       item_name: transaction.description,
       cancelUrl: request.server.info.uri + '/',
-      returnUrl: request.server.info.uri + '/api/paypal-redirect/' + frequency + '/' + transaction.locale + '/'
+      returnUrl: returnUrl
     };
     var request_id = request.headers['x-request-id'];
     function callback(err, data) {
@@ -297,6 +304,11 @@ var routes = {
     var locale = request.params.locale || '';
     if (locale) {
       locale = '/' + locale;
+    }
+    var appName = request.params.appName;
+    var location = "thank-you";
+    if (appName === "thunderbird") {
+      location = "thunderbird/" + location;
     }
     var frequency = request.params.frequency || 'single';
     var request_id = request.headers['x-request-id'];
@@ -343,8 +355,7 @@ var routes = {
           }
 
           request.log(['paypal', 'checkout', frequency], log_details);
-
-          reply.redirect(`${locale}/thank-you/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
+          reply.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
         });
       });
     } else {
@@ -397,7 +408,7 @@ var routes = {
           // Create unique tx id by combining PayerID and timestamp
           var stamp = Date.now() / 100;
           var txId = data.txn.PAYERID + stamp;
-          reply.redirect(`${locale}/thank-you/?frequency=${frequency}&tx=${txId}&amt=${data.txn.AMT}&cc=${data.txn.CURRENCYCODE}`);
+          reply.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${txId}&amt=${data.txn.AMT}&cc=${data.txn.CURRENCYCODE}`);
         });
       });
     }

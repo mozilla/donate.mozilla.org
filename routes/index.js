@@ -415,6 +415,55 @@ var routes = {
         reply('Dispute closed');
       }
     );
+  },
+  'stripe-charge-succeeded': function(request, reply) {
+    var event = request.payload;
+    var charge = event.data.object;
+
+    if (event.type !== 'charge.succeeded') {
+      return reply('This hook only processes charge succeeded events');
+    }
+
+    stripe.retrieveCharge(
+      charge.id,
+      function(fetchChargeErr, charge) {
+        if (fetchChargeErr) {
+          return reply(boom.badImplementation('An error occurred while fetching the invoice for this charge', fetchChargeErr));
+        }
+
+        if (!charge.invoice || !charge.invoice.subscription) {
+          return reply('Charge not part of a subscription');
+        }
+
+        stripe.retrieveSubscription(
+          charge.invoice.customer,
+          charge.invoice.subscription,
+          function(retrieveSubscriptionErr, subscription) {
+            if (retrieveSubscriptionErr) {
+              return reply(boom.badImplementation('An error occurred while fetching the subscription for this charge\'s invoice', retrieveSubscriptionErr));
+            }
+
+            var updateData = {
+              metadata: subscription.metadata
+            };
+
+            if (updateData.metadata.thunderbird) {
+              updateData.description = 'Thunderbird monthly';
+            } else {
+              updateData.description = 'Mozilla Foundation Monthly Donation';
+            }
+
+            stripe.updateCharge(charge.id, updateData, function(updateChargeErr) {
+              if (updateChargeErr) {
+                return reply(boom.badImplementation('An error occurred while updating the charge'));
+              }
+
+              reply('Charge updated');
+            });
+          }
+        )
+      }
+    );
   }
 };
 

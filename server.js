@@ -225,7 +225,8 @@ module.exports = function(options) {
             description: Joi.string().required(),
             amount: Joi.number().required(),
             locale: Joi.string().min(2).max(12).required(),
-            currency: Joi.any().valid(currencyFor.paypal).required()
+            currency: Joi.any().valid(currencyFor.paypal).required(),
+            appName: Joi.string()
           }
         },
         response: {
@@ -237,7 +238,7 @@ module.exports = function(options) {
       }
     }, {
       method: 'GET',
-      path: '/api/paypal-redirect/{frequency}/{locale}/',
+      path: '/api/paypal-redirect/{frequency}/{locale}/{appName}/',
       handler: routes['paypal-redirect']
     }, {
       method: 'GET',

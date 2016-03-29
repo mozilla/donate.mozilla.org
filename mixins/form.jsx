@@ -401,6 +401,7 @@ module.exports = {
         }
       }
       submitProps.description = description;
+      submitProps.appName = appName;
       this.submit("/api/paypal", submitProps, function(json) {
         window.location = json.endpoint + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + json.token;
       });

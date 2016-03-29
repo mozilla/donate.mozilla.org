@@ -76,6 +76,10 @@ var routes = {
     };
     var request_id = request.headers['x-request-id'];
 
+    if (transaction.description.indexOf("Thunderbird") >= 0 ) {
+      metadata.thunderbird = true;
+    }
+
     stripe.customer({
       metadata,
       email: transaction.email,

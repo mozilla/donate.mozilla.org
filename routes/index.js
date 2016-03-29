@@ -251,9 +251,9 @@ var routes = {
     var amount = amountModifier.paypal(transaction.amount, currency);
     var returnUrl = request.server.info.uri + '/api/paypal-redirect/' + frequency + '/' + transaction.locale + '/';
     if (appName === "thunderbird") {
-      returnUrl += "thunderbird/"
+      returnUrl += "thunderbird/";
     } else {
-      returnUrl += "mozillafoundation/"
+      returnUrl += "mozillafoundation/";
     }
     var details = {
       amount: amount,
@@ -302,7 +302,7 @@ var routes = {
       locale = '/' + locale;
     }
     var appName = request.params.appName;
-    location = "thank-you";
+    var location = "thank-you";
     if (appName === "thunderbird") {
       location = "thunderbird/" + location;
     }

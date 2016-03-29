@@ -40,8 +40,8 @@ module.exports = function(outputPath, callback) {
     if (outputPath.indexOf('thunderbird') !== -1) {
       favicon = "/assets/images/thunderbird/favicon.ico";
       desc = values.messages.i_donated_to_thunderbird;
-      twitterImage = "/assets/images/thunderbird/TorontoSummit2014m.12923cab901787ca8681718646196167.jpg"
-      facebookImage = "/assets/images/thunderbird/TorontoSummit2014m.12923cab901787ca8681718646196167.jpg"
+      twitterImage = "/assets/images/thunderbird/TorontoSummit2014m.12923cab901787ca8681718646196167.jpg";
+      facebookImage = "/assets/images/thunderbird/TorontoSummit2014m.12923cab901787ca8681718646196167.jpg";
     }
     FS.makeTree(Path.join(__dirname, '..', 'public', outputPath)).then(function() {
       var contentOfTheFile = React.renderToStaticMarkup(index({

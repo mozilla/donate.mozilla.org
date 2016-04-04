@@ -247,7 +247,7 @@ var AmountButtons = React.createClass({
     this.setState({
       presets: value
     });
-    if (newAmount) {
+    if (newAmount && !this.state.userInputting) {
       form.updateField("amount", newAmount);
     }
   },

@@ -17,13 +17,13 @@ module.exports = function(driver, By, done) {
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
       var result = true;
-      if (url.indexOf('http://localhost:3000/en-US/thunderbird/thank-you/') === -1) {
+      if (url.indexOf('http://localhost:3000/en-CA/thunderbird/thank-you/') === -1) {
         result = false;
       }
       if (url.indexOf('&amt=10.00') === -1) {
         result = false;
       }
-      if (url.indexOf('&cc=USD') === -1) {
+      if (url.indexOf('&cc=CAD') === -1) {
         result = false;
       }
       if (url.indexOf('?frequency=single') === -1) {

@@ -20,7 +20,4 @@ function start() {
 }
 
 // lol @ Infinity actually being used for something meaningful
-throng(start, {
-  workers,
-  lifetime: Infinity
-});
+throng(workers, start);

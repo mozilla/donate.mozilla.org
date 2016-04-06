@@ -16,7 +16,7 @@
     "test:karma": "karma start",
     "test:coverage": "KARMA_ENV=coverage karma start --reporters coverage,coveralls",
     "watch:test": "karma start --no-single-run --browsers Firefox",
-    "test:http": "mocha tests/http/*.test.js --timeout 5000",
+    "test:http": "mocha tests/http/*.test.js --timeout 10000",
     "test:server": "node tests/start.js",
     "test:selenium": "node tests/selenium/start.js",
     "test:lint": "eslint --ext .js,.jsx .",
@@ -87,7 +87,7 @@
     "scooter": "2.0.1",
     "stripe": "4.1.0",
     "style-loader": "0.13.0",
-    "throng": "1.0.1",
+    "throng": "3.0.0",
     "webpack": "1.12.14",
     "whatwg-fetch": "0.11.0"
   },

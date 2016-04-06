@@ -1,29 +1,29 @@
 import React from 'react';
-import ThunderbirdFooter from '../../components/thunderbird/footer.jsx';
-import ThankYouHeader from '../../components/thunderbird/thank-you-header.jsx';
+import MozillaFooter from '../../components/mozilla/footer.jsx';
+import ThankYouHeader from '../../components/thank-you-header.jsx';
 import SignUpOrSocial from '../../components/signup-or-social.jsx';
 import ThankYouPage from '../thank-you.jsx';
 
-var ThunderbirdThankYou = React.createClass({
+var MozillaThankYou = React.createClass({
   propTypes: {
     email: React.PropTypes.string,
     country: React.PropTypes.string.isRequired
   },
   render: function() {
     return (
-      <ThankYouPage className="thunderbird" {...this.props}>
+      <ThankYouPage {...this.props}>
         <ThankYouHeader/>
         <div>
           <SignUpOrSocial
-            supportedLocales={["en"]}
+            supportedLocales={["en", "de"]}
             country={this.props.country}
             email={this.props.email}
           />
-          <ThunderbirdFooter/>
+          <MozillaFooter/>
         </div>
       </ThankYouPage>
     );
   }
 });
 
-module.exports = ThunderbirdThankYou;
+module.exports = MozillaThankYou;

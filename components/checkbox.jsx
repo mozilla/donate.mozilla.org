@@ -1,17 +1,19 @@
 import React from 'react';
-import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import { FormattedHTMLMessage } from 'react-intl';
 import { ErrorMessage } from './error.jsx';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 
 var Checkbox = React.createClass({
-  mixins: [IntlMixin],
   propTypes: {
     name: React.PropTypes.string.isRequired,
     field: React.PropTypes.string.isRequired,
     id: React.PropTypes.string.isRequired,
-    message: React.PropTypes.string.isRequired,
+    intlId: React.PropTypes.string.isRequired,
     error: React.PropTypes.string
+  },
+  contextTypes: {
+    intl: React.PropTypes.object
   },
   getInitialState: function() {
     return {
@@ -62,7 +64,7 @@ var Checkbox = React.createClass({
           <div className="full">
             <input type="checkbox" onChange={this.onCheck} checked={this.state.value} name="legal_confirm" id={this.props.id}/>
             <label htmlFor={this.props.id}>
-              <FormattedHTMLMessage message={ this.props.message } />
+              <FormattedHTMLMessage id={ this.props.intlId } />
             </label>
           </div>
         </div>
@@ -73,41 +75,46 @@ var Checkbox = React.createClass({
   }
 });
 
-module.exports = {
-  PrivacyPolicyCheckbox: React.createClass({
-    mixins: [IntlMixin],
-    propTypes: {
-      name: React.PropTypes.string.isRequired
-    },
-    render: function() {
-      var message = this.props.message || this.getIntlMessage("privacy_policy");
-      return (
+var PrivacyPolicyCheckbox =  React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired,
+    intlId: React.PropTypes.string
+  },
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
+  render: function() {
+    var intlId = this.props.intlId || "privacy_policy";
+    return (
+      <Checkbox
+        {...this.props}
+        intlId={intlId}
+        error={this.context.intl.formatMessage({id: 'pp_acknowledge'})}
+        id="privacy-policy-checkbox"
+        field="privacyPolicy"
+      />
+    );
+  }
+});
+var SignupCheckbox = React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    return (
+      <div className="signup-checkbox">
         <Checkbox
           {...this.props}
-          message={message}
-          error={this.getIntlMessage('pp_acknowledge')}
-          id="privacy-policy-checkbox"
-          field="privacyPolicy"
+          intlId="yes_i_want_to_keep_in_touch"
+          id="signup-checkbox"
+          field="signup"
         />
-      );
-    }
-  }),
-  SignupCheckbox: React.createClass({
-    mixins: [IntlMixin],
-    propTypes: {
-      name: React.PropTypes.string.isRequired
-    },
-    render: function() {
-      return (
-        <div className="signup-checkbox">
-          <Checkbox
-            {...this.props}
-            message={this.getIntlMessage("yes_i_want_to_keep_in_touch")}
-            id="signup-checkbox"
-            field="signup"
-          />
-        </div>
-      );
-    }
-  })
+      </div>
+    );
+  }
+});
+
+module.exports = {
+  SignupCheckbox,
+  PrivacyPolicyCheckbox
 };

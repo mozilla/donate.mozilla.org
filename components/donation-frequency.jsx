@@ -3,11 +3,13 @@ import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 import helpsImageData from '../data/helps-image-data.js';
 
-module.exports = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+var DonationFrequency = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
     locale: React.PropTypes.string
+  },
+  contextTypes: {
+    intl: React.PropTypes.object
   },
   getInitialState: function() {
     return {
@@ -40,7 +42,7 @@ module.exports = React.createClass({
     return true;
   },
   renderArrow: function() {
-    var locale = this.props.locale;
+    var locale = this.context.intl.locale;
     var fileName = helpsImageData[locale];
     if (fileName && this.state.frequency !== "monthly") {
       return (
@@ -63,13 +65,13 @@ module.exports = React.createClass({
             <input name={inputName} checked={frequency !== "monthly"} className="one-time-payment"
               onChange={this.onChange} type="radio" value="single" id={onTimeId}
             />
-            <label htmlFor={onTimeId} className="medium-label-size">{this.getIntlMessage('one_time')}</label>
+            <label htmlFor={onTimeId} className="medium-label-size">{this.context.intl.formatMessage({id: 'one_time'})}</label>
           </div>
           <div className="frequency-radio">
             <input name={inputName} checked={frequency === "monthly"} className="monthly-payment"
               onChange={this.onChange} type="radio" value="monthly" id={monthlyId}
             />
-            <label htmlFor={monthlyId} className="medium-label-size">{this.getIntlMessage('monthly')}</label>
+            <label htmlFor={monthlyId} className="medium-label-size">{this.context.intl.formatMessage({id: 'monthly'})}</label>
           </div>
         </div>
         {this.renderArrow()}
@@ -77,3 +79,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = DonationFrequency;

@@ -3,7 +3,7 @@ import currencyData from '../data/currencies.js';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 
-var CurrencyDropDown = React.createClass({
+module.exports = React.createClass({
   getInitialState: function() {
     return {
       currency: {}
@@ -45,5 +45,3 @@ var CurrencyDropDown = React.createClass({
     );
   }
 });
-
-module.exports = CurrencyDropDown;

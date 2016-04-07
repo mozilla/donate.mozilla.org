@@ -8,8 +8,7 @@ var NavigationButton = React.createClass({
   propTypes: {
     activePage: React.PropTypes.number.isRequired,
     index: React.PropTypes.number.isRequired,
-    validate: React.PropTypes.array,
-    children: React.PropTypes.any
+    validate: React.PropTypes.array
   },
   onClick: function(e) {
     var valid;
@@ -45,9 +44,7 @@ var NavigationButton = React.createClass({
 var AmountNavigationButton = React.createClass({
   propTypes: {
     activePage: React.PropTypes.number.isRequired,
-    index: React.PropTypes.number.isRequired,
-    validate: React.PropTypes.array,
-    children: React.PropTypes.any
+    index: React.PropTypes.number.isRequired
   },
   getInitialState: function() {
     return {
@@ -103,9 +100,7 @@ var DisplayNavigationButton = React.createClass({
   propTypes: {
     activePage: React.PropTypes.number.isRequired,
     index: React.PropTypes.number.isRequired,
-    display: React.PropTypes.string,
-    validate: React.PropTypes.array,
-    children: React.PropTypes.any
+    display: React.PropTypes.string
   },
   render: function() {
     return (

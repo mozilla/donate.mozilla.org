@@ -1,21 +1,19 @@
 import React from 'react';
+import IntlMixin from 'react-intl';
 import Email from '../../components/email-input.jsx';
 import {PrivacyPolicyCheckbox} from '../../components/checkbox.jsx';
 import {Country} from '../../components/address-input.jsx';
 import SubmitButton from '../../components/submit-button.jsx';
 
-var Signup = React.createClass({
-  mixins: [require('../../mixins/form.jsx')],
-  contextTypes: {
-    intl: React.PropTypes.object
-  },
+var Form = React.createClass({
+  mixins: [IntlMixin, require('../../mixins/form.jsx')],
   render: function() {
     return (
       <div>
         <div className="container">
           <div className="wrap">
             <div className="row">
-              <h3>{this.context.intl.formatMessage({id: 'sign_up_thunderbird'})}</h3>
+              <h3>{this.getIntlMessage('sign_up_thunderbird')}</h3>
             </div>
           </div>
           <div className="wrap">
@@ -24,7 +22,7 @@ var Signup = React.createClass({
               <div className="full country-signup">
                 <Country name="country"/>
               </div>
-              <PrivacyPolicyCheckbox name="privacyPolicy" intlId="privacy_policy_thunderbird"/>
+              <PrivacyPolicyCheckbox name="privacyPolicy" message={this.getIntlMessage('privacy_policy_thunderbird')}/>
               <div className="no-country-signup">
                 <SubmitButton
                   submitting={this.state.submitting}
@@ -33,7 +31,7 @@ var Signup = React.createClass({
                   submit={["email"]}
                   errors={["email"]}
                 >
-                  {this.context.intl.formatMessage({id: 'sign_up_now'})}
+                  {this.getIntlMessage('sign_up_now')}
                 </SubmitButton>
               </div>
               <div className="country-signup">
@@ -44,7 +42,7 @@ var Signup = React.createClass({
                   submit={["email", "country"]}
                   errors={["email", "country"]}
                 >
-                  {this.context.intl.formatMessage({id: 'sign_up_now'})}
+                  {this.getIntlMessage('sign_up_now')}
                 </SubmitButton>
               </div>
             </div>
@@ -56,4 +54,4 @@ var Signup = React.createClass({
 
 });
 
-module.exports = Signup;
+module.exports = Form;

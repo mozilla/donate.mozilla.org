@@ -1,19 +1,17 @@
 import React from 'react';
 
-var Social = React.createClass({
-  contextTypes: {
-    intl: React.PropTypes.object
-  },
+module.exports = React.createClass({
+  mixins: [require('react-intl').IntlMixin],
   render: function() {
     var appURL = process.env.APPLICATION_URI;
-    var twitterShareURL = 'https://twitter.com/share?url=' + appURL +'/' + this.context.intl.locale + '/&text=' + encodeURIComponent(this.context.intl.formatMessage({id: 'i_donated_to_mozilla'}));
-    var facebookShareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + appURL + '/' + this.context.intl.locale + '/';
+    var twitterShareURL = 'https://twitter.com/share?url=' + appURL +'/' + this.props.language + '/&text=' + encodeURIComponent(this.getIntlMessage('i_donated_to_mozilla'));
+    var facebookShareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + appURL + '/' + this.props.language + '/';
     return (
       <div className="share-page">
         <div className="container">
           <h3>
-            <div>{this.context.intl.formatMessage({id: 'tell_your_friends'})}</div>
-            <div>{this.context.intl.formatMessage({id: 'help_spread_the_word'})}</div>
+            <div>{this.getIntlMessage('tell_your_friends')}</div>
+            <div>{this.getIntlMessage('help_spread_the_word')}</div>
           </h3>
           <div className="row">
             <div className="half" id="facebook">
@@ -35,6 +33,5 @@ var Social = React.createClass({
       </div>
     );
   }
-});
 
-module.exports = Social;
+});

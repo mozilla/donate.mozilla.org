@@ -1,11 +1,10 @@
 import React  from 'react';
 import MozillaFooter from '../components/mozilla/footer.jsx';
 import Header from '../components/header.jsx';
+import { IntlMixin } from 'react-intl';
 
-var Survey = React.createClass({
-  propTypes: {
-    test: React.PropTypes.string
-  },
+module.exports = React.createClass({
+  mixins: [IntlMixin],
   render: function() {
     var className = "row";
     if (this.props.test) {
@@ -24,5 +23,3 @@ var Survey = React.createClass({
     );
   }
 });
-
-module.exports = Survey;

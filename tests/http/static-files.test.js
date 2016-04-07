@@ -18,6 +18,10 @@ var cache = {
 
 describe('static files', () => {
   var files = {
+    '/': {
+      type: types.html,
+      cache: cache.short
+    },
     '/api/polyfill.js': {
       type: types.js,
       cache: cache.long,
@@ -189,33 +193,31 @@ describe('static files', () => {
     },
     '/en-US/': {
       type: types.html,
-      cache: cache.short,
-      vary: 'User-Agent'
+      cache: cache.short
     },
     '/en-US/about/': {
       type: types.html,
-      cache: cache.short,
-      vary: 'User-Agent'
+      cache: cache.short
     },
     '/en-US/give-bitcoin/': {
       type: types.html,
-      cache: cache.short,
-      vary: 'User-Agent'
+      cache: cache.short
     },
     '/en-US/paypal-donate/': {
       type: types.html,
-      cache: cache.short,
-      vary: 'User-Agent'
+      cache: cache.short
+    },
+    '/en-US/sequential/': {
+      type: types.html,
+      cache: cache.short
     },
     '/en-US/share/': {
       type: types.html,
-      cache: cache.short,
-      vary: 'User-Agent'
+      cache: cache.short
     },
     '/en-US/thank-you/': {
       type: types.html,
-      cache: cache.short,
-      vary: 'User-Agent'
+      cache: cache.short
     },
     '/favicon.ico': {
       type: types.ico,
@@ -232,15 +234,6 @@ describe('static files', () => {
   };
 
   var instance = server({ useDomains: false });
-
-  it(`should redirect and return 302 when accessing '/'`,(done) => {
-    instance.inject({
-      url: '/'
-    }, (response) => {
-      should(response.statusCode).equal(302);
-      done();
-    });
-  });
 
   Object.keys(files).forEach((key) => {
     it(`should return okay when accessing ${key}`, (done) => {

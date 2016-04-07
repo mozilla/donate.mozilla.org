@@ -1,4 +1,5 @@
 import React from 'react';
+import IntlMixin from 'react-intl';
 import Input from './input.jsx';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
@@ -465,14 +466,12 @@ var southAfricanProvinces = [
 ];
 
 var CountrySelect = React.createClass({
+  mixins: [IntlMixin],
   propTypes: {
     country: React.PropTypes.string.isRequired,
     name: React.PropTypes.string.isRequired,
     className: React.PropTypes.string.isRequired,
     onCountryChange: React.PropTypes.func.isRequired
-  },
-  contextTypes: {
-    intl: React.PropTypes.object
   },
   validate: function() {
     return !!this.props.country;
@@ -486,7 +485,7 @@ var CountrySelect = React.createClass({
       <div className="field-container">
         <i className="fa fa-map-marker field-icon"></i>
         <select onChange={this.props.onCountryChange} name={this.props.name} value={this.props.country} className={countryClassName}>
-          <option value="">{this.context.intl.formatMessage({id: 'country'})}</option>
+          <option value="">{this.getIntlMessage('country')}</option>
           {countryOptions}
         </select>
       </div>
@@ -495,15 +494,13 @@ var CountrySelect = React.createClass({
 });
 
 var ProvinceSelect = React.createClass({
+  mixins: [IntlMixin],
   propTypes: {
     province: React.PropTypes.string.isRequired,
     country: React.PropTypes.string.isRequired,
     name: React.PropTypes.string.isRequired,
     className: React.PropTypes.string.isRequired,
     onProvinceChange: React.PropTypes.func.isRequired
-  },
-  contextTypes: {
-    intl: React.PropTypes.object
   },
   validate: function() {
     if (this.props.province || !this.refs.provinceSelect) {
@@ -519,7 +516,7 @@ var ProvinceSelect = React.createClass({
     if (this.props.country === "US") {
       return (
         <select ref="provinceSelect" onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
-          <option value="">{this.context.intl.formatMessage({id: 'state_province'})}</option>
+          <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="U.S. States and Territories">
             {usStates}
           </optgroup>
@@ -528,7 +525,7 @@ var ProvinceSelect = React.createClass({
     } else if (this.props.country === "AU") {
       return (
         <select ref="provinceSelect" onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
-          <option value="">{this.context.intl.formatMessage({id: 'state_province'})}</option>
+          <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="Australian States">
             {australianStates}
           </optgroup>
@@ -537,7 +534,7 @@ var ProvinceSelect = React.createClass({
     } else if (this.props.country === "BR") {
       return (
         <select ref="provinceSelect" onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
-          <option value="">{this.context.intl.formatMessage({id: 'state_province'})}</option>
+          <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="Brazilian States">
             {brazilianStates}
           </optgroup>
@@ -546,7 +543,7 @@ var ProvinceSelect = React.createClass({
     } else if (this.props.country === "CA") {
       return (
         <select ref="provinceSelect" onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
-          <option value="">{this.context.intl.formatMessage({id: 'state_province'})}</option>
+          <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="Canadian Provinces">
             {canadianProvinces}
           </optgroup>
@@ -555,7 +552,7 @@ var ProvinceSelect = React.createClass({
     } else if (this.props.country === "IE") {
       return (
         <select ref="provinceSelect" onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
-          <option value="">{this.context.intl.formatMessage({id: 'state_province'})}</option>
+          <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="Irish Counties">
             {irishCounties}
           </optgroup>
@@ -564,7 +561,7 @@ var ProvinceSelect = React.createClass({
     } else if (this.props.country === "MX") {
       return (
         <select onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
-          <option value="">{this.context.intl.formatMessage({id: 'state_province'})}</option>
+          <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="Mexican States">
             {mexicanStates}
           </optgroup>
@@ -573,7 +570,7 @@ var ProvinceSelect = React.createClass({
     } else if (this.props.country === "ZA") {
       return (
         <select onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
-          <option value="">{this.context.intl.formatMessage({id: 'state_province'})}</option>
+          <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="South African Provinces">
             {southAfricanProvinces}
           </optgroup>
@@ -582,7 +579,7 @@ var ProvinceSelect = React.createClass({
     } else if (this.props.country === "SE") {
       return (
         <select onChange={this.props.onProvinceChange} name={this.props.name} value={this.props.province} id="wsstate_cd" className={provinceClassName}>
-          <option value="">{this.context.intl.formatMessage({id: 'state_province'})}</option>
+          <option value="">{this.getIntlMessage('state_province')}</option>
           <optgroup label="Swedish Provinces">
             {swedishProvinces}
           </optgroup>
@@ -594,11 +591,9 @@ var ProvinceSelect = React.createClass({
 });
 
 var Country = React.createClass({
+  mixins: [IntlMixin],
   propTypes: {
     name: React.PropTypes.string.isRequired
-  },
-  contextTypes: {
-    intl: React.PropTypes.object
   },
   getInitialState: function() {
     return {
@@ -637,7 +632,7 @@ var Country = React.createClass({
     var valid = true;
     if (!this.refs.countrySelect.validate()) {
       valid = false;
-      form.error("country", this.context.intl.formatMessage({id: "please_complete"}));
+      form.error("country", this.getIntlMessage("please_complete"));
       this.setState({
         valid: valid
       });
@@ -656,11 +651,9 @@ var Country = React.createClass({
 });
 
 var Province = React.createClass({
+  mixins: [IntlMixin],
   propTypes: {
     name: React.PropTypes.string.isRequired
-  },
-  contextTypes: {
-    intl: React.PropTypes.object
   },
   getInitialState: function() {
     return {
@@ -702,7 +695,7 @@ var Province = React.createClass({
     var valid = true;
     if (!this.refs.provinceSelect.validate()) {
       valid = false;
-      form.error("province", this.context.intl.formatMessage({id: "please_complete"}));
+      form.error("province", this.getIntlMessage("please_complete"));
       this.setState({
         valid: valid
       });
@@ -724,14 +717,12 @@ var Code = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired
   },
-  contextTypes: {
-    intl: React.PropTypes.object
-  },
+  mixins: [IntlMixin],
   render: function() {
     return (
       <Input
         {...this.props}
-        placeholder={this.context.intl.formatMessage({id: 'postal_code'})}
+        placeholder={this.getIntlMessage('postal_code')}
         field="code"
       />
     );
@@ -742,14 +733,12 @@ var City = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired
   },
-  contextTypes: {
-    intl: React.PropTypes.object
-  },
+  mixins: [IntlMixin],
   render: function() {
     return (
       <Input
         {...this.props}
-        placeholder={this.context.intl.formatMessage({id: 'city'})}
+        placeholder={this.getIntlMessage('city')}
         field="city"
       />
     );
@@ -760,14 +749,12 @@ var Address = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired
   },
-  contextTypes: {
-    intl: React.PropTypes.object
-  },
+  mixins: [IntlMixin],
   render: function() {
     return (
       <Input
         {...this.props}
-        placeholder={this.context.intl.formatMessage({id: 'address'})}
+        placeholder={this.getIntlMessage('address')}
         field="address"
       />
     );

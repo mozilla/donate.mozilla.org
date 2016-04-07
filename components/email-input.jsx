@@ -1,17 +1,14 @@
 import React from 'react';
-import { FormattedHTMLMessage } from 'react-intl';
+import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
 import { ErrorMessage } from './error.jsx';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 
-var EmailInput = React.createClass({
+module.exports = React.createClass({
+  mixins: [IntlMixin],
   propTypes: {
     info: React.PropTypes.string,
-    name: React.PropTypes.string.isRequired,
-    intlID: React.PropTypes.string
-  },
-  contextTypes: {
-    intl: React.PropTypes.object
+    name: React.PropTypes.string.isRequired
   },
   getInitialState: function() {
     return {
@@ -43,12 +40,12 @@ var EmailInput = React.createClass({
   validate: function() {
     var valid = !!this.state.email;
     var errorMessage = "";
-    if (!this.refs.inputElement.validity.valid) {
+    if (!this.refs.inputElement.getDOMNode().validity.valid) {
       valid = false;
-      errorMessage = this.context.intl.formatMessage({id: 'email_invalid'});
+      errorMessage = this.getIntlMessage('email_invalid');
     }
     if (!this.state.email || !this.state.email.trim()) {
-      form.error("email", this.context.intl.formatMessage({id: "please_complete"}));
+      form.error("email", this.getIntlMessage("please_complete"));
     }
     this.setState({
       valid: valid,
@@ -71,18 +68,18 @@ var EmailInput = React.createClass({
   renderHint: function() {
     var hintClassIconName = "fa fa-question-circle hint";
     var hintClassName = "hint-msg small";
-    var intlID = this.props.intlID;
+    var info = this.props.info;
     if (this.state.showHint) {
       hintClassIconName += " on";
     } else {
       hintClassName += " hidden";
     }
-    if (intlID) {
+    if (info) {
       return (
         <span>
           <i onClick={this.hintClicked} className={hintClassIconName}></i>
           <div className={hintClassName}>
-            <FormattedHTMLMessage id={intlID}/>
+            <FormattedHTMLMessage message={info}/>
           </div>
         </span>
       );
@@ -99,7 +96,7 @@ var EmailInput = React.createClass({
           <div className="full">
             <div className="field-container">
               <i className="fa fa-envelope field-icon"></i>
-              <input type="email" ref="inputElement" className={inputClassName} name="email" value={this.state.email} onChange={this.onEmailChange} placeholder={this.context.intl.formatMessage({id: 'email'})}/>
+              <input type="email" ref="inputElement" className={inputClassName} name="email" value={this.state.email} onChange={this.onEmailChange} placeholder={this.getIntlMessage('email')}/>
               {this.renderHint()}
             </div>
           </div>
@@ -110,5 +107,3 @@ var EmailInput = React.createClass({
     );
   }
 });
-
-module.exports = EmailInput;

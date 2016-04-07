@@ -72,7 +72,7 @@
     "langmap": "0.0.12",
     "less": "2.5.3",
     "less-loader": "2.2.2",
-    "newrelic": "1.24.0",
+    "newrelic": "1.26.2",
     "npm-run-all": "1.4.0",
     "polyfill-service": "3.3.0",
     "properties-parser": "0.3.1",

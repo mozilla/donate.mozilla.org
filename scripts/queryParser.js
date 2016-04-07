@@ -1,24 +1,23 @@
-import url from 'url';
 import currencies from '../data/currencies.js';
 import {localeCurrencyData, localeCountryData} from '../data/locale-data.js';
-import locales from '../public/locales.json';
-import assign from 'react/lib/Object.assign';
+import i18n from '../locales/i18n.js';
 
 function isNumber(item) {
   return !isNaN(parseInt(item, 10));
 }
 
 module.exports = function(queryString, pathname) {
-  var locale = url.parse(pathname).pathname.split('/')[1] || "en-US";
   queryString = queryString || {};
+  var localesData = i18n.intlDataFor(i18n.urlOverrideLang(pathname).lang);
   var presets = queryString.presets || "";
+  var locale = localesData.locales[0];
+
   var queryStringCurrencyCode = queryString.currency;
   var localeCurrencyCode = localeCurrencyData[locale];
   var country = queryString.country || localeCountryData[locale] || "US";
   var amount = "";
   var frequency = "single";
   var currency = currencies[queryStringCurrencyCode] || currencies[localeCurrencyCode] || currencies.usd;
-  var currentString, messages;
 
   if (queryString.amount && !isNaN(queryString.amount)) {
     amount = queryString.amount.trim();
@@ -34,22 +33,14 @@ module.exports = function(queryString, pathname) {
     presets = currency.presets[frequency];
   }
 
-  if (locale && locales[locale]) {
-    currentString = locales[locale];
-    messages = assign({}, locales['en-US'], currentString);
-  } else {
-    locale = 'en-US';
-    messages = locales['en-US'];
-  }
-
   return {
-    messages,
-    locale,
     test: queryString.test,
     currency: currency,
     presets: presets,
     amount: amount,
     frequency: frequency,
+    messages: localesData.messages,
+    locales: localesData.locales,
     email: queryString.email || "",
     country: country
   };

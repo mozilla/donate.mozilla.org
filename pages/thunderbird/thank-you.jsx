@@ -1,29 +1,43 @@
-import React from 'react';
-import ThunderbirdFooter from '../../components/thunderbird/footer.jsx';
-import ThankYouHeader from '../../components/thunderbird/thank-you-header.jsx';
-import SignUpOrSocial from '../../components/signup-or-social.jsx';
-import ThankYouPage from '../thank-you.jsx';
+// this will ignore that Bad Invocation error which is a bug in JSXHint
+/* jshint -W067 */
 
-var ThunderbirdThankYou = React.createClass({
-  propTypes: {
-    email: React.PropTypes.string,
-    country: React.PropTypes.string.isRequired
+import React from 'react';
+import Social from '../../components/thunderbird/social.jsx';
+import ThunderbirdFooter from '../../components/thunderbird/footer.jsx';
+import Signup from '../../components/thunderbird/signup.jsx';
+import ThankYouHeader from '../../components/thunderbird/thank-you-header.jsx';
+import { IntlMixin } from 'react-intl';
+import analytics from '../../assets/js/analytics.js';
+import form from '../../scripts/form.js';
+
+var ThankYou = React.createClass({
+  mixins: [IntlMixin],
+  componentDidMount: function() {
+    form.updateField("email", this.props.email || "");
+    analytics();
   },
   render: function() {
+    var className = "row thank-you-page thunderbird";
+    var locale = this.props.locales[0];
+    var signUpOrSocial = (<Social language={locale}/>);
+    if (this.props.params && /^(en)(\b|$)/.test(locale)) {
+      signUpOrSocial = (<Signup country={this.props.country} email={this.props.email} locales={this.props.locales} />);
+    }
+    if (this.props.test) {
+      className += " " + this.props.test;
+    }
     return (
-      <ThankYouPage className="thunderbird" {...this.props}>
-        <ThankYouHeader/>
-        <div>
-          <SignUpOrSocial
-            supportedLocales={["en"]}
-            country={this.props.country}
-            email={this.props.email}
-          />
-          <ThunderbirdFooter/>
+      <div>
+        <div className={className}>
+          <ThankYouHeader/>
+          <div>
+            {signUpOrSocial}
+            <ThunderbirdFooter/>
+          </div>
         </div>
-      </ThankYouPage>
+      </div>
     );
   }
 });
 
-module.exports = ThunderbirdThankYou;
+module.exports = ThankYou;

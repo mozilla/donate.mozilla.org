@@ -1,14 +1,8 @@
 import React from 'react';
-import {FormattedMessage, FormattedNumber} from 'react-intl';
+import {FormattedMessage, IntlMixin, FormattedNumber} from 'react-intl';
 import listener from '../scripts/listener.js';
 
-var DonateButton = React.createClass({
-  contextTypes: {
-    intl: React.PropTypes.object
-  },
-  propTypes: {
-    currency: React.PropTypes.object
-  },
+module.exports = React.createClass({
   getInitialState: function() {
     return {
       amount: "",
@@ -41,26 +35,25 @@ var DonateButton = React.createClass({
       });
     }
   },
+  mixins: [IntlMixin],
   render: function() {
     if (this.state.amount) {
       return (
         <FormattedMessage
-          id='donate_now_amount'
-          values={{donationAmount:
+          message={this.getIntlMessage('donate_now_amount')}
+          donationAmount={
             <FormattedNumber
               maximumFractionDigits={2}
               value={this.state.amount}
               style="currency"
               currency={this.state.currency.code}
             />
-          }}
+          }
         />
       );
     }
     return (
-      <span>{this.context.intl.formatMessage({id: "donate_now"})}</span>
+      <span>{this.getIntlMessage("donate_now")}</span>
     );
   }
 });
-
-module.exports = DonateButton;

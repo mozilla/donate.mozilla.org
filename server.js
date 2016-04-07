@@ -18,6 +18,7 @@ var Path = require('path');
 var Hapi = require('hapi');
 var Hoek = require('hoek');
 var Joi = require('joi');
+var polyfillio = require('polyfill-service');
 var PolyfillSet = require('./scripts/PolyfillSet.js');
 var exchangeRates = require('./assets/exchange-rates/latest.json');
 var routes = require('./routes');
@@ -258,7 +259,7 @@ module.exports = function(options) {
           unknown: 'polyfill'
         };
         params.uaString = request.plugins.scooter.source;
-        require('polyfill-service').getPolyfillString(params).then(function(bundleString) {
+        polyfillio.getPolyfillString(params).then(function(bundleString) {
           reply(bundleString).type('application/javascript; charset=utf-8').vary('User-Agent');
         });
       },

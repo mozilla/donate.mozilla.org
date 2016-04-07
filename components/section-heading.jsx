@@ -1,9 +1,7 @@
 import React from 'react';
 
-var SectionHeader = React.createClass({
-  propTypes: {
-    children: React.PropTypes.any
-  },
+module.exports = React.createClass({
+
   render: function() {
     return (
       <div className="full">
@@ -13,5 +11,3 @@ var SectionHeader = React.createClass({
   }
 
 });
-
-module.exports = SectionHeader;

@@ -253,7 +253,7 @@ var routes = {
     var currency = transaction.currency;
     var appName = transaction.appName;
     var amount = amountModifier.paypal(transaction.amount, currency);
-    var returnUrl = `${request.server.info.uri}/api/paypal-redirect/${frequency}/${transaction.locale}/`;
+    var returnUrl = request.server.info.uri + '/api/paypal-redirect/' + frequency + '/' + transaction.locale + '/';
     if (appName === "thunderbird") {
       returnUrl += "thunderbird/";
     } else {
@@ -303,7 +303,7 @@ var routes = {
   'paypal-redirect': function(request, reply) {
     var locale = request.params.locale || '';
     if (locale) {
-      locale = `/${locale}`;
+      locale = '/' + locale;
     }
     var appName = request.params.appName;
     var location = "thank-you";
@@ -476,7 +476,7 @@ var routes = {
               reply('Charge updated');
             });
           }
-        );
+        )
       }
     );
   }

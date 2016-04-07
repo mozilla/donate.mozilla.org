@@ -1,55 +1,78 @@
 var pages = {
   '/': {
     name: 'one-page',
-    component: require('../pages/one-page.jsx')
+    path: '/:locale/',
+    handler: require('../pages/one-page.jsx')
+  },
+  '/partial-page/': {
+    name: 'partial-page',
+    path: '/:locale/partial-page/?',
+    handler: require('../pages/partial-page.jsx')
   },
   '/about/': {
     name: 'about',
-    component: require('../pages/about.jsx')
+    path: '/:locale/about/?',
+    handler: require('../pages/about.jsx')
   },
   '/one-page-monthly/': {
     name: 'one-page-monthly',
-    component: require('../pages/one-page-monthly.jsx')
+    path: '/:locale/one-page-monthly/?',
+    handler: require('../pages/one-page-monthly.jsx')
   },
   '/thank-you/': {
     name: 'thank-you',
-    component: require('../pages/mozilla/thank-you.jsx')
+    path: '/:locale/thank-you/?',
+    handler: require('../pages/thank-you.jsx')
   },
   '/share/': {
     name: 'share',
-    component: require('../pages/share.jsx')
+    path: '/:locale/share/?',
+    handler: require('../pages/share.jsx')
   },
   '/survey/': {
     name: 'survey',
-    component: require('../pages/survey.jsx')
+    path: '/:locale/survey/?',
+    handler: require('../pages/survey.jsx')
   },
   '/give-bitcoin/': {
     name: 'give-bitcoin',
-    component: require('../pages/give-bitcoin.jsx')
+    path: '/:locale/give-bitcoin/?',
+    handler: require('../pages/give-bitcoin.jsx')
+  },
+  '/sequential/': {
+    name: 'sequential',
+    path: '/:locale/sequential/?',
+    handler: require('../pages/sequential.jsx')
   },
   '/paypal-donate/': {
     name: 'paypal-donate',
-    component: require('../pages/paypal-donate.jsx')
+    path: '/:locale/paypal-donate/?',
+    handler: require('../pages/paypal-donate.jsx')
   },
   '/directory-tiles/': {
     name: 'directory-tiles',
-    component: require('../pages/directory-tiles.jsx')
+    path: '/:locale/directory-tiles/?',
+    handler: require('../pages/directory-tiles.jsx')
   },
   '/thunderbird/': {
     name: 'thunderbird-onepage',
-    component: require('../pages/thunderbird/one-page.jsx')
+    path: '/:locale/thunderbird/?',
+    handler: require('../pages/thunderbird/one-page.jsx')
   },
   '/thunderbird/about/': {
     name: 'thunderbird-about',
-    component: require('../pages/thunderbird/about.jsx')
+    path: '/:locale/thunderbird/about/?',
+    handler: require('../pages/thunderbird/about.jsx')
   },
   '/thunderbird/thank-you/': {
     name: 'thunderbird-thank-you',
-    component: require('../pages/thunderbird/thank-you.jsx')
+    path: '/:locale/thunderbird/thank-you/?',
+    handler: require('../pages/thunderbird/thank-you.jsx')
   },
   '/thunderbird/share/': {
     name: 'thunderbird-share',
-    component: require('../pages/thunderbird/share.jsx')
+    path: '/:locale/thunderbird/share/?',
+    handler: require('../pages/thunderbird/share.jsx')
   }
 };
 

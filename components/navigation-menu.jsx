@@ -1,9 +1,6 @@
 import React from 'react';
 
 var NavigationMenu = React.createClass({
-  propTypes: {
-    children: React.PropTypes.any
-  },
   render: function() {
     return (
       <ol className="progress">

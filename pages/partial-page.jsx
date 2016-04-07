@@ -4,7 +4,7 @@ import Header from '../components/header.jsx';
 import SmallPrint from '../components/small-print.jsx';
 import SingleForm from '../components/single-form.jsx';
 
-module.exports = React.createClass({
+var OnePage = React.createClass({
   mixins: [require('react-intl').IntlMixin],
   render: function() {
     var className = "row";
@@ -15,7 +15,7 @@ module.exports = React.createClass({
       <div className={className}>
         <Header locale={this.props.locales[0]} alt={this.getIntlMessage('donate_to_mozilla')}></Header>
         <SingleForm
-          billingAddress={true}
+          billingAddress={false}
           currency={this.props.currency}
           presets={this.props.presets}
           amount={this.props.amount}
@@ -29,3 +29,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = OnePage;

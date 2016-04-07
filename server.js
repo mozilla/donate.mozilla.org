@@ -1,7 +1,4 @@
-"use strict";
-
 require('habitat').load();
-require('babel-core/register');
 
 /*eslint-disable no-unused-vars*/
 var newrelic;
@@ -12,7 +9,6 @@ if (process.env.NEW_RELIC_ENABLED === 'true') {
   newrelic = {};
 }
 
-var fs = require('fs');
 var Boom = require('boom');
 var Path = require('path');
 var Hapi = require('hapi');
@@ -22,7 +18,6 @@ var polyfillio = require('polyfill-service');
 var PolyfillSet = require('./scripts/PolyfillSet.js');
 var exchangeRates = require('./assets/exchange-rates/latest.json');
 var routes = require('./routes');
-var reactify = require('./scripts/route-file-content');
 var goodConfig = {
   reporter: require('good-console-logfmt')
 };
@@ -310,7 +305,7 @@ module.exports = function(options) {
         );
       }
 
-      return reply.redirect('/');
+      return reply.redirect('/?redirect=' + request.url.pathname);
     }
     return reply.continue();
   });
@@ -356,7 +351,11 @@ module.exports = function(options) {
     server.route([{
       method: 'GET',
       path: '/{params*}',
-      handler: reactify,
+      handler: {
+        directory: {
+          path: Path.join(__dirname, 'public')
+        }
+      },
       config: {
         cache: {
           expiresIn: 1000 * 60 * 5,
@@ -370,32 +369,6 @@ module.exports = function(options) {
         directory: {
           path: Path.join(__dirname, 'assets')
         }
-      },
-      config: {
-        cache: {
-          expiresIn: 7 * 24 * 60 * 60 * 1000, // one week
-          privacy: 'public'
-        }
-      }
-    }, {
-      method: 'GET',
-      path: '/intl/data/{locale}.js',
-      handler: function(request, reply) {
-        var locale = request.params.locale.replace('.js', '');
-        var path = Path.join(__dirname, `node_modules/react-intl/locale-data/${locale}.js`);
-        fs.stat(path, (err, stats) => {
-          if (!err) {
-            return reply.file(path);
-          }
-          locale = locale.split('-')[0];
-          path = Path.join(__dirname, `node_modules/react-intl/locale-data/${locale}.js`);
-          fs.stat(path, (err, stats) => {
-            if (!err) {
-              return reply.file(path);
-            }
-            return reply.file(Path.join(__dirname, `node_modules/react-intl/locale-data/en.js`));
-          });
-        });
       },
       config: {
         cache: {

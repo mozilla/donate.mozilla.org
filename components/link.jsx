@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router';
+import Router from 'react-router';
+var Link = Router.Link;
 
 var Linker = React.createClass({
   propTypes: {
     to: React.PropTypes.string,
-    href: React.PropTypes.string,
-    children: React.PropTypes.any
+    href: React.PropTypes.string
   },
   render: function() {
     // Swap out Link or a simple anchor depending on the props we have.

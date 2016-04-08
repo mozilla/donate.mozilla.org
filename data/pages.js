@@ -24,11 +24,6 @@ var pages = {
     path: '/:locale/give-bitcoin/?',
     handler: require('../pages/give-bitcoin.jsx')
   },
-  '/sequential/': {
-    name: 'sequential',
-    path: '/:locale/sequential/?',
-    handler: require('../pages/sequential.jsx')
-  },
   '/paypal-donate/': {
     name: 'paypal-donate',
     path: '/:locale/paypal-donate/?',

@@ -476,7 +476,7 @@ var routes = {
               reply('Charge updated');
             });
           }
-        )
+        );
       }
     );
   }

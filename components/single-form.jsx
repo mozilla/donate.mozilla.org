@@ -8,8 +8,7 @@ import Frequency from '../components/donation-frequency.jsx';
 import {PayPalButton, StripeButton} from '../components/payment-options.jsx';
 import SubmitButton from '../components/submit-button.jsx';
 import DonateButton from '../components/donate-button.jsx';
-import form from '../scripts/form.js';
-import {FormattedMessage, FormattedHTMLMessage, FormattedNumber} from 'react-intl';
+import {FormattedHTMLMessage} from 'react-intl';
 
 module.exports = React.createClass({
   mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],

@@ -22,11 +22,11 @@ assign(Context.router, {
 });
 
 var stubContext = require('react-test-context');
-var SequentialPage = require('../../pages/sequential.jsx');
+var DonationPage = require('../../pages/one-page.jsx');
 
-describe('sequential page query ?amount=100&currency=cad&presets=1,2,3,4&frequency=monthly sequential test', function() {
+describe('donation page query ?amount=100&currency=cad&presets=1,2,3,4&frequency=monthly donation test', function() {
   should.doesNotThrow(() => {
-    var TestInput = stubContext(SequentialPage, Context);
+    var TestInput = stubContext(DonationPage, Context);
     var Page = React.createElement(stubContext(TestInput, Context), {
       locales: ['en-US'],
       amount: "100",
@@ -40,8 +40,7 @@ describe('sequential page query ?amount=100&currency=cad&presets=1,2,3,4&frequen
           monthly: ['50', '40', '30', '20']
         }
       },
-      frequency: "monthly",
-      country: "GB"
+      frequency: "monthly"
     });
     var Document = TestUtils.renderIntoDocument(Page);
     var testElement = Document.getDOMNode();
@@ -52,7 +51,6 @@ describe('sequential page query ?amount=100&currency=cad&presets=1,2,3,4&frequen
     var aboutPresetButton3 = testElement.querySelector('#amount-3').value;
     var aboutPresetButton4 = testElement.querySelector('#amount-4').value;
     var frequency = testElement.querySelector('.monthly-payment').checked;
-    var country = testElement.querySelector('select[name="country"]').value;
 
     it('#amount-other-input value is 100', function() {
       should(amountOther).equal('100');
@@ -74,9 +72,6 @@ describe('sequential page query ?amount=100&currency=cad&presets=1,2,3,4&frequen
     });
     it('frequency .monthly-payment checked is true', function() {
       should(frequency).equal(true);
-    });
-    it('select[name="country"] value is GB', function() {
-      should(country).equal('GB');
     });
     React.unmountComponentAtNode(Document.getDOMNode().parentNode);
   });

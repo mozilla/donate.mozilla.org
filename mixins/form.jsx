@@ -307,7 +307,6 @@ module.exports = {
     var description = this.getIntlMessage("mozilla_donation");
     var handlerDesc = this.getIntlMessage("donate_now");
     var appName = this.props.appName;
-    var billingAddress = this.props.billingAddress;
     var submitProps= {};
     if (!valid || this.state.submitting) {
       return;
@@ -336,7 +335,7 @@ module.exports = {
       key: process.env.STRIPE_PUBLIC_KEY,
       image: process.env.APPLICATION_URI + '/assets/images/mozilla-circular.911f4f7f4e6682c9893b8441d2e09df40cea80e2.png',
       zipCode: true,
-      billingAddress: billingAddress,
+      billingAddress: true,
       locale: locale,
       closed: () => {
         this.setState({
@@ -355,12 +354,11 @@ module.exports = {
           description: description
         };
 
-        if (billingAddress) {
-          checkoutProps.country = response.card.address_country;
-          checkoutProps.address = response.card.address_line1;
-          checkoutProps.city = response.card.address_city;
-          checkoutProps.first = response.card.name;
-        }
+        checkoutProps.country = response.card.address_country;
+        checkoutProps.address = response.card.address_line1;
+        checkoutProps.city = response.card.address_city;
+        checkoutProps.first = response.card.name;
+
         submit("/api/stripe-checkout", checkoutProps, success, function(response) {
           if (response.stripe) {
             error(response.stripe.code, response.stripe.rawType);

@@ -34,11 +34,6 @@ var pages = {
     path: '/:locale/paypal-donate/?',
     handler: require('../pages/paypal-donate.jsx')
   },
-  '/directory-tiles/': {
-    name: 'directory-tiles',
-    path: '/:locale/directory-tiles/?',
-    handler: require('../pages/directory-tiles.jsx')
-  },
   '/thunderbird/': {
     name: 'thunderbird-onepage',
     path: '/:locale/thunderbird/?',

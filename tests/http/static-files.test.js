@@ -207,10 +207,6 @@ describe('static files', () => {
       type: types.html,
       cache: cache.short
     },
-    '/en-US/sequential/': {
-      type: types.html,
-      cache: cache.short
-    },
     '/en-US/share/': {
       type: types.html,
       cache: cache.short

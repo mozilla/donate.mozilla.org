@@ -3,7 +3,6 @@ import reactGA from 'react-ga';
 import {Navigation} from 'react-router';
 import amountModifier from '../scripts/amount-modifier';
 import listener from '../scripts/listener.js';
-import dispatcher from '../scripts/dispatcher.js';
 import form from '../scripts/form.js';
 
 module.exports = {
@@ -13,14 +12,12 @@ module.exports = {
     presets: React.PropTypes.array,
     amount: React.PropTypes.string,
     frequency: React.PropTypes.string,
-    country: React.PropTypes.string.isRequired,
     locales: React.PropTypes.array.isRequired
   },
   getInitialState: function() {
     return {
       paymentType: "",
       submitting: false,
-      showCvcHint: false,
       currency: this.props.currency,
       frequency: this.props.frequency || "",
       amount: ""
@@ -31,19 +28,12 @@ module.exports = {
     form.updateState("presets", this.props.presets);
     form.updateField("amount", this.props.amount);
     form.updateField("frequency", this.props.frequency);
-    form.updateField("country", this.props.country);
 
     listener.on("fieldUpdated", this.onFieldUpdated);
     listener.on("stateUpdated", this.onStateUpdated);
-    listener.on("toggleCvcHint", this.onToggleCvcHint);
-    listener.on("toPage", this.toThisPage);
-    listener.on("nextPage", this.nextPage);
   },
   componentWillUnmount: function() {
     listener.off("stateUpdated", this.onStateUpdated);
-    listener.off("toggleCvcHint", this.onToggleCvcHint);
-    listener.off("toPage", this.toThisPage);
-    listener.off("nextPage", this.nextPage);
     listener.off("fieldUpdated", this.onFieldUpdated);
   },
   onFieldUpdated: function(e) {
@@ -70,32 +60,6 @@ module.exports = {
         currency: value
       });
     }
-  },
-  onToggleCvcHint: function() {
-    this.setState({
-      showCvcHint: !this.state.showCvcHint
-    });
-  },
-  nextPage: function(e) {
-    dispatcher.fire("toPage", {
-      page: this.state.activePage+1
-    });
-  },
-  toThisPage: function(e) {
-    var index = e.detail.page;
-    if (this.state.activePage === index) {
-      return;
-    }
-    this.setState({
-      activePage: index
-    });
-
-    // Index starts at 0, and our page tracking starts at 1.
-    var page = index+1;
-    // Build the page the way it is expected.
-    var currentPage = window.location.pathname + "#page-" + page;
-    // These are virtual pageviews, so we track them manually in GA
-    reactGA.pageview(currentPage);
   },
   submit: function(action, props, success, error) {
     props.locale = this.props.locales[0];
@@ -176,127 +140,10 @@ module.exports = {
     reactGA.pageview(page);
     this.transitionTo(page + '?' + params);
   },
-  stripeError: function(errorCode, errorType) {
-    var cardErrorCodes = {
-      "invalid_number": {
-        field: "cardNumber",
-        message: this.getIntlMessage('invalid_number')
-      },
-      "invalid_expiry_month": {
-        field: "expMonth",
-        message: this.getIntlMessage('invalid_expiry_month')
-      },
-      "invalid_expiry_year": {
-        field: "expYear",
-        message: this.getIntlMessage('invalid_expiry_year')
-      },
-      "invalid_cvc": {
-        field: "cvc",
-        message: this.getIntlMessage('invalid_CVC')
-      },
-      "incorrect_number": {
-        field: "cardNumber",
-        message: this.getIntlMessage('incorrect_number')
-      },
-      "expired_card": {
-        field: "cardNumber",
-        message: this.getIntlMessage('expired_card')
-      },
-      "incorrect_cvc": {
-        field: "cvc",
-        message: this.getIntlMessage('incorrect_CVC')
-      },
-      "incorrect_zip": {
-        field: "code",
-        message: this.getIntlMessage('invalid_zip')
-      },
-      "card_declined": {
-        field: "cardNumber",
-        message: this.getIntlMessage('declined_card')
-      },
-      "processing_error": {
-        field: "cardNumber",
-        message: this.getIntlMessage('transaction_try_another')
-      }
-    };
-
-    var cardError = cardErrorCodes[errorCode];
-    if (errorType === "card_error" && cardError) {
-      form.error(cardError.field, cardError.message);
-    } else {
-      form.error("other", this.getIntlMessage('try_again_later') + " [" + errorType + "]");
-    }
+  stripeError: function(error) {
+    form.error("other", this.getIntlMessage('try_again_later') + " [" + error + "]");
     this.setState({
       submitting: false
-    });
-  },
-  stripe: function(validate, props) {
-    var submit = this.submit;
-    var success = this.stripeSuccess;
-    var error = this.stripeError;
-    var valid = form.validate(validate);
-    var submitProps = {};
-    if (!valid || this.state.submitting) {
-      return;
-    }
-    var description = this.getIntlMessage("mozilla_donation");
-    var appName = this.props.appName;
-    if (appName === "thunderbird") {
-      description = "Thunderbird";
-      success = this.thunderbirdStripeSuccess;
-    }
-    this.setState({
-      submitting: true
-    });
-    submitProps = form.buildProps(props);
-    if (submitProps.frequency === "monthly") {
-      description = this.getIntlMessage("mozilla_monthly_donation");
-      if (appName === "thunderbird") {
-        description = "Thunderbird monthly";
-      }
-    }
-    Stripe.setPublishableKey(process.env.STRIPE_PUBLIC_KEY);
-    Stripe.card.createToken({
-      number: submitProps.cardNumber,
-      cvc: submitProps.cvc,
-      exp_month: submitProps.expMonth,
-      exp_year: submitProps.expYear,
-      address_city: submitProps.city,
-      address_country: submitProps.country,
-      address_line1: submitProps.address,
-      address_state: submitProps.province,
-      address_zip: submitProps.code,
-      name: submitProps.firstName + " " + submitProps.lastName
-    }, function(status, response) {
-      var stripeProps = {};
-      if (response.error) {
-        error(response.error.code, response.error.type);
-      } else {
-        stripeProps = {
-          currency: submitProps.currency,
-          amount: submitProps.amount,
-          frequency: submitProps.frequency,
-          stripeToken: response.id,
-          email: submitProps.email,
-          first: submitProps.firstName,
-          last: submitProps.lastName,
-          country: submitProps.country,
-          address: submitProps.address,
-          city: submitProps.city,
-          code: submitProps.code,
-          province: submitProps.province,
-          locale: submitProps.locale,
-          signup: submitProps.signup,
-          description: description
-        };
-        submit("/api/stripe", stripeProps, success, function(response) {
-          if (response.stripe) {
-            error(response.stripe.code, response.stripe.rawType);
-          } else {
-            error(response.statusCode, response.error);
-          }
-        });
-      }
     });
   },
   stripeCheckout: function(validate, props) {
@@ -307,7 +154,6 @@ module.exports = {
     var description = this.getIntlMessage("mozilla_donation");
     var handlerDesc = this.getIntlMessage("donate_now");
     var appName = this.props.appName;
-    var billingAddress = this.props.billingAddress;
     var submitProps= {};
     if (!valid || this.state.submitting) {
       return;
@@ -336,7 +182,7 @@ module.exports = {
       key: process.env.STRIPE_PUBLIC_KEY,
       image: process.env.APPLICATION_URI + '/assets/images/mozilla-circular.911f4f7f4e6682c9893b8441d2e09df40cea80e2.png',
       zipCode: true,
-      billingAddress: billingAddress,
+      billingAddress: true,
       locale: locale,
       closed: () => {
         this.setState({
@@ -355,17 +201,16 @@ module.exports = {
           description: description
         };
 
-        if (billingAddress) {
-          checkoutProps.country = response.card.address_country;
-          checkoutProps.address = response.card.address_line1;
-          checkoutProps.city = response.card.address_city;
-          checkoutProps.first = response.card.name;
-        }
+        checkoutProps.country = response.card.address_country;
+        checkoutProps.address = response.card.address_line1;
+        checkoutProps.city = response.card.address_city;
+        checkoutProps.first = response.card.name;
+
         submit("/api/stripe-checkout", checkoutProps, success, function(response) {
           if (response.stripe) {
-            error(response.stripe.code, response.stripe.rawType);
+            error(response.stripe.rawType);
           } else {
-            error(response.statusCode, response.error);
+            error(response.error);
           }
         });
       }

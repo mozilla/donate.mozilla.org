@@ -14,10 +14,6 @@ Gets a donation amount from the user. Four static donation amount buttons, and a
 
 Gets the donation frequency from the user, like montly or one-time.
 
-### credit-card-info.jsx
-
-Inputs for credit card number, expiration date, and cvc code.
-
 ### name-input.jsx
 
 Inputs for first and last name.
@@ -54,33 +50,9 @@ Opens Stripe widget to accept a donation, similar to the PayPal redirect.
 
 A button that generally submits a donation to Stripe, this looks and works different than `credit-card-button.jsx`, in that it displays "donate now", and looks like a button and not a toggled state between tow kinds of payment providers. This is intended for use after a payment provided has been selected by the user.
 
-## Navigation Components
-
-Components that handle navigation between sequences, or pages. Like a next button, a sequence menu, or the actual displayed sequence and navigating between them.
-
-### navigation-button.jsx
-
-Button in the navigation header that handles going back to complete sequence pages.
-
-### navigation-page.jsx
-
-Displays child content as a single page, and handles the transition between multiple pages.
-
-### next-button.jsx
-
-Button that handles moving forward to incomplete sequence pages.
-
 ## Layout Components
 
 Just static UI components like header, footer, and basic containers.
-
-### navigation-container.jsx
-
-Wraps all the navigation pages, and handles resizing of the page based on the new page content.
-
-### navigation-menu.jsx
-
-Just a simple bit of wrapper around the header navigation back buttons.
 
 ### footer.jsx
 

@@ -19,7 +19,7 @@ function formatLocale(lang) {
 function urlOverrideLang(path) {
   var localPath = path || location.pathname;
   var localeCode = localPath.split('/')[1];
-  var pathname = localPath.split('/')[2];
+  var pathname = localPath.split('/')[2] || localeCode;
   return {
     test: !!locales[localeCode],
     pathname: pathname,

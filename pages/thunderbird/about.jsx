@@ -24,7 +24,7 @@ module.exports = React.createClass({
             locales={this.props.locales}
           />
         </div>
-        <SmallPrint stripeNotice={true} />
+        <SmallPrint locale={this.props.locales[0]} stripeNotice={true} />
         <ThunderbirdFooter/>
       </div>
     );

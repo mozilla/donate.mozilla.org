@@ -1,5 +1,6 @@
 import React from 'react';
-import Router from 'react-router';
+//import ReactDomServer from 'react-dom/server';
+import { match, RoutingContext } from 'react-router';
 import routes from '../components/routes.jsx';
 import currencies from '../data/currencies.js';
 import {localeCurrencyData, localeCountryData} from '../data/locale-data.js';
@@ -10,7 +11,7 @@ var FS = require("q-io/fs");
 var englishStrings = locales["en-US"] || {};
 
 module.exports = function(outputPath, callback) {
-  Router.run(routes, outputPath, function(Handler) {
+  match({ routes, location: outputPath }, function(error, redirectLocation, renderProps) {
     var locale = url.parse(outputPath).pathname.split('/')[1];
     var currencyCode = localeCurrencyData[locale] || 'usd';
     var country = localeCountryData[locale] || 'US';
@@ -25,8 +26,7 @@ module.exports = function(outputPath, callback) {
       frequency: 'single',
       country: country
     };
-    var index = React.createFactory(require('../pages/index.jsx'));
-    var page = React.createFactory(Handler);
+
     var currentStrings, mergedStrings;
     if (locale && locales[locale]) {
       currentStrings = locales[locale];
@@ -44,6 +44,13 @@ module.exports = function(outputPath, callback) {
       facebookImage = "/assets/images/thunderbird/TorontoSummit2014m.12923cab901787ca8681718646196167.jpg";
       siteUrl += "thunderbird/";
     }
+
+    function createElement(Component, props) {
+      // make sure you pass all the props in!
+      return <Component {...props} {...values} />;
+    }
+
+    var index = React.createFactory(require('../pages/index.jsx'));
     FS.makeTree(Path.join(__dirname, '..', 'public', outputPath)).then(function() {
       var contentOfTheFile = React.renderToStaticMarkup(index({
         localeInfo: locale,
@@ -58,9 +65,8 @@ module.exports = function(outputPath, callback) {
           facebook_image: process.env.APPLICATION_URI + facebookImage,
           twitter_image: process.env.APPLICATION_URI + twitterImage
         },
-        markup: React.renderToString(page(values))
+        markup: React.renderToString(<RoutingContext createElement={createElement} {...renderProps} />)
       }));
-
       var nameOfTheFile = Path.join(__dirname, '..', 'public', outputPath, 'index.html');
 
       FS.write(nameOfTheFile, contentOfTheFile).then(function() {

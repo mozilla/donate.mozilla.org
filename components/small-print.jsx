@@ -3,9 +3,12 @@ import Link from './link.jsx';
 import { FormattedHTMLMessage, FormattedMessage, IntlMixin } from 'react-intl';
 
 var Footer = React.createClass({
+  propTypes: {
+    locale: React.PropTypes.string.isRequired
+  },
   mixins: [IntlMixin],
   render: function() {
-    var bitcoinLink = (<Link to='give-bitcoin'>{this.getIntlMessage('Bitcoin')}</Link>);
+    var bitcoinLink = (<Link to={'/' + this.props.locale + '/give-bitcoin/'}>{this.getIntlMessage('Bitcoin')}</Link>);
     var checkLink = (<a target='_blank' href='https://wiki.mozilla.org/Ways_to_Give#Check_.28via_postal_service.29'>{this.getIntlMessage('check')}</a>);
     var stripeNotice = "stripe-notice";
     if (!this.props.stripeNotice) {

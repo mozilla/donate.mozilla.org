@@ -1,18 +1,29 @@
 import React from 'react';
-import Router from 'react-router';
+import { Router, Route } from 'react-router';
+import { createHistory } from 'history';
 import routes from './routes.jsx';
-import langURLParser from '../scripts/langURLParser.js';
 import queryParser from '../scripts/queryParser.js';
+import langURLParser from '../scripts/langURLParser.js';
 
-Router.run(routes, Router.HistoryLocation, function(Handler, state) {
-  var queryString = state.query;
-  var pathname = langURLParser(state);
+function createElement(Component, props) {
+  var queryString = props.location.query;
+  return (
+    <Component {...queryParser(queryString, props.location.pathname)} {...props}/>
+  );
+}
+
+function onEnter(nextState, replaceState) {
+  var pathname = langURLParser(nextState.location);
   if (pathname) {
-    if (queryString) {
-      delete queryString.redirect;
-    }
-    return Handler.replaceWith(pathname, {}, queryString);
+    replaceState({}, pathname);
   }
+}
 
-  React.render(<Handler {...queryParser(queryString, state.pathname)} />, document.querySelector("#my-app"));
-});
+React.render(
+  <Router createElement={createElement} history={createHistory()}>
+    <Route onEnter={onEnter}>
+      {routes}
+    </Route>
+  </Router>,
+  document.querySelector("#my-app")
+);

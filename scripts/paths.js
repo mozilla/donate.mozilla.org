@@ -1,28 +1,17 @@
 import locales from '../public/locales.json';
 import pages from '../data/pages.js';
-var localeString = ':locale';
 
-function createPaths(first, arr, isLocale) {
+function createPaths(first, arr) {
   var returnArray = [];
   first.forEach(function(item) {
     returnArray = returnArray.concat(arr.map(function(key) {
-      if (item.indexOf(localeString) !== -1 && isLocale) {
-        return item.replace(localeString, key).replace('?', '');
-      }
-      return item;
+      return "/" + key + item;
     }));
   });
   return returnArray;
 }
 
-// create an array of paths from pages object.
-// this should include paths with :locale? in them.
-var pathWithOptional = [];
-Object.keys(pages).forEach(function(item) {
-  pathWithOptional.push(pages[item].path);
-});
-
-var paths = Object.keys(pages);
-paths = paths.concat(createPaths(pathWithOptional, Object.keys(locales), true));
+var paths = createPaths(Object.keys(pages), Object.keys(locales));
+paths.push("/");
 
 module.exports = paths;

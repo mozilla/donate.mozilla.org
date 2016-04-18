@@ -40,7 +40,7 @@ module.exports = React.createClass({
   validate: function() {
     var valid = !!this.state.email;
     var errorMessage = "";
-    if (!this.refs.inputElement.getDOMNode().validity.valid) {
+    if (!this.refs.inputElement.validity.valid) {
       valid = false;
       errorMessage = this.getIntlMessage('email_invalid');
     }

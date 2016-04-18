@@ -46,9 +46,9 @@ var PaypalForm = React.createClass({
   },
   submit: function(frequency) {
     if (frequency === "monthly") {
-      this.refs.paypalRecurring.getDOMNode().submit();
+      this.refs.paypalRecurring.submit();
     } else {
-      this.refs.paypalOneTime.getDOMNode().submit();
+      this.refs.paypalOneTime.submit();
     }
   },
   render: function() {

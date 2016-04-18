@@ -1,4 +1,4 @@
-import React from 'react';
+import ReactDOM from 'react-dom';
 import { Router, Route } from 'react-router';
 import { createHistory } from 'history';
 import routes from './routes.jsx';
@@ -19,7 +19,7 @@ function onEnter(nextState, replaceState) {
   }
 }
 
-React.render(
+ReactDOM.render(
   <Router createElement={createElement} history={createHistory()}>
     <Route onEnter={onEnter}>
       {routes}

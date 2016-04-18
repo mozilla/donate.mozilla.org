@@ -1,5 +1,5 @@
 import React from 'react';
-//import ReactDomServer from 'react-dom/server';
+import ReactDOMServer from 'react-dom/server';
 import { match, RoutingContext } from 'react-router';
 import routes from '../components/routes.jsx';
 import currencies from '../data/currencies.js';
@@ -52,7 +52,7 @@ module.exports = function(outputPath, callback) {
 
     var index = React.createFactory(require('../pages/index.jsx'));
     FS.makeTree(Path.join(__dirname, '..', 'public', outputPath)).then(function() {
-      var contentOfTheFile = React.renderToStaticMarkup(index({
+      var contentOfTheFile = ReactDOMServer.renderToStaticMarkup(index({
         localeInfo: locale,
         favicon,
         metaData: {
@@ -65,7 +65,7 @@ module.exports = function(outputPath, callback) {
           facebook_image: process.env.APPLICATION_URI + facebookImage,
           twitter_image: process.env.APPLICATION_URI + twitterImage
         },
-        markup: React.renderToString(<RoutingContext createElement={createElement} {...renderProps} />)
+        markup: ReactDOMServer.renderToString(<RoutingContext createElement={createElement} {...renderProps} />)
       }));
       var nameOfTheFile = Path.join(__dirname, '..', 'public', outputPath, 'index.html');
 

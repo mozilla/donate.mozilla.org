@@ -138,7 +138,7 @@ module.exports = {
     }
     var page = '/' + this.props.locales[0] + '/' + location + '/';
     reactGA.pageview(page);
-    this.history.pushState(null, page + '?' + params);
+    this.history.pushState(null, page + params);
   },
   stripeError: function(error) {
     form.error("other", this.getIntlMessage('try_again_later') + " [" + error + "]");

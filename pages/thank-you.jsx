@@ -6,22 +6,22 @@ import MozillaFooter from '../components/mozilla/footer.jsx';
 import Signup from '../components/signup.jsx';
 import Social from '../components/social.jsx';
 import ThankYouHeader from '../components/thank-you-header.jsx';
-import { IntlMixin } from 'react-intl';
 import analytics from '../assets/js/analytics.js';
 import form from '../scripts/form.js';
 
 var ThankYou = React.createClass({
-  mixins: [IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   componentDidMount: function() {
     form.updateField("email", this.props.email || "");
     analytics();
   },
   render: function() {
     var className = "row thank-you-page";
-    var locale = this.props.locales[0];
-    var signUpOrSocial = (<Social language={locale}/>);
-    if (this.props.params && /^(en|de)(\b|$)/.test(locale)) {
-      signUpOrSocial = (<Signup country={this.props.country} email={this.props.email} locales={this.props.locales} />);
+    var signUpOrSocial = (<Social/>);
+    if (/^(en|de)(\b|$)/.test(this.context.intl.locale)) {
+      signUpOrSocial = (<Signup country={this.props.country} email={this.props.email}/>);
     }
     if (this.props.test) {
       className += " " + this.props.test;

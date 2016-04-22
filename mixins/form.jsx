@@ -7,12 +7,14 @@ import form from '../scripts/form.js';
 
 module.exports = {
   mixins: [History],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   propTypes: {
     currency: React.PropTypes.object,
     presets: React.PropTypes.array,
     amount: React.PropTypes.string,
-    frequency: React.PropTypes.string,
-    locales: React.PropTypes.array.isRequired
+    frequency: React.PropTypes.string
   },
   getInitialState: function() {
     return {
@@ -62,7 +64,7 @@ module.exports = {
     }
   },
   submit: function(action, props, success, error) {
-    props.locale = this.props.locales[0];
+    props.locale = this.context.intl.locale;
     var currency = this.state.currency;
     if (currency) {
       props.currency = currency.code;
@@ -136,12 +138,12 @@ module.exports = {
     if (country) {
       params += "&country=" + country;
     }
-    var page = '/' + this.props.locales[0] + '/' + location + '/';
+    var page = '/' + this.context.intl.locale + '/' + location + '/';
     reactGA.pageview(page);
     this.history.pushState(null, page + '?' + params);
   },
   stripeError: function(error) {
-    form.error("other", this.getIntlMessage('try_again_later') + " [" + error + "]");
+    form.error("other", this.context.intl.formatMessage({id: 'try_again_later'}) + " [" + error + "]");
     this.setState({
       submitting: false
     });
@@ -151,8 +153,8 @@ module.exports = {
     var success = this.stripeSuccess;
     var error = this.stripeError;
     var valid = form.validate(validate);
-    var description = this.getIntlMessage("mozilla_donation");
-    var handlerDesc = this.getIntlMessage("donate_now");
+    var description = this.context.intl.formatMessage({id: "mozilla_donation"});
+    var handlerDesc = this.context.intl.formatMessage({id: "donate_now"});
     var appName = this.props.appName;
     var submitProps= {};
     if (!valid || this.state.submitting) {
@@ -168,14 +170,14 @@ module.exports = {
       success = this.thunderbirdStripeSuccess;
     }
     if (submitProps.frequency === "monthly") {
-      description = this.getIntlMessage("mozilla_monthly_donation");
-      handlerDesc = this.getIntlMessage("donate_monthly");
+      description = this.context.intl.formatMessage({id: "mozilla_monthly_donation"});
+      handlerDesc = this.context.intl.formatMessage({id: "donate_monthly"});
       if (appName === "thunderbird") {
         description = "Thunderbird monthly";
       }
     }
 
-    var locale = this.props.locales[0];
+    var locale = this.context.intl.locale;
     var currency = this.state.currency && this.state.currency.code;
     var handler = StripeCheckout.configure({
       // Need to get this from .env
@@ -218,7 +220,7 @@ module.exports = {
 
     // Open Checkout with further options
     handler.open({
-      name: appName || this.getIntlMessage("mozilla_foundation"),
+      name: appName || this.context.intl.formatMessage({id: "mozilla_foundation"}),
       description: handlerDesc,
       currency: currency,
       // Stripe wants cents.
@@ -228,7 +230,7 @@ module.exports = {
   paypal: function(validate, props) {
     var valid = form.validate(validate);
     var submitProps = {};
-    var description = this.getIntlMessage("mozilla_donation");
+    var description = this.context.intl.formatMessage({id: "mozilla_donation"});
     var appName = this.props.appName;
     if (valid) {
       this.setState({
@@ -240,7 +242,7 @@ module.exports = {
         description = "Thunderbird";
       }
       if (submitProps.frequency === "monthly") {
-        description = this.getIntlMessage("mozilla_monthly_donation");
+        description = this.context.intl.formatMessage({id: "mozilla_monthly_donation"});
         if (appName === "thunderbird") {
           description = "Thunderbird monthly";
         }
@@ -256,7 +258,7 @@ module.exports = {
     this.setState({
       submitting: false
     });
-    var page = '/' + this.props.locales[0] + location;
+    var page = '/' + this.context.intl.locale + location;
     reactGA.pageview(page);
     this.history.pushState(null, page);
   },
@@ -270,7 +272,7 @@ module.exports = {
     this.setState({
       submitting: false
     });
-    form.error("other", this.getIntlMessage('try_again_later'));
+    form.error("other", this.context.intl.formatMessage({id: 'try_again_later'}));
   },
   doSignup: function(url, validate, props, success, error) {
     var valid = form.validate(validate);

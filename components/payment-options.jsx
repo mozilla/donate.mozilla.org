@@ -1,7 +1,9 @@
 import React from 'react';
 
 var PayPalButton = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   propTypes: {
     onClick: React.PropTypes.func,
     submitting: React.PropTypes.bool,
@@ -19,7 +21,7 @@ var PayPalButton = React.createClass({
   renderButton: function() {
     if (this.props.submitting) {
       return (
-        <div className="submitting-container"><i className="fa fa-cog fa-spin"/>{this.getIntlMessage('submitting')}</div>
+        <div className="submitting-container"><i className="fa fa-cog fa-spin"/>{this.context.intl.formatMessage({id: 'submitting'})}</div>
       );
     }
     return (
@@ -40,14 +42,16 @@ var PayPalButton = React.createClass({
         <label className="payment-paypal-label" htmlFor={labelId}>
           {this.renderButton()}
         </label>
-        <input type="hidden" name="item_name_monthly" value={this.getIntlMessage("mozilla_donation")}/>
+        <input type="hidden" name="item_name_monthly" value={this.context.intl.formatMessage({id: "mozilla_donation"})}/>
       </div>
     );
   }
 });
 
 var StripeButton = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   propTypes: {
     onClick: React.PropTypes.func,
     submitting: React.PropTypes.bool,
@@ -71,7 +75,7 @@ var StripeButton = React.createClass({
           <div className="row payment-logos credit-card-logos">
             <p>&nbsp;</p>
           </div>
-          <div className="row medium-label-size">{this.getIntlMessage('credit_card')}</div>
+          <div className="row medium-label-size">{this.context.intl.formatMessage({id: 'credit_card'})}</div>
         </label>
       </div>
     );
@@ -79,7 +83,9 @@ var StripeButton = React.createClass({
 });
 
 var CreditCardButton = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   propTypes: {
     onClick: React.PropTypes.func.isRequired,
     name: React.PropTypes.string.isRequired
@@ -94,7 +100,7 @@ var CreditCardButton = React.createClass({
           <div className="row payment-logos credit-card-logos">
             <p>&nbsp;</p>
           </div>
-          <div className="row medium-label-size">{this.getIntlMessage('credit_card')}</div>
+          <div className="row medium-label-size">{this.context.intl.formatMessage({id: 'credit_card'})}</div>
         </label>
       </div>
     );

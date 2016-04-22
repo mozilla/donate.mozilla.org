@@ -40,7 +40,7 @@ module.exports = function(queryString, pathname) {
     amount: amount,
     frequency: frequency,
     messages: localesData.messages,
-    locales: localesData.locales,
+    locale: locale,
     email: queryString.email || "",
     country: country
   };

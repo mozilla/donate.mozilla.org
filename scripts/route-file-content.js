@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { match, RoutingContext } from 'react-router';
+import { IntlProvider } from 'react-intl';
 import routes from '../components/routes.jsx';
 import currencies from '../data/currencies.js';
 import {localeCurrencyData, localeCountryData} from '../data/locale-data.js';
@@ -10,7 +11,7 @@ var Path = require('path');
 var FS = require("q-io/fs");
 var englishStrings = locales["en-US"] || {};
 
-module.exports = function(outputPath, callback) {
+function routeFileContent(outputPath, callback) {
   match({ routes, location: outputPath }, function(error, redirectLocation, renderProps) {
     var locale = url.parse(outputPath).pathname.split('/')[1];
     var currencyCode = localeCurrencyData[locale] || 'usd';
@@ -31,10 +32,10 @@ module.exports = function(outputPath, callback) {
     if (locale && locales[locale]) {
       currentStrings = locales[locale];
       mergedStrings = Object.assign({}, englishStrings, currentStrings);
-      values = Object.assign({}, {locales : [locale], messages: mergedStrings}, values);
+      values = Object.assign({}, {locale: locale, messages: mergedStrings}, values);
     } else {
       locale = 'en-US';
-      values = Object.assign({}, {locales : [locale], messages: englishStrings}, values);
+      values = Object.assign({}, {locale: locale, messages: englishStrings}, values);
     }
     var desc = values.messages.i_donated_to_mozilla;
     if (outputPath.indexOf('thunderbird') !== -1) {
@@ -47,7 +48,11 @@ module.exports = function(outputPath, callback) {
 
     function createElement(Component, props) {
       // make sure you pass all the props in!
-      return <Component {...props} {...values} />;
+      return (
+        <IntlProvider locale={values.locale} messages={values.messages}>
+          <Component {...props} {...values} />
+        </IntlProvider>
+      );
     }
 
     var index = React.createFactory(require('../pages/index.jsx'));
@@ -78,4 +83,7 @@ module.exports = function(outputPath, callback) {
       console.log(e);
     });
   });
-};
+}
+
+
+module.exports = routeFileContent;

@@ -11,7 +11,10 @@ import DonateButton from '../components/donate-button.jsx';
 import {FormattedHTMLMessage} from 'react-intl';
 
 module.exports = React.createClass({
-  mixins: [require('react-intl').IntlMixin, require('../mixins/form.jsx')],
+  mixins: [require('../mixins/form.jsx')],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   propTypes: {
     currency: React.PropTypes.object.isRequired,
     presets: React.PropTypes.array.isRequired,
@@ -27,7 +30,7 @@ module.exports = React.createClass({
   },
   renderPrivacyPolicy: function() {
     return (
-      <p className="full"><FormattedHTMLMessage message={this.getIntlMessage("privacy_policy_var_b")}/></p>
+      <p className="full"><FormattedHTMLMessage id="privacy_policy_var_b"/></p>
     );
   },
   renderPaymentOptions: function() {
@@ -35,8 +38,8 @@ module.exports = React.createClass({
       return (
         <span>
           <SectionHeading>
-            <h4>{this.getIntlMessage("choose_payment")}</h4>
-            <p id="secure-label"><i className="fa fa-lock"></i>{this.getIntlMessage('secure')}</p>
+            <h4>{this.context.intl.formatMessage({id: "choose_payment"})}</h4>
+            <p id="secure-label"><i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}</p>
           </SectionHeading>
           <div className="row">
             {this.renderPrivacyPolicy()}
@@ -78,9 +81,9 @@ module.exports = React.createClass({
       return (
         <span className="paypal-disabled">
           <SectionHeading>
-            <h3>{this.getIntlMessage("credit_card")}</h3>
+            <h3>{this.context.intl.formatMessage({id: "credit_card"})}</h3>
             <p id="secure-label">
-              <i className="fa fa-lock"></i>{this.getIntlMessage('secure')}
+              <i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}
             </p>
             <div className="row payment-logos credit-card-logos">
               <p>&nbsp;</p>
@@ -119,7 +122,7 @@ module.exports = React.createClass({
       <div className="container">
         <SectionHeading>
           <h3>
-            {this.getIntlMessage("donate_now")}
+            {this.context.intl.formatMessage({id: "donate_now"})}
             <span className="right">
               <CurrencyDropdown/>
             </span>
@@ -128,7 +131,7 @@ module.exports = React.createClass({
         <div className="frequency-move">
           <Frequency name="frequency-test"/>
         </div>
-        <AmountButtons name="amount" locale={this.props.locales[0]}/>
+        <AmountButtons name="amount"/>
         <div className="frequency-move-baseline">
           <Frequency name="frequency"/>
         </div>

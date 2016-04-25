@@ -63,7 +63,7 @@
     "hapi-auth-bearer-token": "4.0.2",
     "hatchet": "0.3.2",
     "history": "1.12.0",
-    "hoek": "3.0.4",
+    "hoek": "4.0.0",
     "imports-loader": "0.6.5",
     "inert": "3.2.0",
     "joi": "7.1.0",

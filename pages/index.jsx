@@ -10,6 +10,9 @@ var Index = React.createClass({
     var metaData = this.props.metaData;
     var robots = 'index, follow';
     var googleFonts = "https://fonts.googleapis.com/css?family=Open+Sans:600,400,300,300italic";
+console.log(this.props.localeInfo);
+    var localeData = fs.readFileSync(Path.join(__dirname, '../node_modules/react-intl/locale-data/' + this.props.localeInfo.split('-')[0] + '.js'), 'utf8');
+
     if (this.props.localeInfo === "cs") {
       googleFonts += "&subset=latin-ext";
     }
@@ -53,7 +56,8 @@ var Index = React.createClass({
           <Optimizely/>
           <link rel="icon" href={this.props.favicon} type="image/x-icon"/>
           <link rel="stylesheet" href={'/' + fileHashes.main.css}/>
-           <script dangerouslySetInnerHTML={{__html: ga}}></script>
+          <script dangerouslySetInnerHTML={{__html: ga}}></script>
+          <script dangerouslySetInnerHTML={{__html: localeData}}></script>
         </head>
         <body>
           <div id="my-app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>

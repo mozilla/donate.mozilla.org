@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route } from 'react-router';
 import { createHistory } from 'history';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider, addLocaleData } from 'react-intl';
 import routes from './routes.jsx';
 import queryParser from '../scripts/queryParser.js';
 import langURLParser from '../scripts/langURLParser.js';
@@ -12,6 +12,9 @@ import langURLParser from '../scripts/langURLParser.js';
 function createElement(Component, props) {
   var queryString = props.location.query;
   var queryData = queryParser(queryString, props.location.pathname);
+console.log(window.ReactIntlLocaleData);
+  addLocaleData(window.ReactIntlLocaleData[queryData.locale]);
+
   return (
     <IntlProvider locale={queryData.locale} messages={queryData.messages}>
       <Component {...queryData} {...props}/>

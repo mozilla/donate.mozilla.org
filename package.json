@@ -78,7 +78,7 @@
     "react": "0.13.3",
     "react-ga": "1.2.0",
     "react-intl": "1.2.2",
-    "react-router": "1.0.0",
+    "react-router": "2.3.0",
     "request": "2.67.0",
     "scooter": "2.0.1",
     "stripe": "4.1.0",

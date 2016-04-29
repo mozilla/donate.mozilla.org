@@ -12,8 +12,11 @@ import langURLParser from '../scripts/langURLParser.js';
 function createElement(Component, props) {
   var queryString = props.location.query;
   var queryData = queryParser(queryString, props.location.pathname);
-console.log(window.ReactIntlLocaleData);
-  addLocaleData(window.ReactIntlLocaleData[queryData.locale]);
+  var ReactIntlLocaleData = window.ReactIntlLocaleData;
+
+  Object.keys(ReactIntlLocaleData).forEach((lang) => {
+    addLocaleData(ReactIntlLocaleData[lang]);
+  });
 
   return (
     <IntlProvider locale={queryData.locale} messages={queryData.messages}>

@@ -49,6 +49,7 @@ if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
 module.exports = function(options) {
   var serverOptions = Hoek.applyToDefaults({
     connections: {
+      compression: false,
       routes: {
         security: {
           hsts: {

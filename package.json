@@ -94,7 +94,7 @@
     "expect": "1.13.4",
     "imagemin-cli": "2.0.0",
     "karma": "0.13.19",
-    "karma-chrome-launcher": "0.2.2",
+    "karma-chrome-launcher": "1.0.1",
     "karma-coverage": "0.5.3",
     "karma-coveralls": "1.1.2",
     "karma-firefox-launcher": "0.1.7",

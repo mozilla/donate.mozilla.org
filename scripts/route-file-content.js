@@ -14,12 +14,14 @@ var englishStrings = locales["en-US"] || {};
 function routeFileContent(outputPath, callback) {
   match({ routes, location: outputPath }, function(error, redirectLocation, renderProps) {
     var locale = url.parse(outputPath).pathname.split('/')[1];
+
     var currencyCode = localeCurrencyData[locale] || 'usd';
     var country = localeCountryData[locale] || 'US';
     var favicon = "/assets/images/favicon.8af3a74ede48e250ceb935c026242483.ico";
     var twitterImage = "/assets/images/EOY_Twitter_v8_EN.d1bb5d2a5ce35859d038df852d9e6a0a811beaac.png";
     var facebookImage = "/assets/images/EOY_facebook_v1.a152496406bad899d1a920f6d6b9f507.png";
     var siteUrl = locale + '/';
+    var localesInfo = [];
     var values = {
       currency: currencies[currencyCode],
       presets: currencies.usd.presets.single,
@@ -31,10 +33,12 @@ function routeFileContent(outputPath, callback) {
     var currentStrings, mergedStrings;
     if (locale && locales[locale]) {
       currentStrings = locales[locale];
+      localesInfo = [locale];
       mergedStrings = Object.assign({}, englishStrings, currentStrings);
       values = Object.assign({}, {locale: locale, messages: mergedStrings}, values);
     } else {
       locale = 'en-US';
+      localesInfo = Object.keys(locales);
       values = Object.assign({}, {locale: locale, messages: englishStrings}, values);
     }
     var desc = values.messages.i_donated_to_mozilla;
@@ -58,7 +62,8 @@ function routeFileContent(outputPath, callback) {
     var index = React.createFactory(require('../pages/index.jsx'));
     FS.makeTree(Path.join(__dirname, '..', 'public', outputPath)).then(function() {
       var contentOfTheFile = ReactDOMServer.renderToStaticMarkup(index({
-        localeInfo: locale,
+        localesInfo,
+        locale,
         favicon,
         metaData: {
           current_url: outputPath,

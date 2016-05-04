@@ -12,8 +12,9 @@ var PayPalButton = React.createClass({
     name: React.PropTypes.string.isRequired
   },
   onChange: function() {
-    this.props.onClick = this.props.onClick || function() {};
-    this.props.onClick();
+    if (this.props.onClick) {
+      this.props.onClick();
+    }
     if (!this.props.submitting) {
       this.props.onSubmit(this.props.validate, this.props.submit);
     }
@@ -59,8 +60,9 @@ var StripeButton = React.createClass({
     name: React.PropTypes.string.isRequired
   },
   onChange: function() {
-    this.props.onClick = this.props.onClick || function() {};
-    this.props.onClick();
+    if (this.props.onClick) {
+      this.props.onClick();
+    }
     setTimeout(() => {
       this.props.onSubmit(this.props.validate, this.props.submit);
     });
@@ -87,14 +89,14 @@ var CreditCardButton = React.createClass({
     intl: React.PropTypes.object
   },
   propTypes: {
-    onClick: React.PropTypes.func.isRequired,
+    onClick: React.PropTypes.func,
     name: React.PropTypes.string.isRequired
   },
   render: function() {
     var name = this.props.name;
     var labelId = "payment-cc-" + name;
     return (
-      <div onClick={this.props.onClick} className="half">
+      <div onClick={this.props.onClick || function() {}} className="half">
         <input type="radio" className="payment-type payment-cc-input" name={name} value="cc" id={labelId}/>
         <label className="payment-cc-label" htmlFor={labelId}>
           <div className="row payment-logos credit-card-logos">

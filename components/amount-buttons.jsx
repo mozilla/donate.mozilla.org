@@ -97,7 +97,7 @@ var AmountOtherButton = React.createClass({
     } else if (!this.props.userInputting) {
       // We only need this for initial display before the user starts inputting,
       // once they start inputting, we can adapt.
-      inputValue = this.this.context.intl.formatNumber(amount);
+      inputValue = this.context.intl.formatNumber(amount);
     }
     return (
       <div className="two-third">

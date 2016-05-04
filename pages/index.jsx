@@ -62,7 +62,11 @@ var Index = React.createClass({
           <link rel="stylesheet" href={'/' + fileHashes.main.css}/>
           <script dangerouslySetInnerHTML={{__html: ga}}></script>
           {
-            localesData.map(localeData => <script dangerouslySetInnerHTML={{__html: localeData}}></script>)
+            localesData.map((localeData, index) => {
+              return (
+                <script key={"localeData-" + index} dangerouslySetInnerHTML={{__html: localeData}}></script>
+              );
+            })
           }
         </head>
         <body>

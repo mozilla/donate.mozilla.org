@@ -66,7 +66,7 @@
     "hoek": "3.0.4",
     "imports-loader": "0.6.5",
     "inert": "3.2.1",
-    "joi": "7.1.0",
+    "joi": "8.1.0",
     "json-loader": "0.5.4",
     "less": "2.5.3",
     "less-loader": "2.2.2",

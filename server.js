@@ -298,14 +298,18 @@ module.exports = function(options) {
   // This will catch all 404s and redirect them to root URL
   // with preserving the pathname for client-side to handle.
   server.ext('onPreResponse', function(request, reply) {
+    var redirect = "";
     if (request.response.output && request.response.output.statusCode === 404) {
       if (nonASCIICharacters.test(request.path)) {
         return reply(
           new Boom.badRequest('Location cannot contain or convert into non-ascii characters', { path: request.path })
         );
       }
-
-      return reply.redirect('/?redirect=' + request.url.pathname);
+      redirect = '/?redirect=' + request.url.pathname;
+      if (request.url.search) {
+        redirect += "&query=" + request.url.search;
+      }
+      return reply.redirect(redirect);
     }
     return reply.continue();
   });

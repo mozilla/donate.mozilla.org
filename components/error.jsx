@@ -3,7 +3,7 @@ import listener from '../scripts/listener.js';
 
 var ErrorMessage = React.createClass({
   propTypes: {
-    message: React.PropTypes.string
+    message: React.PropTypes.node
   },
   render: function() {
     var message = this.props.message;

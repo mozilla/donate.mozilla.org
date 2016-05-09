@@ -4,18 +4,19 @@ In this project we're using [React-Intl](https://github.com/yahoo/react-intl) to
 
 #### Localize a component or page
 
-To localize a component or page you have to include `IntlMixin` in your class `mixins`, for example:
+To localize a component or page you have to include `intl` in your class `contextTypes`, for example:
 
 ``` typescript
 var React = require('react');
-var IntlMixin = require('react-intl').IntlMixin;
 
 var Example = React.createClass({
-  mixins: [IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   render: function() {
     return (
       <div>
-        <h1>{this.getIntlMessage('key_name_here')}
+        <h1>{this.context.intl.formatMessage({id: 'key_name_here'})}
       </div>
     );
   }
@@ -26,14 +27,14 @@ var Example = React.createClass({
 If the strings include HTML, use the `FormattedHTMLMessage` element:
 
 ``` typescript
-import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import { FormattedHTMLMessage } from 'react-intl';
 
 <FormattedHTMLMessage
-  message={ this.getIntlMessage("key_name_here") }
+  id="key_name_here"
 />
 ```
 
-Once you add the mixin it will expose `getIntlMessage` method to your component to get the localized message for the given key.
+Once you add the intl context it will expose `context.intl.formatMessage` method to your component to get the localized message for the given id as a key.
 
 #### Adding locale
 Because we are using .properties for our translation and React-Intl expects JSON, we need an extra build step to convert .properties to JSON.

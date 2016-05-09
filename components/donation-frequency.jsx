@@ -1,13 +1,13 @@
 import React from 'react';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
-import helpsImageData from '../data/helps-image-data.js';
 
 module.exports = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   propTypes: {
-    name: React.PropTypes.string.isRequired,
-    locale: React.PropTypes.string
+    name: React.PropTypes.string.isRequired
   },
   getInitialState: function() {
     return {
@@ -39,18 +39,6 @@ module.exports = React.createClass({
   validate: function() {
     return true;
   },
-  renderArrow: function() {
-    var locale = this.props.locale;
-    var fileName = helpsImageData[locale];
-    if (fileName && this.state.frequency !== "monthly") {
-      return (
-        <img width="250" height="73" className="this-really-helps-img" src={"/assets/images/" + fileName}/>
-      );
-    }
-    return (
-      <span></span>
-    );
-  },
   render: function() {
     var frequency = this.state.frequency;
     var onTimeId = "one-time-payment-" + this.props.name;
@@ -63,16 +51,15 @@ module.exports = React.createClass({
             <input name={inputName} checked={frequency !== "monthly"} className="one-time-payment"
               onChange={this.onChange} type="radio" value="single" id={onTimeId}
             />
-            <label htmlFor={onTimeId} className="medium-label-size">{this.getIntlMessage('one_time')}</label>
+            <label htmlFor={onTimeId} className="medium-label-size">{this.context.intl.formatMessage({id: 'one_time'})}</label>
           </div>
           <div className="frequency-radio">
             <input name={inputName} checked={frequency === "monthly"} className="monthly-payment"
               onChange={this.onChange} type="radio" value="monthly" id={monthlyId}
             />
-            <label htmlFor={monthlyId} className="medium-label-size">{this.getIntlMessage('monthly')}</label>
+            <label htmlFor={monthlyId} className="medium-label-size">{this.context.intl.formatMessage({id: 'monthly'})}</label>
           </div>
         </div>
-        {this.renderArrow()}
       </div>
     );
   }

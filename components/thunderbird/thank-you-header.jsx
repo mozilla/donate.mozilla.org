@@ -1,16 +1,18 @@
 import React from 'react';
-import { IntlMixin, FormattedHTMLMessage } from 'react-intl';
+import { FormattedHTMLMessage } from 'react-intl';
 
 module.exports = React.createClass({
-  mixins: [IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   renderMessage: function() {
     var name = this.props.name;
     if (name) {
       return (
         <h1>
           <FormattedHTMLMessage
-            name={name}
-            message={ this.getIntlMessage("from_all_of_us_with_ty_name") }
+            values={{name: name}}
+            id="from_all_of_us_with_ty_name"
           />
         </h1>
       );
@@ -18,8 +20,8 @@ module.exports = React.createClass({
     return (
       <span>
         <h1>
-          <div>{ this.getIntlMessage("from_all_of_us_at_thunderbird") }</div>
-          <div><b>{ this.getIntlMessage("thank_you") }</b></div>
+          <div>{ this.context.intl.formatMessage({id: "from_all_of_us_at_thunderbird"}) }</div>
+          <div><b>{ this.context.intl.formatMessage({id: "thank_you"}) }</b></div>
         </h1>
       </span>
     );

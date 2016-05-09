@@ -1,8 +1,10 @@
 import React from 'react';
-import { FormattedHTMLMessage, IntlMixin } from 'react-intl';
+import { FormattedHTMLMessage } from 'react-intl';
 
 var Footer = React.createClass({
-  mixins: [IntlMixin],
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
   render: function() {
     var stripeNotice = "stripe-notice";
     if (!this.props.stripeNotice) {
@@ -11,13 +13,13 @@ var Footer = React.createClass({
     return (
       <div className="row disclaimers">
         <p className="need-help">
-          <FormattedHTMLMessage message={ this.getIntlMessage("problems_donating_thunderbird") } />
+          <FormattedHTMLMessage id="problems_donating_thunderbird" />
         </p>
         <p className="donation-notice">
-          {this.getIntlMessage('donation_notice_thunderbird')}
+          {this.context.intl.formatMessage({id: 'donation_notice_thunderbird'})}
         </p>
         <p className={stripeNotice}>
-          <FormattedHTMLMessage message={ this.getIntlMessage("stripe_notice") } />
+          <FormattedHTMLMessage id="stripe_notice" />
         </p>
       </div>
     );

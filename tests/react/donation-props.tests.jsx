@@ -1,6 +1,10 @@
-var React = require('react');
+/* eslint-disable no-unused-vars */
+import React from 'react';
+/* eslint-disable no-unused-vars */
+var ReactDOM = require('react-dom');
 var TestUtils = require('react/lib/ReactTestUtils');
 var should = require('should');
+var IntlStub = require('./IntlStub.jsx');
 var assign = require('react/lib/Object.assign');
 var Context = {
   messages: require('../../public/locales.json')["en-US"],
@@ -21,29 +25,30 @@ assign(Context.router, {
   render: function() {}
 });
 
-var stubContext = require('react-test-context');
 var DonationPage = require('../../pages/one-page.jsx');
 
 describe('donation page query ?amount=100&currency=cad&presets=1,2,3,4&frequency=monthly donation test', function() {
   should.doesNotThrow(() => {
-    var TestInput = stubContext(DonationPage, Context);
-    var Page = React.createElement(stubContext(TestInput, Context), {
-      locales: ['en-US'],
-      amount: "100",
-      presets: ["1", "2", "3", "4"],
-      currency: {
-        code: 'aud',
-        minAmount: '2',
-        symbol: '$',
-        presets: {
-          single: ['200', '150', '100', '50'],
-          monthly: ['50', '40', '30', '20']
-        }
-      },
-      frequency: "monthly"
-    });
-    var Document = TestUtils.renderIntoDocument(Page);
-    var testElement = Document.getDOMNode();
+    var Document = TestUtils.renderIntoDocument(
+      <IntlStub>
+        <DonationPage
+          amount="100"  
+          presets={["1", "2", "3", "4"]}
+          frequency="monthly"
+          currency={{
+            code: 'aud',
+            minAmount: '2',
+            symbol: '$',
+            presets: {
+              single: ['200', '150', '100', '50'],
+              monthly: ['50', '40', '30', '20']
+            }
+          }}
+        />
+      </IntlStub>
+    );
+    
+    var testElement = ReactDOM.findDOMNode(Document);
     var amountOther = testElement.querySelector('#amount-other-input').value;
     var currencySelector = testElement.querySelector('.currency-dropdown').value;
     var aboutPresetButton1 = testElement.querySelector('#amount-1').value;
@@ -73,6 +78,6 @@ describe('donation page query ?amount=100&currency=cad&presets=1,2,3,4&frequency
     it('frequency .monthly-payment checked is true', function() {
       should(frequency).equal(true);
     });
-    React.unmountComponentAtNode(Document.getDOMNode().parentNode);
+    ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(Document).parentNode);
   });
 });

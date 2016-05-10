@@ -30,7 +30,7 @@ function onEnter(nextState, replaceState) {
   var query = nextState.location.query;
   if (pathname) {
     if (query.redirect) {
-      pathname += query.query;
+      pathname += query.query || "";
       query = {};
     }
     replaceState({}, pathname, query);

@@ -1,17 +1,19 @@
 import i18n from '../locales/i18n.js';
 import pages from '../data/pages.js';
 
-function langURLParser(state) {
+function redirectURLParser(location) {
   var redirectQuery = false;
-  var queryString = state.query;
+  var query = location.query;
 
-  if (queryString) {
-    redirectQuery = queryString.redirect;
+  if (query) {
+    redirectQuery = query.redirect;
   }
 
   // We don't need to redirect.
-  if (!redirectQuery && state.pathname !== "/") {
-    return;
+  if (!redirectQuery && location.pathname !== "/") {
+    return {
+      pathname: ""
+    };
   }
 
   var langParse = i18n.urlOverrideLang(redirectQuery);
@@ -29,10 +31,16 @@ function langURLParser(state) {
 
   // invalid lang but with a valid path.
   if (!langTest && Object.keys(pages).indexOf(pathname) !== -1) {
-    return "/" + validLang + pathname;
+    pathname = "/" + validLang + pathname;
+  } else {
+    pathname = "/" + validLang + "/";
   }
-  // default
-  return "/" + validLang + "/";
+
+  if (redirectQuery) {
+    pathname += query.query || "";
+    query = {};
+  }
+  return {pathname, query};
 }
 
-module.exports = langURLParser;
+module.exports = redirectURLParser;

@@ -7,7 +7,7 @@ import { createHistory } from 'history';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import routes from './routes.jsx';
 import queryParser from '../scripts/queryParser.js';
-import langURLParser from '../scripts/langURLParser.js';
+import redirectURLParser from '../scripts/redirectURLParser.js';
 
 function createElement(Component, props) {
   var queryString = props.location.query;
@@ -26,14 +26,9 @@ function createElement(Component, props) {
 }
 
 function onEnter(nextState, replaceState) {
-  var pathname = langURLParser(nextState.location);
-  var query = nextState.location.query;
-  if (pathname) {
-    if (query.redirect) {
-      pathname += query.query || "";
-      query = {};
-    }
-    replaceState({}, pathname, query);
+  var result = redirectURLParser(nextState.location);
+  if (result.pathname) {
+    replaceState({}, result.pathname, result.query);
   }
 }
 

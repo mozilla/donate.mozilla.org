@@ -6,7 +6,7 @@ function redirectURLParser(location) {
   var query = location.query;
 
   if (query) {
-    redirectQuery = query.redirect;
+    redirectQuery = decodeURIComponent(query.redirect || "");
   }
 
   // We don't need to redirect.
@@ -37,7 +37,7 @@ function redirectURLParser(location) {
   }
 
   if (redirectQuery) {
-    pathname += query.query || "";
+    pathname += decodeURIComponent(query.query || "");
     query = {};
   }
   return {pathname, query};

@@ -5,39 +5,39 @@ describe('redirects', () => {
   var redirects = [
     {
       url: "/not-here/",
-      location: "/?redirect=/not-here/"
+      location: "/?redirect=" + encodeURIComponent("/not-here/")
     },
     {
       url: "/en-US/not-here/",
-      location: "/?redirect=/en-US/not-here/"
+      location: "/?redirect=" + encodeURIComponent("/en-US/not-here/")
     },
     {
       url: "/en-UR/not-here/",
-      location: "/?redirect=/en-UR/not-here/"
+      location: "/?redirect=" + encodeURIComponent("/en-UR/not-here/")
     },
     {
       url: "/not-here/?key=value",
-      location: "/?redirect=/not-here/&query=?key=value"
+      location: "/?redirect=" + encodeURIComponent("/not-here/") + "&query=" + encodeURIComponent("?key=value")
     },
     {
       url: "/en-US/not-here/?key=value",
-      location: "/?redirect=/en-US/not-here/&query=?key=value"
+      location: "/?redirect=" + encodeURIComponent("/en-US/not-here/") + "&query=" + encodeURIComponent("?key=value")
     },
     {
       url: "/en-UR/not-here/?key=value",
-      location: "/?redirect=/en-UR/not-here/&query=?key=value"
+      location: "/?redirect=" + encodeURIComponent("/en-UR/not-here/") + "&query=" + encodeURIComponent("?key=value")
     },
     {
       url: "/not-here/?key=value&key2=value2",
-      location: "/?redirect=/not-here/&query=?key=value&key2=value2"
+      location: "/?redirect=" + encodeURIComponent("/not-here/") + "&query=" + encodeURIComponent("?key=value&key2=value2")
     },
     {
       url: "/en-US/not-here/?key=value&key2=value2",
-      location: "/?redirect=/en-US/not-here/&query=?key=value&key2=value2"
+      location: "/?redirect=" + encodeURIComponent("/en-US/not-here/") + "&query=" + encodeURIComponent("?key=value&key2=value2")
     },
     {
       url: "/en-UR/not-here/?key=value&key2=value2",
-      location: "/?redirect=/en-UR/not-here/&query=?key=value&key2=value2"
+      location: "/?redirect=" + encodeURIComponent("/en-UR/not-here/") + "&query=" + encodeURIComponent("?key=value&key2=value2")
     }
   ];
 

@@ -305,9 +305,9 @@ module.exports = function(options) {
           new Boom.badRequest('Location cannot contain or convert into non-ascii characters', { path: request.path })
         );
       }
-      redirect = '/?redirect=' + request.url.pathname;
+      redirect = '/?redirect=' + encodeURIComponent(request.url.pathname);
       if (request.url.search) {
-        redirect += "&query=" + request.url.search;
+        redirect += "&query=" + encodeURIComponent(request.url.search);
       }
       return reply.redirect(redirect);
     }

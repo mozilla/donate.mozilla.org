@@ -44,7 +44,7 @@ var tests = [
     desc: 'should redirect to "/de/" for the redirect query /de/thank-you/abcd/',
     test: {
       query: {
-        redirect: '/de/thank-you/abcd/'
+        redirect: encodeURIComponent('/de/thank-you/abcd/')
       }
     },
     result: {
@@ -56,7 +56,7 @@ var tests = [
     desc: 'should redirect to "/en-US/thank-you/" for the redirect query /thank-you/',
     test: {
       query: {
-        redirect: '/thank-you/'
+        redirect: encodeURIComponent('/thank-you/')
       }
     },
     result: {
@@ -68,7 +68,7 @@ var tests = [
     desc: 'should redirect to /de/ for the redirect query /de/asdsadasd/',
     test: {
       query: {
-        redirect: '/de/asdsadasd/'
+        redirect: encodeURIComponent('/de/asdsadasd/')
       }
     },
     result: {
@@ -80,7 +80,7 @@ var tests = [
     desc: 'should redirect to "/en-US/" for the redirect query /th-TH/ which is not a supported locale',
     test: {
       query: {
-        redirect: '/th-TH/'
+        redirect: encodeURIComponent('/th-TH/')
       }
     },
     result: {
@@ -92,7 +92,7 @@ var tests = [
     desc: 'should redirect to "/en-US/" for the redirect query /fa-KE/ which is not a real locale',
     test: {
       query: {
-        redirect: '/fa-KE/'
+        redirect: encodeURIComponent('/fa-KE/')
       }
     },
     result: {
@@ -104,7 +104,7 @@ var tests = [
     desc: 'should redirect to "/en-US/" for the redirect query /th-TH/abc/',
     test: {
       query: {
-        redirect: '/th-TH/abc/'
+        redirect: encodeURIComponent('/th-TH/abc/')
       }
     },
     result: {
@@ -116,7 +116,7 @@ var tests = [
     desc: 'should redirect to "/en-US/thank-you/" for the redirect query "/fa-KE/thank-you/"',
     test: {
       query: {
-        redirect: '/fa-KE/thank-you/'
+        redirect: encodeURIComponent('/fa-KE/thank-you/')
       }
     },
     result: {
@@ -128,8 +128,8 @@ var tests = [
     desc: 'query "?currency=gbp&amount=10" should be passed along on a redirect to "/en-US/"',
     test: {
       query: {
-        redirect: '/abc/',
-        query: '?currency=gbp&amount=10'
+        redirect: encodeURIComponent('/abc/'),
+        query: encodeURIComponent('?currency=gbp&amount=10')
       }
     },
     result: {
@@ -141,8 +141,8 @@ var tests = [
     desc: 'query "?email=test@email.com" should be passed along on a redirect to "/en-US/thank-you/"',
     test: {
       query: {
-        redirect: '/abc/thank-you',
-        query: '?email=test@email.com'
+        redirect: encodeURIComponent('/abc/thank-you'),
+        query: encodeURIComponent('?email=test@email.com')
       }
     },
     result: {

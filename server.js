@@ -249,10 +249,15 @@ module.exports = function(options) {
       method: 'GET',
       path: '/api/polyfill.js',
       handler: function(request, reply) {
+        var locale = request.query.locale;
+        var langHeader = [];
+        var langArray = [];
 
-        var header = Parser.parse(request.headers["accept-language"]);
-        var languages_array = header.map(l => l.code + (l.region ? "-" + l.region : ""));
-        var locale = bestLang(languages_array, Object.keys(locales), 'en-US');
+        if (!locale) {
+          langHeader = Parser.parse(request.headers["accept-language"]);
+          langArray = langHeader.map(l => l.code + (l.region ? "-" + l.region : ""));
+          locale = bestLang(langArray, locales, 'en-US');
+        }
 
         var features = request.query.features + ',Intl.~locale.' + locale;
         var flags = request.query.flags ? request.query.flags.split(',') : [];

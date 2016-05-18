@@ -30,7 +30,9 @@ function redirectURLParser(location) {
   }
 
   // invalid lang but with a valid path.
-  if (!langTest && Object.keys(pages).indexOf(pathname) !== -1) {
+  if (!langTest && Object.keys(pages).indexOf(redirectQuery) !== -1) {
+    pathname = "/" + validLang + redirectQuery;
+  } else if (!langTest && Object.keys(pages).indexOf(pathname) !== -1) {
     pathname = "/" + validLang + pathname;
   } else {
     pathname = "/" + validLang + "/";

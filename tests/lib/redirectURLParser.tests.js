@@ -65,6 +65,18 @@ var tests = [
     }
   },
   {
+    desc: 'should redirect to "/en-US/thunderbird/about/" for the redirect query thunderbird/about/',
+    test: {
+      query: {
+        redirect: encodeURIComponent('/thunderbird/about/')
+      }
+    },
+    result: {
+      pathname: '/en-US/thunderbird/about/',
+      query: {}
+    }
+  },
+  {
     desc: 'should redirect to /de/ for the redirect query /de/asdsadasd/',
     test: {
       query: {

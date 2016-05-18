@@ -2,7 +2,7 @@ import assign from 'react/lib/Object.assign';
 import locales from '../public/locales.json';
 
 //This is an easy cross browser way to get the preferred language
-/** @const */ var DEFAULT_VALUE = 'en';
+/** @const */ var DEFAULT_VALUE = 'en-US';
 /** @const */ var PREFERRED_LANGUAGE = navigator.language || navigator.userLanguage ||
                   navigator.browserLanguage || navigator.systemLanguage || DEFAULT_VALUE;
 var locale = formatLocale(PREFERRED_LANGUAGE);

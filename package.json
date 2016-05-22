@@ -48,7 +48,7 @@
     "babel-preset-es2015": "6.3.13",
     "babel-preset-react": "6.3.13",
     "blankie": "1.1.1",
-    "boom": "3.1.1",
+    "boom": "3.2.1",
     "css-loader": "0.23.1",
     "enhanced-require": "0.5.0-beta6",
     "eslint": "1.10.3",

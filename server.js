@@ -14,8 +14,13 @@ var Path = require('path');
 var Hapi = require('hapi');
 var Hoek = require('hoek');
 var Joi = require('joi');
+
 var polyfillio = require('polyfill-service');
 var PolyfillSet = require('./scripts/PolyfillSet.js');
+var Parser = require("accept-language-parser");
+var bestLang = require('bestlang');
+var locales = Object.keys(require('./public/locales.json'));
+
 var exchangeRates = require('./assets/exchange-rates/latest.json');
 var routes = require('./routes');
 var goodConfig = {
@@ -244,7 +249,17 @@ module.exports = function(options) {
       method: 'GET',
       path: '/api/polyfill.js',
       handler: function(request, reply) {
-        var features = request.query.features;
+        var locale = request.query.locale;
+        var langHeader = [];
+        var langArray = [];
+
+        if (!locale) {
+          langHeader = Parser.parse(request.headers["accept-language"]);
+          langArray = langHeader.map(l => l.code + (l.region ? "-" + l.region : ""));
+          locale = bestLang(langArray, locales, 'en-US');
+        }
+
+        var features = request.query.features + ',Intl.~locale.' + locale;
         var flags = request.query.flags ? request.query.flags.split(',') : [];
 
         var polyfills = PolyfillSet.fromQueryParam(features || 'default', flags);

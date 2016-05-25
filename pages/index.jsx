@@ -32,7 +32,10 @@ var Index = React.createClass({
       ga('create', 'UA-49796218-32', 'auto');
       ga('send', 'pageview');
     `;
-    var intlPolyfillString = 'Intl.~locale.' + this.props.localesInfo.join(',Intl.~locale.');
+    var polyfillLocale = "";
+    if (this.props.locale) {
+      polyfillLocale = '&locale=' + this.props.locale;
+    }
     return (
       <html>
         <head>
@@ -73,7 +76,7 @@ var Index = React.createClass({
           <div id="my-app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
           <link rel="stylesheet" href={googleFonts}/>
           <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
-          <script src={'/api/polyfill.js?features=Event,CustomEvent,Promise,' + intlPolyfillString}></script>
+          <script src={'/api/polyfill.js?features=Event,CustomEvent,Promise' + polyfillLocale}></script>
           <script src={'/' + fileHashes.main.js} ></script>
           <Pontoon/>
           <script src="https://checkout.stripe.com/checkout.js"></script>

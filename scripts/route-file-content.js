@@ -37,9 +37,8 @@ function routeFileContent(outputPath, callback) {
       mergedStrings = Object.assign({}, englishStrings, currentStrings);
       values = Object.assign({}, {locale: locale, messages: mergedStrings}, values);
     } else {
-      locale = 'en-US';
       localesInfo = Object.keys(locales);
-      values = Object.assign({}, {locale: locale, messages: englishStrings}, values);
+      values = Object.assign({}, {locale: 'en-US', messages: englishStrings}, values);
     }
     var desc = values.messages.i_donated_to_mozilla;
     if (outputPath.indexOf('thunderbird') !== -1) {

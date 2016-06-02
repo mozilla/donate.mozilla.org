@@ -17,20 +17,17 @@ function redirectURLParser(location) {
   }
 
   var langParse = i18n.urlOverrideLang(redirectQuery);
-  var langTest = langParse.test;
   var pathname = langParse.pathname;
   if (pathname) {
     pathname = "/" + pathname + "/";
   }
 
-  var lang = langParse.lang;
-  var validLang = lang || i18n.currentLanguage;
+  var validLang = langParse.lang || i18n.currentLanguage;
   if (!i18n.isSupportedLanguage(validLang)) {
     validLang = i18n.defaultLang;
   }
 
-  // invalid lang but with a valid path.
-  if (!langTest && Object.keys(pages).indexOf(pathname) !== -1) {
+  if (Object.keys(pages).indexOf(pathname) !== -1) {
     pathname = "/" + validLang + pathname;
   } else {
     pathname = "/" + validLang + "/";

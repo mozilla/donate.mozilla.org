@@ -65,6 +65,31 @@ var tests = [
     }
   },
   {
+    desc: 'should redirect to "/en-US/thunderbird/about/" for the redirect query /thunderbird/about/',
+    test: {
+      query: {
+        redirect: encodeURIComponent('/thunderbird/about/')
+      }
+    },
+    result: {
+      pathname: '/en-US/thunderbird/about/',
+      query: {}
+    }
+  },
+  {
+    desc: 'should redirect to "/en-US/thunderbird/about/?x=y" for the redirect query /fa-KE/thunderbird/about/',
+    test: {
+      query: {
+        redirect: encodeURIComponent('/fa-KE/thunderbird/about/'),
+        query: encodeURIComponent('?x=y')
+      }
+    },
+    result: {
+      pathname: '/en-US/thunderbird/about/?x=y',
+      query: {}
+    }
+  },
+  {
     desc: 'should redirect to /de/ for the redirect query /de/asdsadasd/',
     test: {
       query: {
@@ -128,7 +153,7 @@ var tests = [
     desc: 'query "?currency=gbp&amount=10" should be passed along on a redirect to "/en-US/"',
     test: {
       query: {
-        redirect: encodeURIComponent('/abc/'),
+        redirect: encodeURIComponent('/en-US/'),
         query: encodeURIComponent('?currency=gbp&amount=10')
       }
     },
@@ -138,10 +163,10 @@ var tests = [
     }
   },
   {
-    desc: 'query "?email=test@email.com" should be passed along on a redirect to "/en-US/thank-you/"',
+    desc: 'query "?email=test@email.com" should be passed along on a redirect to "/en-US/thank-you"',
     test: {
       query: {
-        redirect: encodeURIComponent('/abc/thank-you'),
+        redirect: encodeURIComponent('/en-US/thank-you'),
         query: encodeURIComponent('?email=test@email.com')
       }
     },

@@ -19,11 +19,20 @@ function formatLocale(lang) {
 function urlOverrideLang(path) {
   var localPath = path || location.pathname;
   var localeCode = localPath.split('/')[1];
-  var pathname = localPath.split('/')[2] || localeCode;
+  localeCode = (/^[a-z]{2,3}(-[A-Z]{2})?$/.test(localeCode)) ? localeCode : null;
+  var pathname;
+  if (localeCode) {
+    // Drop (likely) locale from path.
+    pathname = localPath.substring(localPath.indexOf('/', 1) + 1);
+  }
+  else {
+    pathname = localPath.substring(1);
+  }
+  pathname = pathname.replace(/\/$/, ''); // remove possible trailing slash
   return {
     test: !!locales[localeCode],
     pathname: pathname,
-    lang: locales[localeCode] ? localeCode : null
+    lang: localeCode
   };
 }
 

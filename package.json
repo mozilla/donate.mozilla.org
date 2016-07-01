@@ -82,7 +82,7 @@
     "react-ga": "1.2.0",
     "react-intl": "2.0.0",
     "react-router": "1.0.0",
-    "request": "2.67.0",
+    "request": "2.72.0",
     "scooter": "2.0.1",
     "stripe": "4.1.0",
     "style-loader": "0.13.0",

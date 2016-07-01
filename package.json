@@ -70,7 +70,7 @@
     "inert": "3.2.1",
     "joi": "7.1.0",
     "json-loader": "0.5.4",
-    "less": "2.5.3",
+    "less": "2.7.1",
     "less-loader": "2.2.2",
     "newrelic": "1.24.0",
     "npm-run-all": "1.4.0",

@@ -6,8 +6,9 @@ module.exports = React.createClass({
   },
   render: function() {
     var appURL = process.env.APPLICATION_URI;
-    var twitterShareURL = 'https://twitter.com/share?url=' + appURL +'/' + this.props.language + '/thunderbird/&text=' + encodeURIComponent(this.context.intl.formatMessage({id: 'i_donated_to_thunderbird'}));
-    var facebookShareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + appURL + '/' + this.props.language + '/thunderbird/';
+    var locale = this.context.intl.locale;
+    var twitterShareURL = 'https://twitter.com/share?url=' + appURL +'/' + locale + '/thunderbird/&text=' + encodeURIComponent(this.context.intl.formatMessage({id: 'i_donated_to_thunderbird'}));
+    var facebookShareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + appURL + '/' + locale + '/thunderbird/';
     return (
       <div className="share-page">
         <div className="container">

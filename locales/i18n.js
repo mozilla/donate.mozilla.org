@@ -1,4 +1,4 @@
-import assign from 'react/lib/Object.assign';
+import assign from 'object-assign';
 import locales from '../public/locales.json';
 
 //This is an easy cross browser way to get the preferred language

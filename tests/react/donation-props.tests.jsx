@@ -5,7 +5,7 @@ var ReactDOM = require('react-dom');
 var TestUtils = require('react/lib/ReactTestUtils');
 var should = require('should');
 var IntlStub = require('./IntlStub.jsx');
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 var Context = {
   messages: require('../../public/locales.json')["en-US"],
   router: function() {}

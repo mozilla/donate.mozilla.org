@@ -1,14 +1,13 @@
 import React from 'react';
 import reactGA from 'react-ga';
-import {History} from 'react-router';
 import amountModifier from '../scripts/amount-modifier';
 import listener from '../scripts/listener.js';
 import form from '../scripts/form.js';
 
 module.exports = {
-  mixins: [History],
   contextTypes: {
-    intl: React.PropTypes.object
+    intl: React.PropTypes.object,
+    router: React.PropTypes.object.isRequired
   },
   propTypes: {
     currency: React.PropTypes.object,
@@ -140,7 +139,7 @@ module.exports = {
     }
     var page = '/' + this.context.intl.locale + '/' + location + '/';
     reactGA.pageview(page);
-    this.history.pushState(null, page + params);
+    this.context.router.push(page + params);
   },
   stripeError: function(error) {
     form.error("other", this.context.intl.formatMessage({id: 'try_again_later'}) + " [" + error + "]");
@@ -260,7 +259,7 @@ module.exports = {
     });
     var page = '/' + this.context.intl.locale + location;
     reactGA.pageview(page);
-    this.history.pushState(null, page);
+    this.context.router.push(page);
   },
   signupSuccess: function(result) {
     this.doSignupSuccess(result, '/share/');

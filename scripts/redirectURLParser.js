@@ -32,10 +32,11 @@ function redirectURLParser(location) {
   } else {
     pathname = "/" + validLang + "/";
   }
-
   if (redirectQuery) {
+    // Query is encoded as a string,
+    // so we don't parse it, and add it to the pathname
     pathname += decodeURIComponent(query.query || "");
-    query = {};
+    return {pathname};
   }
   return {pathname, query};
 }

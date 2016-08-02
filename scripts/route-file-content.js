@@ -1,6 +1,8 @@
+/*eslint-disable no-unused-vars*/
 import React from 'react';
+/*eslint-enable no-unused-vars*/
 import ReactDOMServer from 'react-dom/server';
-import { match, RoutingContext } from 'react-router';
+import { match, RouterContext } from 'react-router';
 import { IntlProvider } from 'react-intl';
 import routes from '../components/routes.jsx';
 import currencies from '../data/currencies.js';
@@ -11,9 +13,9 @@ var Path = require('path');
 var FS = require("q-io/fs");
 var englishStrings = locales["en-US"] || {};
 
-function routeFileContent(outputPath, callback) {
-  match({ routes, location: outputPath }, function(error, redirectLocation, renderProps) {
-    var locale = url.parse(outputPath).pathname.split('/')[1];
+function routeFileContent(location, callback) {
+  match({routes, location}, function(error, redirectLocation, renderProps) {
+    var locale = url.parse(location).pathname.split('/')[1];
 
     var currencyCode = localeCurrencyData[locale] || 'usd';
     var country = localeCountryData[locale] || 'US';
@@ -41,7 +43,7 @@ function routeFileContent(outputPath, callback) {
       values = Object.assign({}, {locale: 'en-US', messages: englishStrings}, values);
     }
     var desc = values.messages.i_donated_to_mozilla;
-    if (outputPath.indexOf('thunderbird') !== -1) {
+    if (location.indexOf('thunderbird') !== -1) {
       favicon = "/assets/images/thunderbird/favicon.ico";
       desc = values.messages.i_donated_to_thunderbird;
       twitterImage = "/assets/images/thunderbird/TorontoSummit2014m.12923cab901787ca8681718646196167.jpg";
@@ -58,25 +60,30 @@ function routeFileContent(outputPath, callback) {
       );
     }
 
-    var index = React.createFactory(require('../pages/index.jsx'));
-    FS.makeTree(Path.join(__dirname, '..', 'public', outputPath)).then(function() {
-      var contentOfTheFile = ReactDOMServer.renderToStaticMarkup(index({
-        localesInfo,
-        locale,
-        favicon,
-        metaData: {
-          current_url: outputPath,
-          desc: desc,
-          title: values.messages.support_mozilla,
-          site_name: 'mozilla.org',
-          site_url: url.resolve(process.env.APPLICATION_URI, siteUrl),
-          site_title: values.messages.give_to_mozilla,
-          facebook_image: process.env.APPLICATION_URI + facebookImage,
-          twitter_image: process.env.APPLICATION_URI + twitterImage
-        },
-        markup: ReactDOMServer.renderToString(<RoutingContext createElement={createElement} {...renderProps} />)
-      }));
-      var nameOfTheFile = Path.join(__dirname, '..', 'public', outputPath, 'index.html');
+    var Index = require('../pages/index.jsx');
+    FS.makeTree(Path.join(__dirname, '..', 'public', location)).then(function() {
+      var reactHTML = ReactDOMServer.renderToString(
+        <RouterContext createElement={createElement} {...renderProps}/>
+      );
+      var contentOfTheFile = ReactDOMServer.renderToStaticMarkup(
+        <Index
+          localesInfo={localesInfo}
+          locale={locale}
+          favicon={favicon}
+          metaData={{
+            current_url: location,
+            desc: desc,
+            title: values.messages.support_mozilla,
+            site_name: 'mozilla.org',
+            site_url: url.resolve(process.env.APPLICATION_URI, siteUrl),
+            site_title: values.messages.give_to_mozilla,
+            facebook_image: process.env.APPLICATION_URI + facebookImage,
+            twitter_image: process.env.APPLICATION_URI + twitterImage
+          }}
+          markup={reactHTML}
+        />
+      );
+      var nameOfTheFile = Path.join(__dirname, '..', 'public', location, 'index.html');
 
       FS.write(nameOfTheFile, contentOfTheFile).then(function() {
         callback(undefined, nameOfTheFile);

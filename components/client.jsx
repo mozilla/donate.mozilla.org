@@ -2,8 +2,7 @@
 import React from 'react';
 /*eslint-enable no-unused-vars*/
 import ReactDOM from 'react-dom';
-import { Router, Route } from 'react-router';
-import { createHistory } from 'history';
+import { Router, Route, browserHistory } from 'react-router';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import routes from './routes.jsx';
 import queryParser from '../scripts/queryParser.js';
@@ -27,13 +26,18 @@ function createElement(Component, props) {
 
 function onEnter(nextState, replaceState) {
   var result = redirectURLParser(nextState.location);
-  if (result.pathname) {
-    replaceState({}, result.pathname, result.query);
+  if (!result.pathname) {
+    return;
+  }
+  if (result.query) {
+    replaceState({pathname: result.pathname, query: result.query});
+  } else {
+    replaceState(result.pathname);
   }
 }
 
 ReactDOM.render(
-  <Router createElement={createElement} history={createHistory()}>
+  <Router createElement={createElement} history={browserHistory}>
     <Route onEnter={onEnter}>
       {routes}
     </Route>

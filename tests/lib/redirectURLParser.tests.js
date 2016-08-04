@@ -48,8 +48,7 @@ var tests = [
       }
     },
     result: {
-      pathname: '/de/',
-      query: {}
+      pathname: '/de/'
     }
   },
   {
@@ -60,8 +59,7 @@ var tests = [
       }
     },
     result: {
-      pathname: '/en-US/thank-you/',
-      query: {}
+      pathname: '/en-US/thank-you/'
     }
   },
   {
@@ -72,8 +70,7 @@ var tests = [
       }
     },
     result: {
-      pathname: '/en-US/thunderbird/about/',
-      query: {}
+      pathname: '/en-US/thunderbird/about/'
     }
   },
   {
@@ -85,8 +82,7 @@ var tests = [
       }
     },
     result: {
-      pathname: '/en-US/thunderbird/about/?x=y',
-      query: {}
+      pathname: '/en-US/thunderbird/about/?x=y'
     }
   },
   {
@@ -97,8 +93,7 @@ var tests = [
       }
     },
     result: {
-      pathname: '/de/',
-      query: {}
+      pathname: '/de/'
     }
   },
   {
@@ -109,8 +104,7 @@ var tests = [
       }
     },
     result: {
-      pathname: '/en-US/',
-      query: {}
+      pathname: '/en-US/'
     }
   },
   {
@@ -121,8 +115,7 @@ var tests = [
       }
     },
     result: {
-      pathname: '/en-US/',
-      query: {}
+      pathname: '/en-US/'
     }
   },
   {
@@ -133,8 +126,7 @@ var tests = [
       }
     },
     result: {
-      pathname: '/en-US/',
-      query: {}
+      pathname: '/en-US/'
     }
   },
   {
@@ -145,8 +137,7 @@ var tests = [
       }
     },
     result: {
-      pathname: '/en-US/thank-you/',
-      query: {}
+      pathname: '/en-US/thank-you/'
     }
   },
   {
@@ -158,8 +149,7 @@ var tests = [
       }
     },
     result: {
-      pathname: '/en-US/?currency=gbp&amount=10',
-      query: {}
+      pathname: '/en-US/?currency=gbp&amount=10'
     }
   },
   {
@@ -171,8 +161,7 @@ var tests = [
       }
     },
     result: {
-      pathname: '/en-US/thank-you/?email=test@email.com',
-      query: {}
+      pathname: '/en-US/thank-you/?email=test@email.com'
     }
   }
 ];

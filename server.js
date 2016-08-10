@@ -103,6 +103,7 @@ module.exports = function(options) {
         validate: {
           payload: {
             locale: Joi.string().min(2).max(12).required(),
+            newsletters: Joi.string().default('mozilla-foundation'),
             email: Joi.string().email().required(),
             country: Joi.string().allow('')
           }

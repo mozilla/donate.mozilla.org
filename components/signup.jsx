@@ -1,5 +1,6 @@
 import React from 'react';
 import Email from '../components/email-input.jsx';
+import Input from '../components/input.jsx';
 import {PrivacyPolicyCheckbox} from '../components/checkbox.jsx';
 import {Country} from '../components/address-input.jsx';
 import SubmitButton from '../components/submit-button.jsx';
@@ -21,6 +22,7 @@ var Signup = React.createClass({
           <div className="wrap">
             <div className="row">
               <Email name="email"/>
+              <Input type="hidden" name="newsletters" value="mozilla-foundation"/>
               <div className="full country-signup">
                 <Country name="country"/>
               </div>
@@ -41,7 +43,7 @@ var Signup = React.createClass({
                   submitting={this.state.submitting}
                   validate={["email", "privacyPolicy"]}
                   onSubmit={this.signup}
-                  submit={["email", "country"]}
+                  submit={["email", "country", "newsletters"]}
                   errors={["email", "country"]}
                 >
                   {this.context.intl.formatMessage({id: 'sign_up_now'})}

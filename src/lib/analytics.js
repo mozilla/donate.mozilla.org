@@ -67,14 +67,14 @@ module.exports = function() {
   }
 
   // 2 DP
-  function toTwoDP (i) {
+  function toTwoDP(i) {
     return Math.round(i * 100) / 100;
   }
 
   if (tx && amt && cc) {
 
-    var exchangeRate = 1;
-    var amtUSD = amt;
+    let exchangeRate = 1;
+    let amtUSD = amt;
 
     if (cc !== 'USD' && rates.rates[cc]) {
       exchangeRate = rates.rates[cc];
@@ -97,6 +97,8 @@ module.exports = function() {
 
 
     if (window.ga) {
+
+      let ga = window.ga;
 
       // We're using universal analytics ecommerce tracking
       // https://developers.google.com/analytics/devguides/collection/analyticsjs/ecommerce

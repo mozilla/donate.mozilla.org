@@ -61,7 +61,8 @@ function routeFileContent(location, callback) {
     }
 
     var Index = require('../pages/index.js');
-    FS.makeTree(Path.join(__dirname, '..', 'public', location)).then(function() {
+    var dirPath = Path.join(__dirname, '..', '..', 'public', location);
+    FS.makeTree(dirPath).then(function() {
       var reactHTML = ReactDOMServer.renderToString(
         <RouterContext createElement={createElement} {...renderProps}/>
       );
@@ -83,7 +84,7 @@ function routeFileContent(location, callback) {
           markup={reactHTML}
         />
       );
-      var nameOfTheFile = Path.join(__dirname, '..', 'public', location, 'index.html');
+      var nameOfTheFile = Path.join(dirPath, 'index.html');
 
       FS.write(nameOfTheFile, contentOfTheFile).then(function() {
         callback(undefined, nameOfTheFile);

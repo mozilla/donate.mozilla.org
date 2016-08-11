@@ -5,13 +5,13 @@ var ReactDOM = require('react-dom');
 var TestUtils = require('react/lib/ReactTestUtils');
 var should = require('should');
 var IntlStub = require('./IntlStub.jsx');
-var {FirstName, LastName} = require('../../components/name-input.jsx');
+var {FirstName, LastName} = require('../../dist/components/name-input.js');
 var items = [FirstName, LastName];
 
 describe('name-input.jsx {FirstName, LastName}', function() {
   var form;
   beforeEach(function() {
-    form = require('../../scripts/form.js');
+    form = require('../../dist/lib/form.js');
   });
   items.forEach(function(Item) {
     it('.validate() should return true when all fields are filled', function() {

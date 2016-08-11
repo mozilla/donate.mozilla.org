@@ -1,4 +1,4 @@
-var redirectURLParser = require('../../scripts/redirectURLParser.js');
+var redirectURLParser = require('../../dist/lib/redirectURLParser.js');
 var should = require('should');
 
 var tests = [

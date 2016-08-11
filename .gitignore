@@ -11,3 +11,4 @@ public/locales.json
 public/main.*.js
 public/style.*.css
 public/webpack-assets.json
+dist/

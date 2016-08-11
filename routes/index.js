@@ -3,7 +3,7 @@ var mailchimp = require('./mailchimp');
 var stripe = require('./stripe');
 var paypal = require('./paypal');
 var boom = require('boom');
-var amountModifier = require('../scripts/amount-modifier');
+var amountModifier = require('../dist/lib/amount-modifier.js');
 
 var routes = {
   'signup': function(request, reply) {

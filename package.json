@@ -107,7 +107,8 @@
     "karma-webpack": "1.7.0",
     "mocha": "2.3.4",
     "moment": "2.12.0",
-    "selenium-webdriver": "2.53.3",
+    "selenium-webdriver": "3.0.0-beta-2",
+    "geckodriver": "1.1.2",
     "should": "8.0.2"
   },
   "engines": {

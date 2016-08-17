@@ -4,12 +4,6 @@ module.exports = function(driver, By, done) {
   driver.findElement(By.css('.frequency-move-baseline .payment-cc-label')).click();
 
   driver.switchTo().frame(driver.findElement(By.css(".stripe_checkout_app")));
-  var windowHandle = driver.getWindowHandle();
-  driver.wait(function() {
-    return driver.switchTo().activeElement().getAttribute("id").then(function(id) {
-      return id === "email";
-    });
-  });
   driver.findElement(By.id('email')).sendKeys('send-donation@test.com');
   driver.findElement(By.id('billing-name')).sendKeys('a');
   driver.findElement(By.id('billing-street')).sendKeys('a');
@@ -24,7 +18,6 @@ module.exports = function(driver, By, done) {
   driver.findElement(By.id('cc-exp')).sendKeys('19');
   driver.findElement(By.id('cc-csc')).sendKeys('123');
   driver.findElement(By.id('submitButton')).click();
-  driver.switchTo().window(windowHandle);
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
       var result = true;
@@ -55,12 +48,6 @@ module.exports = function(driver, By, done) {
   driver.findElement(By.css('.frequency-move-baseline .submit-btn')).click();
 
   driver.switchTo().frame(driver.findElement(By.css(".stripe_checkout_app")));
-  windowHandle = driver.getWindowHandle();
-  driver.wait(function() {
-    return driver.switchTo().activeElement().getAttribute("id").then(function(id) {
-      return id === "email";
-    });
-  });
   driver.findElement(By.id('email')).sendKeys('send-donation@test.com');
   driver.findElement(By.id('billing-name')).sendKeys('a');
   driver.findElement(By.id('billing-street')).sendKeys('a');
@@ -75,7 +62,6 @@ module.exports = function(driver, By, done) {
   driver.findElement(By.id('cc-exp')).sendKeys('19');
   driver.findElement(By.id('cc-csc')).sendKeys('123');
   driver.findElement(By.id('submitButton')).click();
-  driver.switchTo().window(windowHandle);
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
       var result = true;

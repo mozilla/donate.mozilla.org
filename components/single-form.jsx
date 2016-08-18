@@ -38,8 +38,8 @@ module.exports = React.createClass({
       return (
         <span>
           <SectionHeading>
-            <h4>{this.context.intl.formatMessage({id: "choose_payment"})}</h4>
-            <p id="secure-label"><i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}</p>
+            <p id="secure-label" className="right"><i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}</p>
+            <h4 className="left">{this.context.intl.formatMessage({id: "choose_payment"})}</h4>
           </SectionHeading>
           <div className="row">
             {this.renderPrivacyPolicy()}

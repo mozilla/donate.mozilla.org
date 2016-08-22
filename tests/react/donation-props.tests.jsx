@@ -25,7 +25,7 @@ assign(Context.router, {
   render: function() {}
 });
 
-var DonationPage = require('../../pages/one-page.jsx');
+var DonationPage = require('../../dist/pages/one-page.js');
 
 describe('donation page query ?amount=100&currency=cad&presets=1,2,3,4&frequency=monthly donation test', function() {
   should.doesNotThrow(() => {

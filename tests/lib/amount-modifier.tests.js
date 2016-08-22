@@ -1,4 +1,4 @@
-var amountModifier = require("../../scripts/amount-modifier.js");
+var amountModifier = require("../../dist/lib/amount-modifier.js");
 
 describe("amount-modifier.js", function() {
   it("'10', 'stripe', 'usd' should return '1000'", function() {

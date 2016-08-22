@@ -5,8 +5,8 @@ var ReactDOM = require('react-dom');
 var TestUtils = require('react/lib/ReactTestUtils');
 var should = require('should');
 var IntlStub = require('./IntlStub.jsx');
-var CurrencyDropdown = require('../../components/currency-dropdown.jsx');
-var listener = require('../../scripts/listener.js');
+var CurrencyDropdown = require('../../dist/components/currency-dropdown.js');
+var listener = require('../../dist/lib/listener.js');
 
 describe('currency-dropdown.jsx', function() {
   it('stateUpdated should contain cad data when currency dropdown changes to cad', function() {

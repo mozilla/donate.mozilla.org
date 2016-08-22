@@ -5,8 +5,8 @@ var ReactDOM = require('react-dom');
 var TestUtils = require('react/lib/ReactTestUtils');
 var should = require('should');
 var IntlStub = require('./IntlStub.jsx');
-var AmountButtons = require('../../components/amount-buttons.jsx');
-var listener = require('../../scripts/listener.js');
+var AmountButtons = require('../../dist/components/amount-buttons.js');
+var listener = require('../../dist/lib/listener.js');
 
 import {addLocaleData} from 'react-intl';
 import ptBRLocaleData from 'react-intl/locale-data/pt';
@@ -15,7 +15,7 @@ addLocaleData(ptBRLocaleData);
 describe('amount-buttons.jsx', function() {
   var form;
   beforeEach(function() {
-    form = require('../../scripts/form.js');
+    form = require('../../dist/lib/form.js');
   });
   it('AmountButtons should select the right button after amount, frequency, currency, and presets are provided', function() {
     should.doesNotThrow(() => {

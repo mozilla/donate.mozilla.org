@@ -1,5 +1,5 @@
-var webpackConfig = require('./webpack.config.js');
 var path = require('path');
+require('babel-core/register');
 
 module.exports = function(config) {
   config.set({
@@ -20,7 +20,11 @@ module.exports = function(config) {
     webpack: {
       devtool: 'inline-source-map',
       module: {
-        loaders: webpackConfig.module.loaders,
+        loaders: [
+          { test: /\.json$/, loaders: ['json-loader'], exclude: ['node_modules'] },
+          { test: /\.js$/, loaders:  ['babel-loader'], exclude: ['node_modules'] },
+          { test: /\.jsx$/, loaders: ['babel-loader'], exclude: ['node_modules'] }
+        ],
         postLoaders: process.env.KARMA_ENV === 'coverage' ? [{
           test: /\.js$/,
           loader: 'istanbul-instrumenter',

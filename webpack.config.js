@@ -1,26 +1,23 @@
 require('habitat').load();
-require('babel-core/register');
 var webpack = require('webpack');
-var SimpleHtmlPrecompiler = require('./scripts/simple-html-plugin.js');
+var SimpleHtmlPrecompiler = require('./dist/lib/simple-html-plugin.js');
 var Path = require('path');
-var paths = require('./scripts/paths.js');
+var paths = require('./dist/lib/paths.js');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var AssetsPlugin = require('assets-webpack-plugin');
 
 module.exports = {
-  entry: ['./components/client.jsx','./less/index.less'],
+  entry: ['./dist/client.js','./less/index.less'],
   output: {
     filename: '[name].[hash].js',
     chunkFilename: '[id].chunk.js',
     path: Path.join('public')
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js']
   },
   module: {
     loaders: [
-      { test: /\.js$/, loaders:  ['babel-loader'], exclude: ['node_modules'] },
-      { test: /\.jsx$/, loaders: ['babel-loader'], exclude: ['node_modules'] },
       { test: /\.json$/, loaders: ['json-loader'], exclude: ['node_modules'] },
       { test: /\.less$/, loader: ExtractTextPlugin.extract(
                     'css?sourceMap!less?sourceMap'

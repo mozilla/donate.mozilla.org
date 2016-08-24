@@ -5,7 +5,7 @@
   "main": "start.js",
   "scripts": {
     "start": "npm-run-all --parallel build:l10njson watch:js server",
-    "build:l10njson": "node scripts/properties2json",
+    "build:l10njson": "pontoon-to-json --dest ./public",
     "build:exchangerates": "node scripts/exchangerates.js",
     "build:babel": "babel src --compact=true -s --out-dir dist",
     "build:webpack": "webpack --optimize-minimize --optimize-dedupe",
@@ -76,6 +76,7 @@
     "npm-run-all": "1.4.0",
     "object-assign": "4.1.0",
     "polyfill-service": "2.2.0",
+    "pontoon-to-json": "1.0.1",
     "properties-parser": "0.3.1",
     "q-io": "1.13.2",
     "react": "15.2.1",

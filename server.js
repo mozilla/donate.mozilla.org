@@ -9,7 +9,6 @@ if (process.env.NEW_RELIC_ENABLED === 'true') {
   newrelic = {};
 }
 
-var Boom = require('boom');
 var Path = require('path');
 var Hapi = require('hapi');
 var Hoek = require('hoek');
@@ -27,6 +26,7 @@ var goodConfig = {
   reporter: require('good-console-logfmt')
 };
 var currencyFor = require('./lib/currency-for.js');
+var reactRouted = require('./dist/lib/react-server-route.js');
 
 if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
   goodConfig.events = {
@@ -308,27 +308,6 @@ module.exports = function(options) {
     }
   ]);
 
-  var nonASCIICharacters = /[^\x00-\x7F]/g;
-
-  // This will catch all 404s and redirect them to root URL
-  // with preserving the pathname for client-side to handle.
-  server.ext('onPreResponse', function(request, reply) {
-    var redirect = "";
-    if (request.response.output && request.response.output.statusCode === 404) {
-      if (nonASCIICharacters.test(request.path)) {
-        return reply(
-          new Boom.badRequest('Location cannot contain or convert into non-ascii characters', { path: request.path })
-        );
-      }
-      redirect = '/?redirect=' + encodeURIComponent(request.url.pathname);
-      if (request.url.search) {
-        redirect += "&query=" + encodeURIComponent(request.url.search);
-      }
-      return reply.redirect(redirect);
-    }
-    return reply.continue();
-  });
-
   server.register([
     {
       register: require('inert')
@@ -370,11 +349,7 @@ module.exports = function(options) {
     server.route([{
       method: 'GET',
       path: '/{params*}',
-      handler: {
-        directory: {
-          path: Path.join(__dirname, 'public')
-        }
-      },
+      handler: reactRouted,
       config: {
         cache: {
           expiresIn: 1000 * 60 * 5,

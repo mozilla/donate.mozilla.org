@@ -30,7 +30,7 @@ module.exports = React.createClass({
             country={this.props.country}
           />
         </div>
-        <SmallPrint stripeNotice={true} />
+        <SmallPrint/>
         <MozillaFooter/>
       </div>
     );

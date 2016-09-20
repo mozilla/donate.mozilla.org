@@ -23,7 +23,7 @@ module.exports = React.createClass({
           frequency={this.props.frequency}
           country={this.props.country}
         />
-        <SmallPrint stripeNotice={true}/>
+        <SmallPrint/>
         <MozillaFooter/>
       </div>
     );

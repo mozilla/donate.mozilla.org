@@ -15,6 +15,7 @@ var HTML = require('../pages/index.js');
 
 function routeFileContent(request, reply) {
   var location = url.parse(request.url).pathname;
+  location = encodeURI(location);
   var search = url.parse(request.url).search || "";
   var parsedLocation = locationParser(request.headers["accept-language"], location);
   var parsedRedirect = parsedLocation.redirect;

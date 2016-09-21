@@ -29,7 +29,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="header">
-        <img src="/assets/images/thunderbird/thunderbird-logo-wordmark.png" width="280" className="tb-logo" />
+        <img src="/assets/images/thunderbird/thunderbird-logo-wordmark.png" width="280" className="tb-logo auto-margin" />
         {this.renderMessage()}
       </div>
     );

@@ -5,39 +5,51 @@ describe('redirects', () => {
   var redirects = [
     {
       url: "/not-here/",
-      location: "/?redirect=" + encodeURIComponent("/not-here/")
+      location: "/en-US/not-here/"
     },
     {
       url: "/en-US/not-here/",
-      location: "/?redirect=" + encodeURIComponent("/en-US/not-here/")
+      location: "/en-US/"
     },
     {
       url: "/en-UR/not-here/",
-      location: "/?redirect=" + encodeURIComponent("/en-UR/not-here/")
+      location: "/en-US/en-UR/not-here/"
+    },
+    {
+      url: "/en-US/en-UR/not-here/",
+      location: "/en-US/"
     },
     {
       url: "/not-here/?key=value",
-      location: "/?redirect=" + encodeURIComponent("/not-here/") + "&query=" + encodeURIComponent("?key=value")
+      location: "/en-US/not-here/?key=value"
     },
     {
       url: "/en-US/not-here/?key=value",
-      location: "/?redirect=" + encodeURIComponent("/en-US/not-here/") + "&query=" + encodeURIComponent("?key=value")
+      location: "/en-US/?key=value"
     },
     {
       url: "/en-UR/not-here/?key=value",
-      location: "/?redirect=" + encodeURIComponent("/en-UR/not-here/") + "&query=" + encodeURIComponent("?key=value")
+      location: "/en-US/en-UR/not-here/?key=value"
+    },
+    {
+      url: "/en-US/en-UR/not-here/?key=value",
+      location: "/en-US/?key=value"
     },
     {
       url: "/not-here/?key=value&key2=value2",
-      location: "/?redirect=" + encodeURIComponent("/not-here/") + "&query=" + encodeURIComponent("?key=value&key2=value2")
+      location: "/en-US/not-here/?key=value&key2=value2"
     },
     {
       url: "/en-US/not-here/?key=value&key2=value2",
-      location: "/?redirect=" + encodeURIComponent("/en-US/not-here/") + "&query=" + encodeURIComponent("?key=value&key2=value2")
+      location: "/en-US/?key=value&key2=value2"
     },
     {
       url: "/en-UR/not-here/?key=value&key2=value2",
-      location: "/?redirect=" + encodeURIComponent("/en-UR/not-here/") + "&query=" + encodeURIComponent("?key=value&key2=value2")
+      location: "/en-US/en-UR/not-here/?key=value&key2=value2"
+    },
+    {
+      url: "/en-US/en-UR/not-here/?key=value&key2=value2",
+      location: "/en-US/?key=value&key2=value2"
     }
   ];
 

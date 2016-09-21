@@ -1,8 +1,6 @@
 require('habitat').load();
 var webpack = require('webpack');
-var SimpleHtmlPrecompiler = require('./dist/lib/simple-html-plugin.js');
 var Path = require('path');
-var paths = require('./dist/lib/paths.js');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var AssetsPlugin = require('assets-webpack-plugin');
 
@@ -51,7 +49,6 @@ module.exports = {
     }),
     new ExtractTextPlugin("style.[hash].css", {
       allChunks: true
-    }),
-    new SimpleHtmlPrecompiler(paths)
+    })
   ]
 };

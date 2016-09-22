@@ -1,10 +1,7 @@
 /*eslint-disable no-unused-vars*/
 import React from 'react';
 /*eslint-enable no-unused-vars*/
-import { renderToStaticMarkup, renderToString } from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
-import { IntlProvider } from 'react-intl';
-import routes from '../routes.js';
+
 import currencies from '../data/currencies.js';
 import {localeCurrencyData, localeCountryData} from '../data/locale-data.js';
 import url from 'url';
@@ -14,6 +11,15 @@ var locationParser = require('./location-parser.js')(langmap);
 var HTML = require('../pages/index.js');
 
 function routeFileContent(request, reply) {
+  var reactDOM = require("react-dom/server");
+  var renderToString = reactDOM.renderToString;
+  var renderToStaticMarkup = reactDOM.renderToStaticMarkup;
+  var routes = require('../routes.js');
+  var reactRouter = require('react-router');
+  var match = reactRouter.match;
+  var RouterContext = reactRouter.RouterContext;
+  var IntlProvider = require('react-intl').IntlProvider;
+
   var location = url.parse(request.url).pathname;
   location = encodeURI(location);
   var search = url.parse(request.url).search || "";

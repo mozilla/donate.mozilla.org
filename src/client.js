@@ -3,11 +3,12 @@ import React from 'react';
 /*eslint-enable no-unused-vars*/
 import ReactDOM from 'react-dom';
 import { Router, browserHistory } from 'react-router';
-import { IntlProvider, addLocaleData } from 'react-intl';
+import { addLocaleData } from 'react-intl';
 import routes from './routes.js';
 import queryParser from './lib/queryParser.js';
 import locales from '../public/locales.json';
 import assign from 'object-assign';
+import CreateElement from './components/create-element.js';
 
 function createElement(Component, props) {
   var locale = window.location.pathname.split("/")[1];
@@ -20,9 +21,9 @@ function createElement(Component, props) {
   });
 
   return (
-    <IntlProvider locale={locale} messages={messages}>
+    <CreateElement locale={locale} messages={messages}>
       <Component {...props} {...values} />
-    </IntlProvider>
+    </CreateElement>
   );
 }
 

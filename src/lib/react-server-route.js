@@ -18,7 +18,7 @@ function routeFileContent(request, reply) {
   var reactRouter = require('react-router');
   var match = reactRouter.match;
   var RouterContext = reactRouter.RouterContext;
-  var IntlProvider = require('react-intl').IntlProvider;
+  var CreateElement = require('../components/create-element.js');
 
   var location = url.parse(request.url).pathname;
   location = encodeURI(location);
@@ -55,9 +55,9 @@ function routeFileContent(request, reply) {
     function createElement(Component, props) {
       // make sure you pass all the props in!
       return (
-        <IntlProvider locale={locale} messages={messages}>
+        <CreateElement locale={locale} messages={messages}>
           <Component {...props} {...values} />
-        </IntlProvider>
+        </CreateElement>
       );
     }
 

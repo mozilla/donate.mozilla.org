@@ -10,7 +10,7 @@ import SubmitButton from './submit-button.js';
 import DonateButton from './donate-button.js';
 import {FormattedHTMLMessage} from 'react-intl';
 
-module.exports = React.createClass({
+var singleForm = React.createClass({
   mixins: [require('../mixins/form.js')],
   contextTypes: {
     intl: React.PropTypes.object
@@ -142,3 +142,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = singleForm;

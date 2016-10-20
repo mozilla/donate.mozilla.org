@@ -4,7 +4,7 @@ import Header from '../components/header.js';
 import SmallPrint from '../components/small-print.js';
 import SingleForm from '../components/single-form.js';
 
-module.exports = React.createClass({
+var onePage = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
@@ -29,3 +29,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = onePage;

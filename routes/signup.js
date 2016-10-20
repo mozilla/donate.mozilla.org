@@ -1,7 +1,7 @@
 var hatchet = require('hatchet');
 var url = process.env.SIGNUP;
 
-module.exports = function(transaction, callback) {
+var signupRoutes = function(transaction, callback) {
   var payload = {
     format: 'html',
     lang: transaction.locale,
@@ -20,3 +20,5 @@ module.exports = function(transaction, callback) {
     callback(hatchet_error, payload);
   });
 };
+
+module.exports = signupRoutes;

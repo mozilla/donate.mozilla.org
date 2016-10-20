@@ -3,7 +3,7 @@ var mailchimpApiKey = process.env.MAILCHIMP_API_KEY;
 var mailchimpListId = process.env.MAILCHIMP_LIST_ID;
 var mailchimpAccountName = process.env.MAILCHIMP_ACCOUNT_NAME;
 
-module.exports = function(transaction, callback) {
+var mailChimp = function(transaction, callback) {
   callback = callback || function() {};
   if (!mailchimpApiKey) {
     console.warn("missing mailchimp API key");
@@ -31,3 +31,5 @@ module.exports = function(transaction, callback) {
     })
   }, callback);
 };
+
+module.exports = mailChimp;

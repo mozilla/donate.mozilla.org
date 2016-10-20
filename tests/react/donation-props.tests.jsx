@@ -4,33 +4,13 @@ import React from 'react';
 var ReactDOM = require('react-dom');
 var TestUtils = require('react/lib/ReactTestUtils');
 var should = require('should');
-var IntlStub = require('./IntlStub.jsx');
-var assign = require('object-assign');
-var Context = {
-  messages: require('../../public/locales.json')["en-US"],
-  router: function() {}
-};
-assign(Context.router, {
-  makeHref: function() {},
-  makePath: function() {},
-  transitionTo: function() {},
-  replaceWith: function() {},
-  goBack: function() {},
-  getCurrentPath: function() {},
-  getCurrentRoutes: function() {},
-  getCurrentPathname: function() {},
-  getCurrentParams: function() {},
-  getCurrentQuery: function() {},
-  isActive: function() {},
-  render: function() {}
-});
-
+var ContextStub = require('./ContextStub.jsx');
 var DonationPage = require('../../dist/pages/one-page.js');
 
 describe('donation page query ?amount=100&currency=cad&presets=1,2,3,4&frequency=monthly donation test', function() {
   should.doesNotThrow(() => {
     var Document = TestUtils.renderIntoDocument(
-      <IntlStub>
+      <ContextStub>
         <DonationPage
           amount="100"  
           presets={["1", "2", "3", "4"]}
@@ -45,7 +25,7 @@ describe('donation page query ?amount=100&currency=cad&presets=1,2,3,4&frequency
             }
           }}
         />
-      </IntlStub>
+      </ContextStub>
     );
     
     var testElement = ReactDOM.findDOMNode(Document);

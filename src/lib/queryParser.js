@@ -34,11 +34,15 @@ module.exports = function(queryString, locale) {
   }
 
   return {
-    test: test,
-    currency: currency,
-    presets: presets,
-    amount: amount,
-    frequency: frequency,
-    email: queryString.email || ""
+    values: {
+      test: test,
+      email: queryString.email || ""
+    },
+    initialState: {
+      currency: currency,
+      presets: presets,
+      amount: amount,
+      frequency: frequency
+    }
   };
 };

@@ -23,11 +23,6 @@ module.exports = React.createClass({
           </div>
           <SingleForm
             appName="glassroomnyc"
-            currency={this.props.currency}
-            presets={this.props.presets}
-            amount={this.props.amount}
-            frequency={this.props.frequency}
-            country={this.props.country}
           />
         </div>
         <SmallPrint/>

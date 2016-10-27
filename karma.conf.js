@@ -19,6 +19,13 @@ function karmaConfig(config) {
     },
     webpack: {
       devtool: 'inline-source-map',
+      externals: {
+        'jsdom': 'window',
+        'cheerio': 'window',
+        'react/lib/ExecutionEnvironment': true,
+        'react/addons': true,
+        'react/lib/ReactContext': 'window'
+      },
       module: {
         loaders: [
           { test: /\.json$/, loaders: ['json-loader'], exclude: ['node_modules'] },

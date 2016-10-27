@@ -33,7 +33,6 @@ $> npm start
 - [Support](docs/Support.md)
 - [Metrics & A/B Testing](docs/Metrics.md)
 - [Client and Server](docs/Client_Server.md)
-- [Donation Components](docs/Donation_Components.md)
 - [Query Strings](docs/Query_Strings.md)
 - [Localization](docs/Localization.md)
 - [Tests](docs/Tests.md)

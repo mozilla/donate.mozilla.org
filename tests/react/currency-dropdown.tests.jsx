@@ -1,107 +1,39 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 /* eslint-disable no-unused-vars */
-var ReactDOM = require('react-dom');
-var TestUtils = require('react/lib/ReactTestUtils');
+
+import { mount } from 'enzyme';
 var should = require('should');
-var IntlStub = require('./IntlStub.jsx');
+var ContextStub = require('./context-stub.jsx');
+var createTestStore = require('./test-store.js');
 var CurrencyDropdown = require('../../dist/components/currency-dropdown.js');
-var listener = require('../../dist/lib/listener.js');
 
 describe('currency-dropdown.jsx', function() {
-  it('stateUpdated should contain cad data when currency dropdown changes to cad', function() {
-    should.doesNotThrow(() => {
-      var Document = TestUtils.renderIntoDocument(<IntlStub><CurrencyDropdown/></IntlStub>);
 
-      function onStateUpdated(e) {
-        listener.off('stateUpdated', onStateUpdated);
-        should(e.detail.value.code).equal('cad');
-      }
-      listener.on('stateUpdated', onStateUpdated);
+  function testCurrency(value, expects) {
+    it('currency code should contain ' + expects + ' when currency dropdown changes to ' + value, function() {
+      should.doesNotThrow(() => {
 
-      var testElement = ReactDOM.findDOMNode(Document);
-      testElement.value = "cad";
-      TestUtils.Simulate.change(testElement);
+        var store = createTestStore();
+
+        var wrapper = mount(
+          <ContextStub store={store}>
+            <CurrencyDropdown/>
+          </ContextStub>
+        );
+
+        var currencyDropdown = wrapper.find(".currency-dropdown");
+        currencyDropdown.get(0).value = value;
+        currencyDropdown.simulate("change");
+
+        should(store.getState().donateForm.currency.code).equal(expects);
+      });
     });
-  });
+  }
 
-  it('stateUpdated should contain brl data when currency dropdown changes to brl', function() {
-    should.doesNotThrow(() => {
-      var Document = TestUtils.renderIntoDocument(<IntlStub><CurrencyDropdown/></IntlStub>);
-
-      function onStateUpdated(e) {
-        listener.off('stateUpdated', onStateUpdated);
-        should(e.detail.value.code).equal('brl');
-      }
-      listener.on('stateUpdated', onStateUpdated);
-
-      var testElement = ReactDOM.findDOMNode(Document);
-      testElement.value = "brl";
-      TestUtils.Simulate.change(testElement);
-    });
-  });
-
-  it('stateUpdated should contain usd data when currency dropdown changes to usd', function() {
-    should.doesNotThrow(() => {
-      var Document = TestUtils.renderIntoDocument(<IntlStub><CurrencyDropdown/></IntlStub>);
-
-      function onStateUpdated(e) {
-        listener.off('stateUpdated', onStateUpdated);
-        should(e.detail.value.code).equal('usd');
-      }
-      listener.on('stateUpdated', onStateUpdated);
-
-      var testElement = ReactDOM.findDOMNode(Document);
-      testElement.value = "usd";
-      TestUtils.Simulate.change(testElement);
-    });
-  });
-
-  it('stateUpdated should contain eur data when currency dropdown changes to eur', function() {
-    should.doesNotThrow(() => {
-      var Document = TestUtils.renderIntoDocument(<IntlStub><CurrencyDropdown/></IntlStub>);
-
-      function onStateUpdated(e) {
-        listener.off('stateUpdated', onStateUpdated);
-        should(e.detail.value.code).equal('eur');
-      }
-      listener.on('stateUpdated', onStateUpdated);
-
-      var testElement = ReactDOM.findDOMNode(Document);
-      testElement.value = "eur";
-      TestUtils.Simulate.change(testElement);
-    });
-  });
-
-  it('stateUpdated should default to usd data when currency dropdown changes to empty string', function() {
-    should.doesNotThrow(() => {
-      var Document = TestUtils.renderIntoDocument(<IntlStub><CurrencyDropdown/></IntlStub>);
-
-      function onStateUpdated(e) {
-        listener.off('stateUpdated', onStateUpdated);
-        should(e.detail.value.code).equal('usd');
-      }
-      listener.on('stateUpdated', onStateUpdated);
-
-      var testElement = ReactDOM.findDOMNode(Document);
-      testElement.value = "";
-      TestUtils.Simulate.change(testElement);
-    });
-  });
-
-  it('stateUpdated should default to usd data when currency dropdown changes to nonsense', function() {
-    should.doesNotThrow(() => {
-      var Document = TestUtils.renderIntoDocument(<IntlStub><CurrencyDropdown/></IntlStub>);
-
-      function onStateUpdated(e) {
-        listener.off('stateUpdated', onStateUpdated);
-        should(e.detail.value.code).equal('usd');
-      }
-      listener.on('stateUpdated', onStateUpdated);
-
-      var testElement = ReactDOM.findDOMNode(Document);
-      testElement.value = "nonsense";
-      TestUtils.Simulate.change(testElement);
-    });
-  });
+  testCurrency("cad", "cad");
+  testCurrency("brl", "brl");
+  testCurrency("eur", "eur");
+  testCurrency("", "usd");
+  testCurrency("nonsense", "usd");
 });

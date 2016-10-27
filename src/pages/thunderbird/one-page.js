@@ -15,11 +15,6 @@ module.exports = React.createClass({
         <Header alt={this.context.intl.formatMessage({id: 'donate_to_thunderbird'})}></Header>
         <SingleForm
           appName="thunderbird"
-          currency={this.props.currency}
-          presets={this.props.presets}
-          amount={this.props.amount}
-          frequency={this.props.frequency}
-          country={this.props.country}
         />
         <SmallPrint/>
         <ThunderbirdFooter/>

@@ -16,13 +16,7 @@ var onePage = React.createClass({
     return (
       <div className={className}>
         <Header alt={this.context.intl.formatMessage({id: 'donate_to_mozilla'})}></Header>
-        <SingleForm
-          currency={this.props.currency}
-          presets={this.props.presets}
-          amount={this.props.amount}
-          frequency={this.props.frequency}
-          country={this.props.country}
-        />
+        <SingleForm/>
         <SmallPrint/>
         <MozillaFooter/>
       </div>

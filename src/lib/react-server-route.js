@@ -5,7 +5,6 @@ import React from 'react';
 import currencies from '../data/currencies.js';
 import {localeCurrencyData, localeCountryData} from '../data/locale-data.js';
 import url from 'url';
-import locales from '../../public/locales.json';
 var langmap = require("langmap");
 var locationParser = require('./location-parser.js')(langmap);
 var HTML = require('../pages/index.js');
@@ -18,6 +17,7 @@ function routeFileContent(request, reply) {
   var reactRouter = require('react-router');
   var match = reactRouter.match;
   var RouterContext = reactRouter.RouterContext;
+  var getMessages = require('./get-messages.js');
   var CreateElement = require('../components/create-element.js');
 
   var location = url.parse(request.url).pathname;
@@ -28,7 +28,7 @@ function routeFileContent(request, reply) {
   var locale = parsedLocation.locale;
 
   function generateHTML(renderProps) {
-    var messages = Object.assign({}, locales["en-US"], locales[locale]);
+    var messages = getMessages(locale);
     var currencyCode = localeCurrencyData[locale] || 'usd';
     var country = localeCountryData[locale] || 'US';
     var favicon = "/assets/images/favicon.8af3a74ede48e250ceb935c026242483.ico";

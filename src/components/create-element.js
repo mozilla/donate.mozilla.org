@@ -1,7 +1,7 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 
-module.exports = React.createClass({
+var createElement = React.createClass({
   propTypes: {
     locale: React.PropTypes.string.isRequired,
     messages: React.PropTypes.object.isRequired
@@ -14,3 +14,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = createElement;

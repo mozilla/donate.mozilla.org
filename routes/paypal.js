@@ -134,7 +134,7 @@ function doExpressCheckoutPayment(checkoutDetails, recurring, callback) {
   });
 }
 
-module.exports = {
+var paypalRoutes = {
   setupSingle: function(transaction, callback) {
     setupPaypal(transaction, false, callback);
   },
@@ -154,3 +154,5 @@ module.exports = {
     doExpressCheckoutPayment(checkoutDetails, true, callback);
   }
 };
+
+module.exports = paypalRoutes;

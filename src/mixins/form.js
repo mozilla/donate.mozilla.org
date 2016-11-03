@@ -4,7 +4,7 @@ import amountModifier from '../lib/amount-modifier';
 import listener from '../lib/listener.js';
 import form from '../lib/form.js';
 
-module.exports = {
+var formMixin = {
   contextTypes: {
     intl: React.PropTypes.object,
     router: React.PropTypes.object.isRequired
@@ -291,3 +291,5 @@ module.exports = {
     this.doSignup("/api/signup/mailchimp", validate, props, this.thundebirdSignupSuccess, this.signupError);
   }
 };
+
+module.exports = formMixin;

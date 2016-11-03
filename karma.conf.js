@@ -1,7 +1,7 @@
 var path = require('path');
 require('babel-core/register');
 
-module.exports = function(config) {
+function karmaConfig(config) {
   config.set({
     browsers: ['Firefox'],
     singleRun: true,
@@ -36,4 +36,6 @@ module.exports = function(config) {
       noInfo: true
     }
   });
-};
+}
+
+module.exports = karmaConfig;

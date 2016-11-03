@@ -1,4 +1,4 @@
-module.exports = {
+var intlConfig = {
   "dest": "public",
   "src": "locales",
   "paypalLocales": {
@@ -9,3 +9,5 @@ module.exports = {
     "id": "id_ID"
   }
 };
+
+module.exports = intlConfig;

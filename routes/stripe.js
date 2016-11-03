@@ -7,7 +7,7 @@ var stripeKeys = {
 var stripe = require('stripe')(stripeKeys.secretKey);
 stripe.setTimeout(25000);
 
-module.exports = {
+var stripeRoutes = {
   customer: function(transaction, callback) {
     var startCreateCustomer = Date.now();
     stripe.customers.create({
@@ -86,3 +86,5 @@ module.exports = {
     stripe.customers.retrieveSubscription(customerId, subscriptionId, callback);
   }
 };
+
+module.exports = stripeRoutes;

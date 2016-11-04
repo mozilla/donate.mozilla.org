@@ -251,21 +251,16 @@ var routes = {
     var transaction = request.payload || {};
     var frequency = transaction.frequency || "";
     var currency = transaction.currency;
-    var appName = transaction.appName;
     var amount = amountModifier.paypal(transaction.amount, currency);
-    var returnUrl = request.server.info.uri + '/api/paypal-redirect/' + frequency + '/' + transaction.locale + '/';
-    if (appName === "thunderbird") {
-      returnUrl += "thunderbird/";
-    } else {
-      returnUrl += "mozillafoundation/";
-    }
+
     var details = {
       amount: amount,
       currency: currency,
       locale: transaction.locale,
       item_name: transaction.description,
-      cancelUrl: request.server.info.uri + '/',
-      returnUrl: returnUrl
+      serverUri: request.server.info.uri,
+      frequency: frequency,
+      appName: transaction.appName
     };
     var request_id = request.headers['x-request-id'];
     function callback(err, data) {
@@ -294,11 +289,7 @@ var routes = {
         }).code(200);
       }
     }
-    if (frequency !== 'monthly') {
-      paypal.setupSingle(details, callback);
-    } else {
-      paypal.setupRecurring(details, callback);
-    }
+    paypal.setupCheckout(details, callback);
   },
   'paypal-redirect': function(request, reply) {
     var locale = request.params.locale || '';
@@ -311,11 +302,15 @@ var routes = {
       location = "thunderbird/" + location;
     }
     var frequency = request.params.frequency || 'single';
+    var options = {
+      recurring: frequency === 'monthly',
+      accountType: request.params.accountType
+    };
     var request_id = request.headers['x-request-id'];
     if (frequency !== 'monthly') {
-      paypal.getSingleCheckoutDetails({
+      paypal.getCheckoutDetails({
         token: request.url.query.token
-      }, function(err, checkoutDetails) {
+      }, options, function(err, checkoutDetails) {
         var paypal_checkout_details_service = checkoutDetails.paypal_checkout_details_service;
         if (err) {
           request.log(['error', 'paypal', 'checkout-details', frequency], {
@@ -334,7 +329,7 @@ var routes = {
           paypal_checkout_details_service
         });
 
-        paypal.completeSingleCheckout(checkoutDetails.response, function(err, data) {
+        paypal.completeCheckout(checkoutDetails.response, options, function(err, data) {
           var paypal_checkout_payment_service = data.paypal_checkout_payment_service;
           var log_details = {
             request_id,
@@ -359,9 +354,9 @@ var routes = {
         });
       });
     } else {
-      paypal.getRecurringCheckoutDetails({
+      paypal.getCheckoutDetails({
         token: request.url.query.token
-      }, function(err, checkoutDetails) {
+      }, options, function(err, checkoutDetails) {
         var paypal_checkout_details_service = checkoutDetails.paypal_checkout_details_service;
         var log_details = {
           request_id,
@@ -383,7 +378,7 @@ var routes = {
 
         request.log(['paypal', 'checkout-details', frequency], log_details);
 
-        paypal.completeRecurringCheckout(checkoutDetails.response, function(err, data) {
+        paypal.completeCheckout(checkoutDetails.response, options, function(err, data) {
           var paypal_checkout_payment_service = data.paypal_checkout_payment_service;
           var log_details = {
             request_id,

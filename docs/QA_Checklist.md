@@ -7,7 +7,7 @@ If you are using the PayPal or Stripe sandbox accounts in [sample.env](../sample
 ### Paypal accounts
 
 - Email - **send-donation@test.com**
-- Password - **testtest**
+- Password - **TestTest1.**
 
 ### Stripe credit cards
 

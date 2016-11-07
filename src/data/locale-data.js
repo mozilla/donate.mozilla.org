@@ -1,5 +1,6 @@
 module.exports = {
   localeCurrencyData: {
+    'cs': 'czk',
     'de': 'eur',
     'pt-BR': 'brl',
     'fr': 'eur',
@@ -21,10 +22,12 @@ module.exports = {
     'gu-IN': 'inr',
     'en-IN': 'inr',
     'id': 'idr',
+    'ru': 'rub',
     'zh-CN': 'cny',
     'zh-TW': 'twd'
   },
   localeCountryData: {
+    'cs': 'CS',
     'de': 'DE',
     'pt-BR': 'BR',
     'fr': 'FR',
@@ -46,6 +49,7 @@ module.exports = {
     'gu-IN': 'IN',
     'en-IN': 'IN',
     'id': 'ID',
+    'ru': 'RU',
     'zh-CN': 'CN',
     'zh-TW': 'TW'
   }

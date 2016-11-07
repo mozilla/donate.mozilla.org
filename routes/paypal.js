@@ -7,7 +7,13 @@ var httpRequest = request.defaults({
   timeout: 25000
 });
 
-function setupPaypal(transaction, recurring, callback) {
+function setupPaypal(transaction, callback) {
+  var frequency = transaction.frequency;
+  var locale = transaction.locale;
+  var appName = transaction.appName;
+
+  var returnUrl = transaction.serverUri + '/api/paypal-redirect/' + frequency + '/' + locale + '/' + appName + '/';
+
   var charge = {
     USER: process.env.PAYPAL_USER,
     PWD: process.env.PAYPAL_PWD,
@@ -18,13 +24,13 @@ function setupPaypal(transaction, recurring, callback) {
     PAYMENTREQUEST_0_AMT: transaction.amount,
     PAYMENTREQUEST_0_DESC: transaction.item_name,
     PAYMENTREQUEST_0_CURRENCYCODE: transaction.currency.toUpperCase(),
-    LOCALECODE: paypalLocales[transaction.locale],
+    LOCALECODE: paypalLocales[locale],
     NOSHIPPING: '1',
     ALLOWNOTE: '0',
-    cancelUrl: transaction.cancelUrl,
-    returnUrl: transaction.returnUrl
+    cancelUrl: transaction.serverUri + '/',
+    returnUrl: returnUrl
   };
-  if (recurring) {
+  if (frequency === "monthly") {
     charge.PAYMENTREQUEST_0_DESC = transaction.item_name;
     charge.L_BILLINGAGREEMENTDESCRIPTION0 = transaction.item_name;
     charge.L_BILLINGTYPE0 = 'RecurringPayments';
@@ -50,7 +56,7 @@ function setupPaypal(transaction, recurring, callback) {
   });
 }
 
-function getCheckoutDetails(transaction, recurring, callback) {
+function getCheckoutDetails(transaction, options, callback) {
   var paypalCheckoutDetailsStart = Date.now();
   httpRequest({
     url: process.env.PAYPAL_API_ENDPOINT,
@@ -73,8 +79,9 @@ function getCheckoutDetails(transaction, recurring, callback) {
   });
 }
 
-function doExpressCheckoutPayment(checkoutDetails, recurring, callback) {
+function doExpressCheckoutPayment(checkoutDetails, options, callback) {
   var paypalCheckoutPaymentStart = Date.now();
+  var recurring = options.recurring;
   var details = {
     USER: process.env.PAYPAL_USER,
     PWD: process.env.PAYPAL_PWD,
@@ -135,23 +142,14 @@ function doExpressCheckoutPayment(checkoutDetails, recurring, callback) {
 }
 
 var paypalRoutes = {
-  setupSingle: function(transaction, callback) {
-    setupPaypal(transaction, false, callback);
+  setupCheckout: function(transaction, callback) {
+    setupPaypal(transaction, callback);
   },
-  setupRecurring: function(transaction, callback) {
-    setupPaypal(transaction, true, callback);
+  getCheckoutDetails: function(transaction, options, callback) {
+    getCheckoutDetails(transaction, options, callback);
   },
-  getSingleCheckoutDetails: function(transaction, callback) {
-    getCheckoutDetails(transaction, false, callback);
-  },
-  getRecurringCheckoutDetails: function(transaction, callback) {
-    getCheckoutDetails(transaction, true, callback);
-  },
-  completeSingleCheckout: function(checkoutDetails, callback) {
-    doExpressCheckoutPayment(checkoutDetails, false, callback);
-  },
-  completeRecurringCheckout: function(checkoutDetails, callback) {
-    doExpressCheckoutPayment(checkoutDetails, true, callback);
+  completeCheckout: function(checkoutDetails, options, callback) {
+    doExpressCheckoutPayment(checkoutDetails, options, callback);
   }
 };
 

@@ -2,16 +2,16 @@
 
 
 ;The Mozilla Fundraising Team has received your help request. Someone will try to respond to you within 72 hours.
-The Mozilla Fundraising Team has received your help request. Someone will try to respond to you within 72 hours.
+Il team della Raccolta fondi Mozilla ha ricevuto la tua richiesta di assistenza. Faremo il possibile per risponderti entro 72 ore.
 
 
 ;To follow up on your request, please reply to this email and reference Case ID {{Case id#}}.
-To follow up on your request, please reply to this email and reference Case ID {{Case id#}}.
+Rispondi a questa email facendo riferimento all'ID assegnato alla tua segnalazione: {{Case id#}}
 
 
 ;- The Mozilla Fundraising Team
-- The Mozilla Fundraising Team
+- The Mozilla Fundraising Team {ok}
 
 
 ;P.S. Please check out our <a href="https://wiki.mozilla.org/Donate">Donation FAQ</a> in case your question has already been answered there!
-P.S. Please check out our <a href="https://wiki.mozilla.org/Donate">Donation FAQ</a> in case your question has already been answered there!
+P.S. Verifica che la risposta alla tua domanda non si trovi già nelle <a href="https://wiki.mozilla.org/Donate"> FAQ sulle donazioni</a>.

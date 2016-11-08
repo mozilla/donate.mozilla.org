@@ -243,7 +243,7 @@ module.exports = function(options) {
       }
     }, {
       method: 'GET',
-      path: '/api/paypal-redirect/{frequency}/{locale}/{appName}/',
+      path: '/api/paypal-redirect/{frequency}/{locale}/{appName}/{accountType}/',
       handler: routes['paypal-redirect']
     }, {
       method: 'GET',

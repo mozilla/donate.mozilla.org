@@ -15,3 +15,4 @@ require('./donation-props.tests.jsx');
 require('../lib/location-parser.tests.js');
 require('../lib/queryParser.tests.js');
 require('../lib/amount-modifier.tests.js');
+require('../lib/paypal-micro.tests.js');

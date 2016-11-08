@@ -2,22 +2,26 @@ var Boom = require('boom');
 var request = require('request');
 var querystring = require('querystring');
 var paypalLocales = require('../intl-config.js').paypalLocales;
+var accountSwitcher = require('../lib/paypal-account-switcher.js');
 
 var httpRequest = request.defaults({
   timeout: 25000
 });
 
 function setupPaypal(transaction, callback) {
+  var accountType = accountSwitcher.getAccountType(transaction.amount, transaction.currency);
+  var paypalCreds = accountSwitcher.creds[accountType];
+
   var frequency = transaction.frequency;
   var locale = transaction.locale;
   var appName = transaction.appName;
 
-  var returnUrl = transaction.serverUri + '/api/paypal-redirect/' + frequency + '/' + locale + '/' + appName + '/';
+  var returnUrl = transaction.serverUri + '/api/paypal-redirect/' + frequency + '/' + locale + '/' + appName + '/' + accountType + '/';
 
   var charge = {
-    USER: process.env.PAYPAL_USER,
-    PWD: process.env.PAYPAL_PWD,
-    SIGNATURE: process.env.PAYPAL_SIGNATURE,
+    USER: paypalCreds.PAYPAL_USER,
+    PWD: paypalCreds.PAYPAL_PWD,
+    SIGNATURE: paypalCreds.PAYPAL_SIGNATURE,
     METHOD: 'SetExpressCheckout',
     VERSION: '106.0',
     PAYMENTREQUEST_0_PAYMENTACTION: 'Sale',
@@ -30,6 +34,7 @@ function setupPaypal(transaction, callback) {
     cancelUrl: transaction.serverUri + '/',
     returnUrl: returnUrl
   };
+
   if (frequency === "monthly") {
     charge.PAYMENTREQUEST_0_DESC = transaction.item_name;
     charge.L_BILLINGAGREEMENTDESCRIPTION0 = transaction.item_name;
@@ -58,13 +63,15 @@ function setupPaypal(transaction, callback) {
 
 function getCheckoutDetails(transaction, options, callback) {
   var paypalCheckoutDetailsStart = Date.now();
+  var paypalCreds = accountSwitcher.creds[options.accountType];
+
   httpRequest({
     url: process.env.PAYPAL_API_ENDPOINT,
     method: 'POST',
     form: {
-      USER: process.env.PAYPAL_USER,
-      PWD: process.env.PAYPAL_PWD,
-      SIGNATURE: process.env.PAYPAL_SIGNATURE,
+      USER: paypalCreds.PAYPAL_USER,
+      PWD: paypalCreds.PAYPAL_PWD,
+      SIGNATURE: paypalCreds.PAYPAL_SIGNATURE,
       METHOD: 'GetExpressCheckoutDetails',
       VERSION: '106.0',
       TOKEN: transaction.token
@@ -81,11 +88,13 @@ function getCheckoutDetails(transaction, options, callback) {
 
 function doExpressCheckoutPayment(checkoutDetails, options, callback) {
   var paypalCheckoutPaymentStart = Date.now();
+  var paypalCreds = accountSwitcher.creds[options.accountType];
+
   var recurring = options.recurring;
   var details = {
-    USER: process.env.PAYPAL_USER,
-    PWD: process.env.PAYPAL_PWD,
-    SIGNATURE: process.env.PAYPAL_SIGNATURE,
+    USER: paypalCreds.PAYPAL_USER,
+    PWD: paypalCreds.PAYPAL_PWD,
+    SIGNATURE: paypalCreds.PAYPAL_SIGNATURE,
     VERSION: '106.0',
     TOKEN: checkoutDetails.TOKEN,
     PAYERID: checkoutDetails.PAYERID

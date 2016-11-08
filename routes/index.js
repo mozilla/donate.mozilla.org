@@ -3,6 +3,7 @@ var mailchimp = require('./mailchimp');
 var stripe = require('./stripe');
 var paypal = require('./paypal');
 var boom = require('boom');
+var basket = require('../lib/basket-queue.js');
 var amountModifier = require('../dist/lib/amount-modifier.js');
 
 var routes = {
@@ -167,6 +168,13 @@ var routes = {
                 stripe_charge_create_service,
                 charge_id: charge.id
               });
+              basket.queue({
+                name: "",
+                email: "",
+                donation_amount: "",
+                recurring: false,
+                opportunity_name: "stripe"
+              });
               reply({
                 frequency: "one-time",
                 amount: charge.amount,
@@ -231,6 +239,13 @@ var routes = {
                 request_id,
                 stripe_create_subscription_service,
                 customer_id: customer.id
+              });
+              basket.queue({
+                name: "",
+                email: "",
+                donation_amount: "",
+                recurring: true,
+                opportunity_name: "stripe"
               });
               reply({
                 frequency: "monthly",
@@ -350,6 +365,13 @@ var routes = {
           }
 
           request.log(['paypal', 'checkout', frequency], log_details);
+          basket.queue({
+            name: "",
+            email: "",
+            donation_amount: "",
+            recurring: false,
+            opportunity_name: "paypal"
+          });
           reply.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
         });
       });
@@ -399,6 +421,14 @@ var routes = {
           }
 
           request.log(['paypal', 'checkout', frequency], log_details);
+          
+          basket.queue({
+            name: "",
+            email: "",
+            donation_amount: "",
+            recurring: true,
+            opportunity_name: "paypal"
+          });
 
           // Create unique tx id by combining PayerID and timestamp
           var stamp = Date.now() / 100;

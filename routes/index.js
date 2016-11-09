@@ -107,6 +107,8 @@ var routes = {
       var stripe_customer_create_service = customerData.stripe_customer_create_service;
       var customer;
       var badRequest;
+      var basketData;
+
       if (err) {
         badRequest = boom.badRequest('Stripe charge failed');
         badRequest.output.payload.stripe = {
@@ -187,16 +189,16 @@ var routes = {
                 charge_id: charge.id
               });
 
-              var basketData = {
-                first_name: customer.cards.data[0].name,
+              basketData = {
+                last_name: customer.cards.data[0].name,
                 email: customer.email,
                 donation_amount: charge.amount,
                 currency: charge.currency,
                 created: charge.created,
                 recurring: false
-              }
+              };
 
-              if (ZERO_DECIMAL_CURRENCIES.indexOf(charge.currency) == -1) {
+              if (ZERO_DECIMAL_CURRENCIES.indexOf(charge.currency) === -1) {
                 basketData.donation_amount = basketData.donation_amount / 100;
               }
 
@@ -268,16 +270,16 @@ var routes = {
                 customer_id: customer.id
               });
 
-              var basketData = {
-                first_name: customer.cards.data[0].name,
+              basketData = {
+                last_name: customer.cards.data[0].name,
                 email: customer.email,
                 donation_amount: subscription.quantity,
                 currency: subscription.plan.currency,
-                created: charge.created,
+                created: subscription.created,
                 recurring: true
               };
 
-              if (ZERO_DECIMAL_CURRENCIES.indexOf(subscription.plan.currency) == -1) {
+              if (ZERO_DECIMAL_CURRENCIES.indexOf(subscription.plan.currency) === -1) {
                 basketData.donation_amount = basketData.donation_amount / 100;
               }
 

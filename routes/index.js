@@ -6,6 +6,24 @@ var boom = require('boom');
 var basket = require('../lib/basket-queue.js');
 var amountModifier = require('../dist/lib/amount-modifier.js');
 
+var ZERO_DECIMAL_CURRENCIES = [
+  'BIF',
+  'CLP',
+  'DJF',
+  'GNF',
+  'JPY',
+  'KMF',
+  'KRW',
+  'MGA',
+  'PYG',
+  'RWF',
+  'VND',
+  'VUV',
+  'XAF',
+  'XOF',
+  'XPF'
+];
+
 var routes = {
   'signup': function(request, reply) {
     var transaction = request.payload;
@@ -168,13 +186,22 @@ var routes = {
                 stripe_charge_create_service,
                 charge_id: charge.id
               });
-              basket.queue({
-                name: "",
-                email: "",
-                donation_amount: "",
-                recurring: false,
-                opportunity_name: "stripe"
-              });
+
+              var basketData = {
+                name: customer.cards.data[0].name,
+                email: customer.email,
+                donation_amount: charge.amount,
+                currency: charge.currency,
+                created: charge.created,
+                recurring: false
+              }
+
+              if (ZERO_DECIMAL_CURRENCIES.indexOf(charge.currency) == -1) {
+                basketData.donation_amount = basketData.donation_amount / 100;
+              }
+
+              basket.queue(basketData);
+
               reply({
                 frequency: "one-time",
                 amount: charge.amount,
@@ -240,13 +267,22 @@ var routes = {
                 stripe_create_subscription_service,
                 customer_id: customer.id
               });
-              basket.queue({
-                name: "",
-                email: "",
-                donation_amount: "",
-                recurring: true,
-                opportunity_name: "stripe"
-              });
+
+              var basketData = {
+                name: customer.cards.data[0].name,
+                email: customer.email,
+                donation_amount: subscription.quantity,
+                currency: subscription.plan.currency,
+                created: charge.created,
+                recurring: true
+              };
+
+              if (ZERO_DECIMAL_CURRENCIES.indexOf(subscription.plan.currency) == -1) {
+                basketData.donation_amount = basketData.donation_amount / 100;
+              }
+
+              basket.queue(basketData);
+
               reply({
                 frequency: "monthly",
                 currency: subscription.plan.currency,
@@ -365,13 +401,17 @@ var routes = {
           }
 
           request.log(['paypal', 'checkout', frequency], log_details);
+
           basket.queue({
-            name: "",
-            email: "",
-            donation_amount: "",
-            recurring: false,
-            opportunity_name: "paypal"
+            first_name: checkoutDetails.response.FIRSTNAME,
+            last_name: checkoutDetails.response.LASTNAME,
+            email: checkoutDetails.response.EMAIL,
+            donation_amount: data.txn.PAYMENTREQUEST_0_AMT,
+            currency: data.txn.CURRENCYCODE,
+            created: Date.now(),
+            recurring: false
           });
+          
           reply.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
         });
       });
@@ -423,11 +463,12 @@ var routes = {
           request.log(['paypal', 'checkout', frequency], log_details);
           
           basket.queue({
-            name: "",
-            email: "",
-            donation_amount: "",
-            recurring: true,
-            opportunity_name: "paypal"
+            first_name: checkoutDetails.response.FIRSTNAME,
+            last_name: checkoutDetails.response.LASTNAME,
+            email: checkoutDetails.response.EMAIL,
+            donation_amount: data.txn.AMT,
+            currency: data.txn.CURRENCYCODE,
+            created: Date.now(),
           });
 
           // Create unique tx id by combining PayerID and timestamp

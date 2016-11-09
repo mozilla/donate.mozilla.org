@@ -17,6 +17,16 @@ module.exports = {
       monthly: ['10', '5', '3', '2']
     }
   },
+  'ars': {
+    code: 'ars',
+    minAmount: '30',
+    symbol: '$',
+    disabled: "paypal",
+    presets: {
+      single: ['300', '150', '75', '45'],
+      monthly: ['150', '75', '45', '30']
+    }
+  },
   'brl': {
     code: 'brl',
     minAmount: '5',
@@ -42,6 +52,17 @@ module.exports = {
     presets: {
       single: ['20', '10', '5', '3'],
       monthly: ['10', '5', '3', '2']
+    }
+  },
+  'clp': {
+    code: 'clp',
+    minAmount: '1300',
+    symbol: '$',
+    disabled: "paypal",
+    zeroDecimal: "stripe",
+    presets: {
+      single: ['13000', '6500', '3250', '2000'],
+      monthly: ['6500', '3250', '2000', '1300']
     }
   },
   'cny': {

@@ -188,7 +188,7 @@ var routes = {
               });
 
               var basketData = {
-                name: customer.cards.data[0].name,
+                first_name: customer.cards.data[0].name,
                 email: customer.email,
                 donation_amount: charge.amount,
                 currency: charge.currency,
@@ -269,7 +269,7 @@ var routes = {
               });
 
               var basketData = {
-                name: customer.cards.data[0].name,
+                first_name: customer.cards.data[0].name,
                 email: customer.email,
                 donation_amount: subscription.quantity,
                 currency: subscription.plan.currency,

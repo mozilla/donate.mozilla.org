@@ -469,6 +469,7 @@ var routes = {
             donation_amount: data.txn.AMT,
             currency: data.txn.CURRENCYCODE,
             created: Date.now(),
+            recurring: true
           });
 
           // Create unique tx id by combining PayerID and timestamp

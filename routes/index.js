@@ -6,24 +6,6 @@ var boom = require('boom');
 var basket = require('../lib/basket-queue.js');
 var amountModifier = require('../dist/lib/amount-modifier.js');
 
-var ZERO_DECIMAL_CURRENCIES = [
-  'BIF',
-  'CLP',
-  'DJF',
-  'GNF',
-  'JPY',
-  'KMF',
-  'KRW',
-  'MGA',
-  'PYG',
-  'RWF',
-  'VND',
-  'VUV',
-  'XAF',
-  'XOF',
-  'XPF'
-];
-
 var routes = {
   'signup': function(request, reply) {
     var transaction = request.payload;
@@ -189,20 +171,16 @@ var routes = {
                 charge_id: charge.id
               });
 
-              basketData = {
+              basket.queue({
                 last_name: customer.cards.data[0].name,
                 email: customer.email,
-                donation_amount: charge.amount,
+                donation_amount: basket.zeroDecimalCurrencyFix(charge.amount, charge.currency),
                 currency: charge.currency,
                 created: charge.created,
-                recurring: false
-              };
-
-              if (ZERO_DECIMAL_CURRENCIES.indexOf(charge.currency) === -1) {
-                basketData.donation_amount = basketData.donation_amount / 100;
-              }
-
-              basket.queue(basketData);
+                recurring: false,
+                service: "stripe",
+                transaction_id: charge.id
+              });
 
               reply({
                 frequency: "one-time",
@@ -270,20 +248,17 @@ var routes = {
                 customer_id: customer.id
               });
 
-              basketData = {
+              basket.queue({
                 last_name: customer.cards.data[0].name,
                 email: customer.email,
-                donation_amount: subscription.quantity,
+                donation_amount: basket.zeroDecimalCurrencyFix(subscription.quantity, subscription.plan.currency),
                 currency: subscription.plan.currency,
                 created: subscription.created,
-                recurring: true
-              };
-
-              if (ZERO_DECIMAL_CURRENCIES.indexOf(subscription.plan.currency) === -1) {
-                basketData.donation_amount = basketData.donation_amount / 100;
-              }
-
-              basket.queue(basketData);
+                recurring: true,
+                frequency: "monthly",
+                service: "stripe",
+                transaction_id: subscription.id
+              });
 
               reply({
                 frequency: "monthly",
@@ -411,7 +386,9 @@ var routes = {
             donation_amount: data.txn.PAYMENTREQUEST_0_AMT,
             currency: data.txn.CURRENCYCODE,
             created: Date.now(),
-            recurring: false
+            recurring: false,
+            service: 'paypal',
+            transaction_id: data.txn.PAYMENTINFO_0_TRANSACTIONID
           });
           
           reply.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
@@ -464,6 +441,10 @@ var routes = {
 
           request.log(['paypal', 'checkout', frequency], log_details);
           
+          // Create unique tx id by combining PayerID and timestamp
+          var stamp = Date.now() / 100;
+          var txId = data.txn.PAYERID + stamp;
+
           basket.queue({
             first_name: checkoutDetails.response.FIRSTNAME,
             last_name: checkoutDetails.response.LASTNAME,
@@ -471,12 +452,12 @@ var routes = {
             donation_amount: data.txn.AMT,
             currency: data.txn.CURRENCYCODE,
             created: Date.now(),
-            recurring: true
+            recurring: true,
+            frequency: "monthly",
+            service: "paypal",
+            transaction_id: txId
           });
 
-          // Create unique tx id by combining PayerID and timestamp
-          var stamp = Date.now() / 100;
-          var txId = data.txn.PAYERID + stamp;
           reply.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${txId}&amt=${data.txn.AMT}&cc=${data.txn.CURRENCYCODE}`);
         });
       });

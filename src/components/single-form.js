@@ -121,12 +121,10 @@ var singleForm = React.createClass({
     return (
       <div className="container">
         <SectionHeading>
-          <h3>
+          <h3 className="donate-now-header">
             {this.context.intl.formatMessage({id: "donate_now"})}
-            <span className="right">
-              <CurrencyDropdown/>
-            </span>
           </h3>
+          <CurrencyDropdown/>
         </SectionHeading>
         <div className="frequency-move">
           <Frequency name="frequency-test"/>

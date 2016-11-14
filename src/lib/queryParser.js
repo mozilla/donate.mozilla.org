@@ -13,6 +13,7 @@ module.exports = function(queryString, locale) {
   var country = queryString.country || localeCountryData[locale] || "US";
   var amount = "";
   var frequency = "single";
+  var test = queryString.test;
   var currency = currencies[queryStringCurrencyCode] || currencies[localeCurrencyCode] || currencies.usd;
 
   if (queryString.amount && !isNaN(queryString.amount)) {
@@ -29,8 +30,12 @@ module.exports = function(queryString, locale) {
     presets = currency.presets[frequency];
   }
 
+  if (test && toString.call(test) === "[object Array]") {
+    test = test.join(" ");
+  }
+
   return {
-    test: queryString.test,
+    test: test,
     currency: currency,
     presets: presets,
     amount: amount,

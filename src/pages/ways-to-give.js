@@ -48,8 +48,8 @@ var WaysToGive = React.createClass({
           <h2><FormattedHTMLMessage id='bitcoin' /></h2>
           <p><FormattedHTMLMessage id='bitcoin_info' /></p>
           <p><FormattedHTMLMessage id='bitcoin_more_info' /></p>
-          <MozillaFooter/>
         </div>
+        <MozillaFooter/>
       </div>
     );
   }

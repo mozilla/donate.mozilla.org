@@ -3,6 +3,7 @@ var mailchimp = require('./mailchimp');
 var stripe = require('./stripe');
 var paypal = require('./paypal');
 var boom = require('boom');
+var basket = require('../lib/basket-queue.js');
 var amountModifier = require('../dist/lib/amount-modifier.js');
 
 var routes = {
@@ -88,6 +89,8 @@ var routes = {
       var stripe_customer_create_service = customerData.stripe_customer_create_service;
       var customer;
       var badRequest;
+      var basketData;
+
       if (err) {
         badRequest = boom.badRequest('Stripe charge failed');
         badRequest.output.payload.stripe = {
@@ -167,6 +170,19 @@ var routes = {
                 stripe_charge_create_service,
                 charge_id: charge.id
               });
+
+              basket.queue({
+                last_name: customer.cards.data[0].name,
+                email: customer.email,
+                donation_amount: basket.zeroDecimalCurrencyFix(charge.amount, charge.currency),
+                currency: charge.currency,
+                created: charge.created,
+                recurring: false,
+                service: "stripe",
+                transaction_id: charge.id,
+                project: metadata.thunderbird ? "thunderbird" : "mozillafoundation"
+              });
+
               reply({
                 frequency: "one-time",
                 amount: charge.amount,
@@ -232,6 +248,20 @@ var routes = {
                 stripe_create_subscription_service,
                 customer_id: customer.id
               });
+
+              basket.queue({
+                last_name: customer.cards.data[0].name,
+                email: customer.email,
+                donation_amount: basket.zeroDecimalCurrencyFix(subscription.quantity, subscription.plan.currency),
+                currency: subscription.plan.currency,
+                created: subscription.created,
+                recurring: true,
+                frequency: "monthly",
+                service: "stripe",
+                transaction_id: subscription.id,
+                project: metadata.thunderbird ? "thunderbird" : "mozillafoundation"
+              });
+
               reply({
                 frequency: "monthly",
                 currency: subscription.plan.currency,
@@ -350,6 +380,20 @@ var routes = {
           }
 
           request.log(['paypal', 'checkout', frequency], log_details);
+
+          basket.queue({
+            first_name: checkoutDetails.response.FIRSTNAME,
+            last_name: checkoutDetails.response.LASTNAME,
+            email: checkoutDetails.response.EMAIL,
+            donation_amount: data.txn.PAYMENTREQUEST_0_AMT,
+            currency: data.txn.CURRENCYCODE,
+            created: Date.now(),
+            recurring: false,
+            service: 'paypal',
+            transaction_id: data.txn.PAYMENTINFO_0_TRANSACTIONID,
+            project: appName
+          });
+          
           reply.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
         });
       });
@@ -403,6 +447,21 @@ var routes = {
           // Create unique tx id by combining PayerID and timestamp
           var stamp = Date.now() / 100;
           var txId = data.txn.PAYERID + stamp;
+
+          basket.queue({
+            first_name: checkoutDetails.response.FIRSTNAME,
+            last_name: checkoutDetails.response.LASTNAME,
+            email: checkoutDetails.response.EMAIL,
+            donation_amount: data.txn.AMT,
+            currency: data.txn.CURRENCYCODE,
+            created: Date.now(),
+            recurring: true,
+            frequency: "monthly",
+            service: "paypal",
+            transaction_id: txId,
+            project: appName
+          });
+
           reply.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${txId}&amt=${data.txn.AMT}&cc=${data.txn.CURRENCYCODE}`);
         });
       });

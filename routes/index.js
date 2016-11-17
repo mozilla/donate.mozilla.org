@@ -443,7 +443,7 @@ var routes = {
           }
 
           request.log(['paypal', 'checkout', frequency], log_details);
-          
+
           // Create unique tx id by combining PayerID and timestamp
           var stamp = Date.now() / 100;
           var txId = data.txn.PAYERID + stamp;

@@ -15,8 +15,8 @@ var Panel = React.createClass({
     var itemClassName = "collapse-item";
     var contentClassName = "collapse-content";
     if (this.props.itemKey === this.props.activeKey) {
-      itemClassName += " collapse-item-active"
-      contentClassName += " collapse-content-active"
+      itemClassName += " collapse-item-active";
+      contentClassName += " collapse-content-active";
     }
     return (
       <div id={this.props.itemKey} className={itemClassName}>

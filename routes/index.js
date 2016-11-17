@@ -179,7 +179,8 @@ var routes = {
                 created: charge.created,
                 recurring: false,
                 service: "stripe",
-                transaction_id: charge.id
+                transaction_id: charge.id,
+                project: metadata.thunderbird ? "thunderbird" : "mozillafoundation"
               });
 
               reply({
@@ -257,7 +258,8 @@ var routes = {
                 recurring: true,
                 frequency: "monthly",
                 service: "stripe",
-                transaction_id: subscription.id
+                transaction_id: subscription.id,
+                project: metadata.thunderbird ? "thunderbird" : "mozillafoundation"
               });
 
               reply({
@@ -388,7 +390,8 @@ var routes = {
             created: Date.now(),
             recurring: false,
             service: 'paypal',
-            transaction_id: data.txn.PAYMENTINFO_0_TRANSACTIONID
+            transaction_id: data.txn.PAYMENTINFO_0_TRANSACTIONID,
+            project: appName
           });
           
           reply.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
@@ -455,7 +458,8 @@ var routes = {
             recurring: true,
             frequency: "monthly",
             service: "paypal",
-            transaction_id: txId
+            transaction_id: txId,
+            project: appName
           });
 
           reply.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${txId}&amt=${data.txn.AMT}&cc=${data.txn.CURRENCYCODE}`);

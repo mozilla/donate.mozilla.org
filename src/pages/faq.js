@@ -66,7 +66,7 @@ var Faq = React.createClass({
     if (/^(en)(\b|$)/.test(this.context.intl.locale)) {
       return (
         <Panel activeKey={this.state.activeKey} activateKey={this.onKeyChange} itemKey="item_tax_b" header="How can I get a receipt for U.S. tax preparation purposes?">
-          <p>If you give to Mozilla through an online form, you should immediately receive an emailed receipt for your donation that you can use for your U.S. tax preparation purposes. Check your spam folder if you don’t see that email arrive in your email inbox, as it can sometimes be caught by spam filters. If you need an additional copy of your receipt for you for your U.S. tax preparation purposes, please contact us at donate@mozilla.org.</p>
+          <p>If you give to Mozilla through an online form, you should immediately receive an emailed receipt for your donation that you can use for your U.S. tax preparation purposes. Check your spam folder if you don’t see that email arrive in your email inbox, as it can sometimes be caught by spam filters. If you need an additional copy of your receipt for you for your U.S. tax preparation purposes, please contact us at <a href="mailto:donate@mozilla.org">donate@mozilla.org</a>.</p>
         </Panel>
       );
     }

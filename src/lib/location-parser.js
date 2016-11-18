@@ -1,18 +1,9 @@
-var Parser = require("accept-language-parser");
-var bestLang = require("bestlang");
-var locales = require('../../public/locales.json');
-
-function getLocale(acceptLang) {
-  var langHeader = Parser.parse(acceptLang);
-  var langArray = langHeader.map(l => l.code + (l.region ? "-" + l.region : ""));
-  return bestLang(langArray, Object.keys(locales), 'en-US');
-}
-
+var getLocale = require('./get-locale.js');
 function getLocation(location) {
   return "/" + location.split("/").splice(2).join("/");
 }
 
-module.exports = function(langmap) {
+module.exports = function(langmap, locales) {
   return function(acceptLang, location) {
     var locationSplit = location.split("/");
     var locale = locationSplit[1];
@@ -20,11 +11,11 @@ module.exports = function(langmap) {
 
     if (!locale || !langmap[locale]) {
       // No locale or not a valid locale.
-      locale = getLocale(acceptLang);
+      locale = getLocale(acceptLang, locales);
       redirect = location;
-    } else if (!locales[locale]) {
+    } else if (!locales[locale.toLowerCase()]) {
       // We have a valid locale, but we currently don't support it.
-      locale = getLocale(acceptLang);
+      locale = getLocale(acceptLang, locales);
       redirect = getLocation(location);
     }
 

@@ -2,8 +2,8 @@
   margin: 61px auto 3px;
   max-width: 700px;
   width: 100%;
-  padding-left: 10px;
-  padding-right: 10px;
+  //padding-left: 10px;
+  //padding-right: 10px;
   text-align: center;
   img {
     max-width: 150px;
@@ -11,5 +11,23 @@
   .header-copy {
     text-align: center;
     margin-top: 20px;
+  }
+  #heart-gif {
+    @media screen and (min-width:300px) {
+      position: relative;
+      top:-30px;
+      margin-bottom:-55px;
+      width: 50%;
+    }
+    @media screen and (min-width:599px) {
+    top:-50px;
+    margin-bottom: -70px;
+    width:35%;
+    }
+    @media screen and (min-width:1200px) {
+    top:-90px;
+    margin-bottom:-110px;
+    width:25%;
+    }
   }
 }

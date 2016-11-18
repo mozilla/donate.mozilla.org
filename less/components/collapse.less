@@ -1,0 +1,48 @@
+.collapse {
+  border-width: 0;
+  font-weight: 300;
+  color: #333333;
+}
+.collapse > .collapse-item {
+  border-top: 1px solid #d9d9d9;
+}
+.collapse > .collapse-item > .collapse-header {
+  line-height: 2rem;
+  padding: 0.5em 0;
+  cursor: pointer;
+  position: relative;
+  font-size: 1.25rem;
+}
+.collapse > .collapse-item > .collapse-header::after {
+  content: '+';
+  color: #16afe5;
+  font-size: 3rem;
+  font-weight: 200;
+  right: 0;
+  width: 1em;
+  text-align: center;
+}
+.collapse > .collapse-item-active > .collapse-header::after {
+  content: '_';
+  margin-top: -49px;
+  font-size: 3.3rem;
+  margin-right: -3px;
+}
+.collapse-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .2s;
+}
+.collapse-content.collapse-content-active {
+  max-height: 1500px;
+  transition: max-height 3s;
+}
+.collapse-item:last-child {
+  border-bottom: 1px solid #d9d9d9;
+}
+.collapse .collapse-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+

@@ -9,6 +9,7 @@ module.exports = {
     'es-CL': 'clp',
     'es-ES': 'eur',
     'es-MX': 'mxn',
+    'es-XL': 'mxn',
     'en-AU': 'aud',
     'en-CA': 'cad',
     'en-GB': 'gbp',

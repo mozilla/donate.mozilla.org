@@ -1,3 +1,8 @@
+var locales = {};
+Object.keys(require('../../public/locales.json')).forEach(function(locale) {
+  locales[locale.toLowerCase()] = locale;
+});
+
 var locationParser = require('../../src/lib/location-parser.js')({
   'en-US': {
     nativeName: "English (US)",
@@ -11,7 +16,7 @@ var locationParser = require('../../src/lib/location-parser.js')({
     nativeName: "Fake locale",
     englishName: "Fake locale"
   }
-});
+}, locales);
 var should = require('should');
 
 var tests = [

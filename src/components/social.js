@@ -10,7 +10,7 @@ module.exports = React.createClass({
     var twitterShareURL = 'https://twitter.com/share?url=' + appURL +'/' + locale + '/&text=' + encodeURIComponent(this.context.intl.formatMessage({id: 'i_donated_to_mozilla'}));
     var facebookShareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + appURL + '/' + locale + '/';
     var emailShareURL = 'mailto:someone@example.com?subject='+ emailSubject +'&body='+ emailBody +'';
-    return (""
+    return (
       <div className="share-page">
         <div className="container">
           <h3>

@@ -250,7 +250,7 @@ var routes = {
               });
 
               basket.queue({
-                last_name: customer.cards.data[0].name,
+                last_name: customer.sources.data[0].name,
                 email: customer.email,
                 donation_amount: basket.zeroDecimalCurrencyFix(subscription.quantity, subscription.plan.currency),
                 currency: subscription.plan.currency,

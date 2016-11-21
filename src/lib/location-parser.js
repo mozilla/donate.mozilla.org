@@ -9,7 +9,7 @@ module.exports = function(langmap, locales) {
     var locale = locationSplit[1];
     var redirect = "";
 
-    if (!locale || !langmap[locale]) {
+    if (!locale || (!langmap[locale] && !locales[locale.toLowerCase()])) {
       // No locale or not a valid locale.
       locale = getLocale(acceptLang, locales);
       redirect = location;

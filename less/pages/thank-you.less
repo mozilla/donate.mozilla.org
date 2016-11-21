@@ -21,7 +21,6 @@
   #facebook,
   #twitter,
   #email {
-    //margin-top: 15px;
     width: 110px;
     height: 110px;
     cursor: pointer;
@@ -44,10 +43,13 @@
         font-size: 17px;
       }
     }
+    @media screen and (max-width: 420px) {
+      width: 104px;
+      height: 104px;
+    }
   }
   #facebook {
     margin-right: 9px;
-    //margin-left: 5px;
     background-color: #406DB4;
     &:hover {
       background-color: #4E7AC0;
@@ -55,22 +57,16 @@
   }
   #twitter {
     margin-right: 9px;
-    //margin-left: 5px;
     background-color: #46C6F1;
-    a {
-      /*i {
-        margin-top: -10px;
-      }*/
-    }
     &:hover {
       background-color: #5ECDF3;
     }
   }
   #email {
     float:right;
-    background-color:#ffd600;
+    background-color:#ea2626;
     &:hover {
-      background-color:#ffdf36;
+      background-color:#E84748;
     }
   }
   h1,
@@ -83,8 +79,10 @@
     font-size: 32px;
   }
   h3 {
-    font-size: 25px;
+    font-size: 24px;
+    line-height:1.25;
     margin-bottom: 32px;
+    text-align:center;
   }
   .heart-image,
   .internet-graphic {

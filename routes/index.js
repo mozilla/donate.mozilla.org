@@ -172,8 +172,8 @@ var routes = {
               });
 
               basket.queue({
-                last_name: customer.cards.data[0].name,
-                email: customer.email,
+                last_name: charge.source.name,
+                email: charge.metadata.email,
                 donation_amount: basket.zeroDecimalCurrencyFix(charge.amount, charge.currency),
                 currency: charge.currency,
                 created: charge.created,

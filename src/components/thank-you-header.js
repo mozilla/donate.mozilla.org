@@ -28,10 +28,17 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <div className="header">
-      <img width="100%" height="20%" className="auto-margin internet-graphic" src="/assets/images/heart-bg.svg"/>
-        <img width="25%" height="115" className="auto-margin internet-graphic" id="heart-gif" src="/assets/images/heart-sparkle.gif"/>
-        {this.renderMessage()}
+      <div>
+        <div className="header baseline-header">
+          <img width="68" height="62" className="auto-margin heart-image" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
+          {this.renderMessage()}
+          <img width="280" height="115" className="auto-margin internet-graphic" src="/assets/images/internet-graphic.e9a5980f4251c71bdd72d088f80d9864.svg"/>
+        </div>
+        <div className="header new-header">
+          <img width="100%" height="20%" className="auto-margin" id="heart-background" src="/assets/images/heart-bg.svg"/>
+          <img width="25%" height="115" className="auto-margin" id="heart-gif" src="/assets/images/heart-sparkle.gif"/>
+          {this.renderMessage()}
+        </div>
       </div>
     );
   }

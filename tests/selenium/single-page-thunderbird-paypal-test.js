@@ -1,7 +1,7 @@
 module.exports = function(driver, By, done) {
   driver.get('http://localhost:3000/en-CA/thunderbird/');
   driver.findElement(By.id('amount-other-input')).sendKeys('10');
-  driver.findElement(By.css('.frequency-move-baseline .paypal-button .payment-paypal-label')).click();
+  driver.findElement(By.css('.paypal-button .payment-paypal-label')).click();
   driver.wait(function() {
     return driver.getCurrentUrl().then(function(url) {
       return url.indexOf('https://www.sandbox.paypal.com/cgi-bin/webscr') === 0;

@@ -36,7 +36,7 @@ var singleForm = React.createClass({
   renderPaymentOptions: function() {
     if (!this.state.currency.disabled) {
       return (
-        <span>
+        <div>
           <SectionHeading>
             <h4 className="left choose-payment">{this.context.intl.formatMessage({id: "choose_payment"})}</h4>
             <p id="secure-label" className="right"><i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}</p>
@@ -45,41 +45,24 @@ var singleForm = React.createClass({
             {this.renderPrivacyPolicy()}
           </div>
           <ErrorListener errors={["cardNumber", "cvc", "expMonth", "expYear"]}/>
-          <div className="frequency-move">
-            <StripeButton
-              name="payment-type-test"
-              submit={["frequency-test", "amount"]}
-              validate={["amount"]}
-              onSubmit={this.stripeCheckout}
-            />
-            <PayPalButton
-              name="payment-type-test"
-              submitting={this.state.submitting}
-              submit={["frequency-test", "amount"]}
-              validate={["amount"]}
-              onSubmit={this.paypal}
-            />
-          </div>
-          <div className="frequency-move-baseline">
-            <StripeButton
-              name="payment-type"
-              submit={["frequency", "amount"]}
-              validate={["amount"]}
-              onSubmit={this.stripeCheckout}
-            />
-            <PayPalButton
-              name="payment-type"
-              submitting={this.state.submitting}
-              submit={["frequency", "amount"]}
-              validate={["amount"]}
-              onSubmit={this.paypal}
-            />
-          </div>
-        </span>
+          <StripeButton
+            name="payment-type"
+            submit={["frequency", "amount"]}
+            validate={["amount"]}
+            onSubmit={this.stripeCheckout}
+          />
+          <PayPalButton
+            name="payment-type"
+            submitting={this.state.submitting}
+            submit={["frequency", "amount"]}
+            validate={["amount"]}
+            onSubmit={this.paypal}
+          />
+        </div>
       );
     } else if (this.state.currency.disabled === "paypal") {
       return (
-        <span className="paypal-disabled">
+        <div className="paypal-disabled">
           <SectionHeading>
             <h3>{this.context.intl.formatMessage({id: "credit_card"})}</h3>
             <p id="secure-label">
@@ -93,27 +76,15 @@ var singleForm = React.createClass({
             {this.renderPrivacyPolicy()}
           </div>
           <ErrorListener errors={["cardNumber", "cvc", "expMonth", "expYear"]}/>
-          <div className="frequency-move">
-            <SubmitButton
-              submitting={this.state.submitting}
-              submit={["amount", "frequency"]}
-              validate={["amount"]}
-              onSubmit={this.stripeCheckout}
-            >
-              <DonateButton currency={this.state.currency}/>
-            </SubmitButton>
-          </div>
-          <div className="frequency-move-baseline">
-            <SubmitButton
-              submitting={this.state.submitting}
-              submit={["amount", "frequency-test"]}
-              validate={["amount"]}
-              onSubmit={this.stripeCheckout}
-            >
-              <DonateButton currency={this.state.currency}/>
-            </SubmitButton>
-          </div>
-        </span>
+          <SubmitButton
+            submitting={this.state.submitting}
+            submit={["amount", "frequency"]}
+            validate={["amount"]}
+            onSubmit={this.stripeCheckout}
+          >
+            <DonateButton currency={this.state.currency}/>
+          </SubmitButton>
+        </div>
       );
     }
   },
@@ -126,13 +97,8 @@ var singleForm = React.createClass({
           </h3>
           <CurrencyDropdown/>
         </SectionHeading>
-        <div className="frequency-move">
-          <Frequency name="frequency-test"/>
-        </div>
+        <Frequency name="frequency"/>
         <AmountButtons name="amount"/>
-        <div className="frequency-move-baseline">
-          <Frequency name="frequency"/>
-        </div>
         <div className="payment-section">
           {this.renderPaymentOptions()}
         </div>

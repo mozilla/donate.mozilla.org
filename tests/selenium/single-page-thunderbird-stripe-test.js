@@ -1,7 +1,7 @@
 module.exports = function(driver, By, done) {
   driver.get('http://localhost:3000/en-US/thunderbird/');
   driver.findElement(By.id('amount-other-input')).sendKeys('10');
-  driver.findElement(By.css('.frequency-move-baseline .payment-cc-label')).click();
+  driver.findElement(By.css('.payment-cc-label')).click();
 
   driver.switchTo().frame(driver.findElement(By.css(".stripe_checkout_app")));
   driver.findElement(By.id('email')).sendKeys('send-donation@test.com');
@@ -45,7 +45,7 @@ module.exports = function(driver, By, done) {
 
   driver.get('http://localhost:3000/pa-IN/thunderbird/');
   driver.findElement(By.id('amount-other-input')).sendKeys('200');
-  driver.findElement(By.css('.frequency-move-baseline .submit-btn')).click();
+  driver.findElement(By.css('.submit-btn')).click();
 
   driver.switchTo().frame(driver.findElement(By.css(".stripe_checkout_app")));
   driver.findElement(By.id('email')).sendKeys('send-donation@test.com');

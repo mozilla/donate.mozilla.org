@@ -167,12 +167,16 @@ var formMixin = {
     if (appName === "thunderbird") {
       description = "Thunderbird";
       success = this.thunderbirdStripeSuccess;
+    } else if (appName === "glassroomnyc") {
+      description = "glassroomnyc";
     }
     if (submitProps.frequency === "monthly") {
       description = this.context.intl.formatMessage({id: "mozilla_monthly_donation"});
       handlerDesc = this.context.intl.formatMessage({id: "donate_monthly"});
       if (appName === "thunderbird") {
         description = "Thunderbird monthly";
+      } else if (appName === "glassroomnyc") {
+        description = "glassroomnyc monthly";
       }
     }
 
@@ -239,11 +243,15 @@ var formMixin = {
 
       if (appName === "thunderbird") {
         description = "Thunderbird";
+      } else if (appName === "glassroomnyc") {
+        description = "glassroomnyc";
       }
       if (submitProps.frequency === "monthly") {
         description = this.context.intl.formatMessage({id: "mozilla_monthly_donation"});
         if (appName === "thunderbird") {
           description = "Thunderbird monthly";
+        } else if (appName === "glassroomnyc") {
+          description = "glassroomnyc monthly";
         }
       }
       submitProps.description = description;

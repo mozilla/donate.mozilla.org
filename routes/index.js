@@ -76,9 +76,10 @@ var routes = {
       locale: transaction.locale
     };
     var request_id = request.headers['x-request-id'];
-
     if (transaction.description.indexOf("Thunderbird") >= 0 ) {
       metadata.thunderbird = true;
+    } else if (transaction.description.indexOf("glassroomnyc") >= 0 ) {
+      metadata.glassroomnyc = true;
     }
 
     stripe.customer({
@@ -180,7 +181,7 @@ var routes = {
                 recurring: false,
                 service: "stripe",
                 transaction_id: charge.id,
-                project: metadata.thunderbird ? "thunderbird" : "mozillafoundation"
+                project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
               });
 
               reply({
@@ -259,7 +260,7 @@ var routes = {
                 frequency: "monthly",
                 service: "stripe",
                 transaction_id: subscription.id,
-                project: metadata.thunderbird ? "thunderbird" : "mozillafoundation"
+                project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
               });
 
               reply({
@@ -518,6 +519,8 @@ var routes = {
 
             if (updateData.metadata.thunderbird) {
               updateData.description = 'Thunderbird monthly';
+            } else if (updateData.metadata.glassroomnyc) {
+              updateData.description = 'glassroomnyc monthly';
             } else {
               updateData.description = 'Mozilla Foundation Monthly Donation';
             }

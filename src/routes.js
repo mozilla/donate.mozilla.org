@@ -17,6 +17,7 @@ var routes = (
             <Route path='share' component={require('./pages/share.js')}/>
             <Route path='ways-to-give' component={require('./pages/ways-to-give.js')}/>
             <Route path='faq' component={require('./pages/faq.js')}/>
+            <Route path='glassroomnyc' component={require('./pages/glassroomnyc.js')}/>
             <Route path='give-bitcoin' component={require('./pages/give-bitcoin.js')}/>
             <Route path='paypal-donate' component={require('./pages/paypal-donate.js')}/>
             <Route path="thunderbird">

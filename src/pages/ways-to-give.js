@@ -13,6 +13,7 @@ var WaysToGive = React.createClass({
     if (this.props.test) {
       className += " " + this.props.test;
     }
+    var checkId = 'check';
     return (
       <div className={className}>
         <div className="faq-header">
@@ -26,7 +27,7 @@ var WaysToGive = React.createClass({
           <h2><FormattedHTMLMessage id='bank_transfer' /></h2>
           <p><FormattedHTMLMessage id='wire_transfer_cost_info' /></p>
           <p><FormattedHTMLMessage id='bank_transfer_info' /></p>
-          <h2><FormattedHTMLMessage id='mail_check_heading' /></h2>
+          <h2 id={checkId}><FormattedHTMLMessage id='mail_check_heading' /></h2>
           <p><FormattedHTMLMessage id='mail_check_body' /></p>
           <address>
             Mozilla Foundation<br/>

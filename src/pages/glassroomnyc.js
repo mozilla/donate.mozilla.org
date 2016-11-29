@@ -18,7 +18,7 @@ module.exports = React.createClass({
           <div className="container additional-page">
             <img className="heart-image" height="37" width="253" src="/assets/images/glassroom-logo-new.svg"/>
             <div>
-              <span>You can donate here to support the Glass Room and more projects like this.</span>
+              <span>Mozilla works with partners like Tactical Technology Collective to educate people about internet health issues. Your donations help support our efforts to produce more projects and events like The Glass Room. Thank you for your support!</span>
             </div>
           </div>
           <SingleForm

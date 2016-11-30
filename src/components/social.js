@@ -9,8 +9,8 @@ module.exports = React.createClass({
     var locale = this.context.intl.locale;
     var twitterShareURL = 'https://twitter.com/share?url=' + appURL +'/' + locale + '/&text=' + encodeURIComponent(this.context.intl.formatMessage({id: 'i_donated_to_mozilla'}));
     var facebookShareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + appURL + '/' + locale + '/';
-    var emailSubject = '';
-    var emailBody = '';
+    var emailSubject = this.context.intl.formatMessage({id: 'share_email_subject'});
+    var emailBody = this.context.intl.formatMessage({id: 'share_email_body'});
     var emailShareURL = 'mailto:someone@example.com?subject='+ emailSubject +'&body='+ emailBody +'';
     return (
       <div className="share-page">
@@ -56,7 +56,7 @@ module.exports = React.createClass({
               <div className="social-button"></div>
               <a href={emailShareURL} target="_blank">
               <i className="fa fa-envelope fa-2x"></i>
-                <div>email</div>
+                <div>{this.context.intl.formatMessage({id: 'email'})}</div>
               </a>
             </div>
           </div>

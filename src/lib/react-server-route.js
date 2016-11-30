@@ -2,9 +2,8 @@
 import React from 'react';
 /*eslint-enable no-unused-vars*/
 
-import currencies from '../data/currencies.js';
-import {localeCurrencyData, localeCountryData} from '../data/locale-data.js';
 import url from 'url';
+import queryParser from './queryParser.js';
 var langmap = require("langmap");
 var HTML = require('../pages/index.js');
 
@@ -30,20 +29,12 @@ function routeFileContent(locales) {
 
     function generateHTML(renderProps) {
       var messages = getMessages(locale);
-      var currencyCode = localeCurrencyData[locale] || 'usd';
-      var country = localeCountryData[locale] || 'US';
       var favicon = "/assets/images/favicon.8af3a74ede48e250ceb935c026242483.ico";
       var twitterImage = "/assets/images/EOY_Twitter_v8_EN.d1bb5d2a5ce35859d038df852d9e6a0a811beaac.png";
       var facebookImage = "/assets/images/EOY_facebook_v1.a152496406bad899d1a920f6d6b9f507.png";
       var siteUrl = locale + '/';
       var localesInfo = [locale];
-      var values = {
-        currency: currencies[currencyCode],
-        presets: currencies.usd.presets.single,
-        amount: '',
-        frequency: 'single',
-        country: country
-      };
+      var values = queryParser(request.query);
       var desc = messages.i_donated_to_mozilla;
       if (location.indexOf('thunderbird') !== -1) {
         favicon = "/assets/images/thunderbird/favicon.ico";

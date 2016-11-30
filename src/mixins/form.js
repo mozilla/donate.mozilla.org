@@ -265,6 +265,11 @@ var formMixin = {
     this.setState({
       submitting: false
     });
+    reactGA.event({
+      category: "Signup",
+      action: "Submitted the form",
+      label: "donate"
+    });
     var page = '/' + this.context.intl.locale + location;
     reactGA.pageview(page);
     this.context.router.push(page);

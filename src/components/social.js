@@ -1,8 +1,26 @@
 import React from 'react';
+import reactGA from 'react-ga';
 
 module.exports = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
+  },
+  socialClick: function(category, action, label) {
+    reactGA.event({
+      category: "Social",
+      action: "Clicked on button",
+      label
+    });
+    return true;
+  },
+  facebookClick: function() {
+    return this.socialClick("facebook");
+  },
+  twitterClick: function() {
+    return this.socialClick("twitter");
+  },
+  emailClick: function() {
+    return this.socialClick("email");
   },
   render: function() {
     var appURL = process.env.APPLICATION_URI;
@@ -23,14 +41,14 @@ module.exports = React.createClass({
           <div className="row baseline-social">
             <div className="third" id="facebook">
               <div className="social-button"></div>
-              <a href={facebookShareURL} target="_blank">
+              <a onClick={this.facebookClick} href={facebookShareURL} target="_blank">
                 <i className="fa fa-facebook fa-4x"></i>
                 <div>facebook</div>
               </a>
             </div>
             <div className="third" id="twitter">
               <div className="social-button"></div>
-              <a href={twitterShareURL} target="_blank">
+              <a onClick={this.twitterClick} href={twitterShareURL} target="_blank">
                 <i className="fa fa-twitter fa-5x"></i>
                 <div>twitter</div>
               </a>
@@ -40,22 +58,22 @@ module.exports = React.createClass({
           <div className="row social-with-email">
             <div className="third" id="facebook">
               <div className="social-button"></div>
-              <a href={facebookShareURL} target="_blank">
+              <a onClick={this.facebookClick} href={facebookShareURL} target="_blank">
                 <i className="fa fa-facebook fa-2x"></i>
                 <div>facebook</div>
               </a>
             </div>
             <div className="third" id="twitter">
               <div className="social-button"></div>
-              <a href={twitterShareURL} target="_blank">
+              <a onClick={this.twitterClick} href={twitterShareURL} target="_blank">
                 <i className="fa fa-twitter fa-2x"></i>
                 <div>twitter</div>
               </a>
             </div>
             <div className="third email-share email-share-test" id="email">
               <div className="social-button"></div>
-              <a href={emailShareURL} target="_blank">
-              <i className="fa fa-envelope fa-2x"></i>
+              <a onClick={this.emailClick} href={emailShareURL} target="_blank">
+                <i className="fa fa-envelope fa-2x"></i>
                 <div>{this.context.intl.formatMessage({id: 'email'})}</div>
               </a>
             </div>

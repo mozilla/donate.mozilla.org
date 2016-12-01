@@ -80,6 +80,7 @@ var Index = React.createClass({
           <script src={'/' + fileHashes.main.js} ></script>
           <Pontoon/>
           <script src="https://checkout.stripe.com/checkout.js"></script>
+          <script src="https://c.shpg.org/352/sp.js"></script>
         </body>
       </html>
     );

@@ -329,10 +329,10 @@ module.exports = function(options) {
         fontSrc: ['self', 'https://fonts.gstatic.com', 'https://maxcdn.bootstrapcdn.com', 'https://pontoon.mozilla.org'],
         frameSrc: ['https://js.stripe.com', 'https://checkout.stripe.com', 'https://pontoon.mozilla.org',
                     'https://app.optimizely.com'],
-        imgSrc: ['self', 'https://www.google-analytics.com', 'https://q.stripe.com', 'https://pontoon.mozilla.org',
+        imgSrc: ['self', 'https://www.google-analytics.com', 'https://q.stripe.com', 'https://pontoon.mozilla.org', 'https://*.shpg.org/',
           'https://cdn.optimizely.com'],
         scriptSrc: ['self', 'unsafe-inline', 'unsafe-eval', 'https://cdn.optimizely.com', 'https://app.optimizely.com',
-          'https://optimizely.s3.amazonaws.com', 'https://www.google-analytics.com', 'https://ajax.googleapis.com',
+          'https://optimizely.s3.amazonaws.com', 'https://www.google-analytics.com', 'https://ajax.googleapis.com', 'https://*.shpg.org/',
           'https://js.stripe.com', 'https://checkout.stripe.com', 'https://pontoon.mozilla.org'],
         styleSrc: ['self', 'unsafe-inline', 'https://fonts.googleapis.com',
           'https://maxcdn.bootstrapcdn.com', 'https://pontoon.mozilla.org']

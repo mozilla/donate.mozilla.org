@@ -187,6 +187,7 @@ var formMixin = {
       key: process.env.STRIPE_PUBLIC_KEY,
       image: process.env.APPLICATION_URI + '/assets/images/mozilla-circular.911f4f7f4e6682c9893b8441d2e09df40cea80e2.png',
       zipCode: true,
+      allowRememberMe: false,
       billingAddress: true,
       locale: locale,
       closed: () => {

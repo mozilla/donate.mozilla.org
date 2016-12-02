@@ -6,10 +6,9 @@ var SocialComponentItem = React.createClass({
     intl: React.PropTypes.object
   },
   render: function() {
-    var locale = this.context.intl.locale;
-    if (locale === 'en-US') {
+    if (/^(en)(\b|$)/.test(this.context.intl.locale)) {
       return (
-        <div className="share-progress-wrapper">
+        <div onClick={this.props.onClick} className="share-progress-wrapper">
           <div className={this.props.shareProgress}></div>
           {this.props.children}
         </div>
@@ -95,7 +94,7 @@ module.exports = React.createClass({
             </div>
             <div className="third email-share email-share-test" id="email">
               <div className="social-button"></div>
-              <SocialComponentItem onClick={this.emailClick} href={emailShareURL} shareProgress="sp_177236 sp_tw_small">
+              <SocialComponentItem onClick={this.emailClick} href={emailShareURL} shareProgress="sp_177234 sp_em_small">
                 <i className="fa fa-envelope fa-2x"></i>
                 <div>{this.context.intl.formatMessage({id: 'email'})}</div>
               </SocialComponentItem>

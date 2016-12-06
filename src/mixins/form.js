@@ -6,8 +6,7 @@ import form from '../lib/form.js';
 
 var formMixin = {
   contextTypes: {
-    intl: React.PropTypes.object,
-    router: React.PropTypes.object.isRequired
+    intl: React.PropTypes.object
   },
   propTypes: {
     currency: React.PropTypes.object,
@@ -138,8 +137,7 @@ var formMixin = {
       params += "&country=" + country;
     }
     var page = '/' + this.context.intl.locale + '/' + location + '/';
-    reactGA.pageview(page);
-    this.context.router.push(page + params);
+    window.location = page + params;
   },
   stripeError: function(error) {
     form.error("other", this.context.intl.formatMessage({id: 'try_again_later'}) + " [" + error + "]");
@@ -272,8 +270,7 @@ var formMixin = {
       label: "donate"
     });
     var page = '/' + this.context.intl.locale + location;
-    reactGA.pageview(page);
-    this.context.router.push(page);
+    window.location = page;
   },
   signupSuccess: function(result) {
     this.doSignupSuccess(result, '/share/');

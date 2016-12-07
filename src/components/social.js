@@ -63,15 +63,19 @@ module.exports = React.createClass({
             <div className="third" id="facebook">
               <div className="social-button"></div>
               <SocialComponentItem onClick={this.facebookClick} href={facebookShareURL} shareProgress="sp_177235 sp_fb_small">
-                <i className="fa fa-facebook fa-4x"></i>
-                <div>facebook</div>
+                <div className="icon-container">
+                  <i className="fa fa-facebook fa-4x"></i>
+                </div>
+                <div className="label-container">facebook</div>
               </SocialComponentItem>
             </div>
             <div className="third" id="twitter">
               <div className="social-button"></div>
               <SocialComponentItem onClick={this.twitterClick} href={twitterShareURL} shareProgress="sp_177236 sp_tw_small">
-                <i className="fa fa-twitter fa-5x"></i>
-                <div>twitter</div>
+                <div className="icon-container">
+                  <i className="fa fa-twitter fa-4x"></i>
+                </div>
+                <div className="label-container">twitter</div>
               </SocialComponentItem>
             </div>
           </div>
@@ -80,23 +84,28 @@ module.exports = React.createClass({
             <div className="third" id="facebook">
               <div className="social-button"></div>
               <SocialComponentItem onClick={this.facebookClick} href={facebookShareURL} shareProgress="sp_177235 sp_fb_small">
-                <i className="fa fa-facebook fa-2x"></i>
-                <div>facebook</div>
+                <div className="icon-container">
+                  <i className="fa fa-facebook fa-2x"></i>
+                </div>
+                <div className="label-container">facebook</div>
               </SocialComponentItem>
             </div>
             <div className="third" id="twitter">
               <div className="social-button"></div>
               <SocialComponentItem onClick={this.twitterClick} href={twitterShareURL} shareProgress="sp_177236 sp_tw_small">
-                <div className='' ></div>
-                <i className="fa fa-twitter fa-2x"></i>
-                <div>twitter</div>
+                <div className="icon-container">
+                  <i className="fa fa-twitter fa-2x"></i>
+                </div>
+                <div className="label-container">twitter</div>
               </SocialComponentItem>
             </div>
             <div className="third email-share email-share-test" id="email">
               <div className="social-button"></div>
               <SocialComponentItem onClick={this.emailClick} href={emailShareURL} shareProgress="sp_177234 sp_em_small">
-                <i className="fa fa-envelope fa-2x"></i>
-                <div>{this.context.intl.formatMessage({id: 'email'})}</div>
+                <div className="icon-container">
+                  <i className="fa fa-envelope fa-2x"></i>
+                </div>
+                <div className="label-container">{this.context.intl.formatMessage({id: 'email'})}</div>
               </SocialComponentItem>
             </div>
           </div>

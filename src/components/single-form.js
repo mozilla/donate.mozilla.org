@@ -101,6 +101,7 @@ var singleForm = React.createClass({
         <AmountButtons name="amount"/>
         <div className="payment-section">
           {this.renderPaymentOptions()}
+          <ErrorListener errors={["other"]}/>
         </div>
       </div>
     );

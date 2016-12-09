@@ -29,6 +29,7 @@ module.exports = {
     code: 'ars',
     minAmount: '30',
     symbol: '$',
+    amexDisabled: true,
     disabled: "paypal",
     presets: {
       single: ['300', '150', '75', '45'],
@@ -39,6 +40,7 @@ module.exports = {
     code: 'brl',
     minAmount: '5',
     symbol: 'R$',
+    amexDisabled: true,
     paypalFixedFee: {
       macro: 0.60,
       micro: 0.10
@@ -79,6 +81,7 @@ module.exports = {
     minAmount: '1300',
     symbol: '$',
     disabled: "paypal",
+    amexDisabled: true,
     zeroDecimal: "stripe",
     presets: {
       single: ['13000', '6500', '3250', '2000'],
@@ -98,6 +101,7 @@ module.exports = {
   'czk': {
     code: 'czk',
     minAmount: '45',
+    amexDisabled: true,
     symbol: 'Kč',
     paypalFixedFee: {
       macro: 10.00,
@@ -163,6 +167,7 @@ module.exports = {
   'huf': {
     code: 'huf',
     minAmount: '490',
+    amexDisabled: true,
     symbol: 'Ft',
     paypalFixedFee: {
       macro: 90,
@@ -202,6 +207,7 @@ module.exports = {
     minAmount: '130',
     symbol: '₹',
     disabled: "paypal",
+    amexDisabled: true,
     presets: {
       single: ['1000', '500', '250', '150'],
       monthly: ['650', '330', '200', '130']
@@ -225,6 +231,7 @@ module.exports = {
     code: 'mxn',
     minAmount: '30',
     symbol: '$',
+    amexDisabled: true,
     paypalFixedFee: {
       macro: 4.00,
       micro: 0.55

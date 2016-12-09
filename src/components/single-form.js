@@ -9,6 +9,7 @@ import {PayPalButton, StripeButton} from './payment-options.js';
 import SubmitButton from './submit-button.js';
 import DonateButton from './donate-button.js';
 import {FormattedHTMLMessage} from 'react-intl';
+import currencies from '../data/currencies.js';
 
 var singleForm = React.createClass({
   mixins: [require('../mixins/form.js')],
@@ -34,6 +35,7 @@ var singleForm = React.createClass({
     );
   },
   renderPaymentOptions: function() {
+    var className = "";
     if (!this.state.currency.disabled) {
       return (
         <div>
@@ -46,6 +48,7 @@ var singleForm = React.createClass({
           </div>
           <ErrorListener errors={["cardNumber", "cvc", "expMonth", "expYear"]}/>
           <StripeButton
+            currency={this.state.currency}
             name="payment-type"
             submit={["frequency", "amount"]}
             validate={["amount"]}
@@ -61,6 +64,10 @@ var singleForm = React.createClass({
         </div>
       );
     } else if (this.state.currency.disabled === "paypal") {
+      className = "row payment-logos credit-card-logos";
+      if (currencies[this.state.currency.code].amexDisabled) {
+        className += " no-amex";
+      }
       return (
         <div className="paypal-disabled">
           <SectionHeading>
@@ -68,7 +75,7 @@ var singleForm = React.createClass({
             <p id="secure-label">
               <i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}
             </p>
-            <div className="row payment-logos credit-card-logos">
+            <div className={className}>
               <p>&nbsp;</p>
             </div>
           </SectionHeading>

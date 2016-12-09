@@ -1,4 +1,5 @@
 import React from 'react';
+import currencies from '../data/currencies.js';
 
 var PayPalButton = React.createClass({
   contextTypes: {
@@ -57,7 +58,8 @@ var StripeButton = React.createClass({
     onClick: React.PropTypes.func,
     submitting: React.PropTypes.bool,
     validate: React.PropTypes.array.isRequired,
-    name: React.PropTypes.string.isRequired
+    name: React.PropTypes.string.isRequired,
+    currency: React.PropTypes.object.isRequired
   },
   onChange: function() {
     if (this.props.onClick) {
@@ -70,11 +72,15 @@ var StripeButton = React.createClass({
   render: function() {
     var name = this.props.name;
     var labelId = "payment-cc-" + name;
+    var className = "row payment-logos credit-card-logos";
+    if (currencies[this.props.currency.code].amexDisabled) {
+      className += " no-amex";
+    }
     return (
       <div className="half">
         <input onChange={this.onChange} type="radio" className="payment-type payment-cc-input" name={name} value="cc" id={labelId}/>
         <label className="payment-cc-label" htmlFor={labelId}>
-          <div className="row payment-logos credit-card-logos">
+          <div className={className}>
             <p>&nbsp;</p>
           </div>
           <div className="row medium-label-size">{this.context.intl.formatMessage({id: 'credit_card'})}</div>
@@ -90,16 +96,21 @@ var CreditCardButton = React.createClass({
   },
   propTypes: {
     onClick: React.PropTypes.func,
-    name: React.PropTypes.string.isRequired
+    name: React.PropTypes.string.isRequired,
+    currency: React.PropTypes.object.isRequired
   },
   render: function() {
     var name = this.props.name;
     var labelId = "payment-cc-" + name;
+    var className = "row payment-logos credit-card-logos";
+    if (currencies[this.props.currency.code].amexDisabled) {
+      className += " no-amex";
+    }
     return (
       <div onClick={this.props.onClick || function() {}} className="half">
         <input type="radio" className="payment-type payment-cc-input" name={name} value="cc" id={labelId}/>
         <label className="payment-cc-label" htmlFor={labelId}>
-          <div className="row payment-logos credit-card-logos">
+          <div className={className}>
             <p>&nbsp;</p>
           </div>
           <div className="row medium-label-size">{this.context.intl.formatMessage({id: 'credit_card'})}</div>

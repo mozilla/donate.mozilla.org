@@ -90,38 +90,7 @@ var StripeButton = React.createClass({
   }
 });
 
-var CreditCardButton = React.createClass({
-  contextTypes: {
-    intl: React.PropTypes.object
-  },
-  propTypes: {
-    onClick: React.PropTypes.func,
-    name: React.PropTypes.string.isRequired,
-    currency: React.PropTypes.object.isRequired
-  },
-  render: function() {
-    var name = this.props.name;
-    var labelId = "payment-cc-" + name;
-    var className = "row payment-logos credit-card-logos";
-    if (currencies[this.props.currency.code].amexDisabled) {
-      className += " no-amex";
-    }
-    return (
-      <div onClick={this.props.onClick || function() {}} className="half">
-        <input type="radio" className="payment-type payment-cc-input" name={name} value="cc" id={labelId}/>
-        <label className="payment-cc-label" htmlFor={labelId}>
-          <div className={className}>
-            <p>&nbsp;</p>
-          </div>
-          <div className="row medium-label-size">{this.context.intl.formatMessage({id: 'credit_card'})}</div>
-        </label>
-      </div>
-    );
-  }
-});
-
 module.exports = {
   PayPalButton: PayPalButton,
-  StripeButton: StripeButton,
-  CreditCardButton: CreditCardButton
+  StripeButton: StripeButton
 };

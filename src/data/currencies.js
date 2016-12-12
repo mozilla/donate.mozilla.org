@@ -345,5 +345,15 @@ module.exports = {
       single: ['480', '240', '150', '70'],
       monthly: ['250', '150', '100', '62']
     }
+  },
+  'zar': {
+    code: 'zar',
+    minAmount: '28',
+    symbol: 'R',
+    disabled: "paypal",
+    presets: {
+      single: ['275', '130', '70', '40'],
+      monthly: ['130', '70', '40', '28']
+    }
   }
 };

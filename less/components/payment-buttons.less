@@ -1,13 +1,23 @@
 .payment-logos {
   width: 116px;
   height: 40px;
-  margin: 0 auto;
-  background-size: 116px auto;
+  margin: -10px auto -3px;
+  background-size: 100px auto;
   background-repeat: no-repeat;
   background-position: top center;
   background-image: url('/assets/images/payment_logos_updated.4ca531c0b90d3635aef0c1fc78d5967e.png');
   &.no-amex {
     width: 82px;
+  }
+}
+
+.payment-cc-label, .payment-paypal-label {
+  .row.medium-label-size {
+    font-size: 13px;
+  }
+  .row.medium-label-size.donate-button {
+    font-weight: 900;
+    font-size: 16px;
   }
 }
 
@@ -42,6 +52,7 @@ input.payment-type:checked + label {
 
 .paypal-logo {
   background-position: center -104px;
+  margin: -7px auto -7px
 }
 
 label.payment-paypal-label,
@@ -122,6 +133,20 @@ label.payment-paypal-label:hover .payment-logos {
   .payment-paypal-input:checked + .payment-paypal-label {
     .payment-logos {
       background-position: -6px -111px, center;
+    }
+  }
+}
+
+.donate-button-text {
+  .donate-button {
+    display: none;
+  }
+  .payment-logos {
+    margin: 0 auto;
+  }
+  .payment-cc-label, .payment-paypal-label {
+    .row.medium-label-size {
+      font-size: 16px;
     }
   }
 }

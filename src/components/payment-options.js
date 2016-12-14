@@ -28,6 +28,7 @@ var PayPalButton = React.createClass({
     }
     return (
       <span>
+        <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button'})}</div>
         <div className="row payment-logos paypal-logo">
           <p>&nbsp;</p>
         </div>
@@ -80,6 +81,7 @@ var StripeButton = React.createClass({
       <div className="half">
         <input onChange={this.onChange} type="radio" className="payment-type payment-cc-input" name={name} value="cc" id={labelId}/>
         <label className="payment-cc-label" htmlFor={labelId}>
+          <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button'})}</div>
           <div className={className}>
             <p>&nbsp;</p>
           </div>

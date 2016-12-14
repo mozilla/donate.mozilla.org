@@ -43,7 +43,7 @@ var singleForm = React.createClass({
             <h4 className="left choose-payment">{this.context.intl.formatMessage({id: "choose_payment"})}</h4>
             <p id="secure-label" className="right"><i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}</p>
           </SectionHeading>
-          <div className="row">
+          <div className="row payment-move-baseline">
             {this.renderPrivacyPolicy()}
           </div>
           <ErrorListener errors={["cardNumber", "cvc", "expMonth", "expYear"]}/>
@@ -61,6 +61,9 @@ var singleForm = React.createClass({
             validate={["amount"]}
             onSubmit={this.paypal}
           />
+          <div className="row payment-move-test">
+            {this.renderPrivacyPolicy()}
+          </div>
         </div>
       );
     } else if (this.state.currency.disabled === "paypal") {

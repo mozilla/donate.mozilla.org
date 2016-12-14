@@ -31,7 +31,6 @@ module.exports = React.createClass({
     if (currency) {
       form.updateState("currency", currency);
     }
-    console.log(currency);
     reactGA.event({
       category: "User Flow",
       action: "Changed Currency",

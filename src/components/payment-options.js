@@ -1,5 +1,6 @@
 import React from 'react';
 import currencies from '../data/currencies.js';
+import reactGA from 'react-ga';
 
 var PayPalButton = React.createClass({
   contextTypes: {
@@ -19,6 +20,10 @@ var PayPalButton = React.createClass({
     if (!this.props.submitting) {
       this.props.onSubmit(this.props.validate, this.props.submit);
     }
+    reactGA.event({
+      category: "User Flow",
+      action: "PayPal Clicked"
+    }); 
   },
   renderButton: function() {
     if (this.props.submitting) {
@@ -68,6 +73,10 @@ var StripeButton = React.createClass({
     setTimeout(() => {
       this.props.onSubmit(this.props.validate, this.props.submit);
     });
+    reactGA.event({
+      category: "User Flow",
+      action: "Stripe Clicked"
+    }); 
   },
   render: function() {
     var name = this.props.name;

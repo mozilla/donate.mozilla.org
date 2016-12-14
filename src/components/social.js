@@ -26,11 +26,11 @@ module.exports = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
-  socialClick: function(category, action, label) {
+  socialClick: function(label) {
     reactGA.event({
       category: "Social",
       action: "Clicked on button",
-      label
+      label: label
     });
     return true;
   },

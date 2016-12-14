@@ -1,6 +1,7 @@
 import React from 'react';
 import listener from '../lib/listener.js';
 import form from '../lib/form.js';
+import reactGA from 'react-ga';
 
 module.exports = React.createClass({
   contextTypes: {
@@ -35,6 +36,11 @@ module.exports = React.createClass({
   },
   onChange: function(e) {
     form.updateField("frequency", e.currentTarget.value);
+    reactGA.event({
+      category: "User Flow",
+      action: "Changed Frequency",
+      label: e.currentTarget.value
+    }); 
   },
   validate: function() {
     return true;

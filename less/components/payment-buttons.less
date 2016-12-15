@@ -11,6 +11,16 @@
   }
 }
 
+.payment-cc-label, .payment-paypal-label {
+  .row.medium-label-size {
+    font-size: 13px;
+  }
+  .row.medium-label-size.donate-button {
+    font-weight: 900;
+    font-size: 16px;
+  }
+}
+
 input.payment-type + label {
   background-color: #EBEBEB;
   background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
@@ -38,10 +48,12 @@ input.payment-type:checked + label {
   &.no-amex {
     background-position: -33px -36px;
   }
+    margin: -7px auto -6px
 }
 
 .paypal-logo {
   background-position: center -104px;
+  margin: -11px auto -3px;
 }
 
 label.payment-paypal-label,
@@ -122,6 +134,29 @@ label.payment-paypal-label:hover .payment-logos {
   .payment-paypal-input:checked + .payment-paypal-label {
     .payment-logos {
       background-position: -6px -111px, center;
+    }
+  }
+
+  .paypal-logo {
+    margin: -7px auto -8px;
+  }
+
+  .credit-card-logos {
+    margin: -12px auto -3px;
+  }
+
+}
+
+.donate-button-text {
+  .donate-button {
+    display: none;
+  }
+  .payment-logos {
+    margin: 0 auto;
+  }
+  .payment-cc-label, .payment-paypal-label {
+    .row.medium-label-size {
+      font-size: 16px;
     }
   }
 }

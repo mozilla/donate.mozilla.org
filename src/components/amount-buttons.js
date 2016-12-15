@@ -3,6 +3,7 @@ import {FormattedMessage, FormattedNumber} from 'react-intl';
 import {ErrorMessage} from './error.js';
 import listener from '../lib/listener.js';
 import form from '../lib/form.js';
+import reactGA from 'react-ga';
 
 var AmountButton = React.createClass({
   propTypes: {
@@ -11,6 +12,15 @@ var AmountButton = React.createClass({
     value: React.PropTypes.string,
     currencyCode: React.PropTypes.string
   },
+
+  onClickEvent: function(e) {
+    reactGA.event({
+      category: "User Flow",
+      action: "Changed Amount",
+      label: e.currentTarget.value
+    }); 
+  },
+
   render: function() {
     var checked = false;
     if (this.props.value === this.props.amount) {
@@ -18,7 +28,7 @@ var AmountButton = React.createClass({
     }
     return (
       <div className="third">
-        <input onChange={this.props.onChange} checked={checked} className="amount-radio" type="radio" name="donation_amount" value={this.props.value} id={"amount-" + this.props.value}/>
+        <input onChange={this.props.onChange} onClick={this.onClickEvent} checked={checked} className="amount-radio" type="radio" name="donation_amount" value={this.props.value} id={"amount-" + this.props.value}/>
         <label htmlFor={"amount-" + this.props.value} className="amount-button large-label-size">
           { this.props.currencyCode && this.props.value ?
           <FormattedNumber
@@ -54,6 +64,11 @@ var AmountOtherButton = React.createClass({
   },
   onRadioClick: function() {
     document.querySelector("#amount-other-input").focus();
+    reactGA.event({
+      category: "User Flow",
+      action: "Changed Amount",
+      label: "Other"
+    }); 
   },
   onInputClick: function() {
     document.querySelector("#amount-other").click();

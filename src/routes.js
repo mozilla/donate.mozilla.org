@@ -11,8 +11,9 @@ var routes = (
       Object.keys(locales).map(function(locale) {
         return (
           <Route key={locale} path={locale}>
-            <IndexRoute component={require('./pages/one-page.js')}/>
+            <IndexRoute component={require('./pages/about.js')}/>
             <Route path='about' component={require('./pages/about.js')}/>
+            <Route path='one-page' component={require('./pages/one-page.js')}/>
             <Route path='thank-you' component={require('./pages/thank-you.js')}/>
             <Route path='share' component={require('./pages/share.js')}/>
             <Route path='ways-to-give' component={require('./pages/ways-to-give.js')}/>

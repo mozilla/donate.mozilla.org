@@ -10,8 +10,12 @@ function start() {
   });
 
   var shutdown = () => {
-    server.stop(() => {
-      process.exit(0);
+    server.stop({
+      timeout: 15000 // wait fifteen seconds before forcefully terminating existing connections
+    },() => {
+      setTimeout(() => {
+        process.exit(0);
+      }, 15000);
     });
   };
 

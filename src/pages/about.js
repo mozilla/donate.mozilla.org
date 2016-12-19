@@ -17,7 +17,7 @@ module.exports = React.createClass({
         <div className="additional-info-page">
           <div className="container additional-page">
             <img className="heart-image icon-baseline" height="100" width="107" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
-            <img className="heart-image icon-variant" height="100" width="107" src="/assets/images/heart.svg"/>
+            <img className="heart-image icon-variant" height="100" width="107" src="/assets/images/pixel-heart.svg"/>
             <div>
               <img className="mozilla-watermark" src="/assets/images/mozilla.5e83dba715a0469b92071758876f0373.svg"/>
               <span>{this.context.intl.formatMessage({id: 'additional_info'})}</span>

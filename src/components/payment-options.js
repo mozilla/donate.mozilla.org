@@ -23,7 +23,7 @@ var PayPalButton = React.createClass({
     reactGA.event({
       category: "User Flow",
       action: "PayPal Clicked"
-    }); 
+    });
   },
   renderButton: function() {
     if (this.props.submitting) {
@@ -37,7 +37,7 @@ var PayPalButton = React.createClass({
         <div className="row payment-logos paypal-logo">
           <p>&nbsp;</p>
         </div>
-        <div className="row medium-label-size">PayPal</div>
+        <div className="row medium-label-size less-text">PayPal</div>
       </span>
     );
   },
@@ -77,7 +77,7 @@ var StripeButton = React.createClass({
     reactGA.event({
       category: "User Flow",
       action: "Stripe Clicked"
-    }); 
+    });
   },
   render: function() {
     var name = this.props.name;
@@ -94,7 +94,7 @@ var StripeButton = React.createClass({
           <div className={className}>
             <p>&nbsp;</p>
           </div>
-          <div className="row medium-label-size">{this.context.intl.formatMessage({id: 'credit_card'})}</div>
+          <div className="row medium-label-size less-text">{this.context.intl.formatMessage({id: 'credit_card'})}</div>
         </label>
       </div>
     );

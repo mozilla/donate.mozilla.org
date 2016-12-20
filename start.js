@@ -10,8 +10,16 @@ function start() {
   });
 
   var shutdown = () => {
-    server.stop(() => {
-      process.exit(0);
+    // instruct hapi to stop accepting incoming requests, and to 
+    // wait fifteen seconds before forcefully terminating existing connections.
+    // We do this so that we don't interrupt in-flight and queued requests
+    server.stop({
+      timeout: 15000
+    },() => {
+      // wait fifteen seconds before terminating the process (to allow for the existing request timeout to run it's course)
+      setTimeout(() => {
+        process.exit(0);
+      }, 15000);
     });
   };
 

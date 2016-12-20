@@ -58,7 +58,7 @@ var singleForm = React.createClass({
             validate={["amount"]}
             onSubmit={this.paypal}
           />
-          <div className="row">
+          <div className="row" id="privacy-policy">
             {this.renderPrivacyPolicy()}
           </div>
         </div>

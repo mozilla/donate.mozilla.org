@@ -4,7 +4,7 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div className="full" id="section-heading">
+      <div className="full">
         {this.props.children}
       </div>
     );

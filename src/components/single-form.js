@@ -31,7 +31,7 @@ var singleForm = React.createClass({
   },
   renderPrivacyPolicy: function() {
     return (
-      <p className="full"><FormattedHTMLMessage id="privacy_policy_var_c"/></p>
+      <p className="full"><FormattedHTMLMessage id="privacy_policy_var_b"/></p>
     );
   },
   renderPaymentOptions: function() {

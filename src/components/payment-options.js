@@ -37,7 +37,6 @@ var PayPalButton = React.createClass({
         <div className="row payment-logos paypal-logo">
           <p>&nbsp;</p>
         </div>
-        <div className="row medium-label-size less-text">PayPal</div>
       </span>
     );
   },
@@ -94,7 +93,6 @@ var StripeButton = React.createClass({
           <div className={className}>
             <p>&nbsp;</p>
           </div>
-          <div className="row medium-label-size less-text">{this.context.intl.formatMessage({id: 'credit_card'})}</div>
         </label>
       </div>
     );

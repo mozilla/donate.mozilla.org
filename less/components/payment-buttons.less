@@ -11,73 +11,54 @@
   }
 }
 
-.payment-cc-label, .payment-paypal-label {
-  .row.medium-label-size {
-    font-size: 13px;
-  }
-  .row.medium-label-size.donate-button {
-    font-weight: 600;
-    font-size: 16px;
+
+.credit-card-logos {
+  background-position: center -3px;
+  &.no-amex {
+    background-position: -33px -3px, 50%;
   }
 }
 
-.credit-card-logos {
-  background-position: center -36px;
-  &.no-amex {
-    background-position: -33px -36px;
+.paypal-disabled {
+  .credit-card-logos {
+    background-position:-2px -33px,50%;
+    &.no-amex {
+      background-position: -33px -36px;
+    }
   }
-    margin: -7px auto -6px;
 }
 
 .paypal-logo {
-  background-position: center -104px;
-  margin: -11px auto -3px;
+  background-position: center -70px;
+  margin: -8px auto -5px;
 }
 
 input.payment-type + label {
-  background-color: #EBEBEB;
+  background-color: #49AFFD;
+  color: white;
   background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
-  color: #65656D;
 }
 
 input.payment-type + label:hover {
-  background-color: #F2F2F2;
-  // This is needed to override the baseline background.
-  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
-}
-input.payment-type + label:hover {
-  // This is needed to override the baseline background.
-  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+  background-color: #75baef;
 }
 
 input.payment-type:checked + label {
-  background-color: #49AFFD;
+  background-color: #0390FC;
   color: white;
   background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
 }
 
 label.payment-paypal-label,
 label.payment-cc-label {
-  height: 89px;
+  height: 79px;
 }
 
-label.payment-cc-label:hover .payment-logos {
-  background-position: center -36px;
-  &.no-amex {
-    background-position: -33px -36px;
-  }
-}
-label.payment-paypal-label:hover .payment-logos {
-  background-position: center -104px;
-  &.no-amex {
-    background-position: -33px -104px;
-  }
-}
 .payment-cc-input:checked + .payment-cc-label {
   .credit-card-logos {
     background-position: center -3px;
     &.no-amex {
-      background-position: -33px -3px;
+      background-position: -33px -3px, 50%;
     }
   }
 }
@@ -85,11 +66,11 @@ label.payment-paypal-label:hover .payment-logos {
 .payment-paypal-input:checked + .payment-paypal-label {
   .paypal-logo {
     background-position: center -70px;
-    color: white;
   }
 }
 
 @media screen and (min-width: 480px) {
+
   .payment-logos {
     width: 165px;
     height: 45px;
@@ -98,35 +79,38 @@ label.payment-paypal-label:hover .payment-logos {
       width: 108px;
     }
   }
+
+  label.payment-paypal-label,
+  label.payment-cc-label {
+    height: 89px;
+  }
+
   .credit-card-logos {
-    background-position: -2px -55px, center;
+    background-position: center -3px;
     &.no-amex {
-      background-position: -47px -55px, center;
+        background-position: -47px -5px, 50%;
     }
   }
 
-  label.payment-cc-label:hover .payment-logos {
-    background-position: -2px -55px, center;
-    &.no-amex {
-      background-position: -47px -55px, center;
+  .paypal-disabled {
+    .credit-card-logos {
+      background-position:-2px -55px,50%;
+      &.no-amex {
+        background-position: -47px -55px, 50%;
+      }
     }
   }
+
   .paypal-logo {
-    background-position: -4px -160px, center;
-  }
-
-  label.payment-paypal-label:hover .payment-logos {
-    background-position: -4px -160px, center;
-    &.no-amex {
-      background-position: -47px -160px, center;
-    }
+    background-position: -6px -111px, center;
+    margin:auto;
   }
 
   .payment-cc-input:checked + .payment-cc-label {
     .credit-card-logos {
-      background-position: -4px -5px, center;
+      background-position: center -3px;
       &.no-amex {
-        background-position: -47px -5px, center;
+        background-position: -47px -5px, 50%;
       }
     }
   }
@@ -136,115 +120,8 @@ label.payment-paypal-label:hover .payment-logos {
       background-position: -6px -111px, center;
     }
   }
-
-  .paypal-logo {
-    margin: -7px auto -8px;
-  }
-
-  .credit-card-logos {
-    margin: -12px auto -3px;
-  }
-
 }
 
-.donate-button-text {
-  .donate-button {
-    display: none;
-  }
-  .payment-logos {
-    margin: 0 auto;
-  }
-  .payment-cc-label, .payment-paypal-label {
-    .row.medium-label-size {
-      font-size: 16px;
-    }
-  }
-}
-
-.donate-buttons-blue {
-  //Position so that cc logos are white even on initial load
-  input.payment-type + label {
-    background-color: #49AFFD;
-    color: white;
-    .credit-card-logos {
-      background-position: center -3px;
-      &.no-amex {
-        background-position: -33px -3px;
-      }
-      margin: -6px auto -7px;
-    }
-    //Position so that the paypal logos is white even on initial load
-    .paypal-logo {
-      background-position: center -70px;
-      margin: -8px auto -5px;
-    }
-  }
-
-  input.payment-type + label:hover {
-    background-color: #75baef;
-  }
-
-  input.payment-type:checked + label {
-    background-color: #0390FC;
-    background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
-  }
-
-  .payment-cc-input:checked + .payment-cc-label {
-    .credit-card-logos {
-      background-position: center -3px;
-      &.no-amex {
-        background-position: -33px -3px;
-      }
-    }
-  }
-
-  @media screen and (min-width: 480px) {
-
-    input.payment-type + label {
-      background-color: #49AFFD;
-      color: white;
-      .credit-card-logos {
-        background-position: center -3px;
-        &.no-amex {
-          background-position: -47px -3px;
-        }
-        margin: -12px auto 0;
-      }
-      .paypal-logo {
-        background-position: -6px -111px, center;
-        margin: -7px auto -8px;
-      }
-    }
-
-  }
-
-}
-
-.buttons-less-text {
-
-  .less-text {
-    display: none;
-  }
-
-  .credit-card-logos {
-    margin: auto;
-  }
-
-  .paypal-logo {
-    margin: auto;
-  }
-
-  @media screen and (min-width: 480px) {
-
-    input.payment-type + label {
-      .credit-card-logos {
-        margin: auto;
-      }
-      .paypal-logo {
-        margin: auto;
-      }
-    }
-
-  }
-
+.less-text {
+  display:none;
 }

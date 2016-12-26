@@ -56,3 +56,4 @@ Optionally configure Hatchet environment variables as documented [here](https://
 #### Thanks
 
 Thanks to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to run our build in real browsers.
+Mozilla fundraising uses [twemoji](https://github.com/twitter/twemoji) to encourage donations

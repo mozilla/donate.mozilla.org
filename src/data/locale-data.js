@@ -37,6 +37,7 @@ module.exports = {
     'sl': 'eur',
     'sv-SE': 'sek',
     'te': 'inr',
+    'uk': 'uah',
     'zh-CN': 'cny',
     'zh-TW': 'twd'
   },
@@ -76,6 +77,7 @@ module.exports = {
     'sv-SE': 'SE',
     'te': 'IN',
     'th': 'TH',
+    'uk': 'UK',
     'zh-CN': 'CN',
     'zh-TW': 'TW'
   }

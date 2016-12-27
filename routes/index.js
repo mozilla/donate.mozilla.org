@@ -90,7 +90,6 @@ var routes = {
       var stripe_customer_create_service = customerData.stripe_customer_create_service;
       var customer;
       var badRequest;
-      var basketData;
 
       if (err) {
         badRequest = boom.badRequest('Stripe charge failed');

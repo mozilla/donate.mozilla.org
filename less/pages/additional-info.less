@@ -12,7 +12,7 @@
     .container {
       display: inline-block;
       vertical-align: top;
-      text-align: left;
+      text-align: initial;
       padding: 30px;
     }
     .heart-image {
@@ -55,17 +55,18 @@
     padding: 0 20px;
   }
   .disclaimers {
-    text-align: left;
+    text-align: initial;
     max-width: 420px;
     .other-ways-to-give,
     .need-help,
     .donation-notice,
     .stripe-notice {
       width: 100%;
-      text-align: left;
+      text-align: initial;
       margin-left: auto;
     }
   }
+
   @media screen and (min-width: 840px) {
     .additional-info-page {
       margin-top: 60px;
@@ -90,7 +91,20 @@
       .stripe-notice {
         max-width: 840px;
         margin-left: 0;
+        margin-right: 0;
       }
+    }
+  }
+}
+
+html[dir="rtl"] {
+  .additional-info-container {
+    .footer .half {
+      padding-left: 35px;
+      padding-right: 0;
+    }
+    .mozilla-watermark {
+      margin: 0 0 -2px 8px;
     }
   }
 }

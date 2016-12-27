@@ -164,6 +164,17 @@ input[type="submit"] {
   float: left;
   padding-left: 5px;
   padding-right: 5px;
+  word-wrap: break-word;
+}
+
+html[dir="rtl"] {
+  .full,
+  .half,
+  .third,
+  .two-third,
+  .quarter {
+    float: right;
+  }
 }
 
 .full {
@@ -238,6 +249,15 @@ input[type="submit"] {
   float: right;
 }
 
+html[dir="rtl"] {
+  .left {
+    float: right;
+  }
+  .right {
+    float: left;
+  }
+}
+
 /* = Form Fields ========== */
 
 label {
@@ -246,6 +266,10 @@ label {
 
 input[type="radio"] + label {
   margin-left: 10px;
+}
+html[dir="rtl"] input[type="radio"] + label {
+  margin-left: 0;
+  margin-right: 10px;
 }
 
 input[type="text"],
@@ -263,10 +287,7 @@ input[type="email"] {
 
 input[type="email"] {
   padding-right: 33px;
-}
-input[name="lastname"],
-input[name="zip"] {
-  padding-left: 14px;
+  margin-top: 3px;
 }
 
 input[type="text"]:focus,
@@ -295,6 +316,13 @@ input.payment-type + label {
   cursor: pointer;
   white-space: nowrap;
   line-height: 1.42857;
+}
+
+html[dir="rtl"] {
+  input[name="donation_amount"] + label,
+  input.payment-type + label {
+    margin-right: 0;
+  }
 }
 
 input[name="donation_amount"]:checked + label,
@@ -403,6 +431,29 @@ input.payment-type + label {
   }
 }
 
+html[dir="rtl"] {
+  .paypal-disabled {
+    #secure-label {
+      left: 5px;
+      right: auto;
+    }
+    .credit-card-logos {
+      float: right;
+      margin-left: 0;
+      margin-right: -20px;
+      &.no-amex {
+        margin-left: 0;
+        margin-right: -10px;
+      }
+
+      @media screen and (max-width: 480px) {
+        margin-left: 0;
+        margin-right: -16px;
+      }
+    }
+  }
+}
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -moz-appearance: none;
@@ -446,6 +497,10 @@ i.fa.field-icon {
     font-size: 15px;
   }
 }
+html[dir="rtl"] i.fa.field-icon {
+  left: auto;
+  right: 12px;
+}
 
 i.fa.hint {
   position: absolute;
@@ -455,6 +510,11 @@ i.fa.hint {
   right: 10px;
   cursor: pointer;
 }
+html[dir="rtl"] i.fa.hint {
+  left: auto;
+  right: 10px;
+}
+
 
 /* = Layout, sections, and other UI related stuff ========== */
 
@@ -484,6 +544,10 @@ i.fa.hint {
     margin-right: 6px;
   }
 }
+html[dir="rtl"] #secure-label i.fa {
+  margin-left: 6px;
+  margin-right: 0;
+}
 
 /* Parsley.js / Validation Styling */
 .parsley-errors-list,
@@ -496,6 +560,7 @@ i.fa.hint {
   display: block;
   list-style: none;
   padding-left: 0;
+  padding-right: 0;
   margin: 0;
 }
 

@@ -346,6 +346,16 @@ module.exports = {
       monthly: ['250', '150', '100', '62']
     }
   },
+  'uah': {
+    code: 'uah',
+    minAmount: '53',
+    symbol: '₴',
+    disabled: "paypal",
+    presets: {
+      single: ['530', '260', '130', '80'],
+      monthly: ['260', '130', '80', '53']
+    }
+  },
   'zar': {
     code: 'zar',
     minAmount: '28',

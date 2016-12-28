@@ -11,6 +11,9 @@ import DonateButton from './donate-button.js';
 import {FormattedHTMLMessage} from 'react-intl';
 import currencies from '../data/currencies.js';
 
+var STRIPE_SUBMITTING = 2;
+var PAYPAL_SUBMITTING = 3;
+
 var singleForm = React.createClass({
   mixins: [require('../mixins/form.js')],
   contextTypes: {
@@ -36,6 +39,7 @@ var singleForm = React.createClass({
   },
   renderPaymentOptions: function() {
     var className = "";
+
     if (!this.state.currency.disabled) {
       return (
         <div>
@@ -47,13 +51,14 @@ var singleForm = React.createClass({
           <StripeButton
             currency={this.state.currency}
             name="payment-type"
+            submitting={this.state.submitting === STRIPE_SUBMITTING}
             submit={["frequency", "amount"]}
             validate={["amount"]}
             onSubmit={this.stripeCheckout}
           />
           <PayPalButton
             name="payment-type"
-            submitting={this.state.submitting}
+            submitting={this.state.submitting === PAYPAL_SUBMITTING}
             submit={["frequency", "amount"]}
             validate={["amount"]}
             onSubmit={this.paypal}
@@ -84,7 +89,7 @@ var singleForm = React.createClass({
           </div>
           <ErrorListener errors={["cardNumber", "cvc", "expMonth", "expYear"]}/>
           <SubmitButton
-            submitting={this.state.submitting}
+            submitting={this.state.submitting === STRIPE_SUBMITTING}
             submit={["amount", "frequency"]}
             validate={["amount"]}
             onSubmit={this.stripeCheckout}

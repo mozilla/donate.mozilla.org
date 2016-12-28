@@ -91,6 +91,7 @@ var PaypalForm = React.createClass({
   }
 });
 
+var PAYPAL_SUBMITTING = 3;
 var simplePaypal = React.createClass({
   mixins: [require('../mixins/form.js')],
   simplePaypal: function(validate, props) {
@@ -98,7 +99,7 @@ var simplePaypal = React.createClass({
     var submitProps = {};
     if (valid) {
       this.setState({
-        submitting: true
+        submitting: PAYPAL_SUBMITTING
       });
       submitProps = form.buildProps(props);
       this.refs.paypalForm.submit(submitProps.frequency);
@@ -137,7 +138,7 @@ var simplePaypal = React.createClass({
                   <AmountButtons name="amount"/>
                   <Frequency name="frequency"/>
                   <SubmitButton
-                    submitting={this.state.submitting}
+                    submitting={this.state.submitting === PAYPAL_SUBMITTING}
                     validate={["amount"]}
                     onSubmit={this.simplePaypal}
                     submit={["amount", "frequency"]}

@@ -32,13 +32,13 @@ var PayPalButton = React.createClass({
       );
     }
     return (
-      <span>
+      <div>
         <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button'})}</div>
         <div className="row payment-logos paypal-logo">
           <p>&nbsp;</p>
         </div>
         <div className="row medium-label-size less-text">PayPal</div>
-      </span>
+      </div>
     );
   },
   render: function() {
@@ -71,11 +71,34 @@ var StripeButton = React.createClass({
     if (this.props.onClick) {
       this.props.onClick();
     }
-    this.props.onSubmit(this.props.validate, this.props.submit);
+
+    if (!this.props.submitting) {
+      this.props.onSubmit(this.props.validate, this.props.submit);
+    }
     reactGA.event({
       category: "User Flow",
       action: "Stripe Clicked"
     });
+  },
+  renderButton: function() {
+    if (this.props.submitting) {
+      return (
+        <div className="submitting-container"><i className="fa fa-cog fa-spin"/>{this.context.intl.formatMessage({id: 'submitting'})}</div>
+      );
+    }
+    var className = "row payment-logos credit-card-logos";
+    if (currencies[this.props.currency.code].amexDisabled) {
+      className += " no-amex";
+    }
+    return (
+      <div>
+        <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button'})}</div>
+        <div className={className}>
+          <p>&nbsp;</p>
+        </div>
+        <div className="row medium-label-size less-text">{this.context.intl.formatMessage({id: 'credit_card'})}</div>
+      </div>
+    );
   },
   componentDidMount: function() {
     // Need this because Chrome on iOS plus StripeCheckout triggers a popup.
@@ -90,19 +113,11 @@ var StripeButton = React.createClass({
   render: function() {
     var name = this.props.name;
     var labelId = "payment-cc-" + name;
-    var className = "row payment-logos credit-card-logos";
-    if (currencies[this.props.currency.code].amexDisabled) {
-      className += " no-amex";
-    }
     return (
-      <div className="half">
+      <div className="half cc-button">
         <input ref={(input) => { this.input = input; }} type="radio" className="payment-type payment-cc-input" name={name} value="cc" id={labelId}/>
         <label className="payment-cc-label" htmlFor={labelId}>
-          <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button'})}</div>
-          <div className={className}>
-            <p>&nbsp;</p>
-          </div>
-          <div className="row medium-label-size less-text">{this.context.intl.formatMessage({id: 'credit_card'})}</div>
+          {this.renderButton()}
         </label>
       </div>
     );

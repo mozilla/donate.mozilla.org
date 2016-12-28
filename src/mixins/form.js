@@ -4,6 +4,11 @@ import amountModifier from '../lib/amount-modifier';
 import listener from '../lib/listener.js';
 import form from '../lib/form.js';
 
+var NOT_SUBMITTING = 0;
+var SIGNUP_SUBMITTING = 1;
+var STRIPE_SUBMITTING = 2;
+var PAYPAL_SUBMITTING = 3;
+
 var formMixin = {
   contextTypes: {
     intl: React.PropTypes.object
@@ -17,7 +22,7 @@ var formMixin = {
   getInitialState: function() {
     return {
       paymentType: "",
-      submitting: false,
+      submitting: NOT_SUBMITTING,
       currency: this.props.currency,
       frequency: this.props.frequency || "",
       amount: ""
@@ -108,7 +113,7 @@ var formMixin = {
     var country = data.country || "";
     var donationFrequency = data.frequency;
     this.setState({
-      submitting: false
+      submitting: NOT_SUBMITTING
     });
     if (donationFrequency === "monthly") {
       currency = data.currency;
@@ -142,7 +147,7 @@ var formMixin = {
   stripeError: function(error) {
     form.error("other", this.context.intl.formatMessage({id: 'try_again_later'}) + " [" + error + "]");
     this.setState({
-      submitting: false
+      submitting: NOT_SUBMITTING
     });
   },
   stripeCheckout: function(validate, props) {
@@ -158,7 +163,7 @@ var formMixin = {
       return;
     }
     this.setState({
-      submitting: true
+      submitting: STRIPE_SUBMITTING
     });
 
     submitProps = form.buildProps(props);
@@ -190,7 +195,7 @@ var formMixin = {
       locale: locale,
       closed: () => {
         this.setState({
-          submitting: false
+          submitting: NOT_SUBMITTING
         });
       },
       token: function(response) {
@@ -236,7 +241,7 @@ var formMixin = {
     var appName = this.props.appName;
     if (valid) {
       this.setState({
-        submitting: true
+        submitting: PAYPAL_SUBMITTING
       });
       submitProps = form.buildProps(props);
 
@@ -262,7 +267,7 @@ var formMixin = {
   },
   doSignupSuccess: function(result, location) {
     this.setState({
-      submitting: false
+      submitting: NOT_SUBMITTING
     });
     reactGA.event({
       category: "Signup",
@@ -280,7 +285,7 @@ var formMixin = {
   },
   signupError: function(result) {
     this.setState({
-      submitting: false
+      submitting: NOT_SUBMITTING
     });
     form.error("other", this.context.intl.formatMessage({id: 'try_again_later'}));
   },
@@ -289,7 +294,7 @@ var formMixin = {
     var submitProps = {};
     if (valid) {
       this.setState({
-        submitting: true
+        submitting: SIGNUP_SUBMITTING
       });
       submitProps = form.buildProps(props);
       this.submit(url, submitProps, success, error);

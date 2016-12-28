@@ -6,6 +6,7 @@ var Footer = React.createClass({
     intl: React.PropTypes.object
   },
   render: function() {
+    var year = new Date().getFullYear();
     return (
       <footer>
         <div className="footer">
@@ -13,7 +14,10 @@ var Footer = React.createClass({
             <div className="half">
               <img src="/assets/images/mozilla.5e83dba715a0469b92071758876f0373.svg"/>
               <p className="license">
-                <FormattedHTMLMessage id="footerLicense"/>
+                <FormattedHTMLMessage
+                  id='footerLicense'
+                  values={{year}}
+                />
               </p>
               <p>
                 {this.props.message}

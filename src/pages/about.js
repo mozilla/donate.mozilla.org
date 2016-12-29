@@ -13,7 +13,7 @@ module.exports = React.createClass({
       className += " " + this.props.test;
     }
     var header = "";
-    if (this.props.test.indexOf("donate-by") !== -1 && /^(en)(\b|$)/.test(this.context.intl.locale)) {
+    if (this.props.test && this.props.test.indexOf("donate-by") !== -1 && /^(en)(\b|$)/.test(this.context.intl.locale)) {
       header = "Donate by 12/31";
     }
     return (

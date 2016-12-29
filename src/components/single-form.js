@@ -20,7 +20,8 @@ var singleForm = React.createClass({
     currency: React.PropTypes.object.isRequired,
     presets: React.PropTypes.array.isRequired,
     amount: React.PropTypes.string.isRequired,
-    frequency: React.PropTypes.string.isRequired
+    frequency: React.PropTypes.string.isRequired,
+    header: React.PropTypes.string
   },
   getInitialState: function() {
     return {
@@ -96,11 +97,12 @@ var singleForm = React.createClass({
     }
   },
   render: function() {
+    var header = this.props.header || this.context.intl.formatMessage({id: "donate_now"});
     return (
       <div className="container">
         <SectionHeading>
           <h3 className="donate-now-header">
-            {this.context.intl.formatMessage({id: "donate_now"})}
+            {header}
           </h3>
           <CurrencyDropdown/>
         </SectionHeading>

@@ -12,6 +12,10 @@ module.exports = React.createClass({
     if (this.props.test) {
       className += " " + this.props.test;
     }
+    var header = "";
+    if (this.props.test.indexOf("donate-by") !== -1 && /^(en)(\b|$)/.test(this.context.intl.locale)) {
+      header = "Donate by 12/31";
+    }
     return (
       <div className={className}>
         <div className="additional-info-page">
@@ -29,6 +33,7 @@ module.exports = React.createClass({
             amount={this.props.amount}
             frequency={this.props.frequency}
             country={this.props.country}
+            header={header}
           />
         </div>
         <SmallPrint/>

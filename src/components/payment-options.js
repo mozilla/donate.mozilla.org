@@ -13,7 +13,7 @@ var PayPalButton = React.createClass({
     submit: React.PropTypes.array.isRequired,
     name: React.PropTypes.string.isRequired
   },
-  onChange: function() {
+  onClick: function() {
     if (this.props.onClick) {
       this.props.onClick();
     }
@@ -46,7 +46,7 @@ var PayPalButton = React.createClass({
     var labelId = "payment-paypal-" + name;
     return (
       <div className="half paypal-button">
-        <input onChange={this.onChange} type="radio" className="payment-type payment-paypal-input" name={name} value="paypal" id={labelId}/>
+        <input onClick={this.onClick} type="radio" className="payment-type payment-paypal-input" name={name} value="paypal" id={labelId}/>
         <label className="payment-paypal-label" htmlFor={labelId}>
           {this.renderButton()}
         </label>
@@ -67,17 +67,25 @@ var StripeButton = React.createClass({
     name: React.PropTypes.string.isRequired,
     currency: React.PropTypes.object.isRequired
   },
-  onChange: function() {
+  onClick: function() {
     if (this.props.onClick) {
       this.props.onClick();
     }
-    setTimeout(() => {
-      this.props.onSubmit(this.props.validate, this.props.submit);
-    });
+    this.props.onSubmit(this.props.validate, this.props.submit);
     reactGA.event({
       category: "User Flow",
       action: "Stripe Clicked"
     });
+  },
+  componentDidMount: function() {
+    // Need this because Chrome on iOS plus StripeCheckout triggers a popup.
+    // We need to ensure the popup isn't blocked.
+    this.input.addEventListener("click", this.onClick);
+  },
+  componentWillUnmount: function() {
+    // Need to ensure we remove it, or else we'll have a memory leak.
+    // This is why you don't use DOM events in React.
+    this.input.removeEventListener("click", this.onClick);
   },
   render: function() {
     var name = this.props.name;
@@ -88,7 +96,7 @@ var StripeButton = React.createClass({
     }
     return (
       <div className="half">
-        <input onChange={this.onChange} type="radio" className="payment-type payment-cc-input" name={name} value="cc" id={labelId}/>
+        <input ref={(input) => { this.input = input; }} type="radio" className="payment-type payment-cc-input" name={name} value="cc" id={labelId}/>
         <label className="payment-cc-label" htmlFor={labelId}>
           <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button'})}</div>
           <div className={className}>

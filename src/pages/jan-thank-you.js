@@ -42,11 +42,11 @@ var ThankYou = React.createClass({
     var video = this.refs.video;
     var videoId = pageDataSet[this.props.route.pageType];
 
-    video.addEventListener("play", (e) =>{
-      this.videoGaEvent({action: "Video started",label: videoId.thankYouSentenceId});
+    video.addEventListener("play", (e) => {
+      this.videoGaEvent({action: "Video started", label: videoId.thankYouSentenceId});
     });
     video.addEventListener("ended", (e) => {
-      this.videoGaEvent({action: "Video ended",label: videoId.thankYouSentenceId});
+      this.videoGaEvent({action: "Video ended", label: videoId.thankYouSentenceId});
     });
   },
   render: function() {

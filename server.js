@@ -335,7 +335,8 @@ module.exports = function(options) {
           'https://optimizely.s3.amazonaws.com', 'https://www.google-analytics.com', 'https://ajax.googleapis.com', 'https://*.shpg.org/',
           'https://js.stripe.com', 'https://checkout.stripe.com', 'https://pontoon.mozilla.org'],
         styleSrc: ['self', 'unsafe-inline', 'https://fonts.googleapis.com',
-          'https://maxcdn.bootstrapcdn.com', 'https://pontoon.mozilla.org']
+          'https://maxcdn.bootstrapcdn.com', 'https://pontoon.mozilla.org'],
+        mediaSrc: ['https://d24kjznqej0s8a.cloudfront.net']
       }
     }
   ], function(err) {

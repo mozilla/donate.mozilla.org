@@ -42,7 +42,6 @@ var ThankYou = React.createClass({
             <video width="600" height="480" controls>
             {
               pageData.videoSrc.map(function(videoSrc) {
-                console.log("video: ", videoSrc);
                 return (<source src={videoSrc} />);
               })
             }

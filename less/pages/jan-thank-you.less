@@ -1,0 +1,42 @@
+.jan-thank-you {
+  background-color: #fff;
+  min-width: 300px;
+  position: relative;
+  video {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #5F7E9D;
+  }
+  .header {
+    padding: 0;
+    max-width: none;
+    width: 100%;
+    margin-bottom: -40px;
+  }
+  h1 {
+    font-family:"Roboto Slab", Georgia, Times, "Times New Roman", serif;
+    font-weight: 200;
+    font-size: 24px;
+    line-height: 35px;
+    color: #4A4A4A;
+    letter-spacing: 0.01em;
+    max-width: 70%;
+    margin: 30px auto 15px;
+  }
+  .video-container {
+    background-image: url("/assets/images/bg-pattern.png");
+    padding-top: 60px;
+  }
+  @media screen and (max-width:600px) {
+    video {
+      width: 320px;
+      height: 256px;
+    }
+    h1 {
+      max-width:100%;
+    }
+    .header {
+      padding: 0 20px;
+    }
+  }
+}

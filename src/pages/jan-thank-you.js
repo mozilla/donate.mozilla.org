@@ -8,15 +8,24 @@ import analytics from '../lib/analytics.js';
 
 var pageDataSet = {
   cute: {
-    videoSrc: ["https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Cute/Cute_Final.mp4","https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Cute/Cute_Final.webm"],
+    videoSrc: [
+      "https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Cute/Cute_Final.mp4",
+      "https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Cute/Cute_Final.webm"
+    ],
     thankYouSentenceId: "cute_thank_you"
   },
   sincere: {
-    videoSrc: ["https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Sincere/Sincere_Final.mp4","https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Sincere/Sincere_Final.webm"],
+    videoSrc: [
+      "https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Sincere/Sincere_Final.mp4",
+      "https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Sincere/Sincere_Final.webm"
+    ],
     thankYouSentenceId: "sincere_thank_you"
   },
   superhero: {
-    videoSrc: ["https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Hero/Hero_Final.mp4","https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Hero/Hero_Final.webm"],
+    videoSrc: [
+      "https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Hero/Hero_Final.mp4",
+      "https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Hero/Hero_Final.webm"
+    ],
     thankYouSentenceId: "superhero_thank_you"
   }
 };

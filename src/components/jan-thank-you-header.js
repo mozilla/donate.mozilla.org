@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedHTMLMessage } from 'react-intl';
 
 module.exports = React.createClass({
   contextTypes: {

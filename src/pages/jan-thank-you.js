@@ -4,7 +4,7 @@
 import React from 'react';
 import MozillaFooter from '../components/mozilla/footer.js';
 import ThankYouHeader from '../components/jan-thank-you-header.js';
-import analytics from '../lib/analytics.js';
+import ga from 'react-ga';
 
 var pageDataSet = {
   cute: {
@@ -34,8 +34,20 @@ var ThankYou = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
-  componentDidMount: function() {
-    analytics();
+  videoGaEvent(props) {
+    props.category = "Thank You Video";
+    ga.event(props);
+  },
+  componentDidMount() {
+    var video = this.refs.video;
+    var videoId = pageDataSet[this.props.route.pageType];
+
+    video.addEventListener("play", (e) =>{
+      this.videoGaEvent({action: "Video started",label: videoId.thankYouSentenceId});
+    });
+    video.addEventListener("ended", (e) => {
+      this.videoGaEvent({action: "Video ended",label: videoId.thankYouSentenceId});
+    });
   },
   render: function() {
     var className = "row thank-you-page";
@@ -48,7 +60,7 @@ var ThankYou = React.createClass({
         <div className={className}>
           <ThankYouHeader thankYouSentenceId={pageData.thankYouSentenceId}/>
           <div className="video-container">
-            <video width="600" height="480" controls>
+            <video width="600" height="480" ref="video" controls>
             {
               pageData.videoSrc.map(function(videoSrc) {
                 return (<source src={videoSrc} />);

@@ -10,7 +10,12 @@ var Index = React.createClass({
     var metaData = this.props.metaData;
     var robots = 'index, follow';
     var googleFonts = "https://fonts.googleapis.com/css?family=Open+Sans:600,400,300,300italic";
-    if (metaData.current_url.indexOf("jan-thank-you") !== -1) {
+    var tyPages = [
+      '/' + this.props.locale + '/jan-thank-you-cute',
+      '/' + this.props.locale + '/jan-thank-you-sincere',
+      '/' + this.props.locale + '/jan-thank-you-superhero'
+    ];
+    if (tyPages.indexOf(metaData.current_url) >= 0) {
       googleFonts = "https://fonts.googleapis.com/css?family=Roboto+Slab:600,400,300,200,100";
     }
 

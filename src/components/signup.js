@@ -4,6 +4,8 @@ import {PrivacyPolicyCheckbox} from './checkbox.js';
 import {Country} from './address-input.js';
 import SubmitButton from './submit-button.js';
 
+var SIGNUP_SUBMITTING = 1;
+
 var Signup = React.createClass({
   mixins: [require('../mixins/form.js')],
   contextTypes: {
@@ -27,7 +29,7 @@ var Signup = React.createClass({
               <PrivacyPolicyCheckbox name="privacyPolicy"/>
               <div className="no-country-signup">
                 <SubmitButton
-                  submitting={this.state.submitting}
+                  submitting={this.state.submitting === SIGNUP_SUBMITTING}
                   validate={["email", "privacyPolicy"]}
                   onSubmit={this.signup}
                   submit={["email"]}
@@ -38,7 +40,7 @@ var Signup = React.createClass({
               </div>
               <div className="country-signup">
                 <SubmitButton
-                  submitting={this.state.submitting}
+                  submitting={this.state.submitting === SIGNUP_SUBMITTING}
                   validate={["email", "privacyPolicy"]}
                   onSubmit={this.signup}
                   submit={["email", "country"]}

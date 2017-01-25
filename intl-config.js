@@ -17,12 +17,13 @@ var intlConfig = {
     "nb-NO": "no_NO",
     "nl": "nl_NL",
     "nn-NO": "no_NO",
+    "pl": "pl_PL",
     "pt-BR": "BR",
     "ru": "RU",
     "sv-SE": "sv_SE",
     "th": "th_TH",
     "zh-CN": "zh_CN",
-    "zh-TW": "zh_TW",
+    "zh-TW": "zh_TW"
   }
 };
 

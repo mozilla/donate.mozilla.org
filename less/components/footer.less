@@ -19,6 +19,7 @@ footer {
   }
   ul {
     padding-left: 0;
+    padding-right: 0;
     list-style: none;
   }
 
@@ -27,6 +28,9 @@ footer {
       margin: 0 auto;
       width: 100%;
       max-width: 100%;
+      .half {
+        padding-right: 0;
+      }
     }
 
     .full,
@@ -35,6 +39,19 @@ footer {
     .two-third,
     .quarter {
       width: 100%;
+    }
+  }
+}
+
+html[dir="rtl"] footer .footer {
+  .half {
+    padding-right: 0;
+    padding-left: 35px;
+  }
+  @media screen and (max-width: 480px) {
+    .half {
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 }

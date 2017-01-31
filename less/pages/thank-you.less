@@ -120,6 +120,24 @@
     max-width: none;
   }
 }
+
+html[dir="rtl"] {
+  .thank-you-page,
+  .share-page {
+    #facebook {
+      margin-left: 8px;
+      margin-right: 5px;
+    }
+    #twitter {
+      margin-left: 5px;
+      margin-right: 8px;
+    }
+    #email {
+      float: left;
+    }
+  }
+}
+
 .new-header-test {
   .baseline-header {
     display: none;
@@ -220,6 +238,21 @@
         #twitter {
           margin-right: 7px;
         }
+      }
+    }
+  }
+}
+
+html[dir="rtl"] {
+  .social-test-with-email {
+    .share-page .social-with-email {
+      #facebook {
+        margin-left: 9px;
+        margin-right: 0;
+      }
+      #twitter {
+        margin-left: 9px;
+        margin-right: 0;
       }
     }
   }

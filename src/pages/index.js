@@ -39,8 +39,12 @@ var Index = React.createClass({
     if (this.props.locale) {
       polyfillLocale = '&locale=' + this.props.locale;
     }
+    var dir = 'ltr';
+    if (['ar', 'fa', 'he', 'ur'].indexOf(this.props.locale) >= 0) {
+      dir = 'rtl';
+    }
     return (
-      <html>
+      <html dir={dir}>
         <head>
           <meta charSet="UTF-8"/>
           <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>

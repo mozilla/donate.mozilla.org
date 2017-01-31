@@ -5,7 +5,14 @@
     margin-left: 10px;
     display: inline;
   }
-  text-align: left;
+  text-align: initial;
+}
+
+html[dir="rtl"] .checkbox {
+  input[type="checkbox"] + label {
+    margin-left: 0;
+    margin-right: 10px;
+  }
 }
 
 .signup-checkbox {

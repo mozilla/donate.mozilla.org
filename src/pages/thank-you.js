@@ -7,14 +7,12 @@ import Signup from '../components/signup.js';
 import Social from '../components/social.js';
 import ThankYouHeader from '../components/thank-you-header.js';
 import analytics from '../lib/analytics.js';
-import form from '../lib/form.js';
 
 var ThankYou = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
   componentDidMount: function() {
-    form.updateField("email", this.props.email || "");
     analytics();
   },
   render: function() {

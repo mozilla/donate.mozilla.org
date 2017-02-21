@@ -11,7 +11,7 @@ import getMessages from './lib/get-messages.js';
 
 function createElement(Component, props) {
   var locale = window.location.pathname.split("/")[1];
-  var values = queryParser(props.location.query, locale);
+  var query = queryParser(props.location.query, locale);
   var ReactIntlLocaleData = window.ReactIntlLocaleData;
   var messages = getMessages(locale);
 
@@ -20,8 +20,8 @@ function createElement(Component, props) {
   });
 
   return (
-    <CreateElement locale={locale} messages={messages}>
-      <Component {...props} {...values} />
+    <CreateElement {...query.initialState} locale={locale} messages={messages}>
+      <Component {...props} {...query.values} />
     </CreateElement>
   );
 }

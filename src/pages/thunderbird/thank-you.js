@@ -7,14 +7,12 @@ import ThunderbirdFooter from '../../components/thunderbird/footer.js';
 import Signup from '../../components/thunderbird/signup.js';
 import ThankYouHeader from '../../components/thunderbird/thank-you-header.js';
 import analytics from '../../lib/analytics.js';
-import form from '../../lib/form.js';
 
 var ThankYou = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
   componentDidMount: function() {
-    form.updateField("email", this.props.email || "");
     analytics();
   },
   render: function() {

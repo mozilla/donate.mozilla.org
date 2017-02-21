@@ -1,5 +1,8 @@
 import React from 'react';
-var IntlStub = require('./IntlStub.jsx');
+import { IntlProvider } from 'react-intl';
+import { Provider } from 'react-redux';
+var createTestStore = require('./test-store.js');
+import locales from '../../public/locales.json';
 
 var ContextStub = React.createClass({
   getChildContext: function() {
@@ -24,8 +27,17 @@ var ContextStub = React.createClass({
     return Context;
   },
   render: function() {
+    var locale = this.props.locale || "en-US";
+    var store = this.props.store || createTestStore({
+      currency: this.props.currency,
+      frequency: this.props.frequency,
+      presets: this.props.presets,
+      amount: this.props.amount
+    });
     return (
-      <IntlStub>{this.props.children}</IntlStub>
+      <Provider store={store}>
+        <IntlProvider locale={locale} messages={locales[locale]}>{this.props.children}</IntlProvider>
+      </Provider>
     );
   }
 });

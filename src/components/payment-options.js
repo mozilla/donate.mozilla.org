@@ -9,8 +9,7 @@ var PayPalButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func,
     submitting: React.PropTypes.bool,
-    validate: React.PropTypes.array,
-    submit: React.PropTypes.array.isRequired,
+    onSubmit: React.PropTypes.func.isRequired,
     name: React.PropTypes.string.isRequired
   },
   onClick: function() {
@@ -18,7 +17,7 @@ var PayPalButton = React.createClass({
       this.props.onClick();
     }
     if (!this.props.submitting) {
-      this.props.onSubmit(this.props.validate, this.props.submit);
+      this.props.onSubmit();
     }
     reactGA.event({
       category: "User Flow",
@@ -63,17 +62,16 @@ var StripeButton = React.createClass({
   propTypes: {
     onClick: React.PropTypes.func,
     submitting: React.PropTypes.bool,
-    validate: React.PropTypes.array.isRequired,
     name: React.PropTypes.string.isRequired,
-    currency: React.PropTypes.object.isRequired
+    currency: React.PropTypes.object.isRequired,
+    onSubmit: React.PropTypes.func.isRequired
   },
   onClick: function() {
     if (this.props.onClick) {
       this.props.onClick();
     }
-
     if (!this.props.submitting) {
-      this.props.onSubmit(this.props.validate, this.props.submit);
+      this.props.onSubmit();
     }
     reactGA.event({
       category: "User Flow",

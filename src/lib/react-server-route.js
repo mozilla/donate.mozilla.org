@@ -34,7 +34,7 @@ function routeFileContent(locales) {
       var facebookImage = "/assets/images/EOY_facebook_v1.a152496406bad899d1a920f6d6b9f507.png";
       var siteUrl = locale + '/';
       var localesInfo = [locale];
-      var values = queryParser(request.query);
+      var query = queryParser(request.query);
       var desc = messages.i_donated_to_mozilla;
       if (location.indexOf('thunderbird') !== -1) {
         favicon = "/assets/images/thunderbird/favicon.ico";
@@ -47,8 +47,8 @@ function routeFileContent(locales) {
       function createElement(Component, props) {
         // make sure you pass all the props in!
         return (
-          <CreateElement locale={locale} messages={messages}>
-            <Component {...props} {...values} />
+          <CreateElement {...query.initialState} locale={locale} messages={messages}>
+            <Component {...props} {...query.values} />
           </CreateElement>
         );
       }

@@ -7,8 +7,6 @@ console.warn = function(warning) {
   warn.apply(console, arguments);
 };
 
-require('./name-input.tests.jsx');
-require('./address-input.tests.jsx');
 require('./amount-buttons.tests.jsx');
 require('./currency-dropdown.tests.jsx');
 require('./donation-props.tests.jsx');

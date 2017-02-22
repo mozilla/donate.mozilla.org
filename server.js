@@ -11,7 +11,6 @@ if (process.env.NEW_RELIC_ENABLED === 'true') {
 
 var Path = require('path');
 var Hapi = require('hapi');
-var Hoek = require('hoek');
 var Joi = require('joi');
 
 var polyfillio = require('polyfill-service');

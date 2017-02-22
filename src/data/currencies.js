@@ -343,10 +343,10 @@ module.exports = {
       monthly: ['40', '20', '10', '7']
     }
   },
-  'qad': {
-    code: 'qad',
+  'qar': {
+    code: 'qar',
     minAmount: '8',
-    symbol: 'QAD',
+    symbol: 'ر.ق.‏',
     disabled: "paypal",
     presets: {
       single: ['55', '36', '18', '11'],

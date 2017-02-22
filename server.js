@@ -54,8 +54,8 @@ if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
   };
 }
 
-module.exports = function(options) {
-  var serverOptions = Hoek.applyToDefaults({
+module.exports = function() {
+  var serverOptions = {
     connections: {
       routes: {
         security: {
@@ -71,7 +71,7 @@ module.exports = function(options) {
         }
       }
     }
-  }, options);
+  };
 
   var server = new Hapi.Server(serverOptions);
 

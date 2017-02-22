@@ -11,7 +11,6 @@ if (process.env.NEW_RELIC_ENABLED === 'true') {
 
 var Path = require('path');
 var Hapi = require('hapi');
-var Hoek = require('hoek');
 var Joi = require('joi');
 
 var polyfillio = require('polyfill-service');
@@ -55,7 +54,8 @@ if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
 }
 
 module.exports = function(options) {
-  var serverOptions = Hoek.applyToDefaults({
+  options = options || {};
+  var serverOptions = {
     connections: {
       routes: {
         security: {
@@ -70,8 +70,9 @@ module.exports = function(options) {
           noSniff: true
         }
       }
-    }
-  }, options);
+    },
+    useDomains: !!options.useDomains
+  };
 
   var server = new Hapi.Server(serverOptions);
 

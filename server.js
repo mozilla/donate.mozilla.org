@@ -53,7 +53,8 @@ if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
   };
 }
 
-module.exports = function() {
+module.exports = function(options) {
+  options = options || {};
   var serverOptions = {
     connections: {
       routes: {
@@ -69,7 +70,8 @@ module.exports = function() {
           noSniff: true
         }
       }
-    }
+    },
+    useDomains: !!options.useDomains
   };
 
   var server = new Hapi.Server(serverOptions);

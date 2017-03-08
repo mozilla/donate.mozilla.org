@@ -1,6 +1,3 @@
-// this will ignore that Bad Invocation error which is a bug in JSXHint
-/* jshint -W067 */
-
 import React from 'react';
 import Social from '../../components/thunderbird/social.js';
 import ThunderbirdFooter from '../../components/thunderbird/footer.js';

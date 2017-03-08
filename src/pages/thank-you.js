@@ -1,6 +1,3 @@
-// this will ignore that Bad Invocation error which is a bug in JSXHint
-/* jshint -W067 */
-
 import React from 'react';
 import MozillaFooter from '../components/mozilla/footer.js';
 import Signup from '../components/signup.js';

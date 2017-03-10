@@ -59,8 +59,8 @@ var ThankYou = React.createClass({
           <div className="video-container">
             <video width="600" height="480" ref="video" controls>
             {
-              pageData.videoSrc.map(function(videoSrc) {
-                return (<source src={videoSrc} />);
+              pageData.videoSrc.map(function(videoSrc, index) {
+                return (<source key={"vid-" + index} src={videoSrc} />);
               })
             }
             </video>

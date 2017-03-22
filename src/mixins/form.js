@@ -146,6 +146,11 @@ var formMixin = {
   },
   stripeError: function(error) {
     form.error("other", this.context.intl.formatMessage({id: 'could_not_complete'}) + " [" + error + "]");
+    reactGA.event({
+      category: "User Flow",
+      action: "Card Error",
+      label: error
+    });
     this.setState({
       submitting: NOT_SUBMITTING
     });

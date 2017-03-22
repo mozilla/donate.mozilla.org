@@ -145,7 +145,7 @@ var formMixin = {
     window.location = page + params;
   },
   stripeError: function(error) {
-    form.error("other", this.context.intl.formatMessage({id: 'try_again_later'}) + " [" + error + "]");
+    form.error("other", this.context.intl.formatMessage({id: 'could_not_complete'}) + " [" + error + "]");
     this.setState({
       submitting: NOT_SUBMITTING
     });

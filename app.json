@@ -1,0 +1,46 @@
+{
+  "name": "donate.mozilla.org",
+  "scripts": {},
+  "env": {
+    "APPLICATION_URI": {
+      "required": true
+    },
+    "DOWNSTREAM_APP": {
+      "required": true
+    },
+    "ENABLE_PONTOON": {
+      "required": true
+    },
+    "NODE_ENV": {
+      "required": true
+    },
+    "OPTIMIZELY_ACTIVE": {
+      "required": true
+    },
+    "PAYPAL_API_ENDPOINT": {
+      "required": true
+    },
+    "PAYPAL_EMAIL": {
+      "required": true
+    },
+    "PAYPAL_ENDPOINT": {
+      "required": true
+    },
+    "PAYPAL_PWD": {
+      "required": true
+    },
+    "PAYPAL_SIGNATURE": {
+      "required": true
+    },
+    "PAYPAL_USER": {
+      "required": true
+    },
+    "STRIPE_PUBLIC_KEY": {
+      "required": true
+    },
+    "STRIPE_SECRET_KEY": {
+      "required": true
+    }
+  },
+  "addons": []
+}

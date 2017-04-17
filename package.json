@@ -52,7 +52,7 @@
     "babel-preset-react": "6.11.1",
     "bestlang": "0.0.1",
     "blankie": "1.1.1",
-    "boom": "3.1.1",
+    "boom": "3.1.2",
     "css-loader": "0.23.1",
     "enhanced-require": "0.5.0-beta6",
     "eslint": "1.10.3",

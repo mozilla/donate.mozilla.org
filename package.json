@@ -93,7 +93,7 @@
     "whatwg-fetch": "0.10.1"
   },
   "devDependencies": {
-    "aws-sdk": "2.2.26",
+    "aws-sdk": "2.3.10",
     "cross-spawn": "2.1.4",
     "dependency-check": "2.5.1",
     "expect": "1.13.4",

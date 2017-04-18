@@ -88,7 +88,7 @@
     "scooter": "2.0.1",
     "stripe": "4.1.0",
     "style-loader": "0.13.0",
-    "throng": "1.0.1",
+    "throng": "4.0.0",
     "webpack": "1.12.9",
     "whatwg-fetch": "0.10.1"
   },

@@ -86,7 +86,7 @@
     "react-router": "2.0.0",
     "request": "2.67.0",
     "scooter": "2.0.1",
-    "stripe": "4.1.0",
+    "stripe": "4.5.0",
     "style-loader": "0.13.0",
     "throng": "1.0.1",
     "webpack": "1.12.9",

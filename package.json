@@ -60,7 +60,7 @@
     "eslint-plugin-react": "3.14.0",
     "exports-loader": "0.6.2",
     "extract-text-webpack-plugin": "0.9.1",
-    "good": "6.4.0",
+    "good": "7.0.1",
     "good-console-logfmt": "1.0.2",
     "habitat": "3.1.2",
     "hapi": "13.3.0",

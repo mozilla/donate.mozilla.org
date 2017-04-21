@@ -81,6 +81,7 @@ var Index = React.createClass({
         </head>
         <body>
           <div id="my-app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
+          <div dangerouslySetInnerHTML={{__html: '<!-- Mozilla fundraising uses twemoji https://github.com/twitter/twemoji to encourage donations -->'}}></div>
           <link rel="stylesheet" href={googleFonts}/>
           <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
           <script src={'/api/polyfill.js?features=Event,CustomEvent,Promise' + polyfillLocale}></script>

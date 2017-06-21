@@ -1,14 +1,5 @@
 require('habitat').load();
 
-/*eslint-disable no-unused-vars*/
-var newrelic;
-/*eslint-disable no-unused-vars*/
-if (process.env.NEW_RELIC_ENABLED === 'true') {
-  newrelic = require('newrelic');
-} else {
-  newrelic = {};
-}
-
 var Path = require('path');
 var Hapi = require('hapi');
 var Joi = require('joi');

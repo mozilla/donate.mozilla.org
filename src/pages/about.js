@@ -19,7 +19,7 @@ module.exports = React.createClass({
             <img className="heart-image icon-baseline" height="100" width="107" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
             <img className="heart-image icon-variant" height="100" width="107" src="/assets/images/pixel-heart.svg"/>
             <div>
-              <img className="mozilla-watermark" src="/assets/images/mozilla.5e83dba715a0469b92071758876f0373.svg"/>
+              <img className="mozilla-watermark" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
               <span>{this.context.intl.formatMessage({id: 'additional_info'})}</span>
             </div>
           </div>

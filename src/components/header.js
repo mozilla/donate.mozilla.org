@@ -18,7 +18,7 @@ module.exports = React.createClass({
     return (
       <div className="header">
         <h1>
-          <img className="auto-margin" alt={alt} src="/assets/images/mozilla.5e83dba715a0469b92071758876f0373.svg" />
+          <img className="auto-margin" alt={alt} src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg" />
         </h1>
         <div className="header-copy">
           <div className="row">

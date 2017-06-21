@@ -107,8 +107,8 @@ describe('static files', () => {
       type: types.png,
       cache: cache.long
     },
-    '/assets/images/favicon.8af3a74ede48e250ceb935c026242483.ico': {
-      type: types.ico,
+    '/assets/images/favicon.d0608f227db61f2852a32087e614911c.png': {
+      type: types.png,
       cache: cache.long
     },
     '/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg': {
@@ -127,7 +127,7 @@ describe('static files', () => {
       type: types.png,
       cache: cache.long
     },
-    '/assets/images/mozilla.5e83dba715a0469b92071758876f0373.svg': {
+    '/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg': {
       type: types.svg,
       cache: cache.long
     },
@@ -211,8 +211,8 @@ describe('static files', () => {
       type: types.html,
       cache: cache.short
     },
-    '/favicon.ico': {
-      type: types.ico,
+    '/favicon.png': {
+      type: types.png,
       cache: cache.long
     },
     '/main.asdf.js': {

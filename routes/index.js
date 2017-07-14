@@ -393,7 +393,7 @@ var routes = {
             transaction_id: data.txn.PAYMENTINFO_0_TRANSACTIONID,
             project: appName
           });
-          
+
           reply.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
         });
       });
@@ -470,20 +470,68 @@ var routes = {
   'stripe-dispute': function(request, reply) {
     var event = request.payload;
 
-    if (event.type !== 'charge.dispute.created') {
-      return reply('This hook only processes newly created disputes');
+    var disputeEvents = [
+      'charge.dispute.closed',
+      'charge.dispute.created',
+      'charge.dispute.funds_reinstated'
+    ];
+
+
+    if (disputeEvents.indexOf(event.type) === -1) {
+      return reply('This hook only processes disputes');
     }
 
-    stripe.closeDispute(
-      event.data.object.id,
-      function(closeDisputeError, dispute) {
-        if (closeDisputeError) {
-          return reply(boom.badImplementation('An error occurred while closing the dispute', closeDisputeError));
+    var dispute = event.data.object;
+
+    // kick off a Promise Chain
+    Promise.resolve()
+    .then(function() {
+      return new Promise(function(resolve, reject) {
+        if (dispute.status === 'lost') {
+          return resolve();
         }
 
-        reply('Dispute closed');
+        return stripe.closeDispute(
+          dispute.id,
+          function(closeDisputeError, dispute) {
+            if (closeDisputeError) {
+              reject(boom.badImplementation('An error occurred while closing the dispute', closeDisputeError));
+            }
+
+            resolve();
+          }
+        );
+      });
+    })
+    .then(function() {
+      return stripe.retrieveDispute(dispute.id);
+    })
+    .then(function(expandedDispute) {
+      dispute = expandedDispute;
+
+      basket.queue({
+        last_name: dispute.charge.source.name,
+        email: dispute.charge.metadata.email,
+        transaction_id: dispute.charge.id,
+        dispute_amount: dispute.amount,
+        disputed_on: dispute.created,
+        dispute_currency: dispute.currency,
+        dispute_reason: dispute.reason,
+        dispute_status: dispute.status
+      });
+
+      reply("dispute processed");
+
+    })
+    .catch(function(err) {
+      if (err.isBoom) {
+        return reply(err);
       }
-    );
+
+      return reply(boom.badImplementation('An error occurred while handling the dispute webhook', err));
+    });
+
+
   },
   'stripe-charge-succeeded': function(request, reply) {
     var event = request.payload;

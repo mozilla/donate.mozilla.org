@@ -298,6 +298,20 @@ module.exports = function(options) {
         auth: "stripe"
       },
       handler: routes['stripe-charge-succeeded']
+    }, {
+      method: "POST",
+      path: "/stripe/charge-failed",
+      config: {
+        auth: "stripe"
+      },
+      handler: routes['stripe-charge-failed']
+    }, {
+      method: "POST",
+      path: "/stripe/charge-refunded",
+      config: {
+        auth: "stripe"
+      },
+      handler: routes['stripe-charge-refunded']
     }
   ]);
 

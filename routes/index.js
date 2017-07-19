@@ -121,7 +121,8 @@ var routes = {
             currency,
             metadata,
             customer,
-            description: transaction.description
+            description: transaction.description,
+
           }, function(err, chargeData) {
             var stripe_charge_create_service = chargeData.stripe_charge_create_service;
             var charge;
@@ -467,6 +468,57 @@ var routes = {
       });
     }
   },
+  'stripe-charge-failed': function(request, reply) {
+    var event = request.payload;
+
+    if (event.type !== 'charge.failed') {
+      return reply('This hook only processes charge failed events');
+    }
+
+    var charge = event.data.object;
+
+    basket.queue({
+      event_type: event.type,
+      transaction_id: charge.id,
+      failure_code: charge.failure_code,
+      failure_message: charge.failure_message,
+      outcome: charge.outcome
+    });
+
+    return reply("charge failed event processed");
+  },
+  'stripe-charge-refunded': function(request, reply) {
+    var event = request.payload;
+
+    if (event.type !== 'charge.refunded') {
+      return reply('This hook only processes charge refunded events');
+    }
+
+    var charge = event.data.object;
+
+    var reason;
+
+    if (charge.fraud_details.user_report) {
+      reason = charge.fraud_details.user_report;
+    } else if (charge.fraud_details.stripe_report) {
+      reason = charge.fraud_details.stripe_report
+    } else {
+      // Manually refunded by Donor Support representative, likely upon request
+      reason = 'donor request';
+    }
+
+    basket.queue({
+      event_type: event.type,
+      transaction_id: charge.id,
+      amount_refunded: basket.zeroDecimalCurrencyFix(charge.amount_refunded, charge.currency),
+
+      currency: charge.currency,
+      fully_refunded: charge.refunded,
+      reason: reason
+    });
+
+    return reply("charge event processed");
+  },
   'stripe-dispute': function(request, reply) {
     var event = request.payload;
 
@@ -510,10 +562,10 @@ var routes = {
       dispute = expandedDispute;
 
       basket.queue({
-        last_name: dispute.charge.source.name,
-        email: dispute.charge.metadata.email,
+        event_type: event.type,
         transaction_id: dispute.charge.id,
-        dispute_amount: dispute.amount,
+        dispute_amount: basket.zeroDecimalCurrencyFix(dispute.amount, dispute.currency),
+        dispute_currency: dispute.currency,
         disputed_on: dispute.created,
         dispute_currency: dispute.currency,
         dispute_reason: dispute.reason,

@@ -480,9 +480,7 @@ var routes = {
     basket.queue({
       event_type: event.type,
       transaction_id: charge.id,
-      failure_code: charge.failure_code,
-      failure_message: charge.failure_message,
-      outcome: charge.outcome
+      failure_code: charge.failure_code
     });
 
     return reply("charge failed event processed");
@@ -490,31 +488,17 @@ var routes = {
   'stripe-charge-refunded': function(request, reply) {
     var event = request.payload;
 
-    if (event.type !== 'charge.refunded') {
-      return reply('This hook only processes charge refunded events');
+    if (event.type !== ' charge.refund.updated') {
+      return reply('This hook only processes charge.refund.updated events');
     }
 
-    var charge = event.data.object;
-
-    var reason;
-
-    if (charge.fraud_details.user_report) {
-      reason = charge.fraud_details.user_report;
-    } else if (charge.fraud_details.stripe_report) {
-      reason = charge.fraud_details.stripe_report
-    } else {
-      // Manually refunded by Donor Support representative, likely upon request
-      reason = 'donor request';
-    }
+    var refund = event.data.object;
 
     basket.queue({
       event_type: event.type,
-      transaction_id: charge.id,
-      amount_refunded: basket.zeroDecimalCurrencyFix(charge.amount_refunded, charge.currency),
-
-      currency: charge.currency,
-      fully_refunded: charge.refunded,
-      reason: reason
+      transaction_id: refund.charge,
+      reason: refund.reason,
+      status: refund.status
     });
 
     return reply("charge event processed");
@@ -525,7 +509,7 @@ var routes = {
     var disputeEvents = [
       'charge.dispute.closed',
       'charge.dispute.created',
-      'charge.dispute.funds_reinstated'
+      'charge.dispute.updated'
     ];
 
 
@@ -538,6 +522,7 @@ var routes = {
     // kick off a Promise Chain
     Promise.resolve()
     .then(function() {
+      // close the dispute automatically if it's not lost already
       return new Promise(function(resolve, reject) {
         if (dispute.status === 'lost') {
           return resolve();
@@ -556,24 +541,15 @@ var routes = {
       });
     })
     .then(function() {
-      return stripe.retrieveDispute(dispute.id);
-    })
-    .then(function(expandedDispute) {
-      dispute = expandedDispute;
 
       basket.queue({
         event_type: event.type,
-        transaction_id: dispute.charge.id,
-        dispute_amount: basket.zeroDecimalCurrencyFix(dispute.amount, dispute.currency),
-        dispute_currency: dispute.currency,
-        disputed_on: dispute.created,
-        dispute_currency: dispute.currency,
+        transaction_id: dispute.charge,
         dispute_reason: dispute.reason,
         dispute_status: dispute.status
       });
 
       reply("dispute processed");
-
     })
     .catch(function(err) {
       if (err.isBoom) {

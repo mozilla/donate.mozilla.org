@@ -245,8 +245,6 @@ module.exports = function(options) {
       path: '/api/polyfill.js',
       handler: function(request, reply) {
         var locale = request.query.locale;
-        var langHeader = [];
-        var langArray = [];
 
         if (!locale) {
           locale = getLocale(request.headers["accept-language"], locales);

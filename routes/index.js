@@ -121,8 +121,7 @@ var routes = {
             currency,
             metadata,
             customer,
-            description: transaction.description,
-
+            description: transaction.description
           }, function(err, chargeData) {
             var stripe_charge_create_service = chargeData.stripe_charge_create_service;
             var charge;
@@ -535,7 +534,7 @@ var routes = {
     .then(function() {
       // close the dispute automatically if it's not lost already
       if (event === 'charge.dispute.created' && dispute.status === 'lost') {
-        return resolve();
+        return Promise.resolve();
       }
 
       return stripe.closeDispute(dispute.id)

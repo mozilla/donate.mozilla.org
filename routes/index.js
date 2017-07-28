@@ -550,8 +550,8 @@ var routes = {
       basket.queue({
         event_type: event.type,
         transaction_id: dispute.charge,
-        dispute_reason: dispute.reason,
-        dispute_status: dispute.status
+        reason: dispute.reason,
+        status: dispute.status
       });
 
       reply("dispute processed");

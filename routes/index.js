@@ -488,17 +488,28 @@ var routes = {
   'stripe-charge-refunded': function(request, reply) {
     var event = request.payload;
 
-    if (event.type !== ' charge.refund.updated') {
-      return reply('This hook only processes charge.refund.updated events');
+    if (event.type !== 'charge.refunded') {
+      return reply('This hook only processes charge.refunded events');
     }
 
-    var refund = event.data.object;
+    var event_type = event.type;
+    var charge = event.data.object;
+    var refund = charge.refunds.data[0];
+
+    var transaction_id = charge.id;
+    var reason = refund.reason;
+    var status = refund.status;
+
+    if (reason === null) {
+      // refunded via dashboard, mark as requested_by_customer
+      reason = 'requested_by_customer';
+    }
 
     basket.queue({
-      event_type: event.type,
-      transaction_id: refund.charge,
-      reason: refund.reason,
-      status: refund.status
+      event_type,
+      transaction_id,
+      reason,
+      status
     });
 
     return reply("charge event processed");
@@ -523,25 +534,20 @@ var routes = {
     Promise.resolve()
     .then(function() {
       // close the dispute automatically if it's not lost already
-      return new Promise(function(resolve, reject) {
-        if (dispute.status === 'lost') {
-          return resolve();
+      if (event === 'charge.dispute.created' && dispute.status === 'lost') {
+        return resolve();
+      }
+
+      return stripe.closeDispute(dispute.id)
+      .catch(function(closeDisputeError) {
+        if (closeDisputeError.message === 'This dispute is already closed') {
+          return console.log(closeDisputeError.message);
         }
 
-        return stripe.closeDispute(
-          dispute.id,
-          function(closeDisputeError, dispute) {
-            if (closeDisputeError) {
-              reject(boom.badImplementation('An error occurred while closing the dispute', closeDisputeError));
-            }
-
-            resolve();
-          }
-        );
+        return Promise.reject("Could not close the dispute");
       });
     })
     .then(function() {
-
       basket.queue({
         event_type: event.type,
         transaction_id: dispute.charge,

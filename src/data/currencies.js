@@ -22,6 +22,16 @@ module.exports = {
       monthly: ['37', '18', '11', '8']
     }
   },
+  'all': {
+    code: 'all',
+    minAmount: '230',
+    symbol: 'L',
+    disabled: "paypal",
+    presets: {
+      single: ['2280', '1140', '570', '350'],
+      monthly: ['1140', '570', '350', '230']
+    }
+  },
   'aud': {
     code: 'aud',
     minAmount: '2',
@@ -46,9 +56,29 @@ module.exports = {
       monthly: ['150', '75', '45', '30']
     }
   },
+  'azn': {
+    code: 'azn',
+    minAmount: '4',
+    symbol: '₼',
+    disabled: "paypal",
+    presets: {
+      single: ['34', '17', '8', '5'],
+      monthly: ['17', '8', '5', '4']
+    }
+  },
+  'bdt': {
+    code: 'bdt',
+    minAmount: '162',
+    symbol: '৳',
+    disabled: "paypal",
+    presets: {
+      single: ['1600', '800', '400', '240'],
+      monthly: ['800', '400', '240', '162']
+    }
+  },
   'brl': {
     code: 'brl',
-    minAmount: '5',
+    minAmount: '6',
     symbol: 'R$',
     amexDisabled: true,
     paypalFixedFee: {
@@ -56,8 +86,8 @@ module.exports = {
       micro: 0.10
     },
     presets: {
-      single: ['40', '24', '12', '8'],
-      monthly: ['20', '15', '10', '6']
+      single: ['60', '30', '15', '10'],
+      monthly: ['30', '15', '10', '6']
     }
   },
   'cad': {
@@ -100,12 +130,12 @@ module.exports = {
   },
   'cny': {
     code: 'cny',
-    minAmount: '12',
+    minAmount: '14',
     symbol: '¥',
     disabled: "paypal",
     presets: {
-      single: ['120','60','30','15'],
-      monthly: ['60','30','20','12']
+      single: ['140','70','35','20'],
+      monthly: ['70','35','20','14']
     }
   },
   'czk': {
@@ -118,21 +148,21 @@ module.exports = {
       micro: 1.67
     },
     presets: {
-      single: ['400', '200', '100', '55'],
-      monthly: ['300', '150', '80', '45']
+      single: ['450', '220', '110', '70'],
+      monthly: ['220', '110', '70', '45']
     }
   },
   'dkk': {
     code: 'dkk',
-    minAmount: '12',
+    minAmount: '13',
     symbol: 'kr',
     paypalFixedFee: {
       macro: 2.60,
       micro: 0.43
     },
     presets: {
-      single: ['160', '80', '40', '20'],
-      monthly: ['100', '60', '30', '15']
+      single: ['130', '60', '30', '20'],
+      monthly: ['60', '30', '20', '15']
     }
   },
   'dzd': {
@@ -141,8 +171,8 @@ module.exports = {
     symbol: 'د.ج.‏',
     disabled: "paypal",
     presets: {
-      single: ['1653', '1102', '551', '330'],
-      monthly: ['1102', '551', '330', '220']
+      single: ['2180', '1000', '550', '330'],
+      monthly: ['1000', '550', '330', '220']
     }
   },
   'egp': {
@@ -192,6 +222,16 @@ module.exports = {
     presets: {
       single: ['100', '50', '25', '18'],
       monthly: ['70', '30', '20', '15']
+    }
+  },
+  'hrk': {
+    code: 'hrk',
+    minAmount: '13',
+    symbol: 'kn',
+    disabled: "paypal",
+    presets: {
+      single: ['128', '64', '32', '19'],
+      monthly: ['64', '32', '19', '13']
     }
   },
   'huf': {
@@ -253,8 +293,19 @@ module.exports = {
     },
     zeroDecimal: "stripe paypal",
     presets: {
-      single: ['1600', '800', '400', '250'],
-      monthly: ['1000', '600', '300', '240']
+      single: ['2240', '1120', '560', '340'],
+      monthly: ['1120', '560', '340', '240']
+    }
+  },
+  'krw': {
+    code: 'krw',
+    minAmount: '2240',
+    symbol: '₩',
+    disabled: "paypal",
+    zeroDecimal: "stripe",
+    presets: {
+      single: ['22320', '11160', '5580', '3350'],
+      monthly: ['11160', '5580', '3350', '2240']
     }
   },
   'lbp': {
@@ -275,6 +326,16 @@ module.exports = {
     presets: {
       single: ['150', '100', '50', '30'],
       monthly: ['100', '50', '30', '20']
+    }
+  },
+  'myr': {
+    code: 'myr',
+    minAmount: '9',
+    symbol: 'RM',
+    disabled: "paypal",
+    presets: {
+      single: ['85', '42', '21', '13'],
+      monthly: ['42', '21', '13', '9']
     }
   },
   'mxn': {
@@ -353,6 +414,16 @@ module.exports = {
       monthly: ['36', '18', '11', '8']
     }
   },
+  'ron': {
+    code: 'ron',
+    minAmount: '8',
+    symbol: 'lei',
+    disabled: "paypal",
+    presets: {
+      single: ['80', '40', '20', '12'],
+      monthly: ['40', '20', '12', '8']
+    }
+  },
   'rub': {
     code: 'rub',
     minAmount: '100',
@@ -400,6 +471,16 @@ module.exports = {
     presets: {
       single: ['500', '250', '125', '75'],
       monthly: ['300', '200', '100', '70']
+    }
+  },
+  'try': {
+    code: 'try',
+    minAmount: '7',
+    symbol: '₺',
+    disabled: "paypal",
+    presets: {
+      single: ['70', '35', '18', '10'],
+      monthly: ['35', '18', '10', '7']
     }
   },
   'twd': {

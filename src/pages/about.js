@@ -12,6 +12,10 @@ module.exports = React.createClass({
     if (this.props.test) {
       className += " " + this.props.test;
     }
+    var aboutCopy = (<span>{this.context.intl.formatMessage({id: 'additional_info'})}</span>);
+    if (this.props.test === "nnsnippet1707") {
+      aboutCopy = (<span>is a global nonprofit that stands up for an open and healthy Internet, where telecom companies are not allowed to censor or throttle your access to the web based on the content you want to see. Will you give today?</span>);
+    }
     return (
       <div className={className}>
         <div className="additional-info-page">
@@ -20,7 +24,7 @@ module.exports = React.createClass({
             <img className="heart-image icon-variant" height="100" width="107" src="/assets/images/pixel-heart.svg"/>
             <div>
               <img className="mozilla-watermark" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
-              <span>{this.context.intl.formatMessage({id: 'additional_info'})}</span>
+              {aboutCopy}
             </div>
           </div>
           <SingleForm

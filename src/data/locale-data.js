@@ -5,7 +5,7 @@ module.exports = {
     'bn-IN': 'inr',
     'ca': 'eur',
     'cs': 'czk',
-    'da': 'ddk',
+    'da': 'dkk',
     'de': 'eur',
     'dsb': 'eur',
     'es': 'eur',

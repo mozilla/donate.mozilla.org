@@ -17,7 +17,7 @@ var ThankYou = React.createClass({
   render: function() {
     var className = "row thank-you-page";
     var signUpOrSocial = (<Social/>);
-    if (/^(en|de)(\b|$)/.test(this.context.intl.locale)) {
+    if (/^(en|de|es|fr|pl|pt-BR)(\b|$)/.test(this.context.intl.locale)) {
       signUpOrSocial = (<Signup country={this.props.country} email={this.props.email}/>);
     }
     if (this.props.test) {

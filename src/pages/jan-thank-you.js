@@ -9,21 +9,21 @@ var pageDataSet = {
       "https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Cute/Cute_Final.mp4",
       "https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Cute/Cute_Final.webm"
     ],
-    thankYouSentenceId: "cute_thank_you"
+    thankYouSentenceId: "cute_thank_you_evergreen"
   },
   sincere: {
     videoSrc: [
       "https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Sincere/Sincere_Final.mp4",
       "https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Sincere/Sincere_Final.webm"
     ],
-    thankYouSentenceId: "sincere_thank_you"
+    thankYouSentenceId: "sincere_thank_you_evergreen"
   },
   superhero: {
     videoSrc: [
       "https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Hero/Hero_Final.mp4",
       "https://d24kjznqej0s8a.cloudfront.net/2016/eoy/Hero/Hero_Final.webm"
     ],
-    thankYouSentenceId: "superhero_thank_you"
+    thankYouSentenceId: "superhero_thank_you_evergreen"
   }
 };
 

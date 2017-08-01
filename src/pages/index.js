@@ -44,7 +44,7 @@ var Index = React.createClass({
       dir = 'rtl';
     }
     return (
-      <html dir={dir}>
+      <html dir={dir} lang={this.props.locale}>
         <head>
           <meta charSet="UTF-8"/>
           <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>

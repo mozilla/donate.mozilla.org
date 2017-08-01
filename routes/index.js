@@ -172,6 +172,7 @@ var routes = {
               });
 
               basket.queue({
+                event_type: "donation",
                 last_name: charge.source.name,
                 email: charge.metadata.email,
                 donation_amount: basket.zeroDecimalCurrencyFix(charge.amount, charge.currency),
@@ -250,6 +251,7 @@ var routes = {
               });
 
               basket.queue({
+                event_type: "donation",
                 last_name: customer.sources.data[0].name,
                 email: customer.email,
                 donation_amount: basket.zeroDecimalCurrencyFix(subscription.quantity, subscription.plan.currency),
@@ -382,6 +384,7 @@ var routes = {
           request.log(['paypal', 'checkout', frequency], log_details);
 
           basket.queue({
+            event_type: "donation",
             first_name: checkoutDetails.response.FIRSTNAME,
             last_name: checkoutDetails.response.LASTNAME,
             email: checkoutDetails.response.EMAIL,
@@ -449,6 +452,7 @@ var routes = {
           var txId = data.txn.PAYERID + stamp;
 
           basket.queue({
+            event_type: "donation",
             first_name: checkoutDetails.response.FIRSTNAME,
             last_name: checkoutDetails.response.LASTNAME,
             email: checkoutDetails.response.EMAIL,

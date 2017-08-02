@@ -15,7 +15,7 @@ module.exports = React.createClass({
   componentDidMount: function() {
     var aboutCopy = (<span>{this.context.intl.formatMessage({id: 'additional_info'})}</span>);
     if (this.props.test === "nnsnippet1707") {
-      aboutCopy = (<span>is a global nonprofit that stands up for an open and healthy Internet, where telecom companies are not allowed to censor or throttle your access to the web based on the content you want to see. Will you give today?</span>);
+      aboutCopy = (<p>is a global nonprofit that stands up for an open and healthy Internet, where telecom companies are not allowed to censor or throttle your access to the web based on the content you want to see. Will you give today?</p>);
     }
     this.setState({
       aboutCopy: aboutCopy

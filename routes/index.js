@@ -172,6 +172,7 @@ var routes = {
               });
 
               basket.queue({
+                event_type: "donation",
                 last_name: charge.source.name,
                 email: charge.metadata.email,
                 donation_amount: basket.zeroDecimalCurrencyFix(charge.amount, charge.currency),
@@ -250,6 +251,7 @@ var routes = {
               });
 
               basket.queue({
+                event_type: "donation",
                 last_name: customer.sources.data[0].name,
                 email: customer.email,
                 donation_amount: basket.zeroDecimalCurrencyFix(subscription.quantity, subscription.plan.currency),
@@ -382,6 +384,7 @@ var routes = {
           request.log(['paypal', 'checkout', frequency], log_details);
 
           basket.queue({
+            event_type: "donation",
             first_name: checkoutDetails.response.FIRSTNAME,
             last_name: checkoutDetails.response.LASTNAME,
             email: checkoutDetails.response.EMAIL,
@@ -393,7 +396,7 @@ var routes = {
             transaction_id: data.txn.PAYMENTINFO_0_TRANSACTIONID,
             project: appName
           });
-          
+
           reply.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
         });
       });
@@ -449,6 +452,7 @@ var routes = {
           var txId = data.txn.PAYERID + stamp;
 
           basket.queue({
+            event_type: "donation",
             first_name: checkoutDetails.response.FIRSTNAME,
             last_name: checkoutDetails.response.LASTNAME,
             email: checkoutDetails.response.EMAIL,
@@ -467,23 +471,104 @@ var routes = {
       });
     }
   },
+  'stripe-charge-failed': function(request, reply) {
+    var event = request.payload;
+
+    if (event.type !== 'charge.failed') {
+      return reply('This hook only processes charge failed events');
+    }
+
+    var charge = event.data.object;
+
+    basket.queue({
+      event_type: event.type,
+      transaction_id: charge.id,
+      failure_code: charge.failure_code
+    });
+
+    return reply("charge failed event processed");
+  },
+  'stripe-charge-refunded': function(request, reply) {
+    var event = request.payload;
+
+    if (event.type !== 'charge.refunded') {
+      return reply('This hook only processes charge.refunded events');
+    }
+
+    var event_type = event.type;
+    var charge = event.data.object;
+    var refund = charge.refunds.data[0];
+
+    var transaction_id = charge.id;
+    var reason = refund.reason;
+    var status = refund.status;
+
+    if (reason === null) {
+      // refunded via dashboard, mark as requested_by_customer
+      reason = 'requested_by_customer';
+    }
+
+    basket.queue({
+      event_type,
+      transaction_id,
+      reason,
+      status
+    });
+
+    return reply("charge event processed");
+  },
   'stripe-dispute': function(request, reply) {
     var event = request.payload;
 
-    if (event.type !== 'charge.dispute.created') {
-      return reply('This hook only processes newly created disputes');
+    var disputeEvents = [
+      'charge.dispute.closed',
+      'charge.dispute.created',
+      'charge.dispute.updated'
+    ];
+
+
+    if (disputeEvents.indexOf(event.type) === -1) {
+      return reply('This hook only processes disputes');
     }
 
-    stripe.closeDispute(
-      event.data.object.id,
-      function(closeDisputeError, dispute) {
-        if (closeDisputeError) {
-          return reply(boom.badImplementation('An error occurred while closing the dispute', closeDisputeError));
+    var dispute = event.data.object;
+
+    // kick off a Promise Chain
+    Promise.resolve()
+    .then(function() {
+      // close the dispute automatically if it's not lost already
+      if (event === 'charge.dispute.created' && dispute.status === 'lost') {
+        return Promise.resolve();
+      }
+
+      return stripe.closeDispute(dispute.id)
+      .catch(function(closeDisputeError) {
+        if (closeDisputeError.message === 'This dispute is already closed') {
+          return console.log(closeDisputeError.message);
         }
 
-        reply('Dispute closed');
+        return Promise.reject("Could not close the dispute");
+      });
+    })
+    .then(function() {
+      basket.queue({
+        event_type: event.type,
+        transaction_id: dispute.charge,
+        reason: dispute.reason,
+        status: dispute.status
+      });
+
+      reply("dispute processed");
+    })
+    .catch(function(err) {
+      if (err.isBoom) {
+        return reply(err);
       }
-    );
+
+      return reply(boom.badImplementation('An error occurred while handling the dispute webhook', err));
+    });
+
+
   },
   'stripe-charge-succeeded': function(request, reply) {
     var event = request.payload;

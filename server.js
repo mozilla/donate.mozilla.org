@@ -245,8 +245,6 @@ module.exports = function(options) {
       path: '/api/polyfill.js',
       handler: function(request, reply) {
         var locale = request.query.locale;
-        var langHeader = [];
-        var langArray = [];
 
         if (!locale) {
           locale = getLocale(request.headers["accept-language"], locales);
@@ -298,6 +296,20 @@ module.exports = function(options) {
         auth: "stripe"
       },
       handler: routes['stripe-charge-succeeded']
+    }, {
+      method: "POST",
+      path: "/stripe/charge-failed",
+      config: {
+        auth: "stripe"
+      },
+      handler: routes['stripe-charge-failed']
+    }, {
+      method: "POST",
+      path: "/stripe/charge-refunded",
+      config: {
+        auth: "stripe"
+      },
+      handler: routes['stripe-charge-refunded']
     }
   ]);
 

@@ -71,11 +71,16 @@ var stripeRoutes = {
       }
     );
   },
-  closeDispute: function(disputeId, callback) {
-    stripe.disputes.close(disputeId, callback);
+  closeDispute: function(disputeId) {
+    return stripe.disputes.close(disputeId);
   },
   updateCharge: function(chargeId, updateData, callback) {
     stripe.charges.update(chargeId, updateData, callback);
+  },
+  retrieveDispute: function(disputeId) {
+    return stripe.disputes.retrieve(disputeId, {
+      expand: ["charge"]
+    });
   },
   retrieveCharge: function(chargeId, callback) {
     stripe.charges.retrieve(chargeId, {

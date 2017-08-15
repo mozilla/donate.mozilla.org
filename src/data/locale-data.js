@@ -1,5 +1,6 @@
 module.exports = {
   localeCurrencyData: {
+    'ast': 'eur',
     'az': 'azn',
     'bn-BD': 'bdt',
     'bn-IN': 'inr',

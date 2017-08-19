@@ -98,6 +98,11 @@ var Faq = React.createClass({
               <p><FormattedHTMLMessage id='faq_item_1_paragraph_thunderbird'/></p>
             </Panel>
 
+            <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_2" header={this.context.intl.formatHTMLMessage({id: 'faq_item_2_header_thunderbird'})}>
+              <p><FormattedHTMLMessage id='faq_item_2_p_thunderbird_a'/></p>
+              <p><FormattedHTMLMessage id='faq_item_2_p_thunderbird_b'/></p>
+            </Panel>
+
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_3" header={this.context.intl.formatHTMLMessage({id: 'faq_item_3_header'})}>
               <p><FormattedHTMLMessage id='faq_item_3_paragraph_thunderbird'/></p>
             </Panel>

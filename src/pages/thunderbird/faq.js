@@ -83,7 +83,7 @@ var Faq = React.createClass({
         <div className="faq-header">
           <div className="container">
             <h1><FormattedHTMLMessage id='faq_header'/></h1>
-            <Link to={'/' + this.context.intl.locale + '/'}>
+            <Link to={'/' + this.context.intl.locale + '/thunderbird'}>
               <FormattedHTMLMessage id='faq_donate_link'/>
             </Link>
           </div>
@@ -118,7 +118,7 @@ var Faq = React.createClass({
                 <br/>
                 USA
               </address>
-              <p>If required by your bank, add receiver phone number (650) 903-0800</p>
+              <p><FormattedHTMLMessage id='faq_item_4_paragraph_h_thunderbird'/></p>
               <p><FormattedHTMLMessage id='faq_item_4_paragraph_f_thunderbird'/></p>
               <p><FormattedHTMLMessage id='faq_item_4_paragraph_g'/></p>
             </Panel>

@@ -150,7 +150,7 @@ var Faq = React.createClass({
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_tax_a" header={this.context.intl.formatHTMLMessage({id: 'faq_item_tax_header'})}>
-              <p><FormattedHTMLMessage id='faq_item_tax_paragraph_a'/></p>
+              <p><FormattedHTMLMessage id='donation_notice'/> <FormattedHTMLMessage id='faq_item_tax_paragraph_a_tax_id'/></p>
               <p><FormattedHTMLMessage id='faq_item_tax_paragraph_b'/></p>
               <p><FormattedHTMLMessage id='faq_item_tax_paragraph_c'/></p>
             </Panel>
@@ -162,7 +162,7 @@ var Faq = React.createClass({
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_12" header={this.context.intl.formatHTMLMessage({id: 'faq_item_12_header'})}>
-              <p><FormattedHTMLMessage id='faq_item_12_paragraph'/></p>
+              <p><FormattedHTMLMessage id='faq_item_12_paragraph_shorter'/></p>
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_13" header={this.context.intl.formatHTMLMessage({id: 'faq_item_13_header'})}>

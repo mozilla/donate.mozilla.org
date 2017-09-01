@@ -29,6 +29,7 @@ var routes = (
               <Route path='about' component={require('./pages/thunderbird/about.js')}/>
               <Route path='thank-you' component={require('./pages/thunderbird/thank-you.js')}/>
               <Route path='share' component={require('./pages/thunderbird/share.js')}/>
+              <Route path='faq' component={require('./pages/thunderbird/faq.js')}/>
               <Redirect from="*" to={"/" + locale + "/thunderbird"} />
             </Route>
             <Redirect from="*" to={"/" + locale} />

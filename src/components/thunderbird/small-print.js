@@ -9,7 +9,11 @@ var Footer = React.createClass({
     return (
       <div className="row disclaimers">
         <p className="need-help">
-          <FormattedHTMLMessage id="problems_donating_thunderbird2" />
+          <FormattedHTMLMessage id="problems_donating_thunderbird2"
+          values={{
+                  thunderbirdUrl: (href="thunderbird/faq")
+            }}
+          />
         </p>
         <p className="donation-notice">
           {this.context.intl.formatMessage({id: 'donation_notice_thunderbird'})}

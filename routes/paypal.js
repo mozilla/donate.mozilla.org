@@ -18,6 +18,10 @@ function setupPaypal(transaction, callback) {
 
   var returnUrl = transaction.serverUri + '/api/paypal-redirect/' + frequency + '/' + locale + '/' + appName + '/' + accountType + '/';
 
+  var cancelUrl = transaction.serverUri + '/';
+  if (appName === 'thunderbird') {
+    cancelUrl += 'thunderbird/';
+  }
   var charge = {
     USER: paypalCreds.PAYPAL_USER,
     PWD: paypalCreds.PAYPAL_PWD,
@@ -31,7 +35,7 @@ function setupPaypal(transaction, callback) {
     LOCALECODE: paypalLocales[locale],
     NOSHIPPING: '1',
     ALLOWNOTE: '0',
-    cancelUrl: transaction.serverUri + '/',
+    cancelUrl: cancelUrl,
     returnUrl: returnUrl
   };
 

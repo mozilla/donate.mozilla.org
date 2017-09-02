@@ -1,16 +1,20 @@
 [![Build Status](https://travis-ci.org/mozilla/donate.mozilla.org.svg?branch=master)](https://travis-ci.org/mozilla/donate.mozilla.org)
 
 # donate.mozilla.org
-Mozilla donation forms
+Mozilla donation forms:
 
 * Staging: https://donate.mofostaging.net/
 * Production: https://donate.mozilla.org/
 
-## Requirements
+---
+
+## Pre-requisites
 
 [node 4+](https://nodejs.org/) with [`Intl` support](https://github.com/joyent/node/wiki/Intl).  To test if you have `Intl` support run this command:
 
 `$ node -e "console.log(typeof Intl === 'object')"`
+
+---
 
 ## Setup
 
@@ -19,11 +23,15 @@ $> npm install
 $> cp sample.env .env
 ```
 
-## To run
+---
+
+## Execution
 
 ```
 $> npm start
 ```
+
+---
 
 ## Documentation
 
@@ -39,6 +47,8 @@ $> npm start
 - [Tests](docs/Tests.md)
 - [Hashing](docs/Hashing.md)
 
+---
+
 ## Environment Variables
 
 You can configure the following environment variables:
@@ -49,11 +59,17 @@ You can configure the following environment variables:
 | OPTIMIZELY_ACTIVE | If set to 'yes' (String) the project will include Optimizely snippet in the page load |
 | SUPPORTED_LOCALES | If set to '*' all locales under `intl-config.js` file for `src` will be enabled otherwise it expects array of locales.
 
+---
+
 ### Hatchet
 
 Optionally configure Hatchet environment variables as documented [here](https://github.com/jbuck/hatchet) to send signup requests to a sawmill event processor queue.
+
+---
 
 #### Thanks
 
 Thanks to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to run our build in real browsers.
 Mozilla fundraising uses [twemoji](https://github.com/twitter/twemoji) to encourage donations
+
+---

@@ -73,3 +73,5 @@ Thanks to [BrowserStack](https://www.browserstack.com/) for providing the infras
 Mozilla fundraising uses [twemoji](https://github.com/twitter/twemoji) to encourage donations
 
 ---
+
+<img src="http://cdn.ttgtmedia.com/ITKE/cwblogs/open-source-insider/Mozilla%20PL.png" width="150"></img>

@@ -36,12 +36,12 @@ describe('amount-buttons.jsx', function() {
         },
         presets: {
           single: ['160', '80', '40', '20'],
-          monthly: ['100', '60', '30', '15']
+          monthly: ['60', '30', '20', '15']
         }
       }));
       store.dispatch(setFrequency("monthly"));
-      store.dispatch(setAmount("100"));
-      var checked = wrapper.getDOMNode().querySelector("#amount-100").checked;
+      store.dispatch(setAmount("60"));
+      var checked = wrapper.getDOMNode().querySelector("#amount-60").checked;
 
       should(checked).equal(true);
     });
@@ -86,7 +86,7 @@ describe('amount-buttons.jsx', function() {
         },
         presets: {
           single: ['160', '80', '40', '20'],
-          monthly: ['100', '60', '30', '15']
+          monthly: ['60', '30', '20', '15']
         }
       }));
 

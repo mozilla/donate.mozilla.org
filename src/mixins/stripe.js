@@ -1,6 +1,7 @@
 import React from 'react';
 import amountModifier from '../lib/amount-modifier';
 import submit from '../lib/submit';
+import reactGA from 'react-ga';
 
 var NOT_SUBMITTING = 0;
 var STRIPE_SUBMITTING = 2;

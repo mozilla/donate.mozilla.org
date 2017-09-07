@@ -1,9 +1,9 @@
 import React from 'react';
-import {FormattedMessage, FormattedNumber} from 'react-intl';
-import {ErrorMessage} from './error.js';
-import listener from '../lib/listener.js';
-import form from '../lib/form.js';
 import reactGA from 'react-ga';
+import { FormattedMessage, FormattedNumber } from 'react-intl';
+import ErrorMessage from './error.js';
+import { connect } from 'react-redux';
+import { setAmount } from '../actions';
 
 var AmountButton = React.createClass({
   propTypes: {
@@ -101,8 +101,8 @@ var AmountOtherButton = React.createClass({
       this.setState({
         inputValue: inputValue
       });
-      this.props.onInputChange(amount);
     }
+    this.props.onInputChange(amount);
   },
   render: function() {
     var amount = this.props.amount;
@@ -156,13 +156,7 @@ var AmountButtons = React.createClass({
     return {
       // userInputting is used to override checked amount
       // buttons while the user is entering an other amount.
-      userInputting: false,
-      valid: true,
-      errorMessage: "",
-      amount: "",
-      currency: {},
-      frequency: "",
-      presets: []
+      userInputting: false
     };
   },
   onChange: function(e) {
@@ -170,11 +164,9 @@ var AmountButtons = React.createClass({
   },
   setAmount: function(amount, userInputting) {
     this.setState({
-      userInputting: userInputting,
-      valid: true,
-      errorMessage: ""
+      userInputting: userInputting
     });
-    form.updateField("amount", amount);
+    this.props.setAmount(amount);
   },
   otherRadioChange: function() {
     this.setAmount("", true);
@@ -182,113 +174,34 @@ var AmountButtons = React.createClass({
   otherInputChange: function(newAmount) {
     this.setAmount(newAmount, true);
   },
-  validate: function() {
-    var valid = false;
-    var errorMessage = "";
-    if (this.state.amount) {
-      if (parseInt(this.state.amount, 10) < parseInt(this.state.currency.minAmount, 10)) {
-        errorMessage = 'donation_min_error';
-      } else {
-        valid = true;
-      }
-    } else {
-      errorMessage = 'please_select_an_amount';
-    }
-    this.setState({
-      valid: valid,
-      errorMessage: errorMessage
-    });
-    return valid;
-  },
   renderErrorMessage: function() {
-    if (this.state.errorMessage === 'donation_min_error') {
+    if (this.props.amountError === 'donation_min_error') {
       return (
         <FormattedMessage
-          id={this.state.errorMessage}
+          id={this.props.amountError}
           values={{minAmount:
             <span>
-              { this.state.currency.code ?
+              { this.props.currency.code ?
               <FormattedNumber
                 maximumFractionDigits={2}
-                value={this.state.currency.minAmount}
+                value={this.props.currency.minAmount}
                 style="currency"
-                currency={this.state.currency.code}
+                currency={this.props.currency.code}
               /> : "" }
             </span>
           }}
         />
       );
     }
-    if (this.state.errorMessage) {
-      return this.context.intl.formatMessage({id: this.state.errorMessage});
+    if (this.props.amountError) {
+      return this.context.intl.formatMessage({id: this.props.amountError});
     }
     return "";
   },
-  componentDidMount: function() {
-    listener.on("fieldUpdated", this.onFieldUpdated);
-    listener.on("stateUpdated", this.onStateUpdated);
-    form.registerField({
-      name: this.props.name,
-      element: this,
-      field: "amount"
-    });
-  },
-  componentWillUnmount: function() {
-    listener.off("fieldUpdated", this.onFieldUpdated);
-    listener.off("stateUpdated", this.onStateUpdated);
-  },
-  onFieldUpdated: function(e) {
-    var detail = e.detail;
-    var field = detail.field;
-    var value = detail.value;
-    if (field === "amount") {
-      this.setState({
-        amount: value
-      });
-    }
-    if (field === "frequency") {
-      this.setState({
-        frequency: value
-      });
-      if (this.state.currency.presets) {
-        form.updateState("presets", this.state.currency.presets[value]);
-      }
-    }
-  },
-  onCurrencyChange: function(value) {
-    this.setState({
-      currency: value
-    });
-    if (this.state.frequency) {
-      form.updateState("presets", value.presets[this.state.frequency]);
-    }
-    form.updateField("amount", "");
-  },
-  onPresetsChange: function(value) {
-    var selectedIndex = this.state.presets.indexOf(this.state.amount);
-    var newAmount = value[selectedIndex];
-    this.setState({
-      presets: value
-    });
-    if (newAmount && !this.state.userInputting) {
-      form.updateField("amount", newAmount);
-    }
-  },
-  onStateUpdated: function(e) {
-    var detail = e.detail;
-    var state = detail.state;
-    var value = detail.value;
-    if (state === "currency") {
-      this.onCurrencyChange(value);
-    }
-    if (state === "presets") {
-      this.onPresetsChange(value);
-    }
-  },
   render: function() {
     var otherAmount = "";
-    var amount = this.state.amount;
-    var presets = this.state.presets;
+    var amount = this.props.amount;
+    var presets = this.props.presets;
     var preset = presets.indexOf(amount);
     var userInputting = this.state.userInputting;
     var otherChecked = userInputting || !!(amount && preset < 0);
@@ -297,11 +210,7 @@ var AmountButtons = React.createClass({
       otherAmount = amount;
       amount = "";
     }
-    var errorMessageClassName = "row error-msg-row";
-    if (this.state.valid) {
-      errorMessageClassName += " hidden";
-    }
-    var currency = this.state.currency;
+    var currency = this.props.currency;
     return (
       <div className="amount-buttons">
         <div className="row donation-amount-row">
@@ -330,4 +239,19 @@ var AmountButtons = React.createClass({
   }
 });
 
-module.exports = AmountButtons;
+module.exports = connect(
+function(state) {
+  return {
+    amount: state.donateForm.amount,
+    presets: state.donateForm.presets,
+    currency: state.donateForm.currency,
+    amountError: state.donateForm.amountError
+  };
+},
+function(dispatch) {
+  return {
+    setAmount: function(data) {
+      dispatch(setAmount(data));
+    }
+  };
+})(AmountButtons);

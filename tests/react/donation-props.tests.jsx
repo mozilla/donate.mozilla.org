@@ -1,34 +1,39 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 /* eslint-disable no-unused-vars */
-var ReactDOM = require('react-dom');
-var TestUtils = require('react/lib/ReactTestUtils');
+
 var should = require('should');
-var ContextStub = require('./ContextStub.jsx');
+var ContextStub = require('./context-stub.jsx');
+
+import { mount } from 'enzyme';
+var createTestStore = require('./test-store.js');
 var DonationPage = require('../../dist/pages/one-page.js');
 
-describe('donation page query ?amount=100&currency=cad&presets=1,2,3,4&frequency=monthly donation test', function() {
+describe('donation page query ?amount=101&currency=aud&presets=1,2,3,4&frequency=monthly donation test', function() {
   should.doesNotThrow(() => {
-    var Document = TestUtils.renderIntoDocument(
-      <ContextStub>
-        <DonationPage
-          amount="100"  
-          presets={["1", "2", "3", "4"]}
-          frequency="monthly"
-          currency={{
-            code: 'aud',
-            minAmount: '2',
-            symbol: '$',
-            presets: {
-              single: ['200', '150', '100', '50'],
-              monthly: ['50', '40', '30', '20']
-            }
-          }}
-        />
+
+    var store = createTestStore({
+      amount: "101",
+      presets: ["1", "2", "3", "4"],
+      frequency: "monthly",
+      currency: {
+        code: 'aud',
+        minAmount: '2',
+        symbol: '$',
+        presets: {
+          single: ['200', '150', '100', '50'],
+          monthly: ['50', '40', '30', '20']
+        }
+      }
+    });
+
+    var wrapper = mount(
+      <ContextStub store={store}>
+        <DonationPage/>
       </ContextStub>
     );
-    
-    var testElement = ReactDOM.findDOMNode(Document);
+
+    var testElement = wrapper.getDOMNode();
     var amountOther = testElement.querySelector('#amount-other-input').value;
     var currencySelector = testElement.querySelector('.currency-dropdown').value;
     var aboutPresetButton1 = testElement.querySelector('#amount-1').value;
@@ -37,8 +42,8 @@ describe('donation page query ?amount=100&currency=cad&presets=1,2,3,4&frequency
     var aboutPresetButton4 = testElement.querySelector('#amount-4').value;
     var frequency = testElement.querySelector('.monthly-payment').checked;
 
-    it('#amount-other-input value is 100', function() {
-      should(amountOther).equal('100');
+    it('#amount-other-input value is 101', function() {
+      should(amountOther).equal('101');
     });
     it('.currency-dropdown value is aud', function() {
       should(currencySelector).equal('aud');
@@ -58,6 +63,5 @@ describe('donation page query ?amount=100&currency=cad&presets=1,2,3,4&frequency
     it('frequency .monthly-payment checked is true', function() {
       should(frequency).equal(true);
     });
-    ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(Document).parentNode);
   });
 });

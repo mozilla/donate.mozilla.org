@@ -5,56 +5,25 @@ import AmountButtons from '../components/amount-buttons.js';
 import Frequency from '../components/donation-frequency.js';
 import SubmitButton from '../components/submit-button.js';
 import DonateButton from '../components/donate-button.js';
-import {paypalLocales} from '../../intl-config.js';
+import { paypalLocales } from '../../intl-config.js';
 import amountModifier from '../lib/amount-modifier.js';
-
-import listener from '../lib/listener.js';
-import form from '../lib/form.js';
+import { connect } from 'react-redux';
+import { setAmountError } from '../actions';
 
 var PaypalForm = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
-  getInitialState: function() {
-    return {
-      amount: "",
-      currency: {}
-    };
-  },
-  componentDidMount: function() {
-    listener.on("fieldUpdated", this.onFieldUpdated);
-    listener.on("stateUpdated", this.onStateUpdated);
-  },
-  componentWillUnmount: function() {
-    listener.off("fieldUpdated", this.onFieldUpdated);
-    listener.off("stateUpdated", this.onStateUpdated);
-  },
-  onFieldUpdated: function(e) {
-    var detail = e.detail;
-    if (detail.field === "amount") {
-      this.setState({
-        amount: detail.value
-      });
-    }
-  },
-  onStateUpdated: function(e) {
-    var detail = e.detail;
-    if (detail.state === "currency") {
-      this.setState({
-        currency: detail.value
-      });
-    }
-  },
-  submit: function(frequency) {
-    if (frequency === "monthly") {
+  submit: function() {
+    if (this.props.frequency === "monthly") {
       this.refs.paypalRecurring.submit();
     } else {
       this.refs.paypalOneTime.submit();
     }
   },
   render: function() {
-    var amount = this.state.amount;
-    var currencyCode = this.state.currency.code || "";
+    var amount = this.props.amount;
+    var currencyCode = this.props.currency.code || "";
     var locale = this.context.intl.locale;
     return (
       <span>
@@ -91,19 +60,31 @@ var PaypalForm = React.createClass({
   }
 });
 
+var NOT_SUBMITTING = 0;
 var PAYPAL_SUBMITTING = 3;
 var simplePaypal = React.createClass({
-  mixins: [require('../mixins/form.js')],
-  simplePaypal: function(validate, props) {
-    var valid = form.validate(validate);
-    var submitProps = {};
-    if (valid) {
-      this.setState({
-        submitting: PAYPAL_SUBMITTING
-      });
-      submitProps = form.buildProps(props);
-      this.refs.paypalForm.submit(submitProps.frequency);
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
+  getInitialState: function() {
+    return {
+      submitting: NOT_SUBMITTING
+    };
+  },
+  validatePaypal: function() {
+    var errorMessage = "";
+    var amount = parseInt(this.props.amount, 10);
+    var minAmount = parseInt(this.props.currency.minAmount, 10);
+    if (!amount) {
+      errorMessage = 'please_select_an_amount';
+    } else if (amount < minAmount) {
+      errorMessage = 'donation_min_error';
     }
+    if (errorMessage) {
+      this.props.setAmountError(errorMessage);
+      return;
+    }
+    this.refs.paypalForm.submit();
   },
   render: function() {
     var className = "row";
@@ -135,17 +116,18 @@ var simplePaypal = React.createClass({
               </div>
               <div className="row">
                 <div className="full">
-                  <AmountButtons name="amount"/>
-                  <Frequency name="frequency"/>
-                  <SubmitButton
-                    submitting={this.state.submitting === PAYPAL_SUBMITTING}
-                    validate={["amount"]}
-                    onSubmit={this.simplePaypal}
-                    submit={["amount", "frequency"]}
-                  >
-                    <DonateButton/>
-                  </SubmitButton>
-
+                  <AmountButtons/>
+                  <Frequency/>
+                  <div className="row submit-button">
+                    <div className="full submit-button-container">
+                      <SubmitButton
+                        submitting={this.state.submitting === PAYPAL_SUBMITTING}
+                        onSubmit={this.validatePaypal}
+                      >
+                        <DonateButton/>
+                      </SubmitButton>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -156,7 +138,11 @@ var simplePaypal = React.createClass({
               {this.context.intl.formatMessage({id: "donation_notice"})}
             </p>
           </div>
-          <PaypalForm ref="paypalForm"/>
+          <PaypalForm ref="paypalForm"
+            currency={this.props.currency}
+            amount={this.props.amount}
+            frequency={this.props.frequency}
+          />
         </div>
         <MozillaFooter/>
       </div>
@@ -164,4 +150,18 @@ var simplePaypal = React.createClass({
   }
 });
 
-module.exports = simplePaypal;
+module.exports = connect(
+function(state) {
+  return {
+    currency: state.donateForm.currency,
+    amount: state.donateForm.amount,
+    frequency: state.donateForm.frequency
+  };
+},
+function(dispatch) {
+  return {
+    setAmountError: function(data) {
+      dispatch(setAmountError(data));
+    }
+  };
+})(simplePaypal);

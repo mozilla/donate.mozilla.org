@@ -1,5 +1,5 @@
 import currencies from '../data/currencies.js';
-import {localeCurrencyData, localeCountryData} from '../data/locale-data.js';
+import localeCurrencyData from '../data/locale-data.js';
 
 function isNumber(item) {
   return !isNaN(parseInt(item, 10));
@@ -10,7 +10,6 @@ module.exports = function(queryString, locale) {
   var presets = queryString.presets || "";
   var queryStringCurrencyCode = queryString.currency;
   var localeCurrencyCode = localeCurrencyData[locale];
-  var country = queryString.country || localeCountryData[locale] || "US";
   var amount = "";
   var frequency = "single";
   var test = queryString.test;
@@ -35,12 +34,15 @@ module.exports = function(queryString, locale) {
   }
 
   return {
-    test: test,
-    currency: currency,
-    presets: presets,
-    amount: amount,
-    frequency: frequency,
-    email: queryString.email || "",
-    country: country
+    values: {
+      test: test,
+      email: queryString.email || ""
+    },
+    initialState: {
+      currency: currency,
+      presets: presets,
+      amount: amount,
+      frequency: frequency
+    }
   };
 };

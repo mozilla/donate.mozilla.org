@@ -1,21 +1,17 @@
 import React from 'react';
-import {ErrorListener} from './error.js';
 
 var DonateButton = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
   propTypes: {
-    onClick: React.PropTypes.func,
+    onSubmit: React.PropTypes.func,
     submitting: React.PropTypes.bool,
-    validate: React.PropTypes.array.isRequired,
-    submit: React.PropTypes.array.isRequired,
-    errors: React.PropTypes.array,
     name: React.PropTypes.string
   },
   onClick: function() {
     if (!this.props.submitting) {
-      this.props.onSubmit(this.props.validate, this.props.submit);
+      this.props.onSubmit();
     }
   },
   renderButton: function() {
@@ -38,14 +34,9 @@ var DonateButton = React.createClass({
   },
   render: function() {
     return (
-      <div className="row submit-button">
-        <div className="full submit-button-container">
-          <ErrorListener errors={this.props.errors || []}/>
-          <button ref={(button) => { this.submitButton = button; }} name={this.props.name || "submit-button"} type="submit" className="submit-btn large-label-size">
-            {this.renderButton()}
-          </button>
-        </div>
-      </div>
+      <button ref={(button) => { this.submitButton = button; }} name={this.props.name || "submit-button"} type="submit" className="submit-btn large-label-size">
+        {this.renderButton()}
+      </button>
     );
   }
 });

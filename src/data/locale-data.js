@@ -32,6 +32,7 @@ module.exports = {
   'id': 'idr',
   'it': 'eur',
   'ja': 'jpy',
+  'ka': 'gel',
   'kab': 'dzd',
   'ko': 'krw',
   'lv': 'eur',

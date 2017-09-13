@@ -211,6 +211,16 @@ module.exports = {
       monthly: ['10', '5', '3', '2']
     }
   },
+  'gel': {
+    code: 'gel',
+    minAmount: '5',
+    symbol: '₾',
+    disabled: "paypal",
+    presets: {
+      single: ['50', '25', '12', '7'],
+      monthly: ['25', '12', '7', '5']
+    }
+  },
   'hkd': {
     code: 'hkd',
     minAmount: '15',

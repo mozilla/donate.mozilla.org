@@ -23,7 +23,7 @@ var WaysToGive = React.createClass({
         <div className="container">
           <h2><FormattedHTMLMessage id='credit_debit_paypal' /></h2>
           <p><FormattedHTMLMessage id='make_donation' /></p>
-          <h2><FormattedHTMLMessage id='bank_transfer' /></h2>
+          <h2 id="wire"><FormattedHTMLMessage id='bank_transfer' /></h2>
           <p><FormattedHTMLMessage id='wire_transfer_cost_info' /></p>
           <p><FormattedHTMLMessage id='bank_transfer_info' /></p>
           <h2 id="check"><FormattedHTMLMessage id='mail_check_heading' /></h2>

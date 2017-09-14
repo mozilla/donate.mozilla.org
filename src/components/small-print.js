@@ -8,7 +8,7 @@ var Footer = React.createClass({
   },
   render: function() {
     var bitcoinLink = (<Link to={'/' + this.context.intl.locale + '/give-bitcoin/'}>{this.context.intl.formatMessage({id: 'Bitcoin'})}</Link>);
-    var checkLink = (<a href='https://donate.mozilla.org/ways-to-give#check'>{this.context.intl.formatMessage({id: 'check'})}</a>);
+    var checkLink = (<a href={'/' + this.context.intl.locale + '/ways-to-give#check'}>{this.context.intl.formatMessage({id: 'check'})}</a>);
     return (
       <div className="row disclaimers">
         <p className="other-ways-to-give">

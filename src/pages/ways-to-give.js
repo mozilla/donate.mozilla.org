@@ -23,11 +23,77 @@ var WaysToGive = React.createClass({
         <div className="container">
           <h2><FormattedHTMLMessage id='credit_debit_paypal' /></h2>
           <p><FormattedHTMLMessage id='make_donation' /></p>
-          <h2 id="wire"><FormattedHTMLMessage id='bank_transfer' /></h2>
-          <p><FormattedHTMLMessage id='wire_transfer_cost_info' /></p>
-          <p><FormattedHTMLMessage id='bank_transfer_info' /></p>
+          <h2 id="wire"><FormattedHTMLMessage id='bank_transfer_sepa' /></h2>
+          <p>
+            <b><FormattedHTMLMessage id='sepa_desc_new' /></b>
+            {" "}
+            <FormattedHTMLMessage id='sepa_desc_start' />
+            {" "}
+            <FormattedHTMLMessage id='sepa_desc_end' />
+          </p>
+          <br/>
+          <h3><FormattedHTMLMessage id='euro_title' /></h3>
+          <p>
+            <b><FormattedHTMLMessage id='account_currency' /></b>
+            {" "}
+            <FormattedHTMLMessage id='euro_currency' />
+            <br/>
+            <b><FormattedHTMLMessage id='receiving_bank' /></b>
+            {" Standard Chartered Bank"}
+            <br/>
+            <b><FormattedHTMLMessage id='city_and_country' /></b>
+            {" "}
+            <FormattedHTMLMessage id='frankfurt' />
+            <br/>
+            <b><FormattedHTMLMessage id='swift_code' /></b>
+            {" SCBLDEFX"}
+            <br/>
+            <b><FormattedHTMLMessage id='beneficiary' /></b>
+            {" SVB-Mozilla Foundation"}
+            <br/>
+            <b><FormattedHTMLMessage id='IBAN' /></b>
+            {" DE67512305000500136802"}
+          </p>
+          <br/>
+          <h3><FormattedHTMLMessage id='gbp_title' /></h3>
+          <p>
+            <b><FormattedHTMLMessage id='account_currency' /></b>
+            {" "}
+            <FormattedHTMLMessage id='gbp_currency' />
+            <br/>
+            <b><FormattedHTMLMessage id='receiving_bank' /></b>
+            {" National Westminster Bank"}
+            <br/>
+            <b><FormattedHTMLMessage id='city_and_country' /></b>
+            {" "}
+            <FormattedHTMLMessage id='london' />
+            <br/>
+            <b><FormattedHTMLMessage id='sort_code' /></b>
+            {" 60-00-04"}
+            <br/>
+            <b><FormattedHTMLMessage id='account_number' /></b>
+            {" 10017496"}
+            <br/>
+            <b><FormattedHTMLMessage id='beneficiary' /></b>
+            {" SVB RE Mozilla Foundation"}
+          </p>
+          <p>
+            <b><FormattedHTMLMessage id='swift_code' /></b>
+            {" NWBKGB2L"}
+            <br/>
+            <b><FormattedHTMLMessage id='IBAN' /></b>
+            {" GB77NWBK60000410017496"}
+          </p>
+          <p>
+            <FormattedHTMLMessage
+              id='physical_address'
+              values={{
+                MozillaMV: `331 E. Evelyn Ave, Mountain View, CA 94041 USA`
+              }}
+            />
+          </p>
           <h2 id="check"><FormattedHTMLMessage id='mail_check_heading' /></h2>
-          <p><FormattedHTMLMessage id='mail_check_body' /></p>
+          <p><FormattedHTMLMessage id='mail_check_body2' /></p>
           <address>
             Mozilla Foundation<br/>
             331 E. Evelyn Ave<br/>

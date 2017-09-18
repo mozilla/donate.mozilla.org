@@ -111,8 +111,78 @@ var Faq = React.createClass({
               </Panel>
 
               <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_2" header={this.context.intl.formatHTMLMessage({id: 'faq_item_2_header_thunderbird'})}>
-                <p><FormattedHTMLMessage id='faq_item_2_p_thunderbird_a'/></p>
-                <p><FormattedHTMLMessage id='faq_item_2_p_thunderbird_b'/></p>
+                <p>
+                  <FormattedHTMLMessage id='sepa_desc_start' />
+                  {" "}
+                  <FormattedHTMLMessage id='sepa_desc_end_thunderbird' />
+                </p>
+                <br/>
+                <h4><FormattedHTMLMessage id='euro_title' /></h4>
+                <p>
+                  <b><FormattedHTMLMessage id='account_currency' /></b>
+                  {" "}
+                  <FormattedHTMLMessage id='euro_currency' />
+                  <br/>
+                  <b><FormattedHTMLMessage id='receiving_bank' /></b>
+                  {" Standard Chartered Bank"}
+                  <br/>
+                  <b><FormattedHTMLMessage id='city_and_country' /></b>
+                  {" "}
+                  <FormattedHTMLMessage id='frankfurt' />
+                  <br/>
+                  <b><FormattedHTMLMessage id='swift_code' /></b>
+                  {" SCBLDEFX"}
+                  <br/>
+                  <b><FormattedHTMLMessage id='beneficiary' /></b>
+                  {" SVB-Mozilla Foundation"}
+                  <br/>
+                  <b><FormattedHTMLMessage id='IBAN' /></b>
+                  {" DE67512305000500136802"}
+                  <br/>
+                  <b><FormattedHTMLMessage id='memo_field' /></b>
+                  {" Thunderbird"}
+                </p>
+                <br/>
+                <h4><FormattedHTMLMessage id='gbp_title' /></h4>
+                <p>
+                  <b><FormattedHTMLMessage id='account_currency' /></b>
+                  {" "}
+                  <FormattedHTMLMessage id='gbp_currency' />
+                  <br/>
+                  <b><FormattedHTMLMessage id='receiving_bank' /></b>
+                  {" National Westminster Bank"}
+                  <br/>
+                  <b><FormattedHTMLMessage id='city_and_country' /></b>
+                  {" "}
+                  <FormattedHTMLMessage id='london' />
+                  <br/>
+                  <b><FormattedHTMLMessage id='sort_code' /></b>
+                  {" 60-00-04"}
+                  <br/>
+                  <b><FormattedHTMLMessage id='account_number' /></b>
+                  {" 10017496"}
+                  <br/>
+                  <b><FormattedHTMLMessage id='beneficiary' /></b>
+                  {" SVB RE Mozilla Foundation"}
+                  <br/>
+                  <b><FormattedHTMLMessage id='memo_field' /></b>
+                  {" Thunderbird"}
+                </p>
+                <p>
+                  <b><FormattedHTMLMessage id='swift_code' /></b>
+                  {" NWBKGB2L"}
+                  <br/>
+                  <b><FormattedHTMLMessage id='IBAN' /></b>
+                  {" GB77NWBK60000410017496"}
+                </p>
+                <p>
+                  <FormattedHTMLMessage
+                    id='physical_address'
+                    values={{
+                      MozillaMV: `331 E. Evelyn Ave, Mountain View, CA 94041 USA`
+                    }}
+                  />
+                </p>
               </Panel>
 
               <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_3" header={this.context.intl.formatHTMLMessage({id: 'faq_item_3_header'})}>
@@ -180,7 +250,7 @@ var Faq = React.createClass({
           <MozillaFooter/>
         </div>
       );
-    } else {
+    }
     return (
       <div className={className}>
         <div className="faq-header">
@@ -270,7 +340,6 @@ var Faq = React.createClass({
         <MozillaFooter/>
       </div>
     );
-    }
   }
 });
 

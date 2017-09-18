@@ -227,7 +227,8 @@ var Faq = React.createClass({
           <MozillaFooter/>
         </div>
       );
-    } else {
+    }
+
     return (
       <div className={className}>
         <div className="faq-header">
@@ -331,7 +332,6 @@ var Faq = React.createClass({
         <MozillaFooter/>
       </div>
     );
-    }
   }
 });
 

@@ -221,6 +221,17 @@ module.exports = {
       monthly: ['25', '12', '7', '5']
     }
   },
+  'gtq': {
+    code: 'gtq',
+    minAmount: '15',
+    symbol: 'Q',
+    amexDisabled: true,
+    disabled: "paypal",
+    presets: {
+      single: ['145', '70', '35', '20'],
+      monthly: ['70', '35', '20', '15']
+    }
+  },
   'hkd': {
     code: 'hkd',
     minAmount: '15',

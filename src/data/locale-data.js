@@ -4,6 +4,7 @@ module.exports = {
   'bn-BD': 'bdt',
   'bn-IN': 'inr',
   'ca': 'eur',
+  'cak': 'gtq',
   'cs': 'czk',
   'da': 'dkk',
   'de': 'eur',

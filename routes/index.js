@@ -250,20 +250,6 @@ var routes = {
                 customer_id: customer.id
               });
 
-              basket.queue({
-                event_type: "donation",
-                last_name: customer.sources.data[0].name,
-                email: customer.email,
-                donation_amount: basket.zeroDecimalCurrencyFix(subscription.quantity, subscription.plan.currency),
-                currency: subscription.plan.currency,
-                created: subscription.created,
-                recurring: true,
-                frequency: "monthly",
-                service: "stripe",
-                transaction_id: subscription.id,
-                project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
-              });
-
               reply({
                 frequency: "monthly",
                 currency: subscription.plan.currency,
@@ -592,6 +578,9 @@ var routes = {
         stripe.retrieveSubscription(
           charge.invoice.customer,
           charge.invoice.subscription,
+          {
+            expand: ["customer"]
+          },
           function(retrieveSubscriptionErr, subscription) {
             if (retrieveSubscriptionErr) {
               return reply(boom.badImplementation('An error occurred while fetching the subscription for this charge\'s invoice', retrieveSubscriptionErr));
@@ -608,6 +597,22 @@ var routes = {
             } else {
               updateData.description = 'Mozilla Foundation Monthly Donation';
             }
+
+            // capture recurring stripe transactions in salesforce
+            basket.queue({
+              event_type: "donation",
+              last_name: subscription.customer.sources.data[0].name,
+              email: subscription.customer.email,
+              donation_amount: basket.zeroDecimalCurrencyFix(charge.quantity, charge.currency),
+              currency: charge.currency,
+              created: charge.created,
+              recurring: true,
+              frequency: "monthly",
+              service: "stripe",
+              transaction_id: charge.id,
+              subscription_id: subscription.id,
+              project: charge.metadata.thunderbird ? "thunderbird" : ( charge.metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
+            });
 
             stripe.updateCharge(charge.id, updateData, function(updateChargeErr) {
               if (updateChargeErr) {

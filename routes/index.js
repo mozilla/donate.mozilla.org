@@ -603,7 +603,7 @@ var routes = {
               event_type: "donation",
               last_name: subscription.customer.sources.data[0].name,
               email: subscription.customer.email,
-              donation_amount: basket.zeroDecimalCurrencyFix(charge.quantity, charge.currency),
+              donation_amount: basket.zeroDecimalCurrencyFix(charge.amount, charge.currency),
               currency: charge.currency,
               created: charge.created,
               recurring: true,

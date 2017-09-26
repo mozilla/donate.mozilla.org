@@ -611,7 +611,7 @@ var routes = {
               service: "stripe",
               transaction_id: charge.id,
               subscription_id: subscription.id,
-              project: charge.metadata.thunderbird ? "thunderbird" : ( charge.metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
+              project: updateData.metadata.thunderbird ? "thunderbird" : ( updateData.metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
             });
 
             stripe.updateCharge(charge.id, updateData, function(updateChargeErr) {

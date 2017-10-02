@@ -27,12 +27,43 @@ var WaysToGive = React.createClass({
           <p>
             <b><FormattedHTMLMessage id='sepa_desc_new' /></b>
             {" "}
-            <FormattedHTMLMessage id='sepa_desc_start' />
-            {" "}
-            <FormattedHTMLMessage id='sepa_desc_end' />
+            <FormattedHTMLMessage id='sepa_desc' />
           </p>
           <br/>
-          <h3><FormattedHTMLMessage id='euro_title' /></h3>
+          <h3><FormattedHTMLMessage id='usd_title' /></h3>
+          <p>
+            <b><FormattedHTMLMessage id='receiving_bank' /></b>
+            {" Silicon Valley Bank"}
+            <br/>
+            <b><FormattedHTMLMessage id='bank_address' /></b>
+            {" 3003 Tasman Drive, Santa Clara, CA 94054 USA"}
+            <p>
+              <h4><FormattedHTMLMessage id='domestic_transfer' /></h4>
+              <b><FormattedHTMLMessage id='routing_transit' /></b>
+              {" 121140399"}
+              <br/>
+              <b><FormattedHTMLMessage id='beneficiary' /></b>
+              {" Mozilla Foundation"}
+              <br/>
+              <b><FormattedHTMLMessage id='account_number_usa' /></b>
+              {" 3302228513"}
+              <br/><br/>
+              <h4><FormattedHTMLMessage id='international_transfer' /></h4>
+              <b><FormattedHTMLMessage id='routing_transit' /></b>
+              {" 121140399"}
+              <br/>
+              <b><FormattedHTMLMessage id='beneficiary' /></b>
+              {" Mozilla Foundation"}
+              <br/>
+              <b><FormattedHTMLMessage id='account_number_usa' /></b>
+              {" 3302228513"}
+              <br/>
+              <b><FormattedHTMLMessage id='swift_code' /></b>
+              {" SVBKUS6S"}
+            </p>
+          </p>
+          <br/>
+          <h3 id="euro"><FormattedHTMLMessage id='euro_title' /></h3>
           <p>
             <b><FormattedHTMLMessage id='account_currency' /></b>
             {" "}
@@ -55,7 +86,7 @@ var WaysToGive = React.createClass({
             {" DE67512305000500136802"}
           </p>
           <br/>
-          <h3><FormattedHTMLMessage id='gbp_title' /></h3>
+          <h3 id="gbp"><FormattedHTMLMessage id='gbp_title' /></h3>
           <p>
             <b><FormattedHTMLMessage id='account_currency' /></b>
             {" "}
@@ -91,6 +122,11 @@ var WaysToGive = React.createClass({
                 MozillaMV: `331 E. Evelyn Ave, Mountain View, CA 94041 USA`
               }}
             />
+          </p>
+          <br/>
+          <h3><FormattedHTMLMessage id='other_currency' /></h3>
+          <p>
+            <FormattedHTMLMessage id='other_currency_iban' />
           </p>
           <h2 id="check"><FormattedHTMLMessage id='mail_check_heading' /></h2>
           <p><FormattedHTMLMessage id='mail_check_body2' /></p>

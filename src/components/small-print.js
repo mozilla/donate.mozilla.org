@@ -7,14 +7,16 @@ var Footer = React.createClass({
     intl: React.PropTypes.object
   },
   render: function() {
+    var wireTransferLink = (<Link to={'/' + this.context.intl.locale + '/ways-to-give#wire'}>{this.context.intl.formatMessage({id: 'wireTransfer'})}</Link>);
     var bitcoinLink = (<Link to={'/' + this.context.intl.locale + '/give-bitcoin/'}>{this.context.intl.formatMessage({id: 'Bitcoin'})}</Link>);
-    var checkLink = (<a href='https://donate.mozilla.org/ways-to-give#check'>{this.context.intl.formatMessage({id: 'check'})}</a>);
+    var checkLink = (<a href={'/' + this.context.intl.locale + '/ways-to-give#check'}>{this.context.intl.formatMessage({id: 'check'})}</a>);
     return (
       <div className="row disclaimers">
         <p className="other-ways-to-give">
           <FormattedMessage
-            id='other_way_to_give'
+            id='other_way_to_give_wire'
             values={{
+              wireTransferLink,
               bitcoinLink,
               checkLink
             }}

@@ -150,8 +150,7 @@ var Faq = React.createClass({
                   <br/>
                   USA
                 </address>{this.renderEnglishMemoLine()}
-                <p><FormattedHTMLMessage id='faq_item_4_paragraph_f'/></p>
-                <p><FormattedHTMLMessage id='faq_item_4_paragraph_g_bold'/></p>
+                <br/><br/>
               </Panel>
 
               <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_5" header={this.context.intl.formatHTMLMessage({id: 'faq_item_5_header'})}>
@@ -269,8 +268,6 @@ var Faq = React.createClass({
                 <br/>
                 USA
               </address>
-              <p><FormattedHTMLMessage id='faq_item_4_paragraph_f'/></p>
-              <p><FormattedHTMLMessage id='faq_item_4_paragraph_g'/></p>
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_5" header={this.context.intl.formatHTMLMessage({id: 'faq_item_5_header'})}>

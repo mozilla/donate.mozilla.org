@@ -102,7 +102,7 @@ var Faq = React.createClass({
           </div>
           <div className="container">
             <h2>
-              <FormattedHTMLMessage id='faq_intro_thunderbird'/>
+              <FormattedHTMLMessage id='faq_intro_shorter_thunderbird'/>
             </h2>
             <div className="collapse">
 

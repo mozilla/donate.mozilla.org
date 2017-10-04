@@ -56,7 +56,7 @@ You can configure the following environment variables:
 |--------|-----|
 | OPTIMIZELY_ID | Optimizely Project ID (not a secret) e.g. '206878104' |
 | OPTIMIZELY_ACTIVE | If set to 'yes' (String) the project will include Optimizely snippet in the page load |
-| SUPPORTED_LOCALES | If set to '*' all locales under `intl-config.js` file for `src` will be enabled otherwise it expects array of locales.
+| SUPPORTED_LOCALES | If set to '*' all locales under `intl-config.js` file for `src` will be enabled otherwise it expects an array of locales.
 
 ---
 

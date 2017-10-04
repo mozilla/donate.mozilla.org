@@ -8,6 +8,14 @@ var WaysToGive = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
+  renderEnglishMemoLine: function() {
+    if (/^(en-US|en-CA)(\b|$)/.test(this.context.intl.locale)) {
+      return (
+        <span> and include your email address on the memo line.</span>
+      );
+    }
+    return (<div></div>);
+  },
   render: function() {
     var className = "row faq-page ways-to-give-page";
     if (this.props.test) {
@@ -136,7 +144,7 @@ var WaysToGive = React.createClass({
             331 E. Evelyn Ave<br/>
             Mountain View, CA 94041<br/>
             USA
-          </address>
+          </address>{this.renderEnglishMemoLine()}
           <br/>
           <h2><FormattedHTMLMessage id='currencies' /></h2>
           <p><FormattedHTMLMessage id='select_donation_currency' /></p>

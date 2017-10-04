@@ -87,8 +87,8 @@ var stripeRoutes = {
       expand: ["invoice"]
     }, callback);
   },
-  retrieveSubscription: function(customerId, subscriptionId, callback) {
-    stripe.customers.retrieveSubscription(customerId, subscriptionId, callback);
+  retrieveSubscription: function(customerId, subscriptionId, options, callback) {
+    stripe.customers.retrieveSubscription(customerId, subscriptionId, options, callback);
   }
 };
 

@@ -89,7 +89,7 @@ var Faq = React.createClass({
 
     // FIXME: Temporary expose the new template to English and locales that are ready,
     // until we have a good coverage.
-    if (/^(en|cs|de|es|fr|it|nl|pl|sv-SE|zh-TW)(\b|$)/.test(this.context.intl.locale)) {
+    if (/^(en|cs|de|es|fr|it|nl|pl|ru|sv-SE|zh-TW)(\b|$)/.test(this.context.intl.locale)) {
       return (
         <div className={className}>
           <div className="faq-header">

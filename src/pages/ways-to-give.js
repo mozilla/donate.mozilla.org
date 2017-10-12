@@ -38,40 +38,6 @@ var WaysToGive = React.createClass({
             <FormattedHTMLMessage id='sepa_desc' />
           </p>
           <br/>
-          <h3><FormattedHTMLMessage id='usd_title' /></h3>
-          <p>
-            <b><FormattedHTMLMessage id='receiving_bank' /></b>
-            {" Silicon Valley Bank"}
-            <br/>
-            <b><FormattedHTMLMessage id='bank_address' /></b>
-            {" 3003 Tasman Drive, Santa Clara, CA 94054 USA"}
-          </p>
-          <h4><FormattedHTMLMessage id='domestic_transfer' /></h4>
-          <p>
-            <b><FormattedHTMLMessage id='routing_transit' /></b>
-            {" 121140399"}
-            <br/>
-            <b><FormattedHTMLMessage id='beneficiary' /></b>
-            {" Mozilla Foundation"}
-            <br/>
-            <b><FormattedHTMLMessage id='account_number_usa' /></b>
-            {" 3302228513"}
-          </p>
-          <h4><FormattedHTMLMessage id='international_transfer' /></h4>
-          <p>
-            <b><FormattedHTMLMessage id='routing_transit' /></b>
-            {" 121140399"}
-            <br/>
-            <b><FormattedHTMLMessage id='beneficiary' /></b>
-            {" Mozilla Foundation"}
-            <br/>
-            <b><FormattedHTMLMessage id='account_number_usa' /></b>
-            {" 3302228513"}
-            <br/>
-            <b><FormattedHTMLMessage id='swift_code' /></b>
-            {" SVBKUS6S"}
-          </p>
-          <br/>
           <h3 id="euro"><FormattedHTMLMessage id='euro_title' /></h3>
           <p>
             <b><FormattedHTMLMessage id='account_currency' /></b>
@@ -131,6 +97,40 @@ var WaysToGive = React.createClass({
                 MozillaMV: `331 E. Evelyn Ave, Mountain View, CA 94041 USA`
               }}
             />
+          </p>
+          <br/>
+          <h3><FormattedHTMLMessage id='usd_title' /></h3>
+          <p>
+            <b><FormattedHTMLMessage id='receiving_bank' /></b>
+            {" Silicon Valley Bank"}
+            <br/>
+            <b><FormattedHTMLMessage id='bank_address' /></b>
+            {" 3003 Tasman Drive, Santa Clara, CA 94054 USA"}
+          </p>
+          <h4><FormattedHTMLMessage id='domestic_transfer' /></h4>
+          <p>
+            <b><FormattedHTMLMessage id='routing_transit' /></b>
+            {" 121140399"}
+            <br/>
+            <b><FormattedHTMLMessage id='beneficiary' /></b>
+            {" Mozilla Foundation"}
+            <br/>
+            <b><FormattedHTMLMessage id='account_number_usa' /></b>
+            {" 3302228513"}
+          </p>
+          <h4><FormattedHTMLMessage id='international_transfer' /></h4>
+          <p>
+            <b><FormattedHTMLMessage id='routing_transit' /></b>
+            {" 121140399"}
+            <br/>
+            <b><FormattedHTMLMessage id='beneficiary' /></b>
+            {" Mozilla Foundation"}
+            <br/>
+            <b><FormattedHTMLMessage id='account_number_usa' /></b>
+            {" 3302228513"}
+            <br/>
+            <b><FormattedHTMLMessage id='swift_code' /></b>
+            {" SVBKUS6S"}
           </p>
           <br/>
           <h3><FormattedHTMLMessage id='other_currency' /></h3>

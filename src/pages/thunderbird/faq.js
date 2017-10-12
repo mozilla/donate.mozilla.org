@@ -114,43 +114,6 @@ var Faq = React.createClass({
                 <p>
                   <FormattedHTMLMessage id='sepa_desc' />
                 </p>
-                <h4><FormattedHTMLMessage id='usd_title' /></h4>
-                <p>
-                  <b><FormattedHTMLMessage id='receiving_bank' /></b>
-                  {" Silicon Valley Bank"}
-                  <br/>
-                  <b><FormattedHTMLMessage id='bank_address' /></b>
-                  {" 3003 Tasman Drive, Santa Clara, CA 94054 USA"}
-                </p>
-                <h6><FormattedHTMLMessage id='domestic_transfer' /></h6>
-                <b><FormattedHTMLMessage id='routing_transit' /></b>
-                {" 121140399"}
-                <br/>
-                <b><FormattedHTMLMessage id='beneficiary' /></b>
-                {" Mozilla Foundation"}
-                <br/>
-                <b><FormattedHTMLMessage id='account_number_usa' /></b>
-                {" 3302228513"}
-                <br/>
-                <b><FormattedHTMLMessage id='memo_field' /></b>
-                {" Thunderbird"}
-                <br/><br/>
-                <h6><FormattedHTMLMessage id='international_transfer' /></h6>
-                <b><FormattedHTMLMessage id='routing_transit' /></b>
-                {" 121140399"}
-                <br/>
-                <b><FormattedHTMLMessage id='beneficiary' /></b>
-                {" Mozilla Foundation"}
-                <br/>
-                <b><FormattedHTMLMessage id='account_number_usa' /></b>
-                {" 3302228513"}
-                <br/>
-                <b><FormattedHTMLMessage id='memo_field' /></b>
-                {" Thunderbird"}
-                <br/>
-                <b><FormattedHTMLMessage id='swift_code' /></b>
-                {" SVBKUS6S"}
-                <br/><br/>
                 <h4><FormattedHTMLMessage id='euro_title' /></h4>
                 <p>
                   <b><FormattedHTMLMessage id='account_currency' /></b>
@@ -217,6 +180,44 @@ var Faq = React.createClass({
                     }}
                   />
                 </p>
+                <br/>
+                <h4><FormattedHTMLMessage id='usd_title' /></h4>
+                <p>
+                  <b><FormattedHTMLMessage id='receiving_bank' /></b>
+                  {" Silicon Valley Bank"}
+                  <br/>
+                  <b><FormattedHTMLMessage id='bank_address' /></b>
+                  {" 3003 Tasman Drive, Santa Clara, CA 94054 USA"}
+                </p>
+                <h6><FormattedHTMLMessage id='domestic_transfer' /></h6>
+                <b><FormattedHTMLMessage id='routing_transit' /></b>
+                {" 121140399"}
+                <br/>
+                <b><FormattedHTMLMessage id='beneficiary' /></b>
+                {" Mozilla Foundation"}
+                <br/>
+                <b><FormattedHTMLMessage id='account_number_usa' /></b>
+                {" 3302228513"}
+                <br/>
+                <b><FormattedHTMLMessage id='memo_field' /></b>
+                {" Thunderbird"}
+                <br/><br/>
+                <h6><FormattedHTMLMessage id='international_transfer' /></h6>
+                <b><FormattedHTMLMessage id='routing_transit' /></b>
+                {" 121140399"}
+                <br/>
+                <b><FormattedHTMLMessage id='beneficiary' /></b>
+                {" Mozilla Foundation"}
+                <br/>
+                <b><FormattedHTMLMessage id='account_number_usa' /></b>
+                {" 3302228513"}
+                <br/>
+                <b><FormattedHTMLMessage id='memo_field' /></b>
+                {" Thunderbird"}
+                <br/>
+                <b><FormattedHTMLMessage id='swift_code' /></b>
+                {" SVBKUS6S"}
+                <br/><br/>
               </Panel>
 
               <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_3" header={this.context.intl.formatHTMLMessage({id: 'faq_item_3_header'})}>

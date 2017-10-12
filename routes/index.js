@@ -369,6 +369,8 @@ var routes = {
 
           request.log(['paypal', 'checkout', frequency], log_details);
 
+          var timestamp = new Date(data.txn.PAYMENTINFO_0_ORDERTIME).getTime() / 1000
+
           basket.queue({
             event_type: "donation",
             first_name: checkoutDetails.response.FIRSTNAME,
@@ -376,7 +378,7 @@ var routes = {
             email: checkoutDetails.response.EMAIL,
             donation_amount: data.txn.PAYMENTREQUEST_0_AMT,
             currency: data.txn.CURRENCYCODE,
-            created: Date.now(),
+            created: timestamp,
             recurring: false,
             service: 'paypal',
             transaction_id: data.txn.PAYMENTINFO_0_TRANSACTIONID,
@@ -433,6 +435,8 @@ var routes = {
 
           request.log(['paypal', 'checkout', frequency], log_details);
 
+          var timestamp = new Date(data.txn.TIMESTAMP).getTime() / 1000
+
           // Create unique tx id by combining PayerID and timestamp
           var stamp = Date.now() / 100;
           var txId = data.txn.PAYERID + stamp;
@@ -444,11 +448,12 @@ var routes = {
             email: checkoutDetails.response.EMAIL,
             donation_amount: data.txn.AMT,
             currency: data.txn.CURRENCYCODE,
-            created: Date.now(),
+            created: timestamp,
             recurring: true,
             frequency: "monthly",
             service: "paypal",
             transaction_id: txId,
+            subscription_id: data.txn.PROFILEID,
             project: appName
           });
 

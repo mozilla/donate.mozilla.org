@@ -369,7 +369,7 @@ var routes = {
 
           request.log(['paypal', 'checkout', frequency], log_details);
 
-          var timestamp = new Date(data.txn.PAYMENTINFO_0_ORDERTIME).getTime() / 1000
+          var timestamp = new Date(data.txn.PAYMENTINFO_0_ORDERTIME).getTime() / 1000;
 
           basket.queue({
             event_type: "donation",
@@ -435,7 +435,7 @@ var routes = {
 
           request.log(['paypal', 'checkout', frequency], log_details);
 
-          var timestamp = new Date(data.txn.TIMESTAMP).getTime() / 1000
+          var timestamp = new Date(data.txn.TIMESTAMP).getTime() / 1000;
 
           // Create unique tx id by combining PayerID and timestamp
           var stamp = Date.now() / 100;
@@ -509,7 +509,9 @@ var routes = {
     return reply("charge event processed");
   },
   'stripe-dispute': function(request, reply) {
-    var event = request.payload;
+    var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_DISPUTE;
+    var signature = request.headers["stripe-signature"];
+    var event = stripe.webhooks.constructEvent(request.payload, signature, endpointSecret);
 
     var disputeEvents = [
       'charge.dispute.closed',
@@ -562,7 +564,10 @@ var routes = {
 
   },
   'stripe-charge-succeeded': function(request, reply) {
-    var event = request.payload;
+    var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_SUCCESS;
+    var signature = request.headers["stripe-signature"];
+    var event = stripe.webhooks.constructEvent(request.payload, signature, endpointSecret);
+
     var charge = event.data.object;
 
     if (event.type !== 'charge.succeeded') {

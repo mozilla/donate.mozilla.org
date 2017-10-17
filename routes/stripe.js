@@ -89,6 +89,9 @@ var stripeRoutes = {
   },
   retrieveSubscription: function(customerId, subscriptionId, options, callback) {
     stripe.customers.retrieveSubscription(customerId, subscriptionId, options, callback);
+  },
+  constructEvent: function(payload, signature, endpointSecret) {
+    return stripe.webhooks.constructEvent(payload, signature, endpointSecret);
   }
 };
 

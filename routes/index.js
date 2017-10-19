@@ -463,7 +463,15 @@ var routes = {
     }
   },
   'stripe-charge-failed': function(request, reply) {
-    var event = request.payload;
+    var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_FAILED;
+    var signature = request.headers["stripe-signature"];
+
+    var event;
+    try {
+      event = stripe.constructEvent(request.payload, signature, endpointSecret);
+    } catch (constructEventErr) {
+      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret', constructEventErr));
+    }
 
     if (event.type !== 'charge.failed') {
       return reply('This hook only processes charge failed events');
@@ -480,7 +488,15 @@ var routes = {
     return reply("charge failed event processed");
   },
   'stripe-charge-refunded': function(request, reply) {
-    var event = request.payload;
+    var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_REFUNDED;
+    var signature = request.headers["stripe-signature"];
+
+    var event;
+    try {
+      event = stripe.constructEvent(request.payload, signature, endpointSecret);
+    } catch (constructEventErr) {
+      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret', constructEventErr));
+    }
 
     if (event.type !== 'charge.refunded') {
       return reply('This hook only processes charge.refunded events');

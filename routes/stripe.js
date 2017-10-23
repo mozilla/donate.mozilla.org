@@ -91,7 +91,15 @@ var stripeRoutes = {
     stripe.customers.retrieveSubscription(customerId, subscriptionId, options, callback);
   },
   constructEvent: function(payload, signature, endpointSecret) {
-    return stripe.webhooks.constructEvent(payload, signature, endpointSecret);
+    var event;
+
+    try {
+      event = stripe.webhooks.constructEvent(payload, signature, endpointSecret);
+    } catch (constructEventErr) {
+      event = [null, constructEventErr];
+    }
+
+    return event;
   }
 };
 

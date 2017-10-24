@@ -1,6 +1,7 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { persistStore, autoRehydrate } from 'redux-persist';
+import { asyncSessionStorage } from "redux-persist/storages"
 
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -20,7 +21,9 @@ var createElement = React.createClass({
         amount: this.props.amount
       }
     }, autoRehydrate());
-    persistStore(store);
+    persistStore(store, {
+      storage: asyncSessionStorage
+    });
     return (
       <Provider store={store}>
         <IntlProvider locale={this.props.locale} messages={this.props.messages}>

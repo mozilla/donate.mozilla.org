@@ -1,5 +1,6 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
+import { persistStore, autoRehydrate } from 'redux-persist';
 
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -11,15 +12,17 @@ var createElement = React.createClass({
     messages: React.PropTypes.object.isRequired
   },
   render: function() {
+    const store = createStore(reducer, {
+      donateForm: {
+        currency: this.props.currency,
+        frequency: this.props.frequency,
+        presets: this.props.presets,
+        amount: this.props.amount
+      }
+    }, autoRehydrate());
+    persistStore(store);
     return (
-      <Provider store={createStore(reducer, {
-        donateForm: {
-          currency: this.props.currency,
-          frequency: this.props.frequency,
-          presets: this.props.presets,
-          amount: this.props.amount
-        }
-      })}>
+      <Provider store={store}>
         <IntlProvider locale={this.props.locale} messages={this.props.messages}>
           {this.props.children}
         </IntlProvider>

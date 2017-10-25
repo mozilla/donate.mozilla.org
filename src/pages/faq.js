@@ -107,127 +107,6 @@ var Faq = React.createClass({
     }
     var activeKey = this.state.activeKey;
 
-    // FIXME: Temporary expose the new template to English and locales that are ready,
-    // until we have a good coverage.
-    if (/^(en|cs|de|es|fr|it|nl|pl|pt-BR|ru|sv-SE|zh-CN|zh-TW)(\b|$)/.test(this.context.intl.locale)) {
-      return (
-        <div className={className}>
-          <div className="faq-header">
-            <div className="container">
-              <h1><FormattedHTMLMessage id='faq_header'/></h1>
-              <Link to={'/' + this.context.intl.locale + '/'}>
-                <FormattedHTMLMessage id='faq_donate_link'/>
-              </Link>
-            </div>
-          </div>
-          <div className="container">
-            <h2>
-              <FormattedHTMLMessage id='faq_intro_shorter'/>
-            </h2>
-            <div className="collapse">
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_1" header={this.context.intl.formatHTMLMessage({id: 'faq_item_1_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_1_paragraph'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_2" header={this.context.intl.formatHTMLMessage({id: 'faq_item_2_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_2_paragraph_a'/></p>
-                <p><FormattedHTMLMessage id='faq_item_2_paragraph_b2'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_3" header={this.context.intl.formatHTMLMessage({id: 'faq_item_3_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_3_paragraph_bitcoin'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_4" header={this.context.intl.formatHTMLMessage({id: 'faq_item_4_header_check'})}>
-                <p><FormattedHTMLMessage id='faq_item_4_paragraph_a'/></p>
-                <address>
-                  Mozilla Foundation
-                  <br/>
-                  331 East Evelyn Avenue,
-                  <br/>
-                  Mountain View, CA 94041
-                  <br/>
-                  USA
-                </address>{this.renderEnglishMemoLine()}
-                <br/><br/>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_5" header={this.context.intl.formatHTMLMessage({id: 'faq_item_5_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_5_paragraph'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_6" header={this.context.intl.formatHTMLMessage({id: 'faq_item_6_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_6_paragraph_a_shorter'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_7" header={this.context.intl.formatHTMLMessage({id: 'faq_item_7_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_7_paragraph_a_mission'/></p>
-                <p><FormattedHTMLMessage id='faq_item_7_paragraph_b'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_8" header={this.context.intl.formatHTMLMessage({id: 'faq_item_8_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_8_paragraph_a'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_9" header={this.context.intl.formatHTMLMessage({id: 'faq_item_9_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_9_paragraph_foundations'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_10" header={this.context.intl.formatHTMLMessage({id: 'faq_item_10_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_10_paragraph'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_tax_a" header={this.context.intl.formatHTMLMessage({id: 'faq_item_tax_header'})}>
-                <p><FormattedHTMLMessage id='donation_notice'/> <FormattedHTMLMessage id='faq_item_tax_paragraph_a_tax_id'/></p>
-                <p><FormattedHTMLMessage id='faq_item_tax_paragraph_b'/></p>
-                <p><FormattedHTMLMessage id='faq_item_tax_paragraph_c'/></p>
-              </Panel>
-
-              {this.renderEnglishTaxItem()}
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_11" header={this.context.intl.formatHTMLMessage({id: 'faq_item_11_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_11_paragraph'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_12" header={this.context.intl.formatHTMLMessage({id: 'faq_item_12_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_12_paragraph_currencies'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_13" header={this.context.intl.formatHTMLMessage({id: 'faq_item_13_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_13_paragraph'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_14" header={this.context.intl.formatHTMLMessage({id: 'faq_item_14_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_14_paragraph'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_15" header={this.context.intl.formatHTMLMessage({id: 'faq_item_15_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_15_paragraph'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_16" header={this.context.intl.formatHTMLMessage({id: 'faq_item_16_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_16_paragraph'/></p>
-              </Panel>
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_17" header={this.context.intl.formatHTMLMessage({id: 'faq_item_17_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_17_paragraph'/></p>
-              </Panel>
-
-              {this.renderEnglishMatchingFunds()}
-
-              <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_18" header={this.context.intl.formatHTMLMessage({id: 'faq_item_18_header'})}>
-                <p><FormattedHTMLMessage id='faq_item_18_paragraph'/></p>
-              </Panel>
-
-              {this.renderEnglishAmazonSmile()}
-            </div>
-          </div>
-          <MozillaFooter/>
-        </div>
-      );
-    }
-
     return (
       <div className={className}>
         <div className="faq-header">
@@ -240,7 +119,7 @@ var Faq = React.createClass({
         </div>
         <div className="container">
           <h2>
-            <FormattedHTMLMessage id='faq_intro'/>
+            <FormattedHTMLMessage id='faq_intro_shorter'/>
           </h2>
           <div className="collapse">
 
@@ -250,14 +129,14 @@ var Faq = React.createClass({
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_2" header={this.context.intl.formatHTMLMessage({id: 'faq_item_2_header'})}>
               <p><FormattedHTMLMessage id='faq_item_2_paragraph_a'/></p>
-              <p><FormattedHTMLMessage id='faq_item_2_paragraph_b'/></p>
+              <p><FormattedHTMLMessage id='faq_item_2_paragraph_b2'/></p>
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_3" header={this.context.intl.formatHTMLMessage({id: 'faq_item_3_header'})}>
-              <p><FormattedHTMLMessage id='faq_item_3_paragraph'/></p>
+              <p><FormattedHTMLMessage id='faq_item_3_paragraph_bitcoin'/></p>
             </Panel>
 
-            <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_4" header={this.context.intl.formatHTMLMessage({id: 'faq_item_4_header'})}>
+            <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_4" header={this.context.intl.formatHTMLMessage({id: 'faq_item_4_header_check'})}>
               <p><FormattedHTMLMessage id='faq_item_4_paragraph_a'/></p>
               <address>
                 Mozilla Foundation
@@ -267,7 +146,8 @@ var Faq = React.createClass({
                 Mountain View, CA 94041
                 <br/>
                 USA
-              </address>
+              </address>{this.renderEnglishMemoLine()}
+              <br/><br/>
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_5" header={this.context.intl.formatHTMLMessage({id: 'faq_item_5_header'})}>
@@ -275,22 +155,20 @@ var Faq = React.createClass({
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_6" header={this.context.intl.formatHTMLMessage({id: 'faq_item_6_header'})}>
-              <p><FormattedHTMLMessage id='faq_item_6_paragraph_a'/></p>
-              <p><FormattedHTMLMessage id='faq_item_6_paragraph_b'/></p>
+              <p><FormattedHTMLMessage id='faq_item_6_paragraph_a_shorter'/></p>
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_7" header={this.context.intl.formatHTMLMessage({id: 'faq_item_7_header'})}>
-              <p><FormattedHTMLMessage id='faq_item_7_paragraph_a'/></p>
+              <p><FormattedHTMLMessage id='faq_item_7_paragraph_a_mission'/></p>
               <p><FormattedHTMLMessage id='faq_item_7_paragraph_b'/></p>
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_8" header={this.context.intl.formatHTMLMessage({id: 'faq_item_8_header'})}>
               <p><FormattedHTMLMessage id='faq_item_8_paragraph_a'/></p>
-              <p><FormattedHTMLMessage id='faq_item_8_paragraph_b'/></p>
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_9" header={this.context.intl.formatHTMLMessage({id: 'faq_item_9_header'})}>
-              <p><FormattedHTMLMessage id='faq_item_9_paragraph'/></p>
+              <p><FormattedHTMLMessage id='faq_item_9_paragraph_foundations'/></p>
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_10" header={this.context.intl.formatHTMLMessage({id: 'faq_item_10_header'})}>
@@ -310,7 +188,7 @@ var Faq = React.createClass({
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_12" header={this.context.intl.formatHTMLMessage({id: 'faq_item_12_header'})}>
-              <p><FormattedHTMLMessage id='faq_item_12_paragraph_shorter'/></p>
+              <p><FormattedHTMLMessage id='faq_item_12_paragraph_currencies'/></p>
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_13" header={this.context.intl.formatHTMLMessage({id: 'faq_item_13_header'})}>
@@ -324,6 +202,22 @@ var Faq = React.createClass({
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_15" header={this.context.intl.formatHTMLMessage({id: 'faq_item_15_header'})}>
               <p><FormattedHTMLMessage id='faq_item_15_paragraph'/></p>
             </Panel>
+
+            <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_16" header={this.context.intl.formatHTMLMessage({id: 'faq_item_16_header'})}>
+              <p><FormattedHTMLMessage id='faq_item_16_paragraph'/></p>
+            </Panel>
+
+            <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_17" header={this.context.intl.formatHTMLMessage({id: 'faq_item_17_header'})}>
+              <p><FormattedHTMLMessage id='faq_item_17_paragraph'/></p>
+            </Panel>
+
+            {this.renderEnglishMatchingFunds()}
+
+            <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_18" header={this.context.intl.formatHTMLMessage({id: 'faq_item_18_header'})}>
+              <p><FormattedHTMLMessage id='faq_item_18_paragraph'/></p>
+            </Panel>
+
+            {this.renderEnglishAmazonSmile()}
           </div>
         </div>
         <MozillaFooter/>

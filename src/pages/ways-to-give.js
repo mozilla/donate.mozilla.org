@@ -153,7 +153,7 @@ var WaysToGive = React.createClass({
           <ul className="currencyList">
             {Object.keys(currencies).map((currencyKey)=>{
               var currency = currencies[currencyKey];
-              var url = `https://donate.mozilla.org/?currency=${currencyKey}&ref=EOYFR2016&utm_campaign=EOYFR2016&utm_source=wiki.mozilla.org&utm_medium=referral&utm_content=Ways_to_Give`;
+              var url = `https://donate.mozilla.org/?currency=${currencyKey}&utm_content=Ways_to_Give`;
               return <li key={currencyKey}><a href={url}>{`${currency.code.toUpperCase()} ${currency.symbol}`} </a></li>;
             })}
           </ul>

@@ -31,6 +31,8 @@ $> cp sample.env .env
 $> npm start
 ```
 
+With the default settings, this will run the service on http://localhost:3000
+
 ---
 
 ## Documentation

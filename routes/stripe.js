@@ -96,7 +96,7 @@ var stripeRoutes = {
     try {
       event = stripe.webhooks.constructEvent(payload, signature, endpointSecret);
     } catch (constructEventErr) {
-      event = [null, constructEventErr];
+      console.error('Error: ', constructEventErr);
     }
 
     return event;

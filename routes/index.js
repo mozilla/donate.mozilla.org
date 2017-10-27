@@ -466,11 +466,10 @@ var routes = {
     var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_FAILED;
     var signature = request.headers["stripe-signature"];
 
-    var event;
-    try {
-      event = stripe.constructEvent(request.payload, signature, endpointSecret);
-    } catch (constructEventErr) {
-      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret', constructEventErr));
+    var event = stripe.constructEvent(request.payload, signature, endpointSecret);
+
+    if (!event) {
+      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret'));
     }
 
     if (event.type !== 'charge.failed') {
@@ -491,11 +490,10 @@ var routes = {
     var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_REFUNDED;
     var signature = request.headers["stripe-signature"];
 
-    var event;
-    try {
-      event = stripe.constructEvent(request.payload, signature, endpointSecret);
-    } catch (constructEventErr) {
-      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret', constructEventErr));
+    var event = stripe.constructEvent(request.payload, signature, endpointSecret);
+
+    if (!event) {
+      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret'));
     }
 
     if (event.type !== 'charge.refunded') {
@@ -528,11 +526,10 @@ var routes = {
     var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_DISPUTE;
     var signature = request.headers["stripe-signature"];
 
-    var event;
-    try {
-      event = stripe.constructEvent(request.payload, signature, endpointSecret);
-    } catch (constructEventErr) {
-      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret', constructEventErr));
+    var event = stripe.constructEvent(request.payload, signature, endpointSecret);
+
+    if (!event) {
+      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret'));
     }
 
 
@@ -592,8 +589,8 @@ var routes = {
 
     var event = stripe.constructEvent(request.payload, signature, endpointSecret);
 
-    if (event[0] === null) {
-      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret', event[1]));
+    if (!event) {
+      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret'));
     }
 
     var charge = event.data.object;

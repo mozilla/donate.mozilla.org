@@ -1,4 +1,4 @@
-var currencies = require('../dist/data/currencies.js');
+var currencies = require('../../dist/data/currencies.js');
 
 module.exports = {
   getAccountType: function(amount, currency) {

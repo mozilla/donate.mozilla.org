@@ -1,4 +1,4 @@
-var currencies = require('../dist/data/currencies.js');
+var currencies = require('../../dist/data/currencies.js');
 var currencyFor = {
   stripe: Object.keys(currencies),
   paypal: Object.keys(currencies).filter(function(i) {

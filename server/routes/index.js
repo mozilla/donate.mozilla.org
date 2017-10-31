@@ -4,7 +4,7 @@ var stripe = require('./stripe');
 var paypal = require('./paypal');
 var boom = require('boom');
 var basket = require('../lib/basket-queue.js');
-var amountModifier = require('../dist/lib/amount-modifier.js');
+var amountModifier = require('../../dist/lib/amount-modifier.js');
 
 var routes = {
   'signup': function(request, reply) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { persistStore, autoRehydrate } from 'redux-persist';
-import { asyncSessionStorage } from "redux-persist/storages"
+import { asyncSessionStorage } from 'redux-persist/storages';
 
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';

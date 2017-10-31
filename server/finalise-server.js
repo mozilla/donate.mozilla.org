@@ -1,13 +1,6 @@
 var Path = require('path');
 
-var locales = {};
-Object.keys(require('../public/locales.json')).forEach(function(locale) {
-  locales[locale.toLowerCase()] = locale;
-});
-
-var reactRouted = require('../dist/lib/react-server-route.js')(locales);
-
-module.exports = function finalizeServer(err, server) {
+module.exports = function finalizeServer(err, server, reactRouted) {
   if (err) {
     throw err;
   }

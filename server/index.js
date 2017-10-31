@@ -1,15 +1,8 @@
 require('habitat').load();
 
 var Hapi = require('hapi');
-var Joi = require('joi');
-
-var polyfillio = require('polyfill-service');
-var PolyfillSet = require('./scripts/PolyfillSet.js');
-var getLocale = require('../dist/lib/get-locale.js');
-
-
-var exchangeRates = require('../assets/exchange-rates/latest.json');
-var currencyFor = require('./lib/currency-for.js');
+var locales = require('./locales');
+var reactRouted = require('../dist/lib/react-server-route.js')(locales);
 var getServerOptions = require('./get-server-options');
 var baseRoutes = require('./base-routes');
 var services = require('./services');
@@ -40,7 +33,7 @@ module.exports = function(options) {
   server.route(baseRoutes);
 
   server.register(services, function(err) {
-    finalizeServer(err, server);
+    finalizeServer(err, server, reactRouted);
   });
 
   return server;

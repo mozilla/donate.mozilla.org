@@ -3,6 +3,7 @@ node_modules/
 *~
 .env
 npm-debug*
+package-lock.json
 
 public/css/*
 public/**/*.html

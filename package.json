@@ -99,7 +99,7 @@
   "devDependencies": {
     "aws-sdk": "2.2.26",
     "cross-spawn": "2.1.4",
-    "dependency-check": "2.5.1",
+    "dependency-check": "^2.9.1",
     "expect": "1.13.4",
     "geckodriver": "1.1.2",
     "imagemin-cli": "2.0.0",
@@ -114,6 +114,7 @@
     "karma-webpack": "1.8.1",
     "mocha": "2.3.4",
     "moment": "2.12.0",
+    "on-build-webpack": "^0.1.0",
     "selenium-webdriver": "3.0.0-beta-2",
     "should": "8.0.2"
   },

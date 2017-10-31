@@ -1,5 +1,5 @@
 var should = require('should');
-var accountSwitcher = require("../../lib/paypal-account-switcher.js");
+var accountSwitcher = require("../../server/lib/paypal-account-switcher.js");
 
 function runTest(amount, currency, expected) {
   it(amount + " " + currency + " should be " + expected, function() {

@@ -286,28 +286,44 @@ module.exports = function(options) {
       method: "POST",
       path: "/stripe/dispute-callback",
       config: {
-        auth: "stripe"
+        auth: "stripe",
+        payload: {
+          output: 'data',
+          parse: false
+        }
       },
       handler: routes['stripe-dispute']
     }, {
       method: "POST",
       path: "/stripe/charge-succeeded",
       config: {
-        auth: "stripe"
+        auth: "stripe",
+        payload: {
+          output: 'data',
+          parse: false
+        }
       },
       handler: routes['stripe-charge-succeeded']
     }, {
       method: "POST",
       path: "/stripe/charge-failed",
       config: {
-        auth: "stripe"
+        auth: "stripe",
+        payload: {
+          output: 'data',
+          parse: false
+        }
       },
       handler: routes['stripe-charge-failed']
     }, {
       method: "POST",
       path: "/stripe/charge-refunded",
       config: {
-        auth: "stripe"
+        auth: "stripe",
+        payload: {
+          output: 'data',
+          parse: false
+        }
       },
       handler: routes['stripe-charge-refunded']
     }

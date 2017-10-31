@@ -369,7 +369,7 @@ var routes = {
 
           request.log(['paypal', 'checkout', frequency], log_details);
 
-          var timestamp = new Date(data.txn.PAYMENTINFO_0_ORDERTIME).getTime() / 1000
+          var timestamp = new Date(data.txn.PAYMENTINFO_0_ORDERTIME).getTime() / 1000;
 
           basket.queue({
             event_type: "donation",
@@ -435,7 +435,7 @@ var routes = {
 
           request.log(['paypal', 'checkout', frequency], log_details);
 
-          var timestamp = new Date(data.txn.TIMESTAMP).getTime() / 1000
+          var timestamp = new Date(data.txn.TIMESTAMP).getTime() / 1000;
 
           // Create unique tx id by combining PayerID and timestamp
           var stamp = Date.now() / 100;
@@ -463,7 +463,14 @@ var routes = {
     }
   },
   'stripe-charge-failed': function(request, reply) {
-    var event = request.payload;
+    var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_FAILED;
+    var signature = request.headers["stripe-signature"];
+
+    var event = stripe.constructEvent(request.payload, signature, endpointSecret);
+
+    if (!event) {
+      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret'));
+    }
 
     if (event.type !== 'charge.failed') {
       return reply('This hook only processes charge failed events');
@@ -480,7 +487,14 @@ var routes = {
     return reply("charge failed event processed");
   },
   'stripe-charge-refunded': function(request, reply) {
-    var event = request.payload;
+    var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_REFUNDED;
+    var signature = request.headers["stripe-signature"];
+
+    var event = stripe.constructEvent(request.payload, signature, endpointSecret);
+
+    if (!event) {
+      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret'));
+    }
 
     if (event.type !== 'charge.refunded') {
       return reply('This hook only processes charge.refunded events');
@@ -509,7 +523,15 @@ var routes = {
     return reply("charge event processed");
   },
   'stripe-dispute': function(request, reply) {
-    var event = request.payload;
+    var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_DISPUTE;
+    var signature = request.headers["stripe-signature"];
+
+    var event = stripe.constructEvent(request.payload, signature, endpointSecret);
+
+    if (!event) {
+      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret'));
+    }
+
 
     var disputeEvents = [
       'charge.dispute.closed',
@@ -562,7 +584,15 @@ var routes = {
 
   },
   'stripe-charge-succeeded': function(request, reply) {
-    var event = request.payload;
+    var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_SUCCESS;
+    var signature = request.headers["stripe-signature"];
+
+    var event = stripe.constructEvent(request.payload, signature, endpointSecret);
+
+    if (!event) {
+      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret'));
+    }
+
     var charge = event.data.object;
 
     if (event.type !== 'charge.succeeded') {

@@ -5,7 +5,7 @@ import AmountButtons from '../components/amount-buttons.js';
 import Frequency from '../components/donation-frequency.js';
 import SubmitButton from '../components/submit-button.js';
 import DonateButton from '../components/donate-button.js';
-import { paypalLocales } from '../../intl-config.js';
+import { paypalLocales } from '../../server/lib/intl-config.js';
 import amountModifier from '../lib/amount-modifier.js';
 import { connect } from 'react-redux';
 import { setAmountError } from '../actions';

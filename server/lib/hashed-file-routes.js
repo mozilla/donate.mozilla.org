@@ -2,7 +2,7 @@ var FS = require('fs');
 var Path = require('path');
 
 function pathify(parent, path) {
-  return Path.join(__dirname, '..', parent, path);
+  return Path.join(__dirname, '..', '..', parent, path);
 }
 
 var hashedFileRoutes = function() {

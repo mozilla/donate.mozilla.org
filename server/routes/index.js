@@ -4,7 +4,7 @@ var stripe = require('./stripe');
 var paypal = require('./paypal');
 var boom = require('boom');
 var basket = require('../lib/basket-queue.js');
-var amountModifier = require('../dist/lib/amount-modifier.js');
+var amountModifier = require('../../dist/lib/amount-modifier.js');
 
 var routes = {
   'signup': function(request, reply) {
@@ -369,7 +369,7 @@ var routes = {
 
           request.log(['paypal', 'checkout', frequency], log_details);
 
-          var timestamp = new Date(data.txn.PAYMENTINFO_0_ORDERTIME).getTime() / 1000
+          var timestamp = new Date(data.txn.PAYMENTINFO_0_ORDERTIME).getTime() / 1000;
 
           basket.queue({
             event_type: "donation",
@@ -435,7 +435,7 @@ var routes = {
 
           request.log(['paypal', 'checkout', frequency], log_details);
 
-          var timestamp = new Date(data.txn.TIMESTAMP).getTime() / 1000
+          var timestamp = new Date(data.txn.TIMESTAMP).getTime() / 1000;
 
           // Create unique tx id by combining PayerID and timestamp
           var stamp = Date.now() / 100;

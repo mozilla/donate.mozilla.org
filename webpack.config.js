@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var Path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var AssetsPlugin = require('assets-webpack-plugin');
+var WebpackOnBuildPlugin = require('on-build-webpack');
 
 module.exports = {
   entry: ['./dist/client.js','./less/index.less'],
@@ -31,7 +32,7 @@ module.exports = {
   },
   plugins: [
     new AssetsPlugin({
-      path: Path.join(__dirname, "public")
+      path: Path.join(__dirname, 'public')
     }),
     new webpack.DefinePlugin({
       'process.env': JSON.stringify({
@@ -49,6 +50,12 @@ module.exports = {
     }),
     new ExtractTextPlugin("style.[hash].css", {
       allChunks: true
+    }),
+    new WebpackOnBuildPlugin(function(stats) {
+      console.log('\n------------------------------------------');
+      console.log(' Build complete. To access the server,');
+      console.log(' open http://' + process.env.HOST + ':' + process.env.PORT, 'in a browser.');
+      console.log('------------------------------------------');      
     })
   ]
 };

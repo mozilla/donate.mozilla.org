@@ -1,7 +1,7 @@
 var Boom = require('boom');
 var request = require('request');
 var querystring = require('querystring');
-var paypalLocales = require('../intl-config.js').paypalLocales;
+var paypalLocales = require('../lib/intl-config.js').paypalLocales;
 var accountSwitcher = require('../lib/paypal-account-switcher.js');
 
 var httpRequest = request.defaults({

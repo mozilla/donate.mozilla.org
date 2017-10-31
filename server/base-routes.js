@@ -1,19 +1,13 @@
 var routes = require('./routes');
 
 var Joi = require('joi');
-var polyfillio = require('polyfill-service');
-var PolyfillSet = require('./lib/PolyfillSet');
+
 var locales = require('./locales');
 var getLocale = require('../dist/lib/get-locale');
-var currencyFor = require('./lib/currency-for');
-
-var exchangeRates = require('../assets/exchange-rates/latest.json');
-
-var locales = require('./locales');
-var getLocale = require('../dist/lib/get-locale.js');
 var polyfillio = require('polyfill-service');
-var PolyfillSet = require('./scripts/PolyfillSet.js');
+var PolyfillSet = require('./lib/PolyfillSet');
 
+var currencyFor = require('./lib/currency-for');
 var exchangeRates = require('../assets/exchange-rates/latest.json');
 
 var baseRoutes = [

@@ -1,16 +1,16 @@
 [![Build Status](https://travis-ci.org/mozilla/donate.mozilla.org.svg?branch=master)](https://travis-ci.org/mozilla/donate.mozilla.org)
 
 # donate.mozilla.org
-Mozilla donation forms:
+**Mozilla donation forms:**
 
-* Staging: https://donate.mofostaging.net/
-* Production: https://donate.mozilla.org/
+* **Staging:** *https://donate.mofostaging.net/*
+* **Production:** *https://donate.mozilla.org/*
 
 ---
 
 ## Pre-requisites
 
-[node 4+](https://nodejs.org/) with [`Intl` support](https://github.com/joyent/node/wiki/Intl).  To test if you have `Intl` support run this command:
+[node 4+](https://nodejs.org/) with [`Intl` support](https://github.com/joyent/node/wiki/Intl).  To test **if you have `Intl` support run this command:**
 
 `$ node -e "console.log(typeof Intl === 'object')"`
 
@@ -52,7 +52,7 @@ With the default settings, this will run the service on http://localhost:3000
 
 ## Environment Variables
 
-You can configure the following environment variables:
+You can **configure the following environment variables**:
 
 |Variable|About|
 |--------|-----|
@@ -64,13 +64,13 @@ You can configure the following environment variables:
 
 ### Hatchet
 
-Optionally configure Hatchet environment variables as documented [here](https://github.com/jbuck/hatchet) to send signup requests to a sawmill event processor queue.
+Optionally **configure Hatchet environment variables** as documented [here](https://github.com/jbuck/hatchet) to **send signup requests** to a **sawmill event processor** queue.
 
 ---
 
 #### Thanks
 
-Thanks to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to run our build in real browsers.
-Mozilla fundraising uses [twemoji](https://github.com/twitter/twemoji) to encourage donations
+Thanks to **[BrowserStack](https://www.browserstack.com/)** for **providing the infrastructure** that allows us to run our build in real browsers.
+Mozilla fundraising uses **[twemoji](https://github.com/twitter/twemoji) to encourage donations**
 
 ---

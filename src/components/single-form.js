@@ -71,65 +71,6 @@ var singleForm = React.createClass({
     }
     return true;
   },
-  renderPaymentOptions: function() {
-    var className = "";
-
-    if (!this.props.currency.disabled) {
-      return (
-        <div>
-          <SectionHeading>
-            <h4 className="left choose-payment">{this.context.intl.formatMessage({id: "choose_payment"})}</h4>
-            <p id="secure-label" className="right"><i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}</p>
-          </SectionHeading>
-          <StripeButton
-            currency={this.props.currency}
-            name="payment-type"
-            onSubmit={this.validateStripe}
-            submitting={this.state.submitting === STRIPE_SUBMITTING}
-          />
-          <PayPalButton
-            name="payment-type"
-            submitting={this.state.submitting === PAYPAL_SUBMITTING}
-            onSubmit={this.validatePaypal}
-          />
-          <div className="row">
-            {this.renderPrivacyPolicy()}
-          </div>
-        </div>
-      );
-    } else if (this.props.currency.disabled === "paypal") {
-      className = "row payment-logos credit-card-logos";
-      if (currencies[this.props.currency.code].amexDisabled) {
-        className += " no-amex";
-      }
-      return (
-        <div className="paypal-disabled">
-          <SectionHeading>
-            <h3>{this.context.intl.formatMessage({id: "credit_card"})}</h3>
-            <p id="secure-label">
-              <i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}
-            </p>
-            <div className={className}>
-              <p>&nbsp;</p>
-            </div>
-          </SectionHeading>
-          <div className="row">
-            {this.renderPrivacyPolicy()}
-          </div>
-          <div className="row submit-button">
-            <div className="full submit-button-container">
-              <SubmitButton
-                submitting={this.state.submitting === STRIPE_SUBMITTING}
-                onSubmit={this.validateStripe}
-              >
-                <DonateButton currency={this.props.currency}/>
-              </SubmitButton>
-            </div>
-          </div>
-        </div>
-      );
-    }
-  },
   render: function() {
     return (
       <div className="container">
@@ -144,6 +85,71 @@ var singleForm = React.createClass({
         <div className="payment-section">
           {this.renderPaymentOptions()}
           <ErrorMessage message={this.state.stripeError}/>
+        </div>
+      </div>
+    );
+  },
+  renderPaymentOptions: function() {
+    if (this.props.currency.disabled !== "paypal") {
+      return this.renderBaseForm();
+    }
+
+    var className = "row payment-logos credit-card-logos";
+
+    if (currencies[this.props.currency.code].amexDisabled) {
+      className += " no-amex";
+    }
+
+    return this.renderWithDisabledCurrency(className);
+  },
+  renderBaseForm: function() {
+    return (
+      <div>
+        <SectionHeading>
+          <h4 className="left choose-payment">{this.context.intl.formatMessage({id: "choose_payment"})}</h4>
+          <p id="secure-label" className="right"><i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}</p>
+        </SectionHeading>
+        <StripeButton
+          currency={this.props.currency}
+          name="payment-type"
+          onSubmit={this.validateStripe}
+          submitting={this.state.submitting === STRIPE_SUBMITTING}
+        />
+        <PayPalButton
+          name="payment-type"
+          submitting={this.state.submitting === PAYPAL_SUBMITTING}
+          onSubmit={this.validatePaypal}
+        />
+        <div className="row">
+          {this.renderPrivacyPolicy()}
+        </div>
+      </div>
+    );
+  },
+  renderWithDisabledCurrency: function(className) {
+    return (
+      <div className="paypal-disabled">
+        <SectionHeading>
+          <h3>{this.context.intl.formatMessage({id: "credit_card"})}</h3>
+          <p id="secure-label">
+            <i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}
+          </p>
+          <div className={className}>
+            <p>&nbsp;</p>
+          </div>
+        </SectionHeading>
+        <div className="row">
+          {this.renderPrivacyPolicy()}
+        </div>
+        <div className="row submit-button">
+          <div className="full submit-button-container">
+            <SubmitButton
+              submitting={this.state.submitting === STRIPE_SUBMITTING}
+              onSubmit={this.validateStripe}
+            >
+              <DonateButton currency={this.props.currency}/>
+            </SubmitButton>
+          </div>
         </div>
       </div>
     );

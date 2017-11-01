@@ -4,7 +4,7 @@ import CurrencyDropdown from './currency-dropdown.js';
 import ErrorMessage from './error.js';
 
 import AmountButtons from './amount-buttons.js';
-import Frequency from './donation-frequency.js';
+import DonationFrequency from './donation-frequency.js';
 import { PayPalButton, StripeButton } from './payment-options.js';
 import SubmitButton from './submit-button.js';
 import DonateButton from './donate-button.js';
@@ -72,6 +72,8 @@ var singleForm = React.createClass({
     return true;
   },
   render: function() {
+    console.log('single-form', this.props);
+
     return (
       <div className="container">
         <SectionHeading>
@@ -80,7 +82,7 @@ var singleForm = React.createClass({
           </h3>
           <CurrencyDropdown/>
         </SectionHeading>
-        <Frequency/>
+        <DonationFrequency/>
         <AmountButtons/>
         <div className="payment-section">
           {this.renderPaymentOptions()}
@@ -161,7 +163,8 @@ function(state) {
   return {
     currency: state.donateForm.currency,
     amount: state.donateForm.amount,
-    frequency: state.donateForm.frequency
+    frequency: state.donateForm.frequency,
+    nextmonth: state.donateForm.nextmonth
   };
 },
 function(dispatch) {

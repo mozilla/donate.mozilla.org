@@ -6,12 +6,15 @@ function isNumber(item) {
 }
 
 module.exports = function(queryString, locale) {
+  console.log('query-parser', queryString);
+
   queryString = queryString || {};
   var presets = queryString.presets || "";
   var queryStringCurrencyCode = queryString.currency;
   var localeCurrencyCode = localeCurrencyData[locale];
   var amount = "";
   var frequency = "single";
+  var nextmonth = false;
   var test = queryString.test;
   var currency = currencies[queryStringCurrencyCode] || currencies[localeCurrencyCode] || currencies.usd;
 
@@ -20,6 +23,10 @@ module.exports = function(queryString, locale) {
   }
   if (queryString.frequency === "monthly") {
     frequency = "monthly";
+  }
+  if (queryString.nextmonth && !isNaN(queryString.nextmonth)) {
+    nextmonth = true;
+    console.log('x');
   }
 
   // We didn't get valid presets from the query string,
@@ -33,16 +40,15 @@ module.exports = function(queryString, locale) {
     test = test.join(" ");
   }
 
-  return {
-    values: {
-      test: test,
-      email: queryString.email || ""
-    },
-    initialState: {
-      currency: currency,
-      presets: presets,
-      amount: amount,
-      frequency: frequency
-    }
+  var values = { test, email: queryString.email || "" };
+
+  var initialState = {
+    currency,
+    presets,
+    amount,
+    frequency,
+    nextmonth
   };
+
+  return { values, initialState };
 };

@@ -24,7 +24,7 @@ module.exports = function(queryString, locale) {
   if (queryString.frequency === "monthly") {
     frequency = "monthly";
   }
-  if (queryString.nextmonth && !isNaN(queryString.nextmonth)) {
+  if (queryString.nextmonth && queryString.nextmonth==='true') {
     nextmonth = true;
     console.log('x');
   }

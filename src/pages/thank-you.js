@@ -5,6 +5,7 @@ import Social from '../components/social.js';
 import ThankYouHeader from '../components/thank-you-header.js';
 import analytics from '../lib/analytics.js';
 
+
 var ThankYou = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
@@ -14,17 +15,21 @@ var ThankYou = React.createClass({
   },
   render: function() {
     var className = "row thank-you-page";
+
     var signUpOrSocial = (<Social/>);
+
     if (/^(en|de|es|fr|pl|pt-BR)(\b|$)/.test(this.context.intl.locale)) {
       signUpOrSocial = (<Signup country={this.props.country} email={this.props.email}/>);
     }
+
     if (this.props.test) {
       className += " " + this.props.test;
     }
+
     return (
       <div>
         <div className={className}>
-          <ThankYouHeader/>
+          <ThankYouHeader location={this.props.location} />
           <div>
             {signUpOrSocial}
             <MozillaFooter/>

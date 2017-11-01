@@ -19,8 +19,6 @@ function createElement(Component, props) {
     addLocaleData(ReactIntlLocaleData[lang]);
   });
 
-  console.log('client.js', query);
-
   return (
     <CreateElement {...query.initialState} locale={locale} messages={messages}>
       <Component {...props} {...query.values} />

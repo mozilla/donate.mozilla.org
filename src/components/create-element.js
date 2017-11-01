@@ -17,6 +17,7 @@ var createElement = React.createClass({
       donateForm: {
         currency: this.props.currency,
         frequency: this.props.frequency,
+        nextmonth: this.props.nextmonth,
         presets: this.props.presets,
         amount: this.props.amount
       }

@@ -3,6 +3,7 @@ import assign from 'object-assign';
 
 const initialState = {
   frequency: 'single',
+  nextmonth: false,
   amount: '',
   presets: currencyData.usd.presets.single,
   currency: currencyData.usd,
@@ -26,6 +27,10 @@ const donateApp = (state = initialState, action) => {
       presets: presets,
       amount: amount,
       amountError: ''
+    });
+  case 'SET_NEXTMONTH':
+    return assign({}, state, {
+      nextmonth: action.data
     });
   case 'SET_AMOUNT':
     return assign({}, state, {

@@ -6,27 +6,26 @@ function isNumber(item) {
 }
 
 module.exports = function(queryString, locale) {
-  console.log('query-parser', queryString);
-
   queryString = queryString || {};
   var presets = queryString.presets || "";
   var queryStringCurrencyCode = queryString.currency;
   var localeCurrencyCode = localeCurrencyData[locale];
   var amount = "";
   var frequency = "single";
-  var nextmonth = false;
+  var nextmonth = "false";
   var test = queryString.test;
   var currency = currencies[queryStringCurrencyCode] || currencies[localeCurrencyCode] || currencies.usd;
 
   if (queryString.amount && !isNaN(queryString.amount)) {
     amount = queryString.amount.trim();
   }
+
   if (queryString.frequency === "monthly") {
     frequency = "monthly";
-  }
-  if (queryString.nextmonth && queryString.nextmonth==='true') {
-    nextmonth = true;
-    console.log('x');
+  
+    if (queryString.nextmonth && queryString.nextmonth==="true") {
+      nextmonth = "true";
+    }
   }
 
   // We didn't get valid presets from the query string,
@@ -49,6 +48,8 @@ module.exports = function(queryString, locale) {
     frequency,
     nextmonth
   };
+
+  console.log('qp', initialState);
 
   return { values, initialState };
 };

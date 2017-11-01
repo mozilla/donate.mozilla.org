@@ -19,8 +19,6 @@ var DonationFrequency = React.createClass({
     return true;
   },
   render: function() {
-    console.log('donation-frequency', this.props);
-
     var frequency = this.props.frequency;
     var onTimeId = "one-time-payment-" + this.props.name;
     var monthlyId = "monthly-payment-" + this.props.name;

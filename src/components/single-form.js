@@ -5,6 +5,7 @@ import ErrorMessage from './error.js';
 
 import AmountButtons from './amount-buttons.js';
 import DonationFrequency from './donation-frequency.js';
+import DonationStart from './donation-start.js';
 import { PayPalButton, StripeButton } from './payment-options.js';
 import SubmitButton from './submit-button.js';
 import DonateButton from './donate-button.js';
@@ -40,6 +41,7 @@ var singleForm = React.createClass({
     if (this.validateAmount()) {
       this.stripeCheckout({
         frequency: this.props.frequency,
+        // ADD IN START OF DONATION IF MONTHLY HERE
         amount: this.props.amount,
         appName: this.props.appName,
         currency: this.props.currency.code
@@ -50,6 +52,7 @@ var singleForm = React.createClass({
     if (this.validateAmount()) {
       this.paypal({
         frequency: this.props.frequency,
+        // ADD IN START OF DONATION IF MONTHLY HERE
         amount: this.props.amount,
         appName: this.props.appName,
         currency: this.props.currency.code
@@ -72,8 +75,7 @@ var singleForm = React.createClass({
     return true;
   },
   render: function() {
-    console.log('single-form', this.props);
-
+    console.log('sf', this.props);
     return (
       <div className="container">
         <SectionHeading>
@@ -83,6 +85,7 @@ var singleForm = React.createClass({
           <CurrencyDropdown/>
         </SectionHeading>
         <DonationFrequency/>
+        { this.props.frequency === "monthly" ? <DonationStart nextmonth={this.props.nextmonth}/> : null }
         <AmountButtons/>
         <div className="payment-section">
           {this.renderPaymentOptions()}

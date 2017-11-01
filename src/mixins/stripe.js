@@ -117,6 +117,7 @@ var StripeMixin = {
       },
       token: function(response) {
         formClosable = false;
+
         var checkoutProps = {
           frequency: props.frequency,
           amount: amount,

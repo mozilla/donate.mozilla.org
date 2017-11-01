@@ -29,3 +29,7 @@ export function setEmail(data) {
 export function setEmailError(data) {
   return { type: 'SET_EMAIL_ERROR', data };
 }
+
+export function setNextmonth(data) {
+  return { type: 'SET_NEXTMONTH', data };
+}

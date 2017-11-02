@@ -4,10 +4,10 @@
   },
   "env": {
     "ADEPT_SCALE_LICENSE_KEY": {
-      "required": true
+      "required": false
     },
     "ADEPT_SCALE_URL": {
-      "required": true
+      "required": false
     },
     "APPLICATION_URI": {
       "required": true
@@ -34,7 +34,7 @@
       "required": true
     },
     "ENABLE_XFRAMEOPTIONS": {
-      "required": true
+      "required": false
     },
     "HATCHET_APP_NAME": {
       "required": true

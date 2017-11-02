@@ -4,14 +4,17 @@
  */
 module.exports = function parseLocationSearch(location = {}) {
   if (!location.search) {
-  	return false;
+    return false;
   }
+
   let string = location.search.replace('?','');
   let terms = decodeURIComponent(string).split('&');
   let parsed = {};
+
   terms.forEach( term => {
-  	term = term.split('=');
-  	parsed[term[0]] = term[1];
+    term = term.split('=');
+    parsed[term[0]] = term[1];
   });
+
   return parsed;
 };

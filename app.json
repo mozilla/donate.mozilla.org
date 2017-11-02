@@ -1,0 +1,134 @@
+{
+  "name": "donate.mozilla.org",
+  "scripts": {
+  },
+  "env": {
+    "ADEPT_SCALE_LICENSE_KEY": {
+      "required": true
+    },
+    "ADEPT_SCALE_URL": {
+      "required": true
+    },
+    "APPLICATION_URI": {
+      "required": true
+    },
+    "AWS_ACCESS_KEY_ID": {
+      "required": true
+    },
+    "AWS_SECRET_ACCESS_KEY": {
+      "required": true
+    },
+    "BASKET_ACCESS_KEY": {
+      "required": true
+    },
+    "BASKET_QUEUE_REGION": {
+      "required": true
+    },
+    "BASKET_QUEUE_URL": {
+      "required": true
+    },
+    "BASKET_SECRET_ACCESS_KEY": {
+      "required": true
+    },
+    "ENABLE_PONTOON": {
+      "required": true
+    },
+    "ENABLE_XFRAMEOPTIONS": {
+      "required": true
+    },
+    "HATCHET_APP_NAME": {
+      "required": true
+    },
+    "HATCHET_QUEUE_REGION": {
+      "required": true
+    },
+    "HATCHET_QUEUE_URL": {
+      "required": true
+    },
+    "MAILCHIMP_ACCOUNT_NAME": {
+      "required": true
+    },
+    "MAILCHIMP_API_KEY": {
+      "required": true
+    },
+    "MAILCHIMP_LIST_ID": {
+      "required": true
+    },
+    "NODE_ENV": {
+      "required": true
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "required": true
+    },
+    "OPENEXCHANGERATES_KEY": {
+      "required": true
+    },
+    "PAYPAL_API_ENDPOINT": {
+      "required": true
+    },
+    "PAYPAL_EMAIL": {
+      "required": true
+    },
+    "PAYPAL_ENDPOINT": {
+      "required": true
+    },
+    "PAYPAL_MICRO_EMAIL": {
+      "required": true
+    },
+    "PAYPAL_MICRO_PWD": {
+      "required": true
+    },
+    "PAYPAL_MICRO_SIGNATURE": {
+      "required": true
+    },
+    "PAYPAL_MICRO_USER": {
+      "required": true
+    },
+    "PAYPAL_PWD": {
+      "required": true
+    },
+    "PAYPAL_SIGNATURE": {
+      "required": true
+    },
+    "PAYPAL_USER": {
+      "required": true
+    },
+    "SIGNUP": {
+      "required": true
+    },
+    "STRIPE_PUBLIC_KEY": {
+      "required": true
+    },
+    "STRIPE_SECRET_KEY": {
+      "required": true
+    },
+    "STRIPE_WEBHOOK_SECRET": {
+      "required": true
+    },
+    "STRIPE_WEBHOOK_SIGNATURE_CHARGE_FAILED": {
+      "required": true
+    },
+    "STRIPE_WEBHOOK_SIGNATURE_CHARGE_REFUNDED": {
+      "required": true
+    },
+    "STRIPE_WEBHOOK_SIGNATURE_CHARGE_SUCCESS": {
+      "required": true
+    },
+    "STRIPE_WEBHOOK_SIGNATURE_DISPUTE": {
+      "required": true
+    },
+    "WEB_CONCURRENCY": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+    "adept-scale"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

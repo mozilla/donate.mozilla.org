@@ -2,6 +2,7 @@ import React from 'react';
 import MozillaFooter from '../components/mozilla/footer.js';
 import SmallPrint from '../components/small-print.js';
 import SingleForm from '../components/single-form.js';
+import locationSearchParser from '../lib/location-search-parser.js';
 
 module.exports = React.createClass({
   contextTypes: {
@@ -11,6 +12,12 @@ module.exports = React.createClass({
     return {
       aboutCopy: null
     };
+  },
+  componentWillMount: function() {
+    let query = locationSearchParser(this.props.location);
+    if (query.fd === "true") {
+      this.monthlyUpgrade = true;
+    }
   },
   componentDidMount: function() {
     var aboutCopy = (<span>{this.context.intl.formatMessage({id: 'additional_info'})}</span>);
@@ -33,10 +40,7 @@ module.exports = React.createClass({
           <div className="container additional-page">
             <img className="heart-image icon-baseline" height="100" width="107" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
             <img className="heart-image icon-variant" height="100" width="107" src="/assets/images/pixel-heart.svg"/>
-            <div>
-              <img className="mozilla-watermark" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
-              {aboutCopy}
-            </div>
+            { this.renderCopy() }
           </div>
           <SingleForm
             currency={this.props.currency}
@@ -48,6 +52,20 @@ module.exports = React.createClass({
         </div>
         <SmallPrint/>
         <MozillaFooter/>
+      </div>
+    );
+  },
+  renderCopy: function() {
+    if (this.monthlyUpgrade) {
+      return (
+        <div>Thank you for wanting to help out by signing up for a monthly donation!</div>
+      )
+    }
+
+    return (
+      <div>
+        <img className="mozilla-watermark" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
+        { this.state.aboutCopy }
       </div>
     );
   }

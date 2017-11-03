@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedHTMLMessage } from 'react-intl';
-import locationSearchParser from '../lib/locationSearchParser.js';
+import locationSearchParser from '../lib/location-search-parser.js';
 import amountModifier from '../lib/amount-modifier.js';
 import suggestMonthly from '../lib/suggest-monthly.js';
 
@@ -88,7 +88,7 @@ module.exports = React.createClass({
       <div className="monthly-invitation">
         ...maybe we could persuade you to turn that into <a href={url}>a monthly donation</a>?
       </div>
-    )
+    );
   }
 
 });

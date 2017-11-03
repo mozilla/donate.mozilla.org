@@ -3,12 +3,6 @@
   "scripts": {
   },
   "env": {
-    "ADEPT_SCALE_LICENSE_KEY": {
-      "required": true
-    },
-    "ADEPT_SCALE_URL": {
-      "required": true
-    },
     "APPLICATION_URI": {
       "required": true
     },
@@ -31,9 +25,6 @@
       "required": true
     },
     "ENABLE_PONTOON": {
-      "required": true
-    },
-    "ENABLE_XFRAMEOPTIONS": {
       "required": true
     },
     "HATCHET_APP_NAME": {
@@ -123,9 +114,6 @@
   },
   "formation": {
   },
-  "addons": [
-    "adept-scale"
-  ],
   "buildpacks": [
     {
       "url": "heroku/nodejs"

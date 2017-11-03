@@ -114,9 +114,6 @@
   },
   "formation": {
   },
-  "addons": [
-    "adept-scale"
-  ],
   "buildpacks": [
     {
       "url": "heroku/nodejs"

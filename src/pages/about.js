@@ -15,7 +15,38 @@ module.exports = React.createClass({
   componentDidMount: function() {
     var aboutCopy = (<span>{this.context.intl.formatMessage({id: 'additional_info'})}</span>);
     if (this.props.test === "nnsnippet1707") {
-      aboutCopy = (<span>is a global nonprofit that stands up for an open and healthy Internet, where telecom companies are not allowed to censor or throttle your access to the web based on the content you want to see. Will you give today?</span>);
+      aboutCopy = (
+        <span>
+          is a global nonprofit that stands up for an open and healthy Internet, where telecom companies are not allowed to censor or throttle your access to the web based on the content you want to see. Will you give today?
+        </span>
+      );
+    } else if (this.props.test === "misinformation") {
+      aboutCopy = (
+        <span>
+          Fake News threatens to make the Web divisive, dangerous & overall - not fun. As a non-profit, we rely on donations to carry out our mission — and when you support Mozilla, you’re standing up for a healthy Internet. Donate today.
+          <br/>
+          <br/>
+          Not ready to donate? Subscribe to our <a href="https://www.mozilla.org/newsletter/">newsletter</a> to learn more about what we do.
+        </span>
+      );
+    } else if (this.props.test === "decentralization") {
+      aboutCopy = (
+        <span>
+          We work every year to keep the Web open & free; it’s thanks to thousands of people around the world that we can continue to fight for people, not profit. Your donation helps us meet our goals for 2018. Can you chip in today?
+          <br/>
+          <br/>
+          Not ready to donate? Subscribe to our <a href="https://www.mozilla.org/newsletter/">newsletter</a> to learn more about what we do.
+        </span>
+      );
+    } else if (this.props.test === "digital-inclusion") {
+      aboutCopy = (
+        <span>
+          You can help Mozilla continue to defend the web from trolls and cyberbullies.  An inclusive, diverse Web is better for all of us, and your support helps us to achieve that. Make a donation today, and stand up for a healthy Internet.
+          <br/>
+          <br/>
+          Not ready to donate? Subscribe to our <a href="https://www.mozilla.org/newsletter/">newsletter</a> to learn more about what we do.
+        </span>
+      );
     }
     this.setState({
       aboutCopy: aboutCopy

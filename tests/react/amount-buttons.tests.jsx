@@ -20,7 +20,7 @@ describe('amount-buttons.jsx', function() {
 
       var wrapper = mount(
         <ContextStub store={store}>
-          <AmountButtons 
+          <AmountButtons
             presets={["1","2","3","4"]}
           />
         </ContextStub>
@@ -155,16 +155,16 @@ describe('amount-buttons.jsx', function() {
   it('switching frequency should keep selected position, and not amount', function() {
     should.doesNotThrow(() => {
 
-      var store = createTestStore({amount: '20'});
+      var store = createTestStore({amount: '25'});
       var wrapper = mount(
         <ContextStub store={store}>
           <AmountButtons/>
         </ContextStub>
       );
 
-      var firstInput = wrapper.find("#amount-20");
+      var firstInput = wrapper.find("#amount-25");
       store.dispatch(setFrequency('monthly'));
-      should(firstInput.get(0).value).equal('10');
+      should(firstInput.get(0).value).equal('5');
     });
   });
   it('switching frequency should keep other amount selected', function() {

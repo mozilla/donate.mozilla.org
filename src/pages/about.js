@@ -26,7 +26,7 @@ module.exports = React.createClass({
           Fake News threatens to make the Web divisive, dangerous & overall - not fun. As a non-profit, we rely on donations to carry out our mission — and when you support Mozilla, you’re standing up for a healthy Internet. Donate today.
           <br/>
           <br/>
-          Not ready to donate? Subscribe to our <a href="https://www.mozilla.org/newsletter/">newsletter</a> to learn more about what we do.
+          Not ready to donate? Subscribe to our <a href="https://www.mozilla.org/newsletter/?src=misinformation">newsletter</a> to learn more about what we do.
         </span>
       );
     } else if (this.props.test === "decentralization") {
@@ -35,7 +35,7 @@ module.exports = React.createClass({
           We work every year to keep the Web open & free; it’s thanks to thousands of people around the world that we can continue to fight for people, not profit. Your donation helps us meet our goals for 2018. Can you chip in today?
           <br/>
           <br/>
-          Not ready to donate? Subscribe to our <a href="https://www.mozilla.org/newsletter/">newsletter</a> to learn more about what we do.
+          Not ready to donate? Subscribe to our <a href="https://www.mozilla.org/newsletter/?src=decentralization">newsletter</a> to learn more about what we do.
         </span>
       );
     } else if (this.props.test === "digital-inclusion") {
@@ -44,7 +44,7 @@ module.exports = React.createClass({
           You can help Mozilla continue to defend the web from trolls and cyberbullies.  An inclusive, diverse Web is better for all of us, and your support helps us to achieve that. Make a donation today, and stand up for a healthy Internet.
           <br/>
           <br/>
-          Not ready to donate? Subscribe to our <a href="https://www.mozilla.org/newsletter/">newsletter</a> to learn more about what we do.
+          Not ready to donate? Subscribe to our <a href="https://www.mozilla.org/newsletter/?src=digital-inclusion">newsletter</a> to learn more about what we do.
         </span>
       );
     }

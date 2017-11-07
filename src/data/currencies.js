@@ -8,7 +8,7 @@ module.exports = {
       micro: 0.05
     },
     presets: {
-      single: ['20', '10', '5', '3'],
+      single: ['50', '25', '10', '3'],
       monthly: ['10', '5', '3', '2']
     }
   },
@@ -194,7 +194,7 @@ module.exports = {
       micro: 0.05
     },
     presets: {
-      single: ['20', '10', '5', '3'],
+      single: ['50', '25', '10', '3'],
       monthly: ['10', '5', '3', '2']
     }
   },

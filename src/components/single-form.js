@@ -5,7 +5,7 @@ import ErrorMessage from './error.js';
 
 import AmountButtons from './amount-buttons.js';
 import Frequency from './donation-frequency.js';
-import { PayPalButton, StripeButton } from './payment-options.js';
+import { PayPalButton, StripeButton, SEPAButton } from './payment-options.js';
 import SubmitButton from './submit-button.js';
 import DonateButton from './donate-button.js';
 import { FormattedHTMLMessage } from 'react-intl';
@@ -16,9 +16,12 @@ import { setAmountError } from '../actions';
 import PaypalMixin from '../mixins/paypal.js';
 import StripeMixin from '../mixins/stripe.js';
 
-var NOT_SUBMITTING = 0;
-var STRIPE_SUBMITTING = 2;
-var PAYPAL_SUBMITTING = 3;
+import { StripeProvider, Elements } from 'react-stripe-elements';
+
+const NOT_SUBMITTING = 0;
+const STRIPE_SUBMITTING = 2;
+const PAYPAL_SUBMITTING = 3;
+const SEPA_SUBMITTING = 4;
 
 var singleForm = React.createClass({
   mixins: [PaypalMixin, StripeMixin],
@@ -28,7 +31,8 @@ var singleForm = React.createClass({
   getInitialState: function() {
     return {
       submitting: NOT_SUBMITTING,
-      stripeError: ""
+      stripeError: "",
+      showSEPAmodal: false
     };
   },
   renderPrivacyPolicy: function() {
@@ -74,6 +78,7 @@ var singleForm = React.createClass({
   render: function() {
     return (
       <div className="container">
+        { this.state.showSEPAmodal ? this.renderSEPAmodal() : null }
         <SectionHeading>
           <h3 className="donate-now-header">
             {this.context.intl.formatMessage({id: "donate_now"})}
@@ -109,17 +114,28 @@ var singleForm = React.createClass({
           <h4 className="left choose-payment">{this.context.intl.formatMessage({id: "choose_payment"})}</h4>
           <p id="secure-label" className="right"><i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}</p>
         </SectionHeading>
+
         <StripeButton
           currency={this.props.currency}
           name="payment-type"
           onSubmit={this.validateStripe}
           submitting={this.state.submitting === STRIPE_SUBMITTING}
         />
+
+        <SEPAButton
+          currency={this.props.currency}
+          name="payment-type"
+          onSubmit={ () => {} }
+          onClick={ evt => this.showSEPAmodal(evt) }
+          submitting={this.state.submitting === SEPA_SUBMITTING}
+        />
+
         <PayPalButton
           name="payment-type"
           submitting={this.state.submitting === PAYPAL_SUBMITTING}
           onSubmit={this.validatePaypal}
         />
+
         <div className="row">
           {this.renderPrivacyPolicy()}
         </div>
@@ -153,6 +169,18 @@ var singleForm = React.createClass({
         </div>
       </div>
     );
+  },
+  showSEPAmodal(evt) {
+    this.setState({ showSEPAmodal: true });
+  },
+  renderSEPAmodal() {
+    return (
+      <StripeProvider apiKey="pk_test_12345">
+        <Elements>
+          <div>...form goes here...</div>
+        </Elements>
+      </StripeProvider>
+    )
   }
 });
 

@@ -10,7 +10,7 @@ const project = 'mozillafoundation';
 const service = 'stripe';
 const oneTime = 'one-time';
 // const monthly = 'monthly';
-const single = 'single';
+// const single = 'single';
 const requestIdHeader = 'x-request-id';
 const errorMessage = 'Stripe SEPA charge failed';
 const createCustomerErrorTags = ['error', 'stripe', 'sepa', 'customer'];
@@ -45,7 +45,7 @@ let stripeSepa = (request, reply) => {
     email,
     source
   }, (err, customerData) => {
-    let stripe_customer_create_service = customerData.stripe_customer_create_service,
+    let {stripe_customer_create_service} = customerData,
       customer,
       badRequest;
 
@@ -75,98 +75,99 @@ let stripeSepa = (request, reply) => {
       customer_id: customer.id
     });
 
-    if (payload.frequency === single) {
-      // Create a single charge, using the new Customer, and the associated SEPA Source
-      stripe.sepaSingle(
-        amount,
-        currency,
-        customer,
-        source,
-        description,
-        metadata,
-        (err, result) => {
-          let {stripe_charge_create_service} = result,
-            charge,
-            badRequest;
+    // Monthly not implemented.
+    // if (payload.frequency === single) {
+    // Create a single charge, using the new Customer, and the associated SEPA Source
+    stripe.sepaSingle(
+      amount,
+      currency,
+      customer,
+      source,
+      description,
+      metadata,
+      (err, result) => {
+        let {stripe_charge_create_service} = result,
+          charge,
+          badRequest;
 
-          if (err) {
-            badRequest = boom.badRequest(errorMessage);
-            badRequest.output.payload.stripe = {
-              code: err.code,
-              rawType: err.rawType
-            };
+        if (err) {
+          badRequest = boom.badRequest(errorMessage);
+          badRequest.output.payload.stripe = {
+            code: err.code,
+            rawType: err.rawType
+          };
 
-            request.log(createChargeErrorTags, {
-              request_id,
-              stripe_charge_create_service,
-              customer_id: customer.id,
-              code: err.code,
-              type: err.type,
-              param: err.param
-            });
-
-            return reply(badRequest);
-          }
-
-          // grab the new Charge from the result object
-          ({charge} = result);
-
-          request.log(createChargeTags, {
+          request.log(createChargeErrorTags, {
             request_id,
             stripe_charge_create_service,
-            charge_id: charge.id
+            customer_id: customer.id,
+            code: err.code,
+            type: err.type,
+            param: err.param
           });
 
-          // process mailing list signups
-          if (signup) {
-            let signup_service = Date.now();
-
-            doSignup(payload, (err) => {
-              if (err) {
-                return request.log(signupErrorTags, {
-                  request_id,
-                  service: Date.now() - signup_service,
-                  code: err.code,
-                  type: err.type,
-                  param: err.param
-                });
-              }
-
-              request.log(signupTags, {
-                request_id,
-                service: Date.now() - signup_service
-              });
-            });
-          }
-
-          // TODO: Determine if we should instead send this receipt once a sepa payment is successfully captured
-          basket.queue({
-            event_type,
-            email,
-            last_name: charge.source.name,
-            donation_amount: basket.zeroDecimalCurrencyFix(charge.amount, charge.currency),
-            currency: charge.currency,
-            created: charge.created,
-            recurring: false,
-            service,
-            transaction_id: charge.id,
-            project
-          });
-
-          reply({
-            id: charge.id,
-            frequency: oneTime,
-            amount: charge.amount,
-            currency: charge.currency,
-            signup,
-            country,
-            email
-          }).code(200);
+          return reply(badRequest);
         }
-      );
-    } else {
-      // not sure if we're doing this.
-    }
+
+        // grab the new Charge from the result object
+        ({charge} = result);
+
+        request.log(createChargeTags, {
+          request_id,
+          stripe_charge_create_service,
+          charge_id: charge.id
+        });
+
+        // process mailing list signups
+        if (signup) {
+          let signup_service = Date.now();
+
+          doSignup(payload, (err) => {
+            if (err) {
+              return request.log(signupErrorTags, {
+                request_id,
+                service: Date.now() - signup_service,
+                code: err.code,
+                type: err.type,
+                param: err.param
+              });
+            }
+
+            request.log(signupTags, {
+              request_id,
+              service: Date.now() - signup_service
+            });
+          });
+        }
+
+        // TODO: Determine if we should instead send this receipt once a sepa payment is successfully captured
+        basket.queue({
+          event_type,
+          email,
+          last_name: charge.source.name,
+          donation_amount: amount,
+          currency: charge.currency,
+          created: charge.created,
+          recurring: false,
+          service,
+          transaction_id: charge.id,
+          project
+        });
+
+        reply({
+          id: charge.id,
+          frequency: oneTime,
+          amount: charge.amount,
+          currency: charge.currency,
+          signup,
+          country,
+          email
+        }).code(200);
+      }
+    );
+    // } else {
+    // 
+    // }
   });
 };
 

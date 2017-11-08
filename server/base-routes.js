@@ -99,6 +99,41 @@ var baseRoutes = [
     }
   }, {
     method: 'POST',
+    path: '/api/stripe/sepa',
+    handler: routes['stripe-sepa'],
+    config: {
+      payload: {
+        maxBytes: 32000,
+        allow: 'application/json'
+      },
+      validate: {
+        payload: {
+          currency: Joi.any().valid(currencyFor.stripe).required(),
+          amount: Joi.number().required(),
+          frequency: Joi.string().valid("monthly", "one-time").required(),
+          source: Joi.string().required(),
+          description: Joi.string().required(),
+          email: Joi.string().email().required(),
+          country: Joi.string().required(),
+          locale: Joi.string().min(2).max(12).required(),
+          signup: Joi.boolean()
+        }
+      },
+      response: {
+        schema: {
+          id: Joi.string(),
+          frequency: Joi.string().valid("monthly", "one-time"),
+          currency: Joi.any().valid(currencyFor.stripe).required(),
+          quantity: Joi.number(),
+          amount: Joi.number(),
+          signup: Joi.boolean(),
+          email: Joi.string().email().allow(''),
+          country: Joi.string().allow('')
+        }
+      }
+    }
+  }, {
+    method: 'POST',
     path: '/api/stripe-checkout',
     handler: routes.stripe,
     config: {

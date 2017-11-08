@@ -1,6 +1,5 @@
 var stripeKeys = {
   publishableKey: process.env.STRIPE_PUBLIC_KEY,
-  // This is just a test key right now, nothing secret about it.
   secretKey: process.env.STRIPE_SECRET_KEY
 };
 
@@ -13,7 +12,7 @@ var stripeRoutes = {
     stripe.customers.create({
       email: transaction.email,
       metadata: transaction.metadata,
-      source: transaction.stripeToken
+      source: transaction.source
     }, function(err, customer) {
       var stripe_customer_create_service = Date.now() - startCreateCustomer;
       if (err) {
@@ -70,6 +69,32 @@ var stripeRoutes = {
         });
       }
     );
+  },
+  sepaSingle: function(amount, currency, customer, source, description, metadata, callback) {
+    let charge = {
+      amount,
+      currency,
+      customer,
+      source,
+      description,
+      metadata
+    };
+
+    let startCreateSepaCharge = Date.now();
+    return stripe.charges.create(charge, (err, charge) => {
+      let stripe_sepa_charge_create_service = Date.now() - startCreateSepaCharge;
+
+      if (err) {
+        return callback(err, {
+          stripe_sepa_charge_create_service
+        });
+      }
+
+      callback(null, {
+        stripe_sepa_charge_create_service,
+        charge
+      });
+    });
   },
   closeDispute: function(disputeId) {
     return stripe.disputes.close(disputeId);

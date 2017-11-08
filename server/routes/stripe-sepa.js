@@ -44,8 +44,8 @@ let stripeSepa = (request, reply) => {
     metadata,
     email,
     source
-  }, (err, customerData) => {
-    let {stripe_customer_create_service} = customerData,
+  }, (err, result) => {
+    let {stripe_customer_create_service} = result,
       customer,
       badRequest;
 
@@ -67,7 +67,7 @@ let stripeSepa = (request, reply) => {
       return reply(badRequest);
     }
 
-    customer = customerData.customer;
+    ({customer} = result);
 
     request.log(createCustomerTags, {
       request_id,

@@ -15,8 +15,13 @@ import { connect } from 'react-redux';
 import { setAmountError } from '../actions'; 
 import { PaypalMixin, StripeMixin, SEPAMixin } from '../mixins';
 
+
+
 import { StripeProvider, Elements } from 'react-stripe-elements';
+import { CardElement } from 'react-stripe-elements';
 import { Helmet } from "react-helmet";
+
+
 
 const NOT_SUBMITTING = 0;
 const STRIPE_SUBMITTING = 2;
@@ -94,6 +99,10 @@ var singleForm = React.createClass({
   render: function() {
     return (
       <div className="container">
+        <Helmet>
+          <script src="https://js.stripe.com/v3/"></script>
+        </Helmet>
+
         { this.state.showSEPAmodal ? this.renderSEPAmodal() : null }
         <SectionHeading>
           <h3 className="donate-now-header">
@@ -193,13 +202,11 @@ var singleForm = React.createClass({
   TEMP_REMOVE_LATER_RENDER_SEPA: function() {
     return (
       <div>
-        <Helmet>
-          <script src="https://js.stripe.com/v3/" />
-        </Helmet>
         <StripeProvider apiKey="pk_test_12345">
           <Elements>
             <div>
-              Yeah this is SEPA alright.
+              <h2>Yeah this is SEPA alright.</h2>
+              <CardElement style={{base: {fontSize: '18px'}}} />
             </div>
           </Elements>
         </StripeProvider>

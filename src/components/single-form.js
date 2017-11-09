@@ -13,10 +13,10 @@ import currencies from '../data/currencies.js';
 
 import { connect } from 'react-redux';
 import { setAmountError } from '../actions'; 
-import PaypalMixin from '../mixins/paypal.js';
-import StripeMixin from '../mixins/stripe.js';
+import { PaypalMixin, StripeMixin, SEPAMixin } from '../mixins';
 
 import { StripeProvider, Elements } from 'react-stripe-elements';
+import { Helmet } from "react-helmet";
 
 const NOT_SUBMITTING = 0;
 const STRIPE_SUBMITTING = 2;
@@ -24,7 +24,11 @@ const PAYPAL_SUBMITTING = 3;
 const SEPA_SUBMITTING = 4;
 
 var singleForm = React.createClass({
-  mixins: [PaypalMixin, StripeMixin],
+  mixins: [
+    PaypalMixin,
+    StripeMixin,
+    SEPAMixin
+  ],
   contextTypes: {
     intl: React.PropTypes.object
   },
@@ -32,7 +36,7 @@ var singleForm = React.createClass({
     return {
       submitting: NOT_SUBMITTING,
       stripeError: "",
-      showSEPAmodal: false
+      TEMP_REMOVE_LATER_SEPA_TOGGLE: false
     };
   },
   renderPrivacyPolicy: function() {
@@ -50,6 +54,18 @@ var singleForm = React.createClass({
       });
     }
   },
+  validateSEPA: function() {
+    if (this.validateAmount()) {
+      //this.sepaCheckout({
+      //  frequency: this.props.frequency,
+      //  amount: this.props.amount,
+      //  appName: this.props.appName,
+      //  currency: this.props.currency.code
+      //});
+
+      this.setState({ TEMP_REMOVE_LATER_SEPA_TOGGLE: true });
+    }
+  },  
   validatePaypal: function() {
     if (this.validateAmount()) {
       this.paypal({
@@ -125,8 +141,7 @@ var singleForm = React.createClass({
         <SEPAButton
           currency={this.props.currency}
           name="payment-type"
-          onSubmit={ () => {} }
-          onClick={ evt => this.showSEPAmodal(evt) }
+          onSubmit={this.validateSEPA}
           submitting={this.state.submitting === SEPA_SUBMITTING}
         />
 
@@ -139,6 +154,11 @@ var singleForm = React.createClass({
         <div className="row">
           {this.renderPrivacyPolicy()}
         </div>
+
+        { /* TEMP REMOVE ONE SEPA PAGE IS A THING ON ITS OWN */ }
+        { this.state.TEMP_REMOVE_LATER_SEPA_TOGGLE ? this.TEMP_REMOVE_LATER_RENDER_SEPA() : null }
+        { /* TEMP REMOVE ONE SEPA PAGE IS A THING ON ITS OWN */ }
+      
       </div>
     );
   },
@@ -170,16 +190,20 @@ var singleForm = React.createClass({
       </div>
     );
   },
-  showSEPAmodal(evt) {
-    this.setState({ showSEPAmodal: true });
-  },
-  renderSEPAmodal() {
+  TEMP_REMOVE_LATER_RENDER_SEPA: function() {
     return (
-      <StripeProvider apiKey="pk_test_12345">
-        <Elements>
-          <div>...form goes here...</div>
-        </Elements>
-      </StripeProvider>
+      <div>
+        <Helmet>
+          <script src="https://js.stripe.com/v3/" />
+        </Helmet>
+        <StripeProvider apiKey="pk_test_12345">
+          <Elements>
+            <div>
+              Yeah this is SEPA alright.
+            </div>
+          </Elements>
+        </StripeProvider>
+      </div>
     )
   }
 });

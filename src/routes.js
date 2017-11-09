@@ -12,8 +12,10 @@ var routes = (
         return (
           <Route key={locale} path={locale}>
             <IndexRoute component={require('./pages/about.js')}/>
+
             <Route path='about' component={require('./pages/about.js')}/>
             <Route path='one-page' component={require('./pages/one-page.js')}/>
+            <Route path='sepa' component={require('./pages/sepa.js')}/>
             <Route path='thank-you' component={require('./pages/thank-you.js')}/>
             <Route path='jan-thank-you-cute' component={require('./pages/jan-thank-you.js')} pageType="cute"/>
             <Route path='jan-thank-you-sincere' component={require('./pages/jan-thank-you.js')} pageType="sincere"/>
@@ -24,6 +26,7 @@ var routes = (
             <Route path='glassroomnyc' component={require('./pages/glassroomnyc.js')}/>
             <Route path='give-bitcoin' component={require('./pages/give-bitcoin.js')}/>
             <Route path='paypal-donate' component={require('./pages/paypal-donate.js')}/>
+
             <Route path="thunderbird">
               <IndexRoute component={require('./pages/thunderbird/one-page.js')}/>
               <Route path='about' component={require('./pages/thunderbird/about.js')}/>
@@ -32,6 +35,7 @@ var routes = (
               <Route path='faq' component={require('./pages/thunderbird/faq.js')}/>
               <Redirect from="*" to={"/" + locale + "/thunderbird"} />
             </Route>
+
             <Redirect from="*" to={"/" + locale} />
           </Route>
         );

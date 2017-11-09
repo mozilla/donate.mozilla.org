@@ -40,11 +40,18 @@ var PayPalButton = React.createClass({
   },
   render: function() {
     var name = this.props.name;
-    var labelId = "payment-paypal-" + name;
+    var inputId = "payment-paypal-" + name;
     return (
       <div className="half paypal-button">
-        <input onClick={this.onClick} type="radio" className="payment-type payment-paypal-input" name={name} value="paypal" id={labelId}/>
-        <label className="payment-paypal-label" htmlFor={labelId}>
+        <input
+          onClick={this.onClick}
+          type="radio"
+          className="payment-type payment-paypal-input"
+          name={name}
+          value="paypal"
+          id={inputId}
+        />
+        <label className="payment-paypal-label" htmlFor={inputId}>
           {this.renderButton()}
         </label>
         <input type="hidden" name="item_name_monthly" value={this.context.intl.formatMessage({id: "mozilla_donation"})}/>
@@ -108,11 +115,18 @@ var StripeButton = React.createClass({
   },
   render: function() {
     var name = this.props.name;
-    var labelId = "payment-cc-" + name;
+    var inputId = "payment-cc-" + name;
     return (
       <div className="half cc-button">
-        <input ref={(input) => { this.input = input; }} type="radio" className="payment-type payment-cc-input" name={name} value="cc" id={labelId}/>
-        <label className="payment-cc-label" htmlFor={labelId}>
+        <input
+          ref={(input) => { this.input = input; }}
+          type="radio"
+          className="payment-type payment-cc-input"
+          name={name}
+          value="cc"
+          id={inputId}
+        />
+        <label className="payment-cc-label" htmlFor={inputId}>
           {this.renderButton()}
         </label>
       </div>
@@ -178,11 +192,18 @@ var SEPAButton = React.createClass({
   },
   render: function() {
     var name = this.props.name;
-    var labelId = "payment-cc-" + name;
+    var inputId = "payment-sepa-" + name;
     return (
-      <div className="half cc-button">
-        <input ref={(input) => { this.input = input; }} type="radio" className="payment-type payment-cc-input" name={name} value="cc" id={labelId}/>
-        <label className="payment-cc-label" htmlFor={labelId}>
+      <div className="half sepa-button">
+        <input
+          ref={(input) => { this.input = input; }}
+          type="radio"
+          className="payment-type payment-sepa-input"
+          name={name}
+          value="sepa"
+          id={inputId}
+        />
+        <label className="payment-sepa-label" htmlFor={inputId}>
           {this.renderButton()}
         </label>
       </div>

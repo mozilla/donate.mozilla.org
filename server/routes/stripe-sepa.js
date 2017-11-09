@@ -1,24 +1,48 @@
 let boom = require('boom');
 let stripe = require('./stripe');
 let doSignup = require('./signup');
-let basket = require('../lib/basket-queue.js');
 let amountModifier = require('../../dist/lib/amount-modifier.js');
 
 // define some constant values
-const event_type = 'donation';
-const project = 'mozillafoundation';
-const service = 'stripe';
 const oneTime = 'one-time';
-// const monthly = 'monthly';
-// const single = 'single';
+const monthly = 'monthly';
+const single = 'single';
 const requestIdHeader = 'x-request-id';
 const errorMessage = 'Stripe SEPA charge failed';
-const createCustomerErrorTags = ['error', 'stripe', 'sepa', 'customer'];
+
+// Success logging tags
 const createCustomerTags = ['stripe', 'sepa', 'customer'];
-const createChargeErrorTags = ['error', 'stripe', 'sepa', 'single'];
 const createChargeTags = ['stripe', 'sepa', 'single'];
-const signupErrorTags = ['error', 'stripe', 'sepa', 'signup'];
+const createSubscriptionTags = ['stripe', 'sepa', 'recurring'];
 const signupTags = ['stripe', 'sepa', 'signup'];
+
+// Error logging tags
+const createCustomerErrorTags = ['error', 'stripe', 'sepa', 'customer'];
+const createSingleChargeErrorTags = ['error', 'stripe', 'sepa', 'single'];
+const createRecurringChargeErrorTags = ['error', 'stripe', 'sepa', 'recurring'];
+const signupErrorTags = ['error', 'stripe', 'sepa', 'signup'];
+
+// process mailing list signups
+let processSignup = (payload, request, request_id) => {
+  let signup_service = Date.now();
+
+  doSignup(payload, (err) => {
+    if (err) {
+      return request.log(signupErrorTags, {
+        request_id,
+        service: Date.now() - signup_service,
+        code: err.code,
+        type: err.type,
+        param: err.param
+      });
+    }
+
+    request.log(signupTags, {
+      request_id,
+      service: Date.now() - signup_service
+    });
+  });
+};
 
 // This is the route handler function
 let stripeSepa = (request, reply) => {
@@ -35,7 +59,7 @@ let stripeSepa = (request, reply) => {
   } = request.payload;
 
   amount = amountModifier.stripe(amount, currency);
-  
+
   let metadata = { email, locale };
   let request_id = request.headers[requestIdHeader];
 
@@ -75,99 +99,120 @@ let stripeSepa = (request, reply) => {
       customer_id: customer.id
     });
 
-    // Monthly not implemented.
-    // if (payload.frequency === single) {
-    // Create a single charge, using the new Customer, and the associated SEPA Source
-    stripe.sepaSingle(
-      amount,
-      currency,
-      customer,
-      source,
-      description,
-      metadata,
-      (err, result) => {
-        let {stripe_charge_create_service} = result,
-          charge,
-          badRequest;
+    if (payload.frequency === single) {
+      // Create a single charge, using the new Customer, and the associated SEPA Source
+      stripe.sepa.single(
+        amount,
+        currency,
+        customer,
+        source,
+        description,
+        metadata,
+        (err, result) => {
+          let {stripe_charge_create_service} = result,
+            charge,
+            badRequest;
 
-        if (err) {
-          badRequest = boom.badRequest(errorMessage);
-          badRequest.output.payload.stripe = {
-            code: err.code,
-            rawType: err.rawType
-          };
+          if (err) {
+            badRequest = boom.badRequest(errorMessage);
+            badRequest.output.payload.stripe = {
+              code: err.code,
+              rawType: err.rawType
+            };
 
-          request.log(createChargeErrorTags, {
+            request.log(createSingleChargeErrorTags, {
+              request_id,
+              stripe_charge_create_service,
+              customer_id: customer.id,
+              code: err.code,
+              type: err.type,
+              param: err.param
+            });
+
+            return reply(badRequest);
+          }
+
+          // grab the new Charge from the result object
+          ({charge} = result);
+
+          request.log(createChargeTags, {
             request_id,
             stripe_charge_create_service,
-            customer_id: customer.id,
-            code: err.code,
-            type: err.type,
-            param: err.param
+            charge_id: charge.id
           });
 
-          return reply(badRequest);
+          if (signup) {
+            processSignup(payload, request, request_id);
+          }
+
+
+          reply({
+            id: charge.id,
+            frequency: oneTime,
+            amount: charge.amount,
+            currency: charge.currency,
+            sepa: true,
+            signup,
+            country,
+            email
+          }).code(200);
         }
+      );
+    } else {
+      stripe.sepa.recurring(
+        // Stripe has plans with set amounts, not custom amounts.
+        // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
+        // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
+        customer,
+        currency,
+        amount,
+        metadata,
+        source,
+        function(err, result) {
+          var {stripe_create_subscription_service} = result;
+          var subscription;
 
-        // grab the new Charge from the result object
-        ({charge} = result);
-
-        request.log(createChargeTags, {
-          request_id,
-          stripe_charge_create_service,
-          charge_id: charge.id
-        });
-
-        // process mailing list signups
-        if (signup) {
-          let signup_service = Date.now();
-
-          doSignup(payload, (err) => {
-            if (err) {
-              return request.log(signupErrorTags, {
-                request_id,
-                service: Date.now() - signup_service,
-                code: err.code,
-                type: err.type,
-                param: err.param
-              });
-            }
-
-            request.log(signupTags, {
+          if (err) {
+            request.log(createRecurringChargeErrorTags, {
               request_id,
-              service: Date.now() - signup_service
+              stripe_create_subscription_service,
+              customer_id: customer.id,
+              code: err.code,
+              type: err.type,
+              param: err.param
             });
+
+            return reply(boom.create(400, errorMessage, {
+              code: err.code,
+              rawType: err.rawType
+            }));
+          }
+
+          ({subscription} = result);
+
+          if (signup) {
+            processSignup(payload, request, request_id);
+          }
+
+          request.log(createSubscriptionTags, {
+            request_id,
+            stripe_create_subscription_service,
+            customer_id: customer.id
           });
+
+          reply({
+            id: subscription.id,
+            frequency: monthly,
+            currency: subscription.plan.currency,
+            quantity: subscription.quantity,
+            sepa: true,
+            signup,
+            country,
+            email
+          }).code(200);
         }
-
-        // TODO: Determine if we should instead send this receipt once a sepa payment is successfully captured
-        basket.queue({
-          event_type,
-          email,
-          last_name: charge.source.name,
-          donation_amount: amount,
-          currency: charge.currency,
-          created: charge.created,
-          recurring: false,
-          service,
-          transaction_id: charge.id,
-          project
-        });
-
-        reply({
-          id: charge.id,
-          frequency: oneTime,
-          amount: charge.amount,
-          currency: charge.currency,
-          signup,
-          country,
-          email
-        }).code(200);
-      }
-    );
-    // } else {
-    // 
-    // }
+      );
+    }
   });
 };
 

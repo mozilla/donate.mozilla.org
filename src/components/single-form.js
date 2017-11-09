@@ -16,13 +16,6 @@ import { setAmountError } from '../actions';
 import { PaypalMixin, StripeMixin, SEPAMixin } from '../mixins';
 
 
-
-import { StripeProvider, Elements } from 'react-stripe-elements';
-import { CardElement } from 'react-stripe-elements';
-import { Helmet } from "react-helmet";
-
-
-
 const NOT_SUBMITTING = 0;
 const STRIPE_SUBMITTING = 2;
 const PAYPAL_SUBMITTING = 3;
@@ -61,14 +54,12 @@ var singleForm = React.createClass({
   },
   validateSEPA: function() {
     if (this.validateAmount()) {
-      //this.sepaCheckout({
-      //  frequency: this.props.frequency,
-      //  amount: this.props.amount,
-      //  appName: this.props.appName,
-      //  currency: this.props.currency.code
-      //});
-
-      this.setState({ TEMP_REMOVE_LATER_SEPA_TOGGLE: true });
+      this.sepaCheckout({
+        frequency: this.props.frequency,
+        amount: this.props.amount,
+        appName: this.props.appName,
+        currency: this.props.currency.code
+      });
     }
   },  
   validatePaypal: function() {
@@ -97,13 +88,8 @@ var singleForm = React.createClass({
     return true;
   },
   render: function() {
-    return (
+    return (     
       <div className="container">
-        <Helmet>
-          <script src="https://js.stripe.com/v3/"></script>
-        </Helmet>
-
-        { this.state.showSEPAmodal ? this.renderSEPAmodal() : null }
         <SectionHeading>
           <h3 className="donate-now-header">
             {this.context.intl.formatMessage({id: "donate_now"})}
@@ -162,12 +148,7 @@ var singleForm = React.createClass({
 
         <div className="row">
           {this.renderPrivacyPolicy()}
-        </div>
-
-        { /* TEMP REMOVE ONE SEPA PAGE IS A THING ON ITS OWN */ }
-        { this.state.TEMP_REMOVE_LATER_SEPA_TOGGLE ? this.TEMP_REMOVE_LATER_RENDER_SEPA() : null }
-        { /* TEMP REMOVE ONE SEPA PAGE IS A THING ON ITS OWN */ }
-      
+        </div>      
       </div>
     );
   },
@@ -198,22 +179,9 @@ var singleForm = React.createClass({
         </div>
       </div>
     );
-  },
-  TEMP_REMOVE_LATER_RENDER_SEPA: function() {
-    return (
-      <div>
-        <StripeProvider apiKey="pk_test_12345">
-          <Elements>
-            <div>
-              <h2>Yeah this is SEPA alright.</h2>
-              <CardElement style={{base: {fontSize: '18px'}}} />
-            </div>
-          </Elements>
-        </StripeProvider>
-      </div>
-    )
   }
 });
+
 
 module.exports = connect(
 function(state) {

@@ -2,6 +2,7 @@ var signup = require('./signup');
 var mailchimp = require('./mailchimp');
 var stripe = require('./stripe');
 var paypal = require('./paypal');
+var stripeSepa = require('./stripe-sepa');
 var boom = require('boom');
 var basket = require('../lib/basket-queue.js');
 var amountModifier = require('../../dist/lib/amount-modifier.js');
@@ -85,7 +86,7 @@ var routes = {
     stripe.customer({
       metadata,
       email: transaction.email,
-      stripeToken: transaction.stripeToken
+      source: transaction.stripeToken
     }, function(err, customerData) {
       var stripe_customer_create_service = customerData.stripe_customer_create_service;
       var customer;
@@ -660,7 +661,8 @@ var routes = {
         );
       }
     );
-  }
+  },
+  'stripe-sepa': stripeSepa
 };
 
 module.exports = routes;

@@ -32,6 +32,7 @@ var StripeMixin = {
     } else {
       amount = data.amount;
       currency = data.currency;
+      console.log(data);
     }
 
     location = location || "thank-you";

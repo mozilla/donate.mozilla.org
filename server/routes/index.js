@@ -189,6 +189,7 @@ var routes = {
                 amount: charge.amount,
                 currency: charge.currency,
                 id: charge.id,
+                customerId: customer.id,
                 signup: transaction.signup,
                 country: transaction.country,
                 email: transaction.email
@@ -255,6 +256,7 @@ var routes = {
                 currency: subscription.plan.currency,
                 quantity: subscription.quantity,
                 id: subscription.id,
+                customerId: customer.id,
                 signup: transaction.signup,
                 country: transaction.country,
                 email: transaction.email

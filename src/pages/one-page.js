@@ -15,7 +15,7 @@ var onePage = React.createClass({
     }
     return (
       <div className={className}>
-        <Header alt={this.context.intl.formatMessage({id: 'donate_to_mozilla'})}></Header>
+        <Header alt={this.context.intl.formatMessage({id: 'donate_to_mozilla'})} />
         <SingleForm/>
         <SmallPrint/>
         <MozillaFooter/>

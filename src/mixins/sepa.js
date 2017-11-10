@@ -1,5 +1,5 @@
 import React from 'react';
-import reactGA from 'react-ga';
+//import reactGA from 'react-ga'; // TODO: we want some sensible analytics here
 
 var SEPAMixin = {
   contextTypes: {

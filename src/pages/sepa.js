@@ -32,6 +32,7 @@ var SEPA = React.createClass({
   render: function() {
     return (
       <div className={'row'}>
+        <Header/>
         <div>
           <p>SEPA PAYMENT PAGE</p>
           { this.getSepaForm() }
@@ -42,7 +43,7 @@ var SEPA = React.createClass({
     );
   },
   getSepaForm: function() {
-    if(!this.state.stripeLoaded) {
+    if (!this.state.stripeLoaded) {
       return null;
     }
 
@@ -83,12 +84,12 @@ var SEPA = React.createClass({
         stripe.createSource({
           type: 'sepa_debit',
           sepa_debit: {
-            iban: this.state.iban,
+            iban: this.state.iban
           },
           currency: 'eur',
           owner: {
-            name: this.state.name,
-          },
+            name: this.state.name
+          }
         }).then( result => {
           console.log(result);
 

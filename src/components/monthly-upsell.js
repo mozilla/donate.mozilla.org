@@ -60,9 +60,9 @@ var MonthlyUpsell = React.createClass({
     }, function(response) {
       // Handle errors.
       if (response.stripe) {
-        error(response.stripe.rawType);
+        //error(response.stripe.rawType);
       } else {
-        error(response.error);
+        //error(response.error);
       }
     });
   },

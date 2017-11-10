@@ -139,6 +139,26 @@ var baseRoutes = [
     }
   }, {
     method: 'POST',
+    path: '/api/stripe-monthly-upsell',
+    handler: routes.stripeMonthlyUpsell,
+    config: {
+      payload: {
+        maxBytes: 32000,
+        allow: 'application/json'
+      },
+      validate: {
+        payload: {
+
+        }
+      },
+      response: {
+        schema: {
+
+        }
+      }
+    }
+  }, {
+    method: 'POST',
     path: '/api/paypal',
     handler: routes.paypal,
     config: {

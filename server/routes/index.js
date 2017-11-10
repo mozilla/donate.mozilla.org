@@ -267,6 +267,10 @@ var routes = {
       }
     });
   },
+  stripeMonthlyUpsell: function(request, reply) {
+    // Get customer from customer id
+    // Call stripe.recurring()
+  },
   'paypal': function(request, reply) {
     var transaction = request.payload || {};
     var frequency = transaction.frequency || "";

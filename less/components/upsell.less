@@ -1,0 +1,46 @@
+.upsell-container {
+  .upsell-modal {
+    background: #FFFFFF;
+    padding: 30px;
+    border-radius: 6px;
+    color: #333;
+    text-align: center;
+    .upsell-ask {
+      font-size: 28px;
+    }
+    input {
+      width: 120px;
+    }
+    button {
+      color: #FFFFFF;
+      border-radius: 3px;
+      border: none;
+      line-height: 1.42857;
+      font-weight: 400;
+      font-size: 24px;
+      position: relative;
+      padding: 5px 0;
+      width: 140px;
+      display: inline-flex;
+      justify-content: center;
+      &:before {
+        content: "";
+        position: absolute;
+        border-radius: 3px;
+        top: 1px;
+        right: 1px;
+        bottom: 1px;
+        left: 1px;
+        border: 1px solid hsla(0,0%,100%,.3);
+      }
+      &.yes-button {
+        background-color: #49affd;
+        margin-right: 20px;
+      }
+      &.no-button {
+        background-color: #a7aab3;
+      }
+      background-image: linear-gradient(transparent,rgba(0,0,0,.2));
+    }
+  }
+}

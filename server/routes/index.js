@@ -284,7 +284,11 @@ var routes = {
 
     stripe.retrieveCustomer(
       customerId,
-      function(err, customer) {
+      function(retrieveCustomerErr, customer) {
+        if (retrieveCustomerErr) {
+          return reply(boom.badImplementation('An error occurred while fetching the customer for this monthly upsell', retrieveCustomerErr));
+        }
+// Make this with a monthly delay for the user.
         stripe.recurring({
           // Stripe has plans with set amounts, not custom amounts.
           // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.

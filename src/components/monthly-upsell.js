@@ -18,6 +18,7 @@ var MonthlyUpsell = React.createClass({
     var inputValue = "";
     let query = this.props.query;
     let currencyCode = query.str_currency;
+    let customerId = query.customer_id;
     let trueAmount = amountModifier.reverse(
       query.str_amount,
       query.payment.toLowerCase(),
@@ -27,7 +28,9 @@ var MonthlyUpsell = React.createClass({
 
     return ({
       inputValue,
-      amount: inputValue
+      amount: inputValue,
+      currencyCode,
+      customerId
     });
   },
   onInputChange: function(e) {
@@ -55,8 +58,17 @@ var MonthlyUpsell = React.createClass({
     this.setState({amount});
   },
   submit: function() {
-    submit("/api/stripe-monthly-upsell", {}, function(response) {
-      
+    let currencyCode = this.state.currencyCode;
+    submit("/api/stripe-monthly-upsell", {
+      customerId: this.state.customerId,
+      currency: this.state.currencyCode,
+      amount: amountModifier.stripe(this.state.inputValue, currencyCode),
+      locale: this.context.intl.locale,
+      description: this.context.intl.formatMessage({id: "mozilla_monthly_donation"})
+    }, (response) => {
+      // Handle success.
+      console.log(response, "success");
+      window.location = '/' + this.context.intl.locale + '/' + 'thank-you' + '/';
     }, function(response) {
       // Handle errors.
       if (response.stripe) {

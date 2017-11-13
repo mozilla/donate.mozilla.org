@@ -268,8 +268,65 @@ var routes = {
     });
   },
   stripeMonthlyUpsell: function(request, reply) {
-    // Get customer from customer id
-    // Call stripe.recurring()
+    var transaction = request.payload || {};
+    var customerId = transaction.customerId;
+    var currency = transaction.currency;
+    var amount = amountModifier.stripe(transaction.amount, currency);
+    var metadata = {
+      locale: transaction.locale
+    };
+    var request_id = request.headers['x-request-id'];
+    if (transaction.description.indexOf("Thunderbird") >= 0 ) {
+      metadata.thunderbird = true;
+    } else if (transaction.description.indexOf("glassroomnyc") >= 0 ) {
+      metadata.glassroomnyc = true;
+    }
+
+    stripe.retrieveCustomer(
+      customerId,
+      function(err, customer) {
+        stripe.recurring({
+          // Stripe has plans with set amounts, not custom amounts.
+          // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
+          // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
+          currency,
+          metadata,
+          customer,
+          quantity: amount
+        }, function(err, subscriptionData) {
+          var stripe_create_subscription_service = subscriptionData.stripe_create_subscription_service;
+          var subscription;
+          if (err) {
+            request.log(['error', 'stripe', 'recurring'], {
+              request_id,
+              stripe_create_subscription_service,
+              customer_id: customer.id,
+              code: err.code,
+              type: err.type,
+              param: err.param
+            });
+            reply(boom.create(400, 'Stripe subscription failed', {
+              code: err.code,
+              rawType: err.rawType
+            }));
+          } else {
+            subscription = subscriptionData.subscription;
+            request.log(['stripe', 'recurring'], {
+              request_id,
+              stripe_create_subscription_service,
+              customer_id: customer.id
+            });
+
+            reply({
+              frequency: "monthly",
+              currency: subscription.plan.currency,
+              quantity: subscription.quantity,
+              id: subscription.id
+            }).code(200);
+          }
+        });
+      }
+    );
   },
   'paypal': function(request, reply) {
     var transaction = request.payload || {};

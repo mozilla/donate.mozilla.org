@@ -23,6 +23,7 @@ var StripeMixin = {
     var email = data.email || "";
     var country = data.country || "";
     var donationFrequency = data.frequency;
+    var customerId = data.customerId;
 
     if (donationFrequency === "monthly") {
       currency = data.currency;
@@ -32,7 +33,6 @@ var StripeMixin = {
     } else {
       amount = data.amount;
       currency = data.currency;
-      console.log(data);
     }
 
     location = location || "thank-you";
@@ -43,7 +43,7 @@ var StripeMixin = {
       country = "";
     }
 
-    var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' + donationFrequency;
+    var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' + donationFrequency + '&customer_id=' + customerId;
 
     if (email) {
       params += "&email=" + email;

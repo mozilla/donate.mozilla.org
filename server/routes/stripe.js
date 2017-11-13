@@ -90,6 +90,9 @@ var stripeRoutes = {
   retrieveSubscription: function(customerId, subscriptionId, options, callback) {
     stripe.customers.retrieveSubscription(customerId, subscriptionId, options, callback);
   },
+  retrieveCustomer: function(customerId, callback) {
+    stripe.customers.retrieve(customerId, callback);
+  },
   constructEvent: function(payload, signature, endpointSecret) {
     var event;
 

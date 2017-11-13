@@ -148,12 +148,20 @@ var baseRoutes = [
       },
       validate: {
         payload: {
-
+          customerId: Joi.string(),
+          currency: Joi.any().valid(currencyFor.stripe).required(),
+          amount: Joi.number().required(),
+          locale: Joi.string().min(2).max(12).required(),
+          description: Joi.string().required()
         }
       },
       response: {
         schema: {
-
+          id: Joi.string(),
+          frequency: Joi.string().valid("monthly", "one-time"),
+          currency: Joi.any().valid(currencyFor.stripe).required(),
+          quantity: Joi.number(),
+          amount: Joi.number()
         }
       }
     }

@@ -4,34 +4,16 @@ import amountModifier from '../lib/amount-modifier.js';
 import currencyData from '../data/currencies.js';
 import submit from '../lib/submit';
 
-function suggestMonthly(amount) {
-  // TODO: refine this function to actually do what
-  // we want it to do based on the amount donated,
-  // and the numbers we came up with.
-  return (1.5 * parseInt(amount, 10)/12) + "";
-}
-
 var MonthlyUpsell = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
   getInitialState: function() {
-    var inputValue = "";
-    let query = this.props.query;
-    let currencyCode = query.str_currency;
-    let customerId = query.customer_id;
-    let trueAmount = amountModifier.reverse(
-      query.str_amount,
-      query.payment.toLowerCase(),
-      currencyCode
-    );
-    inputValue = suggestMonthly(trueAmount);
-
+console.log(this.props.suggestedMonthly);
     return ({
-      inputValue,
-      amount: inputValue,
-      currencyCode,
-      customerId,
+      inputValue: this.props.suggestedMonthly,
+      currencyCode: this.props.currencyCode,
+      customerId: this.props.customerId,
       amountError: ""
     });
   },
@@ -113,7 +95,7 @@ var MonthlyUpsell = React.createClass({
     var amountErrorElement = null;
     if (amountError) {
       amountErrorElement = (
-        <div>amountError</div>
+        <div>{this.context.intl.formatMessage({id: amountError})}</div>
       );
     }
     return (

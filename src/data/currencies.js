@@ -7,6 +7,13 @@ module.exports = {
       macro: 0.30,
       micro: 0.05
     },
+    monthlyUpsell: [
+      {min: 250, value: "30"},
+      {min: 120, value: "20"},
+      {min: 60, value: "15"},
+      {min: 35, value: "10"},
+      {min: 15, value: "5"}
+    ],
     presets: {
       single: ['50', '25', '10', '3'],
       monthly: ['10', '5', '3', '2']
@@ -40,6 +47,13 @@ module.exports = {
       macro: 0.30,
       micro: 0.05
     },
+    monthlyUpsell: [
+      {min: 250, value: "30"},
+      {min: 150, value: "25"},
+      {min: 80, value: "20"},
+      {min: 45, value: "12"},
+      {min: 20, value: "6"}
+    ],
     presets: {
       single: ['20', '10', '5', '3'],
       monthly: ['10', '5', '3', '2']
@@ -98,6 +112,13 @@ module.exports = {
       macro: 0.30,
       micro: 0.05
     },
+    monthlyUpsell: [
+      {min: 250, value: "30"},
+      {min: 150, value: "25"},
+      {min: 80, value: "20"},
+      {min: 45, value: "12"},
+      {min: 20, value: "6"}
+    ],
     presets: {
       single: ['20', '10', '5', '3'],
       monthly: ['10', '5', '3', '2']
@@ -193,6 +214,13 @@ module.exports = {
       macro: 0.35,
       micro: 0.05
     },
+    monthlyUpsell: [
+      {min: 250, value: "30"},
+      {min: 120, value: "20"},
+      {min: 60, value: "15"},
+      {min: 35, value: "10"},
+      {min: 15, value: "5"}
+    ],
     presets: {
       single: ['50', '25', '10', '3'],
       monthly: ['10', '5', '3', '2']
@@ -206,6 +234,13 @@ module.exports = {
       macro: 0.20,
       micro: 0.05
     },
+    monthlyUpsell: [
+      {min: 200, value: "30"},
+      {min: 100, value: "20"},
+      {min: 50, value: "15"},
+      {min: 25, value: "10"},
+      {min: 10, value: "4"}
+    ],
     presets: {
       single: ['20', '10', '5', '3'],
       monthly: ['10', '5', '3', '2']
@@ -324,6 +359,13 @@ module.exports = {
     symbol: '₩',
     disabled: "paypal",
     zeroDecimal: "stripe",
+    monthlyUpsell: [
+      {min: 280000, value: "33000"},
+      {min: 135000, value: "22000"},
+      {min: 67000, value: "16000"},
+      {min: 40000, value: "10000"},
+      {min: 16000, value: "5500"}
+    ],
     presets: {
       single: ['22320', '11160', '5580', '3350'],
       monthly: ['11160', '5580', '3350', '2240']

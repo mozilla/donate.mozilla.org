@@ -9,7 +9,6 @@ var MonthlyUpsell = React.createClass({
     intl: React.PropTypes.object
   },
   getInitialState: function() {
-console.log(this.props.suggestedMonthly);
     return ({
       inputValue: this.props.suggestedMonthly,
       currencyCode: this.props.currencyCode,

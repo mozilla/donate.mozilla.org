@@ -5,7 +5,7 @@ function suggestMonthly(amount, currency) {
   var upsellResult = "";
   amount = parseInt(amount, 10);
 
-  for(var i = 0; i < upsellRanges.length && !upsellResult; i++) {
+  for (let i = 0; i < upsellRanges.length && !upsellResult; i++) {
     if (amount >= upsellRanges[i].min) {
       upsellResult = upsellRanges[i].value;
     }

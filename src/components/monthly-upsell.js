@@ -102,7 +102,9 @@ var MonthlyUpsell = React.createClass({
         <Modal>
           <div className="upsell-modal">
             <p className="upsell-ask">
-              Add a {currencySymbol} <input value={this.state.inputValue} onChange={this.onInputChange}/> monthly donation starting next month?
+              <b>Thank you!</b> We’d love to have you as a sustaining supporter of Mozilla;
+              <br/>
+              could you add a {currencySymbol} <input value={this.state.inputValue} onChange={this.onInputChange}/> monthly donation starting next month?
             </p>
             {amountErrorElement}
             <button onClick={this.submit} className="yes-button">YES</button>

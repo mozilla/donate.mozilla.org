@@ -61,15 +61,13 @@ var PayPalButton = React.createClass({
   renderButton: function() {
     if (this.props.submitting) {
       return (
-        <div className="submitting-container"><i className="fa fa-cog fa-spin"/>{this.context.intl.formatMessage({id: 'submitting'})}</div>
+        <div className="submitting-container"><i className="progress-cog fa-spin"/>{this.context.intl.formatMessage({id: 'submitting'})}</div>
       );
     }
     return (
       <div>
         <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button'})}</div>
-        <div className="row payment-logos paypal-logo">
-          <p>&nbsp;</p>
-        </div>
+        <div className="row payment-logos paypal-logo"></div>
         <div className="row medium-label-size less-text">PayPal</div>
       </div>
     );
@@ -135,7 +133,7 @@ var StripeButton = React.createClass({
   renderButton: function() {
     if (this.props.submitting) {
       return (
-        <div className="submitting-container"><i className="fa fa-cog fa-spin"/>{this.context.intl.formatMessage({id: 'submitting'})}</div>
+        <div className="submitting-container"><i className="progress-cog fa-spin"/>{this.context.intl.formatMessage({id: 'submitting'})}</div>
       );
     }
     var className = "row payment-logos credit-card-logos";
@@ -145,9 +143,7 @@ var StripeButton = React.createClass({
     return (
       <div>
         <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button'})}</div>
-        <div className={className}>
-          <p>&nbsp;</p>
-        </div>
+        <div className={className}></div>
         <div className="row medium-label-size less-text">{this.context.intl.formatMessage({id: 'credit_card'})}</div>
       </div>
     );
@@ -212,16 +208,14 @@ var SEPAButton = React.createClass({
   renderButton: function() {
     if (this.props.submitting) {
       return (
-        <div className="submitting-container"><i className="fa fa-cog fa-spin"/>{this.context.intl.formatMessage({id: 'submitting'})}</div>
+        <div className="submitting-container"><i className="progress-cog fa-spin"/>{this.context.intl.formatMessage({id: 'submitting'})}</div>
       );
     }
-    var className = "row SEPA-logos";
+    var className = "row payment-logos sepa-logo";
     return (
       <div>
         <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button'})}</div>
-        <div className={className}>
-          <p>&nbsp;</p>
-        </div>
+        <div className={className}></div>
         <div className="row medium-label-size less-text">{this.context.intl.formatMessage({id: 'credit_card'})}</div>
       </div>
     );

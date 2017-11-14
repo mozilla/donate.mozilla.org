@@ -3,6 +3,10 @@ import MozillaFooter from '../components/mozilla/footer.js';
 import Header from '../components/header.js';
 import SmallPrint from '../components/small-print.js';
 import parseLocationSearch from '../lib/location-search-parser.js';
+import AmountButtons from '../components/amount-buttons.js';
+import Frequency from '../components/donation-frequency.js';
+import CurrencyDropdown from '../components/currency-dropdown.js';
+
 
 /**
  * SEPA payment page, kept as dedicated page to allow
@@ -11,7 +15,7 @@ import parseLocationSearch from '../lib/location-search-parser.js';
 var SEPA = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
-  }, 
+  },
   getInitialState: function() {
     return {
       stripeLoaded: false
@@ -33,10 +37,12 @@ var SEPA = React.createClass({
     return (
       <div className={'row'}>
         <Header/>
-        <div>
-          <p>SEPA PAYMENT PAGE</p>
+        <div className="container">
+          <h4>Donate via SEPA</h4>
+          <Frequency/>
+          <AmountButtons/>
           { this.getSepaForm() }
-        </div>  
+        </div>
         <SmallPrint/>
         <MozillaFooter/>
       </div>
@@ -48,18 +54,16 @@ var SEPA = React.createClass({
     }
 
     return (
-      <form>
-        <fieldset>
+      <form className="row full">
           <label htmlFor={'namefield'}>Name</label>
           <input type="text" id={'namefield'} onChange={e => this.handleName(e)}/>
-        </fieldset>
 
-        <fieldset>
           <label htmlFor={'ibanfield'}>IBAN</label>
           <input type="text" id={'ibanfield'} onChange={e => this.handleIBAN(e)}/>
-        </fieldset>
 
-        <button onClick={e => this.handleSubmit(e)}>Submit</button>
+          <div className="submit-button">
+            <button className="donate-submit submit-btn" onClick={e => this.handleSubmit(e)}>Submit</button>
+          </div>
       </form>
     );
   },
@@ -96,7 +100,7 @@ var SEPA = React.createClass({
           if (result.error) {
             // this would be bad, and good error handling will
             // be necessary.
-          } 
+          }
 
           if (result.source) {
             // communicate the source and this.search.amount to

@@ -4,7 +4,7 @@ import reactGA from 'react-ga';
 
 
 //
-// TODO: This code is highly repetitive, and can be 
+// TODO: This code is highly repetitive, and can be
 //       cleaned up considerably either by object
 //       unification prior to calling createClass,
 //       or using ES6, which will then require making
@@ -42,7 +42,7 @@ var PayPalButton = React.createClass({
     var name = this.props.name;
     var inputId = "payment-paypal-" + name;
     return (
-      <div className="half paypal-button">
+      <div className="third paypal-button">
         <input
           onClick={this.onClick}
           type="radio"
@@ -117,7 +117,7 @@ var StripeButton = React.createClass({
     var name = this.props.name;
     var inputId = "payment-cc-" + name;
     return (
-      <div className="half cc-button">
+      <div className="third cc-button">
         <input
           ref={(input) => { this.input = input; }}
           type="radio"
@@ -194,7 +194,7 @@ var SEPAButton = React.createClass({
     var name = this.props.name;
     var inputId = "payment-sepa-" + name;
     return (
-      <div className="half sepa-button">
+      <div className="third sepa-button">
         <input
           ref={(input) => { this.input = input; }}
           type="radio"

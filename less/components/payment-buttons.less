@@ -1,6 +1,7 @@
 .payment-logos {
   width: 100%;
   height: 30px;
+  max-width: 155px;
   margin: 5px auto 5px auto;
   background-size: 80%;
   background-repeat: no-repeat;
@@ -44,6 +45,16 @@ input.payment-type:checked + label {
 
 .less-text {
   display: none;
+}
+
+.donate-buttons{
+  display: flex;
+  & > *:not(:last-child){
+    margin-right: 10px;
+  }
+  & > *{
+    flex: 1;
+  }
 }
 
 .paypal-button,

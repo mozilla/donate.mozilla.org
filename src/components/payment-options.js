@@ -42,7 +42,7 @@ var PayPalButton = React.createClass({
     var name = this.props.name;
     var inputId = "payment-paypal-" + name;
     return (
-      <div className="third paypal-button">
+      <div className="paypal-button">
         <input
           onClick={this.onClick}
           type="radio"
@@ -115,7 +115,7 @@ var StripeButton = React.createClass({
     var name = this.props.name;
     var inputId = "payment-cc-" + name;
     return (
-      <div className="third cc-button">
+      <div className="cc-button">
         <input
           ref={(input) => { this.input = input; }}
           type="radio"
@@ -190,7 +190,7 @@ var SEPAButton = React.createClass({
     var name = this.props.name;
     var inputId = "payment-sepa-" + name;
     return (
-      <div className="third sepa-button">
+      <div className="sepa-button" hidden={this.props.hidden}>
         <input
           ref={(input) => { this.input = input; }}
           type="radio"

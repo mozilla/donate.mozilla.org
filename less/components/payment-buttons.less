@@ -20,6 +20,28 @@
   background-image: url('/assets/images/payment-type-paypal.png');
 }
 
+.paypal-disabled {
+
+  #secure-label {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    margin: 0;
+  }
+
+  .payment-logos {
+    background-image: url('/assets/images/payment-type-cards-color.png');
+    background-position: left;
+    float: left;
+    margin: 0;
+    background-size: contain;
+
+    &.no-amex {
+      background-image: url('/assets/images/payment-type-cards-color-no-amex.png');
+    }
+  }
+}
+
 .sepa-logo {
   background-size: 65%;
   background-repeat: no-repeat;

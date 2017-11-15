@@ -34,8 +34,8 @@ var SEPA = React.createClass({
     script.onload = (e) => this.setState({ stripeLoaded: true });
     head.appendChild(script);
   },
-  componentDidUpdate: function(){
-    if(!this.state.initialFieldFocused) {
+  componentDidUpdate: function() {
+    if (!this.state.initialFieldFocused) {
       this.setState({
         initialFieldFocused: true
       });

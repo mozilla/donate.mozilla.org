@@ -125,27 +125,28 @@ var singleForm = React.createClass({
           <h4 className="left choose-payment">{this.context.intl.formatMessage({id: "choose_payment"})}</h4>
           <p id="secure-label" className="right"><i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}</p>
         </SectionHeading>
+        <div className="donate-buttons full">
+          <StripeButton
+            currency={this.props.currency}
+            name="payment-type"
+            onSubmit={this.validateStripe}
+            submitting={this.state.submitting === STRIPE_SUBMITTING}
+          />
 
-        <StripeButton
-          currency={this.props.currency}
-          name="payment-type"
-          onSubmit={this.validateStripe}
-          submitting={this.state.submitting === STRIPE_SUBMITTING}
-        />
+          <SEPAButton
+            currency={this.props.currency}
+            name="payment-type"
+            onSubmit={this.validateSEPA}
+            submitting={this.state.submitting === SEPA_SUBMITTING}
+            hidden={this.props.currency.code !== `eur`}
+          />
 
-        <SEPAButton
-          currency={this.props.currency}
-          name="payment-type"
-          onSubmit={this.validateSEPA}
-          submitting={this.state.submitting === SEPA_SUBMITTING}
-        />
-
-        <PayPalButton
-          name="payment-type"
-          submitting={this.state.submitting === PAYPAL_SUBMITTING}
-          onSubmit={this.validatePaypal}
-        />
-
+          <PayPalButton
+            name="payment-type"
+            submitting={this.state.submitting === PAYPAL_SUBMITTING}
+            onSubmit={this.validatePaypal}
+          />
+        </div>
         <div className="row">
           {this.renderPrivacyPolicy()}
         </div>
@@ -160,9 +161,7 @@ var singleForm = React.createClass({
           <p id="secure-label">
             <i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}
           </p>
-          <div className={className}>
-            <p>&nbsp;</p>
-          </div>
+          <div className={className}></div>
         </SectionHeading>
         <div className="row">
           {this.renderPrivacyPolicy()}

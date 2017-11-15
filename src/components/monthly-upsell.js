@@ -7,6 +7,9 @@ import ErrorMessage from './error.js';
 import { FormattedMessage, FormattedNumber } from 'react-intl';
 import reactGA from 'react-ga';
 
+var NOT_SUBMITTING = 0;
+var STRIPE_SUBMITTING = 2;
+
 var MonthlyUpsell = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
@@ -17,7 +20,8 @@ var MonthlyUpsell = React.createClass({
       currencyCode: this.props.currencyCode,
       customerId: this.props.customerId,
       amountError: "",
-      stripeError: ""
+      stripeError: "",
+      submitting: NOT_SUBMITTING
     };
   },
   onInputChange: function(e) {
@@ -48,9 +52,13 @@ var MonthlyUpsell = React.createClass({
   submit: function() {
     let currencyCode = this.state.currencyCode;
 
-    if (!this.validateAmount()) {
+    if (!this.validateAmount() || this.state.submitting === STRIPE_SUBMITTING) {
       return;
     }
+
+    this.setState({
+      submitting: STRIPE_SUBMITTING
+    });
 
     submit("/api/stripe-monthly-upsell", {
       customerId: this.state.customerId,
@@ -107,6 +115,7 @@ var MonthlyUpsell = React.createClass({
     }
     if (errorMessage) {
       this.setState({
+        submitting: NOT_SUBMITTING,
         amountError: errorMessage
       });
       return false;

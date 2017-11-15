@@ -1,11 +1,16 @@
 import React from 'react';
+
 import MozillaFooter from '../components/mozilla/footer.js';
 import Header from '../components/header.js';
 import SmallPrint from '../components/small-print.js';
-import parseLocationSearch from '../lib/location-search-parser.js';
 import AmountButtons from '../components/amount-buttons.js';
 import Frequency from '../components/donation-frequency.js';
+
+import parseLocationSearch from '../lib/location-search-parser.js';
+
 import { connect } from 'react-redux';
+import { setCurrency } from '../actions';
+
 
 /**
  * SEPA payment page, kept as dedicated page to allow
@@ -23,6 +28,7 @@ var SEPA = React.createClass({
   },
   componentWillMount: function() {
     this.search = parseLocationSearch(this.props.location);
+    setCurrency('ALL');
   },
   componentDidMount: function() {
     if (typeof window === "undefined") return;
@@ -158,15 +164,10 @@ var SEPA = React.createClass({
 });
 
 module.exports = connect(
-function(state) {
-  return {
-    frequency: state.donateForm.frequency,
-    amount: state.donateForm.amount
-  };
-},
-function(dispatch) {
-  // We don't allow the SEPA "page" itself to set
-  // anything. That is the responsibility of the
-  // frequency/amount components.
-  return {};
-})(SEPA);
+  function matchStateToProps(state) {
+    return {
+      frequency: state.donateForm.frequency,
+      amount: state.donateForm.amount
+    };
+  }
+)(SEPA);

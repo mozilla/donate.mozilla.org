@@ -56,10 +56,26 @@ var MonthlyUpsell = React.createClass({
       amount: amountModifier.stripe(this.state.inputValue, currencyCode),
       locale: this.context.intl.locale,
       description: this.context.intl.formatMessage({id: "mozilla_monthly_donation"})
-    }, (response) => {
-      // Handle success.
-      console.log(response, "success");
-      window.location = '/' + this.context.intl.locale + '/' + 'thank-you' + '/';
+    }, (data) => {
+      var transactionId = data.id;
+      var amount;
+      var currency;
+      var donationFrequency = data.frequency;
+
+      if (donationFrequency === "monthly") {
+        currency = data.currency;
+        // Stripe plans are a multiple of the currencies equivilent of Cents
+        // e.g. £5/month = 500 £0.01 subscriptions
+        amount = data.quantity;
+      } else {
+        amount = data.amount;
+        currency = data.currency;
+      }
+
+      var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' + donationFrequency;
+      var page = '/' + this.context.intl.locale + '/thank-you/';
+console.log(page + params);
+      window.location = page + params;
     }, function(response) {
       // Handle errors.
       if (response.stripe) {
@@ -92,12 +108,9 @@ var MonthlyUpsell = React.createClass({
     var currency = currencyData[this.state.currencyCode];
     var currencySymbol = currency.symbol;
     var amountError = this.state.amountError;
-    // Display amount error and server errors.
+    // Display server errors.
     var amountErrorElement = null;
     if (amountError) {
-
-
-
       if (amountError === 'donation_min_error') {
         amountErrorElement = (
           <ErrorMessage message={(

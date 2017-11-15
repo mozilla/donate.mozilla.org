@@ -6,7 +6,7 @@ import parseLocationSearch from '../lib/location-search-parser.js';
 import AmountButtons from '../components/amount-buttons.js';
 import Frequency from '../components/donation-frequency.js';
 import CurrencyDropdown from '../components/currency-dropdown.js';
-
+import { connect } from 'react-redux';
 
 /**
  * SEPA payment page, kept as dedicated page to allow
@@ -39,14 +39,32 @@ var SEPA = React.createClass({
         <Header/>
         <div className="container">
           <h4>Donate via SEPA</h4>
-          <Frequency/>
-          <AmountButtons/>
+          { this.showLeadinContent() }
           { this.getSepaForm() }
         </div>
         <SmallPrint/>
         <MozillaFooter/>
       </div>
     );
+  },
+  showLeadinContent: function() {
+    if (!this.props.amount || this.state.showChangeForm) {
+      return [<Frequency key={'freq'}/>, <AmountButtons key={'amt'}/>];
+    }
+
+    // TODO: I'm not a fan of using <a href=#> but we'll need a user-tabbable
+    //       element here so we might be able to do a <span> with a tabindex=0
+    //       so that people can tab to it to trigger the freq/amount components.
+    return [
+      <p key={'commit_msg'}>
+        You are committing to a {this.props.frequency} donation of {this.props.amount} euro.
+      </p>,
+      <p key={'change_msg'}>
+        <a href='#' onClick={evt => this.setState({ showChangeForm: true }) }>
+          Click here to change the amount and/or frequency.
+        </a>
+      </p>
+    ];
   },
   getSepaForm: function() {
     if (!this.state.stripeLoaded) {
@@ -113,4 +131,16 @@ var SEPA = React.createClass({
   }
 });
 
-module.exports = SEPA;
+module.exports = connect(
+function(state) {
+  return {
+    frequency: state.donateForm.frequency,
+    amount: state.donateForm.amount
+  };
+},
+function(dispatch) {
+  // We don't allow the SEPA "page" itself to set
+  // anything. That is the responsibility of the
+  // frequency/amount components.
+  return {};
+})(SEPA);

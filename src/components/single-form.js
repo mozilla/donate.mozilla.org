@@ -12,7 +12,7 @@ import { FormattedHTMLMessage } from 'react-intl';
 import currencies from '../data/currencies.js';
 
 import { connect } from 'react-redux';
-import { setAmountError } from '../actions'; 
+import { setAmountError } from '../actions';
 import { PaypalMixin, StripeMixin, SEPAMixin } from '../mixins';
 
 
@@ -61,7 +61,7 @@ var singleForm = React.createClass({
         currency: this.props.currency.code
       });
     }
-  },  
+  },
   validatePaypal: function() {
     if (this.validateAmount()) {
       this.paypal({
@@ -88,7 +88,7 @@ var singleForm = React.createClass({
     return true;
   },
   render: function() {
-    return (     
+    return (
       <div className="container">
         <SectionHeading>
           <h3 className="donate-now-header">
@@ -161,9 +161,7 @@ var singleForm = React.createClass({
           <p id="secure-label">
             <i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}
           </p>
-          <div className={className}>
-            <p>&nbsp;</p>
-          </div>
+          <div className={className}></div>
         </SectionHeading>
         <div className="row">
           {this.renderPrivacyPolicy()}

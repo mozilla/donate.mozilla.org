@@ -5,7 +5,6 @@ import SmallPrint from '../components/small-print.js';
 import parseLocationSearch from '../lib/location-search-parser.js';
 import AmountButtons from '../components/amount-buttons.js';
 import Frequency from '../components/donation-frequency.js';
-import CurrencyDropdown from '../components/currency-dropdown.js';
 import { connect } from 'react-redux';
 
 /**

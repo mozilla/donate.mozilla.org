@@ -1,7 +1,8 @@
 .upsell-container {
   .upsell-modal {
     background: #FFFFFF;
-    padding: 30px;
+    padding: 0 30px 30px 30px;
+    overflow: hidden;
     border-radius: 6px;
     color: #333;
     text-align: center;
@@ -14,10 +15,20 @@
     .upsell-ask {
       font-size: 28px;
       line-height: 34px;
+      @media screen and (max-width: 400px) {
+        font-size: 14px;
+        line-height: 20px;
+      }
     }
     input {
       width: 120px;
       line-height: 28px;
+      @media screen and (max-width: 400px) {
+        line-height: 14px;
+      }
+    }
+    .error-msg-row {
+      margin-bottom: 15px;
     }
     button {
       color: #FFFFFF;

@@ -3,6 +3,8 @@ import Modal from '../components/modal.js';
 import amountModifier from '../lib/amount-modifier.js';
 import currencyData from '../data/currencies.js';
 import submit from '../lib/submit';
+import ErrorMessage from './error.js';
+import { FormattedMessage, FormattedNumber } from 'react-intl';
 
 var MonthlyUpsell = React.createClass({
   contextTypes: {
@@ -93,19 +95,46 @@ var MonthlyUpsell = React.createClass({
     // Display amount error and server errors.
     var amountErrorElement = null;
     if (amountError) {
-      amountErrorElement = (
-        <div>{this.context.intl.formatMessage({id: amountError})}</div>
-      );
+
+
+
+      if (amountError === 'donation_min_error') {
+        amountErrorElement = (
+          <ErrorMessage message={(
+            <FormattedMessage
+              id={amountError}
+              values={{minAmount:
+                <span>
+                  { currency.code ?
+                  <FormattedNumber
+                    maximumFractionDigits={2}
+                    value={currency.minAmount}
+                    style="currency"
+                    currency={currency.code}
+                  /> : "" }
+                </span>
+              }}
+            />
+          )}/>
+        );
+      } else {
+        amountErrorElement = (
+          <ErrorMessage message={this.context.intl.formatMessage({id: amountError})}/>
+        );
+      }
     }
     return (
       <div className="upsell-container">
         <Modal>
           <div className="upsell-modal">
-            <p className="upsell-ask">
-              <b>Thank you!</b> We’d love to have you as a sustaining supporter of Mozilla;
-              <br/>
-              could you add a {currencySymbol} <input value={this.state.inputValue} onChange={this.onInputChange}/> monthly donation starting next month?
-            </p>
+            <div className="upsell-ask">
+              <p>
+                <b>Thank you!</b> We’d love to have you as a sustaining supporter of Mozilla.
+              </p>
+              <p>
+                Could you add a {currencySymbol} <input value={this.state.inputValue} onChange={this.onInputChange}/> monthly donation starting next month?
+              </p>
+            </div>
             {amountErrorElement}
             <button onClick={this.submit} className="yes-button">YES</button>
             <button onClick={this.props.onClose} className="no-button">NO</button>

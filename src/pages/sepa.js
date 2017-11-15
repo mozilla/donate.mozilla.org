@@ -80,8 +80,9 @@ var SEPA = React.createClass({
     }
 
     return (
-      <form className="row full">
-          <label htmlFor={'namefield'}>{"Account Holder's Name"}</label>
+      <div>
+        <form className="row full">
+          <label htmlFor={'namefield'}>Name</label>
           <input ref="namefield" type="text" id={'namefield'} onChange={e => this.handleName(e)}/>
 
           <label htmlFor={'emailfield'}>Email Address</label>
@@ -93,7 +94,16 @@ var SEPA = React.createClass({
           <div className="submit-button">
             <button className="donate-submit submit-btn" onClick={e => this.handleSubmit(e)}>Submit</button>
           </div>
-      </form>
+        </form>
+        <div className="sepa-mandate">
+          <p>
+            By providing your IBAN and confirming this payment, you are authorizing Mozilla Foundation and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions.
+          </p>
+          <p>
+            You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.
+          </p>
+        </div>
+      </div>
     );
   },
   handleName(e) {

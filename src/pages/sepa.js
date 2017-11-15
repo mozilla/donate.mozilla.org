@@ -17,7 +17,8 @@ var SEPA = React.createClass({
   },
   getInitialState: function() {
     return {
-      stripeLoaded: false
+      stripeLoaded: false,
+      initialFieldFocused : false
     };
   },
   componentWillMount: function() {
@@ -31,6 +32,14 @@ var SEPA = React.createClass({
     script.src = 'https://js.stripe.com/v3/';
     script.onload = (e) => this.setState({ stripeLoaded: true });
     head.appendChild(script);
+  },
+  componentDidUpdate: function() {
+    if (!this.state.initialFieldFocused) {
+      this.setState({
+        initialFieldFocused: true
+      });
+      this.refs.namefield.focus();
+    }
   },
   render: function() {
     return (
@@ -72,11 +81,14 @@ var SEPA = React.createClass({
 
     return (
       <form className="row full">
-          <label htmlFor={'namefield'}>Name</label>
-          <input type="text" id={'namefield'} onChange={e => this.handleName(e)}/>
+          <label htmlFor={'namefield'}>{"Account Holder's Name"}</label>
+          <input ref="namefield" type="text" id={'namefield'} onChange={e => this.handleName(e)}/>
 
-          <label htmlFor={'ibanfield'}>IBAN</label>
-          <input type="text" id={'ibanfield'} onChange={e => this.handleIBAN(e)}/>
+          <label htmlFor={'emailfield'}>Email Address</label>
+          <input type="text" id={'emailfield'} onChange={e => this.handleEmail(e)}/>
+
+          <label htmlFor={'ibanfield'}>Account Number (IBAN)</label>
+          <input type="email" id={'ibanfield'} onChange={e => this.handleIBAN(e)}/>
 
           <div className="submit-button">
             <button className="donate-submit submit-btn" onClick={e => this.handleSubmit(e)}>Submit</button>
@@ -92,6 +104,10 @@ var SEPA = React.createClass({
     let iban = e.target.value;
     this.setState({ iban });
   },
+  handleEmail(e) {
+    let email = e.target.value;
+    this.setState({ email });
+  },
   handleSubmit(e) {
     e.preventDefault();
 
@@ -105,7 +121,8 @@ var SEPA = React.createClass({
         stripe.createSource({
           type: 'sepa_debit',
           sepa_debit: {
-            iban: this.state.iban
+            iban: this.state.iban,
+            email: this.state.email
           },
           currency: 'eur',
           owner: {

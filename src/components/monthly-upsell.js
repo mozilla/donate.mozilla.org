@@ -5,6 +5,7 @@ import currencyData from '../data/currencies.js';
 import submit from '../lib/submit';
 import ErrorMessage from './error.js';
 import { FormattedMessage, FormattedNumber } from 'react-intl';
+import reactGA from 'react-ga';
 
 var MonthlyUpsell = React.createClass({
   contextTypes: {
@@ -15,7 +16,8 @@ var MonthlyUpsell = React.createClass({
       inputValue: this.props.suggestedMonthly,
       currencyCode: this.props.currencyCode,
       customerId: this.props.customerId,
-      amountError: ""
+      amountError: "",
+      stripeError: ""
     };
   },
   onInputChange: function(e) {
@@ -74,15 +76,22 @@ var MonthlyUpsell = React.createClass({
 
       var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' + donationFrequency;
       var page = '/' + this.context.intl.locale + '/thank-you/';
-console.log(page + params);
       window.location = page + params;
-    }, function(response) {
-      // Handle errors.
+    }, (response) => {
+      var errorCode = error(response.error);
       if (response.stripe) {
-        //error(response.stripe.rawType);
-      } else {
-        //error(response.error);
+        errorCode = response.stripe.rawType;
       }
+
+      this.setState({
+        submitting: NOT_SUBMITTING,
+        stripeError: this.context.intl.formatMessage({id: 'could_not_complete'}) + " [" + errorCode + "]"
+      });
+      reactGA.event({
+        category: "User Flow",
+        action: "Card Error",
+        label: errorCode
+      });
     });
   },
   validateAmount: function() {
@@ -108,7 +117,8 @@ console.log(page + params);
     var currency = currencyData[this.state.currencyCode];
     var currencySymbol = currency.symbol;
     var amountError = this.state.amountError;
-    // Display server errors.
+    var stripeError = this.state.stripeError;
+
     var amountErrorElement = null;
     if (amountError) {
       if (amountError === 'donation_min_error') {
@@ -136,6 +146,12 @@ console.log(page + params);
         );
       }
     }
+    var stripeErrorElement = null;
+    if (stripeError) {
+      stripeErrorElement = (
+        <ErrorMessage message={stripeError}/>
+      );
+    }
     return (
       <div className="upsell-container">
         <Modal>
@@ -149,6 +165,7 @@ console.log(page + params);
               </p>
             </div>
             {amountErrorElement}
+            {stripeErrorElement}
             <button onClick={this.submit} className="yes-button">YES</button>
             <button onClick={this.props.onClose} className="no-button">NO</button>
           </div>

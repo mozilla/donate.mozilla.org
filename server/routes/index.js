@@ -2,7 +2,6 @@ var signup = require('./signup');
 var mailchimp = require('./mailchimp');
 var stripe = require('./stripe');
 var paypal = require('./paypal');
-var stripeSepa = require('./stripe-sepa');
 var boom = require('boom');
 var basket = require('../lib/basket-queue.js');
 var amountModifier = require('../../dist/lib/amount-modifier.js');
@@ -666,7 +665,7 @@ var routes = {
 
 // SEPA debit feature flag
 if (process.env.ENABLE_SEPA) {
-  routes['stripe-sepa'] = stripeSepa;
+  routes['stripe-sepa'] = require('./stripe-sepa');
 }
 
 module.exports = routes;

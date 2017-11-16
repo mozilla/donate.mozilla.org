@@ -25,8 +25,9 @@ var routes = (
             <Route path='give-bitcoin' component={require('./pages/give-bitcoin.js')}/>
             <Route path='paypal-donate' component={require('./pages/paypal-donate.js')}/>
             <Route path="thunderbird">
-              <IndexRoute component={require('./pages/thunderbird/one-page.js')}/>
+              <IndexRoute component={require('./pages/thunderbird/about.js')}/>
               <Route path='about' component={require('./pages/thunderbird/about.js')}/>
+              <Route path='one-page' component={require('./pages/thunderbird/one-page.js')}/>
               <Route path='thank-you' component={require('./pages/thunderbird/thank-you.js')}/>
               <Route path='share' component={require('./pages/thunderbird/share.js')}/>
               <Route path='faq' component={require('./pages/thunderbird/faq.js')}/>

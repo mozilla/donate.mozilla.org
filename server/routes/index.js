@@ -184,6 +184,10 @@ var routes = {
                 project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
               });
 
+              request.yar.set("session", {
+                stripeCustomerId: customer.id
+              });
+
               reply({
                 frequency: "one-time",
                 amount: charge.amount,
@@ -192,9 +196,7 @@ var routes = {
                 signup: transaction.signup,
                 country: transaction.country,
                 email: transaction.email
-              })
-              .state("stripeCustomerId", customer.id)
-              .code(200);
+              }).code(200);
             }
           });
         } else {
@@ -269,7 +271,8 @@ var routes = {
   },
   stripeMonthlyUpgrade: function(request, reply) {
     var transaction = request.payload || {};
-    var customerId = request.state.stripeCustomerId;
+    var cookie = request.yar.get("session");
+    var customerId = cookie && cookie.stripeCustomerId;
     var currency = transaction.currency;
     var amount = amountModifier.stripe(transaction.amount, currency);
     var metadata = {
@@ -313,8 +316,7 @@ var routes = {
             reply(boom.create(400, 'Stripe subscription failed', {
               code: err.code,
               rawType: err.rawType
-            }))
-            .unstate("stripeCustomerId");
+            }));
           } else {
             subscription = subscriptionData.subscription;
             request.log(['stripe', 'recurring'], {
@@ -328,9 +330,7 @@ var routes = {
               currency: subscription.plan.currency,
               quantity: subscription.quantity,
               id: subscription.id
-            })
-            .code(200)
-            .unstate("stripeCustomerId");
+            }).code(200);
           }
         });
       }

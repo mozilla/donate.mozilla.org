@@ -95,7 +95,8 @@
     "style-loader": "0.13.0",
     "throng": "1.0.1",
     "webpack": "1.12.9",
-    "whatwg-fetch": "0.10.1"
+    "whatwg-fetch": "0.10.1",
+    "yar": "^7.0.2"
   },
   "devDependencies": {
     "aws-sdk": "2.2.26",

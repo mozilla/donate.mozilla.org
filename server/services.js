@@ -2,6 +2,8 @@ var goodConfig = {
   reporter: require('good-console-logfmt')
 };
 
+const ONE_HOUR_MS = 1000 * 60 * 60;
+
 if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
   goodConfig.events = {
     error: '*',
@@ -53,6 +55,17 @@ var services = [
       styleSrc: ['self', 'unsafe-inline', 'https://fonts.googleapis.com',
         'https://maxcdn.bootstrapcdn.com', 'https://pontoon.mozilla.org'],
       mediaSrc: ['https://d24kjznqej0s8a.cloudfront.net']
+    }
+  },
+  {
+    register: require('yar'),
+    options: {
+      storeBlank: false,
+      cookieOptions: {
+        password: process.env.SECRET_COOKIE_PASSWORD,
+        isSecure: process.env.NODE_ENV === 'production',
+        ttl: ONE_HOUR_MS
+      }
     }
   }
 ];

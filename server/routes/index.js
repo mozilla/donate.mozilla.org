@@ -85,7 +85,7 @@ var routes = {
     stripe.customer({
       metadata,
       email: transaction.email,
-      stripeToken: transaction.stripeToken
+      source: transaction.stripeToken
     }, function(err, customerData) {
       var stripe_customer_create_service = customerData.stripe_customer_create_service;
       var customer;
@@ -662,5 +662,10 @@ var routes = {
     );
   }
 };
+
+// SEPA debit feature flag
+if (process.env.ENABLE_SEPA) {
+  routes['stripe-sepa'] = require('./stripe-sepa');
+}
 
 module.exports = routes;

@@ -37,6 +37,8 @@ const donateApp = (state = initialState, action) => {
       amountError: action.data
     });
   case 'SET_CURRENCY':
+    // TODO: this should work with action being a string, not an object
+    // see https://github.com/mozilla/donate.mozilla.org/issues/1901
     return assign({}, state, {
       currency: action.data,
       presets: currencyData[action.data.code].presets[state.frequency],

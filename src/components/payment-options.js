@@ -155,75 +155,79 @@ var StripeButton = React.createClass({
  * A Stripe payment method button class,
  * specifically for SEPA payments.
  */
-var SEPAButton = React.createClass({
-  contextTypes: {
-    intl: React.PropTypes.object
-  },
-  propTypes: {
-    onClick: React.PropTypes.func,
-    submitting: React.PropTypes.bool,
-    name: React.PropTypes.string.isRequired,
-    currency: React.PropTypes.object.isRequired,
-    onSubmit: React.PropTypes.func.isRequired
-  },
-  onClick: function() {
-    if (this.props.onClick) {
-      this.props.onClick();
-    }
-    if (!this.props.submitting) {
-      this.props.onSubmit();
-    }
-    reactGA.event({
-      category: "User Flow",
-      action: "SEPA Clicked"
-    });
-  },
-  componentDidMount: function() {
-    // TODO: do we need the same protection as for Stripe?
-    this.input.addEventListener("click", this.onClick);
-  },
-  componentWillUnmount: function() {
-    // TODO: do we need the same protection as for Stripe?
-    this.input.removeEventListener("click", this.onClick);
-  },
-  render: function() {
-    var name = this.props.name;
-    var inputId = "payment-sepa-" + name;
-    return (
-      <div className="sepa-button" hidden={this.props.hidden}>
-        <input
-          ref={(input) => { this.input = input; }}
-          type="radio"
-          className="payment-type payment-sepa-input"
-          name={name}
-          value="sepa"
-          id={inputId}
-        />
-        <label className="payment-sepa-label" htmlFor={inputId}>
-          {this.renderButton()}
-        </label>
-      </div>
-    );
-  },
-  renderButton: function() {
-    if (this.props.submitting) {
+var SEPAButton = null;
+
+if (process.env.SEPA_ENABLED) {
+  SEPAButton = React.createClass({
+    contextTypes: {
+      intl: React.PropTypes.object
+    },
+    propTypes: {
+      onClick: React.PropTypes.func,
+      submitting: React.PropTypes.bool,
+      name: React.PropTypes.string.isRequired,
+      currency: React.PropTypes.object.isRequired,
+      onSubmit: React.PropTypes.func.isRequired
+    },
+    onClick: function() {
+      if (this.props.onClick) {
+        this.props.onClick();
+      }
+      if (!this.props.submitting) {
+        this.props.onSubmit();
+      }
+      reactGA.event({
+        category: "User Flow",
+        action: "SEPA Clicked"
+      });
+    },
+    componentDidMount: function() {
+      // TODO: do we need the same protection as for Stripe?
+      this.input.addEventListener("click", this.onClick);
+    },
+    componentWillUnmount: function() {
+      // TODO: do we need the same protection as for Stripe?
+      this.input.removeEventListener("click", this.onClick);
+    },
+    render: function() {
+      var name = this.props.name;
+      var inputId = "payment-sepa-" + name;
       return (
-        <div className="submitting-container"><i className="progress-cog fa-spin"/>{this.context.intl.formatMessage({id: 'submitting'})}</div>
+        <div className="sepa-button" hidden={this.props.hidden}>
+          <input
+            ref={(input) => { this.input = input; }}
+            type="radio"
+            className="payment-type payment-sepa-input"
+            name={name}
+            value="sepa"
+            id={inputId}
+          />
+          <label className="payment-sepa-label" htmlFor={inputId}>
+            {this.renderButton()}
+          </label>
+        </div>
+      );
+    },
+    renderButton: function() {
+      if (this.props.submitting) {
+        return (
+          <div className="submitting-container"><i className="progress-cog fa-spin"/>{this.context.intl.formatMessage({id: 'submitting'})}</div>
+        );
+      }
+      var className = "row payment-logos sepa-logo";
+      return (
+        <div>
+          <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button'})}</div>
+          <div className={className}></div>
+          <div className="row medium-label-size less-text">{this.context.intl.formatMessage({id: 'credit_card'})}</div>
+        </div>
       );
     }
-    var className = "row payment-logos sepa-logo";
-    return (
-      <div>
-        <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button'})}</div>
-        <div className={className}></div>
-        <div className="row medium-label-size less-text">{this.context.intl.formatMessage({id: 'credit_card'})}</div>
-      </div>
-    );
-  }
-});
+  });
+}
 
 module.exports = {
-  PayPalButton: PayPalButton,
-  StripeButton: StripeButton,
-  SEPAButton: SEPAButton
+  PayPalButton,
+  StripeButton,
+  SEPAButton
 };

@@ -21,25 +21,41 @@ var SEPA = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
+
   getInitialState: function() {
     return {
       stripeLoaded: false,
       initialFieldFocused : false
     };
   },
+
   componentWillMount: function() {
     this.search = parseLocationSearch(this.props.location);
     this.props.setCurrency();
   },
+
+  /**
+   * In order to work with Stripe for the SEPA transfers,
+   * we need to make sure Stripe.js is loaded "the normal way"
+   * as far as the browser is concerned.
+   *
+   * This means injecting the script element responsible for
+   * loading Stripe.js into the document head.
+   *
+   * Note that this page should only work if STRIPE_SEPA_ENABLED is set.
+   */
   componentDidMount: function() {
     if (typeof window === "undefined") return;
     if (window.document === "undefined") return;
+    
     var head = window.document.querySelector('head');
     var script = window.document.createElement('script');
+    
     script.src = 'https://js.stripe.com/v3/';
     script.onload = (e) => this.setState({ stripeLoaded: true });
     head.appendChild(script);
   },
+
   componentDidUpdate: function() {
     if (!this.state.initialFieldFocused) {
       this.setState({
@@ -47,6 +63,7 @@ var SEPA = React.createClass({
       });
     }
   },
+
   render: function() {
     return (
       <div className={'row'}>
@@ -61,6 +78,7 @@ var SEPA = React.createClass({
       </div>
     );
   },
+
   showLeadinContent: function() {
     if (!this.props.amount || this.state.showChangeForm) {
       return [<Frequency key={'freq'}/>, <AmountButtons key={'amt'}/>];
@@ -81,10 +99,9 @@ var SEPA = React.createClass({
       </p>
     ];
   },
+
   getSepaForm: function() {
-    if (!this.state.stripeLoaded) {
-      return null;
-    }
+    if (!this.state.stripeLoaded) return null;
 
     // References are a bit odd, and render will retrigger
     // the ref 'attribute' with null after initial binding.
@@ -122,27 +139,30 @@ var SEPA = React.createClass({
       </div>
     );
   },
+
   handleName(e) {
     let name = e.target.value;
     this.setState({ name });
   },
+
   handleIBAN(e) {
     let iban = e.target.value;
     this.setState({ iban });
   },
+
   handleEmail(e) {
     let email = e.target.value;
     this.setState({ email });
   },
+
   handleSubmit(e) {
     e.preventDefault();
-
     // See https://stripe.com/docs/sources/sepa-debit#prerequisite
-
     if (typeof Stripe !== 'undefined') {
       this.setState({ submitting: true }, () => this.submitSEPAPayment());
     }
   },
+
   submitSEPAPayment() {
     let key = process.env.STRIPE_PUBLIC_KEY;
     let stripe = Stripe(key);
@@ -158,7 +178,7 @@ var SEPA = React.createClass({
       }
     };
 
-    // commented off for testing:
+    // NOTE: the following code is commented off, to allow for code path testing.
     //    
     // stripe.createSource(sourceData).then(result => this.handleStripeSourceResponse(result));
 
@@ -168,6 +188,7 @@ var SEPA = React.createClass({
       source: 'abcd1234'
     });
   },
+
   handleStripeSourceResponse(result) {
     console.log(result);
 
@@ -206,11 +227,9 @@ var SEPA = React.createClass({
       );
     }
   },
-  handleSEPASuccess(success) {
-    // TODO: FIXME: this needs better UX, of course
-    console.log('success!', success);
 
-    // TODO: should we verify that (amount === success.amount) etc.?
+  handleSEPASuccess(success) {
+    // TODO: FIXME: this may need UX
     window.location = '/thank-you/?' + [
       `payment=sepa`,
       `str_amount={amount}`,
@@ -220,35 +239,37 @@ var SEPA = React.createClass({
       `email={this.state.email}`
     ].join('&');
   },
+
   handleSEPAfailure(error) {
-    // TODO: FIXME: this needs better UX, of course.
+    // TODO: FIXME: this needs UX to notify the user of what went wrong.
     console.error(error);
 
-    let code = error.code;
-    let rawType = error.rawType;
+    // let code = error.code;
+    // let rawType = error.rawType;
   }
 });
 
+
+/**
+ * When the SEPA page loads, we need to make
+ * sure it has a way to force the currency
+ * to euro. We set up a special 'setCurrency'
+ * function for this, which takes no arguments
+ * and is called as this.props.setCurrency()
+ * just prior to component mounting.
+ */
 module.exports = connect(
-  function matchStateToProps(state) {
+  function bindAppStateToComponentProps(state) {
     return {
       frequency: state.donateForm.frequency,
       amount: state.donateForm.amount,
       currency: state.donateForm.currency
     };
   },
-
-  function matchDispatchToProps(dispatch) {
-    // When the SEPA page loads, we need to make
-    // sure it has a way to force the currency
-    // to euro. We set up a special 'setSEPACurrency'
-    // function for this, which takes no arguments
-    // and is called as this.props.setSEPACurrency()
-    // just prior to component mounting.
+  function bindDispatchFunctionsToComponentProps(dispatch) {
     return {
       setCurrency: function() {
-        let data = { code: 'eur' };
-        dispatch(setCurrency(data));
+        dispatch(setCurrency({ code: 'eur' }));
       }
     };
   }

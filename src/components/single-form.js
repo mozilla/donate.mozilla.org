@@ -133,13 +133,15 @@ var singleForm = React.createClass({
             submitting={this.state.submitting === STRIPE_SUBMITTING}
           />
 
-          <SEPAButton
-            currency={this.props.currency}
-            name="payment-type"
-            onSubmit={this.validateSEPA}
-            submitting={this.state.submitting === SEPA_SUBMITTING}
-            hidden={this.props.currency.code !== `eur`}
-          />
+          { !process.env.SEPA_ENABLED ? null :
+            <SEPAButton
+              currency={this.props.currency}
+              name="payment-type"
+              onSubmit={this.validateSEPA}
+              submitting={this.state.submitting === SEPA_SUBMITTING}
+              hidden={this.props.currency.code !== `eur`}
+            />
+          }
 
           <PayPalButton
             name="payment-type"

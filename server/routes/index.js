@@ -661,8 +661,12 @@ var routes = {
         );
       }
     );
-  },
-  'stripe-sepa': stripeSepa
+  }
 };
+
+// SEPA debit feature flag
+if (process.env.ENABLE_SEPA) {
+  routes['stripe-sepa'] = stripeSepa;
+}
 
 module.exports = routes;

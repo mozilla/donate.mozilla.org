@@ -83,14 +83,10 @@ let stripeChargeFailed = (request, reply) => {
         project,
         failure_code
       });
+
+      return reply(success_message);
     });
   });
-
-  let {id: transaction_id, failure_code} = event.data.object;
-
-  basket.queue({ event_type, transaction_id, failure_code});
-
-  return reply(success_message);
 };
 
 module.exports = stripeChargeFailed;

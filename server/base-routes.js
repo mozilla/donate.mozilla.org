@@ -87,7 +87,6 @@ var baseRoutes = [
       response: {
         schema: {
           id: Joi.string(),
-          customerId: Joi.string(),
           frequency: Joi.string().valid("monthly", "one-time"),
           currency: Joi.any().valid(currencyFor.stripe).required(),
           quantity: Joi.number(),
@@ -126,7 +125,6 @@ var baseRoutes = [
       response: {
         schema: {
           id: Joi.string(),
-          customerId: Joi.string(),
           frequency: Joi.string().valid("monthly", "one-time"),
           currency: Joi.any().valid(currencyFor.stripe).required(),
           quantity: Joi.number(),

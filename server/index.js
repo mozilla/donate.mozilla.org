@@ -8,6 +8,8 @@ var baseRoutes = require('./base-routes');
 var services = require('./services');
 var finalizeServer = require('./finalise-server');
 
+const ONE_HOUR_MS = 1000 * 60 * 60;
+
 
 module.exports = function(options) {
   var serverOptions = getServerOptions(options);
@@ -29,6 +31,12 @@ module.exports = function(options) {
     validateFunc: function(token, callback) {
       callback(null, token === process.env.STRIPE_WEBHOOK_SECRET, { token: token });
     }
+  });
+
+  server.state("stripeCustomerId", {
+    ttl: ONE_HOUR_MS,
+    isSecure: process.env.NODE_ENV === "production",
+    encoding: "base64"
   });
 
   server.route(baseRoutes);

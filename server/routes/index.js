@@ -189,11 +189,12 @@ var routes = {
                 amount: charge.amount,
                 currency: charge.currency,
                 id: charge.id,
-                customerId: customer.id,
                 signup: transaction.signup,
                 country: transaction.country,
                 email: transaction.email
-              }).code(200);
+              })
+              .state("stripeCustomerId", customer.id)
+              .code(200);
             }
           });
         } else {
@@ -256,7 +257,6 @@ var routes = {
                 currency: subscription.plan.currency,
                 quantity: subscription.quantity,
                 id: subscription.id,
-                customerId: customer.id,
                 signup: transaction.signup,
                 country: transaction.country,
                 email: transaction.email
@@ -269,7 +269,7 @@ var routes = {
   },
   stripeMonthlyUpgrade: function(request, reply) {
     var transaction = request.payload || {};
-    var customerId = transaction.customerId;
+    var customerId = request.state.stripeCustomerId;
     var currency = transaction.currency;
     var amount = amountModifier.stripe(transaction.amount, currency);
     var metadata = {
@@ -313,7 +313,8 @@ var routes = {
             reply(boom.create(400, 'Stripe subscription failed', {
               code: err.code,
               rawType: err.rawType
-            }));
+            }))
+            .unstate("stripeCustomerId");
           } else {
             subscription = subscriptionData.subscription;
             request.log(['stripe', 'recurring'], {
@@ -327,7 +328,9 @@ var routes = {
               currency: subscription.plan.currency,
               quantity: subscription.quantity,
               id: subscription.id
-            }).code(200);
+            })
+            .code(200)
+            .unstate("stripeCustomerId");
           }
         });
       }

@@ -86,7 +86,7 @@ var MonthlyUpsell = React.createClass({
       var page = '/' + this.context.intl.locale + '/thank-you/';
       window.location = page + params;
     }, (response) => {
-      var errorCode = error(response.error);
+      var errorCode = response.error;
       if (response.stripe) {
         errorCode = response.stripe.rawType;
       }

@@ -285,6 +285,8 @@ var routes = {
       metadata.glassroomnyc = true;
     }
 
+    request.yar.clear("session");
+
     stripe.retrieveCustomer(
       customerId,
       function(retrieveCustomerErr, customer) {

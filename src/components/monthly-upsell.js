@@ -161,6 +161,15 @@ var MonthlyUpsell = React.createClass({
         <ErrorMessage message={stripeError}/>
       );
     }
+    var yesButton = (<button onClick={this.submit} className="yes-button">YES</button>);
+    var noButton = (<button onClick={this.props.onClose} className="no-button">NO</button>);
+    var submittingElement = null;
+    if (this.state.submitting !== NOT_SUBMITTING) {
+      yesButton = null;
+      noButton = null;
+      // Do something cool with this.
+      submittingElement = null;
+    }
     return (
       <div className="upsell-container">
         <Modal>
@@ -175,8 +184,9 @@ var MonthlyUpsell = React.createClass({
             </div>
             {amountErrorElement}
             {stripeErrorElement}
-            <button onClick={this.submit} className="yes-button">YES</button>
-            <button onClick={this.props.onClose} className="no-button">NO</button>
+            {yesButton}
+            {noButton}
+            {submittingElement}
           </div>
         </Modal>
       </div>

@@ -93,7 +93,8 @@ var baseRoutes = [
           amount: Joi.number(),
           signup: Joi.boolean(),
           email: Joi.string().email().allow(''),
-          country: Joi.string().allow('')
+          country: Joi.string().allow(''),
+          doNotShowMonthlyPrompt: Joi.boolean()
         }
       }
     }
@@ -131,7 +132,8 @@ var baseRoutes = [
           amount: Joi.number(),
           signup: Joi.boolean(),
           email: Joi.string().email().allow(''),
-          country: Joi.string().allow('')
+          country: Joi.string().allow(''),
+          doNotShowMonthlyPrompt: Joi.boolean()
         }
       }
     }

@@ -69,6 +69,7 @@
     "hatchet": "0.3.2",
     "imports-loader": "0.6.5",
     "inert": "3.2.1",
+    "iron": "^5.0.4",
     "joi": "7.1.0",
     "json-loader": "0.5.4",
     "langmap": "0.0.12",
@@ -95,8 +96,7 @@
     "style-loader": "0.13.0",
     "throng": "1.0.1",
     "webpack": "1.12.9",
-    "whatwg-fetch": "0.10.1",
-    "yar": "^7.0.2"
+    "whatwg-fetch": "0.10.1"
   },
   "devDependencies": {
     "aws-sdk": "2.2.26",

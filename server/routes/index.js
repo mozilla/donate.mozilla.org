@@ -1,3 +1,4 @@
+const iron = require('iron');
 var signup = require('./signup');
 var mailchimp = require('./mailchimp');
 var stripe = require('./stripe');
@@ -5,6 +6,24 @@ var paypal = require('./paypal');
 var boom = require('boom');
 var basket = require('../lib/basket-queue.js');
 var amountModifier = require('../../dist/lib/amount-modifier.js');
+
+const cookiePassword = process.env.SECRET_COOKIE_PASSWORD;
+
+async function decrypt(encryptedCookie) {
+  try {
+    return await iron.unseal(encryptedCookie, cookiePassword, iron.defaults);
+  } catch(err) {
+    return Promise.reject(err);
+  }
+}
+
+async function encrypt(cookie) {
+  try {
+    return await iron.seal(cookie, cookiePassword, iron.defaults);
+  } catch(err) {
+    return Promise.reject(err);
+  }
+}
 
 var routes = {
   'signup': function(request, reply) {
@@ -184,11 +203,10 @@ var routes = {
                 project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
               });
 
-              request.yar.set("session", {
+              const cookie = {
                 stripeCustomerId: customer.id
-              });
-
-              reply({
+              };
+              const response = {
                 frequency: "one-time",
                 amount: charge.amount,
                 currency: charge.currency,
@@ -196,7 +214,24 @@ var routes = {
                 signup: transaction.signup,
                 country: transaction.country,
                 email: transaction.email
-              }).code(200);
+              };
+
+              return encrypt(cookie)
+              .then(encryptedCookie => reply(response)
+                .state("session", encryptedCookie)
+                .code(200)
+              )
+              .catch(err => {
+                request.log(['error', 'stripe', 'single', 'cookie'], {
+                  request_id,
+                  customer_id: customer.id,
+                  code: err.code,
+                  message: err.message
+                });
+
+                response.doNotShowMonthlyPrompt = true;
+                return reply(response).code(200);
+              });
             }
           });
         } else {
@@ -271,8 +306,7 @@ var routes = {
   },
   stripeMonthlyUpgrade: function(request, reply) {
     var transaction = request.payload || {};
-    var cookie = request.yar.get("session");
-    var customerId = cookie && cookie.stripeCustomerId;
+    const encryptedCookie = request.state && request.state.session;
     var currency = transaction.currency;
     var amount = amountModifier.stripe(transaction.amount, currency);
     var metadata = {
@@ -285,67 +319,95 @@ var routes = {
       metadata.glassroomnyc = true;
     }
 
-    if (!customerId) {
-      request.log(['error', 'stripe', 'recurring'], {
+    if (!encryptedCookie) {
+      request.log(['error', 'stripe', 'recurring', 'upgrade'], {
         request_id,
-        err: 'Customer ID not present in the cookie'
+        err: 'Cookie does not exist'
       });
 
-      return reply(boom.badRequest('An error occurred while creating this monthly donation'));
+      return reply(boom.badRequest('An error occurred while creating this monthly donation'))
+      .unstate("session");
     }
 
-    request.yar.clear("session");
+    decrypt(encryptedCookie)
+    .then(cookie => {
+      const customerId = cookie && cookie.stripeCustomerId;
 
-    stripe.retrieveCustomer(
-      customerId,
-      function(retrieveCustomerErr, customer) {
-        if (retrieveCustomerErr) {
-          return reply(boom.badImplementation('An error occurred while creating this monthly donation', retrieveCustomerErr));
-        }
-// Make this with a monthly delay for the user.
-        stripe.recurring({
-          // Stripe has plans with set amounts, not custom amounts.
-          // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
-          // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
-          currency,
-          metadata,
-          customer,
-          quantity: amount,
-          trialPeriodDays: "30"
-        }, function(err, subscriptionData) {
-          var stripe_create_subscription_service = subscriptionData.stripe_create_subscription_service;
-          var subscription;
-          if (err) {
-            request.log(['error', 'stripe', 'recurring'], {
-              request_id,
-              stripe_create_subscription_service,
-              customer_id: customer.id,
-              code: err.code,
-              type: err.type,
-              param: err.param
-            });
-            reply(boom.create(400, 'Stripe subscription failed', {
-              code: err.code,
-              rawType: err.rawType
-            }));
-          } else {
-            subscription = subscriptionData.subscription;
-            request.log(['stripe', 'recurring'], {
-              request_id,
-              stripe_create_subscription_service,
-              customer_id: customer.id
-            });
-
-            reply({
-              frequency: "monthly",
-              currency: subscription.plan.currency,
-              quantity: subscription.quantity,
-              id: subscription.id
-            }).code(200);
-          }
+      if (!customerId) {
+        request.log(['error', 'stripe', 'recurring', 'upgrade'], {
+          request_id,
+          err: 'Customer ID missing from the cookie'
         });
+
+        return reply(boom.badRequest('An error occurred while creating this monthly donation'))
+        .unstate("session");
       }
-    );
+
+      stripe.retrieveCustomer(
+        customerId,
+        function(retrieveCustomerErr, customer) {
+          if (retrieveCustomerErr) {
+            return reply(boom.badImplementation('An error occurred while creating this monthly donation', retrieveCustomerErr))
+            .unstate("session");
+          }
+          // Make this with a monthly delay for the user.
+          stripe.recurring({
+            // Stripe has plans with set amounts, not custom amounts.
+            // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
+            // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
+            currency,
+            metadata,
+            customer,
+            quantity: amount,
+            trialPeriodDays: "30"
+          }, function(err, subscriptionData) {
+            var stripe_create_subscription_service = subscriptionData.stripe_create_subscription_service;
+            var subscription;
+            if (err) {
+              request.log(['error', 'stripe', 'recurring', 'upgrade'], {
+                request_id,
+                stripe_create_subscription_service,
+                customer_id: customer.id,
+                code: err.code,
+                type: err.type,
+                param: err.param
+              });
+              reply(boom.create(400, 'Stripe subscription failed', {
+                code: err.code,
+                rawType: err.rawType
+              }))
+              .unstate("session");
+            } else {
+              subscription = subscriptionData.subscription;
+              request.log(['stripe', 'recurring', 'upgrade'], {
+                request_id,
+                stripe_create_subscription_service,
+                customer_id: customer.id
+              });
+
+              reply({
+                frequency: "monthly",
+                currency: subscription.plan.currency,
+                quantity: subscription.quantity,
+                id: subscription.id
+              })
+              .unstate("session")
+              .code(200);
+            }
+          });
+        }
+      );
+    })
+    .catch(err => {
+      request.log(['error', 'stripe', 'recurring', 'upgrade'], {
+        request_id,
+        code: err.code,
+        message: err.message
+      });
+
+      return reply(boom.badImplementation('An error occurred while creating this monthly donation'))
+      .unstate("session");
+    });
   },
   'paypal': function(request, reply) {
     var transaction = request.payload || {};

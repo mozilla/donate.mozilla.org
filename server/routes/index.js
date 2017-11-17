@@ -285,6 +285,15 @@ var routes = {
       metadata.glassroomnyc = true;
     }
 
+    if (!customerId) {
+      request.log(['error', 'stripe', 'recurring'], {
+        request_id,
+        err: 'Customer ID not present in the cookie'
+      });
+
+      return reply(boom.badRequest('An error occurred while fetching the customer for this monthly upsell'));
+    }
+
     request.yar.clear("session");
 
     stripe.retrieveCustomer(

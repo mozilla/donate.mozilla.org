@@ -4,7 +4,7 @@ import Signup from '../components/signup.js';
 import Social from '../components/social.js';
 import ThankYouHeader from '../components/thank-you-header.js';
 import analytics from '../lib/analytics.js';
-import MonthlyUpsell from '../components/monthly-upsell.js';
+import MonthlyUpgrade from '../components/monthly-upgrade.js';
 import locationSearchParser from '../lib/location-search-parser.js';
 import amountModifier from '../lib/amount-modifier.js';
 import suggestMonthly from '../lib/suggest-monthly.js';
@@ -25,7 +25,7 @@ var ThankYou = React.createClass({
         let suggestedMonthly = suggestMonthly(trueAmount, query.str_currency);
         if (suggestedMonthly) {
           return {
-            showMonthlyUpsell: true,
+            showMonthlyUpgrade: true,
             suggestedMonthly,
             currencyCode: query.str_currency,
             customerId: query.customer_id
@@ -34,7 +34,7 @@ var ThankYou = React.createClass({
       }
     }
     return {
-      showMonthlyUpsell: false,
+      showMonthlyUpgrade: false,
       showThankyouPage: false
     };
   },
@@ -44,21 +44,21 @@ var ThankYou = React.createClass({
       showThankyouPage: true
     });
   },
-  closeMonthlyUpsell: function() {
+  closeMonthlyUpgrade: function() {
     this.setState({
-      showMonthlyUpsell: false
+      showMonthlyUpgrade: false
     });
   },
   render: function() {
     var className = "row thank-you-page";
     var signUpOrSocial = (<Social/>);
-    var monthlyUpsell = null;
-    if (this.state.showMonthlyUpsell) {
-      monthlyUpsell = (
-        <MonthlyUpsell
+    var monthlyUpgrade = null;
+    if (this.state.showMonthlyUpgrade) {
+      monthlyUpgrade = (
+        <MonthlyUpgrade
           customerId={this.state.customerId}
           currencyCode={this.state.currencyCode}
-          onClose={this.closeMonthlyUpsell}
+          onClose={this.closeMonthlyUpgrade}
           suggestedMonthly={this.state.suggestedMonthly}
         />
       );
@@ -75,7 +75,7 @@ var ThankYou = React.createClass({
       thankYouPage = (
         <div>
           <ThankYouHeader/>
-          {monthlyUpsell}
+          {monthlyUpgrade}
           <div>
             {signUpOrSocial}
             <MozillaFooter/>

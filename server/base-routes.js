@@ -139,8 +139,8 @@ var baseRoutes = [
     }
   }, {
     method: 'POST',
-    path: '/api/stripe-monthly-upsell',
-    handler: routes.stripeMonthlyUpsell,
+    path: '/api/stripe-monthly-upgrade',
+    handler: routes.stripeMonthlyUpgrade,
     config: {
       payload: {
         maxBytes: 32000,

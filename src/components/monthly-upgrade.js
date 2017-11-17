@@ -10,7 +10,7 @@ import reactGA from 'react-ga';
 var NOT_SUBMITTING = 0;
 var STRIPE_SUBMITTING = 2;
 
-var MonthlyUpsell = React.createClass({
+var MonthlyUpgrade = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
@@ -60,7 +60,7 @@ var MonthlyUpsell = React.createClass({
       submitting: STRIPE_SUBMITTING
     });
 
-    submit("/api/stripe-monthly-upsell", {
+    submit("/api/stripe-monthly-upgrade", {
       customerId: this.state.customerId,
       currency: this.state.currencyCode,
       amount: amountModifier.stripe(this.state.inputValue, currencyCode),
@@ -179,16 +179,16 @@ var MonthlyUpsell = React.createClass({
       submittingElement = null;
     }
     return (
-      <div className="upsell-container">
+      <div className="upgrade-container">
         <Modal>
-          <div className="upsell-modal">
-            <div className="upsell-ask">
+          <div className="upgrade-modal">
+            <div className="upgrade-ask">
               <p>
-                <FormattedHTMLMessage id="monthly_upsell_first_line"/>
+                <FormattedHTMLMessage id="monthly_upgrade_first_line"/>
               </p>
               <p>
                 <FormattedMessage
-                  id="monthly_upsell_second_line"
+                  id="monthly_upgrade_second_line"
                   values={{
                     currencySymbol,
                     inputElement: (<input value={this.state.inputValue} onChange={this.onInputChange}/>)
@@ -208,4 +208,4 @@ var MonthlyUpsell = React.createClass({
   }
 });
 
-module.exports = MonthlyUpsell;
+module.exports = MonthlyUpgrade;

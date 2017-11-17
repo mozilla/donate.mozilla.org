@@ -7,7 +7,7 @@ module.exports = {
       macro: 0.30,
       micro: 0.05
     },
-    monthlyUpsell: [
+    monthlyUpgrade: [
       {min: 250, value: "30"},
       {min: 120, value: "20"},
       {min: 60, value: "15"},
@@ -47,7 +47,7 @@ module.exports = {
       macro: 0.30,
       micro: 0.05
     },
-    monthlyUpsell: [
+    monthlyUpgrade: [
       {min: 250, value: "30"},
       {min: 150, value: "25"},
       {min: 80, value: "20"},
@@ -112,7 +112,7 @@ module.exports = {
       macro: 0.30,
       micro: 0.05
     },
-    monthlyUpsell: [
+    monthlyUpgrade: [
       {min: 250, value: "30"},
       {min: 150, value: "25"},
       {min: 80, value: "20"},
@@ -214,7 +214,7 @@ module.exports = {
       macro: 0.35,
       micro: 0.05
     },
-    monthlyUpsell: [
+    monthlyUpgrade: [
       {min: 250, value: "30"},
       {min: 120, value: "20"},
       {min: 60, value: "15"},
@@ -234,7 +234,7 @@ module.exports = {
       macro: 0.20,
       micro: 0.05
     },
-    monthlyUpsell: [
+    monthlyUpgrade: [
       {min: 200, value: "30"},
       {min: 100, value: "20"},
       {min: 50, value: "15"},
@@ -359,7 +359,7 @@ module.exports = {
     symbol: '₩',
     disabled: "paypal",
     zeroDecimal: "stripe",
-    monthlyUpsell: [
+    monthlyUpgrade: [
       {min: 280000, value: "33000"},
       {min: 135000, value: "22000"},
       {min: 67000, value: "16000"},

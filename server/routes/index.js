@@ -267,7 +267,7 @@ var routes = {
       }
     });
   },
-  stripeMonthlyUpsell: function(request, reply) {
+  stripeMonthlyUpgrade: function(request, reply) {
     var transaction = request.payload || {};
     var customerId = transaction.customerId;
     var currency = transaction.currency;
@@ -286,7 +286,7 @@ var routes = {
       customerId,
       function(retrieveCustomerErr, customer) {
         if (retrieveCustomerErr) {
-          return reply(boom.badImplementation('An error occurred while fetching the customer for this monthly upsell', retrieveCustomerErr));
+          return reply(boom.badImplementation('An error occurred while fetching the customer for this monthly upgrade', retrieveCustomerErr));
         }
 // Make this with a monthly delay for the user.
         stripe.recurring({

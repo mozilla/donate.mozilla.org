@@ -1,17 +1,17 @@
 var currencies = require('../data/currencies.js');
 
 function suggestMonthly(amount, currency) {
-  var upsellRanges = currencies[currency].monthlyUpsell || [];
-  var upsellResult = "";
+  var upgradeRanges = currencies[currency].monthlyUpgrade || [];
+  var upgradeResult = "";
   amount = parseInt(amount, 10);
 
-  for (let i = 0; i < upsellRanges.length && !upsellResult; i++) {
-    if (amount >= upsellRanges[i].min) {
-      upsellResult = upsellRanges[i].value;
+  for (let i = 0; i < upgradeRanges.length && !upgradeResult; i++) {
+    if (amount >= upgradeRanges[i].min) {
+      upgradeResult = upgradeRanges[i].value;
     }
   }
 
-  return upsellResult;
+  return upgradeResult;
 }
 
 module.exports = suggestMonthly;

@@ -161,8 +161,16 @@ var MonthlyUpsell = React.createClass({
         <ErrorMessage message={stripeError}/>
       );
     }
-    var yesButton = (<button onClick={this.submit} className="yes-button">YES</button>);
-    var noButton = (<button onClick={this.props.onClose} className="no-button">NO</button>);
+    var yesButton = (
+      <button onClick={this.submit} className="yes-button">
+        {this.context.intl.formatMessage({id: "yes_button"})}
+      </button>
+    );
+    var noButton = (
+      <button onClick={this.props.onClose} className="no-button">
+        {this.context.intl.formatMessage({id: "no_button"})}
+      </button>
+    );
     var submittingElement = null;
     if (this.state.submitting !== NOT_SUBMITTING) {
       yesButton = null;

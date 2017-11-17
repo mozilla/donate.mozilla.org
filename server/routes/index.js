@@ -296,7 +296,8 @@ var routes = {
           currency,
           metadata,
           customer,
-          quantity: amount
+          quantity: amount,
+          trialPeriodDays: "30"
         }, function(err, subscriptionData) {
           var stripe_create_subscription_service = subscriptionData.stripe_create_subscription_service;
           var subscription;

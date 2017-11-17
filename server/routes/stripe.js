@@ -60,6 +60,9 @@ var stripeRoutes = {
       quantity: transaction.quantity,
       metadata: transaction.metadata
     };
+    if (transaction.trialPeriodDays) {
+      subscription.trial_period_days = transaction.trialPeriodDays;
+    }
     var startCreateSubscription = Date.now();
     stripe.customers.createSubscription(transaction.customer.id, subscription,
       function(err, subscription) {

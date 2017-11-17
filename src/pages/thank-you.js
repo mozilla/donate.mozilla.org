@@ -34,11 +34,15 @@ var ThankYou = React.createClass({
       }
     }
     return {
-      showMonthlyUpsell: false
+      showMonthlyUpsell: false,
+      showThankyouPage: false
     };
   },
   componentDidMount: function() {
     analytics();
+    this.setState({
+      showThankyouPage: true
+    });
   },
   closeMonthlyUpsell: function() {
     this.setState({
@@ -65,15 +69,26 @@ var ThankYou = React.createClass({
     if (this.props.test) {
       className += " " + this.props.test;
     }
-    return (
-      <div>
-        <div className={className}>
+    var thankYouPage = null;
+    var containerClass = "";
+    if (this.state.showThankyouPage) {
+      thankYouPage = (
+        <div>
           <ThankYouHeader/>
           {monthlyUpsell}
           <div>
             {signUpOrSocial}
             <MozillaFooter/>
           </div>
+        </div>
+      );
+    } else {
+      containerClass += "initial-render";
+    }
+    return (
+      <div className={containerClass}>
+        <div className={className}>
+          {thankYouPage}
         </div>
       </div>
     );

@@ -4,7 +4,7 @@ import amountModifier from '../lib/amount-modifier.js';
 import currencyData from '../data/currencies.js';
 import submit from '../lib/submit';
 import ErrorMessage from './error.js';
-import { FormattedMessage, FormattedNumber } from 'react-intl';
+import { FormattedMessage, FormattedHTMLMessage, FormattedNumber } from 'react-intl';
 import reactGA from 'react-ga';
 
 var NOT_SUBMITTING = 0;
@@ -176,10 +176,16 @@ var MonthlyUpsell = React.createClass({
           <div className="upsell-modal">
             <div className="upsell-ask">
               <p>
-                <b>Thank you!</b> We’d love to have you as a sustaining supporter of Mozilla.
+                <FormattedHTMLMessage id="monthly_upsell_first_line"/>
               </p>
               <p>
-                Could you add a {currencySymbol} <input value={this.state.inputValue} onChange={this.onInputChange}/> monthly donation starting next month?
+                <FormattedMessage
+                  id="monthly_upsell_second_line"
+                  values={{
+                    currencySymbol,
+                    inputElement: (<input value={this.state.inputValue} onChange={this.onInputChange}/>)
+                  }}
+                />
               </p>
             </div>
             {amountErrorElement}

@@ -49,6 +49,11 @@ var MonthlyUpgrade = React.createClass({
     }
     this.setState({amount});
   },
+  onClose: function(e) {
+    if (this.state.submitting === NOT_SUBMITTING) {
+      this.props.onClose(e);
+    }
+  },
   submit: function() {
     let currencyCode = this.state.currencyCode;
 
@@ -60,6 +65,7 @@ var MonthlyUpgrade = React.createClass({
       submitting: STRIPE_SUBMITTING
     });
 
+return;
     submit("/api/stripe-monthly-upgrade", {
       customerId: this.state.customerId,
       currency: this.state.currencyCode,
@@ -161,22 +167,15 @@ var MonthlyUpgrade = React.createClass({
         <ErrorMessage message={stripeError}/>
       );
     }
-    var yesButton = (
-      <button onClick={this.submit} className="yes-button">
-        {this.context.intl.formatMessage({id: "yes_button"})}
-      </button>
-    );
-    var noButton = (
-      <button onClick={this.props.onClose} className="no-button">
-        {this.context.intl.formatMessage({id: "no_button"})}
-      </button>
-    );
-    var submittingElement = null;
+    var yesButtonClassName = "yes-button";
+    var noButtonClassName = "no-button";
+    var yesButtonText = this.context.intl.formatMessage({id: "yes_button"});
     if (this.state.submitting !== NOT_SUBMITTING) {
-      yesButton = null;
-      noButton = null;
-      // Do something cool with this.
-      submittingElement = null;
+      yesButtonClassName += " submitting";
+      noButtonClassName += " submitting";
+      yesButtonText = (
+        <i className="fa fa-cog fa-spin"></i>
+      );
     }
     return (
       <div className="upgrade-container">
@@ -198,9 +197,12 @@ var MonthlyUpgrade = React.createClass({
             </div>
             {amountErrorElement}
             {stripeErrorElement}
-            {yesButton}
-            {noButton}
-            {submittingElement}
+            <button onClick={this.submit} className={yesButtonClassName}>
+              {yesButtonText}
+            </button>
+            <button onClick={this.onClose} className={noButtonClassName}>
+              {this.context.intl.formatMessage({id: "no_button"})}
+            </button>
           </div>
         </Modal>
       </div>

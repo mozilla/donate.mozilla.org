@@ -40,6 +40,8 @@
       line-height: 1.42857;
       font-weight: 400;
       font-size: 24px;
+      height: 44px;
+      vertical-align: top;
       position: relative;
       padding: 5px 0;
       width: 120px;
@@ -58,9 +60,19 @@
       &.yes-button {
         background-color: #49affd;
         margin-right: 20px;
+        &.submitting {
+          background-color: #8ccdfe;
+        }
       }
       &.no-button {
         background-color: #a7aab3;
+        &.submitting {
+          background-color: #cbcdd2;
+        }
+      }
+      &.submitting {
+        cursor: auto;
+        color: rgba(255, 255, 255, 0.6);
       }
       background-image: linear-gradient(transparent,rgba(0,0,0,.2));
     }

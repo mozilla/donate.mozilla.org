@@ -291,7 +291,7 @@ var routes = {
         err: 'Customer ID not present in the cookie'
       });
 
-      return reply(boom.badRequest('An error occurred while fetching the customer for this monthly upsell'));
+      return reply(boom.badRequest('An error occurred while creating this monthly donation'));
     }
 
     request.yar.clear("session");
@@ -300,7 +300,7 @@ var routes = {
       customerId,
       function(retrieveCustomerErr, customer) {
         if (retrieveCustomerErr) {
-          return reply(boom.badImplementation('An error occurred while fetching the customer for this monthly upgrade', retrieveCustomerErr));
+          return reply(boom.badImplementation('An error occurred while creating this monthly donation', retrieveCustomerErr));
         }
 // Make this with a monthly delay for the user.
         stripe.recurring({

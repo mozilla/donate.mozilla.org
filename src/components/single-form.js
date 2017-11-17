@@ -39,7 +39,7 @@ var singleForm = React.createClass({
   },
   renderPrivacyPolicy: function() {
     return (
-      <p className="full"><FormattedHTMLMessage id="privacy_policy_var_b_v2"/></p>
+      <p className="full"><FormattedHTMLMessage id="privacy_policy_var_b"/></p>
     );
   },
   validateStripe: function() {

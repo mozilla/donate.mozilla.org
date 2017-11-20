@@ -19,9 +19,9 @@ var CurrencyDropdown = React.createClass({
   render: function() {
     return (
       <select onChange={this.onChange} className="currency-dropdown" value={this.props.currency.code}>
-        {Object.keys(currencyData).map(function(currency, i) {
+        {Object.keys(currencyData).map(currency => {
           return (
-            <option value={currency} key={i}>
+            <option value={currency} key={currency}>
               {currency} &nbsp; {currencyData[currency].symbol}
             </option>
           );
@@ -32,12 +32,12 @@ var CurrencyDropdown = React.createClass({
 });
 
 module.exports = connect(
-function(state) {
+function matchStateToProps(state) {
   return {
     currency: state.donateForm.currency
   };
 },
-function(dispatch) {
+function matchDispatchToProps(dispatch) {
   return {
     setCurrency: function(data) {
       dispatch(setCurrency(data));

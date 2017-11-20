@@ -65,7 +65,6 @@ var MonthlyUpgrade = React.createClass({
       submitting: STRIPE_SUBMITTING
     });
 
-return;
     submit("/api/stripe-monthly-upgrade", {
       customerId: this.state.customerId,
       currency: this.state.currencyCode,

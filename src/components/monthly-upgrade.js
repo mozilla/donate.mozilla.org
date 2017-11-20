@@ -124,12 +124,12 @@ var MonthlyUpgrade = React.createClass({
               values={{minAmount:
                 <span>
                   { currency.code ?
-                  <FormattedNumber
-                    maximumFractionDigits={2}
-                    value={currency.minAmount}
-                    style="currency"
-                    currency={currency.code}
-                  /> : "" }
+                    <FormattedNumber
+                      maximumFractionDigits={2}
+                      value={currency.minAmount}
+                      style="currency"
+                      currency={currency.code}
+                    /> : "" }
                 </span>
               }}
             />

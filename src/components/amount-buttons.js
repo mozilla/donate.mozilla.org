@@ -85,6 +85,9 @@ var AmountOtherButton = React.createClass({
     var inputValue = e.currentTarget.value;
     var amount = "";
 
+    // TODO: This needs to be refactored to use regex replace
+    // and needs documentation for what they are matching.
+    // See https://github.com/mozilla/donate.mozilla.org/issues/1917
     if (/^[\d]*[.]?\d{0,2}$/.test(inputValue)) {
       amount = inputValue.replace(/,/g, "");
     } else if (/^[\d]*[,]?\d{0,2}$/.test(inputValue)) {

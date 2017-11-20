@@ -13,6 +13,19 @@ var AmountInput = React.createClass({
       inputValue: amount
     };
   },
+  componentWillReceiveProps: function(nextProps) {
+    var amount = nextProps.amount;
+    var inputValue = this.state.inputValue;
+    if (!amount && inputValue) {
+      this.setState({
+        inputValue: ""
+      });
+    } else if (amount && !inputValue) {
+      this.setState({
+        inputValue: this.context.intl.formatNumber(amount)
+      });
+    }
+  },
   onInputChange: function(e) {
     var inputValue = e.currentTarget.value;
     var amount = "";

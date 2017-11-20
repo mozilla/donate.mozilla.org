@@ -5,40 +5,56 @@ import ErrorMessage from './error.js';
 
 import AmountButtons from './amount-buttons.js';
 import Frequency from './donation-frequency.js';
-import { PayPalButton, StripeButton } from './payment-options.js';
+import { PayPalButton, StripeButton, SEPAButton } from './payment-options.js';
 import SubmitButton from './submit-button.js';
 import DonateButton from './donate-button.js';
 import { FormattedHTMLMessage } from 'react-intl';
 import currencies from '../data/currencies.js';
 
 import { connect } from 'react-redux';
-import { setAmountError } from '../actions'; 
-import PaypalMixin from '../mixins/paypal.js';
-import StripeMixin from '../mixins/stripe.js';
+import { setAmountError } from '../actions';
+import { PaypalMixin, StripeMixin, SEPAMixin } from '../mixins';
 
-var NOT_SUBMITTING = 0;
-var STRIPE_SUBMITTING = 2;
-var PAYPAL_SUBMITTING = 3;
+
+const NOT_SUBMITTING = 0;
+const STRIPE_SUBMITTING = 2;
+const PAYPAL_SUBMITTING = 3;
+const SEPA_SUBMITTING = 4;
 
 var singleForm = React.createClass({
-  mixins: [PaypalMixin, StripeMixin],
+  mixins: [
+    PaypalMixin,
+    StripeMixin,
+    SEPAMixin
+  ],
   contextTypes: {
     intl: React.PropTypes.object
   },
   getInitialState: function() {
     return {
       submitting: NOT_SUBMITTING,
-      stripeError: ""
+      stripeError: "",
+      TEMP_REMOVE_LATER_SEPA_TOGGLE: false
     };
   },
   renderPrivacyPolicy: function() {
     return (
-      <p className="full"><FormattedHTMLMessage id="privacy_policy_var_b"/></p>
+      <p className="full"><FormattedHTMLMessage id="privacy_policy_var_b_v2"/></p>
     );
   },
   validateStripe: function() {
     if (this.validateAmount()) {
       this.stripeCheckout({
+        frequency: this.props.frequency,
+        amount: this.props.amount,
+        appName: this.props.appName,
+        currency: this.props.currency.code
+      });
+    }
+  },
+  validateSEPA: function() {
+    if (this.validateAmount()) {
+      this.sepaCheckout({
         frequency: this.props.frequency,
         amount: this.props.amount,
         appName: this.props.appName,
@@ -109,17 +125,28 @@ var singleForm = React.createClass({
           <h4 className="left choose-payment">{this.context.intl.formatMessage({id: "choose_payment"})}</h4>
           <p id="secure-label" className="right"><i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}</p>
         </SectionHeading>
-        <StripeButton
-          currency={this.props.currency}
-          name="payment-type"
-          onSubmit={this.validateStripe}
-          submitting={this.state.submitting === STRIPE_SUBMITTING}
-        />
-        <PayPalButton
-          name="payment-type"
-          submitting={this.state.submitting === PAYPAL_SUBMITTING}
-          onSubmit={this.validatePaypal}
-        />
+        <div className="donate-buttons full">
+          <StripeButton
+            currency={this.props.currency}
+            name="payment-type"
+            onSubmit={this.validateStripe}
+            submitting={this.state.submitting === STRIPE_SUBMITTING}
+          />
+
+          <SEPAButton
+            currency={this.props.currency}
+            name="payment-type"
+            onSubmit={this.validateSEPA}
+            submitting={this.state.submitting === SEPA_SUBMITTING}
+            hidden={this.props.currency.code !== `eur`}
+          />
+
+          <PayPalButton
+            name="payment-type"
+            submitting={this.state.submitting === PAYPAL_SUBMITTING}
+            onSubmit={this.validatePaypal}
+          />
+        </div>
         <div className="row">
           {this.renderPrivacyPolicy()}
         </div>
@@ -134,9 +161,7 @@ var singleForm = React.createClass({
           <p id="secure-label">
             <i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}
           </p>
-          <div className={className}>
-            <p>&nbsp;</p>
-          </div>
+          <div className={className}></div>
         </SectionHeading>
         <div className="row">
           {this.renderPrivacyPolicy()}
@@ -155,6 +180,7 @@ var singleForm = React.createClass({
     );
   }
 });
+
 
 module.exports = connect(
 function(state) {

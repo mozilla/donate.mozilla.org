@@ -1,36 +1,52 @@
 .payment-logos {
-  width: 116px;
-  height: 40px;
-  margin: 0 auto;
-  background-size: 116px auto;
+  width: 100%;
+  height: 30px;
+  max-width: 155px;
+  margin: 5px auto 5px auto;
+  background-size: 80%;
   background-repeat: no-repeat;
-  background-position: top center;
-  background-image: url('/assets/images/payment_logos_updated.4ca531c0b90d3635aef0c1fc78d5967e.png');
-  &.no-amex {
-    width: 82px;
-  }
+  background-position: center;
 }
-
 
 .credit-card-logos {
-  background-position: center -3px;
-  &.no-amex {
-    background-position: -33px -3px, 50%;
-  }
-}
+  background-image: url('/assets/images/payment-type-cards.png');
 
-.paypal-disabled {
-  .credit-card-logos {
-    background-position:-2px -33px,50%;
-    &.no-amex {
-      background-position: -33px -36px;
-    }
+  &.no-amex {
+    background-image: url('/assets/images/payment-type-cards-no-amex.png');
   }
 }
 
 .paypal-logo {
-  background-position: center -70px;
-  margin: -8px auto -5px;
+  background-image: url('/assets/images/payment-type-paypal.png');
+}
+
+.paypal-disabled {
+
+  #secure-label {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    margin: 0;
+  }
+
+  .payment-logos {
+    background-image: url('/assets/images/payment-type-cards-color.png');
+    background-position: left;
+    float: left;
+    margin: 0;
+    background-size: contain;
+
+    &.no-amex {
+      background-image: url('/assets/images/payment-type-cards-color-no-amex.png');
+    }
+  }
+}
+
+.sepa-logo {
+  background-size: 65%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url('/assets/images/payment-type-sepa.svg');
 }
 
 input.payment-type + label {
@@ -49,100 +65,37 @@ input.payment-type:checked + label {
   background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
 }
 
-label.payment-paypal-label,
-label.payment-cc-label {
-  height: 79px;
-}
-
-.payment-cc-input:checked + .payment-cc-label {
-  .credit-card-logos {
-    background-position: center -3px;
-    &.no-amex {
-      background-position: -33px -3px, 50%;
-    }
-  }
-}
-
-.payment-paypal-input:checked + .payment-paypal-label {
-  .paypal-logo {
-    background-position: center -70px;
-  }
-}
-
-@media screen and (min-width: 480px) {
-
-  .payment-logos {
-    width: 165px;
-    height: 45px;
-    background-size: 165px auto;
-    &.no-amex {
-      width: 108px;
-    }
-  }
-
-  label.payment-paypal-label,
-  label.payment-cc-label {
-    height: 89px;
-  }
-
-  .credit-card-logos {
-    background-position: center -3px;
-    &.no-amex {
-        background-position: -47px -5px, 50%;
-    }
-  }
-
-  .paypal-disabled {
-    .credit-card-logos {
-      background-position:-2px -55px,50%;
-      &.no-amex {
-        background-position: -47px -55px, 50%;
-      }
-    }
-  }
-
-  .paypal-logo {
-    background-position: -6px -111px, center;
-    margin:auto;
-  }
-
-  .payment-cc-input:checked + .payment-cc-label {
-    .credit-card-logos {
-      background-position: center -3px;
-      &.no-amex {
-        background-position: -47px -5px, 50%;
-      }
-    }
-  }
-
-  .payment-paypal-input:checked + .payment-paypal-label {
-    .payment-logos {
-      background-position: -6px -111px, center;
-    }
-  }
-}
-
 .less-text {
-  display:none;
+  display: none;
+}
+
+.donate-buttons{
+  display: flex;
+  & > *:not(:last-child){
+    margin-right: 10px;
+  }
+  & > *{
+    flex: 1;
+  }
 }
 
 .paypal-button,
 .cc-button {
   .submitting-container {
-    margin-top: 20px;
-    font-size: 20px;
-    .fa-cog {
-      margin-right: 6px;
-    }
-  }
-}
+    font-size: 14px;
+    padding: 0 8px;
+    margin: 10px 0 8px 0;
 
-html[dir="rtl"] {
-  .paypal-button,
-  .cc-button {
-    .submitting-container .fa-cog {
-      margin-right: 0;
-      margin-left: 6px;
+    @media screen and (max-width: 480px) {
+      font-size: 12px;
+    }
+
+    .progress-cog {
+      background-image: url('/assets/images/cog.svg');
+      height: 20px;
+      width: 20px;
+      display: block;
+      margin: 0 auto 5px auto;
     }
   }
 }

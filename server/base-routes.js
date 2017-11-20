@@ -94,7 +94,7 @@ var baseRoutes = [
           signup: Joi.boolean(),
           email: Joi.string().email().allow(''),
           country: Joi.string().allow(''),
-          doNotShowMonthlyPrompt: Joi.boolean()
+          cookiesDisabled: Joi.boolean()
         }
       }
     }
@@ -133,7 +133,7 @@ var baseRoutes = [
           signup: Joi.boolean(),
           email: Joi.string().email().allow(''),
           country: Joi.string().allow(''),
-          doNotShowMonthlyPrompt: Joi.boolean()
+          cookiesDisabled: Joi.boolean()
         }
       }
     }

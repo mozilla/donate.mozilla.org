@@ -229,7 +229,7 @@ var routes = {
                     message: err.message
                   });
 
-                  response.doNotShowMonthlyPrompt = true;
+                  response.cookiesDisabled = true;
                   return reply(response).code(200);
                 });
             }

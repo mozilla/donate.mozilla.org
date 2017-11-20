@@ -6,6 +6,7 @@ import submit from '../lib/submit';
 import ErrorMessage from './error.js';
 import { FormattedMessage, FormattedHTMLMessage, FormattedNumber } from 'react-intl';
 import reactGA from 'react-ga';
+import AmountInput from './amount-input.js';
 
 var NOT_SUBMITTING = 0;
 var STRIPE_SUBMITTING = 2;
@@ -16,7 +17,7 @@ var MonthlyUpgrade = React.createClass({
   },
   getInitialState: function() {
     return {
-      inputValue: this.props.suggestedMonthly,
+      amount: this.props.suggestedMonthly,
       currencyCode: this.props.currencyCode,
       customerId: this.props.customerId,
       amountError: "",
@@ -24,30 +25,11 @@ var MonthlyUpgrade = React.createClass({
       submitting: NOT_SUBMITTING
     };
   },
-  onInputChange: function(e) {
-    var inputValue = e.currentTarget.value;
-    var amount = "";
-
-    // Pull this into a shared function.
-    if (/^[\d]*[\.]?\d{0,2}$/.test(inputValue)) {
-      amount = inputValue.replace(/,/g, "");
-    } else if (/^[\d]*[,]?\d{0,2}$/.test(inputValue)) {
-      amount = inputValue.replace(/\./g, "").replace(",", ".");
-    } else if (/^[\d,]*[\.]?\d{0,2}$/.test(inputValue)) {
-      amount = inputValue.replace(/,/g, "");
-    } else if (/^[\d\.]*[,]?\d{0,2}$/.test(inputValue)) {
-      amount = inputValue.replace(/\./g, "").replace(",", ".");
-    } else {
-      inputValue = this.state.inputValue;
-    }
-
-    if (this.state.inputValue !== inputValue) {
-      this.setState({
-        inputValue: inputValue,
-        amountError: ""
-      });
-    }
-    this.setState({amount});
+  onInputChange: function(amount) {
+    this.setState({
+      amount,
+      amountError: ""
+    });
   },
   onClose: function(e) {
     if (this.state.submitting === NOT_SUBMITTING) {
@@ -68,7 +50,7 @@ var MonthlyUpgrade = React.createClass({
     submit("/api/stripe-monthly-upgrade", {
       customerId: this.state.customerId,
       currency: this.state.currencyCode,
-      amount: amountModifier.stripe(this.state.inputValue, currencyCode),
+      amount: amountModifier.stripe(this.state.amount, currencyCode),
       locale: this.context.intl.locale,
       description: this.context.intl.formatMessage({id: "mozilla_monthly_donation"})
     }, (data) => {
@@ -109,7 +91,7 @@ var MonthlyUpgrade = React.createClass({
   },
   validateAmount: function() {
     var currency = currencyData[this.state.currencyCode];
-    var amount = parseInt(this.state.inputValue, 10);
+    var amount = parseInt(this.state.amount, 10);
     var minAmount = parseInt(currency.minAmount, 10);
 
     var errorMessage = "";
@@ -189,7 +171,12 @@ var MonthlyUpgrade = React.createClass({
                   id="monthly_upgrade_second_line"
                   values={{
                     currencySymbol,
-                    inputElement: (<input value={this.state.inputValue} onChange={this.onInputChange}/>)
+                    inputElement: (
+                      <AmountInput
+                        amount={this.state.amount}
+                        onInputChange={this.onInputChange}
+                      />
+                    )
                   }}
                 />
               </p>

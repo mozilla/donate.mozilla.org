@@ -15,22 +15,20 @@ var ThankYou = React.createClass({
   },
   getInitialState: function() {
     let query = locationSearchParser(this.props.location);
-    if (/^(en)(\b|$)/.test(this.context.intl.locale)) {
-      if (query && query.str_frequency === "one-time") {
-        let trueAmount = amountModifier.reverse(
-          query.str_amount,
-          query.payment.toLowerCase(),
-          query.str_currency
-        );
-        let suggestedMonthly = suggestMonthly(trueAmount, query.str_currency);
-        if (suggestedMonthly) {
-          return {
-            showMonthlyUpgrade: true,
-            suggestedMonthly,
-            currencyCode: query.str_currency,
-            customerId: query.customer_id
-          };
-        }
+    if (query && query.str_frequency === "one-time") {
+      let trueAmount = amountModifier.reverse(
+        query.str_amount,
+        query.payment.toLowerCase(),
+        query.str_currency
+      );
+      let suggestedMonthly = suggestMonthly(trueAmount, query.str_currency);
+      if (suggestedMonthly) {
+        return {
+          showMonthlyUpgrade: true,
+          suggestedMonthly,
+          currencyCode: query.str_currency,
+          customerId: query.customer_id
+        };
       }
     }
     return {

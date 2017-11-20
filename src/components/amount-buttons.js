@@ -104,8 +104,8 @@ var AmountOtherButton = React.createClass({
       this.setState({
         inputValue: inputValue
       });
+      this.props.onInputChange(amount);
     }
-    this.props.onInputChange(amount);
   },
   render: function() {
     var amount = this.props.amount;

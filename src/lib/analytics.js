@@ -11,7 +11,7 @@ module.exports = function() {
 
   // Search for PayPal Params
   var pp_tx_re = /tx=(\w+)/;
-  var pp_amt_re = /amt=([\w\.]+)/;
+  var pp_amt_re = /amt=([\w.]+)/;
   var pp_cc_re = /cc=(\w+)/;
   var pp_frequency_re = /frequency=(\w+)/;
   if (pp_tx_re.test(queryString) && pp_amt_re.test(queryString) && pp_cc_re.test(queryString)) {
@@ -31,7 +31,7 @@ module.exports = function() {
 
   // Search for Coinbase Params
   var cb_tx_re = /order\[transaction\]\[id\]=(\w+)/;
-  var cb_amt_re = /order\[total_native\]\[cents\]=([\w\.]+)/;
+  var cb_amt_re = /order\[total_native\]\[cents\]=([\w.]+)/;
   var cb_cc_re = /order\[total_payout\]\[currency_iso\]=(\w+)/;
   if (cb_tx_re.test(queryString) && cb_amt_re.test(queryString) && cb_cc_re.test(queryString)) {
     tx = queryString.match(cb_tx_re)[1];
@@ -42,7 +42,7 @@ module.exports = function() {
 
   // Search for Stripe Params
   var str_tx_re = /str_id=(\w+)/;
-  var str_amt_re = /str_amount=([\w\.]+)/;
+  var str_amt_re = /str_amount=([\w.]+)/;
   var str_cc_re = /str_currency=(\w+)/;
   var str_frequency_re = /str_frequency=(\w+)/;
   if (str_tx_re.test(queryString) && str_amt_re.test(queryString) && str_cc_re.test(queryString)) {

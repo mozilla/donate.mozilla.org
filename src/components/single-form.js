@@ -157,17 +157,17 @@ var singleForm = React.createClass({
 });
 
 module.exports = connect(
-function(state) {
-  return {
-    currency: state.donateForm.currency,
-    amount: state.donateForm.amount,
-    frequency: state.donateForm.frequency
-  };
-},
-function(dispatch) {
-  return {
-    setAmountError: function(data) {
-      dispatch(setAmountError(data));
-    }
-  };
-})(singleForm);
+  function(state) {
+    return {
+      currency: state.donateForm.currency,
+      amount: state.donateForm.amount,
+      frequency: state.donateForm.frequency
+    };
+  },
+  function(dispatch) {
+    return {
+      setAmountError: function(data) {
+        dispatch(setAmountError(data));
+      }
+    };
+  })(singleForm);

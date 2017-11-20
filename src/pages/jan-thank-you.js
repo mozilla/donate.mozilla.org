@@ -58,11 +58,11 @@ var ThankYou = React.createClass({
           <ThankYouHeader thankYouSentenceId={pageData.thankYouSentenceId}/>
           <div className="video-container">
             <video width="600" height="480" ref="video" controls>
-            {
-              pageData.videoSrc.map(function(videoSrc, index) {
-                return (<source key={"vid-" + index} src={videoSrc} />);
-              })
-            }
+              {
+                pageData.videoSrc.map(function(videoSrc, index) {
+                  return (<source key={"vid-" + index} src={videoSrc} />);
+                })
+              }
             </video>
             <MozillaFooter/>
           </div>

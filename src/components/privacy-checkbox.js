@@ -26,16 +26,16 @@ var PrivacyPolicyCheckbox = React.createClass({
 });
 
 module.exports = connect(
-function(state) {
-  return {
-    privacyPolicy: state.signupForm.privacyPolicy,
-    privacyPolicyError: state.signupForm.privacyPolicyError
-  };
-},
-function(dispatch) {
-  return {
-    setPrivacyPolicy: function(data) {
-      dispatch(setPrivacyPolicy(data));
-    }
-  };
-})(PrivacyPolicyCheckbox);
+  function(state) {
+    return {
+      privacyPolicy: state.signupForm.privacyPolicy,
+      privacyPolicyError: state.signupForm.privacyPolicyError
+    };
+  },
+  function(dispatch) {
+    return {
+      setPrivacyPolicy: function(data) {
+        dispatch(setPrivacyPolicy(data));
+      }
+    };
+  })(PrivacyPolicyCheckbox);

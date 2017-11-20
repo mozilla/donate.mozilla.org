@@ -45,15 +45,15 @@ var DonationFrequency = React.createClass({
 });
 
 module.exports = connect(
-function(state) {
-  return {
-    frequency: state.donateForm.frequency
-  };
-},
-function(dispatch) {
-  return {
-    setFrequency: function(data) {
-      dispatch(setFrequency(data));
-    }
-  };
-})(DonationFrequency);
+  function(state) {
+    return {
+      frequency: state.donateForm.frequency
+    };
+  },
+  function(dispatch) {
+    return {
+      setFrequency: function(data) {
+        dispatch(setFrequency(data));
+      }
+    };
+  })(DonationFrequency);

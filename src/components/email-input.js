@@ -33,18 +33,18 @@ var EmailInput = React.createClass({
 });
 
 module.exports = connect(
-function(state) {
-  return {
-    email: state.signupForm.email,
-    emailError: state.signupForm.emailError
-  };
-},
-function(dispatch) {
-  return {
-    setEmail: function(data) {
-      dispatch(setEmail(data));
-    }
-  };
-}, null, {
-  withRef: true
-})(EmailInput);
+  function(state) {
+    return {
+      email: state.signupForm.email,
+      emailError: state.signupForm.emailError
+    };
+  },
+  function(dispatch) {
+    return {
+      setEmail: function(data) {
+        dispatch(setEmail(data));
+      }
+    };
+  }, null, {
+    withRef: true
+  })(EmailInput);

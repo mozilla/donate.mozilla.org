@@ -548,38 +548,38 @@ var routes = {
 
     // kick off a Promise Chain
     Promise.resolve()
-    .then(function() {
+      .then(function() {
       // close the dispute automatically if it's not lost already
-      if (event === 'charge.dispute.created' && dispute.status === 'lost') {
-        return Promise.resolve();
-      }
-
-      return stripe.closeDispute(dispute.id)
-      .catch(function(closeDisputeError) {
-        if (closeDisputeError.message === 'This dispute is already closed') {
-          return console.log(closeDisputeError.message);
+        if (event === 'charge.dispute.created' && dispute.status === 'lost') {
+          return Promise.resolve();
         }
 
-        return Promise.reject("Could not close the dispute");
-      });
-    })
-    .then(function() {
-      basket.queue({
-        event_type: event.type,
-        transaction_id: dispute.charge,
-        reason: dispute.reason,
-        status: dispute.status
-      });
+        return stripe.closeDispute(dispute.id)
+          .catch(function(closeDisputeError) {
+            if (closeDisputeError.message === 'This dispute is already closed') {
+              return console.log(closeDisputeError.message);
+            }
 
-      reply("dispute processed");
-    })
-    .catch(function(err) {
-      if (err.isBoom) {
-        return reply(err);
-      }
+            return Promise.reject("Could not close the dispute");
+          });
+      })
+      .then(function() {
+        basket.queue({
+          event_type: event.type,
+          transaction_id: dispute.charge,
+          reason: dispute.reason,
+          status: dispute.status
+        });
 
-      return reply(boom.badImplementation('An error occurred while handling the dispute webhook', err));
-    });
+        reply("dispute processed");
+      })
+      .catch(function(err) {
+        if (err.isBoom) {
+          return reply(err);
+        }
+
+        return reply(boom.badImplementation('An error occurred while handling the dispute webhook', err));
+      });
 
 
   },

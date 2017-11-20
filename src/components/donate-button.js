@@ -29,9 +29,9 @@ var DonateButton = React.createClass({
 });
 
 module.exports = connect(
-function(state) {
-  return {
-    amount: state.donateForm.amount,
-    currency: state.donateForm.currency
-  };
-})(DonateButton);
+  function(state) {
+    return {
+      amount: state.donateForm.amount,
+      currency: state.donateForm.currency
+    };
+  })(DonateButton);

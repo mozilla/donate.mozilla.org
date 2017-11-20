@@ -74,19 +74,19 @@ var Signup = React.createClass({
 });
 
 module.exports = connect(
-function(state) {
-  return {
-    email: state.signupForm.email,
-    privacyPolicy: state.signupForm.privacyPolicy
-  };
-},
-function(dispatch) {
-  return {
-    setEmailError: function(data) {
-      dispatch(setEmailError(data));
-    },
-    setPrivacyPolicyError: function(data) {
-      dispatch(setPrivacyPolicyError(data));
-    }
-  };
-})(Signup);
+  function(state) {
+    return {
+      email: state.signupForm.email,
+      privacyPolicy: state.signupForm.privacyPolicy
+    };
+  },
+  function(dispatch) {
+    return {
+      setEmailError: function(data) {
+        dispatch(setEmailError(data));
+      },
+      setPrivacyPolicyError: function(data) {
+        dispatch(setPrivacyPolicyError(data));
+      }
+    };
+  })(Signup);

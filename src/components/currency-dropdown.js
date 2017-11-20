@@ -32,15 +32,15 @@ var CurrencyDropdown = React.createClass({
 });
 
 module.exports = connect(
-function(state) {
-  return {
-    currency: state.donateForm.currency
-  };
-},
-function(dispatch) {
-  return {
-    setCurrency: function(data) {
-      dispatch(setCurrency(data));
-    }
-  };
-})(CurrencyDropdown);
+  function(state) {
+    return {
+      currency: state.donateForm.currency
+    };
+  },
+  function(dispatch) {
+    return {
+      setCurrency: function(data) {
+        dispatch(setCurrency(data));
+      }
+    };
+  })(CurrencyDropdown);

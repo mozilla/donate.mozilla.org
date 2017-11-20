@@ -18,7 +18,7 @@ var AmountButton = React.createClass({
       category: "User Flow",
       action: "Changed Amount",
       label: e.currentTarget.value
-    }); 
+    });
   },
 
   render: function() {
@@ -31,12 +31,12 @@ var AmountButton = React.createClass({
         <input onChange={this.props.onChange} onClick={this.onClickEvent} checked={checked} className="amount-radio" type="radio" name="donation_amount" value={this.props.value} id={"amount-" + this.props.value}/>
         <label htmlFor={"amount-" + this.props.value} className="amount-button large-label-size">
           { this.props.currencyCode && this.props.value ?
-          <FormattedNumber
-            minimumFractionDigits={0}
-            value={this.props.value}
-            style="currency"
-            currency={this.props.currencyCode}
-          /> : <span>&nbsp;</span> }
+            <FormattedNumber
+              minimumFractionDigits={0}
+              value={this.props.value}
+              style="currency"
+              currency={this.props.currencyCode}
+            /> : <span>&nbsp;</span> }
         </label>
       </div>
     );
@@ -68,7 +68,7 @@ var AmountOtherButton = React.createClass({
       category: "User Flow",
       action: "Changed Amount",
       label: "Other"
-    }); 
+    });
   },
   onInputClick: function() {
     document.querySelector("#amount-other").click();
@@ -85,13 +85,13 @@ var AmountOtherButton = React.createClass({
     var inputValue = e.currentTarget.value;
     var amount = "";
 
-    if (/^[\d]*[\.]?\d{0,2}$/.test(inputValue)) {
+    if (/^[\d]*[.]?\d{0,2}$/.test(inputValue)) {
       amount = inputValue.replace(/,/g, "");
     } else if (/^[\d]*[,]?\d{0,2}$/.test(inputValue)) {
       amount = inputValue.replace(/\./g, "").replace(",", ".");
-    } else if (/^[\d,]*[\.]?\d{0,2}$/.test(inputValue)) {
+    } else if (/^[\d,]*[.]?\d{0,2}$/.test(inputValue)) {
       amount = inputValue.replace(/,/g, "");
-    } else if (/^[\d\.]*[,]?\d{0,2}$/.test(inputValue)) {
+    } else if (/^[\d.]*[,]?\d{0,2}$/.test(inputValue)) {
       amount = inputValue.replace(/\./g, "").replace(",", ".");
     } else {
       inputValue = this.state.inputValue;
@@ -182,12 +182,12 @@ var AmountButtons = React.createClass({
           values={{minAmount:
             <span>
               { this.props.currency.code ?
-              <FormattedNumber
-                maximumFractionDigits={2}
-                value={this.props.currency.minAmount}
-                style="currency"
-                currency={this.props.currency.code}
-              /> : "" }
+                <FormattedNumber
+                  maximumFractionDigits={2}
+                  value={this.props.currency.minAmount}
+                  style="currency"
+                  currency={this.props.currency.code}
+                /> : "" }
             </span>
           }}
         />
@@ -240,18 +240,18 @@ var AmountButtons = React.createClass({
 });
 
 module.exports = connect(
-function(state) {
-  return {
-    amount: state.donateForm.amount,
-    presets: state.donateForm.presets,
-    currency: state.donateForm.currency,
-    amountError: state.donateForm.amountError
-  };
-},
-function(dispatch) {
-  return {
-    setAmount: function(data) {
-      dispatch(setAmount(data));
-    }
-  };
-})(AmountButtons);
+  function(state) {
+    return {
+      amount: state.donateForm.amount,
+      presets: state.donateForm.presets,
+      currency: state.donateForm.currency,
+      amountError: state.donateForm.amountError
+    };
+  },
+  function(dispatch) {
+    return {
+      setAmount: function(data) {
+        dispatch(setAmount(data));
+      }
+    };
+  })(AmountButtons);

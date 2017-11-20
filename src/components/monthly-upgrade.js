@@ -1,6 +1,5 @@
 import React from 'react';
 import Modal from '../components/modal.js';
-import amountModifier from '../lib/amount-modifier.js';
 import currencyData from '../data/currencies.js';
 import submit from '../lib/submit';
 import ErrorMessage from './error.js';
@@ -50,7 +49,7 @@ var MonthlyUpgrade = React.createClass({
     submit("/api/stripe-monthly-upgrade", {
       customerId: this.state.customerId,
       currency: this.state.currencyCode,
-      amount: amountModifier.stripe(this.state.amount, currencyCode),
+      amount: this.state.amount,
       locale: this.context.intl.locale,
       description: this.context.intl.formatMessage({id: "mozilla_monthly_donation"})
     }, (data) => {

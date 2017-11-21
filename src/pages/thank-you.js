@@ -26,8 +26,7 @@ var ThankYou = React.createClass({
         return {
           showMonthlyUpgrade: true,
           suggestedMonthly,
-          currencyCode: query.str_currency,
-          customerId: query.customer_id
+          currencyCode: query.str_currency
         };
       }
     }
@@ -54,7 +53,6 @@ var ThankYou = React.createClass({
     if (this.state.showMonthlyUpgrade) {
       monthlyUpgrade = (
         <MonthlyUpgrade
-          customerId={this.state.customerId}
           currencyCode={this.state.currencyCode}
           onClose={this.closeMonthlyUpgrade}
           suggestedMonthly={this.state.suggestedMonthly}

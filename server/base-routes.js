@@ -148,7 +148,6 @@ var baseRoutes = [
       },
       validate: {
         payload: {
-          customerId: Joi.string(),
           currency: Joi.any().valid(currencyFor.stripe).required(),
           amount: Joi.number().required(),
           locale: Joi.string().min(2).max(12).required(),

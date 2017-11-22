@@ -87,14 +87,14 @@ var baseRoutes = [
       response: {
         schema: {
           id: Joi.string(),
-          customerId: Joi.string(),
           frequency: Joi.string().valid("monthly", "one-time"),
           currency: Joi.any().valid(currencyFor.stripe).required(),
           quantity: Joi.number(),
           amount: Joi.number(),
           signup: Joi.boolean(),
           email: Joi.string().email().allow(''),
-          country: Joi.string().allow('')
+          country: Joi.string().allow(''),
+          cookiesDisabled: Joi.boolean()
         }
       }
     }
@@ -126,14 +126,14 @@ var baseRoutes = [
       response: {
         schema: {
           id: Joi.string(),
-          customerId: Joi.string(),
           frequency: Joi.string().valid("monthly", "one-time"),
           currency: Joi.any().valid(currencyFor.stripe).required(),
           quantity: Joi.number(),
           amount: Joi.number(),
           signup: Joi.boolean(),
           email: Joi.string().email().allow(''),
-          country: Joi.string().allow('')
+          country: Joi.string().allow(''),
+          cookiesDisabled: Joi.boolean()
         }
       }
     }
@@ -148,7 +148,6 @@ var baseRoutes = [
       },
       validate: {
         payload: {
-          customerId: Joi.string(),
           currency: Joi.any().valid(currencyFor.stripe).required(),
           amount: Joi.number().required(),
           locale: Joi.string().min(2).max(12).required(),

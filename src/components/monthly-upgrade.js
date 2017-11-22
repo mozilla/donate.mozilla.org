@@ -18,7 +18,6 @@ var MonthlyUpgrade = React.createClass({
     return {
       amount: this.props.suggestedMonthly,
       currencyCode: this.props.currencyCode,
-      customerId: this.props.customerId,
       amountError: "",
       stripeError: "",
       submitting: NOT_SUBMITTING
@@ -47,7 +46,6 @@ var MonthlyUpgrade = React.createClass({
     });
 
     submit("/api/stripe-monthly-upgrade", {
-      customerId: this.state.customerId,
       currency: this.state.currencyCode,
       amount: this.state.amount,
       locale: this.context.intl.locale,
@@ -124,12 +122,12 @@ var MonthlyUpgrade = React.createClass({
               values={{minAmount:
                 <span>
                   { currency.code ?
-                  <FormattedNumber
-                    maximumFractionDigits={2}
-                    value={currency.minAmount}
-                    style="currency"
-                    currency={currency.code}
-                  /> : "" }
+                    <FormattedNumber
+                      maximumFractionDigits={2}
+                      value={currency.minAmount}
+                      style="currency"
+                      currency={currency.code}
+                    /> : "" }
                 </span>
               }}
             />

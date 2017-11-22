@@ -228,7 +228,6 @@ var routes = {
                     code: err.code,
                     message: err.message
                   });
-
                   response.cookiesDisabled = true;
                   return reply(response).code(200);
                 });

@@ -23,6 +23,7 @@ var StripeMixin = {
     var email = data.email || "";
     var country = data.country || "";
     var donationFrequency = data.frequency;
+    var cookiesDisabled = data.cookiesDisabled;
 
     if (donationFrequency === "monthly") {
       currency = data.currency;
@@ -49,6 +50,9 @@ var StripeMixin = {
     }
     if (country) {
       params += "&country=" + country;
+    }
+    if (cookiesDisabled) {
+      params += "&cookies_disabled=true";
     }
     var page = '/' + this.context.intl.locale + '/' + location + '/';
     window.location = page + params;

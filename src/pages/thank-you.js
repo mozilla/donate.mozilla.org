@@ -15,7 +15,7 @@ var ThankYou = React.createClass({
   },
   getInitialState: function() {
     let query = locationSearchParser(this.props.location);
-    if (query && !query.cookies_disabled) {
+    if (query && navigator.cookieEnabled) {
       if (query.str_frequency === "one-time") {
         let trueAmount = amountModifier.reverse(
           query.str_amount,

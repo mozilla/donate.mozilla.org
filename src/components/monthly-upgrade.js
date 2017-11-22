@@ -46,7 +46,7 @@ var MonthlyUpgrade = React.createClass({
     });
 
     submit("/api/stripe-monthly-upgrade", {
-      currency: this.state.currencyCode,
+      currency: currencyCode,
       amount: this.state.amount,
       locale: this.context.intl.locale,
       description: this.context.intl.formatMessage({id: "mozilla_monthly_donation"})

@@ -50,7 +50,6 @@ var StripeMixin = {
     if (country) {
       params += "&country=" + country;
     }
-    
     var page = '/' + this.context.intl.locale + '/' + location + '/';
     window.location = page + params;
   },

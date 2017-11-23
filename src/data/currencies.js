@@ -80,6 +80,16 @@ module.exports = {
       monthly: ['17', '8', '5', '4']
     }
   },
+  'bam': {
+    code: 'bam',
+    minAmount: '4',
+    symbol: 'MK',
+    disabled: "paypal",
+    presets: {
+      single: ['32', '16', '8', '5'],
+      monthly: ['16', '8', '5', '4']
+    }
+  },
   'bdt': {
     code: 'bdt',
     minAmount: '162',
@@ -127,11 +137,18 @@ module.exports = {
   'chf': {
     code: 'chf',
     minAmount: '2',
-    symbol: 'CHF',
+    symbol: 'Fr.',
     paypalFixedFee: {
       macro: 0.55,
       micro: 0.09
     },
+    monthlyUpgrade: [
+      {min: 250, value: "30"},
+      {min: 120, value: "20"},
+      {min: 60, value: "15"},
+      {min: 35, value: "10"},
+      {min: 15, value: "5"}
+    ],
     presets: {
       single: ['20', '10', '5', '3'],
       monthly: ['10', '5', '3', '2']
@@ -348,6 +365,13 @@ module.exports = {
       micro: 7
     },
     zeroDecimal: "stripe paypal",
+    monthlyUpgrade: [
+      {min: 28000, value: "3300"},
+      {min: 13000, value: "2200"},
+      {min: 6700, value: "1700"},
+      {min: 4000, value: "1100"},
+      {min: 1600, value: "500"}
+    ],
     presets: {
       single: ['2240', '1120', '560', '340'],
       monthly: ['1120', '560', '340', '240']
@@ -410,6 +434,13 @@ module.exports = {
       macro: 4.00,
       micro: 0.55
     },
+    monthlyUpgrade: [
+      {min: 4600, value: "550"},
+      {min: 2200, value: "400"},
+      {min: 1100, value: "300"},
+      {min: 500, value: "200"},
+      {min: 200, value: "100"}
+    ],
     presets: {
       single: ['240', '120', '60', '35'],
       monthly: ['200', '100', '40', '30']
@@ -462,6 +493,13 @@ module.exports = {
       macro: 1.35,
       micro: 0.23
     },
+    monthlyUpgrade: [
+      {min: 900, value: "100"},
+      {min: 425, value: "70"},
+      {min: 200, value: "50"},
+      {min: 125, value: "35"},
+      {min: 50, value: "15"}
+    ],
     presets: {
       single: ['80', '40', '20', '10'],
       monthly: ['40', '20', '10', '7']
@@ -495,6 +533,13 @@ module.exports = {
       macro: 10,
       micro: 2
     },
+    monthlyUpgrade: [
+      {min: 15000, value: "1800"},
+      {min: 7000, value: "1100"},
+      {min: 3500, value: "900"},
+      {min: 2000, value: "600"},
+      {min: 900, value: "300"}
+    ],
     presets: {
       single: ['1000', '500', '250', '140'],
       monthly: ['250', '180', '120', '100']
@@ -555,6 +600,13 @@ module.exports = {
       micro: 2.00
     },
     zeroDecimal: "paypal",
+    monthlyUpgrade: [
+      {min: 7500, value: "900"},
+      {min: 3600, value: "600"},
+      {min: 1800, value: "450"},
+      {min: 1000, value: "300"},
+      {min: 450, value: "150"}
+    ],
     presets: {
       single: ['480', '240', '150', '70'],
       monthly: ['250', '150', '100', '62']

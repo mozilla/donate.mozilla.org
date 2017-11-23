@@ -22,7 +22,7 @@ var CurrencyDropdown = React.createClass({
         {Object.keys(currencyData).map(function(currency, i) {
           return (
             <option value={currency} key={i}>
-              {currency} &nbsp; {currencyData[currency].symbol}
+              {currency.toUpperCase()} &nbsp; {currencyData[currency].symbol}
             </option>
           );
         })}

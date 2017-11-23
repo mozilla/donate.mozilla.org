@@ -20,6 +20,14 @@ module.exports = React.createClass({
           is a global nonprofit that stands up for an open and healthy Internet, where telecom companies are not allowed to censor or throttle your access to the web based on the content you want to see. Will you give today?
         </span>
       );
+    } else if (this.props.test === "video-stuff") {
+      aboutCopy = (
+        <span>
+
+          <br/>
+          <br/>
+        </span>
+      );
     } else if (this.props.test === "misinformation") {
       aboutCopy = (
         <span>

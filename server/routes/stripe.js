@@ -60,6 +60,9 @@ var stripeRoutes = {
       quantity: transaction.quantity,
       metadata: transaction.metadata
     };
+    if (transaction.trialPeriodDays) {
+      subscription.trial_period_days = transaction.trialPeriodDays;
+    }
     var startCreateSubscription = Date.now();
     stripe.customers.createSubscription(transaction.customer.id, subscription,
       function(err, subscription) {
@@ -89,6 +92,9 @@ var stripeRoutes = {
   },
   retrieveSubscription: function(customerId, subscriptionId, options, callback) {
     stripe.customers.retrieveSubscription(customerId, subscriptionId, options, callback);
+  },
+  retrieveCustomer: function(customerId, callback) {
+    stripe.customers.retrieve(customerId, callback);
   },
   constructEvent: function(payload, signature, endpointSecret) {
     var event;

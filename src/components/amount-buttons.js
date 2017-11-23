@@ -4,6 +4,7 @@ import { FormattedMessage, FormattedNumber } from 'react-intl';
 import ErrorMessage from './error.js';
 import { connect } from 'react-redux';
 import { setAmount } from '../actions';
+import AmountInput from './amount-input.js';
 
 var AmountButton = React.createClass({
   propTypes: {
@@ -53,14 +54,7 @@ var AmountOtherButton = React.createClass({
     onInputChange: React.PropTypes.func,
     amount: React.PropTypes.string,
     currencySymbol: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    userInputting: React.PropTypes.bool
-  },
-  getInitialState: function() {
-    return {
-      inputValue: "",
-      decimalCurrency: this.testNumberFormat()
-    };
+    placeholder: React.PropTypes.string
   },
   onRadioClick: function() {
     document.querySelector("#amount-other-input").focus();
@@ -78,45 +72,7 @@ var AmountOtherButton = React.createClass({
       this.props.onRadioChange();
     }
   },
-  testNumberFormat: function() {
-    return this.context.intl.formatNumber("1.50").indexOf(",") === -1;
-  },
-  onInputChange: function(e) {
-    var inputValue = e.currentTarget.value;
-    var amount = "";
-
-    // TODO: This needs to be refactored to use regex replace
-    // and needs documentation for what they are matching.
-    // See https://github.com/mozilla/donate.mozilla.org/issues/1917
-    if (/^[\d]*[.]?\d{0,2}$/.test(inputValue)) {
-      amount = inputValue.replace(/,/g, "");
-    } else if (/^[\d]*[,]?\d{0,2}$/.test(inputValue)) {
-      amount = inputValue.replace(/\./g, "").replace(",", ".");
-    } else if (/^[\d,]*[.]?\d{0,2}$/.test(inputValue)) {
-      amount = inputValue.replace(/,/g, "");
-    } else if (/^[\d.]*[,]?\d{0,2}$/.test(inputValue)) {
-      amount = inputValue.replace(/\./g, "").replace(",", ".");
-    } else {
-      inputValue = this.state.inputValue;
-    }
-
-    if (this.state.inputValue !== inputValue) {
-      this.setState({
-        inputValue: inputValue
-      });
-      this.props.onInputChange(amount);
-    }
-  },
   render: function() {
-    var amount = this.props.amount;
-    var inputValue = this.state.inputValue;
-    if (!amount) {
-      inputValue = "";
-    } else if (!this.props.userInputting) {
-      // We only need this for initial display before the user starts inputting,
-      // once they start inputting, we can adapt.
-      inputValue = this.context.intl.formatNumber(amount);
-    }
     return (
       <div className="two-third">
         <div className="amount-other-container">
@@ -124,7 +80,7 @@ var AmountOtherButton = React.createClass({
             checked={this.props.checked}
             onClick={this.onRadioClick}
             onChange={this.onRadioChange}
-            value={amount}
+            value={this.props.amount}
           />
           <label htmlFor="amount-other" className="large-label-size">
             <span className="currency-symbol-container">
@@ -135,10 +91,11 @@ var AmountOtherButton = React.createClass({
             </span>
           </label>
           <div className="amount-other-wrapper">
-            <input id="amount-other-input" className="medium-label-size" type="text"
-              onChange={this.onInputChange}
-              value={inputValue}
-              onClick={this.onInputClick}
+            <AmountInput id="amount-other-input"
+              className="medium-label-size" type="text"
+              onInputChange={this.props.onInputChange}
+              amount={this.props.amount}
+              onInputClick={this.onInputClick}
               placeholder={this.props.placeholder}
             />
           </div>
@@ -229,7 +186,6 @@ var AmountButtons = React.createClass({
             onChange={this.onChange}/>
           <AmountOtherButton amount={otherAmount}
             currencySymbol={currency.symbol}
-            userInputting={userInputting}
             checked={otherChecked}
             onRadioChange={this.otherRadioChange}
             onInputChange={this.otherInputChange}

@@ -1,0 +1,80 @@
+.upgrade-container {
+  .modal-container {
+    background: #D8D5CC;
+  }
+  .upgrade-modal {
+    background: #FFFFFF;
+    padding: 0 30px 30px 30px;
+    overflow: hidden;
+    border-radius: 6px;
+    color: #333;
+    text-align: center;
+
+    @media screen and (max-width: 400px) {
+      min-height: 100vh;
+      border-radius: 0;
+    }
+
+    .upgrade-ask {
+      font-size: 28px;
+      line-height: 34px;
+      @media screen and (max-width: 400px) {
+        font-size: 14px;
+        line-height: 20px;
+      }
+    }
+    input {
+      width: 120px;
+      line-height: 28px;
+      @media screen and (max-width: 400px) {
+        line-height: 14px;
+      }
+    }
+    .error-msg-row {
+      margin-bottom: 15px;
+    }
+    button {
+      color: #FFFFFF;
+      border-radius: 3px;
+      border: none;
+      line-height: 1.42857;
+      font-weight: 400;
+      font-size: 24px;
+      height: 44px;
+      vertical-align: top;
+      position: relative;
+      padding: 5px 0;
+      width: 120px;
+      display: inline-flex;
+      justify-content: center;
+      &:before {
+        content: "";
+        position: absolute;
+        border-radius: 3px;
+        top: 1px;
+        right: 1px;
+        bottom: 1px;
+        left: 1px;
+        border: 1px solid hsla(0,0%,100%,.3);
+      }
+      &.yes-button {
+        background-color: #49affd;
+        margin-right: 20px;
+        &.submitting {
+          background-color: #8ccdfe;
+        }
+      }
+      &.no-button {
+        background-color: #a7aab3;
+        &.submitting {
+          background-color: #cbcdd2;
+        }
+      }
+      &.submitting {
+        cursor: auto;
+        color: rgba(255, 255, 255, 0.6);
+      }
+      background-image: linear-gradient(transparent,rgba(0,0,0,.2));
+    }
+  }
+}

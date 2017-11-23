@@ -35,7 +35,7 @@ let stripeChargeFailed = (request, reply) => {
     return reply(incorrectEventError);
   }
 
-  let {charge} = event.data.object;
+  let charge = event.data.object;
 
   // If the charge has no invoice ID, this is not a recurring charge
   if (!charge.invoice) {

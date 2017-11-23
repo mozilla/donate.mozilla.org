@@ -1,6 +1,7 @@
 module.exports = {
   'ast': 'eur',
   'az': 'azn',
+  'bs': 'bam',
   'bn-BD': 'bdt',
   'bn-IN': 'inr',
   'ca': 'eur',

@@ -605,30 +605,6 @@ var routes = {
       });
     }
   },
-  'stripe-charge-failed': function(request, reply) {
-    var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_FAILED;
-    var signature = request.headers["stripe-signature"];
-
-    var event = stripe.constructEvent(request.payload, signature, endpointSecret);
-
-    if (!event) {
-      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret'));
-    }
-
-    if (event.type !== 'charge.failed') {
-      return reply('This hook only processes charge failed events');
-    }
-
-    var charge = event.data.object;
-
-    basket.queue({
-      event_type: event.type,
-      transaction_id: charge.id,
-      failure_code: charge.failure_code
-    });
-
-    return reply("charge failed event processed");
-  },
   'stripe-charge-refunded': function(request, reply) {
     var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_REFUNDED;
     var signature = request.headers["stripe-signature"];
@@ -803,7 +779,8 @@ var routes = {
         );
       }
     );
-  }
+  },
+  'stripe-charge-failed': require('./webhooks/stripe-charge-failed.js')
 };
 
 module.exports = routes;

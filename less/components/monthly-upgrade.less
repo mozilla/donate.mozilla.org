@@ -86,6 +86,11 @@
       display: inline-flex;
       margin: 5px 10px;
       justify-content: center;
+      transition: background-color .075s linear;
+
+      &:focus {
+        outline: none;
+      }
 
       @media screen and (max-width: 400px) {
         font-size: 18px;
@@ -103,13 +108,27 @@
         border: 1px solid hsla(0,0%,100%,.3);
       }
       &.yes-button {
+        font-weight: bold;
         background-color: #49affd;
+        &:hover {
+          background-color: #5bb8ff;
+        }
+        &:active {
+          background-color: #3694dc;
+          outline: none;
+        }
         &.submitting {
           background-color: #8ccdfe;
         }
       }
       &.no-button {
         background-color: #a7aab3;
+        &:hover {
+          background-color: #b6b9c3;
+        }
+        &:active {
+          background-color: #90949e;
+        }
         &.submitting {
           background-color: #cbcdd2;
         }

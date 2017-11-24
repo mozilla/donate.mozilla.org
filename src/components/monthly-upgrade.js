@@ -161,13 +161,13 @@ var MonthlyUpgrade = React.createClass({
           <div className="upgrade-modal">
             <div className="upgrade-ask">
               <p>
-                <FormattedHTMLMessage id="monthly_upgrade_first_line" />
+                <FormattedHTMLMessage id="monthly_upgrade_first_line"/>
               </p>
               <p>
                 <FormattedMessage
                   id="monthly_upgrade_second_line"
                   values={{
-                    currencySymbol: currencySymbol,
+                    currencySymbol,
                     inputElement: (
                       <AmountInput
                         amount={this.state.amount}

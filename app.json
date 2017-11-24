@@ -87,6 +87,9 @@
     "SIGNUP": {
       "required": true
     },
+    "SECRET_COOKIE_PASSWORD": {
+      "required": true
+    },
     "STRIPE_PUBLIC_KEY": {
       "required": true
     },

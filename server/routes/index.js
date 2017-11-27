@@ -324,8 +324,7 @@ var routes = {
         err: 'Cookie does not exist'
       });
 
-      return reply(boom.badRequest('An error occurred while creating this monthly donation'))
-        .unstate("session");
+      return reply(boom.badRequest('An error occurred while creating this monthly donation'));
     }
 
     decrypt(encryptedCookie)
@@ -338,16 +337,14 @@ var routes = {
             err: 'Customer ID missing from the cookie'
           });
 
-          return reply(boom.badRequest('An error occurred while creating this monthly donation'))
-            .unstate("session");
+          return reply(boom.badRequest('An error occurred while creating this monthly donation'));
         }
 
         stripe.retrieveCustomer(
           customerId,
           function(retrieveCustomerErr, customer) {
             if (retrieveCustomerErr) {
-              return reply(boom.badImplementation('An error occurred while creating this monthly donation', retrieveCustomerErr))
-                .unstate("session");
+              return reply(boom.badImplementation('An error occurred while creating this monthly donation', retrieveCustomerErr));
             }
             // Make this with a monthly delay for the user.
             stripe.recurring({
@@ -374,8 +371,7 @@ var routes = {
                 reply(boom.create(400, 'Stripe subscription failed', {
                   code: err.code,
                   rawType: err.rawType
-                }))
-                  .unstate("session");
+                }));
               } else {
                 subscription = subscriptionData.subscription;
                 request.log(['stripe', 'recurring', 'upgrade'], {
@@ -404,8 +400,7 @@ var routes = {
           message: err.message
         });
 
-        return reply(boom.badImplementation('An error occurred while creating this monthly donation'))
-          .unstate("session");
+        return reply(boom.badImplementation('An error occurred while creating this monthly donation'));
       });
   },
   'paypal': function(request, reply) {

@@ -56,50 +56,57 @@ let stripeChargeFailed = (request, reply) => {
     let {customer, subscription} = charge.invoice;
 
     // Expand the subscription object
-    stripe.retrieveSubscription(customer, subscription, (retrieveSubscriptionError, subscription) => {
-      if (retrieveSubscriptionError) {
-        return reply(boom.badImplementation(`${retrieveSubscriptionErrorMsg}: ${retrieveSubscriptionError}`));
+    stripe.retrieveSubscription(
+      customer,
+      subscription,
+      {
+        expand: ["customer"]
+      },
+      (retrieveSubscriptionError, subscription) => {
+        if (retrieveSubscriptionError) {
+          return reply(boom.badImplementation(`${retrieveSubscriptionErrorMsg}: ${retrieveSubscriptionError}`));
+        }
+
+        // Capture the variables we need to pass to the CRM
+        // Since this charge failed, we need to pass enough information
+        // for the CRM to create a new Opportunity record, and mark it
+        // immediately as 'Lost'
+        let {
+          currency,
+          created,
+          id: transaction_id,
+          failure_code
+        } = charge;
+
+        let {
+          id: subscription_id,
+          metadata
+        } = subscription;
+
+        let last_name = subscription.customer.sources.data[0].name,
+          email = subscription.customer.email,
+          donation_amount = basket.zeroDecimalCurrencyFix(charge.amount, charge.currency),
+          project = metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" );
+
+        basket.queue({
+          transaction_id,
+          subscription_id,
+          event_type,
+          last_name,
+          email,
+          donation_amount,
+          currency,
+          created,
+          recurring,
+          frequency,
+          service,
+          project,
+          failure_code
+        });
+
+        return reply(successMessage);
       }
-
-      // Capture the variables we need to pass to the CRM
-      // Since this charge failed, we need to pass enough information
-      // for the CRM to create a new Opportunity record, and mark it
-      // immediately as 'Lost'
-      let {
-        currency,
-        created,
-        id: transaction_id,
-        failure_code
-      } = charge;
-
-      let {
-        id: subscription_id,
-        metadata
-      } = subscription;
-
-      let last_name = subscription.customer.sources.data[0].name,
-        email = subscription.customer.email,
-        donation_amount = basket.zeroDecimalCurrencyFix(charge.amount, charge.currency),
-        project = metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" );
-
-      basket.queue({
-        transaction_id,
-        subscription_id,
-        event_type,
-        last_name,
-        email,
-        donation_amount,
-        currency,
-        created,
-        recurring,
-        frequency,
-        service,
-        project,
-        failure_code
-      });
-
-      return reply(successMessage);
-    });
+    );
   });
 };
 

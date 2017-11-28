@@ -83,7 +83,7 @@ module.exports = {
   'bam': {
     code: 'bam',
     minAmount: '4',
-    symbol: 'MK',
+    symbol: 'KM',
     disabled: "paypal",
     presets: {
       single: ['32', '16', '8', '5'],

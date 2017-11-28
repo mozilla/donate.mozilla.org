@@ -10,6 +10,7 @@ module.exports = {
   'da': 'dkk',
   'de': 'eur',
   'dsb': 'eur',
+  'el': 'eur',
   'en-AU': 'aud',
   'en-CA': 'cad',
   'en-GB': 'gbp',

@@ -75,6 +75,7 @@ module.exports = React.createClass({
             amount={this.props.amount}
             frequency={this.props.frequency}
             country={this.props.country}
+            stripeButtonTest={this.props.test === "stripebutton"}
           />
         </div>
         <SmallPrint/>

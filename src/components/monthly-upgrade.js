@@ -32,6 +32,11 @@ var MonthlyUpgrade = React.createClass({
   onClose: function(e) {
     if (this.state.submitting === NOT_SUBMITTING) {
       this.props.onClose(e);
+      reactGA.event({
+        category: "User Flow",
+        action: "Monthly Upgrade Click",
+        label: "No"
+      });
     }
   },
   submit: function() {
@@ -40,6 +45,12 @@ var MonthlyUpgrade = React.createClass({
     if (!this.validateAmount() || this.state.submitting === STRIPE_SUBMITTING) {
       return;
     }
+
+    reactGA.event({
+      category: "User Flow",
+      action: "Monthly Upgrade Click",
+      label: "Yes"
+    });
 
     this.setState({
       submitting: STRIPE_SUBMITTING

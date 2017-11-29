@@ -52,7 +52,7 @@ module.exports = React.createClass({
       aboutCopy: aboutCopy
     });
   },
-  renderTextAboutPage: function(){
+  renderTextAboutPage: function() {
     var aboutCopy = this.state.aboutCopy;
 
     return (
@@ -66,7 +66,7 @@ module.exports = React.createClass({
       </div>
     );
   },
-  renderVideoAboutPage: function(){
+  renderVideoAboutPage: function (){
     return (
       <div className="container additional-page">
         <div className="content-wrapper">
@@ -92,7 +92,7 @@ module.exports = React.createClass({
 
     var additionalInfo = this.renderTextAboutPage();
 
-    if(this.props.test === "video") {
+    if (this.props.test === "video") {
       additionalInfo = this.renderVideoAboutPage();
     }
 

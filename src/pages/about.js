@@ -66,7 +66,7 @@ module.exports = React.createClass({
       </div>
     );
   },
-  renderVideoAboutPage: function (){
+  renderVideoAboutPage: function() {
     return (
       <div className="container additional-page">
         <div className="content-wrapper">

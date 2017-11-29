@@ -52,65 +52,65 @@ module.exports = React.createClass({
       aboutCopy: aboutCopy
     });
   },
+  renderTextAboutPage: function(){
+    var aboutCopy = this.state.aboutCopy;
+
+    return (
+      <div className="container additional-page">
+        <img className="heart-image icon-baseline" height="100" width="107" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
+        <img className="heart-image icon-variant" height="100" width="107" src="/assets/images/pixel-heart.svg"/>
+        <div>
+          <img className="mozilla-watermark" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
+          {aboutCopy}
+        </div>
+      </div>
+    );
+  },
+  renderVideoAboutPage: function(){
+    return (
+      <div className="container additional-page">
+        <div className="content-wrapper">
+          <img className="mozilla-watermark" alt="Mozilla Logo" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
+        </div>
+        <video controls poster="/assets/images/donate-video-poster.jpg">
+          <source src="https://assets.mofoprod.net/fundraising/2017/fundraising-video-single-caption-480p.webm" type="video/webm" />
+          <source src="https://assets.mofoprod.net/fundraising/2017/fundraising-video-single-caption-480p.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="content-wrapper">
+          <p>We are proudly non-profit, non-corporate and non-compromised. Thousands of people like you help us stand up for an open Web for all. We rely on donations to carry out our mission to keep the Web open and free. Will you give today?</p>
+        </div>
+      </div>
+    );
+  },
   render: function() {
     var className = "row additional-info-container";
+
     if (this.props.test) {
       className += " " + this.props.test;
     }
-    var aboutCopy = this.state.aboutCopy;
 
-    if (this.props.test === "video") {
-      return (
-        <div className={className}>
-          <div className="additional-info-page">
-            <div className="container additional-page">
-              <div className="content-wrapper">
-                <img className="mozilla-watermark" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
-              </div>
-              <video controls poster="/assets/images/donate-video-poster.gif">
-                <source src="https://assets.mofoprod.net/fundraising/2017/fundraising-video-single-caption-480p.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <div className="content-wrapper">
-                <p>We are proudly non-profit, non-corporate and non-compromised. Thousands of people like you help us stand up for an open Web for all. We rely on donations to carry out our mission to keep the Web open and free. Will you give today?</p>
-              </div>
-            </div>
-            <SingleForm
-              currency={this.props.currency}
-              presets={this.props.presets}
-              amount={this.props.amount}
-              frequency={this.props.frequency}
-              country={this.props.country}
-            />
-          </div>
-          <SmallPrint/>
-          <MozillaFooter/>
-        </div>
-      );
-    } else {
-      return (
-        <div className={className}>
-          <div className="additional-info-page">
-            <div className="container additional-page">
-              <img className="heart-image icon-baseline" height="100" width="107" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
-              <img className="heart-image icon-variant" height="100" width="107" src="/assets/images/pixel-heart.svg"/>
-              <div>
-                <img className="mozilla-watermark" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
-                {aboutCopy}
-              </div>
-            </div>
-            <SingleForm
-              currency={this.props.currency}
-              presets={this.props.presets}
-              amount={this.props.amount}
-              frequency={this.props.frequency}
-              country={this.props.country}
-            />
-          </div>
-          <SmallPrint/>
-          <MozillaFooter/>
-        </div>
-      );
+    var additionalInfo = this.renderTextAboutPage();
+
+    if(this.props.test === "video") {
+      additionalInfo = this.renderVideoAboutPage();
     }
+
+    return (
+      <div className={className}>
+        <div className="additional-info-page">
+          { additionalInfo }
+          <SingleForm
+            currency={this.props.currency}
+            presets={this.props.presets}
+            amount={this.props.amount}
+            frequency={this.props.frequency}
+            country={this.props.country}
+          />
+        </div>
+        <SmallPrint/>
+        <MozillaFooter/>
+      </div>
+    )
   }
 });

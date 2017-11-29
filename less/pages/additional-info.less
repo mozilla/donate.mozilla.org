@@ -1,7 +1,36 @@
 .additional-info-container {
 
-  &.video-stuff .additional-info-page * {
-    background: pink;
+  &.video .additional-info-page {
+
+    .additional-page {
+      padding: 22px 0 28px 0;
+
+      .content-wrapper {
+        padding: 0 30px;
+      }
+
+      video {
+        width: 100%;
+        margin: 20px 0;
+        box-shadow: 0 2px 3px rgba(0,0,0,.1);
+      }
+
+      @media screen and (max-width: 840px) {
+        video {
+          margin: 20px 0 10px 0;
+        }
+
+        .mozilla-watermark {
+          width: 120px;
+          height: auto;
+        }
+      }
+
+      p {
+        font-size: 16px;
+        margin: 0;
+      }
+    }
   }
 
   .additional-info-page {
@@ -72,7 +101,7 @@
     }
   }
 
-  @media screen and (min-width: 840px) {
+  @media screen and (min-width: 855px) {
     .additional-info-page {
       margin-top: 60px;
       max-width: 840px;

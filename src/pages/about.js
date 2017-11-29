@@ -59,7 +59,7 @@ module.exports = React.createClass({
     }
     var aboutCopy = this.state.aboutCopy;
 
-    if(this.props.test === "video") {
+    if (this.props.test === "video") {
       return (
         <div className={className}>
           <div className="additional-info-page">
@@ -86,7 +86,7 @@ module.exports = React.createClass({
           <SmallPrint/>
           <MozillaFooter/>
         </div>
-        );
+      );
     } else {
       return (
         <div className={className}>

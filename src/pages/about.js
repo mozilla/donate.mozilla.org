@@ -111,6 +111,6 @@ module.exports = React.createClass({
         <SmallPrint/>
         <MozillaFooter/>
       </div>
-    )
+    );
   }
 });

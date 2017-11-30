@@ -53,15 +53,13 @@ module.exports = React.createClass({
     });
   },
   renderTextAboutPage: function() {
-    var aboutCopy = this.state.aboutCopy;
-
     return (
       <div className="container additional-page">
         <img className="heart-image icon-baseline" height="100" width="107" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
         <img className="heart-image icon-variant" height="100" width="107" src="/assets/images/pixel-heart.svg"/>
         <div>
           <img className="mozilla-watermark" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
-          {aboutCopy}
+          { this.state.aboutCopy }
         </div>
       </div>
     );
@@ -78,7 +76,9 @@ module.exports = React.createClass({
           Your browser does not support the video tag.
         </video>
         <div className="content-wrapper">
-          <p>We are proudly non-profit, non-corporate and non-compromised. Thousands of people like you help us stand up for an open Web for all. We rely on donations to carry out our mission to keep the Web open and free. Will you give today?</p>
+          <p>
+            { this.state.aboutCopy }
+          </p>
         </div>
       </div>
     );

@@ -50,12 +50,14 @@ var Index = React.createClass({
           <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <meta name='robots' content={robots}/>
+
           <meta property="og:type" content="website" />
           <meta property="og:title" content={metaData.title} />
           <meta property="og:site_name" content={metaData.site_name} />
           <meta property="og:url" content={metaData.site_url} />
           <meta property="og:description" content={metaData.desc} />
           <meta property="og:image" content={metaData.facebook_image} />
+
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@mozilla" />
           <meta name="twitter:title" content={metaData.title} />

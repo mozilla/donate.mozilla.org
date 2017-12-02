@@ -52,7 +52,7 @@ var services = [
         'https://js.stripe.com', 'https://checkout.stripe.com', 'https://pontoon.mozilla.org'],
       styleSrc: ['self', 'unsafe-inline', 'https://fonts.googleapis.com',
         'https://maxcdn.bootstrapcdn.com', 'https://pontoon.mozilla.org'],
-      mediaSrc: ['https://d24kjznqej0s8a.cloudfront.net']
+      mediaSrc: ['https://d24kjznqej0s8a.cloudfront.net', 'https://assets.mofoprod.net']
     }
   }
 ];

@@ -52,23 +52,54 @@ module.exports = React.createClass({
       aboutCopy: aboutCopy
     });
   },
+  renderTextAboutPage: function() {
+    return (
+      <div className="container additional-page">
+        <img className="heart-image icon-baseline" height="100" width="107" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
+        <img className="heart-image icon-variant" height="100" width="107" src="/assets/images/pixel-heart.svg"/>
+        <div>
+          <img className="mozilla-watermark" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
+          { this.state.aboutCopy }
+        </div>
+      </div>
+    );
+  },
+  renderVideoAboutPage: function() {
+    return (
+      <div className="container additional-page">
+        <div className="content-wrapper">
+          <img className="mozilla-watermark" alt="Mozilla Logo" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
+        </div>
+        <video controls poster="/assets/images/donate-video-poster.jpg">
+          <source src="https://assets.mofoprod.net/fundraising/2017/fundraising-video-single-caption-480p.webm" type="video/webm" />
+          <source src="https://assets.mofoprod.net/fundraising/2017/fundraising-video-single-caption-480p.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="content-wrapper">
+          <p>
+            { this.state.aboutCopy }
+          </p>
+        </div>
+      </div>
+    );
+  },
   render: function() {
     var className = "row additional-info-container";
+
     if (this.props.test) {
       className += " " + this.props.test;
     }
-    var aboutCopy = this.state.aboutCopy;
+
+    var additionalInfo = this.renderTextAboutPage();
+
+    if (this.props.test === "video") {
+      additionalInfo = this.renderVideoAboutPage();
+    }
+
     return (
       <div className={className}>
         <div className="additional-info-page">
-          <div className="container additional-page">
-            <img className="heart-image icon-baseline" height="100" width="107" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
-            <img className="heart-image icon-variant" height="100" width="107" src="/assets/images/pixel-heart.svg"/>
-            <div>
-              <img className="mozilla-watermark" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
-              {aboutCopy}
-            </div>
-          </div>
+          { additionalInfo }
           <SingleForm
             currency={this.props.currency}
             presets={this.props.presets}

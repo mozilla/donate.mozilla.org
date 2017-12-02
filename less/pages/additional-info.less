@@ -1,4 +1,38 @@
 .additional-info-container {
+
+  &.video .additional-info-page {
+
+    .additional-page {
+      padding: 22px 0 28px 0;
+
+      .content-wrapper {
+        padding: 0 30px;
+      }
+
+      video {
+        width: 100%;
+        margin: 20px 0;
+        border-bottom: solid 1px rgba(0,0,0,.05);
+      }
+
+      @media screen and (max-width: 840px) {
+        video {
+          margin: 20px 0 10px 0;
+        }
+
+        .mozilla-watermark {
+          width: 120px;
+          height: auto;
+        }
+      }
+
+      p {
+        font-size: 16px;
+        margin: 0;
+      }
+    }
+  }
+
   .additional-info-page {
     margin: 0 auto;
     border-radius: 6px;
@@ -67,7 +101,7 @@
     }
   }
 
-  @media screen and (min-width: 840px) {
+  @media screen and (min-width: 857px) {
     .additional-info-page {
       margin-top: 60px;
       max-width: 840px;

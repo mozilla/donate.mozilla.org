@@ -62,8 +62,8 @@ module.exports = React.createClass({
         videoStarted : false
       });
 
-      this.videoPlayer.addEventListener("play", e => this.onVideoStart(e));
-      this.videoPlayer.addEventListener("timeupdate", e => this.onVideoTimeupdate(e));
+      this.videoPlayer.addEventListener("play", this.onVideoStart);
+      this.videoPlayer.addEventListener("timeupdate", this.onVideoTimeupdate);
     }
   },
   componentWillUnmount: function(e) {

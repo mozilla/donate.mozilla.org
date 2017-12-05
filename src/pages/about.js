@@ -1,4 +1,5 @@
 import React from 'react';
+import reactGA from 'react-ga';
 import MozillaFooter from '../components/mozilla/footer.js';
 import SmallPrint from '../components/small-print.js';
 import SingleForm from '../components/single-form.js';
@@ -48,9 +49,57 @@ module.exports = React.createClass({
         </span>
       );
     }
+
     this.setState({
       aboutCopy: aboutCopy
     });
+
+    var percentIncrement = 10; // We'll track the video progress in 10% increments.
+    if (this.props.test === "video") {
+      this.setState({
+        nextPercentDone: percentIncrement,
+        percentIncrement : percentIncrement,
+        videoStarted : false
+      });
+
+      this.videoPlayer.addEventListener("play", this.onVideoStart);
+      this.videoPlayer.addEventListener("timeupdate", this.onVideoTimeupdate);
+    }
+  },
+  componentWillUnmount: function(e) {
+    if (this.props.test === "video") {
+      this.videoPlayer.removeEventListener("play", this.onVideoStart);
+      this.videoPlayer.removeEventListener("timeupdate", this.onVideoTimeupdate);
+    }
+  },
+  onVideoTimeupdate: function(e) {
+    var video = e.target;
+    var nextPercentDone = this.state.nextPercentDone;
+    var videoProgress = video.currentTime / video.duration * 100;
+
+    if (videoProgress >= nextPercentDone) {
+      this.setState({
+        nextPercentDone: nextPercentDone + this.state.percentIncrement
+      });
+      reactGA.event({
+        category: "Video",
+        action: "Video Progress",
+        label: "Donate Video",
+        value: nextPercentDone
+      });
+    }
+  },
+  onVideoStart: function(e) {
+    if (this.state.videoStarted === false) {
+      this.setState({
+        videoStarted : true
+      });
+      reactGA.event({
+        category: "Video",
+        action: "Initial Video Start",
+        label: "Donate Video"
+      });
+    }
   },
   renderTextAboutPage: function() {
     return (
@@ -70,7 +119,7 @@ module.exports = React.createClass({
         <div className="content-wrapper">
           <img className="mozilla-watermark" alt="Mozilla Logo" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
         </div>
-        <video controls poster="/assets/images/donate-video-poster.jpg">
+        <video ref={(videoPlayer) => { this.videoPlayer = videoPlayer; }} controls poster="/assets/images/donate-video-poster.jpg">
           <source src="https://assets.mofoprod.net/fundraising/2017/fundraising-video-single-caption-480p.webm" type="video/webm" />
           <source src="https://assets.mofoprod.net/fundraising/2017/fundraising-video-single-caption-480p.mp4" type="video/mp4" />
           Your browser does not support the video tag.

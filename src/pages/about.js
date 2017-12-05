@@ -54,9 +54,8 @@ module.exports = React.createClass({
       aboutCopy: aboutCopy
     });
 
-    if(this.props.test == "video") {
-
-      var percentIncrement = 10; // We'll track the video progress in 10% increments.
+    var percentIncrement = 10; // We'll track the video progress in 10% increments.
+    if (this.props.test === "video") {
 
       this.setState({
         nextPercentDone: percentIncrement,
@@ -68,7 +67,7 @@ module.exports = React.createClass({
       this.refs.videoPlayer.addEventListener("timeupdate", this.onVideoTimeupdate);
     }
   },
-  onVideoTimeupdate: function(e){
+  onVideoTimeupdate: function(e) {
     var video = e.target;
     var nextPercentDone = this.state.nextPercentDone;
     var videoProgress = video.currentTime / video.duration * 100;
@@ -86,7 +85,7 @@ module.exports = React.createClass({
     }
   },
   onVideoStart: function(e) {
-    if(this.state.videoStarted === false) {
+    if (this.state.videoStarted === false) {
       this.setState({
         videoStarted : true
       });
@@ -97,7 +96,6 @@ module.exports = React.createClass({
       });
     }
   },
-
   renderTextAboutPage: function() {
     return (
       <div className="container additional-page">

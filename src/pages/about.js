@@ -56,15 +56,20 @@ module.exports = React.createClass({
 
     var percentIncrement = 10; // We'll track the video progress in 10% increments.
     if (this.props.test === "video") {
-
       this.setState({
         nextPercentDone: percentIncrement,
         percentIncrement : percentIncrement,
         videoStarted : false
       });
 
-      this.refs.videoPlayer.addEventListener("play", this.onVideoStart);
-      this.refs.videoPlayer.addEventListener("timeupdate", this.onVideoTimeupdate);
+      this.videoPlayer.addEventListener("play", e => this.onVideoStart(e));
+      this.videoPlayer.addEventListener("timeupdate", e => this.onVideoTimeupdate(e));
+    }
+  },
+  componentWillUnmount: function(e) {
+    if (this.props.test === "video") {
+      this.videoPlayer.removeEventListener("play", this.onVideoStart);
+      this.videoPlayer.removeEventListener("timeupdate", this.onVideoTimeupdate);
     }
   },
   onVideoTimeupdate: function(e) {
@@ -114,7 +119,7 @@ module.exports = React.createClass({
         <div className="content-wrapper">
           <img className="mozilla-watermark" alt="Mozilla Logo" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
         </div>
-        <video ref="videoPlayer" controls poster="/assets/images/donate-video-poster.jpg">
+        <video ref={(videoPlayer) => { this.videoPlayer = videoPlayer; }} controls poster="/assets/images/donate-video-poster.jpg">
           <source src="https://assets.mofoprod.net/fundraising/2017/fundraising-video-single-caption-480p.webm" type="video/webm" />
           <source src="https://assets.mofoprod.net/fundraising/2017/fundraising-video-single-caption-480p.mp4" type="video/mp4" />
           Your browser does not support the video tag.

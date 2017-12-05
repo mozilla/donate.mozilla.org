@@ -46,7 +46,7 @@ module.exports = React.createClass({
   render: function() {
     var appURL = process.env.APPLICATION_URI;
     var locale = this.context.intl.locale;
-    var twitterShareURL = 'https://twitter.com/share?url=' + appURL +'/' + locale + '/&text=' + encodeURIComponent(this.context.intl.formatMessage({id: 'i_donated_to_mozilla'}));
+    var twitterShareURL = 'https://twitter.com/share?url=' + appURL +'/' + locale + '/&text=' + encodeURIComponent(this.context.intl.formatMessage({id: 'i_donated_to_mozilla_2017'}));
     var facebookShareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + appURL + '/' + locale + '/';
     var emailSubject = this.context.intl.formatMessage({id: 'share_email_subject'});
     var emailBody = this.context.intl.formatMessage({id: 'share_email_body'});

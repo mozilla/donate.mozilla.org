@@ -35,7 +35,7 @@ function routeFileContent(locales) {
       var siteUrl = locale + '/';
       var localesInfo = [locale];
       var query = queryParser(request.query);
-      var desc = messages.i_donated_to_mozilla;
+      var desc = messages.i_donated_to_mozilla_2017;
       if (location.indexOf('thunderbird') !== -1) {
         favicon = "/assets/images/thunderbird/favicon.ico";
         desc = messages.i_donated_to_thunderbird;

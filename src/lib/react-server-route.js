@@ -30,12 +30,12 @@ function routeFileContent(locales) {
     function generateHTML(renderProps) {
       var messages = getMessages(locale);
       var favicon = "/assets/images/favicon.d0608f227db61f2852a32087e614911c.png";
-      var twitterImage = "/assets/images/EOY_Twitter_v8_EN.d1bb5d2a5ce35859d038df852d9e6a0a811beaac.png";
-      var facebookImage = "/assets/images/EOY_facebook_v1.a152496406bad899d1a920f6d6b9f507.png";
+      var twitterImage = "/assets/images/twitter-card.png";
+      var facebookImage = "/assets/images/og.jpg";
       var siteUrl = locale + '/';
       var localesInfo = [locale];
       var query = queryParser(request.query);
-      var desc = messages.i_donated_to_mozilla;
+      var desc = messages.i_donated_to_mozilla_2017;
       if (location.indexOf('thunderbird') !== -1) {
         favicon = "/assets/images/thunderbird/favicon.ico";
         desc = messages.i_donated_to_thunderbird;

@@ -36,6 +36,7 @@ var hashedFileRoutes = function() {
     '/images/internet-graphic.svg' : pathify('assets', 'images/internet-graphic.e9a5980f4251c71bdd72d088f80d9864.svg'),
     '/images/mozilla.svg' : pathify('assets', 'images/mozilla.1068965acefde994a71c187d253aca2b.svg'),
     '/images/payment_logos_updated.png' : pathify('assets', 'images/payment_logos_updated.4ca531c0b90d3635aef0c1fc78d5967e.png'),
+    '/images/payment_logos_discover.png' : pathify('assets', 'images/payment_logos_discover.e08ebedbd623af15a14094b6821ca137.png'),
     '/images/paypal_logo@2x.png' : pathify('assets', 'images/paypal_logo@2x.603485f928e450e7098eb55bc982e19a.png')
   };
 

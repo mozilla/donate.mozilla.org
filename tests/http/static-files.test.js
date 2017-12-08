@@ -135,6 +135,10 @@ describe('static files', () => {
       type: types.png,
       cache: cache.long
     },
+    '/assets/images/payment_logos_discover.e08ebedbd623af15a14094b6821ca137.png': {
+      type: types.png,
+      cache: cache.long
+    },
     '/assets/images/paypal_logo@2x.603485f928e450e7098eb55bc982e19a.png': {
       type: types.png,
       cache: cache.long

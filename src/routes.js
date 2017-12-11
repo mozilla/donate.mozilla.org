@@ -34,6 +34,7 @@ var routes = (
               <Redirect from="*" to={"/" + locale + "/thunderbird"} />
             </Route>
             <Redirect from="*" to={"/" + locale} />
+            <Redirect from="/glassroomnyc" to="/" />
           </Route>
         );
       })

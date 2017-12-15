@@ -30,7 +30,7 @@ module.exports = React.createClass({
     } else if (this.props.test === "eoy2017test2") {
       aboutCopy = (
         <span>
-          An open Web works when people like you come together to protect it. As a non-profit, we rely on donations to carry out our mission - and when you support Mozilla, you’re fighting for a future better, healthy, internet. So please donate today.
+          An open Web works when people like you come together to protect it. As a non-profit, we rely on donations to carry out our mission. When you support Mozilla, you’re fighting for a future better, healthy, internet. So please donate today.
         </span>
       );
     } else if (this.props.test === "misinformation") {

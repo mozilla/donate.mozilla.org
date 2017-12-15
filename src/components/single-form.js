@@ -99,6 +99,10 @@ var singleForm = React.createClass({
 
     var className = "row payment-logos credit-card-logos";
 
+    if (this.props.currency.code !== "usd") {
+      className += " no-discover";
+    }
+
     if (currencies[this.props.currency.code].amexDisabled) {
       className += " no-amex";
     }

@@ -21,6 +21,18 @@ module.exports = React.createClass({
           is a global nonprofit that stands up for an open and healthy Internet, where telecom companies are not allowed to censor or throttle your access to the web based on the content you want to see. Will you give today?
         </span>
       );
+    } else if (this.props.test === "eoy2017test1") {
+      aboutCopy = (
+        <span>
+          If you believe an inclusive, diverse Web is better for the future of the internet, then it’s time to join Mozilla and do your part as digital citizens. Donate today and you’ll be supporting programs that keep the internet healthy, free, and accessible to us all.
+        </span>
+      );
+    } else if (this.props.test === "eoy2017test2") {
+      aboutCopy = (
+        <span>
+          An open Web works when people like you come together to protect it. As a non-profit, we rely on donations to carry out our mission. When you support Mozilla, you’re fighting for a future better, healthy, internet. So please donate today.
+        </span>
+      );
     } else if (this.props.test === "misinformation") {
       aboutCopy = (
         <span>

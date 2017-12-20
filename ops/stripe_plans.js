@@ -3,9 +3,10 @@
 require("habitat").load();
 
 var async = require("async");
+var path = require("path");
 var Stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-var currencies = Object.keys(require("../data/currencies"));
+var currencies = Object.keys(require(path.resolve( __dirname, "../src/data/currencies")));
 var local_plans = {};
 currencies.forEach((currency) => {
   local_plans[currency] = {

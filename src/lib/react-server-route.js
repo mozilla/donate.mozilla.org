@@ -36,6 +36,9 @@ function routeFileContent(locales) {
       var localesInfo = [locale];
       var query = queryParser(request.query);
       var desc = messages.i_donated_to_mozilla_2017;
+      if (/^(fr|de)(\b|$)/.test(locale)) {
+        twitterImage = "/assets/images/twitter-card-" + locale + ".png";
+      }
       if (location.indexOf('thunderbird') !== -1) {
         favicon = "/assets/images/thunderbird/favicon.ico";
         desc = messages.i_donated_to_thunderbird;

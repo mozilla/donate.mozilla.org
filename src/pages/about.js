@@ -60,6 +60,12 @@ module.exports = React.createClass({
           Not ready to donate? Subscribe to our <a href="https://www.mozilla.org/newsletter/?src=digital-inclusion">newsletter</a> to learn more about what we do.
         </span>
       );
+    } else if (this.props.test === "de-copy") {
+      aboutCopy = (
+        <span>
+          Als Non-Profit-Organisation sind wir unabhängig und frei. Unser Handeln wird nicht durch die Interessen anderer Unternehmen bestimmt. Darauf sind wir stolz. Gemeinsam mit tausenden von freiwilligen Helfern weltweit treten wir für ein offenes Internet ein. Unterstützen Sie uns jetzt, damit das Netz auch in Zukunft weiterhin für alle offen and zugänglich bleibt. Vielen Dank für Ihre Spende!
+        </span>
+      );
     }
 
     this.setState({

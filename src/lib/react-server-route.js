@@ -30,12 +30,15 @@ function routeFileContent(locales) {
     function generateHTML(renderProps) {
       var messages = getMessages(locale);
       var favicon = "/assets/images/favicon.d0608f227db61f2852a32087e614911c.png";
-      var twitterImage = "/assets/images/twitter-card.png";
+      var twitterImage = "/assets/images/twitter-card-generic.png";
       var facebookImage = "/assets/images/og.jpg";
       var siteUrl = locale + '/';
       var localesInfo = [locale];
       var query = queryParser(request.query);
       var desc = messages.i_donated_to_mozilla_2017;
+      if (/^(en)(\b|$)/.test(locale)) {
+        var twitterImage = "/assets/images/twitter-card-en.png";
+      }
       if (/^(fr|de)(\b|$)/.test(locale)) {
         twitterImage = "/assets/images/twitter-card-" + locale + ".png";
       }

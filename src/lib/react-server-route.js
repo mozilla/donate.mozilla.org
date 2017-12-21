@@ -37,7 +37,7 @@ function routeFileContent(locales) {
       var query = queryParser(request.query);
       var desc = messages.i_donated_to_mozilla_2017;
       if (/^(en)(\b|$)/.test(locale)) {
-        var twitterImage = "/assets/images/twitter-card-en.png";
+        twitterImage = "/assets/images/twitter-card-en.png";
       }
       if (/^(fr|de)(\b|$)/.test(locale)) {
         twitterImage = "/assets/images/twitter-card-" + locale + ".png";

@@ -1,15 +1,11 @@
-var Path = require('path');
+const Path = require('path');
 
-module.exports = function finalizeServer(err, server, reactRouted) {
-  if (err) {
-    throw err;
-  }
-
+module.exports = function finalizeServer(server, reactRouted) {
   // We have these routes specifically for production where it's possible that
   // a CDN index.html may refer to an outdated CSS/JS file that doesn't exist
   server.route(require('./lib/hashed-file-routes')());
 
-  var finalRoutes = [{
+  const finalRoutes = [{
     method: 'GET',
     path: '/{params*}',
     handler: reactRouted,

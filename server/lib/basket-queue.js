@@ -1,12 +1,12 @@
-var AWS = require("aws-sdk");
-var sqs = new AWS.SQS({
+const AWS = require('aws-sdk');
+const sqs = new AWS.SQS({
   maxRetries: 15,
   region: process.env.BASKET_QUEUE_REGION,
   accessKeyId: process.env.BASKET_ACCESS_KEY,
   secretAccessKey: process.env.BASKET_SECRET_ACCESS_KEY
 });
 
-var ZERO_DECIMAL_CURRENCIES = [
+const ZERO_DECIMAL_CURRENCIES = [
   'BIF',
   'CLP',
   'DJF',
@@ -32,38 +32,38 @@ function zeroDecimalCurrencyFix(amount, currency) {
 }
 
 function queue(data, callback) {
-  if (typeof data !== "object") {
+  if (typeof data !== 'object') {
     return;
   }
 
-  var wrapper = {
+  const wrapper = {
     timestamp: (new Date()).toISOString(),
     data: data
   };
 
   if (!process.env.BASKET_QUEUE_URL) {
     if (!process.env.BASKET_NO_LOG) {
-      console.log("--- basket queue message ---");
+      console.log('--- basket queue message ---');
       console.log(wrapper);
-      console.log("-----------------------");
+      console.log('-----------------------');
     }
 
     if (callback) {
       callback(null, {
-        MD5OfMessageBody: "fake",
-        MD5OfMessageAttributes: "fake",
-        MessageId: "fake"
+        MD5OfMessageBody: 'fake',
+        MD5OfMessageAttributes: 'fake',
+        MessageId: 'fake'
       });
     }
     return;
   }
 
-  var body = JSON.stringify(wrapper);
+  const body = JSON.stringify(wrapper);
 
   sqs.sendMessage({
     MessageBody: body,
     QueueUrl: process.env.BASKET_QUEUE_URL
-  }, function(err, data) {
+  }, (err, data) => {
     if (callback) {
       callback(err, data);
     }

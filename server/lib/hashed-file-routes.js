@@ -1,14 +1,14 @@
-var FS = require('fs');
-var Path = require('path');
+const FS = require('fs');
+const Path = require('path');
 
 function pathify(parent, path) {
   return Path.join(__dirname, '..', '..', parent, path);
 }
 
-var hashedFileRoutes = function() {
-  var hashedPaths = [];
-  var filename = pathify('public', 'webpack-assets.json');
-  var fileHashes = JSON.parse(FS.readFileSync(filename));
+const hashedFileRoutes = function() {
+  const hashedPaths = [];
+  const filename = pathify('public', 'webpack-assets.json');
+  let fileHashes = JSON.parse(FS.readFileSync(filename));
 
   FS.watch(filename, { persistent: false, recursive: false }, () => {
     FS.readFile(filename, 'utf8', (read_error, data) => {
@@ -22,12 +22,12 @@ var hashedFileRoutes = function() {
     });
   });
 
-  var cache = {
+  const cache = {
     expiresIn: 7 * 24 * 60 * 60 * 1000, // one week
     privacy: 'public'
   };
 
-  var files = {
+  const files = {
     '/images/CVC-illustration.png' : pathify('assets', 'images/CVC-illustration.70d7262b2227d24a2f440cc0d560b7da.png'),
     '/images/EOY_facebook_v1.png' : pathify('assets', 'images/EOY_facebook_v1.a152496406bad899d1a920f6d6b9f507.png'),
     '/images/favicon.png' : pathify('assets', 'images/favicon.d0608f227db61f2852a32087e614911c.png'),
@@ -40,12 +40,12 @@ var hashedFileRoutes = function() {
     '/images/paypal_logo@2x.png' : pathify('assets', 'images/paypal_logo@2x.603485f928e450e7098eb55bc982e19a.png')
   };
 
-  Object.keys(files).forEach(function(item) {
+  Object.keys(files).forEach(item => {
     hashedPaths.push({
       method: 'GET',
       path: item,
-      handler: function(request, reply) {
-        reply.file(files[item]);
+      handler: {
+        file: files[item]
       },
       config: {
         cache
@@ -56,8 +56,8 @@ var hashedFileRoutes = function() {
   hashedPaths.push({
     method: 'GET',
     path: '/main.{id}.js',
-    handler: function(request, reply) {
-      reply.file(pathify('public', fileHashes.main.js));
+    handler: {
+      file: pathify('public', fileHashes.main.js)
     },
     config: {
       cache
@@ -65,8 +65,8 @@ var hashedFileRoutes = function() {
   }, {
     method: 'GET',
     path: '/style.{id}.css',
-    handler: function(request, reply) {
-      reply.file(pathify('public', fileHashes.main.css));
+    handler: {
+      file: pathify('public', fileHashes.main.css)
     },
     config: {
       cache

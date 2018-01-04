@@ -1,11 +1,17 @@
-var server = require('../../server');
-var should = require('should');
+const server = require('../../server');
+const should = require('should');
+
+var instance;
 
 describe('/api/paypal', () => {
-  var instance = server({ useDomains: false });
 
-  it('should return 400 when invalid currency is used', (done) => {
-    instance.inject({
+  before(async(done) => {
+    instance = await server();
+    done();
+  });
+
+  it('should return 400 when invalid currency is used', async(done) => {
+    let response = await instance.inject({
       method: 'POST',
       url: '/api/paypal',
       payload: {
@@ -15,17 +21,15 @@ describe('/api/paypal', () => {
         locale: 'en-US',
         currency: 'buck'
       }
-    }, (response) => {
-      should(response.statusCode).equal(400);
-      should(response.result.validation.source).equal('payload');
-      should(response.result.validation.keys).deepEqual(['currency']);
-
-      done();
     });
+
+    should(response.statusCode).equal(400);
+
+    done();
   });
 
-  it('should return 400 when undefined currency is used', (done) => {
-    instance.inject({
+  it('should return 400 when undefined currency is used', async(done) => {
+    let response = await instance.inject({
       method: 'POST',
       url: '/api/paypal',
       payload: {
@@ -34,17 +38,15 @@ describe('/api/paypal', () => {
         amount: 3,
         locale: 'en-US'
       }
-    }, (response) => {
-      should(response.statusCode).equal(400);
-      should(response.result.validation.source).equal('payload');
-      should(response.result.validation.keys).deepEqual(['currency']);
-
-      done();
     });
+
+    should(response.statusCode).equal(400);
+
+    done();
   });
 
-  it('should return 400 when unsupported currency is used', (done) => {
-    instance.inject({
+  it('should return 400 when unsupported currency is used', async(done) => {
+    let response = await instance.inject({
       method: 'POST',
       url: '/api/paypal',
       payload: {
@@ -54,12 +56,10 @@ describe('/api/paypal', () => {
         locale: 'en-US',
         currency: 'idr'
       }
-    }, (response) => {
-      should(response.statusCode).equal(400);
-      should(response.result.validation.source).equal('payload');
-      should(response.result.validation.keys).deepEqual(['currency']);
-
-      done();
     });
+
+    should(response.statusCode).equal(400);
+
+    done();
   });
 });

@@ -19,10 +19,14 @@ var createElement = React.createClass({
         frequency: this.props.frequency,
         presets: this.props.presets,
         amount: this.props.amount
+      },
+      signupForm: {
+        email: this.props.email
       }
     }, autoRehydrate());
     persistStore(store, {
-      storage: asyncSessionStorage
+      storage: asyncSessionStorage,
+      blacklist: ["signupForm"]
     });
     return (
       <Provider store={store}>

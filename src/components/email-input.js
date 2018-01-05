@@ -21,7 +21,12 @@ var EmailInput = React.createClass({
           <div className="full">
             <div className="field-container">
               <i className="fa fa-envelope field-icon"></i>
-              <input type="email" ref={(input) => { this.inputElement = input; }} className={inputClassName} name="email" value={this.props.email} onChange={this.onEmailChange} placeholder={this.context.intl.formatMessage({id: 'email'})}/>
+              <input type="email" autoComplete="off"
+                ref={(input) => { this.inputElement = input; }}
+                className={inputClassName} name="email"
+                value={this.props.email} onChange={this.onEmailChange}
+                placeholder={this.context.intl.formatMessage({id: 'email'})}
+              />
             </div>
           </div>
         </div>

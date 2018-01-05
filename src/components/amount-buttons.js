@@ -29,7 +29,12 @@ var AmountButton = React.createClass({
     }
     return (
       <div className="third">
-        <input onChange={this.props.onChange} onClick={this.onClickEvent} checked={checked} className="amount-radio" type="radio" name="donation_amount" value={this.props.value} id={"amount-" + this.props.value}/>
+        <input onChange={this.props.onChange}
+          onClick={this.onClickEvent} checked={checked}
+          className="amount-radio" type="radio"
+          name="donation_amount" value={this.props.value}
+          id={"amount-" + this.props.value} autoComplete="off"
+        />
         <label htmlFor={"amount-" + this.props.value} className="amount-button large-label-size">
           { this.props.currencyCode && this.props.value ?
             <FormattedNumber
@@ -81,6 +86,7 @@ var AmountOtherButton = React.createClass({
             onClick={this.onRadioClick}
             onChange={this.onRadioChange}
             value={this.props.amount}
+            autoComplete="off"
           />
           <label htmlFor="amount-other" className="large-label-size">
             <span className="currency-symbol-container">

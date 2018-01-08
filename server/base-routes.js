@@ -73,11 +73,6 @@ var baseRoutes = [
           stripeToken: [Joi.string().required(), Joi.number().required()],
           locale: Joi.string().min(2).max(12).required(),
           email: Joi.string().email().required(),
-          first: Joi.string(),
-          country: Joi.string(),
-          address: Joi.string().allow(''),
-          city: Joi.string().allow(''),
-          code: Joi.string().required(),
           description: Joi.string().required()
         }
       },

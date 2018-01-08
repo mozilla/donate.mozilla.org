@@ -124,14 +124,8 @@ var StripeMixin = {
           currency: currency,
           locale: locale,
           email: response.email,
-          code: response.card.address_zip,
           description: description
         };
-
-        checkoutProps.country = response.card.address_country;
-        checkoutProps.address = response.card.address_line1;
-        checkoutProps.city = response.card.address_city;
-        checkoutProps.first = response.card.name;
 
         submit("/api/stripe-checkout", checkoutProps, success, function(response) {
           if (response.stripe) {

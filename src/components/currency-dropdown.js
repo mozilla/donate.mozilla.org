@@ -18,7 +18,7 @@ var CurrencyDropdown = React.createClass({
   },
   render: function() {
     return (
-      <select onChange={this.onChange} autocomplete="off" className="currency-dropdown" value={this.props.currency.code}>
+      <select onChange={this.onChange} autoComplete="off" className="currency-dropdown" value={this.props.currency.code}>
         {Object.keys(currencyData).map(function(currency, i) {
           return (
             <option value={currency} key={i}>

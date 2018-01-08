@@ -7,8 +7,8 @@ var PrivacyPolicyCheckbox = React.createClass({
   propTypes: {
     error: React.PropTypes.string
   },
-  onChange: function(e) {
-    this.props.setPrivacyPolicy(e.currentTarget.checked);
+  onChange: function(checked) {
+    this.props.setPrivacyPolicy(checked);
   },
   render: function() {
     return (

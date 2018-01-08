@@ -16,7 +16,7 @@ var ThankYou = React.createClass({
     var className = "row thank-you-page thunderbird";
     var signUpOrSocial = (<Social/>);
     if (this.props.params && /^(en)(\b|$)/.test(this.context.intl.locale)) {
-      signUpOrSocial = (<Signup country={this.props.country} email={this.props.email}/>);
+      signUpOrSocial = (<Signup/>);
     }
     if (this.props.test) {
       className += " " + this.props.test;

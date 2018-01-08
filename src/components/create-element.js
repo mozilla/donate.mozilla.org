@@ -1,7 +1,5 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
-import { persistStore, autoRehydrate } from 'redux-persist';
-import { asyncSessionStorage } from 'redux-persist/storages';
 
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -20,9 +18,6 @@ var createElement = React.createClass({
         presets: this.props.presets,
         amount: this.props.amount
       }
-    }, autoRehydrate());
-    persistStore(store, {
-      storage: asyncSessionStorage
     });
     return (
       <Provider store={store}>

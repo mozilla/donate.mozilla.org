@@ -23,7 +23,11 @@ var Checkbox = React.createClass({
       <div className="full checkbox">
         <div className="row">
           <div className="full">
-            <input type="checkbox" onChange={this.onChange} checked={this.props.checked} name={this.props.name} id={this.props.id}/>
+            <input type="checkbox"
+              onChange={this.onChange} autoComplete="off"
+              checked={this.props.checked}
+              name={this.props.name} id={this.props.id}
+            />
             <label htmlFor={this.props.id}>
               <FormattedHTMLMessage id={ this.props.intlId } />
             </label>

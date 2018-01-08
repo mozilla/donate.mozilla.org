@@ -27,13 +27,13 @@ var DonationFrequency = React.createClass({
       <div>
         <div className="row donation-frequency">
           <div className="frequency-radio">
-            <input name={inputName} checked={frequency !== "monthly"} className="one-time-payment"
+            <input name={inputName} autoComplete="off" checked={frequency !== "monthly"} className="one-time-payment"
               onChange={this.onChange} type="radio" value="single" id={onTimeId}
             />
             <label htmlFor={onTimeId} className="medium-label-size">{this.context.intl.formatMessage({id: 'one_time'})}</label>
           </div>
           <div className="frequency-radio">
-            <input name={inputName} checked={frequency === "monthly"} className="monthly-payment"
+            <input name={inputName} autoComplete="off" checked={frequency === "monthly"} className="monthly-payment"
               onChange={this.onChange} type="radio" value="monthly" id={monthlyId}
             />
             <label htmlFor={monthlyId} className="medium-label-size">{this.context.intl.formatMessage({id: 'monthly'})}</label>

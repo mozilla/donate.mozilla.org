@@ -164,26 +164,6 @@ var routes = {
               reply(badRequest);
             } else {
               charge = chargeData.charge;
-              if (transaction.signup) {
-                const signup_service = Date.now();
-
-                signup(transaction, (signup_error, payload) => {
-                  if (signup_error) {
-                    return request.log(['error', 'signup'], {
-                      request_id: request.headers['x-request-id'],
-                      service: Date.now() - signup_service,
-                      code: signup_error.code,
-                      type: signup_error.type,
-                      param: signup_error.param
-                    });
-                  }
-
-                  request.log(['signup'], {
-                    request_id: request.headers['x-request-id'],
-                    service: Date.now() - signup_service
-                  });
-                });
-              }
               request.log(['stripe', 'single'], {
                 request_id,
                 stripe_charge_create_service,
@@ -211,8 +191,6 @@ var routes = {
                 amount: charge.amount,
                 currency: charge.currency,
                 id: charge.id,
-                signup: transaction.signup,
-                country: transaction.country,
                 email: transaction.email
               };
 
@@ -262,26 +240,6 @@ var routes = {
               }));
             } else {
               subscription = subscriptionData.subscription;
-              if (transaction.signup) {
-                const signup_service = Date.now();
-
-                signup(transaction, (signup_error, payload) => {
-                  if (signup_error) {
-                    return request.log(['error', 'signup'], {
-                      request_id: request.headers['x-request-id'],
-                      service: Date.now() - signup_service,
-                      code: signup_error.code,
-                      type: signup_error.type,
-                      param: signup_error.param
-                    });
-                  }
-
-                  request.log(['signup'], {
-                    request_id: request.headers['x-request-id'],
-                    service: Date.now() - signup_service
-                  });
-                });
-              }
               request.log(['stripe', 'recurring'], {
                 request_id,
                 stripe_create_subscription_service,
@@ -293,8 +251,6 @@ var routes = {
                 currency: subscription.plan.currency,
                 quantity: subscription.quantity,
                 id: subscription.id,
-                signup: transaction.signup,
-                country: transaction.country,
                 email: transaction.email
               }).code(200);
             }

@@ -23,8 +23,7 @@ var baseRoutes = [
       validate: {
         payload: {
           locale: Joi.string().min(2).max(12).required(),
-          email: Joi.string().email().required(),
-          country: Joi.string().allow('')
+          email: Joi.string().email().required()
         }
       },
       response: {
@@ -34,8 +33,7 @@ var baseRoutes = [
           newsletters: Joi.string().required(),
           trigger_welcome: Joi.any().valid('N').required(),
           source_url: Joi.any().valid('https://donate.mozilla.org/').required(),
-          email: Joi.string().email().required(),
-          country: Joi.string().allow('')
+          email: Joi.string().email().required()
         }
       }
     }
@@ -51,8 +49,7 @@ var baseRoutes = [
       validate: {
         payload: {
           locale: Joi.string().min(2).max(12).required(),
-          email: Joi.string().email().required(),
-          country: Joi.string().allow('')
+          email: Joi.string().email().required()
         }
       }
     }
@@ -83,9 +80,7 @@ var baseRoutes = [
           currency: Joi.any().valid(currencyFor.stripe).required(),
           quantity: Joi.number(),
           amount: Joi.number(),
-          signup: Joi.boolean(),
-          email: Joi.string().email().allow(''),
-          country: Joi.string().allow('')
+          email: Joi.string().email().allow('')
         }
       }
     }

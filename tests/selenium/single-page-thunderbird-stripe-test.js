@@ -80,9 +80,6 @@ module.exports = function(driver, By, done) {
       if (url.indexOf('&email=send-donation@test.com') === -1) {
         result = false;
       }
-      if (url.indexOf('&country=Canada') === -1) {
-        result = false;
-      }
       return result;
     });
   }).then(done);

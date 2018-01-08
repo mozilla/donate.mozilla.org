@@ -24,10 +24,7 @@ var mailChimp = function(transaction, callback) {
     body: JSON.stringify({
       email_address: transaction.email,
       status: "pending",
-      language: "en",
-      merge_fields: {
-        COUNTRY: transaction.country
-      }
+      language: "en"
     })
   }, callback);
 };

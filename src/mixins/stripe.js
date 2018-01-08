@@ -21,7 +21,6 @@ var StripeMixin = {
     var amount;
     var currency;
     var email = data.email || "";
-    var country = data.country || "";
     var donationFrequency = data.frequency;
 
     if (donationFrequency === "monthly") {
@@ -35,20 +34,11 @@ var StripeMixin = {
     }
 
     location = location || "thank-you";
-    // If we are already signed up, send to share.
-    if (data.signup) {
-      location = "share";
-      email = "";
-      country = "";
-    }
 
     var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' + donationFrequency;
 
     if (email) {
       params += "&email=" + email;
-    }
-    if (country) {
-      params += "&country=" + country;
     }
     var page = '/' + this.context.intl.locale + '/' + location + '/';
     window.location = page + params;

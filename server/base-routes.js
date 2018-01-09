@@ -182,6 +182,28 @@ var baseRoutes = [
       }
     }
   }, {
+    method: 'GET',
+    path: '/api/client-env.js',
+    handler: function(request, reply) {
+
+      var clientEnv = "window.__clientenv__ = {};";
+      clientEnv += "window.__clientenv__.APPLICATION_URI = '" + process.env.APPLICATION_URI + "';";
+      clientEnv += "window.__clientenv__.STRIPE_PUBLIC_KEY = '" + process.env.STRIPE_PUBLIC_KEY + "';";
+      clientEnv += "window.__clientenv__.OPTIMIZELY_ID = '" + process.env.OPTIMIZELY_ID + "';";
+      clientEnv += "window.__clientenv__.OPTIMIZELY_ACTIVE = '" + process.env.OPTIMIZELY_ACTIVE + "';";
+      clientEnv += "window.__clientenv__.FULL_SUBDOMAIN_FOR_COOKIE = '" + process.env.FULL_SUBDOMAIN_FOR_COOKIE + "';";
+      clientEnv += "window.__clientenv__.PAYPAL_EMAIL = '" + process.env.PAYPAL_EMAIL + "';";
+      clientEnv += "window.__clientenv__.PAYPAL_ENDPOINT = '" + process.env.PAYPAL_ENDPOINT + "';";
+
+      reply(clientEnv).type('application/javascript; charset=utf-8').vary('User-Agent');
+    },
+    config: {
+      cache: {
+        expiresIn: 7 * 24 * 60 * 60 * 1000, // one week
+        privacy: 'public'
+      }
+    }
+  }, {
     'method': 'GET',
     path: '/api/exchange-rates/latest.json',
     handler: function(request, reply) {

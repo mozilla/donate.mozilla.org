@@ -13,6 +13,14 @@ var Index = React.createClass({
     if (metaData.current_url.indexOf("jan-thank-you") !== -1) {
       googleFonts = "https://fonts.googleapis.com/css?family=Roboto+Slab:600,400,300,200,100";
     }
+    var envClient = "window.__clientenv__ = {};";
+    envClient += "window.__clientenv__.APPLICATION_URI = '" + process.env.APPLICATION_URI + "';";
+    envClient += "window.__clientenv__.STRIPE_PUBLIC_KEY = '" + process.env.STRIPE_PUBLIC_KEY + "';";
+    envClient += "window.__clientenv__.OPTIMIZELY_ID = '" + process.env.OPTIMIZELY_ID + "';";
+    envClient += "window.__clientenv__.OPTIMIZELY_ACTIVE = '" + process.env.OPTIMIZELY_ACTIVE + "';";
+    envClient += "window.__clientenv__.FULL_SUBDOMAIN_FOR_COOKIE = '" + process.env.FULL_SUBDOMAIN_FOR_COOKIE + "';";
+    envClient += "window.__clientenv__.PAYPAL_EMAIL = '" + process.env.PAYPAL_EMAIL + "';";
+    envClient += "window.__clientenv__.PAYPAL_ENDPOINT = '" + process.env.PAYPAL_ENDPOINT + "';";
 
     var localesData = [];
     if (this.props.localesInfo.length) {
@@ -72,6 +80,7 @@ var Index = React.createClass({
           <Optimizely/>
           <link rel="icon" href={this.props.favicon} type="image/x-icon"/>
           <link rel="stylesheet" href={'/' + fileHashes.main.css}/>
+          <script dangerouslySetInnerHTML={{__html: envClient}}></script>
           <script dangerouslySetInnerHTML={{__html: ga}}></script>
           {
             localesData.map((localeData, index) => {

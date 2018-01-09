@@ -14,6 +14,7 @@ function createElement(Component, props) {
   var query = queryParser(props.location.query, locale);
   var ReactIntlLocaleData = window.ReactIntlLocaleData;
   var messages = getMessages(locale);
+  process.env = window.__clientenv__;
 
   Object.keys(ReactIntlLocaleData).forEach((lang) => {
     addLocaleData(ReactIntlLocaleData[lang]);

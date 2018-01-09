@@ -17,6 +17,9 @@ var createElement = React.createClass({
         frequency: this.props.frequency,
         presets: this.props.presets,
         amount: this.props.amount
+      },
+      signupForm: {
+        email: this.props.email
       }
     });
     return (

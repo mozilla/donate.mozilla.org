@@ -185,6 +185,11 @@ var baseRoutes = [
     method: 'GET',
     path: '/api/client-env.js',
     handler: function(request, reply) {
+      //
+      // WARNING! Only put variables safe for public consumption here! This is emitted on the client side!
+      //
+      // NEVER PUT PRIVATE KEYS HERE!!!
+      //
       var env = {
         APPLICATION_URI: process.env.APPLICATION_URI,
         STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,

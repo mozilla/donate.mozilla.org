@@ -35,14 +35,14 @@ module.exports = function(queryString, locale) {
 
   return {
     values: {
-      test: test,
-      email: queryString.email || ""
+      test: test
     },
     initialState: {
       currency: currency,
       presets: presets,
       amount: amount,
-      frequency: frequency
+      frequency: frequency,
+      email: queryString.email || ""
     }
   };
 };

@@ -62,7 +62,7 @@ var ThankYou = React.createClass({
       );
     }
     if (/^(en|de|es|fr|pl|pt-BR)(\b|$)/.test(this.context.intl.locale)) {
-      signUpOrSocial = (<Signup country={this.props.country} email={this.props.email}/>);
+      signUpOrSocial = (<Signup email={this.props.email}/>);
     }
     if (this.props.test) {
       className += " " + this.props.test;

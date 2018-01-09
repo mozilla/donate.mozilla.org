@@ -21,7 +21,6 @@ var StripeMixin = {
     var amount;
     var currency;
     var email = data.email || "";
-    var country = data.country || "";
     var donationFrequency = data.frequency;
 
     if (donationFrequency === "monthly") {
@@ -35,20 +34,11 @@ var StripeMixin = {
     }
 
     location = location || "thank-you";
-    // If we are already signed up, send to share.
-    if (data.signup) {
-      location = "share";
-      email = "";
-      country = "";
-    }
 
     var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' + donationFrequency;
 
     if (email) {
       params += "&email=" + email;
-    }
-    if (country) {
-      params += "&country=" + country;
     }
     var page = '/' + this.context.intl.locale + '/' + location + '/';
     window.location = page + params;
@@ -124,14 +114,8 @@ var StripeMixin = {
           currency: currency,
           locale: locale,
           email: response.email,
-          code: response.card.address_zip,
           description: description
         };
-
-        checkoutProps.country = response.card.address_country;
-        checkoutProps.address = response.card.address_line1;
-        checkoutProps.city = response.card.address_city;
-        checkoutProps.first = response.card.name;
 
         submit("/api/stripe-checkout", checkoutProps, success, function(response) {
           if (response.stripe) {

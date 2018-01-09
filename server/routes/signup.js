@@ -8,8 +8,7 @@ var signupRoutes = function(transaction, callback) {
     newsletters: 'mozilla-foundation',
     trigger_welcome: 'N',
     source_url: 'https://donate.mozilla.org/',
-    email: transaction.email,
-    country: transaction.country
+    email: transaction.email
   };
 
   hatchet.send("send_post_request", {

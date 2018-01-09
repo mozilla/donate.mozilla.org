@@ -23,8 +23,7 @@ var baseRoutes = [
       validate: {
         payload: {
           locale: Joi.string().min(2).max(12).required(),
-          email: Joi.string().email().required(),
-          country: Joi.string().allow('')
+          email: Joi.string().email().required()
         }
       },
       response: {
@@ -34,8 +33,7 @@ var baseRoutes = [
           newsletters: Joi.string().required(),
           trigger_welcome: Joi.any().valid('N').required(),
           source_url: Joi.any().valid('https://donate.mozilla.org/').required(),
-          email: Joi.string().email().required(),
-          country: Joi.string().allow('')
+          email: Joi.string().email().required()
         }
       }
     }
@@ -51,49 +49,7 @@ var baseRoutes = [
       validate: {
         payload: {
           locale: Joi.string().min(2).max(12).required(),
-          email: Joi.string().email().required(),
-          country: Joi.string().allow('')
-        }
-      }
-    }
-  }, {
-    method: 'POST',
-    path: '/api/stripe',
-    handler: routes.stripe,
-    config: {
-      payload: {
-        maxBytes: 32000,
-        allow: 'application/json'
-      },
-      validate: {
-        payload: {
-          currency: Joi.any().valid(currencyFor.stripe).required(),
-          amount: Joi.number().required(),
-          frequency: Joi.string().min(6).max(7).required(),
-          stripeToken: [Joi.string().required(), Joi.number().required()],
-          description: Joi.string().required(),
-          email: Joi.string().email().required(),
-          first: Joi.string().required(),
-          last: Joi.string().required(),
-          country: Joi.string().required(),
-          address: Joi.string().allow(''),
-          city: Joi.string().allow(''),
-          code: Joi.string().required(),
-          province: Joi.string().allow(''),
-          locale: Joi.string().min(2).max(12).required(),
-          signup: Joi.boolean()
-        }
-      },
-      response: {
-        schema: {
-          id: Joi.string(),
-          frequency: Joi.string().valid("monthly", "one-time"),
-          currency: Joi.any().valid(currencyFor.stripe).required(),
-          quantity: Joi.number(),
-          amount: Joi.number(),
-          signup: Joi.boolean(),
-          email: Joi.string().email().allow(''),
-          country: Joi.string().allow('')
+          email: Joi.string().email().required()
         }
       }
     }
@@ -114,11 +70,6 @@ var baseRoutes = [
           stripeToken: [Joi.string().required(), Joi.number().required()],
           locale: Joi.string().min(2).max(12).required(),
           email: Joi.string().email().required(),
-          first: Joi.string(),
-          country: Joi.string(),
-          address: Joi.string().allow(''),
-          city: Joi.string().allow(''),
-          code: Joi.string().required(),
           description: Joi.string().required()
         }
       },
@@ -129,9 +80,7 @@ var baseRoutes = [
           currency: Joi.any().valid(currencyFor.stripe).required(),
           quantity: Joi.number(),
           amount: Joi.number(),
-          signup: Joi.boolean(),
-          email: Joi.string().email().allow(''),
-          country: Joi.string().allow('')
+          email: Joi.string().email().allow('')
         }
       }
     }

@@ -11,8 +11,7 @@ describe('/api/signup/basket', () => {
       url: '/api/signup/basket',
       payload: {
         locale: 'en-CA',
-        email: 'test@example.org',
-        country: 'Canada'
+        email: 'test@example.org'
       }
     }, (response) => {
       should(response.statusCode).equal(201);
@@ -23,8 +22,7 @@ describe('/api/signup/basket', () => {
         newsletters: 'mozilla-foundation',
         trigger_welcome: 'N',
         source_url: 'https://donate.mozilla.org/',
-        email: 'test@example.org',
-        country: 'Canada'
+        email: 'test@example.org'
       });
 
       done();

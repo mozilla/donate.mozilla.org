@@ -200,7 +200,7 @@ var baseRoutes = [
         PAYPAL_ENDPOINT: process.env.PAYPAL_ENDPOINT
       };
 
-      var clientEnv = "window.__clientenv__ = " + JSON.stringify(env) + ";";
+      var clientEnv = `window.__clientenv__ = ${ JSON.stringify(env) };`;
       reply(clientEnv).type('application/javascript; charset=utf-8').vary('User-Agent');
     },
     config: {

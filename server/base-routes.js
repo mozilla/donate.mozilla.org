@@ -182,6 +182,34 @@ var baseRoutes = [
       }
     }
   }, {
+    method: 'GET',
+    path: '/api/client-env.js',
+    handler: function(request, reply) {
+      //
+      // WARNING! Only put variables safe for public consumption here! This is emitted on the client side!
+      //
+      // NEVER PUT PRIVATE KEYS HERE!!!
+      //
+      var env = {
+        APPLICATION_URI: process.env.APPLICATION_URI,
+        STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,
+        OPTIMIZELY_ID: process.env.OPTIMIZELY_ID,
+        OPTIMIZELY_ACTIVE: process.env.OPTIMIZELY_ACTIVE,
+        FULL_SUBDOMAIN_FOR_COOKIE: process.env.FULL_SUBDOMAIN_FOR_COOKIE,
+        PAYPAL_EMAIL: process.env.PAYPAL_EMAIL,
+        PAYPAL_ENDPOINT: process.env.PAYPAL_ENDPOINT
+      };
+
+      var clientEnv = `window.__clientenv__ = ${ JSON.stringify(env) };`;
+      reply(clientEnv).type('application/javascript; charset=utf-8').vary('User-Agent');
+    },
+    config: {
+      cache: {
+        expiresIn: 7 * 24 * 60 * 60 * 1000, // one week
+        privacy: 'public'
+      }
+    }
+  }, {
     'method': 'GET',
     path: '/api/exchange-rates/latest.json',
     handler: function(request, reply) {

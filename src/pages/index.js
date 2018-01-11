@@ -72,6 +72,7 @@ var Index = React.createClass({
           <Optimizely/>
           <link rel="icon" href={this.props.favicon} type="image/x-icon"/>
           <link rel="stylesheet" href={'/' + fileHashes.main.css}/>
+          <script src="/api/client-env.js"></script>
           <script dangerouslySetInnerHTML={{__html: ga}}></script>
           {
             localesData.map((localeData, index) => {

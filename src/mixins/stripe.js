@@ -42,10 +42,10 @@ var StripeMixin = {
       country = "";
     }
 
-    var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' +transactionId + '&str_frequency=' + donationFrequency;
+    var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' + transactionId + '&str_frequency=' + donationFrequency;
 
     if (email) {
-      params += "&email=" + email;
+      params += "&email=" + encodeURIComponent(email);
     }
     if (country) {
       params += "&country=" + country;

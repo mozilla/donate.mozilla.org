@@ -195,9 +195,7 @@ var baseRoutes = [
         STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,
         OPTIMIZELY_ID: process.env.OPTIMIZELY_ID,
         OPTIMIZELY_ACTIVE: process.env.OPTIMIZELY_ACTIVE,
-        FULL_SUBDOMAIN_FOR_COOKIE: process.env.FULL_SUBDOMAIN_FOR_COOKIE,
-        PAYPAL_EMAIL: process.env.PAYPAL_EMAIL,
-        PAYPAL_ENDPOINT: process.env.PAYPAL_ENDPOINT
+        FULL_SUBDOMAIN_FOR_COOKIE: process.env.FULL_SUBDOMAIN_FOR_COOKIE
       };
 
       var clientEnv = `window.__clientenv__ = ${ JSON.stringify(env) };`;

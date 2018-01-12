@@ -203,10 +203,6 @@ describe('static files', () => {
       type: types.html,
       cache: cache.short
     },
-    '/en-US/paypal-donate/': {
-      type: types.html,
-      cache: cache.short
-    },
     '/en-US/share/': {
       type: types.html,
       cache: cache.short

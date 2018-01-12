@@ -523,7 +523,12 @@ var routes = {
             project: appName
           });
 
-          reply.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`);
+          var redirect = `${locale}/${location}/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`;
+          var email = checkoutDetails.response.EMAIL;
+          if (email) {
+            redirect += `&email=${email}`;
+          }
+          reply.redirect(redirect);
         });
       });
     } else {
@@ -595,7 +600,13 @@ var routes = {
             project: appName
           });
 
-          reply.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${txId}&amt=${data.txn.AMT}&cc=${data.txn.CURRENCYCODE}`);
+          var redirect = `${locale}/${location}/?frequency=${frequency}&tx=${txId}&amt=${data.txn.AMT}&cc=${data.txn.CURRENCYCODE}`;
+          var email = checkoutDetails.response.EMAIL;
+          if (email) {
+            redirect += `&email=${email}`;
+          }
+          redirect += `&test=${email}`;
+          reply.redirect(redirect);
         });
       });
     }

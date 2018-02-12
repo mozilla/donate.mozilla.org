@@ -1,4 +1,4 @@
-const intlConfig = {
+var intlConfig = {
   "dest": "public",
   "src": "locales",
   "paypalLocales": {

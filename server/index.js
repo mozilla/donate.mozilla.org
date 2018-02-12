@@ -1,27 +1,35 @@
 require('habitat').load();
 
-const Hapi = require('hapi');
-const AuthBearer = require('hapi-auth-bearer-token');
-const locales = require('./locales');
-const reactRouted = require('../dist/lib/react-server-route.js')(locales);
-const getServerOptions = require('./get-server-options');
-const baseRoutes = require('./base-routes');
-const services = require('./services');
-const finalizeServer = require('./finalise-server');
+var Hapi = require('hapi');
+var locales = require('./locales');
+var reactRouted = require('../dist/lib/react-server-route.js')(locales);
+var getServerOptions = require('./get-server-options');
+var baseRoutes = require('./base-routes');
+var services = require('./services');
+var finalizeServer = require('./finalise-server');
 
 const ONE_HOUR_MS = 1000 * 60 * 60;
 
-module.exports = async function(options) {
-  const serverOptions = getServerOptions(options);
-  const server = new Hapi.Server(serverOptions);
 
-  await server.register(AuthBearer);
+module.exports = function(options) {
+  var serverOptions = getServerOptions(options);
+  var server = new Hapi.Server(serverOptions);
+
+  server.connection({
+    host: process.env.HOST,
+    port: process.env.PORT,
+    uri: process.env.APPLICATION_URI
+  });
+
+  server.register(require("hapi-auth-bearer-token"), function(err) {
+    if (err) {
+      throw err;
+    }
+  });
 
   server.auth.strategy("stripe", "bearer-access-token", {
-    validate: (request, token, h) => {
-      const isValid = token === process.env.STRIPE_WEBHOOK_SECRET;
-      const credentials = { token: token };
-      return { isValid, credentials };
+    validateFunc: function(token, callback) {
+      callback(null, token === process.env.STRIPE_WEBHOOK_SECRET, { token: token });
     }
   });
 
@@ -33,9 +41,9 @@ module.exports = async function(options) {
 
   server.route(baseRoutes);
 
-  await server.register(services);
-
-  finalizeServer(server, reactRouted);
+  server.register(services, function(err) {
+    finalizeServer(err, server, reactRouted);
+  });
 
   return server;
 };

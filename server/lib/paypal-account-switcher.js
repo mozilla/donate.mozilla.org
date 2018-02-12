@@ -1,9 +1,9 @@
-const currencies = require('../../dist/data/currencies.js');
+var currencies = require('../../dist/data/currencies.js');
 
 module.exports = {
   getAccountType: function(amount, currency) {
-    const MACRO_FEE_PERCENT = 2.9 / 100;
-    const MICRO_FEE_PERCENT = 6 / 100;
+    var MACRO_FEE_PERCENT = 2.9 / 100;
+    var MICRO_FEE_PERCENT = 6 / 100;
 
     currency = currency.toLowerCase();
     amount = parseInt(amount, 10);
@@ -13,10 +13,9 @@ module.exports = {
     if (currencies[currency].disabled === 'paypal') {
       return "macro";
     }
-
-    const fixedFees = currencies[currency].paypalFixedFee;
-    const macroFee = amount * MACRO_FEE_PERCENT + fixedFees.macro;
-    const microFee = amount * MICRO_FEE_PERCENT + fixedFees.micro;
+    var fixedFees = currencies[currency].paypalFixedFee;
+    var macroFee = amount * MACRO_FEE_PERCENT + fixedFees.macro;
+    var microFee = amount * MICRO_FEE_PERCENT + fixedFees.micro;
 
     if (microFee <= macroFee) {
       return "micro";

@@ -1,16 +1,16 @@
-var routes = require('./routes');
+const routes = require('./routes');
 
-var Joi = require('joi');
+const Joi = require('joi');
 
-var locales = require('./locales');
-var getLocale = require('../dist/lib/get-locale');
-var polyfillio = require('polyfill-service');
-var PolyfillSet = require('./lib/PolyfillSet');
+const locales = require('./locales');
+const getLocale = require('../dist/lib/get-locale');
+const polyfillio = require('polyfill-service');
+const PolyfillSetFromQueryParams = require('./lib/PolyfillSet');
 
-var currencyFor = require('./lib/currency-for');
-var exchangeRates = require('../assets/exchange-rates/latest.json');
+const currencyFor = require('./lib/currency-for');
+const exchangeRates = require('../assets/exchange-rates/latest.json');
 
-var baseRoutes = [
+const baseRoutes = [
   {
     method: 'POST',
     path: '/api/signup/basket',
@@ -154,7 +154,7 @@ var baseRoutes = [
   }, {
     method: 'GET',
     path: '/api/polyfill.js',
-    handler: function(request, reply) {
+    handler: function(request, h) {
       var locale = request.query.locale;
 
       if (!locale) {
@@ -164,15 +164,18 @@ var baseRoutes = [
       var features = request.query.features + ',Intl.~locale.' + locale;
       var flags = request.query.flags ? request.query.flags.split(',') : [];
 
-      var polyfills = PolyfillSet.fromQueryParam(features || 'default', flags);
+      var polyfills = PolyfillSetFromQueryParams(features || 'default', flags);
       var params = {
         features: polyfills.get(),
         minify: true,
         unknown: 'polyfill'
       };
       params.uaString = request.plugins.scooter.source;
-      polyfillio.getPolyfillString(params).then(function(bundleString) {
-        reply(bundleString).type('application/javascript; charset=utf-8').vary('User-Agent');
+
+      return new Promise((resolve) => {
+        polyfillio.getPolyfillString(params).then(function(bundleString) {
+          resolve(h.response(bundleString).type('application/javascript; charset=utf-8').vary('User-Agent'));
+        });
       });
     },
     config: {
@@ -184,7 +187,7 @@ var baseRoutes = [
   }, {
     method: 'GET',
     path: '/api/client-env.js',
-    handler: function(request, reply) {
+    handler: function(request, h) {
       //
       // WARNING! Only put variables safe for public consumption here! This is emitted on the client side!
       //
@@ -199,7 +202,7 @@ var baseRoutes = [
       };
 
       var clientEnv = `window.__clientenv__ = ${ JSON.stringify(env) };`;
-      reply(clientEnv).type('application/javascript; charset=utf-8').vary('User-Agent');
+      return h.response(clientEnv).type('application/javascript; charset=utf-8').vary('User-Agent');
     },
     config: {
       cache: {
@@ -210,8 +213,8 @@ var baseRoutes = [
   }, {
     'method': 'GET',
     path: '/api/exchange-rates/latest.json',
-    handler: function(request, reply) {
-      reply(exchangeRates).type('application/json; charset=utf-8');
+    handler: function(request, h) {
+      return h.response(exchangeRates).type('application/json; charset=utf-8');
     },
     config: {
       cache: {

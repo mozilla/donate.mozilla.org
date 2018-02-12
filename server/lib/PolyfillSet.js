@@ -1,29 +1,30 @@
-var PolyfillSet = function(polyfillset) {
-  this.data = polyfillset;
-};
+class PolyfillSet {
+  constructor(polyfillset) {
+    this.data = polyfillset;
+  }
 
-PolyfillSet.prototype.stringify = function() {
-  return Object.keys(this.data).map(function(featureName) {
-    var flags = this.data[featureName].flags;
-    return featureName + (flags.length ? '|' + flags.join('|') : '');
-  }, this).join(',');
-};
-PolyfillSet.prototype.get = function() {
-  return this.data;
-};
+  static stringify() {
+    return Object.keys(this.data).map(featureName => {
+      const flags = this.data[featureName].flags;
+      return featureName + (flags.length ? '|' + flags.join('|') : '');
+    }, this).join(',');
+  }
 
+  get() {
+    return this.data;
+  }
+}
 
-PolyfillSet.fromQueryParam = function(polyfillList, additionalFlags) {
-  var list = polyfillList.split(',').filter(function(x) { return x.length; });
+module.exports = function PolyfillSetFromQueryParams(polyfillList, additionalFlags) {
+  const list = polyfillList.split(',').filter(x => x.length);
   additionalFlags = additionalFlags || [];
 
-  return new PolyfillSet(list.sort().reduce(function parsePolyfillInfo(obj, name) {
-    var nameAndFlags = name.split('|');
+  return new PolyfillSet(list.sort().reduce((obj, name) => {
+    const nameAndFlags = name.split('|');
     obj[nameAndFlags[0]] = {
-      flags:   nameAndFlags.slice(1).concat(additionalFlags)
+      flags: nameAndFlags.slice(1).concat(additionalFlags)
     };
+
     return obj;
   }, {}));
 };
-
-module.exports = PolyfillSet;

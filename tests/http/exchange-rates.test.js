@@ -1,35 +1,29 @@
-const server = require('../../server');
-const should = require('should');
-
-const type = 'application/json; charset=utf-8';
-const cache = 'max-age=300, must-revalidate, public';
-const files = {
-  '/api/exchange-rates/latest.json': {
-    type,
-    cache
-  }
-};
-
-var instance;
+var server = require('../../server');
+var should = require('should');
 
 describe('test exchange rates api', () => {
+  var instance = server({ useDomains: false });
+  var type = 'application/json; charset=utf-8';
 
-  before(async(done) => {
-    instance = await server();
-    done();
-  });
+  var cache = 'max-age=300, must-revalidate, public';
+
+  var files = {
+    '/api/exchange-rates/latest.json': {
+      type,
+      cache
+    }
+  };
 
   Object.keys(files).forEach((key) => {
-    it(`should return okay when accessing ${key}`, async(done) => {
-      let response = await instance.inject({
+    it(`should return okay when accessing ${key}`, (done) => {
+      instance.inject({
         url: key
+      }, (response) => {
+        should(response.statusCode).equal(200);
+        should(response.headers['content-type']).equal(type);
+        should(response.headers['cache-control']).equal(cache);
+        done();
       });
-
-      should(response.statusCode).equal(200);
-      should(response.headers['content-type']).equal(type);
-      should(response.headers['cache-control']).equal(cache);
-
-      done();
     });
   });
 });

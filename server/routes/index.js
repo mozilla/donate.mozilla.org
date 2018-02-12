@@ -1,10 +1,11 @@
 const iron = require('iron');
-const Boom = require('boom');
-const mailchimpSignup = require('./mailchimp');
-const stripe = require('./stripe');
-const paypal = require('./paypal');
-const basket = require('../lib/basket-queue.js');
-const amountModifier = require('../../dist/lib/amount-modifier.js');
+var signup = require('./signup');
+var mailchimp = require('./mailchimp');
+var stripe = require('./stripe');
+var paypal = require('./paypal');
+var boom = require('boom');
+var basket = require('../lib/basket-queue.js');
+var amountModifier = require('../../dist/lib/amount-modifier.js');
 
 const cookiePassword = process.env.SECRET_COOKIE_PASSWORD;
 
@@ -20,302 +21,297 @@ async function encrypt(cookie) {
   try {
     return await iron.seal(cookie, cookiePassword, iron.defaults);
   } catch (err) {
-    throw Promise.reject(err);
+    return Promise.reject(err);
   }
 }
 
+var routes = {
+  'signup': function(request, reply) {
+    var transaction = request.payload;
+    const signup_service = Date.now();
 
-const mailchimp = async function(request, h) {
-  const transaction = request.payload;
-  const signup_service = Date.now();
+    signup(transaction, function(err, payload) {
+      if (err) {
+        request.log(['error', 'signup'], {
+          request_id: request.headers['x-request-id'],
+          service: Date.now() - signup_service,
+          code: err.code,
+          type: err.type,
+          param: err.param
+        });
 
-  let payload;
+        return reply(boom.wrap(err, 500, 'Unable to complete Basket signup'));
+      }
 
-  try {
-    payload = await mailchimpSignup(transaction);
-  } catch (err) {
-    request.log(['error', 'mailchimp'], {
-      request_id: request.headers['x-request-id'],
-      service: Date.now() - signup_service,
-      code: err.code,
-      type: err.type,
-      param: err.param
+      request.log(['signup'], {
+        request_id: request.headers['x-request-id'],
+        service: Date.now() - signup_service
+      });
+
+      reply(payload).code(201);
     });
+  },
+  'mailchimp': function(request, reply) {
+    var transaction = request.payload;
+    const signup_service = Date.now();
 
-    throw Boom.boomify(err, 500, 'Unable to complete Mailchimp signup');
-  }
+    mailchimp(transaction, function(err, payload) {
+      if (err) {
+        request.log(['error', 'mailchimp'], {
+          request_id: request.headers['x-request-id'],
+          service: Date.now() - signup_service,
+          code: err.code,
+          type: err.type,
+          param: err.param
+        });
 
+        return reply(boom.wrap(err, 500, 'Unable to complete Mailchimp signup'));
+      }
+      var body = JSON.parse(payload.body);
+      if (payload.statusCode !== 200) {
+        request.log(['error', 'mailchimp'], {
+          request_id: request.headers['x-request-id'],
+          service: Date.now() - signup_service,
+          code: payload.statusCode,
+          message: body.title
+        });
 
-  let body = JSON.parse(payload.body);
+        return reply(boom.create(payload.statusCode, 'Unable to complete Mailchimp signup', body));
+      }
 
-  if (payload.statusCode !== 200) {
-    request.log(['error', 'mailchimp'], {
-      request_id: request.headers['x-request-id'],
-      service: Date.now() - signup_service,
-      code: payload.statusCode,
-      message: body.title
+      request.log(['mailchimp'], {
+        request_id: request.headers['x-request-id'],
+        service: Date.now() - signup_service
+      });
+      reply(body).code(201);
     });
-
-    throw new Boom(payload.statusCode, 'Unable to complete Mailchimp signup', body);
-  }
-
-  request.log(['mailchimp'], {
-    request_id: request.headers['x-request-id'],
-    service: Date.now() - signup_service
-  });
-
-  return h.response(body).code(201);
-};
-
-const routes = {
-  signup: require('./signup'),
-  mailchimp,
-  'stripe': async function(request, h) {
-    const transaction = request.payload || {};
-    const {
-      currency,
-      email,
-      locale,
-      description,
-      stripeToken,
-      frequency,
-      signup,
-      country
-    } = transaction;
-    const amount = amountModifier.stripe(transaction.amount, currency);
-    const metadata = { email, locale };
-    const request_id = request.headers['x-request-id'];
-
-    let badRequest;
-    let stripe_charge_create_service;
-    let stripe_customer_create_service;
-
-    if (description.indexOf("Thunderbird") >= 0 ) {
+  },
+  'stripe': function(request, reply) {
+    var transaction = request.payload || {};
+    var currency = transaction.currency;
+    var amount = amountModifier.stripe(transaction.amount, currency);
+    var metadata = {
+      email: transaction.email,
+      locale: transaction.locale
+    };
+    var request_id = request.headers['x-request-id'];
+    if (transaction.description.indexOf("Thunderbird") >= 0 ) {
       metadata.thunderbird = true;
-    } else if (description.indexOf("glassroomnyc") >= 0 ) {
+    } else if (transaction.description.indexOf("glassroomnyc") >= 0 ) {
       metadata.glassroomnyc = true;
     }
 
-    const startCreateCustomer = Date.now();
-    let customer;
+    stripe.customer({
+      metadata,
+      email: transaction.email,
+      stripeToken: transaction.stripeToken
+    }, function(err, customerData) {
+      var stripe_customer_create_service = customerData.stripe_customer_create_service;
+      var customer;
+      var badRequest;
 
-    try {
-      customer = await stripe.customer({ metadata, email, stripeToken });
-    } catch (err) {
-      stripe_customer_create_service = Date.now() - startCreateCustomer;
-      badRequest = Boom.badRequest('Stripe charge failed');
-
-      badRequest.output.payload.stripe = {
-        code: err.code,
-        rawType: err.rawType
-      };
-
-      request.log(['error', 'stripe', 'customer'], {
-        request_id,
-        stripe_customer_create_service,
-        code: err.code,
-        type: err.type,
-        param: err.param
-      });
-
-      throw badRequest;
-    }
-
-    stripe_customer_create_service = Date.now() - startCreateCustomer;
-
-    request.log(['stripe', 'customer'], {
-      request_id,
-      stripe_customer_create_service,
-      customer_id: customer.id
-    });
-
-    if (frequency !== 'monthly') {
-      const startCreateCharge = Date.now();
-      let charge;
-
-      try {
-        charge = await stripe.single({ amount, currency, metadata, description, customer: customer.id });
-      } catch (err) {
-        stripe_charge_create_service = Date.now() - startCreateCharge;
-        badRequest = Boom.badRequest('Stripe charge failed');
-
+      if (err) {
+        badRequest = boom.badRequest('Stripe charge failed');
         badRequest.output.payload.stripe = {
           code: err.code,
           rawType: err.rawType
         };
 
-        request.log(['error', 'stripe', 'single'], {
+        request.log(['error', 'stripe', 'customer'], {
           request_id,
-          stripe_charge_create_service,
-          customer_id: customer.id,
+          stripe_customer_create_service,
           code: err.code,
           type: err.type,
           param: err.param
         });
 
-        throw badRequest;
-      }
-
-      stripe_charge_create_service = Date.now() - startCreateCharge;
-
-      if (signup) {
-        const signup_service = Date.now();
-
-        signup(transaction, (signup_error, payload) => {
-          if (signup_error) {
-            return request.log(['error', 'signup'], {
-              request_id: request.headers['x-request-id'],
-              service: Date.now() - signup_service,
-              code: signup_error.code,
-              type: signup_error.type,
-              param: signup_error.param
-            });
-          }
-
-          request.log(['signup'], {
-            request_id: request.headers['x-request-id'],
-            service: Date.now() - signup_service
-          });
-        });
-      }
-
-      request.log(['stripe', 'single'], {
-        request_id,
-        stripe_charge_create_service,
-        charge_id: charge.id
-      });
-
-      basket.queue({
-        event_type: "donation",
-        last_name: charge.source.name,
-        email: charge.metadata.email,
-        donation_amount: basket.zeroDecimalCurrencyFix(charge.amount, charge.currency),
-        currency: charge.currency,
-        created: charge.created,
-        recurring: false,
-        service: "stripe",
-        transaction_id: charge.id,
-        project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
-      });
-
-      const cookie = {
-        stripeCustomerId: customer.id
-      };
-      const response = {
-        frequency: "one-time",
-        amount: charge.amount,
-        currency: charge.currency,
-        id: charge.id,
-        signup,
-        country,
-        email
-      };
-
-      try {
-        const encryptedCookie = await encrypt(cookie);
-        return h.response(response)
-          .state("session", encryptedCookie)
-          .code(200);
-
-      } catch (err) {
-        request.log(['error', 'stripe', 'single', 'cookie'], {
+        reply(badRequest);
+      } else {
+        customer = customerData.customer;
+        request.log(['stripe', 'customer'], {
           request_id,
-          customer_id: customer.id,
-          code: err.code,
-          message: err.message
+          stripe_customer_create_service,
+          customer_id: customer.id
         });
 
-        return h.response(response).code(200);
-      }
-    } else {
-      // Monthly Stripe donation
-      let startCreateSubscription = Date.now();
-      let stripe_create_subscription_service;
-      let subscription;
+        if (transaction.frequency !== 'monthly') {
+          stripe.single({
+            amount,
+            currency,
+            metadata,
+            customer,
+            description: transaction.description
+          }, function(err, chargeData) {
+            var stripe_charge_create_service = chargeData.stripe_charge_create_service;
+            var charge;
+            var badRequest;
+            if (err) {
+              badRequest = boom.badRequest('Stripe charge failed');
+              badRequest.output.payload.stripe = {
+                code: err.code,
+                rawType: err.rawType
+              };
 
-      try {
-        subscription = await stripe.recurring({
-          // Stripe has plans with set amounts, not custom amounts.
-          // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
-          // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
-          currency,
-          metadata,
-          customer,
-          stripeToken,
-          email,
-          quantity: amount
-        });
-      } catch (err) {
-        stripe_create_subscription_service = Date.now() - startCreateSubscription;
-        badRequest = Boom.badRequest('Stripe subscription failed', {
-          code: err.code,
-          rawType: err.rawType
-        });
+              request.log(['error', 'stripe', 'single'], {
+                request_id,
+                stripe_charge_create_service,
+                customer_id: customer.id,
+                code: err.code,
+                type: err.type,
+                param: err.param
+              });
 
-        request.log(['error', 'stripe', 'recurring'], {
-          request_id,
-          stripe_create_subscription_service,
-          customer_id: customer.id,
-          code: err.code,
-          type: err.type,
-          param: err.param
-        });
+              reply(badRequest);
+            } else {
+              charge = chargeData.charge;
+              if (transaction.signup) {
+                const signup_service = Date.now();
 
-        throw badRequest;
-      }
+                signup(transaction, (signup_error, payload) => {
+                  if (signup_error) {
+                    return request.log(['error', 'signup'], {
+                      request_id: request.headers['x-request-id'],
+                      service: Date.now() - signup_service,
+                      code: signup_error.code,
+                      type: signup_error.type,
+                      param: signup_error.param
+                    });
+                  }
 
-      stripe_create_subscription_service = Date.now() - startCreateSubscription;
+                  request.log(['signup'], {
+                    request_id: request.headers['x-request-id'],
+                    service: Date.now() - signup_service
+                  });
+                });
+              }
+              request.log(['stripe', 'single'], {
+                request_id,
+                stripe_charge_create_service,
+                charge_id: charge.id
+              });
 
-      if (signup) {
-        const signup_service = Date.now();
+              basket.queue({
+                event_type: "donation",
+                last_name: charge.source.name,
+                email: charge.metadata.email,
+                donation_amount: basket.zeroDecimalCurrencyFix(charge.amount, charge.currency),
+                currency: charge.currency,
+                created: charge.created,
+                recurring: false,
+                service: "stripe",
+                transaction_id: charge.id,
+                project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
+              });
 
-        signup(transaction, (signup_error, payload) => {
-          if (signup_error) {
-            return request.log(['error', 'signup'], {
-              request_id: request.headers['x-request-id'],
-              service: Date.now() - signup_service,
-              code: signup_error.code,
-              type: signup_error.type,
-              param: signup_error.param
-            });
-          }
+              const cookie = {
+                stripeCustomerId: customer.id
+              };
+              const response = {
+                frequency: "one-time",
+                amount: charge.amount,
+                currency: charge.currency,
+                id: charge.id,
+                signup: transaction.signup,
+                country: transaction.country,
+                email: transaction.email
+              };
 
-          request.log(['signup'], {
-            request_id: request.headers['x-request-id'],
-            service: Date.now() - signup_service
+              return encrypt(cookie)
+                .then(encryptedCookie => reply(response)
+                  .state("session", encryptedCookie)
+                  .code(200)
+                )
+                .catch(err => {
+                  request.log(['error', 'stripe', 'single', 'cookie'], {
+                    request_id,
+                    customer_id: customer.id,
+                    code: err.code,
+                    message: err.message
+                  });
+
+                  return reply(response).code(200);
+                });
+            }
           });
-        });
+        } else {
+          stripe.recurring({
+            // Stripe has plans with set amounts, not custom amounts.
+            // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
+            // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
+            currency,
+            metadata,
+            customer,
+            quantity: amount,
+            stripeToken: transaction.stripeToken,
+            email: transaction.email
+          }, function(err, subscriptionData) {
+            var stripe_create_subscription_service = subscriptionData.stripe_create_subscription_service;
+            var subscription;
+            if (err) {
+              request.log(['error', 'stripe', 'recurring'], {
+                request_id,
+                stripe_create_subscription_service,
+                customer_id: customer.id,
+                code: err.code,
+                type: err.type,
+                param: err.param
+              });
+              reply(boom.create(400, 'Stripe subscription failed', {
+                code: err.code,
+                rawType: err.rawType
+              }));
+            } else {
+              subscription = subscriptionData.subscription;
+              if (transaction.signup) {
+                const signup_service = Date.now();
+
+                signup(transaction, (signup_error, payload) => {
+                  if (signup_error) {
+                    return request.log(['error', 'signup'], {
+                      request_id: request.headers['x-request-id'],
+                      service: Date.now() - signup_service,
+                      code: signup_error.code,
+                      type: signup_error.type,
+                      param: signup_error.param
+                    });
+                  }
+
+                  request.log(['signup'], {
+                    request_id: request.headers['x-request-id'],
+                    service: Date.now() - signup_service
+                  });
+                });
+              }
+              request.log(['stripe', 'recurring'], {
+                request_id,
+                stripe_create_subscription_service,
+                customer_id: customer.id
+              });
+
+              reply({
+                frequency: "monthly",
+                currency: subscription.plan.currency,
+                quantity: subscription.quantity,
+                id: subscription.id,
+                signup: transaction.signup,
+                country: transaction.country,
+                email: transaction.email
+              }).code(200);
+            }
+          });
+        }
       }
-
-      request.log(['stripe', 'recurring'], {
-        request_id,
-        stripe_create_subscription_service,
-        customer_id: customer.id
-      });
-
-      return h.response({
-        frequency: "monthly",
-        currency: subscription.plan.currency,
-        quantity: subscription.quantity,
-        id: subscription.id,
-        signup,
-        country,
-        email
-      }).code(200);
-    }
+    });
   },
-  stripeMonthlyUpgrade: async function(request, h) {
-    const transaction = request.payload || {};
+  stripeMonthlyUpgrade: function(request, reply) {
+    var transaction = request.payload || {};
     const encryptedCookie = request.state && request.state.session;
-    const { currency } = transaction;
-    const amount = amountModifier.stripe(transaction.amount, currency);
-    const metadata = {
+    var currency = transaction.currency;
+    var amount = amountModifier.stripe(transaction.amount, currency);
+    var metadata = {
       locale: transaction.locale
     };
-    const request_id = request.headers['x-request-id'];
-
-    let cookie;
-
+    var request_id = request.headers['x-request-id'];
     if (transaction.description.indexOf("Thunderbird") >= 0 ) {
       metadata.thunderbird = true;
     } else if (transaction.description.indexOf("glassroomnyc") >= 0 ) {
@@ -328,99 +324,92 @@ const routes = {
         err: 'Cookie does not exist'
       });
 
-      throw Boom.badRequest('An error occurred while creating this monthly donation');
+      return reply(boom.badRequest('An error occurred while creating this monthly donation'));
     }
 
-    try {
-      cookie = await decrypt(encryptedCookie);
-    } catch (err) {
-      request.log(['error', 'stripe', 'recurring', 'upgrade'], {
-        request_id,
-        code: err.code,
-        message: err.message
+    decrypt(encryptedCookie)
+      .then(cookie => {
+        const customerId = cookie && cookie.stripeCustomerId;
+
+        if (!customerId) {
+          request.log(['error', 'stripe', 'recurring', 'upgrade'], {
+            request_id,
+            err: 'Customer ID missing from the cookie'
+          });
+
+          return reply(boom.badRequest('An error occurred while creating this monthly donation'));
+        }
+
+        stripe.retrieveCustomer(
+          customerId,
+          function(retrieveCustomerErr, customer) {
+            if (retrieveCustomerErr) {
+              return reply(boom.badImplementation('An error occurred while creating this monthly donation', retrieveCustomerErr));
+            }
+            // Make this with a monthly delay for the user.
+            stripe.recurring({
+            // Stripe has plans with set amounts, not custom amounts.
+            // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
+            // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
+              currency,
+              metadata,
+              customer,
+              quantity: amount,
+              trialPeriodDays: "30"
+            }, function(err, subscriptionData) {
+              var stripe_create_subscription_service = subscriptionData.stripe_create_subscription_service;
+              var subscription;
+              if (err) {
+                request.log(['error', 'stripe', 'recurring', 'upgrade'], {
+                  request_id,
+                  stripe_create_subscription_service,
+                  customer_id: customer.id,
+                  code: err.code,
+                  type: err.type,
+                  param: err.param
+                });
+                reply(boom.create(400, 'Stripe subscription failed', {
+                  code: err.code,
+                  rawType: err.rawType
+                }));
+              } else {
+                subscription = subscriptionData.subscription;
+                request.log(['stripe', 'recurring', 'upgrade'], {
+                  request_id,
+                  stripe_create_subscription_service,
+                  customer_id: customer.id
+                });
+
+                reply({
+                  frequency: "monthly",
+                  currency: subscription.plan.currency,
+                  quantity: subscription.quantity,
+                  id: subscription.id
+                })
+                  .unstate("session")
+                  .code(200);
+              }
+            });
+          }
+        );
+      })
+      .catch(err => {
+        request.log(['error', 'stripe', 'recurring', 'upgrade'], {
+          request_id,
+          code: err.code,
+          message: err.message
+        });
+
+        return reply(boom.badImplementation('An error occurred while creating this monthly donation'));
       });
-
-      throw Boom.badImplementation('An error occurred while creating this monthly donation');
-    }
-    const customerId = cookie && cookie.stripeCustomerId;
-
-    if (!customerId) {
-      request.log(['error', 'stripe', 'recurring', 'upgrade'], {
-        request_id,
-        err: 'Customer ID missing from the cookie'
-      });
-
-      throw Boom.badRequest('An error occurred while creating this monthly donation');
-    }
-
-    let customer;
-
-    try {
-      customer = await stripe.retrieveCustomer(customerId);
-    } catch (err) {
-      throw Boom.badImplementation('An error occurred while creating this monthly donation', err);
-    }
-
-    const { id: customer_id } = customer;
-    let startCreateSubscription = Date.now();
-    let stripe_create_subscription_service;
-    let subscription;
-
-    try {
-      // Make this with a monthly delay for the user.
-      subscription = await stripe.recurring({
-        // Stripe has plans with set amounts, not custom amounts.
-        // So to get a custom amount we have a plan set to 1 cent, and we supply the quantity.
-        // https://support.stripe.com/questions/how-can-i-create-plans-that-dont-have-a-fixed-price
-        currency,
-        metadata,
-        customer,
-        quantity: amount,
-        trialPeriodDays: "30"
-      });
-    } catch (err) {
-      stripe_create_subscription_service = Date.now() - startCreateSubscription;
-      const { code, type, param } = err;
-
-      request.log(['error', 'stripe', 'recurring', 'upgrade'], {
-        request_id,
-        stripe_create_subscription_service,
-        customer_id,
-        code,
-        type,
-        param
-      });
-
-      throw Boom.badRequest('Stripe subscription failed', {
-        code: err.code,
-        rawType: err.rawType
-      });
-    }
-
-    stripe_create_subscription_service = Date.now() - startCreateSubscription;
-
-    request.log(['stripe', 'recurring', 'upgrade'], {
-      request_id,
-      stripe_create_subscription_service,
-      customer_id
-    });
-
-    return h.response({
-      frequency: "monthly",
-      currency: subscription.plan.currency,
-      quantity: subscription.quantity,
-      id: subscription.id
-    })
-      .unstate("session")
-      .code(200);
   },
-  'paypal': async function(request, h) {
-    let transaction = request.payload || {};
-    let frequency = transaction.frequency || "";
-    let currency = transaction.currency;
-    let amount = amountModifier.paypal(transaction.amount, currency);
+  'paypal': function(request, reply) {
+    var transaction = request.payload || {};
+    var frequency = transaction.frequency || "";
+    var currency = transaction.currency;
+    var amount = amountModifier.paypal(transaction.amount, currency);
 
-    let details = {
+    var details = {
       amount: amount,
       currency: currency,
       locale: transaction.locale,
@@ -429,255 +418,220 @@ const routes = {
       frequency: frequency,
       appName: transaction.appName
     };
-    let request_id = request.headers['x-request-id'];
-
-    let checkoutDetails;
-    let paypal_request_sale_service;
-
-    const paypalRequestSaleStart = Date.now();
-    try {
-      checkoutDetails = await paypal.setupCheckout(details);
-    } catch (err) {
-      paypal_request_sale_service = Date.now() - paypalRequestSaleStart;
-
-      request.log(['paypal', 'sale', 'error', frequency], {
+    var request_id = request.headers['x-request-id'];
+    function callback(err, data) {
+      var paypal_request_sale_service = data.paypal_request_sale_service;
+      var log_details = {
         request_id,
-        paypal_request_sale_service,
-        error: err.toString()
-      });
+        paypal_request_sale_service
+      };
 
-      throw Boom.boomify(err, 500, 'Paypal donation failed');
+      if (err) {
+        log_details.error = err.toString();
+
+        if (data.response) {
+          log_details.error_name = data.response.name;
+          log_details.error_message = data.response.message;
+          log_details.details = data.response.details;
+        }
+
+        request.log(['paypal', 'sale', 'error', frequency], log_details);
+        reply(boom.wrap(err, 500, 'Paypal donation failed'));
+      } else {
+        request.log(['paypal', 'sale', frequency], log_details);
+        reply({
+          endpoint: process.env.PAYPAL_ENDPOINT,
+          token: data.response.TOKEN
+        }).code(200);
+      }
     }
-
-    paypal_request_sale_service = Date.now() - paypalRequestSaleStart;
-
-    request.log(['paypal', 'sale', frequency], {
-      request_id,
-      paypal_request_sale_service
-    });
-
-    return h.response({
-      endpoint: process.env.PAYPAL_ENDPOINT,
-      token: checkoutDetails.TOKEN
-    }).code(200);
+    paypal.setupCheckout(details, callback);
   },
-  'paypal-redirect': async function(request, h) {
-    let locale = request.params.locale || '';
+  'paypal-redirect': function(request, reply) {
+    var locale = request.params.locale || '';
     if (locale) {
       locale = '/' + locale;
     }
-    let appName = request.params.appName;
-    let location = "thank-you";
+    var appName = request.params.appName;
+    var location = "thank-you";
     if (appName === "thunderbird") {
       location = "thunderbird/" + location;
     }
-    let frequency = request.params.frequency || 'single';
-    let options = {
+    var frequency = request.params.frequency || 'single';
+    var options = {
       recurring: frequency === 'monthly',
       accountType: request.params.accountType
     };
-    let request_id = request.headers['x-request-id'];
-
+    var request_id = request.headers['x-request-id'];
     if (frequency !== 'monthly') {
-      let checkoutDetails;
-      let paypal_checkout_details_service;
-      const paypalCheckoutDetailsStart = Date.now();
-
-      try {
-        checkoutDetails = await paypal.getCheckoutDetails({
-          token: request.url.query.token
-        }, options);
-      } catch (err) {
-        paypal_checkout_details_service = Date.now() - paypalCheckoutDetailsStart;
-        request.log(['error', 'paypal', 'checkout-details', frequency], {
-          request_id,
-          paypal_checkout_details_service,
-          // https://developer.paypal.com/docs/api/#errors
-          error_name: checkoutDetails.name,
-          error_message: checkoutDetails.message,
-          details: checkoutDetails.details
-        });
-
-        throw Boom.badRequest('donation failed', err);
-      }
-
-      paypal_checkout_details_service = Date.now() - paypalCheckoutDetailsStart;
-
-      request.log(['paypal', 'checkout-details', frequency], {
-        request_id,
-        paypal_checkout_details_service
-      });
-
-      let checkoutData;
-      let paypal_checkout_payment_service;
-
-      const paypalCheckoutPaymentStart = Date.now();
-
-      try {
-        checkoutData = await paypal.completeCheckout(checkoutDetails, options);
-      } catch (err) {
-        paypal_checkout_payment_service = Date.now() - paypalCheckoutPaymentStart;
-
-        request.log(['error', 'paypal', 'checkout-payment', frequency], {
-          request_id,
-          paypal_checkout_payment_service,
-          error: err.toString()
-        });
-
-        throw Boom.badRequest('donation failed', err);
-      }
-
-      paypal_checkout_payment_service = Date.now() - paypalCheckoutPaymentStart;
-
-      let {
-        PAYMENTREQUEST_0_AMT: donation_amount,
-        CURRENCYCODE: currency,
-        PAYMENTINFO_0_ORDERTIME: orderTime,
-        PAYMENTINFO_0_TRANSACTIONID: transaction_id
-      } = checkoutData;
-
-      let {
-        FIRSTNAME: first_name,
-        LASTNAME: last_name,
-        EMAIL: email
-      } = checkoutDetails;
-
-      request.log(['paypal', 'checkout', frequency], {
-        request_id,
-        paypal_checkout_payment_service
-      });
-
-      let created = new Date(orderTime).getTime() / 1000;
-
-      basket.queue({
-        event_type: "donation",
-        first_name,
-        last_name,
-        email,
-        donation_amount,
-        currency,
-        created,
-        recurring: false,
-        service: 'paypal',
-        transaction_id,
-        project: appName
-      });
-
-      return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}`);
-    }
-
-    let paypal_checkout_details_service;
-    let checkoutDetails;
-    const paypalCheckoutDetailsStart = Date.now();
-
-    try {
-      checkoutDetails = await paypal.getCheckoutDetails({
+      paypal.getCheckoutDetails({
         token: request.url.query.token
-      }, options);
-    } catch (err) {
-      paypal_checkout_details_service = Date.now() - paypalCheckoutDetailsStart;
+      }, options, function(err, checkoutDetails) {
+        var paypal_checkout_details_service = checkoutDetails.paypal_checkout_details_service;
+        if (err) {
+          request.log(['error', 'paypal', 'checkout-details', frequency], {
+            request_id,
+            paypal_checkout_details_service,
+            // https://developer.paypal.com/docs/api/#errors
+            error_name: checkoutDetails.response.name,
+            error_message: checkoutDetails.response.message,
+            details: checkoutDetails.response.details
+          });
+          return reply(boom.badRequest('donation failed', err));
+        }
 
-      request.log(['error', 'paypal', 'checkout-details', frequency], {
-        request_id,
-        paypal_checkout_details_service,
-        error: err.toString()
+        request.log(['paypal', 'checkout-details', frequency], {
+          request_id,
+          paypal_checkout_details_service
+        });
+
+        paypal.completeCheckout(checkoutDetails.response, options, function(err, data) {
+          var paypal_checkout_payment_service = data.paypal_checkout_payment_service;
+          var log_details = {
+            request_id,
+            paypal_checkout_payment_service
+          };
+
+          if (err) {
+            log_details.error = err.toString();
+
+            if (data.response) {
+              log_details.error_name = data.response.name;
+              log_details.error_message = data.response.message;
+              log_details.details = data.response.details;
+            }
+
+            request.log(['error', 'paypal', 'checkout-payment', frequency], log_details);
+            return reply(boom.badRequest('donation failed', err));
+          }
+
+          request.log(['paypal', 'checkout', frequency], log_details);
+
+          var timestamp = new Date(data.txn.PAYMENTINFO_0_ORDERTIME).getTime() / 1000;
+
+          basket.queue({
+            event_type: "donation",
+            first_name: checkoutDetails.response.FIRSTNAME,
+            last_name: checkoutDetails.response.LASTNAME,
+            email: checkoutDetails.response.EMAIL,
+            donation_amount: data.txn.PAYMENTREQUEST_0_AMT,
+            currency: data.txn.CURRENCYCODE,
+            created: timestamp,
+            recurring: false,
+            service: 'paypal',
+            transaction_id: data.txn.PAYMENTINFO_0_TRANSACTIONID,
+            project: appName
+          });
+
+          var redirect = `${locale}/${location}/?frequency=${frequency}&tx=${data.txn.PAYMENTINFO_0_TRANSACTIONID}&amt=${data.txn.PAYMENTREQUEST_0_AMT}&cc=${data.txn.CURRENCYCODE}`;
+          var email = checkoutDetails.response.EMAIL;
+          if (email) {
+            redirect += `&email=${email}`;
+          }
+          reply.redirect(redirect);
+        });
       });
+    } else {
+      paypal.getCheckoutDetails({
+        token: request.url.query.token
+      }, options, function(err, checkoutDetails) {
+        var paypal_checkout_details_service = checkoutDetails.paypal_checkout_details_service;
+        var log_details = {
+          request_id,
+          paypal_checkout_details_service
+        };
 
-      throw Boom.badRequest('donation failed', err);
-    }
+        if (err) {
+          log_details.error = err.toString();
 
-    paypal_checkout_details_service = Date.now() - paypalCheckoutDetailsStart;
+          if (checkoutDetails.response) {
+            log_details.error_name = checkoutDetails.response.name;
+            log_details.error_message = checkoutDetails.response.message;
+            log_details.details = checkoutDetails.response.details;
+          }
 
-    request.log(['paypal', 'checkout-details', frequency], {
-      request_id,
-      paypal_checkout_details_service
-    });
+          request.log(['error', 'paypal', 'checkout-details', frequency], log_details);
+          return reply(boom.badRequest('donation failed', err));
+        }
 
-    let checkoutData;
-    let paypal_checkout_payment_service;
+        request.log(['paypal', 'checkout-details', frequency], log_details);
 
-    const paypalCheckoutPaymentStart = Date.now();
+        paypal.completeCheckout(checkoutDetails.response, options, function(err, data) {
+          var paypal_checkout_payment_service = data.paypal_checkout_payment_service;
+          var log_details = {
+            request_id,
+            paypal_checkout_payment_service
+          };
 
-    try {
-      checkoutData = await paypal.completeCheckout(checkoutDetails, options);
-    } catch (err) {
-      paypal_checkout_payment_service = Date.now() - paypalCheckoutPaymentStart;
+          if (err) {
+            log_details.error = err;
 
-      request.log(['error', 'paypal', 'checkout-payment', frequency], {
-        request_id,
-        paypal_checkout_payment_service,
-        err: err.toString()
+            if (data.response) {
+              log_details.error_name = data.response.name;
+              log_details.error_message = data.response.message;
+              log_details.details = data.response.details;
+            }
+
+            request.log(['error', 'paypal', 'checkout-payment', frequency], log_details);
+            return reply(boom.wrap(err));
+          }
+
+          request.log(['paypal', 'checkout', frequency], log_details);
+
+          var timestamp = new Date(data.txn.TIMESTAMP).getTime() / 1000;
+
+          // Create unique tx id by combining PayerID and timestamp
+          var stamp = Date.now() / 100;
+          var txId = data.txn.PAYERID + stamp;
+
+          basket.queue({
+            event_type: "donation",
+            first_name: checkoutDetails.response.FIRSTNAME,
+            last_name: checkoutDetails.response.LASTNAME,
+            email: checkoutDetails.response.EMAIL,
+            donation_amount: data.txn.AMT,
+            currency: data.txn.CURRENCYCODE,
+            created: timestamp,
+            recurring: true,
+            frequency: "monthly",
+            service: "paypal",
+            transaction_id: txId,
+            subscription_id: data.txn.PROFILEID,
+            project: appName
+          });
+
+          var redirect = `${locale}/${location}/?frequency=${frequency}&tx=${txId}&amt=${data.txn.AMT}&cc=${data.txn.CURRENCYCODE}`;
+          var email = checkoutDetails.response.EMAIL;
+          if (email) {
+            redirect += `&email=${email}`;
+          }
+          redirect += `&test=${email}`;
+          reply.redirect(redirect);
+        });
       });
-
-      throw Boom.boomify(err);
     }
-
-    paypal_checkout_payment_service = Date.now() - paypalCheckoutPaymentStart;
-
-    request.log(['paypal', 'checkout', frequency], {
-      request_id,
-      paypal_checkout_payment_service
-    });
-
-    let {
-      TIMESTAMP: timestamp,
-      AMT: donation_amount,
-      CURRENCYCODE: currency,
-      PAYERID: payerId,
-      PROFILEID: subscription_id
-    } = checkoutData;
-
-    let {
-      FIRSTNAME: first_name,
-      LASTNAME: last_name,
-      EMAIL: email
-    } = checkoutDetails;
-
-    timestamp = new Date(timestamp).getTime() / 1000;
-
-    // Create unique tx id by combining PayerID and timestamp
-    let stamp = Date.now() / 100;
-    let transaction_id = payerId + stamp;
-
-    basket.queue({
-      event_type: "donation",
-      first_name,
-      last_name,
-      email,
-      donation_amount,
-      currency,
-      created: timestamp,
-      recurring: true,
-      frequency: "monthly",
-      service: "paypal",
-      transaction_id,
-      subscription_id,
-      project: appName
-    });
-
-    return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}`);
   },
-  'stripe-charge-refunded': function(request, h) {
-    let endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_REFUNDED;
-    let signature = request.headers["stripe-signature"];
+  'stripe-charge-refunded': function(request, reply) {
+    var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_REFUNDED;
+    var signature = request.headers["stripe-signature"];
 
-    let event = stripe.constructEvent(request.payload, signature, endpointSecret);
+    var event = stripe.constructEvent(request.payload, signature, endpointSecret);
 
     if (!event) {
-      throw Boom.forbidden('An error occurred while verifying the webhook signing secret');
+      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret'));
     }
 
     if (event.type !== 'charge.refunded') {
-      return h.response('This hook only processes charge.refunded events');
+      return reply('This hook only processes charge.refunded events');
     }
 
-    let event_type = event.type;
-    let charge = event.data.object;
-    let refund = charge.refunds.data[0];
+    var event_type = event.type;
+    var charge = event.data.object;
+    var refund = charge.refunds.data[0];
 
-    let transaction_id = charge.id;
-    let reason = refund.reason;
-    let status = refund.status;
+    var transaction_id = charge.id;
+    var reason = refund.reason;
+    var status = refund.status;
 
     if (reason === null) {
       // refunded via dashboard, mark as requested_by_customer
@@ -691,127 +645,146 @@ const routes = {
       status
     });
 
-    return h.response("charge event processed");
+    return reply("charge event processed");
   },
-  'stripe-dispute': async function(request, h) {
-    const endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_DISPUTE;
-    const signature = request.headers["stripe-signature"];
-    const event = stripe.constructEvent(request.payload, signature, endpointSecret);
+  'stripe-dispute': function(request, reply) {
+    var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_DISPUTE;
+    var signature = request.headers["stripe-signature"];
+
+    var event = stripe.constructEvent(request.payload, signature, endpointSecret);
 
     if (!event) {
-      throw Boom.forbidden('An error occurred while verifying the webhook signing secret');
+      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret'));
     }
 
-    const disputeEvents = [
+
+    var disputeEvents = [
       'charge.dispute.closed',
       'charge.dispute.created',
       'charge.dispute.updated'
     ];
 
+
     if (disputeEvents.indexOf(event.type) === -1) {
-      return h.response('This hook only processes disputes');
+      return reply('This hook only processes disputes');
     }
 
-    const {
-      id: dispute_id,
-      charge: transaction_id,
-      status,
-      reason
-    } = event.data.object;
+    var dispute = event.data.object;
 
-    const event_type = event.type;
-
-    if (event_type === 'charge.dispute.created' && status === 'lost') {
-      try {
-        await stripe.closeDispute(dispute_id);
-        // statements
-      } catch (err) {
-        if (err.message === 'This dispute is already closed') {
-          return console.log(err.message);
+    // kick off a Promise Chain
+    Promise.resolve()
+      .then(function() {
+      // close the dispute automatically if it's not lost already
+        if (event === 'charge.dispute.created' && dispute.status === 'lost') {
+          return Promise.resolve();
         }
 
-        throw Boom.badRequest("Could not close the dispute");
-      }
-    }
+        return stripe.closeDispute(dispute.id)
+          .catch(function(closeDisputeError) {
+            if (closeDisputeError.message === 'This dispute is already closed') {
+              return console.log(closeDisputeError.message);
+            }
 
-    basket.queue({ event_type, transaction_id, reason, status });
+            return Promise.reject("Could not close the dispute");
+          });
+      })
+      .then(function() {
+        basket.queue({
+          event_type: event.type,
+          transaction_id: dispute.charge,
+          reason: dispute.reason,
+          status: dispute.status
+        });
 
-    return h.response("dispute processed");
+        reply("dispute processed");
+      })
+      .catch(function(err) {
+        if (err.isBoom) {
+          return reply(err);
+        }
+
+        return reply(boom.badImplementation('An error occurred while handling the dispute webhook', err));
+      });
+
+
   },
-  'stripe-charge-succeeded': async function(request, h) {
-    let endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_SUCCESS;
-    let signature = request.headers["stripe-signature"];
+  'stripe-charge-succeeded': function(request, reply) {
+    var endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_SUCCESS;
+    var signature = request.headers["stripe-signature"];
 
-    let event = stripe.constructEvent(request.payload, signature, endpointSecret);
+    var event = stripe.constructEvent(request.payload, signature, endpointSecret);
 
     if (!event) {
-      throw Boom.forbidden('An error occurred while verifying the webhook signing secret');
+      return reply(boom.forbidden('An error occurred while verifying the webhook signing secret'));
     }
 
-    let { id } = event.data.object;
+    var charge = event.data.object;
 
     if (event.type !== 'charge.succeeded') {
-      return h.response('This hook only processes charge succeeded events');
+      return reply('This hook only processes charge succeeded events');
     }
 
-    let charge;
+    stripe.retrieveCharge(
+      charge.id,
+      function(fetchChargeErr, charge) {
+        if (fetchChargeErr) {
+          return reply(boom.badImplementation('An error occurred while fetching the invoice for this charge', fetchChargeErr));
+        }
 
-    try {
-      charge = await stripe.retrieveCharge(id);
-    } catch (err) {
-      throw Boom.badImplementation('An error occurred while fetching the invoice for this charge', err);
-    }
+        if (!charge.invoice || !charge.invoice.subscription) {
+          return reply('Charge not part of a subscription');
+        }
 
-    if (!charge.invoice || !charge.invoice.subscription) {
-      return h.response('Charge not part of a subscription');
-    }
+        stripe.retrieveSubscription(
+          charge.invoice.customer,
+          charge.invoice.subscription,
+          {
+            expand: ["customer"]
+          },
+          function(retrieveSubscriptionErr, subscription) {
+            if (retrieveSubscriptionErr) {
+              return reply(boom.badImplementation('An error occurred while fetching the subscription for this charge\'s invoice', retrieveSubscriptionErr));
+            }
 
-    let {
-      customer: customer,
-      subscription: subscription
-    } = charge.invoice;
+            var updateData = {
+              metadata: subscription.metadata
+            };
 
-    try {
-      subscription = stripe.retrieveSubscription(customer, subscription, { expand: ['customer'] });
-    } catch (err) {
-      throw Boom.badImplementation('An error occurred while fetching the subscription for this charge\'s invoice', err);
-    }
+            if (updateData.metadata.thunderbird) {
+              updateData.description = 'Thunderbird monthly';
+            } else if (updateData.metadata.glassroomnyc) {
+              updateData.description = 'glassroomnyc monthly';
+            } else {
+              updateData.description = 'Mozilla Foundation Monthly Donation';
+            }
 
-    let updateData = {
-      metadata: subscription.metadata
-    };
+            // capture recurring stripe transactions in salesforce
+            basket.queue({
+              event_type: "donation",
+              last_name: subscription.customer.sources.data[0].name,
+              email: subscription.customer.email,
+              donation_amount: basket.zeroDecimalCurrencyFix(charge.amount, charge.currency),
+              currency: charge.currency,
+              created: charge.created,
+              recurring: true,
+              frequency: "monthly",
+              service: "stripe",
+              transaction_id: charge.id,
+              subscription_id: subscription.id,
+              project: updateData.metadata.thunderbird ? "thunderbird" : ( updateData.metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
+            });
 
-    if (updateData.metadata.thunderbird) {
-      updateData.description = 'Thunderbird monthly';
-    } else if (updateData.metadata.glassroomnyc) {
-      updateData.description = 'glassroomnyc monthly';
-    } else {
-      updateData.description = 'Mozilla Foundation Monthly Donation';
-    }
+            stripe.updateCharge(charge.id, updateData, function(updateChargeErr) {
+              if (updateChargeErr) {
+                return reply(boom.badImplementation('An error occurred while updating the charge'));
+              }
 
-    // capture recurring stripe transactions in salesforce
-    basket.queue({
-      event_type: "donation",
-      last_name: subscription.customer.sources.data[0].name,
-      email: subscription.customer.email,
-      donation_amount: basket.zeroDecimalCurrencyFix(charge.amount, charge.currency),
-      currency: charge.currency,
-      created: charge.created,
-      recurring: true,
-      frequency: "monthly",
-      service: "stripe",
-      transaction_id: charge.id,
-      subscription_id: subscription.id,
-      project: updateData.metadata.thunderbird ? "thunderbird" : ( updateData.metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
-    });
-
-    try {
-      await stripe.updateCharge(charge.id, updateData);
-    } catch (err) {
-      throw Boom.badImplementation('An error occurred while updating the charge');
-    }
-
-    return h.response('Charge updated');
+              reply('Charge updated');
+            });
+          }
+        );
+      }
+    );
   },
   'stripe-charge-failed': require('./webhooks/stripe-charge-failed.js')
 };

@@ -1,54 +1,100 @@
-const stripeKeys = {
+var stripeKeys = {
   publishableKey: process.env.STRIPE_PUBLIC_KEY,
   // This is just a test key right now, nothing secret about it.
   secretKey: process.env.STRIPE_SECRET_KEY
 };
 
-const stripe = require('stripe')(stripeKeys.secretKey);
+var stripe = require('stripe')(stripeKeys.secretKey);
 stripe.setTimeout(25000);
 
-const stripeRoutes = {
-  customer: function(transaction) {
-    const { email, metadata, stripeToken: source } = transaction;
-    return stripe.customers.create({ email, metadata, source });
+var stripeRoutes = {
+  customer: function(transaction, callback) {
+    var startCreateCustomer = Date.now();
+    stripe.customers.create({
+      email: transaction.email,
+      metadata: transaction.metadata,
+      source: transaction.stripeToken
+    }, function(err, customer) {
+      var stripe_customer_create_service = Date.now() - startCreateCustomer;
+      if (err) {
+        return callback(err, {
+          stripe_customer_create_service
+        });
+      }
+
+      callback(null, {
+        stripe_customer_create_service,
+        customer
+      });
+    });
   },
   single: function(transaction, callback) {
-    const { amount, currency, customer, description, metadata } = transaction;
-    return stripe.charges.create({ amount, currency, customer, description, metadata });
+    var charge = {
+      amount: transaction.amount,
+      currency: transaction.currency,
+      customer: transaction.customer.id,
+      description: transaction.description,
+      metadata: transaction.metadata
+    };
+    var startCreateCharge = Date.now();
+    stripe.charges.create(charge,
+      function(err, charge) {
+        var stripe_charge_create_service = Date.now() - startCreateCharge;
+
+        if (err) {
+          return callback(err, {
+            stripe_charge_create_service
+          });
+        }
+
+        callback(null, {
+          stripe_charge_create_service,
+          charge
+        });
+      }
+    );
   },
   recurring: function(transaction, callback) {
-    const { currency: plan, quantity, metadata } = transaction;
-    const {  id: customerId } = transaction.customer;
-
-    const subscription = { plan, quantity, metadata };
-
+    var subscription = {
+      plan: transaction.currency,
+      quantity: transaction.quantity,
+      metadata: transaction.metadata
+    };
     if (transaction.trialPeriodDays) {
       subscription.trial_period_days = transaction.trialPeriodDays;
     }
-
-    return stripe.customers.createSubscription(customerId, subscription);
+    var startCreateSubscription = Date.now();
+    stripe.customers.createSubscription(transaction.customer.id, subscription,
+      function(err, subscription) {
+        var stripe_create_subscription_service = Date.now() - startCreateSubscription;
+        callback(err, {
+          stripe_create_subscription_service,
+          subscription
+        });
+      }
+    );
   },
   closeDispute: function(disputeId) {
     return stripe.disputes.close(disputeId);
   },
-  updateCharge: function(chargeId, updateData) {
-    return stripe.charges.update(chargeId, updateData);
+  updateCharge: function(chargeId, updateData, callback) {
+    stripe.charges.update(chargeId, updateData, callback);
   },
   retrieveDispute: function(disputeId) {
     return stripe.disputes.retrieve(disputeId, {
       expand: ["charge"]
     });
   },
-  retrieveCharge: function(chargeId) {
-    return stripe.charges.retrieve(chargeId, {
+  retrieveCharge: function(chargeId, callback) {
+    stripe.charges.retrieve(chargeId, {
       expand: ["invoice"]
-    });
+    }, callback);
   },
-  retrieveSubscription: function(customerId, subscriptionId, options) {
-    return stripe.customers.retrieveSubscription(customerId, subscriptionId, options);
+  retrieveSubscription: function(customerId, subscriptionId, options, callback) {
+    stripe.customers.retrieveSubscription(customerId, subscriptionId, options, callback);
   },
   retrieveCustomer: function(customerId, callback) {
-    return stripe.customers.retrieve(customerId);
+    stripe.customers.retrieve(customerId, callback);
   },
   constructEvent: function(payload, signature, endpointSecret) {
     var event;

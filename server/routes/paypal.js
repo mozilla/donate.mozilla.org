@@ -8,7 +8,7 @@ var httpRequest = request.defaults({
   timeout: 25000
 });
 
-function setupPaypal(transaction) {
+function setupPaypal(transaction, callback) {
   var accountType = accountSwitcher.getAccountType(transaction.amount, transaction.currency);
   var paypalCreds = accountSwitcher.creds[accountType];
 
@@ -16,14 +16,12 @@ function setupPaypal(transaction) {
   var locale = transaction.locale;
   var appName = transaction.appName;
 
-  var returnUrl = `${transaction.serverUri}/api/paypal-redirect/${frequency}/${locale}/${appName}/${accountType}/`;
+  var returnUrl = transaction.serverUri + '/api/paypal-redirect/' + frequency + '/' + locale + '/' + appName + '/' + accountType + '/';
 
-  var cancelUrl = `${transaction.serverUri}/`;
-
+  var cancelUrl = transaction.serverUri + '/';
   if (appName === 'thunderbird') {
-    cancelUrl = `${cancelUrl}thunderbird/`;
+    cancelUrl += 'thunderbird/';
   }
-
   var charge = {
     USER: paypalCreds.PAYPAL_USER,
     PWD: paypalCreds.PAYPAL_PWD,
@@ -46,47 +44,54 @@ function setupPaypal(transaction) {
     charge.L_BILLINGAGREEMENTDESCRIPTION0 = transaction.item_name;
     charge.L_BILLINGTYPE0 = 'RecurringPayments';
   }
-  return new Promise((resolve, reject) => {
-    httpRequest({
-      url: process.env.PAYPAL_API_ENDPOINT,
-      method: 'POST',
-      form: charge
-    }, function(err, httpResponse, body) {
-      if (err) {
-        return reject(err);
-      }
-
-      resolve(querystring.parse(body));
-    });
+  var paypalRequestSaleStart = Date.now();
+  httpRequest({
+    url: process.env.PAYPAL_API_ENDPOINT,
+    method: 'POST',
+    form: charge
+  }, function(err, httpResponse, body) {
+    var paypal_request_sale_service = Date.now() - paypalRequestSaleStart;
+    if (err) {
+      callback(err, {
+        paypal_request_sale_service,
+        response: querystring.parse(body)
+      });
+    } else {
+      callback(null, {
+        paypal_request_sale_service,
+        response: querystring.parse(body)
+      });
+    }
   });
 }
 
-function getCheckoutDetails(transaction, options) {
+function getCheckoutDetails(transaction, options, callback) {
+  var paypalCheckoutDetailsStart = Date.now();
   var paypalCreds = accountSwitcher.creds[options.accountType];
 
-  return new Promise((resolve, reject) => {
-    httpRequest({
-      url: process.env.PAYPAL_API_ENDPOINT,
-      method: 'POST',
-      form: {
-        USER: paypalCreds.PAYPAL_USER,
-        PWD: paypalCreds.PAYPAL_PWD,
-        SIGNATURE: paypalCreds.PAYPAL_SIGNATURE,
-        METHOD: 'GetExpressCheckoutDetails',
-        VERSION: '106.0',
-        TOKEN: transaction.token
-      }
-    }, function(err, httpResponse, body) {
-      if (err) {
-        return reject(err);
-      }
-
-      resolve(querystring.parse(body));
+  httpRequest({
+    url: process.env.PAYPAL_API_ENDPOINT,
+    method: 'POST',
+    form: {
+      USER: paypalCreds.PAYPAL_USER,
+      PWD: paypalCreds.PAYPAL_PWD,
+      SIGNATURE: paypalCreds.PAYPAL_SIGNATURE,
+      METHOD: 'GetExpressCheckoutDetails',
+      VERSION: '106.0',
+      TOKEN: transaction.token
+    }
+  }, function(err, httpResponse, body) {
+    var paypal_checkout_details_service = Date.now() - paypalCheckoutDetailsStart;
+    var data = querystring.parse(body);
+    return callback(err, {
+      paypal_checkout_details_service,
+      response: data
     });
   });
 }
 
-function doExpressCheckoutPayment(checkoutDetails, options) {
+function doExpressCheckoutPayment(checkoutDetails, options, callback) {
+  var paypalCheckoutPaymentStart = Date.now();
   var paypalCreds = accountSwitcher.creds[options.accountType];
 
   var recurring = options.recurring;
@@ -113,46 +118,51 @@ function doExpressCheckoutPayment(checkoutDetails, options) {
     details.PAYMENTREQUEST_0_CURRENCYCODE = checkoutDetails.CURRENCYCODE;
   }
 
-  return new Promise((resolve, reject) => {
-    httpRequest({
-      url: process.env.PAYPAL_API_ENDPOINT,
-      method: 'POST',
-      form: details
-    }, (err, httpResponse, body) => {
-      if (err) {
-        return reject(err);
-      }
+  httpRequest({
+    url: process.env.PAYPAL_API_ENDPOINT,
+    method: 'POST',
+    form: details
+  }, function(err, httpResponse, body) {
+    var paypal_checkout_payment_service = Date.now() - paypalCheckoutPaymentStart;
+    if (err) {
+      return callback(err, {
+        paypal_checkout_payment_service
+      });
+    }
+    var txn = querystring.parse(body);
 
-      var txn = querystring.parse(body);
+    if (txn.ACK !== 'Success') {
+      return callback(Boom.badImplementation(txn.L_SHORTMESSAGE0, {
+        error_code: txn.L_ERRORCODE0,
+        error_message: txn.L_LONGMESSAGE0
+      }), {
+        paypal_checkout_payment_service
+      });
+    }
 
-      if (txn.ACK !== 'Success') {
-        return reject(Boom.badImplementation(txn.L_SHORTMESSAGE0, {
-          error_code: txn.L_ERRORCODE0,
-          error_message: txn.L_LONGMESSAGE0
-        }));
-      }
-
-      txn.CURRENCYCODE = checkoutDetails.CURRENCYCODE;
-      if (recurring) {
-        txn.AMT = checkoutDetails.AMT;
-        txn.PAYERID = checkoutDetails.PAYERID;
-      } else {
-        txn.PAYMENTREQUEST_0_AMT = checkoutDetails.PAYMENTREQUEST_0_AMT;
-      }
-      resolve(txn);
+    txn.CURRENCYCODE = checkoutDetails.CURRENCYCODE;
+    if (recurring) {
+      txn.AMT = checkoutDetails.AMT;
+      txn.PAYERID = checkoutDetails.PAYERID;
+    } else {
+      txn.PAYMENTREQUEST_0_AMT = checkoutDetails.PAYMENTREQUEST_0_AMT;
+    }
+    callback(null, {
+      paypal_checkout_payment_service,
+      txn
     });
   });
 }
 
 var paypalRoutes = {
-  setupCheckout: function(transaction) {
-    return setupPaypal(transaction);
+  setupCheckout: function(transaction, callback) {
+    setupPaypal(transaction, callback);
   },
-  getCheckoutDetails: function(transaction, options) {
-    return getCheckoutDetails(transaction, options);
+  getCheckoutDetails: function(transaction, options, callback) {
+    getCheckoutDetails(transaction, options, callback);
   },
-  completeCheckout: function(checkoutDetails, options) {
-    return doExpressCheckoutPayment(checkoutDetails, options);
+  completeCheckout: function(checkoutDetails, options, callback) {
+    doExpressCheckoutPayment(checkoutDetails, options, callback);
   }
 };
 

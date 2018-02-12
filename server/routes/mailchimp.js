@@ -1,40 +1,35 @@
-const httpRequest = require('request');
-const mailchimpListId = process.env.MAILCHIMP_LIST_ID;
-const user = process.env.MAILCHIMP_ACCOUNT_NAME;
-const pass = process.env.MAILCHIMP_API_KEY;
-const auth = { user, pass };
+var httpRequest = require('request');
+var mailchimpApiKey = process.env.MAILCHIMP_API_KEY;
+var mailchimpListId = process.env.MAILCHIMP_LIST_ID;
+var mailchimpAccountName = process.env.MAILCHIMP_ACCOUNT_NAME;
 
-function sendRequest(body) {
-  return new Promise((resolve, reject) => {
-    // Mailchimp API keys store two parts in the key itself seperated via a dash.
-    const splitMailchimpApiKey = pass.split("-");
-    const dc = splitMailchimpApiKey[1] || "";
-    const url = `https://${dc}.api.mailchimp.com/3.0/lists/${mailchimpListId}/members/`;
-
-    httpRequest.post({ url, auth, body }, (err, payload) => {
-      if (err) {
-        return reject(err);
-      }
-
-      resolve(payload);
-    });
-  });
-}
-
-module.exports = async function mailChimp(transaction) {
-  if (!pass) {
+var mailChimp = function(transaction, callback) {
+  callback = callback || function() {};
+  if (!mailchimpApiKey) {
     console.warn("missing mailchimp API key");
     return;
   }
+  // Mailchimp API keys store two parts in the key itself seperated via a dash.
+  var splitMailchimpApiKey = mailchimpApiKey.split("-");
+  var dc = splitMailchimpApiKey[1] || "";
+  var apiKey = splitMailchimpApiKey[0] || "";
 
-  const body = JSON.stringify({
-    email_address: transaction.email,
-    status: "pending",
-    language: "en",
-    merge_fields: {
-      COUNTRY: transaction.country
-    }
-  });
-
-  return await sendRequest(body);
+  var url = "https://" + dc + ".api.mailchimp.com/3.0/lists/" + mailchimpListId + "/members/";
+  httpRequest.post({
+    url: url,
+    auth: {
+      user: mailchimpAccountName,
+      pass: apiKey
+    },
+    body: JSON.stringify({
+      email_address: transaction.email,
+      status: "pending",
+      language: "en",
+      merge_fields: {
+        COUNTRY: transaction.country
+      }
+    })
+  }, callback);
 };
+
+module.exports = mailChimp;

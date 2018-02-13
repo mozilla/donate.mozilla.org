@@ -772,7 +772,7 @@ const routes = {
     } = charge.invoice;
 
     try {
-      subscription = stripe.retrieveSubscription(customer, subscription, { expand: ['customer'] });
+      subscription = await stripe.retrieveSubscription(customer, subscription, { expand: ['customer'] });
     } catch (err) {
       throw Boom.badImplementation('An error occurred while fetching the subscription for this charge\'s invoice', err);
     }

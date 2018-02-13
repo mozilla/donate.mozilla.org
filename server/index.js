@@ -19,7 +19,7 @@ module.exports = async function(options) {
 
   server.auth.strategy("stripe", "bearer-access-token", {
     allowQueryToken: true,
-    validate: async (request, token, h) => {
+    validate: async(request, token, h) => {
       const isValid = token === process.env.STRIPE_WEBHOOK_SECRET;
       const credentials = { token: token };
       return { isValid, credentials };

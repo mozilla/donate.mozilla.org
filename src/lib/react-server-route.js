@@ -9,7 +9,7 @@ var HTML = require('../pages/index.js');
 
 function routeFileContent(locales) {
   var locationParser = require('./location-parser.js')(langmap, locales);
-  return function(request, reply) {
+  return function(request, h) {
     var reactDOM = require("react-dom/server");
     var renderToString = reactDOM.renderToString;
     var renderToStaticMarkup = reactDOM.renderToStaticMarkup;
@@ -89,31 +89,32 @@ function routeFileContent(locales) {
       return "<!doctype html>" + html;
     }
 
-    match({routes, location}, function(error, redirectLocation, renderProps) {
+    return new Promise(function(resolve, reject) {
+      match({routes, location}, function(error, redirectLocation, renderProps) {
 
-      if (error) {
-        reply(error.message).code(500);
-        return;
-      }
-
-      if (parsedRedirect) {
-        reply().redirect("/" + locale + parsedRedirect + search);
-      }
-      // React router lets you specify redirects. If we had any, we literally
-      // just tell our server that we need to look up a different URL.
-      else if (redirectLocation) {
-        reply().redirect(redirectLocation.pathname + "/" + search);
-      }
-      // This is the most interesting part: we have content that React can render.
-      else if (renderProps) {
-
-        if (location === "/") {
-          reply().redirect(location + locale + "/" + search);
-        } else {
-          // Finally, send a full HTML document over to the client
-          reply(generateHTML(renderProps)).type('text/html').code(200);
+        if (error) {
+          return reject(h.response(error.message).code(500));
         }
-      }
+
+        if (parsedRedirect) {
+          return resolve(h.redirect(`/${locale}${parsedRedirect}${search}`));
+        }
+        // React router lets you specify redirects. If we had any, we literally
+        // just tell our server that we need to look up a different URL.
+        else if (redirectLocation) {
+          return resolve(h.redirect(`${redirectLocation.pathname}/${search}`));
+        }
+        // This is the most interesting part: we have content that React can render.
+        else if (renderProps) {
+
+          if (location === "/") {
+            resolve(h.redirect(`${location}${locale}/${search}`));
+          } else {
+            // Finally, send a full HTML document over to the client
+            resolve(generateHTML(renderProps)).type('text/html').code(200);
+          }
+        }
+      });
     });
   };
 }

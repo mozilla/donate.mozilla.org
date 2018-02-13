@@ -1,9 +1,7 @@
-var goodConfig = {
-  reporter: require('good-console-logfmt')
-};
+let squeezeArgs;
 
 if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
-  goodConfig.events = {
+  squeezeArgs = {
     error: '*',
     request: [
       'signup',
@@ -13,7 +11,7 @@ if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
     ]
   };
 } else {
-  goodConfig.events = {
+  squeezeArgs = {
     response: '*',
     log: '*',
     request: [
@@ -25,22 +23,39 @@ if (process.env.NPM_CONFIG_PRODUCTION === 'true') {
   };
 }
 
-var services = [
-  {
-    register: require('inert')
-  },
-  {
-    register: require('good'),
+let services = [];
+
+services.unshift({ plugin: require('inert') });
+
+// Optionally disable request logging
+if (!process.env.DISABLE_LOGGING) {
+  services.unshift({
+    plugin: require('good'),
     options: {
-      reporters: [goodConfig]
+      ops: false,
+      reporters: {
+        defaultReporter: [
+          {
+            module: 'good-squeeze',
+            name: 'Squeeze',
+            args: [squeezeArgs]
+          },
+          {
+            module: 'good-console'
+          },
+          'stdout'
+        ]
+      }
     }
-  },
+  });
+}
+
+services.unshift(
+  { plugin: require('scooter') },
   {
-    register: require('scooter')
-  },
-  {
-    register: require('blankie'),
+    plugin: require('blankie'),
     options: {
+      generateNonces: false,
       connectSrc: ['self', 'https://checkout.stripe.com', '206878104.log.optimizely.com', 'https://api.stripe.com', 'https://pontoon.mozilla.org'],
       fontSrc: ['self', 'https://fonts.gstatic.com', 'https://maxcdn.bootstrapcdn.com', 'https://pontoon.mozilla.org'],
       frameSrc: ['https://js.stripe.com', 'https://checkout.stripe.com', 'https://pontoon.mozilla.org',
@@ -55,6 +70,6 @@ var services = [
       mediaSrc: ['https://d24kjznqej0s8a.cloudfront.net', 'https://assets.mofoprod.net']
     }
   }
-];
+);
 
 module.exports = services;

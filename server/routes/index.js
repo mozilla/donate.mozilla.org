@@ -721,7 +721,7 @@ const routes = {
 
     const event_type = event.type;
 
-    if (event_type === 'charge.dispute.created' && status === 'lost') {
+    if (event_type === 'charge.dispute.created' && status !== 'lost') {
       try {
         await stripe.closeDispute(dispute_id);
         // statements

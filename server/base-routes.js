@@ -78,7 +78,8 @@ const baseRoutes = [
           address: Joi.string().allow(''),
           city: Joi.string().allow(''),
           code: Joi.string().allow(''),
-          description: Joi.string().required()
+          description: Joi.string().required(),
+          donation_url: Joi.string().required()
         }
       },
       response: {
@@ -137,7 +138,8 @@ const baseRoutes = [
           amount: Joi.number().required(),
           locale: Joi.string().min(2).max(12).required(),
           currency: Joi.any().valid(currencyFor.paypal).required(),
-          appName: Joi.string()
+          appName: Joi.string(),
+          donation_url: Joi.string().required()
         }
       },
       response: {

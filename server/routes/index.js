@@ -80,7 +80,8 @@ const routes = {
       stripeToken,
       frequency,
       signup,
-      country
+      country,
+      donation_url
     } = transaction;
     const amount = amountModifier.stripe(transaction.amount, currency);
     const metadata = { email, locale };
@@ -195,7 +196,8 @@ const routes = {
         recurring: false,
         service: "stripe",
         transaction_id: charge.id,
-        project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
+        project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
+        donation_url
       });
 
       const cookie = {

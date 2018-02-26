@@ -459,7 +459,7 @@ const routes = {
       paypal_request_sale_service
     });
 
-    const cookie = { donation_url};
+    const cookie = { donation_url };
     const response = {
       endpoint: process.env.PAYPAL_ENDPOINT,
       token: checkoutDetails.TOKEN
@@ -493,8 +493,8 @@ const routes = {
     // in case someone's browser isn't sending cookies
     const encryptedCookie = request.state && request.state.session;
     if (encryptedCookie) {
-       try {
-        cookie = await decrypt(encryptedCookie);
+      try {
+        let cookie = await decrypt(encryptedCookie);
         donation_url = cookie && cookie.donation_url;
       } catch (err) {
         // lets not throw away money because we don't have a URL
@@ -600,7 +600,7 @@ const routes = {
       });
 
       return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}`)
-      .unstate("session");
+        .unstate("session");
     }
 
     let paypal_checkout_details_service;
@@ -694,7 +694,7 @@ const routes = {
     });
 
     return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}`)
-    .unstate("session");
+      .unstate("session");
   },
   'stripe-charge-refunded': function(request, h) {
     let endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_REFUNDED;

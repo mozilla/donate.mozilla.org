@@ -421,7 +421,7 @@ const routes = {
     let frequency = transaction.frequency || "";
     let currency = transaction.currency;
     let amount = amountModifier.paypal(transaction.amount, currency);
-    let {donation_url} = transaction;
+    let { donation_url } = transaction;
 
     let details = {
       amount: amount,

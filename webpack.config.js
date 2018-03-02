@@ -44,7 +44,11 @@ module.exports = {
       console.log('\n------------------------------------------');
       console.log(' Build complete. To access the server,');
       console.log(' open http://' + process.env.HOST + ':' + process.env.PORT, 'in a browser.');
-      console.log('------------------------------------------');      
-    })
+      console.log('------------------------------------------');
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    }),
+    new webpack.optimize.UglifyJsPlugin()
   ]
 };

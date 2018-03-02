@@ -22,7 +22,9 @@
     "test:depcheck": "dependency-check ./package.json",
     "test:lint": "eslint --ext .js,.jsx .",
     "imagemin": "imagemin assets/images/* assets/images",
-    "postinstall": "npm-run-all build:*"
+    "postinstall": "npm-run-all build:*",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -96,7 +98,8 @@
     "style-loader": "0.18.2",
     "throng": "4.0.0",
     "webpack": "3.2.0",
-    "whatwg-fetch": "0.10.1"
+    "whatwg-fetch": "0.10.1",
+    "snyk": "^1.69.10"
   },
   "devDependencies": {
     "cross-spawn": "2.1.4",
@@ -120,5 +123,6 @@
   },
   "engines": {
     "node": "^8.9.0"
-  }
+  },
+  "snyk": true
 }

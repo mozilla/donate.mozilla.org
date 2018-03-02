@@ -125,7 +125,8 @@ var StripeMixin = {
           locale: locale,
           email: response.email,
           code: response.card.address_zip,
-          description: description
+          description: description,
+          donation_url: window.location.href
         };
 
         checkoutProps.country = response.card.address_country;

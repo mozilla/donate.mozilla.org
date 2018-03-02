@@ -80,7 +80,8 @@ const routes = {
       stripeToken,
       frequency,
       signup,
-      country
+      country,
+      donation_url
     } = transaction;
     const amount = amountModifier.stripe(transaction.amount, currency);
     const metadata = { email, locale };
@@ -195,7 +196,8 @@ const routes = {
         recurring: false,
         service: "stripe",
         transaction_id: charge.id,
-        project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
+        project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
+        donation_url
       });
 
       const cookie = {
@@ -419,6 +421,7 @@ const routes = {
     let frequency = transaction.frequency || "";
     let currency = transaction.currency;
     let amount = amountModifier.paypal(transaction.amount, currency);
+    let { donation_url } = transaction;
 
     let details = {
       amount: amount,
@@ -456,16 +459,48 @@ const routes = {
       paypal_request_sale_service
     });
 
-    return h.response({
+    const cookie = { donation_url };
+    const response = {
       endpoint: process.env.PAYPAL_ENDPOINT,
       token: checkoutDetails.TOKEN
-    }).code(200);
+    };
+
+    try {
+      const encryptedCookie = await encrypt(cookie);
+      return h.response(response)
+        .state("session", encryptedCookie)
+        .code(200);
+
+    } catch (err) {
+      request.log(['error', 'paypal', 'cookie'], {
+        request_id,
+        code: err.code,
+        message: err.message
+      });
+
+      return h.response(response).code(200);
+    }
   },
   'paypal-redirect': async function(request, h) {
     let locale = request.params.locale || '';
     if (locale) {
       locale = '/' + locale;
     }
+
+    let donation_url;
+
+    // don't fail if the donation_url isn't available,
+    // in case someone's browser isn't sending cookies
+    const encryptedCookie = request.state && request.state.session;
+    if (encryptedCookie) {
+      try {
+        let cookie = await decrypt(encryptedCookie);
+        donation_url = cookie && cookie.donation_url;
+      } catch (err) {
+        // lets not throw away money because we don't have a URL
+      }
+    }
+
     let appName = request.params.appName;
     let location = "thank-you";
     if (appName === "thunderbird") {
@@ -560,10 +595,12 @@ const routes = {
         recurring: false,
         service: 'paypal',
         transaction_id,
-        project: appName
+        project: appName,
+        donation_url
       });
 
-      return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}`);
+      return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}`)
+        .unstate("session");
     }
 
     let paypal_checkout_details_service;
@@ -652,10 +689,12 @@ const routes = {
       service: "paypal",
       transaction_id,
       subscription_id,
-      project: appName
+      project: appName,
+      donation_url
     });
 
-    return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}`);
+    return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}`)
+      .unstate("session");
   },
   'stripe-charge-refunded': function(request, h) {
     let endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_REFUNDED;

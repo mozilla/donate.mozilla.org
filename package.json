@@ -22,7 +22,9 @@
     "test:depcheck": "dependency-check ./package.json",
     "test:lint": "eslint --ext .js,.jsx .",
     "imagemin": "imagemin assets/images/* assets/images",
-    "postinstall": "npm-run-all build:*"
+    "postinstall": "npm-run-all build:*",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -45,7 +47,7 @@
     "async": "1.5.1",
     "aws-sdk": "^2.176.0",
     "babel-cli": "6.9.0",
-    "babel-core": "6.9.0",
+    "babel-core": "6.10.4",
     "babel-loader": "6.2.1",
     "babel-preset-es2015": "6.3.13",
     "babel-preset-react": "6.11.1",
@@ -95,8 +97,9 @@
     "stripe": "5.1.1",
     "style-loader": "0.13.0",
     "throng": "4.0.0",
-    "webpack": "1.12.9",
-    "whatwg-fetch": "0.10.1"
+    "webpack": "2.2.0",
+    "whatwg-fetch": "0.10.1",
+    "snyk": "^1.69.10"
   },
   "devDependencies": {
     "cross-spawn": "2.1.4",
@@ -120,5 +123,6 @@
   },
   "engines": {
     "node": "^8.9.0"
-  }
+  },
+  "snyk": true
 }

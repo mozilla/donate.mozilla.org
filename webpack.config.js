@@ -16,13 +16,8 @@ module.exports = {
     extensions: ['.js']
   },
   module: {
-    loaders: [
-      { test: /\.json$/, loaders: ['json-loader'], exclude: ['node_modules'] },
-      { test: /\.less$/, loader: ExtractTextPlugin.extract(
-        'css?sourceMap!less?sourceMap'
-      ), exclude: ['node_modules'] }
-    ],
     rules: [
+      { test: /\.json$/, loader: 'json-loader', exclude: ['node_modules'] },
       { test: /\.jsx$/, enforce: 'pre', loader: 'eslint-loader', exclude: ['node_modules'] },
       { test: /\.less$/, use: ExtractTextPlugin.extract({
           fallback: 'style-loader',

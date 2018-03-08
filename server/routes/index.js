@@ -786,19 +786,19 @@ const routes = {
       throw Boom.badImplementation('An error occurred while fetching the subscription for this charge\'s invoice', err);
     }
 
-    let updateData = {
-      metadata: subscription.metadata
-    };
+    let metadata = subscription.metadata;
+
+    let updateData = { metadata };
 
     let donation_url = '';
 
-    if (subscription.donation_url) {
-      donation_url = subscription.donation_url;
+    if (metadata.donation_url) {
+      donation_url = metadata.donation_url;
     }
 
-    if (updateData.metadata.thunderbird) {
+    if (metadata.thunderbird) {
       updateData.description = 'Thunderbird monthly';
-    } else if (updateData.metadata.glassroomnyc) {
+    } else if (metadata.glassroomnyc) {
       updateData.description = 'glassroomnyc monthly';
     } else {
       updateData.description = 'Mozilla Foundation Monthly Donation';
@@ -818,7 +818,7 @@ const routes = {
       transaction_id: charge.id,
       subscription_id: subscription.id,
       donation_url,
-      project: updateData.metadata.thunderbird ? "thunderbird" : ( updateData.metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
+      project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
     });
 
     try {

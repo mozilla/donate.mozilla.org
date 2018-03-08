@@ -460,27 +460,12 @@ const routes = {
       paypal_request_sale_service
     });
 
-    const cookie = { donation_url };
     const response = {
       endpoint: process.env.PAYPAL_ENDPOINT,
       token: checkoutDetails.TOKEN
     };
 
-    try {
-      const encryptedCookie = await encrypt(cookie);
-      return h.response(response)
-        .state("session", encryptedCookie)
-        .code(200);
-
-    } catch (err) {
-      request.log(['error', 'paypal', 'cookie'], {
-        request_id,
-        code: err.code,
-        message: err.message
-      });
-
-      return h.response(response).code(200);
-    }
+    return h.response(response).code(200);
   },
   'paypal-redirect': async function(request, h) {
     let locale = request.params.locale || '';

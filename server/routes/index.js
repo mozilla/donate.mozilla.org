@@ -235,6 +235,8 @@ const routes = {
       let stripe_create_subscription_service;
       let subscription;
 
+      metadata.donation_url = donation_url;
+
       try {
         subscription = await stripe.recurring({
           // Stripe has plans with set amounts, not custom amounts.
@@ -421,7 +423,6 @@ const routes = {
     let frequency = transaction.frequency || "";
     let currency = transaction.currency;
     let amount = amountModifier.paypal(transaction.amount, currency);
-    let { donation_url } = transaction;
 
     let details = {
       amount: amount,
@@ -485,20 +486,6 @@ const routes = {
     let locale = request.params.locale || '';
     if (locale) {
       locale = '/' + locale;
-    }
-
-    let donation_url;
-
-    // don't fail if the donation_url isn't available,
-    // in case someone's browser isn't sending cookies
-    const encryptedCookie = request.state && request.state.session;
-    if (encryptedCookie) {
-      try {
-        let cookie = await decrypt(encryptedCookie);
-        donation_url = cookie && cookie.donation_url;
-      } catch (err) {
-        // lets not throw away money because we don't have a URL
-      }
     }
 
     let appName = request.params.appName;
@@ -595,8 +582,7 @@ const routes = {
         recurring: false,
         service: 'paypal',
         transaction_id,
-        project: appName,
-        donation_url
+        project: appName
       });
 
       return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}`)
@@ -689,8 +675,7 @@ const routes = {
       service: "paypal",
       transaction_id,
       subscription_id,
-      project: appName,
-      donation_url
+      project: appName
     });
 
     return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}`)
@@ -820,6 +805,12 @@ const routes = {
       metadata: subscription.metadata
     };
 
+    let donation_url = '';
+
+    if (subscription.donation_url) {
+      donation_url = subscription.donation_url;
+    }
+
     if (updateData.metadata.thunderbird) {
       updateData.description = 'Thunderbird monthly';
     } else if (updateData.metadata.glassroomnyc) {
@@ -841,6 +832,7 @@ const routes = {
       service: "stripe",
       transaction_id: charge.id,
       subscription_id: subscription.id,
+      donation_url,
       project: updateData.metadata.thunderbird ? "thunderbird" : ( updateData.metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
     });
 

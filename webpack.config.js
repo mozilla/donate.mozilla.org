@@ -19,7 +19,9 @@ module.exports = {
     rules: [
       { test: /\.json$/, loader: 'json-loader', exclude: ['node_modules'] },
       { test: /\.jsx$/, enforce: 'pre', loader: 'eslint-loader', exclude: ['node_modules'] },
-      { test: /\.less$/, use: ExtractTextPlugin.extract({
+      {
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'less-loader']
         })

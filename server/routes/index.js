@@ -1,5 +1,6 @@
 const iron = require('iron');
 const Boom = require('boom');
+const request = require('request');
 const mailchimpSignup = require('./mailchimp');
 const stripe = require('./stripe');
 const paypal = require('./paypal');
@@ -7,6 +8,10 @@ const basket = require('../lib/basket-queue.js');
 const amountModifier = require('../../dist/lib/amount-modifier.js');
 
 const cookiePassword = process.env.SECRET_COOKIE_PASSWORD;
+
+const httpRequest = request.defaults({
+  timeout: 25000
+});
 
 async function decrypt(encryptedCookie) {
   try {
@@ -70,6 +75,35 @@ const mailchimp = async function(request, h) {
 const routes = {
   signup: require('./signup'),
   mailchimp,
+  'reCaptcha': async function(request, h) {
+    const payload = request.payload || {};
+    const reCaptchaToken = payload.reCaptchaToken || "";
+
+    return new Promise((resolve, reject) => {
+      if (process.env.RECAPTCHA_DISABLED) {
+        return resolve("OK");
+      }
+      httpRequest({
+        url: 'https://www.google.com/recaptcha/api/siteverify',
+        method: 'POST',
+        json: true,
+        form: {
+          'secret': process.env.RECAPTCHA_SECRET_KEY,
+          'response': reCaptchaToken
+        }
+      }, function(err, httpResponse, body) {
+        if (err) {
+          return reject(err);
+        }
+
+        if (!body.success) {
+          reject(new Boom(403, body.errorCodes, body));
+        }
+
+        resolve("OK");
+      });
+    });
+  },
   'stripe': async function(request, h) {
     const transaction = request.payload || {};
     const {

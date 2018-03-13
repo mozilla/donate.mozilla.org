@@ -59,8 +59,11 @@ const baseRoutes = [
   }, {
     method: 'POST',
     path: '/api/stripe-checkout',
-    handler: routes.stripe,
     config: {
+      pre: [
+        routes.reCaptcha
+      ],
+      handler: routes.stripe,
       payload: {
         maxBytes: 32000,
         allow: 'application/json'
@@ -79,7 +82,8 @@ const baseRoutes = [
           city: Joi.string().allow(''),
           code: Joi.string().allow(''),
           description: Joi.string().required(),
-          donation_url: Joi.string().required()
+          donation_url: Joi.string().required(),
+          reCaptchaToken: Joi.string().allow('')
         }
       },
       response: {
@@ -198,6 +202,8 @@ const baseRoutes = [
       var env = {
         APPLICATION_URI: process.env.APPLICATION_URI,
         STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,
+        RECAPTCHA_PUBLIC_KEY: process.env.RECAPTCHA_PUBLIC_KEY,
+        RECAPTCHA_DISABLED: process.env.RECAPTCHA_DISABLED,
         OPTIMIZELY_ID: process.env.OPTIMIZELY_ID,
         OPTIMIZELY_ACTIVE: process.env.OPTIMIZELY_ACTIVE,
         FULL_SUBDOMAIN_FOR_COOKIE: process.env.FULL_SUBDOMAIN_FOR_COOKIE

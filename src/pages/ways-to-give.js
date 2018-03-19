@@ -53,7 +53,7 @@ var WaysToGive = React.createClass({
             {" "}
             <FormattedHTMLMessage id='frankfurt' />
             <br/>
-            <b><FormattedHTMLMessage id='swift_code' /></b>
+            <b><FormattedHTMLMessage id='swift_bic_code' /></b>
             {" SCBLDEFX"}
             <br/>
             <b><FormattedHTMLMessage id='beneficiary' /></b>
@@ -86,7 +86,7 @@ var WaysToGive = React.createClass({
             {" SVB RE Mozilla Foundation"}
           </p>
           <p>
-            <b><FormattedHTMLMessage id='swift_code' /></b>
+            <b><FormattedHTMLMessage id='swift_bic_code' /></b>
             {" NWBKGB2L"}
             <br/>
             <b><FormattedHTMLMessage id='IBAN' /></b>
@@ -131,7 +131,7 @@ var WaysToGive = React.createClass({
             <b><FormattedHTMLMessage id='account_number_usa' /></b>
             {" 3302228513"}
             <br/>
-            <b><FormattedHTMLMessage id='swift_code' /></b>
+            <b><FormattedHTMLMessage id='swift_bic_code' /></b>
             {" SVBKUS6S"}
           </p>
           <br/>

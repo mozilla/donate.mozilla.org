@@ -13,7 +13,7 @@
     "watch:babel": "npm run build:babel -- -w",
     "watch:webpack": "webpack --progress --profile --colors --watch",
     "server": "node start.js",
-    "test": "npm-run-all --parallel test:http test:depcheck test:lint test:karma",
+    "test": "npm-run-all build:* && npm-run-all --parallel test:http test:depcheck test:lint test:karma",
     "test:karma": "karma start",
     "test:coverage": "KARMA_ENV=coverage karma start --reporters coverage,coveralls",
     "watch:test": "karma start --no-single-run --browsers Firefox",

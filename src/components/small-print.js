@@ -26,7 +26,7 @@ var Footer = React.createClass({
           <FormattedHTMLMessage id="problems_donating"/>
         </p>
         <p className="donation-notice">
-          {this.context.intl.formatMessage({id: 'donation_notice'})}
+          {this.context.intl.formatMessage({id: 'donation_notice_2'})}
         </p>
       </div>
     );

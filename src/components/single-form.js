@@ -32,8 +32,12 @@ var singleForm = React.createClass({
     };
   },
   renderPrivacyPolicy: function() {
+    var privicyPolicyMessage = "privacy_policy_var_b";
+    if (this.props.frequency === "monthly") {
+      privicyPolicyMessage = "privacy_policy_var_b_monthly";
+    }
     return (
-      <p className="full"><FormattedHTMLMessage id="privacy_policy_var_b"/></p>
+      <p className="full"><FormattedHTMLMessage id={privicyPolicyMessage}/></p>
     );
   },
   validateStripe: function() {

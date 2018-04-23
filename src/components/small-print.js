@@ -10,6 +10,12 @@ var Footer = React.createClass({
     var wireTransferLink = (<Link to={'/' + this.context.intl.locale + '/ways-to-give#wire'}>{this.context.intl.formatMessage({id: 'wireTransfer'})}</Link>);
     var bitcoinLink = (<Link to={'/' + this.context.intl.locale + '/give-bitcoin/'}>{this.context.intl.formatMessage({id: 'Bitcoin'})}</Link>);
     var checkLink = (<a href={'/' + this.context.intl.locale + '/ways-to-give#check'}>{this.context.intl.formatMessage({id: 'check'})}</a>);
+
+    var donationNotice = "donation_notice";
+    if (/^(en)(\b|$)/.test(this.context.intl.locale)) {
+      donationNotice = "donation_notice_2"
+    }
+
     return (
       <div className="row disclaimers">
         <p className="other-ways-to-give">
@@ -26,7 +32,7 @@ var Footer = React.createClass({
           <FormattedHTMLMessage id="problems_donating"/>
         </p>
         <p className="donation-notice">
-          {this.context.intl.formatMessage({id: 'donation_notice'})}
+          {this.context.intl.formatMessage({id: donationNotice})}
         </p>
       </div>
     );

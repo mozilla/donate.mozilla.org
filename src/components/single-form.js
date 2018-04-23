@@ -33,7 +33,7 @@ var singleForm = React.createClass({
   },
   renderPrivacyPolicy: function() {
     var privacyPolicyMessage = "privacy_policy_var_b";
-    if (this.props.frequency === "monthly") {
+    if (this.props.frequency === "monthly" && /^(en)(\b|$)/.test(this.context.intl.locale)) {
       privacyPolicyMessage = "privacy_policy_var_b_monthly";
     }
     return (

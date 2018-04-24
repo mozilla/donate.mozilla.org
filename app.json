@@ -84,6 +84,12 @@
     "PAYPAL_USER": {
       "required": true
     },
+    "RECAPTCHA_SECRET_KEY": {
+      "value": "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
+    },
+    "RECAPTCHA_PUBLIC_KEY": {
+      "value": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+    },
     "SIGNUP": {
       "required": true
     },

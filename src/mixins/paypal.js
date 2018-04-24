@@ -8,9 +8,15 @@ var PaypalMixin = {
   contextTypes: {
     intl: React.PropTypes.object
   },
-  paypal: function(props) {
+  paypal: function() {
+    var props = {
+      frequency: this.props.frequency,
+      amount: this.props.amount,
+      appName: this.props.appName,
+      currency: this.props.currency.code
+    };
     var description = this.context.intl.formatMessage({id: "mozilla_donation"});
-    var appName = this.props.appName;
+    var appName = props.appName;
 
     if (this.state.submitting !== NOT_SUBMITTING) {
       return;

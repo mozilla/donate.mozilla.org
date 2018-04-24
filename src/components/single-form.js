@@ -42,22 +42,12 @@ var singleForm = React.createClass({
   },
   validateStripe: function() {
     if (this.validateAmount()) {
-      this.stripeCheckout({
-        frequency: this.props.frequency,
-        amount: this.props.amount,
-        appName: this.props.appName,
-        currency: this.props.currency.code
-      });
+      this.stripeCheckout();
     }
   },
   validatePaypal: function() {
     if (this.validateAmount()) {
-      this.paypal({
-        frequency: this.props.frequency,
-        amount: this.props.amount,
-        appName: this.props.appName,
-        currency: this.props.currency.code
-      });
+      this.paypal();
     }
   },
   validateAmount: function() {

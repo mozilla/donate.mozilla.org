@@ -6,52 +6,68 @@ import reactGA from 'react-ga';
 var NOT_SUBMITTING = 0;
 var STRIPE_SUBMITTING = 2;
 
+function doStripeSuccess(data, locale, location) {
+  var transactionId = data.id;
+  var amount;
+  var currency;
+  var email = data.email || "";
+  var country = data.country || "";
+  var donationFrequency = data.frequency;
+
+  if (donationFrequency === "monthly") {
+    currency = data.currency;
+    // Stripe plans are a multiple of the currencies equivilent of Cents
+    // e.g. £5/month = 500 £0.01 subscriptions
+    amount = data.quantity;
+  } else {
+    amount = data.amount;
+    currency = data.currency;
+  }
+
+  location = location || "thank-you";
+  // If we are already signed up, send to share.
+  if (data.signup) {
+    location = "share";
+    email = "";
+    country = "";
+  }
+
+  var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' + transactionId + '&str_frequency=' + donationFrequency;
+
+  if (email) {
+    params += "&email=" + encodeURIComponent(email);
+  }
+  if (country) {
+    params += "&country=" + country;
+  }
+  var page = '/' + locale + '/' + location + '/';
+  window.location = page + params;
+}
+
 var StripeMixin = {
   contextTypes: {
     intl: React.PropTypes.object
   },
   stripeSuccess: function(data) {
-    this.doStripeSuccess(data, "thank-you");
+    doStripeSuccess(data, this.context.intl.locale, "thank-you");
   },
   thunderbirdStripeSuccess: function(data) {
-    this.doStripeSuccess(data, "thunderbird/thank-you");
+    doStripeSuccess(data, this.context.intl.locale, "thunderbird/thank-you");
   },
-  doStripeSuccess: function(data, location) {
-    var transactionId = data.id;
-    var amount;
-    var currency;
-    var email = data.email || "";
-    var country = data.country || "";
-    var donationFrequency = data.frequency;
-
-    if (donationFrequency === "monthly") {
-      currency = data.currency;
-      // Stripe plans are a multiple of the currencies equivilent of Cents
-      // e.g. £5/month = 500 £0.01 subscriptions
-      amount = data.quantity;
-    } else {
-      amount = data.amount;
-      currency = data.currency;
-    }
-
-    location = location || "thank-you";
-    // If we are already signed up, send to share.
-    if (data.signup) {
-      location = "share";
-      email = "";
-      country = "";
-    }
-
-    var params = '?payment=Stripe&str_amount=' + amount + '&str_currency=' + currency + '&str_id=' + transactionId + '&str_frequency=' + donationFrequency;
-
-    if (email) {
-      params += "&email=" + encodeURIComponent(email);
-    }
-    if (country) {
-      params += "&country=" + country;
-    }
-    var page = '/' + this.context.intl.locale + '/' + location + '/';
-    window.location = page + params;
+  componentDidMount: function() {
+    this.setupRecaptcha();
+  },
+  getInitialState: function() {
+    return {
+      checkoutPropsEmail: "",
+      checkoutPropsCode: "",
+      checkoutPropsDescription: "",
+      checkoutPropsCountry: "",
+      checkoutPropsAddress: "",
+      checkoutPropsCity: "",
+      checkoutPropsFirst: "",
+      stripeToken: ""
+    };
   },
   stripeError: function(error) {
     this.setState({
@@ -64,15 +80,81 @@ var StripeMixin = {
       label: error
     });
   },
-  stripeCheckout: function(props) {
+  expectRecaptcha: function(callback) {
+    if (typeof window === "undefined") {
+      return;
+    }
+    if (!window.grecaptcha) {
+      return setTimeout(() => {
+        this.expectRecaptcha(callback);
+      }, 100);
+    }
+
+    callback();
+  },
+  setupRecaptcha: function() {
+    if (process.env.RECAPTCHA_DISABLED) {
+      return;
+    }
+    this.expectRecaptcha(() => {
+      window.grecaptcha.render('g-recaptcha', {
+        'sitekey' : process.env.RECAPTCHA_PUBLIC_KEY,
+        'size': 'invisible',
+        'callback': this.stripeSubmit
+      });
+    });
+  },
+  executeRecaptcha: function() {
+    if (process.env.RECAPTCHA_DISABLED) {
+      return this.stripeSubmit();
+    }
+
+    // This is a hack to get around the reCaptcha
+    // puzzle being shown at the top of the page.
+    window.scrollTo(0, 0);
+    this.expectRecaptcha(window.grecaptcha.execute);
+  },
+  stripeSubmit: function(reCaptchaToken) {
     var success = this.stripeSuccess;
     var error = this.stripeError;
+    var appName = this.props.appName;
+
+    if (appName === "thunderbird") {
+      success = this.thunderbirdStripeSuccess;
+    }
+
+    var checkoutProps = {
+      frequency: this.props.frequency,
+      amount: this.props.amount,
+      currency: this.props.currency.code,
+      locale: this.context.intl.locale,
+      donation_url: window.location.href,
+      email: this.state.checkoutPropsEmail,
+      code: this.state.checkoutPropsCode,
+      description: this.state.checkoutPropsDescription,
+      stripeToken: this.state.stripeToken,
+      country: this.state.checkoutPropsCountry,
+      address: this.state.checkoutPropsAddress,
+      city: this.state.checkoutPropsCity,
+      first: this.state.checkoutPropsFirst
+    };
+
+    checkoutProps.reCaptchaToken = reCaptchaToken || "";
+    submit("/api/stripe-checkout", checkoutProps, success, function(response) {
+      if (response.stripe) {
+        error(response.stripe.rawType);
+      } else {
+        error(response.error);
+      }
+    });
+  },
+  stripeCheckout: function() {
     var description = this.context.intl.formatMessage({id: "mozilla_donation"});
     var handlerDesc = this.context.intl.formatMessage({id: "donate_now"});
-    var appName = props.appName;
-    var currency = props.currency;
-    var locale = this.context.intl.locale;
-    var amount = props.amount;
+    var appName = this.props.appName;
+    var currency = this.props.currency.code;
+    var amount = this.props.amount;
+
     // Stripe uses the same closed callback for closing the input and success.
     // We only want to stop the spinner if it's closed via the x button.
     // Once we get a token, don't close the spinner until we get an error.
@@ -86,11 +168,10 @@ var StripeMixin = {
 
     if (appName === "thunderbird") {
       description = "Thunderbird";
-      success = this.thunderbirdStripeSuccess;
     } else if (appName === "glassroomnyc") {
       description = "glassroomnyc";
     }
-    if (props.frequency === "monthly") {
+    if (this.props.frequency === "monthly") {
       description = this.context.intl.formatMessage({id: "mozilla_monthly_donation"});
       handlerDesc = this.context.intl.formatMessage({id: "donate_monthly"});
       if (appName === "thunderbird") {
@@ -107,7 +188,7 @@ var StripeMixin = {
       zipCode: true,
       allowRememberMe: false,
       billingAddress: true,
-      locale: locale,
+      locale: this.context.intl.locale,
       closed: () => {
         if (formClosable) {
           this.setState({
@@ -115,32 +196,18 @@ var StripeMixin = {
           });
         }
       },
-      token: function(response) {
+      token: (response) => {
         formClosable = false;
-        var checkoutProps = {
-          frequency: props.frequency,
-          amount: amount,
+        this.setState({
+          checkoutPropsEmail: response.email,
+          checkoutPropsCode: response.card.address_zip,
+          checkoutPropsDescription: description,
           stripeToken: response.id,
-          currency: currency,
-          locale: locale,
-          email: response.email,
-          code: response.card.address_zip,
-          description: description,
-          donation_url: window.location.href
-        };
-
-        checkoutProps.country = response.card.address_country;
-        checkoutProps.address = response.card.address_line1;
-        checkoutProps.city = response.card.address_city;
-        checkoutProps.first = response.card.name;
-
-        submit("/api/stripe-checkout", checkoutProps, success, function(response) {
-          if (response.stripe) {
-            error(response.stripe.rawType);
-          } else {
-            error(response.error);
-          }
-        });
+          checkoutPropsCountry: response.card.address_country,
+          checkoutPropsAddress: response.card.address_line1,
+          checkoutPropsCity: response.card.address_city,
+          checkoutPropsFirst: response.card.name
+        }, this.executeRecaptcha);
       }
     });
 

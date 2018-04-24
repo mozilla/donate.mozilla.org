@@ -73,6 +73,7 @@ var Index = React.createClass({
           <link rel="icon" href={this.props.favicon} type="image/x-icon"/>
           <link rel="stylesheet" href={'/' + fileHashes.main.css}/>
           <script src="/api/client-env.js"></script>
+          <script async src={"https://www.google.com/recaptcha/api.js?render=explicit&hl=" + this.props.locale}></script>
           <script dangerouslySetInnerHTML={{__html: ga}}></script>
           {
             localesData.map((localeData, index) => {
@@ -83,6 +84,7 @@ var Index = React.createClass({
           }
         </head>
         <body>
+          <div id="g-recaptcha"></div>
           <div id="my-app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
           <link rel="stylesheet" href={googleFonts}/>
           <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>

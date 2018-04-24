@@ -217,6 +217,11 @@ var Faq = React.createClass({
               <p><FormattedHTMLMessage id='faq_item_18_paragraph'/></p>
             </Panel>
 
+            <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_19" header={this.context.intl.formatHTMLMessage({id: 'faq_item_19_header'})}>
+              <p><FormattedHTMLMessage id='faq_item_19_paragraph_a'/></p>
+              <p><FormattedHTMLMessage id='faq_item_19_paragraph_b'/></p>
+            </Panel>
+
             {this.renderEnglishAmazonSmile()}
           </div>
         </div>

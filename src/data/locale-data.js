@@ -15,6 +15,7 @@ module.exports = {
   'en-CA': 'cad',
   'en-GB': 'gbp',
   'en-IN': 'inr',
+  'en-NZ': 'nzd',
   'en-US': 'usd',
   'en-ZA': 'zar',
   'es': 'eur',

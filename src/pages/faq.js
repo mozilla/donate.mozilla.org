@@ -100,6 +100,17 @@ var Faq = React.createClass({
     }
     return (<div></div>);
   },
+  renderRecaptchFaqItem: function() {
+    if (process.env.RECAPTCHA_DISABLED) {
+      return (<div></div>);
+    }
+    return (
+      <Panel activeKey={this.state.activeKey} activateKey={this.onKeyChange} itemKey="item_19" header={this.context.intl.formatHTMLMessage({id: 'faq_item_19_header'})}>
+        <p><FormattedHTMLMessage id='faq_item_19_paragraph_a'/></p>
+        <p><FormattedHTMLMessage id='faq_item_19_paragraph_b'/></p>
+      </Panel>
+    );
+  },
   render: function() {
     var className = "row faq-page";
     if (this.props.test) {
@@ -217,11 +228,7 @@ var Faq = React.createClass({
               <p><FormattedHTMLMessage id='faq_item_18_paragraph'/></p>
             </Panel>
 
-            <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_19" header={this.context.intl.formatHTMLMessage({id: 'faq_item_19_header'})}>
-              <p><FormattedHTMLMessage id='faq_item_19_paragraph_a'/></p>
-              <p><FormattedHTMLMessage id='faq_item_19_paragraph_b'/></p>
-            </Panel>
-
+            {this.renderRecaptchFaqItem()}
             {this.renderEnglishAmazonSmile()}
           </div>
         </div>

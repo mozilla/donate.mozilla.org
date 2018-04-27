@@ -395,6 +395,17 @@ module.exports = {
       monthly: ['11160', '5580', '3350', '2240']
     }
   },
+  'lak': {
+    code: 'lak',
+    minAmount: '17000',
+    symbol: '₭',
+    amexDisabled: true,
+    disabled: "paypal",
+    presets: {
+      single: ['160000', '80000', '40000', '25000'],
+      monthly: ['80000', '40000', '25000', '17000']
+    }
+  },
   'lbp': {
     code: 'lbp',
     minAmount: '3016',

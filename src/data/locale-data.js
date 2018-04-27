@@ -40,6 +40,7 @@ module.exports = {
   'ka': 'gel',
   'kab': 'dzd',
   'ko': 'krw',
+  'lo': 'lak',
   'lv': 'eur',
   'ml': 'inr',
   'mr': 'inr',

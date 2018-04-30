@@ -162,7 +162,7 @@ var Faq = React.createClass({
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_5" header={this.context.intl.formatHTMLMessage({id: 'faq_item_5_header'})}>
-              <p><FormattedHTMLMessage id='faq_item_5_paragraph'/></p>
+              <p><FormattedHTMLMessage id='faq_item_5_paragraph_b'/></p>
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_6" header={this.context.intl.formatHTMLMessage({id: 'faq_item_6_header'})}>

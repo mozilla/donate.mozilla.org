@@ -20,10 +20,9 @@ var Footer = React.createClass({
       <div className="row disclaimers">
         <p className="other-ways-to-give">
           <FormattedMessage
-            id='other_way_to_give_wire'
+            id='other_way_to_give_wire_check'
             values={{
               wireTransferLink,
-              bitcoinLink,
               checkLink
             }}
           />

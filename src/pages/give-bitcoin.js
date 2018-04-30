@@ -15,16 +15,16 @@ var giveBitcoin = React.createClass({
         </Header>
 
         <div className="container">
-          <div className="wrap">
+          {/*<div className="wrap">
             <div className="row">
               <a className="coinbase-button" href="https://www.coinbase.com/checkouts/a9b87242f4430d841e140fdc90b81df2">
                 <i className="fa fa-shopping-cart"></i> {this.context.intl.formatMessage({id: 'donate_butcoins'})}
               </a>
             </div>
-          </div>
+          </div>*/}
           <div className="row">
             <p className="donation-notice">
-              <FormattedHTMLMessage id='donation_notice_bitcoin' />
+              <FormattedHTMLMessage id='donation_notice_bitcoin_disabled' />
             </p>
           </div>
         </div>

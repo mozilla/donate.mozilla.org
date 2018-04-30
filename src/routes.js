@@ -21,8 +21,7 @@ var routes = (
             <Route path='share' component={require('./pages/share.js')}/>
             <Route path='ways-to-give' component={require('./pages/ways-to-give.js')}/>
             <Route path='faq' component={require('./pages/faq.js')}/>
-            //<Route path='give-bitcoin' component={require('./pages/give-bitcoin.js')}/>
-            <Redirect from="/give-bitcoin" to="/" />
+            <Route path='give-bitcoin' component={require('./pages/give-bitcoin.js')}/>
             <Route path="thunderbird">
               <IndexRoute component={require('./pages/thunderbird/about.js')}/>
               <Route path='about' component={require('./pages/thunderbird/about.js')}/>

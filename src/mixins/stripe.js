@@ -90,7 +90,7 @@ var StripeMixin = {
       }, 100);
     }
 
-    callback();
+    window.grecaptcha.ready(callback);
   },
   setupRecaptcha: function() {
     if (process.env.RECAPTCHA_DISABLED) {

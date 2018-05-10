@@ -15,109 +15,10 @@ module.exports = React.createClass({
   },
   componentDidMount: function() {
     var aboutCopy = (<span>{this.context.intl.formatMessage({id: 'additional_info'})}</span>);
-    if (this.props.test === "nnsnippet1707") {
-      aboutCopy = (
-        <span>
-          is a global nonprofit that stands up for an open and healthy Internet, where telecom companies are not allowed to censor or throttle your access to the web based on the content you want to see. Will you give today?
-        </span>
-      );
-    } else if (this.props.test === "eoy2017test1") {
-      aboutCopy = (
-        <span>
-          If you believe an inclusive, diverse Web is better for the future of the internet, then it’s time to join Mozilla and do your part as digital citizens. Donate today and you’ll be supporting programs that keep the internet healthy, free, and accessible to us all.
-        </span>
-      );
-    } else if (this.props.test === "eoy2017test2") {
-      aboutCopy = (
-        <span>
-          An open Web works when people like you come together to protect it. As a non-profit, we rely on donations to carry out our mission. When you support Mozilla, you’re fighting for a future better, healthy, internet. So please donate today.
-        </span>
-      );
-    } else if (this.props.test === "misinformation") {
-      aboutCopy = (
-        <span>
-          Fake News threatens to make the Web divisive, dangerous & overall - not fun. As a non-profit, we rely on donations to carry out our mission — and when you support Mozilla, you’re standing up for a healthy Internet. Donate today.
-          <br/>
-          <br/>
-          Not ready to donate? Subscribe to our <a href="https://www.mozilla.org/newsletter/?src=misinformation">newsletter</a> to learn more about what we do.
-        </span>
-      );
-    } else if (this.props.test === "decentralization") {
-      aboutCopy = (
-        <span>
-          We work every year to keep the Web open & free; it’s thanks to thousands of people around the world that we can continue to fight for people, not profit. Your donation helps us meet our goals for 2018. Can you chip in today?
-          <br/>
-          <br/>
-          Not ready to donate? Subscribe to our <a href="https://www.mozilla.org/newsletter/?src=decentralization">newsletter</a> to learn more about what we do.
-        </span>
-      );
-    } else if (this.props.test === "digital-inclusion") {
-      aboutCopy = (
-        <span>
-          You can help Mozilla continue to defend the web from trolls and cyberbullies.  An inclusive, diverse Web is better for all of us, and your support helps us to achieve that. Make a donation today, and stand up for a healthy Internet.
-          <br/>
-          <br/>
-          Not ready to donate? Subscribe to our <a href="https://www.mozilla.org/newsletter/?src=digital-inclusion">newsletter</a> to learn more about what we do.
-        </span>
-      );
-    } else if (this.props.test === "de-copy") {
-      aboutCopy = (
-        <span>
-          Als Non-Profit-Organisation sind wir unabhängig und frei. Unser Handeln wird nicht durch die Interessen anderer Unternehmen bestimmt. Darauf sind wir stolz. Gemeinsam mit tausenden von freiwilligen Helfern weltweit treten wir für ein offenes Internet ein. Unterstützen Sie uns jetzt, damit das Netz auch in Zukunft weiterhin für alle offen and zugänglich bleibt. Vielen Dank für Ihre Spende!
-        </span>
-      );
-    }
 
     this.setState({
       aboutCopy: aboutCopy
     });
-
-    var percentIncrement = 10; // We'll track the video progress in 10% increments.
-    if (this.props.test === "video") {
-      this.setState({
-        nextPercentDone: percentIncrement,
-        percentIncrement : percentIncrement,
-        videoStarted : false
-      });
-
-      this.videoPlayer.addEventListener("play", this.onVideoStart);
-      this.videoPlayer.addEventListener("timeupdate", this.onVideoTimeupdate);
-    }
-  },
-  componentWillUnmount: function(e) {
-    if (this.props.test === "video") {
-      this.videoPlayer.removeEventListener("play", this.onVideoStart);
-      this.videoPlayer.removeEventListener("timeupdate", this.onVideoTimeupdate);
-    }
-  },
-  onVideoTimeupdate: function(e) {
-    var video = e.target;
-    var nextPercentDone = this.state.nextPercentDone;
-    var videoProgress = video.currentTime / video.duration * 100;
-
-    if (videoProgress >= nextPercentDone) {
-      this.setState({
-        nextPercentDone: nextPercentDone + this.state.percentIncrement
-      });
-      reactGA.event({
-        category: "Video",
-        action: "Video Progress",
-        label: "Donate Video",
-        value: nextPercentDone
-      });
-    }
-  },
-  onVideoStart: function(e) {
-    if (this.state.videoStarted === false) {
-      this.setState({
-        videoStarted : true
-      });
-      reactGA.event({
-        category: "Video",
-        action: "Initial Video Start",
-        label: "Donate Video"
-      });
-    }
   },
   renderTextAboutPage: function() {
     return (
@@ -131,37 +32,10 @@ module.exports = React.createClass({
       </div>
     );
   },
-  renderVideoAboutPage: function() {
-    return (
-      <div className="container additional-page">
-        <div className="content-wrapper">
-          <img className="mozilla-watermark" alt="Mozilla Logo" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
-        </div>
-        <video ref={(videoPlayer) => { this.videoPlayer = videoPlayer; }} controls poster="/assets/images/donate-video-poster.jpg">
-          <source src="https://assets.mofoprod.net/fundraising/2017/fundraising-video-single-caption-480p.webm" type="video/webm" />
-          <source src="https://assets.mofoprod.net/fundraising/2017/fundraising-video-single-caption-480p.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <div className="content-wrapper">
-          <p>
-            { this.state.aboutCopy }
-          </p>
-        </div>
-      </div>
-    );
-  },
   render: function() {
     var className = "row additional-info-container";
 
-    if (this.props.test) {
-      className += " " + this.props.test;
-    }
-
     var additionalInfo = this.renderTextAboutPage();
-
-    if (this.props.test === "video") {
-      additionalInfo = this.renderVideoAboutPage();
-    }
 
     return (
       <div className={className}>
@@ -173,7 +47,6 @@ module.exports = React.createClass({
             amount={this.props.amount}
             frequency={this.props.frequency}
             country={this.props.country}
-            stripeButtonTest={this.props.test === "stripebutton"}
           />
         </div>
         <SmallPrint/>

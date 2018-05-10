@@ -18,9 +18,6 @@ var ThankYou = React.createClass({
     if (this.props.params && /^(en)(\b|$)/.test(this.context.intl.locale)) {
       signUpOrSocial = (<Signup country={this.props.country}/>);
     }
-    if (this.props.test) {
-      className += " " + this.props.test;
-    }
     return (
       <div>
         <div className={className}>

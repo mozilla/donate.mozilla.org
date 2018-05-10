@@ -85,9 +85,6 @@ var singleForm = React.createClass({
   },
   renderPaymentOptions: function() {
     if (this.props.currency.disabled !== "paypal") {
-      if (this.props.stripeButtonTest) {
-        return this.renderStripeButtonTestForm();
-      }
       return this.renderBaseForm();
     }
 
@@ -102,38 +99,6 @@ var singleForm = React.createClass({
     }
 
     return this.renderWithDisabledCurrency(className);
-  },
-  renderStripeButtonTestForm: function() {
-    var alsoPaypal = (
-      <div className="also-paypal">
-        You can also <a onClick={this.validatePaypal}>Donate via PayPal</a>.
-      </div>
-    );
-    if (this.state.submitting === PAYPAL_SUBMITTING) {
-      alsoPaypal = (
-        <div className="also-paypal">
-          <div className="submitting-container"><i className="fa fa-cog fa-spin"/>{this.context.intl.formatMessage({id: 'submitting'})}</div>
-        </div>
-      );
-    }
-    return (
-      <div className="stripe-button-test">
-        <SectionHeading>
-          <h4 className="left choose-payment">{this.context.intl.formatMessage({id: "choose_payment"})}</h4>
-          <p id="secure-label" className="right"><i className="fa fa-lock"></i>{this.context.intl.formatMessage({id: 'secure'})}</p>
-        </SectionHeading>
-        <StripeButton
-          currency={this.props.currency}
-          name="payment-type"
-          onSubmit={this.validateStripe}
-          submitting={this.state.submitting === STRIPE_SUBMITTING}
-        />
-        {alsoPaypal}
-        <div className="row">
-          {this.renderPrivacyPolicy()}
-        </div>
-      </div>
-    );
   },
   renderBaseForm: function() {
     return (

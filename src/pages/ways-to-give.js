@@ -18,9 +18,6 @@ var WaysToGive = React.createClass({
   },
   render: function() {
     var className = "row faq-page ways-to-give-page";
-    if (this.props.test) {
-      className += " " + this.props.test;
-    }
     return (
       <div className={className}>
         <div className="faq-header">

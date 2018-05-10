@@ -61,7 +61,7 @@ services.unshift(
       frameSrc: ['https://js.stripe.com', 'https://checkout.stripe.com', 'https://pontoon.mozilla.org',
         'https://www.google.com/recaptcha/api2/'],
       imgSrc: ['self', 'https://www.google-analytics.com', 'https://q.stripe.com', 'https://pontoon.mozilla.org', 'https://*.shpg.org/'],
-      scriptSrc: ['self', 'unsafe-inline', 'unsafe-eval',
+      scriptSrc: ['self', 'unsafe-inline',
         'https://www.google-analytics.com', 'https://ajax.googleapis.com', 'https://*.shpg.org/',
         'https://js.stripe.com', 'https://checkout.stripe.com', 'https://pontoon.mozilla.org',
         'https://www.google.com/recaptcha/api.js', 'https://www.gstatic.com/recaptcha/api2/'],

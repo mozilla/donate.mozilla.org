@@ -1,7 +1,5 @@
 import fs from 'fs';
 import React from 'react';
-import Optimizely from '../components/optimizely.js';
-import OptimizelySubdomain from '../components/optimizelysubdomain.js';
 import Path from 'path';
 import Pontoon from '../components/pontoon.js';
 
@@ -66,10 +64,7 @@ var Index = React.createClass({
 
           <link rel="preconnect" href="https://www.google-analytics.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link rel="preconnect" href="https://206878104.log.optimizely.com" />
           <title>donate.mozilla.org | {metaData.site_title}</title>
-          <OptimizelySubdomain/>
-          <Optimizely/>
           <link rel="icon" href={this.props.favicon} type="image/x-icon"/>
           <link rel="stylesheet" href={'/' + fileHashes.main.css}/>
           <script src="/api/client-env.js"></script>

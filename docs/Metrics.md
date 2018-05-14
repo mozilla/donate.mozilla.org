@@ -20,7 +20,7 @@ We also want to track some additional information specific to our fundraising so
 * `currency code`
 * `frequency` < One-off or Monthly
 
-We then use these values to record a [Google Analytics Ecommerce Event](https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingEcommerce), and an [Optimizely Revenue Event](https://help.optimizely.com/hc/en-us/articles/200039865-Revenue-tracking-goals).
+We then use these values to record a [Google Analytics Ecommerce Event](https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingEcommerce).
 
 ### Virtual Pageviews
 
@@ -48,12 +48,9 @@ e.g.
 
 * [Wikipedia: Conversion Rate Optimization](https://en.wikipedia.org/wiki/Conversion_rate_optimization)
 
-### Intro to Optimizely
+### Intro to Traffic Cop
 
-* We use [Optimizely](http://optimizely.com/) to run our A/B testing experiments.
-  * Optimizely tracking is [the first tag to load on all our pages](https://github.com/mozilla/donate.mozilla.org/blob/master/pages/index.jsx#L8)
-  * We fire a custom [Optimizely conversion event on our thank you pages](https://github.com/mozilla/donate.mozilla.org/blob/master/assets/js/analytics.js#L121-L126)
-  * [Learn more about Optimizely](https://learn.optimizely.com/hc/en-us)
+* We are in the process of implementing [Traffic Cop](https://github.com/mozilla/trafficcop) to run our A/B testing experiments.
 
 ### Types of tests
 

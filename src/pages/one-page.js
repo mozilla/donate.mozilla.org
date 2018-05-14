@@ -10,9 +10,6 @@ var onePage = React.createClass({
   },
   render: function() {
     var className = "row";
-    if (this.props.test) {
-      className += " " + this.props.test;
-    }
     return (
       <div className={className}>
         <Header alt={this.context.intl.formatMessage({id: 'donate_to_mozilla'})}></Header>

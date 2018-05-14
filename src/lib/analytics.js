@@ -88,14 +88,6 @@ module.exports = function() {
       amt = toTwoDP(1000 / exchangeRate);
     }
 
-    // Optimizely conversion tracking
-    window.optimizely = window.optimizely || [];
-    window.optimizely.push(['trackEvent', 'donation', {
-      // Optimizely isn't multi currency, so only works with USD, in cents
-      'revenue': amtUSD * 100
-    }]);
-
-
     if (window.ga) {
 
       let ga = window.ga;

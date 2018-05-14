@@ -113,9 +113,6 @@ var Faq = React.createClass({
   },
   render: function() {
     var className = "row faq-page";
-    if (this.props.test) {
-      className += " " + this.props.test;
-    }
     var activeKey = this.state.activeKey;
 
     return (

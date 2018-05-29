@@ -12,7 +12,7 @@ import { FormattedHTMLMessage } from 'react-intl';
 import currencies from '../data/currencies.js';
 
 import { connect } from 'react-redux';
-import { setAmountError } from '../actions'; 
+import { setAmountError } from '../actions';
 import PaypalMixin from '../mixins/paypal.js';
 import StripeMixin from '../mixins/stripe.js';
 
@@ -33,7 +33,7 @@ var singleForm = React.createClass({
   },
   renderPrivacyPolicy: function() {
     var privacyPolicyMessage = "privacy_policy_var_b";
-    if (this.props.frequency === "monthly" && /^(en)(\b|$)/.test(this.context.intl.locale)) {
+    if (this.props.frequency === "monthly") {
       privacyPolicyMessage = "privacy_policy_var_b_monthly";
     }
     return (

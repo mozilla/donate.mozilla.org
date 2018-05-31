@@ -1,24 +1,5 @@
 var _dntStatus = navigator.doNotTrack || navigator.msDoNotTrack;
-
-var fxMatch = navigator.userAgent.match(/Firefox\/(\d+)/);
-
-var ie10Match = navigator.userAgent.match(/MSIE 10/i);
-
-var w8Match = navigator.appVersion.match(/Windows NT 6.2/);
-
-if (fxMatch && Number(fxMatch[1]) < 32) {
-
-  _dntStatus = 'Unspecified';
-
-} else if (ie10Match && w8Match) {
-
-   _dntStatus = 'Unspecified';
-
-} else {
-
-  _dntStatus = { '0': 'Disabled', '1': 'Enabled' }[_dntStatus] || 'Unspecified';
-
-}
+_dntStatus = { '0': 'Disabled', '1': 'Enabled' }[_dntStatus] || 'Unspecified';
 
 if (_dntStatus !== 'Enabled'){
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

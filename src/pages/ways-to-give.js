@@ -115,7 +115,7 @@ var WaysToGive = React.createClass({
             {" Mozilla Foundation"}
             <br/>
             <b><FormattedHTMLMessage id='account_number_usa' /></b>
-            {" 3302228513"}
+            {" 3302412870"}
           </p>
           <h4><FormattedHTMLMessage id='international_transfer' /></h4>
           <p>
@@ -126,7 +126,7 @@ var WaysToGive = React.createClass({
             {" Mozilla Foundation"}
             <br/>
             <b><FormattedHTMLMessage id='account_number_usa' /></b>
-            {" 3302228513"}
+            {" 3302412870"}
             <br/>
             <b><FormattedHTMLMessage id='swift_bic_code' /></b>
             {" SVBKUS6S"}

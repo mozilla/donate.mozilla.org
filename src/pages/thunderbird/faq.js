@@ -193,7 +193,7 @@ var Faq = React.createClass({
               {" Mozilla Foundation"}
               <br/>
               <b><FormattedHTMLMessage id='account_number_usa' /></b>
-              {" 3302228513"}
+              {" 3302412870"}
               <br/>
               <b><FormattedHTMLMessage id='memo_field' /></b>
               {" Thunderbird"}
@@ -206,7 +206,7 @@ var Faq = React.createClass({
               {" Mozilla Foundation"}
               <br/>
               <b><FormattedHTMLMessage id='account_number_usa' /></b>
-              {" 3302228513"}
+              {" 3302412870"}
               <br/>
               <b><FormattedHTMLMessage id='memo_field' /></b>
               {" Thunderbird"}

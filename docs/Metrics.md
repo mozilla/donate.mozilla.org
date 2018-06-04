@@ -51,15 +51,17 @@ e.g.
 ### Intro to Traffic Cop
 
 * We are in the process of implementing [Traffic Cop](https://github.com/mozilla/trafficcop) to run our A/B testing experiments.
+* [Documentation](https://github.com/mozilla/trafficcop/blob/master/documentation.md)
 
 ### Types of tests
 
-Typically, A/B tests fall into one of two categories:
+Typically, A/B tests fall into this category:
 
-1. A significant change to a form or page, which is tested by creating multiple variations of the page and using Optimizely to distribute a % of visitors to each variation. This new page is commited to the repo and deployed *before* the test begins.
-2. A smaller content change on an existing page (say changing some text or moving a button), which is tested by editing the content at load time using Optimizely, *without* commiting any new code to the repo.
+1. A change to a form or page, which is tested by creating multiple variations of the page and using Traffic Cop to distribute a % of visitors to each variation. This new page is commited to the repo and deployed *before* the test begins.
 
-In both cases, once a test has concluded and a winner has been found. The winner is commited to the repo as the new default and deployed.
+The flow for testing large changes and small changes currently is roughly the same, with the difference being how much code is landed.
+
+In all cases, once a test has concluded and a winner has been found. The winner is commited to the repo as the new default and deployed.
 
 ### How to setup a new A/B test for a significantly different page or form
 
@@ -101,7 +103,6 @@ var routes = (
 
 * The root URL for our donation site should always show be our current [champion]() (best performer)
 * All links we promote on external properties (snippet, etc) should link to the core version of the form. e.g. donate.mozilla.org
-* Routing to temporary test URLs is managed via Optimizely via the core URL
 * Tests are run against temporary test URLs
 ** These URLs are named in ways to identify the test function
 ** e.g. donate.mozilla.org/visual-background-de
@@ -111,20 +112,17 @@ var routes = (
 
 * Deploy the test URLs to production
 * Check the new URLs are working
-* Setup A/B test routing via Optimizely to distribute traffic between the test variations
+* Add a test to the /assets/js/ab-tests.js file
 
 #### Ending the test
 * If one of the test variations is the winner, make this page the default / control page for all visitors by updating the default route in `routes.jsx`
 * Remove the temporary test URLs setup for this test
 * Traffic to temporary test URLs now redirects to the core URLs (in case old links persist online)
+* Remove the test from the /assets/js/ab-tests.js file
 ** TBC: do we explicitly manage these redirects in code, or do we have a catch-all redirect for our 404 page?
 
 
 ## Exchange rates
-
-On our donation thank you page, we record donation amounts using the Optimizely conversion tracking tag so we can see which variations of A/B tests we run result in the most donations.
-
-The Optimizely tracking requires we record the donation amount in USD, but many of our transactions happen in other currencies.
 
 We need to convert these donation amounts into USD dollars. To do this, we periodically fetch an updated set of exchange rate data from openexhangerates.org. We store this as a static file on our server as we want to reduce the number of requests to 3rd party services during page load for our end users (this is good for maintaining control over page load times).
 

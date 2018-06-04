@@ -8,9 +8,6 @@ var Index = React.createClass({
     var metaData = this.props.metaData;
     var robots = 'index, follow';
     var googleFonts = "https://fonts.googleapis.com/css?family=Open+Sans:600,400,300,300italic";
-    if (metaData.current_url.indexOf("jan-thank-you") !== -1) {
-      googleFonts = "https://fonts.googleapis.com/css?family=Roboto+Slab:600,400,300,200,100";
-    }
 
     var localesData = [];
     if (this.props.localesInfo.length) {
@@ -25,14 +22,6 @@ var Index = React.createClass({
       robots = 'noindex, nofollow';
     }
     var fileHashes = JSON.parse(fs.readFileSync(Path.join(__dirname, '../../public/webpack-assets.json')));
-    var ga = `
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-49796218-32', 'auto');
-      ga('send', 'pageview');
-    `;
     var polyfillLocale = "";
     if (this.props.locale) {
       polyfillLocale = '&locale=' + this.props.locale;
@@ -68,8 +57,10 @@ var Index = React.createClass({
           <link rel="icon" href={this.props.favicon} type="image/x-icon"/>
           <link rel="stylesheet" href={'/' + fileHashes.main.css}/>
           <script src="/api/client-env.js"></script>
+          <script src="/assets/js/mozilla-traffic-cop.js"></script>
+          <script src="/assets/js/ga.js"></script>
+          <script src="/assets/js/ab-tests.js"></script>
           <script async src={"https://www.google.com/recaptcha/api.js?render=explicit&hl=" + this.props.locale}></script>
-          <script dangerouslySetInnerHTML={{__html: ga}}></script>
           {
             localesData.map((localeData, index) => {
               return (

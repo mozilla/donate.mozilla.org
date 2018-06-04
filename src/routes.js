@@ -15,6 +15,12 @@ var routes = (
             <Route path='about' component={require('./pages/about.js')}/>
             <Route path='one-page' component={require('./pages/one-page.js')}/>
             <Route path='thank-you' component={require('./pages/thank-you.js')}/>
+            <Redirect from="jan-thank-you-cute" to="thank-you-cute" />
+            <Redirect from="jan-thank-you-sincere" to="thank-you-sincere" />
+            <Redirect from="jan-thank-you-superhero" to="thank-you-superhero" />
+            <Route path='thank-you-cute' component={require('./pages/jan-thank-you.js')} pageType="cute"/>
+            <Route path='thank-you-sincere' component={require('./pages/jan-thank-you.js')} pageType="sincere"/>
+            <Route path='thank-you-superhero' component={require('./pages/jan-thank-you.js')} pageType="superhero"/>
             <Route path='share' component={require('./pages/share.js')}/>
             <Route path='ways-to-give' component={require('./pages/ways-to-give.js')}/>
             <Route path='faq' component={require('./pages/faq.js')}/>

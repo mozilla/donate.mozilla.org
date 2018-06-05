@@ -35,7 +35,8 @@ module.exports = function(queryString, locale) {
 
   return {
     values: {
-      test: test
+      test: test,
+      subscribed: queryString.subscribed
     },
     initialState: {
       currency: currency,

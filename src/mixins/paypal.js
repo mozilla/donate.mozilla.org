@@ -44,7 +44,7 @@ var PaypalMixin = {
     props.locale = this.context.intl.locale;
     props.donation_url = window.location.href;
     submit("/api/paypal", props, function(json) {
-      window.location = json.endpoint + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + json.token;
+      window.location = json.endpoint + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + json.token + "&subscribed=" + this.props.subscribed;
     });
   }
 };

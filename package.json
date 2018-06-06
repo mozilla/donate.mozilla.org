@@ -64,7 +64,7 @@
     "extract-text-webpack-plugin": "3.0.2",
     "good": "8.0.0-rc1",
     "good-console": "^7.0.0",
-    "good-console-logfmt": "1.0.2",
+    "good-console-logfmt": "1.0.3",
     "good-squeeze": "^5.0.2",
     "habitat": "3.1.2",
     "hapi": "17.2.0",

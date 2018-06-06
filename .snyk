@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.10.2
+version: v1.12.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   'npm:growl:20160721':
@@ -10,18 +10,33 @@ ignore:
     - good-console-logfmt > hoek:
         reason: None given
         expires: '2018-04-01T19:56:45.295Z'
+      polyfill-service > shrink-ray > node-zopfli > node-pre-gyp > hawk > cryptiles > boom > hoek:
+        reason: None given
+        expires: '2018-07-06T19:21:20.047Z'
     - good-console-logfmt > good-squeeze > hoek:
         reason: None given
         expires: '2018-04-01T19:56:45.295Z'
+      polyfill-service > shrink-ray > node-zopfli > node-pre-gyp > request > hawk > hoek:
+        reason: None given
+        expires: '2018-07-06T19:21:20.047Z'
     - babel-cli > chokidar > fsevents > node-pre-gyp > hawk > hoek:
         reason: None given
         expires: '2018-04-01T19:56:45.295Z'
+      polyfill-service > shrink-ray > node-zopfli > node-pre-gyp > request > hawk > boom > hoek:
+        reason: None given
+        expires: '2018-07-06T19:21:20.047Z'
     - webpack > watchpack > chokidar > fsevents > node-pre-gyp > hawk > hoek:
         reason: None given
         expires: '2018-04-01T19:56:45.295Z'
+      polyfill-service > shrink-ray > node-zopfli > node-pre-gyp > request > hawk > sntp > hoek:
+        reason: None given
+        expires: '2018-07-06T19:21:20.047Z'
     - babel-cli > chokidar > fsevents > node-pre-gyp > request > hawk > hoek:
         reason: None given
         expires: '2018-04-01T19:56:45.295Z'
+      polyfill-service > shrink-ray > node-zopfli > node-pre-gyp > request > hawk > cryptiles > boom > hoek:
+        reason: None given
+        expires: '2018-07-06T19:21:20.047Z'
     - webpack > watchpack > chokidar > fsevents > node-pre-gyp > request > hawk > hoek:
         reason: None given
         expires: '2018-04-01T19:56:45.295Z'
@@ -65,6 +80,9 @@ ignore:
     - good-console-logfmt > logfmt > lodash:
         reason: None given
         expires: '2018-04-01T19:56:45.296Z'
+      polyfill-service > marky-markdown > highlights > first-mate-select-grammar > lodash:
+        reason: None given
+        expires: '2018-07-06T19:21:20.047Z'
     - polyfill-service > grunt > grunt-legacy-util > lodash:
         reason: None given
         expires: '2018-04-01T19:56:45.296Z'
@@ -83,7 +101,12 @@ ignore:
 patch:
   'npm:debug:20170905':
     - polyfill-service > mocha > debug:
-        patched: '2018-03-02T19:56:45.299Z'
+        patched: '2018-06-06T19:18:40.113Z'
+    - polyfill-service > shrink-ray > debug:
+        patched: '2018-06-06T19:18:40.113Z'
   'npm:moment:20160126':
     - good-console-logfmt > moment:
         patched: '2018-03-02T19:56:45.299Z'
+  'npm:ms:20170412':
+    - polyfill-service > shrink-ray > debug > ms:
+        patched: '2018-06-06T19:18:40.113Z'

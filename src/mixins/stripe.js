@@ -6,7 +6,7 @@ import reactGA from 'react-ga';
 var NOT_SUBMITTING = 0;
 var STRIPE_SUBMITTING = 2;
 
-function doStripeSuccess(data, locale, location) {
+function doStripeSuccess(data, locale, location, subscribed) {
   var transactionId = data.id;
   var amount;
   var currency;
@@ -40,6 +40,9 @@ function doStripeSuccess(data, locale, location) {
   if (country) {
     params += "&country=" + country;
   }
+  if (subscribed === "1") {
+    params += "&subscribed=1";
+  }
   var page = '/' + locale + '/' + location + '/';
   window.location = page + params;
 }
@@ -49,7 +52,7 @@ var StripeMixin = {
     intl: React.PropTypes.object
   },
   stripeSuccess: function(data) {
-    doStripeSuccess(data, this.context.intl.locale, "thank-you");
+    doStripeSuccess(data, this.context.intl.locale, "thank-you", this.props.subscribed);
   },
   thunderbirdStripeSuccess: function(data) {
     doStripeSuccess(data, this.context.intl.locale, "thunderbird/thank-you");

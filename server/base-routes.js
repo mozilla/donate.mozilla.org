@@ -143,7 +143,8 @@ const baseRoutes = [
           locale: Joi.string().min(2).max(12).required(),
           currency: Joi.any().valid(currencyFor.paypal).required(),
           appName: Joi.string(),
-          donation_url: Joi.string().required()
+          donation_url: Joi.string().required(),
+          subscribed: Joi.string().min(1).max(1)
         }
       },
       response: {
@@ -155,7 +156,7 @@ const baseRoutes = [
     }
   }, {
     method: 'GET',
-    path: '/api/paypal-redirect/{frequency}/{locale}/{appName}/{accountType}/',
+    path: '/api/paypal-redirect/{frequency}/{locale}/{appName}/{accountType}/{subscribed}',
     handler: routes['paypal-redirect']
   }, {
     method: 'GET',

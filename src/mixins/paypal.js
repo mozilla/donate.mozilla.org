@@ -44,8 +44,10 @@ var PaypalMixin = {
     props.appName = appName || "mozillafoundation";
     props.locale = this.context.intl.locale;
     props.donation_url = window.location.href;
+    props.subscribed = this.props.subscribed;
+
     submit("/api/paypal", props, (json) => {
-      window.location = json.endpoint + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + json.token + "&subscribed=" + this.props.subscribed;
+      window.location = json.endpoint + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + json.token;
     });
   }
 };

@@ -144,7 +144,7 @@ const baseRoutes = [
           currency: Joi.any().valid(currencyFor.paypal).required(),
           appName: Joi.string(),
           donation_url: Joi.string().required(),
-          subscribed: Joi.string().min(1).max(1)
+          subscribed: Joi.string().valid('0', '1').optional()
         }
       },
       response: {

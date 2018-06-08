@@ -15,8 +15,9 @@ function setupPaypal(transaction) {
   var frequency = transaction.frequency;
   var locale = transaction.locale;
   var appName = transaction.appName;
+  var subscribed = transaction.subscribed
 
-  var returnUrl = `${transaction.serverUri}/api/paypal-redirect/${frequency}/${locale}/${appName}/${accountType}/`;
+  var returnUrl = `${transaction.serverUri}/api/paypal-redirect/${frequency}/${locale}/${appName}/${accountType}/${subscribed}`;
 
   var cancelUrl = `${transaction.serverUri}/`;
 

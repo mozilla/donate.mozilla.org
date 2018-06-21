@@ -42,6 +42,7 @@ module.exports = React.createClass({
         <div className="additional-info-page">
           { additionalInfo }
           <SingleForm
+            subscribed={this.props.subscribed}
             currency={this.props.currency}
             presets={this.props.presets}
             amount={this.props.amount}

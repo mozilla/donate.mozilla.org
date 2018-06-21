@@ -457,6 +457,7 @@ const routes = {
     let frequency = transaction.frequency || "";
     let currency = transaction.currency;
     let amount = amountModifier.paypal(transaction.amount, currency);
+    let subscribed = transaction.subscribed || "0";
 
     let details = {
       amount: amount,
@@ -465,7 +466,8 @@ const routes = {
       item_name: transaction.description,
       serverUri: request.server.info.uri,
       frequency: frequency,
-      appName: transaction.appName
+      appName: transaction.appName,
+      subscribed: subscribed
     };
     let request_id = request.headers['x-request-id'];
 
@@ -508,6 +510,7 @@ const routes = {
     }
 
     let appName = request.params.appName;
+    let subscribed = request.params.subscribed;
     let location = "thank-you";
     if (appName === "thunderbird") {
       location = "thunderbird/" + location;
@@ -604,7 +607,7 @@ const routes = {
         project: appName
       });
 
-      return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}`)
+      return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}&subscribed=${subscribed}`)
         .unstate("session");
     }
 
@@ -697,7 +700,7 @@ const routes = {
       project: appName
     });
 
-    return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}`)
+    return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}&subscribed=${subscribed}`)
       .unstate("session");
   },
   'stripe-charge-refunded': function(request, h) {

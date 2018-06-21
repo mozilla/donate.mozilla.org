@@ -52,6 +52,7 @@ var ThankYou = React.createClass({
     var className = "row thank-you-page";
     var signUpOrSocial = (<Social/>);
     var monthlyUpgrade = null;
+    var subscribed = this.props.subscribed;
     if (this.state.showMonthlyUpgrade) {
       monthlyUpgrade = (
         <MonthlyUpgrade
@@ -61,7 +62,7 @@ var ThankYou = React.createClass({
         />
       );
     }
-    if (/^(en|de|es|fr|pl|pt-BR)(\b|$)/.test(this.context.intl.locale)) {
+    if (/^(en|de|es|fr|pl|pt-BR)(\b|$)/.test(this.context.intl.locale) && subscribed !== "1") {
       signUpOrSocial = (<Signup country={this.props.country}/>);
     }
     var thankYouPage = null;

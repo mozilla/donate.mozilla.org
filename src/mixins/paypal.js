@@ -39,11 +39,14 @@ var PaypalMixin = {
         description = "glassroomnyc monthly";
       }
     }
+
     props.description = description;
     props.appName = appName || "mozillafoundation";
     props.locale = this.context.intl.locale;
     props.donation_url = window.location.href;
-    submit("/api/paypal", props, function(json) {
+    props.subscribed = this.props.subscribed;
+
+    submit("/api/paypal", props, (json) => {
       window.location = json.endpoint + "/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=" + json.token;
     });
   }

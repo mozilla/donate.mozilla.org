@@ -22,9 +22,7 @@
     "test:depcheck": "dependency-check ./package.json",
     "test:lint": "eslint --ext .js,.jsx .",
     "imagemin": "imagemin assets/images/* assets/images",
-    "heroku-postbuild": "npm-run-all build:*",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "heroku-postbuild": "npm-run-all build:*"
   },
   "repository": {
     "type": "git",

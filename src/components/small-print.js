@@ -13,7 +13,7 @@ var Footer = React.createClass({
 
     return (
       <div className="row disclaimers">
-        <p className="other-ways-to-give">
+        <p className="full other-ways-to-give">
           <FormattedMessage
             id='other_way_to_give_wire_check'
             values={{
@@ -22,10 +22,10 @@ var Footer = React.createClass({
             }}
           />
         </p>
-        <p className="need-help">
+        <p className="full need-help">
           <FormattedHTMLMessage id="problems_donating"/>
         </p>
-        <p className="donation-notice">
+        <p className="full donation-notice">
           {this.context.intl.formatMessage({id: 'donation_notice_2'})}
         </p>
       </div>

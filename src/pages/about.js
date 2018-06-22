@@ -1,7 +1,6 @@
 import React from 'react';
 import reactGA from 'react-ga';
 import MozillaFooter from '../components/mozilla/footer.js';
-import SmallPrint from '../components/small-print.js';
 import SingleForm from '../components/single-form.js';
 
 module.exports = React.createClass({
@@ -28,9 +27,7 @@ module.exports = React.createClass({
     return (
       <div className="container additional-page">
         <img className="heart-image icon-baseline" height="100" width="107" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
-        <img className="heart-image icon-variant" height="100" width="107" src="/assets/images/pixel-heart.svg"/>
         <div>
-          <img className="mozilla-watermark" src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
           { this.state.aboutCopy }
         </div>
       </div>
@@ -54,7 +51,6 @@ module.exports = React.createClass({
             country={this.props.country}
           />
         </div>
-        <SmallPrint/>
         <MozillaFooter/>
       </div>
     );

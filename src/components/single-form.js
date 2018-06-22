@@ -8,6 +8,7 @@ import Frequency from './donation-frequency.js';
 import { PayPalButton, StripeButton } from './payment-options.js';
 import SubmitButton from './submit-button.js';
 import DonateButton from './donate-button.js';
+import SmallPrint from './small-print.js';
 import { FormattedHTMLMessage } from 'react-intl';
 import currencies from '../data/currencies.js';
 
@@ -68,12 +69,12 @@ var singleForm = React.createClass({
   render: function() {
     return (
       <div className="container">
-        <SectionHeading>
+        <div className="full donate-now-header-container">
           <h3 className="donate-now-header">
             {this.context.intl.formatMessage({id: "donate_now"})}
           </h3>
           <CurrencyDropdown/>
-        </SectionHeading>
+        </div>
         <Frequency/>
         <AmountButtons/>
         <div className="payment-section">
@@ -121,6 +122,7 @@ var singleForm = React.createClass({
         <div className="row">
           {this.renderPrivacyPolicy()}
         </div>
+        <SmallPrint/>
       </div>
     );
   },

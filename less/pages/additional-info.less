@@ -38,15 +38,18 @@
     border-radius: 6px;
     max-width: 420px;
     width: 100%;
-    text-align: center;
-    .donate-now-header {
-      width: 225px;
+    display: flex;
+    .donate-now-header-container {
+      display: flex;
+      .donate-now-header {
+        width: 100%;
+      }
     }
     .container {
-      display: inline-block;
-      vertical-align: top;
-      text-align: initial;
       padding: 30px;
+      flex-grow: 1;
+      width: 100%;
+      max-width: 100%;
     }
     .heart-image {
       margin-bottom: 32px;
@@ -57,6 +60,7 @@
       font-color: #333333;
       line-height: 1.4;
       height: auto;
+      max-width: 380px;
     }
     .mozilla-watermark {
       height: 40px;
@@ -78,18 +82,10 @@
       margin-right: 0px;
     }
   }
-  .footer,
-  .disclaimers {
+  .footer {
     margin: 30px auto 0;
   }
   .disclaimers {
-    background-color: #CECCCA;
-    border-radius: 6px;
-    padding: 0 20px;
-  }
-  .disclaimers {
-    text-align: initial;
-    max-width: 420px;
     .other-ways-to-give,
     .need-help,
     .donation-notice,
@@ -103,7 +99,7 @@
   @media screen and (min-width: 857px) {
     .additional-info-page {
       margin-top: 60px;
-      max-width: 840px;
+      max-width: 1140px;
     }
     .footer {
       width: 100%;
@@ -112,10 +108,6 @@
     }
     .additional-page {
       min-height: 481px;
-    }
-    .disclaimers {
-      max-width: 840px;
-      padding: 0 30px;
     }
     .disclaimers {
       .other-ways-to-give,

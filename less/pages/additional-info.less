@@ -36,9 +36,12 @@
   .additional-info-page {
     margin: 0 auto;
     border-radius: 6px;
-    max-width: 420px;
+    max-width: 1140px;
     width: 100%;
-    display: flex;
+
+    @media screen and (min-width: 800px) {
+      display: flex;
+    }
     .donate-now-header-container {
       display: flex;
       .donate-now-header {
@@ -60,7 +63,9 @@
       font-color: #333333;
       line-height: 1.4;
       height: auto;
-      max-width: 380px;
+      @media screen and (min-width: 800px) {
+        max-width: 380px;
+      }
     }
     .mozilla-watermark {
       height: 40px;
@@ -95,12 +100,32 @@
       margin-left: auto;
     }
   }
-
-  @media screen and (min-width: 857px) {
+  footer {
+    margin-top: 0;
+  }
+  @media screen and (min-width: 800px) {
+    footer {
+      margin-top: 40px;
+    }
+  }
+  @media screen and (min-width: 1140px) {
     .additional-info-page {
       margin-top: 60px;
-      max-width: 1140px;
     }
+  }
+
+  .disclaimers {
+    .other-ways-to-give,
+    .need-help,
+    .donation-notice,
+    .stripe-notice {
+      max-width: 840px;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  @media screen and (min-width: 857px) {
     .footer {
       width: 100%;
       max-width: 840px;
@@ -108,16 +133,6 @@
     }
     .additional-page {
       min-height: 481px;
-    }
-    .disclaimers {
-      .other-ways-to-give,
-      .need-help,
-      .donation-notice,
-      .stripe-notice {
-        max-width: 840px;
-        margin-left: 0;
-        margin-right: 0;
-      }
     }
   }
 }

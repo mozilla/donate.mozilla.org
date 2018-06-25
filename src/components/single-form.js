@@ -151,6 +151,7 @@ var singleForm = React.createClass({
             </SubmitButton>
           </div>
         </div>
+        <SmallPrint/>
       </div>
     );
   }

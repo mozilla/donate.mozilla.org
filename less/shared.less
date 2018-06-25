@@ -272,23 +272,18 @@ select,
 input[type="email"] {
   width: 100%;
   margin-bottom: 12px;
-  border: 3px solid #EAEFF2;
+  border: 1px solid #CCCCCC;
   padding: 6px 7px 6px 33px;
-  background-color: #F7F9FA;
+  background-color: #FFFFFF;
   outline: none;
+  &:focus,
+  &:hover {
+    border-color: #06AAEA;
+  }
 }
 
 input[type="email"] {
   padding-right: 33px;
-}
-
-input[type="text"]:focus,
-select:focus,
-input[type="number"]:focus,
-input[type="email"]:focus,
-input[type="tel"]:focus {
-  border-color: #06AAEA;
-  background-color: #FFF;
 }
 
 input[name="donation_amount"],
@@ -333,26 +328,13 @@ input[type=number] {
   font-size: 22px;
   font-weight: 400;
 }
-.amount-radio + label,
-.button-arrow,
-.submit-btn,
-#facebook,
-#twitter,
-#email {
-  
-}
+
 .amount-radio + label,
 .button-arrow,
 .submit-btn,
 .social-button,
 input.payment-type + label {
   position: relative;
-}
-
-.amount-radio + label:hover,
-.submit-btn:hover {
-  // This is needed to override the baseline background.
-  
 }
 
 .submit-btn {

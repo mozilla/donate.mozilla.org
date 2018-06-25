@@ -9,7 +9,6 @@ import { PayPalButton, StripeButton } from './payment-options.js';
 import SubmitButton from './submit-button.js';
 import DonateButton from './donate-button.js';
 import SmallPrint from './small-print.js';
-import { FormattedHTMLMessage } from 'react-intl';
 import currencies from '../data/currencies.js';
 
 import { connect } from 'react-redux';
@@ -31,15 +30,6 @@ var singleForm = React.createClass({
       submitting: NOT_SUBMITTING,
       stripeError: ""
     };
-  },
-  renderPrivacyPolicy: function() {
-    var privacyPolicyMessage = "privacy_policy_var_b";
-    if (this.props.frequency === "monthly") {
-      privacyPolicyMessage = "privacy_policy_var_b_monthly";
-    }
-    return (
-      <p className="full"><FormattedHTMLMessage id={privacyPolicyMessage}/></p>
-    );
   },
   validateStripe: function() {
     if (this.validateAmount()) {
@@ -119,10 +109,7 @@ var singleForm = React.createClass({
           submitting={this.state.submitting === PAYPAL_SUBMITTING}
           onSubmit={this.validatePaypal}
         />
-        <div className="row">
-          {this.renderPrivacyPolicy()}
-        </div>
-        <SmallPrint/>
+        <SmallPrint frequency={this.props.frequency}/>
       </div>
     );
   },
@@ -138,9 +125,6 @@ var singleForm = React.createClass({
             <p>&nbsp;</p>
           </div>
         </SectionHeading>
-        <div className="row">
-          {this.renderPrivacyPolicy()}
-        </div>
         <div className="row submit-button">
           <div className="full submit-button-container">
             <SubmitButton
@@ -151,7 +135,7 @@ var singleForm = React.createClass({
             </SubmitButton>
           </div>
         </div>
-        <SmallPrint/>
+        <SmallPrint frequency={this.props.frequency}/>
       </div>
     );
   }

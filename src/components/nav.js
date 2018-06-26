@@ -48,11 +48,11 @@ var Nav = React.createClass({
                   <div className="row">
                     <div className="nav-links">
                       <a className="nav-link-home" href="/">Home</a>
-                      <a className="nav-link-initiatives" href="/initiatives">Initiatives</a>
-                      <a className="nav-link-participate" href="/participate">Participate</a>
-                      <a className="nav-link-internet-health" href="/internet-health">Internet&nbsp;Health</a>
-                      <a className="nav-link-people" href="/people">People</a>
-                      <a className="nav-link-about" href="/about">About&nbsp;Us</a>
+                      <a className="nav-link-initiatives" href="https://foundation.mozilla.org/initiatives">Initiatives</a>
+                      <a className="nav-link-participate" href="https://foundation.mozilla.org/participate">Participate</a>
+                      <a className="nav-link-internet-health" href="https://foundation.mozilla.org/internet-health">Internet&nbsp;Health</a>
+                      <a className="nav-link-people" href="https://foundation.mozilla.org/people">People</a>
+                      <a className="nav-link-about" href="https://foundation.mozilla.org/about">About&nbsp;Us</a>
                     </div>
                   </div>
                 </div>
@@ -70,11 +70,11 @@ var Nav = React.createClass({
                     <a className="logo text-hide" href="https://foundation.mozilla.org">Mozilla Foundation</a>
                     <div className={wideMenuClassName}>
                       <div className="nav-links hidden-sm-down">
-                        <a className="nav-link-initiatives" href="/initiatives">Initiatives</a>
-                        <a className="nav-link-participate" href="/participate">Participate</a>
-                        <a className="nav-link-internet-health" href="/internet-health">Internet&nbsp;Health</a>
-                        <a className="nav-link-people" href="/people">People</a>
-                        <a className="nav-link-about" href="/about">About&nbsp;Us</a>
+                        <a className="nav-link-initiatives" href="https://foundation.mozilla.org/initiatives">Initiatives</a>
+                        <a className="nav-link-participate" href="https://foundation.mozilla.org/participate">Participate</a>
+                        <a className="nav-link-internet-health" href="https://foundation.mozilla.org/internet-health">Internet&nbsp;Health</a>
+                        <a className="nav-link-people" href="https://foundation.mozilla.org/people">People</a>
+                        <a className="nav-link-about" href="https://foundation.mozilla.org/about">About&nbsp;Us</a>
                       </div>
                     </div>
                   </div>

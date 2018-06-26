@@ -1,6 +1,7 @@
 import React from 'react';
 import reactGA from 'react-ga';
 import MozillaFooter from '../components/mozilla/footer.js';
+import Nav from '../components/nav.js';
 import SingleForm from '../components/single-form.js';
 
 module.exports = React.createClass({
@@ -39,19 +40,22 @@ module.exports = React.createClass({
     var additionalInfo = this.renderTextAboutPage();
 
     return (
-      <div className={className}>
-        <div className="additional-info-page">
-          { additionalInfo }
-          <SingleForm
-            subscribed={this.props.subscribed}
-            currency={this.props.currency}
-            presets={this.props.presets}
-            amount={this.props.amount}
-            frequency={this.props.frequency}
-            country={this.props.country}
-          />
+      <div>
+        <Nav zenMode={true} simpleBackground={true}/>
+        <div className={className}>
+          <div className="additional-info-page">
+            { additionalInfo }
+            <SingleForm
+              subscribed={this.props.subscribed}
+              currency={this.props.currency}
+              presets={this.props.presets}
+              amount={this.props.amount}
+              frequency={this.props.frequency}
+              country={this.props.country}
+            />
+          </div>
+          <MozillaFooter/>
         </div>
-        <MozillaFooter/>
       </div>
     );
   }

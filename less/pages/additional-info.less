@@ -36,7 +36,7 @@
   .additional-info-page {
     margin: 0 auto;
     border-radius: 6px;
-    max-width: 1140px;
+    max-width: 1110px;
     width: 100%;
 
     @media screen and (min-width: 800px) {
@@ -49,10 +49,19 @@
       }
     }
     .container {
-      padding: 30px;
+      padding: 15px;
+
+      @media (min-width: 768px) {
+        padding: 30px;
+      }
       flex-grow: 1;
       width: 100%;
       max-width: 100%;
+      &.additional-page {
+        @media screen and (min-width: 1270px) {
+          padding-left: 0;
+        }
+      }
     }
     .heart-image {
       margin-bottom: 32px;
@@ -99,7 +108,7 @@
       margin-top: 40px;
     }
   }
-  @media screen and (min-width: 1140px) {
+  @media screen and (min-width: 1110px) {
     .additional-info-page {
       margin-top: 60px;
     }

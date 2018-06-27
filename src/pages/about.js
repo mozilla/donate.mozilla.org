@@ -34,6 +34,14 @@ module.exports = React.createClass({
       </div>
     );
   },
+  renderNav: function() {
+    if (this.props.test === "nav") {
+      return (
+        <Nav zenMode={true} simpleBackground={true}/>
+      );
+    }
+    return (null);
+  },
   render: function() {
     var className = "row additional-info-container";
 
@@ -41,7 +49,7 @@ module.exports = React.createClass({
 
     return (
       <div>
-        <Nav zenMode={true} simpleBackground={true}/>
+        {this.renderNav()}
         <div className={className}>
           <div className="additional-info-page">
             { additionalInfo }

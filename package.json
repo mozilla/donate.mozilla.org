@@ -92,12 +92,12 @@
     "redux": "3.6.0",
     "request": "2.83.0",
     "scooter": "5.0.0",
+    "snyk": "^1.69.10",
     "stripe": "5.1.1",
     "style-loader": "0.18.2",
     "throng": "4.0.0",
     "webpack": "3.2.0",
-    "whatwg-fetch": "0.10.1",
-    "snyk": "^1.69.10"
+    "whatwg-fetch": "0.10.1"
   },
   "devDependencies": {
     "cross-spawn": "2.1.4",

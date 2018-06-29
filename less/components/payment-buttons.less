@@ -16,23 +16,27 @@
 
 
 .credit-card-logos {
-  background-position: center -3px;
+  background-position: center -6px;
+  background-size: 134px auto;
+  &.no-discover {
+    background-position: center -4px;
+  }
   &.no-amex {
-    background-position: -33px -3px, 50%;
+    background-position: -40px -4px, 50%;
   }
 }
 
 .paypal-disabled {
   .credit-card-logos {
-    background-position:-2px -33px,50%;
+    background-position: -2px -36px, 50%;
     &.no-amex {
-      background-position: -33px -36px;
+      background-position: -38px -36px;
     }
   }
 }
 
 .paypal-logo {
-  background-position: center -70px;
+  background-position: center -65px;
   margin: -8px auto -5px;
 }
 
@@ -89,14 +93,20 @@ label.payment-cc-label {
   }
 
   .credit-card-logos {
-    background-position: center -3px;
+    background-size: 195px auto;
+    background-position: center -14px;
+    &.no-discover {
+      background-position: center -14px;
+    }
     &.no-amex {
-        background-position: -47px -5px, 50%;
+      background-position: -66px -14px, 50%;
+      background-size: 192px auto;
     }
   }
 
   .paypal-disabled {
     .credit-card-logos {
+      background-size: 165px auto;
       background-position:-2px -55px,50%;
       &.no-amex {
         background-position: -47px -55px, 50%;

@@ -3,14 +3,24 @@
     position: relative;
     input[name="donation_amount"] + label {
       padding: 5px 0;
-      background-color: #EAEFF2;
+      border: 1px solid #CCCCCC;
+      background: #F2F2F2;
+      margin-bottom: 0;
     }
-    input[name="donation_amount"] + label:hover {
-      background: #43A6E2; /* Mozilla Button color */
-      color: #fff;
+    &:hover {
+      input[name="donation_amount"] + label,
+      #amount-other-input {
+        border: 1px solid #3BB7EF;
+      }
     }
     input[name="donation_amount"]:checked + label {
-      background: #0095DD;
+      background-color: #49AFFD;
+      border: 1px solid #49AFFD;
+    }
+    input[name="donation_amount"]:checked ~ .amount-other-wrapper {
+      #amount-other-input {
+        border: 1px solid #49AFFD;
+      }
     }
   }
 
@@ -31,24 +41,24 @@
   }
 
   .amount-radio + label {
-    background-color: #A7AAB3;
-    color: rgb(255, 255, 255);
+    border: 1px solid #CCCCCC;
+    color: #333;
   }
   .amount-radio + label:hover {
-    background-color: #B3B6BF;
+    border: 1px solid #3BB7EF;
   }
 
   .amount-radio:checked + label {
     background-color: #49AFFD;
-    background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+    border: 1px solid #49AFFD;
   }
 
   .amount-other-wrapper {
     position: absolute;
-    top: 3px;
+    top: 0;
     left: 60px;
-    right: 3px;
-    height: 38px;
+    right: 0;
+    bottom: 0;
   }
 
   .amount-button {
@@ -71,6 +81,12 @@
     border: none;
     width: 100%;
     height: 100%;
+    margin-bottom: 0;
+    background: #FFF;
+    border: 1px solid #CCCCCC;
+    &:focus {
+      border: 1px solid #49AFFD;
+    }
   }
 
   input#amount-other + label {

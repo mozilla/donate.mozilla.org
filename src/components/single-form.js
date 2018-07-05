@@ -9,6 +9,7 @@ import { PayPalButton, StripeButton } from './payment-options.js';
 import SubmitButton from './submit-button.js';
 import DonateButton from './donate-button.js';
 import SmallPrint from './small-print.js';
+import SmallPrintThunderbird from './thunderbird/small-print.js';
 import currencies from '../data/currencies.js';
 
 import { connect } from 'react-redux';
@@ -91,6 +92,16 @@ var singleForm = React.createClass({
 
     return this.renderWithDisabledCurrency(className);
   },
+  renderSmallPrint: function() {
+    if (this.props.appName === "thunderbird") {
+      return (
+        <SmallPrintThunderbird frequency={this.props.frequency}/>
+      );
+    }
+    return (
+      <SmallPrint frequency={this.props.frequency}/>
+    );
+  },
   renderBaseForm: function() {
     return (
       <div>
@@ -109,7 +120,7 @@ var singleForm = React.createClass({
           submitting={this.state.submitting === PAYPAL_SUBMITTING}
           onSubmit={this.validatePaypal}
         />
-        <SmallPrint frequency={this.props.frequency}/>
+        {this.renderSmallPrint()}
       </div>
     );
   },
@@ -135,7 +146,7 @@ var singleForm = React.createClass({
             </SubmitButton>
           </div>
         </div>
-        <SmallPrint frequency={this.props.frequency}/>
+        {this.renderSmallPrint()}
       </div>
     );
   }

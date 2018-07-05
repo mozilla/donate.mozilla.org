@@ -8,12 +8,16 @@ var Footer = React.createClass({
   },
   render: function() {
     var wireTransferLink = (<Link to={'/' + this.context.intl.locale + '/ways-to-give#wire'}>{this.context.intl.formatMessage({id: 'wireTransfer'})}</Link>);
-    var bitcoinLink = (<Link to={'/' + this.context.intl.locale + '/give-bitcoin/'}>{this.context.intl.formatMessage({id: 'Bitcoin'})}</Link>);
     var checkLink = (<a href={'/' + this.context.intl.locale + '/ways-to-give#check'}>{this.context.intl.formatMessage({id: 'check'})}</a>);
+    var privacyPolicyMessage = "privacy_policy_var_b";
+    if (this.props.frequency === "monthly") {
+      privacyPolicyMessage = "privacy_policy_var_b_monthly";
+    }
 
     return (
       <div className="row disclaimers">
-        <p className="other-ways-to-give">
+        <p className="full"><FormattedHTMLMessage id={privacyPolicyMessage}/></p>
+        <p className="full other-ways-to-give">
           <FormattedMessage
             id='other_way_to_give_wire_check'
             values={{
@@ -22,10 +26,10 @@ var Footer = React.createClass({
             }}
           />
         </p>
-        <p className="need-help">
+        <p className="full need-help">
           <FormattedHTMLMessage id="problems_donating"/>
         </p>
-        <p className="donation-notice">
+        <p className="full donation-notice">
           {this.context.intl.formatMessage({id: 'donation_notice_2'})}
         </p>
       </div>

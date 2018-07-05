@@ -7,7 +7,7 @@
 
 html {
   height: auto;
-  background: #FFFFFF;
+  background: #000000;
 }
 
 body {
@@ -16,7 +16,7 @@ body {
   line-height: 20px;
   color: #333;
   margin: 0;
-  background-color: #D8D5CC;
+  background-color: #F2F2F2;
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#d7d3c8', endColorstr='#f6f4ec');/*For IE7-8-9*/
 }
 
@@ -130,7 +130,6 @@ input[type="submit"] {
   overflow-x: hidden;
   padding: 35px;
   background: #fff;
-  border-radius: 6px;
 }
 
 .donate-now-header {
@@ -273,24 +272,18 @@ select,
 input[type="email"] {
   width: 100%;
   margin-bottom: 12px;
-  border: 3px solid #EAEFF2;
-  border-radius: 3px;
+  border: 1px solid #CCCCCC;
   padding: 6px 7px 6px 33px;
-  background-color: #F7F9FA;
+  background-color: #FFFFFF;
   outline: none;
+  &:focus,
+  &:hover {
+    border-color: #06AAEA;
+  }
 }
 
 input[type="email"] {
   padding-right: 33px;
-}
-
-input[type="text"]:focus,
-select:focus,
-input[type="number"]:focus,
-input[type="email"]:focus,
-input[type="tel"]:focus {
-  border-color: #06AAEA;
-  background-color: #FFF;
 }
 
 input[name="donation_amount"],
@@ -304,7 +297,6 @@ input.payment-type + label {
   width: 100%;
   padding: 7px 0;
   margin-left: 0;
-  border-radius: 3px;
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
@@ -336,38 +328,13 @@ input[type=number] {
   font-size: 22px;
   font-weight: 400;
 }
-.amount-radio + label,
-.button-arrow,
-.submit-btn,
-#facebook,
-#twitter,
-#email {
-  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
-  border-radius: 3px;
-}
+
 .amount-radio + label,
 .button-arrow,
 .submit-btn,
 .social-button,
 input.payment-type + label {
   position: relative;
-  border-radius: 3px;
-  &::before {
-    content: '';
-    position: absolute;
-    border-radius: 3px;
-    top: 1px;
-    right: 1px;
-    bottom: 1px;
-    left: 1px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
-}
-
-.amount-radio + label:hover,
-.submit-btn:hover {
-  // This is needed to override the baseline background.
-  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
 }
 
 .submit-btn {

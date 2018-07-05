@@ -1,6 +1,5 @@
 import React from 'react';
 import ThunderbirdFooter from '../../components/thunderbird/footer.js';
-import SmallPrint from '../../components/thunderbird/small-print.js';
 import SingleForm from '../../components/single-form.js';
 
 module.exports = React.createClass({
@@ -20,7 +19,6 @@ module.exports = React.createClass({
             appName="thunderbird"
           />
         </div>
-        <SmallPrint/>
         <ThunderbirdFooter/>
       </div>
     );

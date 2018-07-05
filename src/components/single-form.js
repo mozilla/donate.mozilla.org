@@ -93,13 +93,9 @@ var singleForm = React.createClass({
     return this.renderWithDisabledCurrency(className);
   },
   renderSmallPrint: function() {
-    if (this.props.appName === "thunderbird") {
-      return (
-        <SmallPrintThunderbird frequency={this.props.frequency}/>
-      );
-    }
+    let Type = (this.props.appName === "thunderbird") ? SmallPrintThunderbird : SmallPrint;
     return (
-      <SmallPrint frequency={this.props.frequency}/>
+      <Type frequency={this.props.frequency}/>
     );
   },
   renderBaseForm: function() {

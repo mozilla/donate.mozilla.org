@@ -35,6 +35,9 @@ var WaysToGive = React.createClass({
             <FormattedHTMLMessage id='sepa_desc' />
             {" "}
             <FormattedHTMLMessage id='wire_transfer_cost_info2' />
+            <br/>
+            <br/>
+            <FormattedHTMLMessage id='us_only_deductible' />
           </p>
           <br/>
           <h3 id="euro"><FormattedHTMLMessage id='euro_title' /></h3>

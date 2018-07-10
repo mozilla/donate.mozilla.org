@@ -24,7 +24,7 @@ var Footer = React.createClass({
           </div>
           <div className="footer-info">
             <div className="footer-logo">
-              <img src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
+              <a href="https://foundation.mozilla.org"><img src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/></a>
             </div>
             <div className="footer-break">
 

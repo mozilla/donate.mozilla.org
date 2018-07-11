@@ -1,63 +1,79 @@
 footer {
   margin-top: 40px;
   background: #000;
-  padding: 40px 10px;
-  color: #666;
-  font-size: 12px;
+  padding: 50px 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #808080;
+  p {
+    margin: 0;
+    padding: 0 15px;
+  }
   .footer {
-    max-width: 420px;
+    .footer-links {
+      text-align: center;
+      a {
+        font-size: 14px;
+        font-weight: 700;
+        color: #808080;
+        &:hover {
+          color: #FFFFFF;
+        }
+      }
+      ul {
+        margin: 0;
+        li {
+          display: inline-block;
+          margin: 0 16px 16px 16px;
+        }
+      }
+    }
+    .footer-info {
+      a {
+        color: #FFFFFF;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      .footer-break {
+        margin: 24px 0;
+        height: 1px;
+        width: 50px;
+        background: #808080;
+      }
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      @media screen and (max-width: 619px) {
+        text-align: center;
+      }
+      @media screen and (min-width: 620px) {
+        flex-direction: row;
+        p {
+          padding: 0;
+        }
+        .footer-break {
+          margin: 0 24px;
+          width: 1px;
+          height: 50px;
+        }
+      }
+      width: 100%;
+      margin: 0 auto;
+      max-width: 560px;
+      .footer-logo {
+        min-width: 100px;
+        width: 100px;
+      }
+    }
+    max-width: 1110px;
     margin: 0 auto;
     width: 100%;
-    .half {
-      width: 75%;
-      padding-right: 35px;
-      margin-right: 0;
-    }
-  }
-  a {
-    color: #FFFFFF;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-  img {
-    max-width: 120px;
   }
   ul {
     padding-left: 0;
     padding-right: 0;
     list-style: none;
-  }
-
-  @media screen and (max-width: 480px) {
-    .footer {
-      margin: 0 auto;
-      width: 100%;
-      max-width: 100%;
-      .half {
-        padding-right: 0;
-      }
-    }
-
-    .full,
-    .half,
-    .third,
-    .two-third,
-    .quarter {
-      width: 100%;
-    }
-  }
-}
-
-html[dir="rtl"] footer .footer {
-  .half {
-    padding-right: 0;
-    padding-left: 35px;
-  }
-  @media screen and (max-width: 480px) {
-    .half {
-      padding-left: 0;
-      padding-right: 0;
-    }
   }
 }

@@ -10,30 +10,34 @@ var Footer = React.createClass({
     return (
       <footer>
         <div className="footer">
-          <div className="row">
-            <div className="half">
-              <img src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/>
+          <div className="footer-links">
+            <ul>
+              <li><a href="https://www.mozilla.org/mission/" target="_blank">{this.context.intl.formatMessage({id: 'Mission'})}</a></li>
+              <li><a href="https://www.mozilla.org/about/" target="_blank">{this.context.intl.formatMessage({id: 'About'})}</a></li>
+              <li><a href="https://www.mozilla.org/contact/spaces/" target="_blank">{this.context.intl.formatMessage({id: 'Contact'})}</a>
+              </li>
+              <li><a href="https://www.mozilla.org/privacy/" target="_blank">{this.context.intl.formatMessage({id: 'privacyPolicyFooter'})}</a>
+              </li>
+              <li><a href="https://www.mozilla.org/about/legal/" target="_blank">{this.context.intl.formatMessage({id: 'legalNotices'})}</a>
+              </li>
+            </ul>
+          </div>
+          <div className="footer-info">
+            <div className="footer-logo">
+              <a href="https://foundation.mozilla.org"><img src="/assets/images/mozilla.1068965acefde994a71c187d253aca2b.svg"/></a>
+            </div>
+            <div className="footer-break">
+
+            </div>
+            <div className="footer-paragraph">
               <p className="license">
                 <FormattedHTMLMessage
                   id='footerLicense'
                   values={{year}}
                 />
-              </p>
-              <p>
+                <br/>
                 {this.props.message}
               </p>
-            </div>
-            <div className="quarter">
-              <ul>
-                <li><a href="https://www.mozilla.org/mission/" target="_blank">{this.context.intl.formatMessage({id: 'Mission'})}</a></li>
-                <li><a href="https://www.mozilla.org/about/" target="_blank">{this.context.intl.formatMessage({id: 'About'})}</a></li>
-                <li><a href="https://www.mozilla.org/contact/spaces/" target="_blank">{this.context.intl.formatMessage({id: 'Contact'})}</a>
-                </li>
-                <li><a href="https://www.mozilla.org/privacy/" target="_blank">{this.context.intl.formatMessage({id: 'privacyPolicyFooter'})}</a>
-                </li>
-                <li><a href="https://www.mozilla.org/about/legal/" target="_blank">{this.context.intl.formatMessage({id: 'legalNotices'})}</a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>

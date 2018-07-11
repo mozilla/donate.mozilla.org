@@ -11,8 +11,8 @@ footer {
     padding: 0 15px;
   }
   .footer {
-    text-align: center;
     .footer-links {
+      text-align: center;
       a {
         font-size: 14px;
         font-weight: 700;
@@ -45,9 +45,11 @@ footer {
       display: flex;
       flex-direction: column;
       align-items: center;
+      @media screen and (max-width: 619px) {
+        text-align: center;
+      }
       @media screen and (min-width: 620px) {
         flex-direction: row;
-        text-align: left;
         .footer-break {
           margin: 0 24px;
           width: 1px;

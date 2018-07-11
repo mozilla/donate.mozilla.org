@@ -14,6 +14,8 @@ module.exports = React.createClass({
           <div className="container additional-page">
             <img className="internet-graphic" width="224" src="/assets/images/thunderbird/thunderbird-logo-wordmark-small.png"/>
             <div>{this.context.intl.formatMessage({id: 'additional_info_thunderbird'})}</div>
+            <br/>
+            <div>{this.context.intl.formatMessage({id: 'additional_info_thunderbird_2'})}</div>
           </div>
           <SingleForm
             appName="thunderbird"

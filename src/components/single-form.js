@@ -61,9 +61,9 @@ var singleForm = React.createClass({
     return (
       <div className="container">
         <div className="full donate-now-header-container">
-          <h3 className="donate-now-header">
+          <h2 className="donate-now-header">
             {this.context.intl.formatMessage({id: "donate_now"})}
-          </h3>
+          </h2>
           <CurrencyDropdown/>
         </div>
         <Frequency/>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Footer from '../footer.js';
+import { FormattedHTMLMessage } from 'react-intl';
 
 var MozillaFooter = React.createClass({
   contextTypes: {
@@ -7,7 +8,11 @@ var MozillaFooter = React.createClass({
   },
   render: function() {
     return (
-      <Footer message={ this.context.intl.formatMessage({id: "firefox_footer"}) } {...this.props}/>
+      <Footer {...this.props}>
+        <FormattedHTMLMessage
+          id='footer_updates'
+        />
+      </Footer>
     );
   }
 });

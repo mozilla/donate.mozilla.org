@@ -57,7 +57,6 @@ You can configure the following environment variables:
 |Variable|About|
 |--------|-----|
 | SUPPORTED_LOCALES | If set to '*' all locales under `intl-config.js` file for `src` will be enabled otherwise it expects an array of locales.
-| ENFORCE_HOSTNAME | Set to true to redirect all requests to the hostname defined in `APPLICATION_URI`
 
 ---
 

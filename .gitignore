@@ -4,6 +4,7 @@ node_modules/
 .env
 npm-debug*
 package-lock.json
+.idea/
 
 public/css/*
 public/**/*.html

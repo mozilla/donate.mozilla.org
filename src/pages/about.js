@@ -15,7 +15,7 @@ module.exports = React.createClass({
     };
   },
   componentDidMount: function() {
-    var additionalInfoId = 'additional_info';
+    var additionalInfoId = 'additional_info_internet_health';
     if (/^(en)(\b|$)/.test(this.context.intl.locale)) {
       additionalInfoId = 'additional_info_internet_health_bold';
     }

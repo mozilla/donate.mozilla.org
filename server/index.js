@@ -13,7 +13,7 @@ const services = require('./services');
 const finalizeServer = require('./finalise-server');
 
 const ONE_HOUR_MS = 1000 * 60 * 60;
-const appHost = url.parse(env.get(`APPLICATION_URI`)).host;
+const { host } = url.parse(env.get(`APPLICATION_URI`));
 
 module.exports = async function(options) {
   const serverOptions = getServerOptions(options);
@@ -40,18 +40,13 @@ module.exports = async function(options) {
 
   if (env.get(`ENFORCE_HOSTNAME`)) {
     server.ext('onRequest', (request, h) => {
-      let {host} = request.info;
-
-      if (appHost === host) {
+      if (host === request.info.host) {
         return h.continue;
       }
 
-      let parsed = url.parse(request.url.href, false);
-      let newURL = url.format({
-        protocol: parsed.protocol,
-        host: appHost,
-        pathname: parsed.path
-      });
+      let { 'x-forwarded-proto': protocol = 'http'} = request.headers;
+      let {pathname} = request.url;
+      let newURL = url.format({ protocol, pathname, host });
 
       return h.response().takeover().redirect(newURL);
     });

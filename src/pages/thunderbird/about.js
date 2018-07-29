@@ -6,14 +6,39 @@ module.exports = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
+  getInitialState: function() {
+    return {
+      aboutCopy: null
+    };
+  },
+  
+  componentDidMount: function() {
+    var aboutCopy = (<span>{this.context.intl.formatMessage({id: 'additional_info_thunderbird'})}</span>);
+    if (this.props.test === "tbdownload") {
+      aboutCopy = (
+        <span>
+          <div><b>Thank you for downloading Thunderbird!</b></div>
+          <br/>
+          <div>{this.context.intl.formatMessage({id: 'additional_info_thunderbird'})}</div>
+        </span>
+      );
+    }
+    this.setState({
+      aboutCopy: aboutCopy
+    });
+  },
   render: function() {
     var className = "row additional-info-container thunderbird";
+    if (this.props.test) {
+      className += " " + this.props.test;
+    }
+    var aboutCopy = this.state.aboutCopy;
     return (
       <div className={className}>
         <div className="additional-info-page">
           <div className="container additional-page">
             <img className="internet-graphic" width="224" src="/assets/images/thunderbird/thunderbird-logo-wordmark-small.png"/>
-            <div>{this.context.intl.formatMessage({id: 'additional_info_thunderbird'})}</div>
+            <div>{aboutCopy}</div>
             <br/>
             <div>{this.context.intl.formatMessage({id: 'additional_info_thunderbird_2'})}</div>
           </div>

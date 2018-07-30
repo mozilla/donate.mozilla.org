@@ -11,13 +11,13 @@ module.exports = React.createClass({
       aboutCopy: null
     };
   },
-  
+
   componentDidMount: function() {
     var aboutCopy = (<span>{this.context.intl.formatMessage({id: 'additional_info_thunderbird'})}</span>);
     if (this.props.test === "tbdownload") {
       aboutCopy = (
         <span>
-          <div><b>Thank you for downloading Thunderbird!</b></div>
+          <div><b>{this.context.intl.formatMessage({id: 'thunderbird_thank_you_note'})}</b></div>
           <br/>
           <div>{this.context.intl.formatMessage({id: 'additional_info_thunderbird'})}</div>
         </span>

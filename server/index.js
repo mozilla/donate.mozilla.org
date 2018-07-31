@@ -45,7 +45,7 @@ module.exports = async function(options) {
       }
 
       let { 'x-forwarded-proto': protocol = 'http'} = request.headers;
-      let {pathname} = request.url;
+      let { pathname } = request.url;
       let newURL = url.format({ protocol, pathname, host });
 
       return h.response().takeover().redirect(newURL);

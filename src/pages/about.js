@@ -3,6 +3,7 @@ import reactGA from 'react-ga';
 import MozillaFooter from '../components/mozilla/footer.js';
 import Nav from '../components/nav.js';
 import SingleForm from '../components/single-form.js';
+import { FormattedHTMLMessage } from 'react-intl';
 
 module.exports = React.createClass({
   contextTypes: {
@@ -14,11 +15,11 @@ module.exports = React.createClass({
     };
   },
   componentDidMount: function() {
-    var additionalInfoId = 'additional_info';
+    var additionalInfoId = 'additional_info_internet_health';
     if (/^(en)(\b|$)/.test(this.context.intl.locale)) {
-      additionalInfoId = 'additional_info_internet_health';
+      additionalInfoId = 'additional_info_internet_health_bold';
     }
-    var aboutCopy = (<span>{this.context.intl.formatMessage({id: additionalInfoId})}</span>);
+    var aboutCopy = (<span><FormattedHTMLMessage id={additionalInfoId}/></span>);
 
     this.setState({
       aboutCopy: aboutCopy

@@ -1,24 +1,37 @@
 import React from 'react';
-import { FormattedHTMLMessage } from 'react-intl';
 
 var Footer = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
   render: function() {
-    var year = new Date().getFullYear();
     return (
       <footer>
         <div className="footer">
           <div className="footer-links">
             <ul>
-              <li><a href="https://www.mozilla.org/mission/" target="_blank">{this.context.intl.formatMessage({id: 'Mission'})}</a></li>
-              <li><a href="https://www.mozilla.org/about/" target="_blank">{this.context.intl.formatMessage({id: 'About'})}</a></li>
-              <li><a href="https://www.mozilla.org/contact/spaces/" target="_blank">{this.context.intl.formatMessage({id: 'Contact'})}</a>
+              <li><a href="mailto:network@mozillafoundation.org" target="_blank">{this.context.intl.formatMessage({id: 'email'})}</a></li>
+              <li><a href="https://twitter.com/mozilla" target="_blank">{this.context.intl.formatMessage({id: 'twitter'})}</a></li>
+              <li><a href="https://www.facebook.com/mozilla" target="_blank">{this.context.intl.formatMessage({id: 'facebook'})}</a></li>
+              <li>
+                <a href="https://creativecommons.org/licenses/by/4.0" target="_blank">
+                  {this.context.intl.formatMessage({id: 'license'})}
+                </a>
               </li>
-              <li><a href="https://www.mozilla.org/privacy/" target="_blank">{this.context.intl.formatMessage({id: 'privacyPolicyFooter'})}</a>
+              <li>
+                <a href="https://www.mozilla.org/about/governance/policies/participation/" target="_blank">
+                  {this.context.intl.formatMessage({id: 'participation_guidelines'})}
+                </a>
               </li>
-              <li><a href="https://www.mozilla.org/about/legal/" target="_blank">{this.context.intl.formatMessage({id: 'legalNotices'})}</a>
+              <li>
+                <a href="https://www.mozilla.org/about/legal/" target="_blank">
+                  {this.context.intl.formatMessage({id: 'legalNotices'})}
+                </a>
+              </li>
+              <li>
+                <a href="https://www.mozilla.org/privacy/" target="_blank">
+                  {this.context.intl.formatMessage({id: 'privacyPolicyFooter'})}
+                </a>
               </li>
             </ul>
           </div>
@@ -31,12 +44,7 @@ var Footer = React.createClass({
             </div>
             <div className="footer-paragraph">
               <p className="license">
-                <FormattedHTMLMessage
-                  id='footerLicense'
-                  values={{year}}
-                />
-                <br/>
-                {this.props.message}
+                {this.props.children}
               </p>
             </div>
           </div>

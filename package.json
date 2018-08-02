@@ -67,7 +67,7 @@
     "good-console-logfmt": "1.0.3",
     "good-squeeze": "^5.0.2",
     "habitat": "3.1.2",
-    "hapi": "17.5.2",
+    "hapi": "17.2.0",
     "hapi-auth-bearer-token": "6.0.1",
     "hatchet": "0.3.2",
     "imports-loader": "0.6.5",
@@ -122,7 +122,7 @@
     "should": "8.0.2"
   },
   "engines": {
-    "node": "^8.11.3"
+    "node": "^8.9.0"
   },
   "snyk": true
 }

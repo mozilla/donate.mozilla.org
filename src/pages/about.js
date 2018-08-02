@@ -1,5 +1,4 @@
 import React from 'react';
-import reactGA from 'react-ga';
 import MozillaFooter from '../components/mozilla/footer.js';
 import Nav from '../components/nav.js';
 import SingleForm from '../components/single-form.js';

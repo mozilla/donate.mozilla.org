@@ -10,7 +10,6 @@ var Footer = React.createClass({
         <div className="footer">
           <div className="footer-links">
             <ul>
-              <li><a href="mailto:network@mozillafoundation.org" target="_blank">{this.context.intl.formatMessage({id: 'email_footer'})}</a></li>
               <li><a href="https://twitter.com/mozilla" target="_blank">{this.context.intl.formatMessage({id: 'twitter'})}</a></li>
               <li><a href="https://www.facebook.com/mozilla" target="_blank">{this.context.intl.formatMessage({id: 'facebook'})}</a></li>
               <li>

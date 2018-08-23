@@ -579,6 +579,19 @@ module.exports = {
       monthly: ['100', '40', '20', '15']
     }
   },
+  'sgd': {
+    code: 'sgd',
+    minAmount: '3',
+    symbol: '$SG',
+    paypalFixedFee: {
+      macro: 0.50,
+      micro: 0.08
+    },
+    presets: {
+      single: ['20', '14', '7', '4'],
+      monthly: ['14', '7', '4', '3']
+    }
+  },
   'thb': {
     code: 'thb',
     minAmount: '70',

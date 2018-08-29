@@ -36,12 +36,9 @@ module.exports = React.createClass({
     );
   },
   renderNav: function() {
-    if (this.props.test === "nav") {
-      return (
-        <Nav zenMode={true} simpleBackground={true}/>
-      );
-    }
-    return (null);
+    return (
+      <Nav zenMode={true} simpleBackground={true}/>
+    );
   },
   render: function() {
     var className = "row additional-info-container";

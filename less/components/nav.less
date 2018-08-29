@@ -4,16 +4,36 @@
     width: 100%;
     margin: 0 auto;
   }
+  
+  &.zen-mode {
+    .width-container {
+      max-width: 1138px;
+    }
+    .menu-container {
+      @media (min-width: 768px) {
+        padding-left: 80px;
+        padding-right: 52px;
+      }
+    }
+  }
 
   .menu-container {
     padding: 0 0 0 67px;
-
+    // For languages that we don't translate the foundation site to and thus don't show the menu
+    &.no-menu {
+      padding-left: 15px;
+      .burger { display: none; }
+    }
+    
     @media (min-width: 576px) {
       padding: 0 67px;
     }
-
+    
     @media (min-width: 768px) {
       padding: 8px 0;
+      &.no-menu {
+        padding-left: 40px;
+      }
     }
 
     @media (min-width: 990px) {
@@ -28,17 +48,6 @@
     }
   }
 
-  &.zen-mode {
-    .width-container {
-      max-width: 1138px;
-    }
-    .menu-container {
-      @media (min-width: 768px) {
-        padding-left: 80px;
-        padding-right: 52px;
-      }
-    }
-  }
 
   #donate-header-btn {
     margin-top: 16px;

@@ -141,7 +141,7 @@ var Faq = React.createClass({
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_3" header={this.context.intl.formatHTMLMessage({id: 'faq_item_3_header'})}>
-              <p><FormattedHTMLMessage id='faq_item_3_paragraph_update'/></p>
+              { /^(en-US)(\b|$)/.test(this.context.intl.locale) ? <p><FormattedHTMLMessage id='faq_item_3_paragraph_update2'/></p> : <p><FormattedHTMLMessage id='faq_item_3_paragraph_update'/></p> }
             </Panel>
 
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_4" header={this.context.intl.formatHTMLMessage({id: 'faq_item_4_header_check'})}>

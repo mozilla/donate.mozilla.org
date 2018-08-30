@@ -20,11 +20,18 @@ var Nav = React.createClass({
     var burgerClassName = "burger";
     var wideMenuClassName = "wide-screen-menu";
     var narrowMenuClassName = "narrow-screen-menu";
+    var menuContainerClass = "menu-container";
     if (this.props.zenMode) {
       primaryNavClassName = "zen-mode";
     } else {
       burgerClassName += " hidden-md-up";
     }
+
+    //Only show the navigation on english sites, since the Foundation site isn't localized.
+    if (!/^(en-)(\b|$)/.test(this.context.intl.locale)) {
+      menuContainerClass += " no-menu";
+    }
+
     if (this.props.zenMode && !this.state.menuOpen) {
       wideMenuClassName += " hide-menu";
     }
@@ -41,7 +48,7 @@ var Nav = React.createClass({
     return (
       <div id="primary-nav-container" className={primaryNavClassName}>
         <div className={backgroundClassName}>
-          <div className="menu-container">
+          <div className={menuContainerClass}>
             <div className={narrowMenuClassName}>
               <div className="narrow-screen-menu-background">
                 <div className="narrow-screen-menu-container">

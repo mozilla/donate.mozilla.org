@@ -1,5 +1,4 @@
 import React from 'react';
-import reactGA from 'react-ga';
 import MozillaFooter from '../components/mozilla/footer.js';
 import Nav from '../components/nav.js';
 import SingleForm from '../components/single-form.js';
@@ -36,12 +35,9 @@ module.exports = React.createClass({
     );
   },
   renderNav: function() {
-    if (this.props.test === "nav") {
-      return (
-        <Nav zenMode={true} simpleBackground={true}/>
-      );
-    }
-    return (null);
+    return (
+      <Nav zenMode={true} simpleBackground={true}/>
+    );
   },
   render: function() {
     var className = "row additional-info-container";

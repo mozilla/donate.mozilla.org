@@ -25,14 +25,17 @@ module.exports = React.createClass({
     });
   },
   imageTest: function() {
-    if (this.props.test === "img-a") {
+    let test = this.props.test;
+
+    if (test === "img-a") {
       return (<picture>
-        <source srcSet="/assets/images/homepage-images/teacher-wide.jpg" media="(max-width: 800px)" />
+        <source width="1448" srcSet="/assets/images/homepage-images/teacher-wide.jpg" media="(max-width: 799px)" />
         <img className="homepage-image" src="/assets/images/homepage-images/teacher-full.jpg" alt="Man pointing at student's computer screen"/>
       </picture> );
-    } else if (this.props.test === "img-b") {
+    }
+    if (test === "img-b") {
       return (<picture>
-        <source srcSet="/assets/images/homepage-images/believe-wide.jpg" media="(max-width: 800px)" />
+        <source srcSet="/assets/images/homepage-images/believe-wide.jpg" media="(max-width: 799px)" />
         <img className="homepage-image" src="/assets/images/homepage-images/believe-full.jpg" alt="A sign that reads 'I believe in the open Internet'"/>
       </picture>);
     }

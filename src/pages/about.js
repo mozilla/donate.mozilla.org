@@ -24,10 +24,27 @@ module.exports = React.createClass({
       aboutCopy: aboutCopy
     });
   },
+  imageTest: function() {
+    let test = this.props.test;
+
+    if (test === "img-a") {
+      return (<picture>
+        <source width="1448" srcSet="/assets/images/homepage-images/teacher-wide.jpg" media="(max-width: 799px)" />
+        <img className="homepage-image" src="/assets/images/homepage-images/teacher-full.jpg" alt="Man pointing at student's computer screen"/>
+      </picture> );
+    }
+    if (test === "img-b") {
+      return (<picture>
+        <source srcSet="/assets/images/homepage-images/believe-wide.jpg" media="(max-width: 799px)" />
+        <img className="homepage-image" src="/assets/images/homepage-images/believe-full.jpg" alt="A sign that reads 'I believe in the open Internet'"/>
+      </picture>);
+    }
+    return (<img className="homepage-image icon-baseline" height="100" width="107" alt="heart" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>);
+  },
   renderTextAboutPage: function() {
     return (
       <div className="container additional-page">
-        <img className="heart-image icon-baseline" height="100" width="107" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
+        { this.imageTest() }
         <div>
           { this.state.aboutCopy }
         </div>

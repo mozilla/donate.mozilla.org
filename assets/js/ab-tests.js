@@ -1,14 +1,13 @@
 // Documentation for running AB tests. https://github.com/mozilla/trafficcop/blob/master/documentation.md
 
 // Only run this test on the home page in en-US.
-// if (window.location.pathname === "/en-US/") {
-//   var tc = new Mozilla.TrafficCop({
-//     id: "nav-experiment",
-//     variations: {
-//       "test=nonav": 50,
-//       "test=nav": 50
-//     }
-//   });
-// 
-//   tc.init();
-// }
+var tc = new Mozilla.TrafficCop({
+    id: "image-experiment",
+    variations: {
+      "test=img-a": 33,
+      "test=img-b": 33,
+      "test=no-img": 34
+    }
+});
+
+tc.init();

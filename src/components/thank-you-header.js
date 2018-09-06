@@ -30,7 +30,7 @@ module.exports = React.createClass({
     return (
       <div>
         <div className="header baseline-header">
-          <img width="68" height="62" className="auto-margin heart-image" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
+          <img width="68" height="62" className="auto-margin homepage-image" src="/assets/images/heart.ce7d2d59c757e1598e244e546426577c.svg"/>
           {this.renderMessage()}
           <img width="280" height="115" className="auto-margin internet-graphic" src="/assets/images/internet-graphic.e9a5980f4251c71bdd72d088f80d9864.svg"/>
         </div>

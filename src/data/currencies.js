@@ -130,7 +130,7 @@ module.exports = {
       {min: 20, value: "6"}
     ],
     presets: {
-      single: ['20', '10', '5', '3'],
+      single: ['65', '30', '15', '4'],
       monthly: ['10', '5', '3', '2']
     }
   },

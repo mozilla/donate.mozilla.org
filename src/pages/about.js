@@ -14,11 +14,7 @@ module.exports = React.createClass({
     };
   },
   componentDidMount: function() {
-    var additionalInfoId = 'additional_info_internet_health';
-    if (/^(en)(\b|$)/.test(this.context.intl.locale)) {
-      additionalInfoId = 'additional_info_internet_health_bold';
-    }
-    var aboutCopy = (<span><FormattedHTMLMessage id={additionalInfoId}/></span>);
+    var aboutCopy = (<span><FormattedHTMLMessage id="additional_info_internet_health_bold"/></span>);
 
     this.setState({
       aboutCopy: aboutCopy

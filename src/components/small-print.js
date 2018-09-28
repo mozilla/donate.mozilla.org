@@ -21,8 +21,7 @@ var Footer = React.createClass({
         <p className="full">
           <FormattedHTMLMessage id={privacyPolicyMessage}/>
           {` `}
-          <span>{refundsMessage}</span>
-          {` `}
+          <span>{refundsMessage} </span>
           <FormattedMessage
             id='other_way_to_give_wire_check'
             values={{

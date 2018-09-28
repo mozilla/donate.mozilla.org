@@ -15,7 +15,7 @@ module.exports = React.createClass({
 
   componentDidMount: function() {
     var aboutCopy = (<span>{this.context.intl.formatMessage({id: 'additional_info_thunderbird'})}</span>);
-    if (this.props.test === "tbdownload") {
+    if (this.props.location.query.tbdownload === "true") {
       aboutCopy = (
         <span>
           <div><b>{this.context.intl.formatMessage({id: 'thunderbird_thank_you_note'})}</b></div>
@@ -31,10 +31,7 @@ module.exports = React.createClass({
   render: function() {
     var downloadBanner = "";
     var className = "row additional-info-container thunderbird";
-    if (this.props.test) {
-      className += " " + this.props.test;
-    }
-    if (this.props.test === "tbdownload") {
+    if (this.props.location.query.tbdownload === "true") {
       downloadBanner = (<div className="download-failed"><h3><FormattedHTMLMessage id="thunderbird_download_banner" /></h3></div>);
     }
     var aboutCopy = this.state.aboutCopy;

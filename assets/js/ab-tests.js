@@ -4,9 +4,8 @@
 var tc = new Mozilla.TrafficCop({
     id: "image-experiment",
     variations: {
-      "test=img-a": 33,
-      "test=img-b": 33,
-      "test=no-img": 34
+      "test=img-a": 50,
+      "test=no-img": 50
     }
 });
 

@@ -231,7 +231,8 @@ const routes = {
         service: "stripe",
         transaction_id: charge.id,
         project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
-        donation_url
+        donation_url,
+        last_4: charge.source.last4
       });
 
       const cookie = {
@@ -855,7 +856,8 @@ const routes = {
       transaction_id: charge.id,
       subscription_id: subscription.id,
       donation_url,
-      project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
+      project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
+      last_4: subscription.customer.sources.data[0].last4
     });
 
     try {

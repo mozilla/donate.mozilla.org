@@ -191,6 +191,43 @@ const routes = {
         throw badRequest;
       }
 
+      let balance_txn;
+
+      try {
+        balance_txn = await stripe.retrieveBalanceTransaction(charge.balance_transaction);
+      } catch (err) {
+        stripe_customer_create_service = Date.now() - startCreateCustomer;
+        badRequest = Boom.badRequest('Stripe charge failed');
+
+        badRequest.output.payload.stripe = {
+          code: err.code,
+          rawType: err.rawType
+        };
+
+        request.log(['error', 'stripe', 'customer'], {
+          request_id,
+          stripe_customer_create_service,
+          code: err.code,
+          type: err.type,
+          param: err.param
+        });
+
+        throw badRequest;
+      }
+
+      // Capture the amount of the transaction in USD, before fees
+      let conversion_amount = balance_txn.amount / 100;
+
+      // Capture the net amount of the donation after fees
+      let net_amount = balance_txn.net / 100;
+
+      // Capture the transaction amounts. We're using this iterative approach so
+      // we avoid any rounding errors when subtracting conversion and net amounts.
+      let transaction_fee = 0;
+      for (let fee of balance_txn.fee_details) {
+        transaction_fee += fee.amount / 100;
+      }
+
       stripe_charge_create_service = Date.now() - startCreateCharge;
 
       if (signup) {
@@ -231,7 +268,10 @@ const routes = {
         service: "stripe",
         transaction_id: charge.id,
         project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
-        donation_url
+        donation_url,
+        conversion_amount,
+        net_amount,
+        transaction_fee // Check rounding errors
       });
 
       const cookie = {
@@ -808,6 +848,21 @@ const routes = {
       throw Boom.badImplementation('An error occurred while fetching the invoice for this charge', err);
     }
 
+    let balance_txn = charge.balance_transaction;
+
+    // Capture the amount of the transaction in USD, before fees
+    let conversion_amount = balance_txn.amount / 100;
+
+    // Capture the net amount of the donation after fees
+    let net_amount = balance_txn.net / 100;
+
+    // Capture the transaction amounts. We're using this iterative approach so
+    // we avoid any rounding errors when subtracting conversion and net amounts.
+    let transaction_fee = 0;
+    for (let fee of balance_txn.fee_details) {
+      transaction_fee += fee.amount / 100;
+    }
+
     if (!charge.invoice || !charge.invoice.subscription) {
       return h.response('Charge not part of a subscription');
     }
@@ -855,7 +910,10 @@ const routes = {
       transaction_id: charge.id,
       subscription_id: subscription.id,
       donation_url,
-      project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
+      project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
+      conversion_amount,
+      net_amount,
+      transaction_fee
     });
 
     try {

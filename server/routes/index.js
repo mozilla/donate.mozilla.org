@@ -231,7 +231,8 @@ const routes = {
         service: "stripe",
         transaction_id: charge.id,
         project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
-        donation_url
+        donation_url,
+        locale
       });
 
       const cookie = {
@@ -604,7 +605,8 @@ const routes = {
         recurring: false,
         service: 'paypal',
         transaction_id,
-        project: appName
+        project: appName,
+        locale: locale.substr(1)
       });
 
       return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}&subscribed=${subscribed}`)
@@ -697,7 +699,8 @@ const routes = {
       service: "paypal",
       transaction_id,
       subscription_id,
-      project: appName
+      project: appName,
+      locale: locale.substr(1)
     });
 
     return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}&subscribed=${subscribed}`)
@@ -855,7 +858,8 @@ const routes = {
       transaction_id: charge.id,
       subscription_id: subscription.id,
       donation_url,
-      project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
+      project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
+      locale: subscription.metadata.locale
     });
 
     try {

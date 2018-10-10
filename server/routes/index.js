@@ -225,6 +225,7 @@ const routes = {
       // we avoid any rounding errors when subtracting conversion and net amounts.
       let transaction_fee = 0;
       for (let fee of balance_txn.fee_details) {
+        // convert from cents to dollars
         transaction_fee += fee.amount / 100;
       }
 
@@ -271,7 +272,7 @@ const routes = {
         donation_url,
         conversion_amount,
         net_amount,
-        transaction_fee // Check rounding errors
+        transaction_fee
       });
 
       const cookie = {
@@ -618,12 +619,11 @@ const routes = {
         CURRENCYCODE: currency,
         PAYMENTINFO_0_ORDERTIME: orderTime,
         PAYMENTINFO_0_TRANSACTIONID: transaction_id,
-        // PayPal tells us the conversion rate to USD used at the time of the transaction
         PAYMENTINFO_0_FEEAMT: transaction_fee,
         PAYMENTINFO_0_SETTLEAMT: net_amount
       } = checkoutData;
 
-      // convert these to numbers
+      // convert these to numbers, because they're given as String values
       transaction_fee = +transaction_fee;
       net_amount = +net_amount;
 
@@ -750,9 +750,6 @@ const routes = {
       transaction_id,
       subscription_id,
       project: appName
-      // conversion_amount,
-      // transaction_fee,
-      // net_amount
     });
 
     return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}&subscribed=${subscribed}`)
@@ -875,6 +872,7 @@ const routes = {
     // we avoid any rounding errors when subtracting conversion and net amounts.
     let transaction_fee = 0;
     for (let fee of balance_txn.fee_details) {
+      // Convert cents to dollars
       transaction_fee += fee.amount / 100;
     }
 

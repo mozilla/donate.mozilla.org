@@ -125,6 +125,7 @@ function doExpressCheckoutPayment(checkoutDetails, options) {
       }
 
       let txn = querystring.parse(body);
+
       if (txn.ACK !== 'Success') {
         return reject(Boom.badImplementation(txn.L_SHORTMESSAGE0, {
           error_code: txn.L_ERRORCODE0,

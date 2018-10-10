@@ -231,6 +231,7 @@ const routes = {
         service: "stripe",
         transaction_id: charge.id,
         project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
+        last_4: charge.source.last4,
         donation_url,
         locale
       });
@@ -859,7 +860,8 @@ const routes = {
       subscription_id: subscription.id,
       donation_url,
       project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
-      locale: subscription.metadata.locale
+      locale: subscription.metadata.locale,
+      last_4: subscription.customer.sources.data[0].last4
     });
 
     try {

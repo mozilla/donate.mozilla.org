@@ -617,8 +617,17 @@ const routes = {
         PAYMENTREQUEST_0_AMT: donation_amount,
         CURRENCYCODE: currency,
         PAYMENTINFO_0_ORDERTIME: orderTime,
-        PAYMENTINFO_0_TRANSACTIONID: transaction_id
+        PAYMENTINFO_0_TRANSACTIONID: transaction_id,
+        // PayPal tells us the conversion rate to USD used at the time of the transaction
+        PAYMENTINFO_0_FEEAMT: transaction_fee,
+        PAYMENTINFO_0_SETTLEAMT: net_amount
       } = checkoutData;
+
+      // convert these to numbers
+      transaction_fee = +transaction_fee;
+      net_amount = +net_amount;
+
+      let conversion_amount = net_amount + transaction_fee;
 
       let {
         FIRSTNAME: first_name,
@@ -644,7 +653,10 @@ const routes = {
         recurring: false,
         service: 'paypal',
         transaction_id,
-        project: appName
+        project: appName,
+        conversion_amount,
+        net_amount,
+        transaction_fee
       });
 
       return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}&subscribed=${subscribed}`)
@@ -738,6 +750,9 @@ const routes = {
       transaction_id,
       subscription_id,
       project: appName
+      // conversion_amount,
+      // transaction_fee,
+      // net_amount
     });
 
     return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}&subscribed=${subscribed}`)

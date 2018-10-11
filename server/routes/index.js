@@ -191,6 +191,44 @@ const routes = {
         throw badRequest;
       }
 
+      let balance_txn;
+
+      try {
+        balance_txn = await stripe.retrieveBalanceTransaction(charge.balance_transaction);
+      } catch (err) {
+        stripe_customer_create_service = Date.now() - startCreateCustomer;
+        badRequest = Boom.badRequest('Stripe charge failed');
+
+        badRequest.output.payload.stripe = {
+          code: err.code,
+          rawType: err.rawType
+        };
+
+        request.log(['error', 'stripe', 'customer'], {
+          request_id,
+          stripe_customer_create_service,
+          code: err.code,
+          type: err.type,
+          param: err.param
+        });
+
+        throw badRequest;
+      }
+
+      // Capture the amount of the transaction in USD, before fees
+      let conversion_amount = balance_txn.amount / 100;
+
+      // Capture the net amount of the donation after fees
+      let net_amount = balance_txn.net / 100;
+
+      // Capture the transaction amounts. We're using this iterative approach so
+      // we avoid any rounding errors when subtracting conversion and net amounts.
+      let transaction_fee = 0;
+      for (let fee of balance_txn.fee_details) {
+        // convert from cents to dollars
+        transaction_fee += fee.amount / 100;
+      }
+
       stripe_charge_create_service = Date.now() - startCreateCharge;
 
       if (signup) {
@@ -233,7 +271,10 @@ const routes = {
         project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
         last_4: charge.source.last4,
         donation_url,
-        locale
+        locale,
+        conversion_amount,
+        net_amount,
+        transaction_fee
       });
 
       const cookie = {
@@ -579,8 +620,16 @@ const routes = {
         PAYMENTREQUEST_0_AMT: donation_amount,
         CURRENCYCODE: currency,
         PAYMENTINFO_0_ORDERTIME: orderTime,
-        PAYMENTINFO_0_TRANSACTIONID: transaction_id
+        PAYMENTINFO_0_TRANSACTIONID: transaction_id,
+        PAYMENTINFO_0_FEEAMT: transaction_fee,
+        PAYMENTINFO_0_SETTLEAMT: net_amount
       } = checkoutData;
+
+      // convert these to numbers, because they're given as String values
+      transaction_fee = +transaction_fee;
+      net_amount = +net_amount;
+
+      let conversion_amount = net_amount + transaction_fee;
 
       let {
         FIRSTNAME: first_name,
@@ -607,7 +656,10 @@ const routes = {
         service: 'paypal',
         transaction_id,
         project: appName,
-        locale: locale.substr(1)
+        locale: locale.substr(1),
+        conversion_amount,
+        net_amount,
+        transaction_fee
       });
 
       return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}&subscribed=${subscribed}`)
@@ -812,6 +864,22 @@ const routes = {
       throw Boom.badImplementation('An error occurred while fetching the invoice for this charge', err);
     }
 
+    let balance_txn = charge.balance_transaction;
+
+    // Capture the amount of the transaction in USD, before fees
+    let conversion_amount = balance_txn.amount / 100;
+
+    // Capture the net amount of the donation after fees
+    let net_amount = balance_txn.net / 100;
+
+    // Capture the transaction amounts. We're using this iterative approach so
+    // we avoid any rounding errors when subtracting conversion and net amounts.
+    let transaction_fee = 0;
+    for (let fee of balance_txn.fee_details) {
+      // Convert cents to dollars
+      transaction_fee += fee.amount / 100;
+    }
+
     if (!charge.invoice || !charge.invoice.subscription) {
       return h.response('Charge not part of a subscription');
     }
@@ -861,7 +929,10 @@ const routes = {
       donation_url,
       project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
       locale: subscription.metadata.locale,
-      last_4: subscription.customer.sources.data[0].last4
+      last_4: subscription.customer.sources.data[0].last4,
+      conversion_amount,
+      net_amount,
+      transaction_fee
     });
 
     try {

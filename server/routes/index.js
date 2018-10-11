@@ -269,7 +269,9 @@ const routes = {
         service: "stripe",
         transaction_id: charge.id,
         project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
+        last_4: charge.source.last4,
         donation_url,
+        locale,
         conversion_amount,
         net_amount,
         transaction_fee
@@ -654,6 +656,7 @@ const routes = {
         service: 'paypal',
         transaction_id,
         project: appName,
+        locale: locale.substr(1),
         conversion_amount,
         net_amount,
         transaction_fee
@@ -749,7 +752,8 @@ const routes = {
       service: "paypal",
       transaction_id,
       subscription_id,
-      project: appName
+      project: appName,
+      locale: locale.substr(1)
     });
 
     return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}&subscribed=${subscribed}`)
@@ -819,7 +823,7 @@ const routes = {
 
     const event_type = event.type;
 
-    if (event_type === 'charge.dispute.created' && status !== 'lost') {
+    if (event_type === 'charge.dispute.created' && status !== 'lost' && process.env.AUTO_CLOSE_DISPUTES === 'true') {
       try {
         await stripe.closeDispute(dispute_id);
         // statements
@@ -924,6 +928,8 @@ const routes = {
       subscription_id: subscription.id,
       donation_url,
       project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
+      locale: subscription.metadata.locale,
+      last_4: subscription.customer.sources.data[0].last4,
       conversion_amount,
       net_amount,
       transaction_fee

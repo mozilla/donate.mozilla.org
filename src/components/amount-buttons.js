@@ -91,6 +91,20 @@ var AmountOtherButton = React.createClass({
       this.props.onRadioChange();
     }
   },
+
+  renderCurrencySymbol: function() {
+    var symbol = <span>&nbsp;</span>;
+
+    if (this.props.currencySymbol) {
+      symbol = <div>
+        <span>{this.props.currencySymbol}</span>
+        { this.props.showMonthlyNote && <div className="per-month-note"> {this.context.intl.formatMessage({id: "per_month"})}</div> }
+      </div>;
+    }
+
+    return symbol;
+  },
+
   render: function() {
     return (
       <div className="two-third">
@@ -104,10 +118,7 @@ var AmountOtherButton = React.createClass({
           />
           <label htmlFor="amount-other" className="large-label-size">
             <span className="currency-symbol-container">
-              { this.props.currencySymbol ?
-                <span>{this.props.currencySymbol}</span> :
-                <span>&nbsp;</span>
-              }
+              { this.renderCurrencySymbol() }
             </span>
           </label>
           <div className="amount-other-wrapper">
@@ -194,11 +205,9 @@ var AmountButtons = React.createClass({
 
     var currency = this.props.currency;
     var showMonthlyNote;
-    var otherPlaceholderTextId = `other_amount`;
 
     if (frequency === `monthly`) {
       showMonthlyNote = true;
-      otherPlaceholderTextId = `other_amount_monthly`;
     }
 
     return (
@@ -219,7 +228,8 @@ var AmountButtons = React.createClass({
             checked={otherChecked}
             onRadioChange={this.otherRadioChange}
             onInputChange={this.otherInputChange}
-            placeholder={this.context.intl.formatMessage({id: otherPlaceholderTextId})}
+            placeholder={this.context.intl.formatMessage({id: "other_amount"})}
+            showMonthlyNote={showMonthlyNote}
           />
         </div>
         <ErrorMessage message={this.renderErrorMessage()}/>

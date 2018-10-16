@@ -620,16 +620,8 @@ const routes = {
         PAYMENTREQUEST_0_AMT: donation_amount,
         CURRENCYCODE: currency,
         PAYMENTINFO_0_ORDERTIME: orderTime,
-        PAYMENTINFO_0_TRANSACTIONID: transaction_id,
-        PAYMENTINFO_0_FEEAMT: transaction_fee,
-        PAYMENTINFO_0_SETTLEAMT: net_amount
+        PAYMENTINFO_0_TRANSACTIONID: transaction_id
       } = checkoutData;
-
-      // convert these to numbers, because they're given as String values
-      transaction_fee = +transaction_fee;
-      net_amount = +net_amount;
-
-      let conversion_amount = net_amount + transaction_fee;
 
       let {
         FIRSTNAME: first_name,
@@ -644,7 +636,7 @@ const routes = {
 
       let created = new Date(orderTime).getTime() / 1000;
 
-      basket.queue({
+      let basket_data = {
         event_type: "donation",
         first_name,
         last_name,
@@ -656,11 +648,32 @@ const routes = {
         service: 'paypal',
         transaction_id,
         project: appName,
-        locale: locale.substr(1),
+        locale: locale.substr(1)
+      };
+
+      let net_amount,
         conversion_amount,
-        net_amount,
-        transaction_fee
-      });
+        transaction_fee;
+
+      if (checkoutData.PAYMENTINFO_0_PAYMENTSTATUS === 'Completed') {
+        transaction_fee = +checkoutData.PAYMENTINFO_0_FEEAMT;
+
+        if (currency === 'USD') {
+          // USD txns will not have a "SETTLEAMT" so we must calculate the net
+          conversion_amount = +donation_amount;
+          net_amount = +(conversion_amount - transaction_fee).toFixed(2);
+        } else {
+          // We must calculate the conversion amount for non-USD transactions
+          net_amount = +checkoutData.PAYMENTINFO_0_SETTLEAMT;
+          conversion_amount = +(net_amount + transaction_fee).toFixed(2);
+        }
+
+        basket_data.conversion_amount = conversion_amount;
+        basket_data.transaction_fee = transaction_fee;
+        basket_data.net_amount = net_amount;
+      }
+
+      basket.queue(basket_data);
 
       return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}&subscribed=${subscribed}`)
         .unstate("session");

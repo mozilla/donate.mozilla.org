@@ -26,7 +26,7 @@
 - We have [AWS Business Support](https://aws.amazon.com/premiumsupport/).
 - You can file a support ticket by visiting the [Support Center](https://console.aws.amazon.com/support/home).
 - You must be able to sign-in to the mofo-secure AWS account before you can file a support ticket.
-- You can see the current AWS status by visiting their [status page](http://status.aws.amazon.com/).
+- You can see the current AWS status by visiting their [status page](https://status.aws.amazon.com/).
 
 ### GitHub
 

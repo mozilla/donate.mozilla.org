@@ -7,11 +7,16 @@ import { setAmount } from '../actions';
 import AmountInput from './amount-input.js';
 
 var AmountButton = React.createClass({
+  contextTypes: {
+    intl: React.PropTypes.object
+  },
+
   propTypes: {
     onChange: React.PropTypes.func,
     amount: React.PropTypes.string,
     value: React.PropTypes.string,
-    currencyCode: React.PropTypes.string
+    currencyCode: React.PropTypes.string,
+    showMonthlyNote: React.PropTypes.bool
   },
 
   onClickEvent: function(e) {
@@ -20,6 +25,12 @@ var AmountButton = React.createClass({
       action: "Changed Amount",
       label: e.currentTarget.value
     });
+  },
+
+  renderPerMonthNote: function() {
+    if (!this.props.showMonthlyNote) return null;
+
+    return <div className="per-month-note"> {this.context.intl.formatMessage({id: "per_month"})}</div>;
   },
 
   render: function() {
@@ -37,12 +48,15 @@ var AmountButton = React.createClass({
         />
         <label htmlFor={"amount-" + this.props.value} className="amount-button large-label-size">
           { this.props.currencyCode && this.props.value ?
-            <FormattedNumber
-              minimumFractionDigits={0}
-              value={this.props.value}
-              style="currency"
-              currency={this.props.currencyCode}
-            /> : <span>&nbsp;</span> }
+            <div>
+              <FormattedNumber
+                minimumFractionDigits={0}
+                value={this.props.value}
+                style="currency"
+                currency={this.props.currencyCode}
+              />
+              { this.renderPerMonthNote() }
+            </div> : <span>&nbsp;</span> }
         </label>
       </div>
     );
@@ -77,6 +91,20 @@ var AmountOtherButton = React.createClass({
       this.props.onRadioChange();
     }
   },
+
+  renderCurrencySymbol: function() {
+    var symbol = <span>&nbsp;</span>;
+
+    if (this.props.currencySymbol) {
+      symbol = <div>
+        <span>{this.props.currencySymbol}</span>
+        { this.props.showMonthlyNote && <div className="per-month-note"> {this.context.intl.formatMessage({id: "per_month"})}</div> }
+      </div>;
+    }
+
+    return symbol;
+  },
+
   render: function() {
     return (
       <div className="two-third">
@@ -90,10 +118,7 @@ var AmountOtherButton = React.createClass({
           />
           <label htmlFor="amount-other" className="large-label-size">
             <span className="currency-symbol-container">
-              { this.props.currencySymbol ?
-                <span>{this.props.currencySymbol}</span> :
-                <span>&nbsp;</span>
-              }
+              { this.renderCurrencySymbol() }
             </span>
           </label>
           <div className="amount-other-wrapper">
@@ -169,6 +194,7 @@ var AmountButtons = React.createClass({
     var amount = this.props.amount;
     var presets = this.props.presets;
     var preset = presets.indexOf(amount);
+    var frequency = this.props.frequency;
     var userInputting = this.state.userInputting;
     var otherChecked = userInputting || !!(amount && preset < 0);
 
@@ -176,26 +202,34 @@ var AmountButtons = React.createClass({
       otherAmount = amount;
       amount = "";
     }
+
     var currency = this.props.currency;
+    var showMonthlyNote;
+
+    if (frequency === `monthly`) {
+      showMonthlyNote = true;
+    }
+
     return (
       <div className="amount-buttons">
         <div className="row donation-amount-row">
           <AmountButton value={presets[0]} currencyCode={currency.code} amount={amount}
-            onChange={this.onChange}/>
+            onChange={this.onChange} showMonthlyNote={showMonthlyNote}/>
           <AmountButton value={presets[1]} currencyCode={currency.code} amount={amount}
-            onChange={this.onChange}/>
+            onChange={this.onChange} showMonthlyNote={showMonthlyNote}/>
           <AmountButton value={presets[2]} currencyCode={currency.code} amount={amount}
-            onChange={this.onChange}/>
+            onChange={this.onChange} showMonthlyNote={showMonthlyNote}/>
         </div>
         <div className="row donation-amount-row">
           <AmountButton value={presets[3]} currencyCode={currency.code} amount={amount}
-            onChange={this.onChange}/>
+            onChange={this.onChange} showMonthlyNote={showMonthlyNote}/>
           <AmountOtherButton amount={otherAmount}
             currencySymbol={currency.symbol}
             checked={otherChecked}
             onRadioChange={this.otherRadioChange}
             onInputChange={this.otherInputChange}
-            placeholder={this.context.intl.formatMessage({id: 'other_amount'})}
+            placeholder={this.context.intl.formatMessage({id: "other_amount"})}
+            showMonthlyNote={showMonthlyNote}
           />
         </div>
         <ErrorMessage message={this.renderErrorMessage()}/>
@@ -210,7 +244,8 @@ module.exports = connect(
       amount: state.donateForm.amount,
       presets: state.donateForm.presets,
       currency: state.donateForm.currency,
-      amountError: state.donateForm.amountError
+      amountError: state.donateForm.amountError,
+      frequency: state.donateForm.frequency
     };
   },
   function(dispatch) {

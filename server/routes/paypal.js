@@ -124,7 +124,7 @@ function doExpressCheckoutPayment(checkoutDetails, options) {
         return reject(err);
       }
 
-      var txn = querystring.parse(body);
+      let txn = querystring.parse(body);
 
       if (txn.ACK !== 'Success') {
         return reject(Boom.badImplementation(txn.L_SHORTMESSAGE0, {
@@ -145,7 +145,7 @@ function doExpressCheckoutPayment(checkoutDetails, options) {
   });
 }
 
-var paypalRoutes = {
+let paypalRoutes = {
   setupCheckout: function(transaction) {
     return setupPaypal(transaction);
   },

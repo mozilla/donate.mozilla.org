@@ -191,6 +191,44 @@ const routes = {
         throw badRequest;
       }
 
+      let balance_txn;
+
+      try {
+        balance_txn = await stripe.retrieveBalanceTransaction(charge.balance_transaction);
+      } catch (err) {
+        stripe_customer_create_service = Date.now() - startCreateCustomer;
+        badRequest = Boom.badRequest('Stripe charge failed');
+
+        badRequest.output.payload.stripe = {
+          code: err.code,
+          rawType: err.rawType
+        };
+
+        request.log(['error', 'stripe', 'customer'], {
+          request_id,
+          stripe_customer_create_service,
+          code: err.code,
+          type: err.type,
+          param: err.param
+        });
+
+        throw badRequest;
+      }
+
+      // Capture the amount of the transaction in USD, before fees
+      let conversion_amount = balance_txn.amount / 100;
+
+      // Capture the net amount of the donation after fees
+      let net_amount = balance_txn.net / 100;
+
+      // Capture the transaction amounts. We're using this iterative approach so
+      // we avoid any rounding errors when subtracting conversion and net amounts.
+      let transaction_fee = 0;
+      for (let fee of balance_txn.fee_details) {
+        // convert from cents to dollars
+        transaction_fee += fee.amount / 100;
+      }
+
       stripe_charge_create_service = Date.now() - startCreateCharge;
 
       if (signup) {
@@ -231,7 +269,12 @@ const routes = {
         service: "stripe",
         transaction_id: charge.id,
         project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
-        donation_url
+        last_4: charge.source.last4,
+        donation_url,
+        locale,
+        conversion_amount,
+        net_amount,
+        transaction_fee
       });
 
       const cookie = {
@@ -593,7 +636,7 @@ const routes = {
 
       let created = new Date(orderTime).getTime() / 1000;
 
-      basket.queue({
+      let basket_data = {
         event_type: "donation",
         first_name,
         last_name,
@@ -604,8 +647,33 @@ const routes = {
         recurring: false,
         service: 'paypal',
         transaction_id,
-        project: appName
-      });
+        project: appName,
+        locale: locale.substr(1)
+      };
+
+      let net_amount,
+        conversion_amount,
+        transaction_fee;
+
+      if (checkoutData.PAYMENTINFO_0_PAYMENTSTATUS === 'Completed') {
+        transaction_fee = +checkoutData.PAYMENTINFO_0_FEEAMT;
+
+        if (currency === 'USD') {
+          // USD txns will not have a "SETTLEAMT" so we must calculate the net
+          conversion_amount = +donation_amount;
+          net_amount = +(conversion_amount - transaction_fee).toFixed(2);
+        } else {
+          // We must calculate the conversion amount for non-USD transactions
+          net_amount = +checkoutData.PAYMENTINFO_0_SETTLEAMT;
+          conversion_amount = +(net_amount + transaction_fee).toFixed(2);
+        }
+
+        basket_data.conversion_amount = conversion_amount;
+        basket_data.transaction_fee = transaction_fee;
+        basket_data.net_amount = net_amount;
+      }
+
+      basket.queue(basket_data);
 
       return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}&subscribed=${subscribed}`)
         .unstate("session");
@@ -697,7 +765,8 @@ const routes = {
       service: "paypal",
       transaction_id,
       subscription_id,
-      project: appName
+      project: appName,
+      locale: locale.substr(1)
     });
 
     return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}&subscribed=${subscribed}`)
@@ -767,7 +836,7 @@ const routes = {
 
     const event_type = event.type;
 
-    if (event_type === 'charge.dispute.created' && status !== 'lost') {
+    if (event_type === 'charge.dispute.created' && status !== 'lost' && process.env.AUTO_CLOSE_DISPUTES === 'true') {
       try {
         await stripe.closeDispute(dispute_id);
         // statements
@@ -806,6 +875,22 @@ const routes = {
       charge = await stripe.retrieveCharge(id);
     } catch (err) {
       throw Boom.badImplementation('An error occurred while fetching the invoice for this charge', err);
+    }
+
+    let balance_txn = charge.balance_transaction;
+
+    // Capture the amount of the transaction in USD, before fees
+    let conversion_amount = balance_txn.amount / 100;
+
+    // Capture the net amount of the donation after fees
+    let net_amount = balance_txn.net / 100;
+
+    // Capture the transaction amounts. We're using this iterative approach so
+    // we avoid any rounding errors when subtracting conversion and net amounts.
+    let transaction_fee = 0;
+    for (let fee of balance_txn.fee_details) {
+      // Convert cents to dollars
+      transaction_fee += fee.amount / 100;
     }
 
     if (!charge.invoice || !charge.invoice.subscription) {
@@ -855,7 +940,12 @@ const routes = {
       transaction_id: charge.id,
       subscription_id: subscription.id,
       donation_url,
-      project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" )
+      project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
+      locale: subscription.metadata.locale,
+      last_4: subscription.customer.sources.data[0].last4,
+      conversion_amount,
+      net_amount,
+      transaction_fee
     });
 
     try {

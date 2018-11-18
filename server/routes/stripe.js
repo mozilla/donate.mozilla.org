@@ -34,14 +34,9 @@ const stripeRoutes = {
   updateCharge: function(chargeId, updateData) {
     return stripe.charges.update(chargeId, updateData);
   },
-  retrieveDispute: function(disputeId) {
-    return stripe.disputes.retrieve(disputeId, {
-      expand: ["charge"]
-    });
-  },
   retrieveCharge: function(chargeId) {
     return stripe.charges.retrieve(chargeId, {
-      expand: ["invoice"]
+      expand: ["invoice", "balance_transaction"]
     });
   },
   retrieveSubscription: function(customerId, subscriptionId, options) {
@@ -49,6 +44,9 @@ const stripeRoutes = {
   },
   retrieveCustomer: function(customerId, callback) {
     return stripe.customers.retrieve(customerId);
+  },
+  retrieveBalanceTransaction: function(balanceTxnId) {
+    return stripe.balance.retrieveTransaction(balanceTxnId);
   },
   constructEvent: function(payload, signature, endpointSecret) {
     var event;

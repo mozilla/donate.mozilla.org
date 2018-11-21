@@ -41,7 +41,7 @@ module.exports = {
   },
   'aud': {
     code: 'aud',
-    minAmount: '2',
+    minAmount: '3',
     symbol: '$',
     paypalFixedFee: {
       macro: 0.30,
@@ -55,19 +55,19 @@ module.exports = {
       {min: 20, value: "6"}
     ],
     presets: {
-      single: ['20', '10', '5', '3'],
-      monthly: ['10', '5', '3', '2']
+      single: ['30', '15', '7', '4'],
+      monthly: ['15', '7', '4', '3']
     }
   },
   'ars': {
     code: 'ars',
-    minAmount: '30',
+    minAmount: '80',
     symbol: '$',
     amexDisabled: true,
     disabled: "paypal",
     presets: {
-      single: ['300', '150', '75', '45'],
-      monthly: ['150', '75', '45', '30']
+      single: ['730', '370', '200', '110'],
+      monthly: ['370', '200', '110', '80']
     }
   },
   'azn': {
@@ -92,17 +92,17 @@ module.exports = {
   },
   'bdt': {
     code: 'bdt',
-    minAmount: '162',
+    minAmount: '170',
     symbol: '৳',
     disabled: "paypal",
     presets: {
-      single: ['1600', '800', '400', '240'],
-      monthly: ['800', '400', '240', '162']
+      single: ['1700', '840', '420', '250'],
+      monthly: ['840', '420', '250', '170']
     }
   },
   'brl': {
     code: 'brl',
-    minAmount: '6',
+    minAmount: '8',
     symbol: 'R$',
     amexDisabled: true,
     paypalFixedFee: {
@@ -110,13 +110,13 @@ module.exports = {
       micro: 0.10
     },
     presets: {
-      single: ['60', '30', '15', '10'],
-      monthly: ['30', '15', '10', '6']
+      single: ['80', '40', '20', '11'],
+      monthly: ['40', '20', '11', '8']
     }
   },
   'cad': {
     code: 'cad',
-    minAmount: '2',
+    minAmount: '3',
     symbol: '$',
     paypalFixedFee: {
       macro: 0.30,
@@ -131,7 +131,7 @@ module.exports = {
     ],
     presets: {
       single: ['65', '30', '15', '4'],
-      monthly: ['10', '5', '3', '2']
+      monthly: ['10', '7', '4', '3']
     }
   },
   'chf': {
@@ -156,14 +156,14 @@ module.exports = {
   },
   'clp': {
     code: 'clp',
-    minAmount: '1300',
+    minAmount: '1350',
     symbol: '$',
     disabled: "paypal",
     amexDisabled: true,
     zeroDecimal: "stripe",
     presets: {
       single: ['13000', '6500', '3250', '2000'],
-      monthly: ['6500', '3250', '2000', '1300']
+      monthly: ['6500', '3250', '2000', '1350']
     }
   },
   'cny': {
@@ -205,22 +205,22 @@ module.exports = {
   },
   'dzd': {
     code: 'dzd',
-    minAmount: '220',
+    minAmount: '240',
     symbol: 'د.ج.‏',
     disabled: "paypal",
     presets: {
-      single: ['2180', '1000', '550', '330'],
-      monthly: ['1000', '550', '330', '220']
+      single: ['2400', '1200', '600', '350'],
+      monthly: ['1200', '600', '350', '220']
     }
   },
   'egp': {
     code: 'egp',
-    minAmount: '34',
+    minAmount: '36',
     symbol: 'ج.م.‏',
     disabled: "paypal",
     presets: {
-      single: ['257', '171', '85', '51'],
-      monthly: ['171', '85', '51', '34']
+      single: ['360', '180', '90', '55'],
+      monthly: ['180', '90', '55', '36']
     }
   },
   'eur': {
@@ -245,7 +245,7 @@ module.exports = {
   },
   'gbp': {
     code: 'gbp',
-    minAmount: '1',
+    minAmount: '2',
     symbol: '£',
     paypalFixedFee: {
       macro: 0.20,
@@ -309,7 +309,7 @@ module.exports = {
   },
   'huf': {
     code: 'huf',
-    minAmount: '490',
+    minAmount: '570',
     amexDisabled: true,
     symbol: 'Ft',
     paypalFixedFee: {
@@ -318,18 +318,18 @@ module.exports = {
     },
     zeroDecimal: "paypal",
     presets: {
-      single: ['4000', '2000', '1000', '600'],
-      monthly: ['1500', '1000', '800', '500']
+      single: ['5600', '2800', '1400', '850'],
+      monthly: ['2800', '1400', '850', '600']
     }
   },
   'idr': {
     code: 'idr',
-    minAmount: '27000',
+    minAmount: '30000',
     symbol: 'Rp',
     disabled: "paypal",
     presets: {
-      single: ['270000', '140000', '70000', '40000'],
-      monthly: ['140000', '70000', '40000', '27000']
+      single: ['300000', '150000', '75000', '45000'],
+      monthly: ['150000', '75000', '45000', '30000']
     }
   },
   'ils': {
@@ -347,18 +347,18 @@ module.exports = {
   },
   'inr': {
     code: 'inr',
-    minAmount: '130',
+    minAmount: '145',
     symbol: '₹',
     disabled: "paypal",
     amexDisabled: true,
     presets: {
-      single: ['1000', '500', '250', '150'],
-      monthly: ['650', '330', '200', '130']
+      single: ['1000', '500', '350', '200'],
+      monthly: ['650', '350', '200', '130']
     }
   },
   'jpy': {
     code: 'jpy',
-    minAmount: '240',
+    minAmount: '230',
     symbol: '¥',
     paypalFixedFee: {
       macro: 40,
@@ -374,12 +374,12 @@ module.exports = {
     ],
     presets: {
       single: ['2240', '1120', '560', '340'],
-      monthly: ['1120', '560', '340', '240']
+      monthly: ['1120', '560', '340', '230']
     }
   },
   'krw': {
     code: 'krw',
-    minAmount: '2240',
+    minAmount: '2300',
     symbol: '₩',
     disabled: "paypal",
     zeroDecimal: "stripe",
@@ -392,7 +392,7 @@ module.exports = {
     ],
     presets: {
       single: ['22320', '11160', '5580', '3350'],
-      monthly: ['11160', '5580', '3350', '2240']
+      monthly: ['11160', '5580', '3350', '2300']
     }
   },
   'lak': {
@@ -438,7 +438,7 @@ module.exports = {
   },
   'mxn': {
     code: 'mxn',
-    minAmount: '30',
+    minAmount: '40',
     symbol: '$',
     amexDisabled: true,
     paypalFixedFee: {
@@ -453,13 +453,13 @@ module.exports = {
       {min: 200, value: "100"}
     ],
     presets: {
-      single: ['240', '120', '60', '35'],
-      monthly: ['200', '100', '40', '30']
+      single: ['400', '200', '100', '60'],
+      monthly: ['200', '100', '60', '40']
     }
   },
   'nok': {
     code: 'nok',
-    minAmount: '15',
+    minAmount: '17',
     symbol: 'kr',
     paypalFixedFee: {
       macro: 2.80,
@@ -467,7 +467,7 @@ module.exports = {
     },
     presets: {
       single: ['160', '80', '40', '20'],
-      monthly: ['100', '60', '30', '15']
+      monthly: ['100', '60', '30', '20']
     }
   },
   'nzd': {
@@ -485,15 +485,15 @@ module.exports = {
   },
   'php': {
     code: 'php',
-    minAmount: '90',
+    minAmount: '110',
     symbol: '₱',
     paypalFixedFee: {
       macro: 15.00,
       micro: 2.50
     },
     presets: {
-      single: ['600', '300', '150', '100'],
-      monthly: ['300', '200', '120', '90']
+      single: ['1000', '520', '260', '150'],
+      monthly: ['520', '260', '150', '90']
     }
   },
   'pln': {
@@ -538,7 +538,7 @@ module.exports = {
   },
   'rub': {
     code: 'rub',
-    minAmount: '100',
+    minAmount: '130',
     symbol: '₽',
     paypalFixedFee: {
       macro: 10,
@@ -552,8 +552,8 @@ module.exports = {
       {min: 900, value: "300"}
     ],
     presets: {
-      single: ['1000', '500', '250', '140'],
-      monthly: ['250', '180', '120', '100']
+      single: ['1300', '800', '500', '200'],
+      monthly: ['500', '300', '200', '130']
     }
   },
   'sar': {
@@ -568,15 +568,15 @@ module.exports = {
   },
   'sek': {
     code: 'sek',
-    minAmount: '15',
+    minAmount: '18',
     symbol: 'kr',
     paypalFixedFee: {
       macro: 3.25,
       micro: 0.54
     },
     presets: {
-      single: ['160', '80', '40', '20'],
-      monthly: ['100', '40', '20', '15']
+      single: ['180', '90', '45', '30'],
+      monthly: ['90', '45', '30', '18']
     }
   },
   'sgd': {
@@ -607,12 +607,12 @@ module.exports = {
   },
   'try': {
     code: 'try',
-    minAmount: '7',
+    minAmount: '11',
     symbol: '₺',
     disabled: "paypal",
     presets: {
-      single: ['70', '35', '18', '10'],
-      monthly: ['35', '18', '10', '7']
+      single: ['100', '50', '25', '15'],
+      monthly: ['50', '25', '15', '11']
     }
   },
   'twd': {
@@ -638,12 +638,12 @@ module.exports = {
   },
   'uah': {
     code: 'uah',
-    minAmount: '53',
+    minAmount: '60',
     symbol: '₴',
     disabled: "paypal",
     presets: {
       single: ['530', '260', '130', '80'],
-      monthly: ['260', '130', '80', '53']
+      monthly: ['260', '130', '80', '60']
     }
   },
   'yer': {

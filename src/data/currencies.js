@@ -583,10 +583,7 @@ module.exports = {
     code: 'sgd',
     minAmount: '3',
     symbol: '$SG',
-    paypalFixedFee: {
-      macro: 0.50,
-      micro: 0.08
-    },
+    disabled: "paypal",
     presets: {
       single: ['20', '14', '7', '4'],
       monthly: ['14', '7', '4', '3']

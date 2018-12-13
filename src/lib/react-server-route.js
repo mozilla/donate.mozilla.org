@@ -27,7 +27,7 @@ function routeFileContent(locales) {
     var parsedRedirect = parsedLocation.redirect;
     var locale = parsedLocation.locale;
 
-    function generateHTML(renderProps) {
+    function generateHTML(renderProps, userAgentString) {
       var messages = getMessages(locale);
       var favicon = "/assets/images/favicon.d0608f227db61f2852a32087e614911c.png";
       var twitterImage = "/assets/images/twitter-card-generic.png";
@@ -72,13 +72,14 @@ function routeFileContent(locales) {
           favicon={favicon}
           metaData={{
             current_url: location,
+            user_agent: userAgentString,
             desc: desc,
             title: messages.support_mozilla,
             site_name: 'mozilla.org',
             site_url: url.resolve(process.env.APPLICATION_URI, siteUrl),
             site_title: messages.give_to_mozilla,
             facebook_image: process.env.APPLICATION_URI + facebookImage,
-            twitter_image: process.env.APPLICATION_URI + twitterImage
+            twitter_image: process.env.APPLICATION_URI + twitterImage,
           }}
           markup={reactHTML}
         />
@@ -111,7 +112,7 @@ function routeFileContent(locales) {
             resolve(h.redirect(`${location}${locale}/${search}`));
           } else {
             // Finally, send a full HTML document over to the client
-            resolve(generateHTML(renderProps)).type('text/html').code(200);
+            resolve(generateHTML(renderProps, request.headers['user-agent'])).type('text/html').code(200);
           }
         }
       });

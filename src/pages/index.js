@@ -29,6 +29,14 @@ var Index = React.createClass({
     if (['ar', 'fa', 'he', 'ur'].indexOf(this.props.locale) >= 0) {
       dir = 'rtl';
     }
+
+    // bypass Traffic Cop for IE11
+    var bypassTrafficCop = false;
+    var ua = metaData.user_agent;
+    if (ua && ua.indexOf("Trident") > 0 && ua.indexOf("rv:11.0") > 0) {
+      bypassTrafficCop = true;
+    }
+
     return (
       <html dir={dir} lang={this.props.locale}>
         <head>
@@ -55,10 +63,11 @@ var Index = React.createClass({
           <title>donate.mozilla.org | {metaData.site_title}</title>
           <link rel="icon" href={this.props.favicon} type="image/x-icon"/>
           <link rel="stylesheet" href={'/' + fileHashes.main.css}/>
+
           <script src="/api/client-env.js"></script>
-          <script src="/assets/js/mozilla-traffic-cop.js"></script>
+          { bypassTrafficCop ? null : <script src="/assets/js/mozilla-traffic-cop.js"></script> }
           <script src="/assets/js/ga.js"></script>
-          <script src="/assets/js/ab-tests.js"></script>
+          <script src="/assets/js/ab-tests.js" async defer></script>
           <script async src={"https://www.google.com/recaptcha/api.js?render=explicit&hl=" + this.props.locale}></script>
           {
             localesData.map((localeData, index) => {

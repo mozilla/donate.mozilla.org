@@ -29,11 +29,11 @@ module.exports = function(queryString, locale) {
     presets = currency.presets[frequency];
   }
 
-  if (test && toString.call(test) === "[object Array]") {
+  if (test && test.join && test.map) {
     test = test.join(" ");
   }
 
-  return {
+  var parsed = {
     values: {
       test: test,
       subscribed: queryString.subscribed
@@ -46,4 +46,6 @@ module.exports = function(queryString, locale) {
       email: queryString.email || ""
     }
   };
+
+  return parsed;
 };

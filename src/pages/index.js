@@ -33,7 +33,7 @@ var Index = React.createClass({
     // bypass Traffic Cop for IE11
     var bypassTrafficCop = false;
     var ua = metaData.user_agent;
-    if (ua && ua.indexOf("Trident") > 0 && ua.indexOf("rv:11.0") > 0) {
+    if (ua && ua.indexOf("Trident")) {
       bypassTrafficCop = true;
     }
 
@@ -65,9 +65,11 @@ var Index = React.createClass({
           <link rel="stylesheet" href={'/' + fileHashes.main.css}/>
 
           <script src="/api/client-env.js"></script>
-          { bypassTrafficCop ? null : <script src="/assets/js/mozilla-traffic-cop.js"></script> }
           <script src="/assets/js/ga.js"></script>
-          <script src="/assets/js/ab-tests.js" async defer></script>
+
+          { bypassTrafficCop ? null : <script src="/assets/js/mozilla-traffic-cop.js"></script> }
+          { bypassTrafficCop ? null : <script src="/assets/js/ab-tests.js"></script> }
+
           <script async src={"https://www.google.com/recaptcha/api.js?render=explicit&hl=" + this.props.locale}></script>
           {
             localesData.map((localeData, index) => {

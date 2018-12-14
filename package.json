@@ -4,7 +4,8 @@
   "description": "Mozilla's Donation Forms",
   "main": "start.js",
   "scripts": {
-    "start": "npm-run-all build:* && npm-run-all --parallel watch:js server",
+    "clean": "shx rm ./public/*",
+    "start": "npm run clean && npm-run-all build:* && npm-run-all --parallel watch:js server",
     "build:l10njson": "pontoon-to-json --dest ./public",
     "build:exchangerates": "node scripts/exchangerates.js",
     "build:babel": "babel src --compact=true -s --out-dir dist",
@@ -120,7 +121,8 @@
     "mocha": "2.3.4",
     "moment": "^2.22.2",
     "selenium-webdriver": "^3.6.0",
-    "should": "8.0.2"
+    "should": "8.0.2",
+    "shx": "^0.3.2"
   },
   "engines": {
     "node": "^8.12.0"

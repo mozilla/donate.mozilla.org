@@ -33,7 +33,7 @@ var Index = React.createClass({
     // bypass Traffic Cop for IE11
     var bypassTrafficCop = false;
     var ua = metaData.user_agent;
-    if (ua && ua.indexOf("Trident")) {
+    if (ua && ua.indexOf("Trident") > -1) {
       bypassTrafficCop = true;
     }
 

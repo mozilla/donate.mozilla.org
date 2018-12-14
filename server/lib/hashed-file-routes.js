@@ -68,7 +68,6 @@ const hashedFileRoutes = function() {
     method: 'GET',
     path: '/style.{id}.css',
     handler: function(request, h) {
-      console.log(fileHashes.main.css);
       return h.file(pathify('public', fileHashes.main.css), {
         confine: false // file is served from a directory outside of the server's file tree
       });

@@ -13,6 +13,7 @@ const httpRequest = request.defaults({
   timeout: 25000
 });
 
+
 async function decrypt(encryptedCookie) {
   try {
     return await iron.unseal(encryptedCookie, cookiePassword, iron.defaults);
@@ -20,6 +21,7 @@ async function decrypt(encryptedCookie) {
     return Promise.reject(err);
   }
 }
+
 
 async function encrypt(cookie) {
   try {
@@ -75,6 +77,8 @@ const mailchimp = async function(request, h) {
 const routes = {
   signup: require('./signup'),
   mailchimp,
+
+  // Route
   'reCaptcha': async function(request, h) {
     const payload = request.payload || {};
     const reCaptchaToken = payload.reCaptchaToken || "";
@@ -104,6 +108,8 @@ const routes = {
       });
     });
   },
+
+  // Route
   'stripe': async function(request, h) {
     const transaction = request.payload || {};
     const {
@@ -385,6 +391,8 @@ const routes = {
       }).code(200);
     }
   },
+
+  // Route
   stripeMonthlyUpgrade: async function(request, h) {
     const transaction = request.payload || {};
     const encryptedCookie = request.state && request.state.session;
@@ -495,6 +503,8 @@ const routes = {
       .unstate("session")
       .code(200);
   },
+
+  // Route
   'paypal': async function(request, h) {
     let transaction = request.payload || {};
     let frequency = transaction.frequency || "";
@@ -546,6 +556,7 @@ const routes = {
 
     return h.response(response).code(200);
   },
+
   'paypal-redirect': async function(request, h) {
     let locale = request.params.locale || '';
     if (locale) {
@@ -772,6 +783,7 @@ const routes = {
     return h.redirect(`${locale}/${location}/?frequency=${frequency}&tx=${transaction_id}&amt=${donation_amount}&cc=${currency}&email=${email}&subscribed=${subscribed}`)
       .unstate("session");
   },
+
   'stripe-charge-refunded': function(request, h) {
     let endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_REFUNDED;
     let signature = request.headers["stripe-signature"];
@@ -808,6 +820,8 @@ const routes = {
 
     return h.response("charge event processed");
   },
+
+  // Route
   'stripe-dispute': async function(request, h) {
     const endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_DISPUTE;
     const signature = request.headers["stripe-signature"];
@@ -853,6 +867,8 @@ const routes = {
 
     return h.response("dispute processed");
   },
+
+  // Route
   'stripe-charge-succeeded': async function(request, h) {
     let endpointSecret = process.env.STRIPE_WEBHOOK_SIGNATURE_CHARGE_SUCCESS;
     let signature = request.headers["stripe-signature"];
@@ -956,6 +972,8 @@ const routes = {
 
     return h.response('Charge updated');
   },
+
+  // Route
   'stripe-charge-failed': require('./webhooks/stripe-charge-failed.js')
 };
 

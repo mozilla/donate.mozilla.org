@@ -27,7 +27,7 @@ module.exports = React.createClass({
         <picture>
           <source width="1448" srcSet="/assets/images/homepage-images/teacher-wide.jpg" media="(max-width: 799px)" />
           <img className="homepage-image" src="/assets/images/homepage-images/teacher-full.jpg" alt="Man pointing at student's computer screen"/>
-        </picture> 
+        </picture>
         <div>
           { this.state.aboutCopy }
         </div>
@@ -51,6 +51,7 @@ module.exports = React.createClass({
           <div className="additional-info-page">
             { additionalInfo }
             <SingleForm
+              test={this.props.test}
               subscribed={this.props.subscribed}
               currency={this.props.currency}
               presets={this.props.presets}

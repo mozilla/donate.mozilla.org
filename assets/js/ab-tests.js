@@ -1,17 +1,26 @@
-// Documentation for running AB tests. https://github.com/mozilla/trafficcop/blob/master/documentation.md
+/*
 
-//*********************/
-//Traffic cop seems to break IE11. Next time we enable this, let's run a check and avoid running on IE11
-/*************************/
+ Documentation for running AB tests:
 
+   https://github.com/mozilla/trafficcop/blob/master/documentation.md
 
-// Only run this test on the home page in en-US.
-// var tc = new Mozilla.TrafficCop({
-//     id: "image-experiment",
-//     variations: {
-//       "test=img-a": 50,
-//       "test=no-img": 50
-//     }
-// });
+ Also note that Traffic Cop seems to break IE11, and so we don't load
+ it in that browser (using conditional script loading, something that
+ only IE supports! Handy...?). As such  we need to test to see if the
+ `TrafficCop` object is available to us.
 
-// tc.init();
+*/
+
+if (typeof Mozilla !== "undefined" && Mozilla.TrafficCop) {
+
+  // Only run this test on the home page in en-US.
+  var tc = new Mozilla.TrafficCop({
+    id: "button-ordering",
+    variations: {
+      "test=lth": 50,
+      "test=htl": 50
+    }
+  });
+
+  tc.init();
+}

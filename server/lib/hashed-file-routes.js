@@ -57,7 +57,9 @@ const hashedFileRoutes = function() {
     method: 'GET',
     path: '/main.{id}.js',
     handler: function(request, h) {
-      return h.file(pathify('public', fileHashes.main.js));
+      return h.file(pathify('public', fileHashes.main.js), {
+        confine: false // file is served from a directory outside of the server's file tree
+      });
     },
     config: {
       cache
@@ -66,7 +68,9 @@ const hashedFileRoutes = function() {
     method: 'GET',
     path: '/style.{id}.css',
     handler: function(request, h) {
-      return h.file(pathify('public', fileHashes.main.css));
+      return h.file(pathify('public', fileHashes.main.css), {
+        confine: false // file is served from a directory outside of the server's file tree
+      });
     },
     config: {
       cache

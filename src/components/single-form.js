@@ -67,7 +67,7 @@ var singleForm = React.createClass({
           <CurrencyDropdown/>
         </div>
         <Frequency/>
-        <AmountButtons/>
+        <AmountButtons test={this.props.test} />
         <div className="payment-section">
           {this.renderPaymentOptions()}
           <ErrorMessage message={this.state.stripeError}/>

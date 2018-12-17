@@ -29,9 +29,9 @@ module.exports = function(queryString, locale) {
     presets = currency.presets[frequency];
   }
 
-  // Collaps test to a string if it happens to be an array.
-  if (test && test.join) {
-    test = test.join(" ");
+  // Ensure test is always an array of strings.
+  if (typeof test === "string") {
+    test = [test];
   }
 
   var parsed = {

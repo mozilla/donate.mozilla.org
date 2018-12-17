@@ -22,7 +22,6 @@ if (typeof Mozilla !== "undefined" && Mozilla.TrafficCop) {
     }
   })).init();
 
-  /*
   // This test runs on the main page (Currently about.js), for en-US only
   (new Mozilla.TrafficCop({
     id: "side-text",
@@ -31,5 +30,4 @@ if (typeof Mozilla !== "undefined" && Mozilla.TrafficCop) {
       "test=nst": 50  // New Side Text
     }
   })).init();
-  */
 }

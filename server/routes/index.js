@@ -133,8 +133,6 @@ const routes = {
 
     if (description.indexOf("Thunderbird") >= 0 ) {
       metadata.thunderbird = true;
-    } else if (description.indexOf("glassroomnyc") >= 0 ) {
-      metadata.glassroomnyc = true;
     }
 
     const startCreateCustomer = Date.now();
@@ -274,7 +272,7 @@ const routes = {
         recurring: false,
         service: "stripe",
         transaction_id: charge.id,
-        project: metadata.thunderbird ? "thunderbird" : ( metadata.glassroomnyc ? "glassroomnyc" : "mozillafoundation" ),
+        project: metadata.thunderbird ? "thunderbird" : "mozillafoundation",
         last_4: charge.source.last4,
         donation_url,
         locale,
@@ -407,8 +405,6 @@ const routes = {
 
     if (transaction.description.indexOf("Thunderbird") >= 0 ) {
       metadata.thunderbird = true;
-    } else if (transaction.description.indexOf("glassroomnyc") >= 0 ) {
-      metadata.glassroomnyc = true;
     }
 
     if (!encryptedCookie) {
@@ -937,6 +933,7 @@ const routes = {
     if (metadata.thunderbird) {
       updateData.description = 'Thunderbird monthly';
     } else if (metadata.glassroomnyc) {
+      // NOTE: keep this here in the event there are recurring monthly transactions that resulted from this campaign
       updateData.description = 'glassroomnyc monthly';
     } else {
       updateData.description = 'Mozilla Foundation Monthly Donation';

@@ -26,8 +26,8 @@ if (typeof Mozilla !== "undefined" && Mozilla.TrafficCop) {
   (new Mozilla.TrafficCop({
     id: "side-text",
     variations: {
-      "test=ost": 50, // Original Side Text
-      "test=nst": 50  // New Side Text
+      "test=ost": 100, // Original Side Text
+      "test=nst": 0  // New Side Text
     }
   })).init();
 }

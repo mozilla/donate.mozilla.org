@@ -13,14 +13,21 @@
 
 if (typeof Mozilla !== "undefined" && Mozilla.TrafficCop) {
 
-  // Only run this test on the home page in en-US.
-  var tc = new Mozilla.TrafficCop({
+  // This test runs in amount-buttons.jsx
+  (new Mozilla.TrafficCop({
     id: "button-ordering",
     variations: {
-      "test=lth": 50,
-      "test=htl": 50
+      "test=lth": 50, // Low To High
+      "test=htl": 50  // High To Low
     }
-  });
+  })).init();
 
-  tc.init();
+  // This test runs on the main page (Currently about.js), for en-US only
+  (new Mozilla.TrafficCop({
+    id: "side-text",
+    variations: {
+      "test=ost": 100, // Original Side Text
+      "test=nst": 0  // New Side Text
+    }
+  })).init();
 }

@@ -9,18 +9,19 @@ module.exports = React.createClass({
     intl: React.PropTypes.object
   },
   getInitialState: function() {
+    var aboutCopy = (<span><FormattedHTMLMessage id="additional_info_internet_health_bold"/></span>);
+    var test = this.props.test;
+
+    // Run our copy test only on English locale:
+    if (test && test.indexOf('nst') > -1 && this.context.intl.locale.indexOf("en") > -1) {
+      // New Side Text copy from ./locales/en-US/messages.properties
+      aboutCopy = (<span><FormattedHTMLMessage id="updated_additional_info_internet_health_bold"/></span>);
+    }
+
     return {
-      aboutCopy: null
+      aboutCopy: aboutCopy
     };
   },
-  componentDidMount: function() {
-    var aboutCopy = (<span><FormattedHTMLMessage id="additional_info_internet_health_bold"/></span>);
-
-    this.setState({
-      aboutCopy: aboutCopy
-    });
-  },
-
   renderTextAboutPage: function() {
     return (
       <div className="container additional-page">

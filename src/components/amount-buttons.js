@@ -212,12 +212,13 @@ var AmountButtons = React.createClass({
 
     // Test conversion based on donation amount ordering.
     var test = this.props.test;
-    if (test !== "htl") {
-      // low-to-high presentation
-      presets.sort((a,b) => parseFloat(a) - parseFloat(b));
-    } else if (test === "htl") {
+
+    if (test && test.indexOf('htl') > -1) {
       // high-to-low presentation
       presets.sort((a,b) => parseFloat(b) - parseFloat(a));
+    } else {
+      // low-to-high presentation
+      presets.sort((a,b) => parseFloat(a) - parseFloat(b));
     }
 
     return (

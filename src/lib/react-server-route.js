@@ -5,7 +5,7 @@ import React from 'react';
 import url from 'url';
 import queryParser from './queryParser.js';
 var langmap = require("langmap");
-var HTML = require('../pages/index.js');
+var IndexPage = require('../pages/index.js');
 
 function routeFileContent(locales) {
   var locationParser = require('./location-parser.js')(langmap, locales);
@@ -66,7 +66,7 @@ function routeFileContent(locales) {
       // the bundle for hooking into the DOM.
       var reactHTML = renderToString(<RouterContext createElement={createElement} {...renderProps}/>);
       var html = renderToStaticMarkup(
-        <HTML
+        <IndexPage
           localesInfo={localesInfo}
           locale={locale}
           favicon={favicon}

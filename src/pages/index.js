@@ -2,8 +2,9 @@ import fs from 'fs';
 import React from 'react';
 import Path from 'path';
 import Pontoon from '../components/pontoon.js';
+import detectIE from '../lib/detect-ie.js';
 
-var Index = React.createClass({
+var IndexPage = React.createClass({
   render: function() {
     var metaData = this.props.metaData;
     var robots = 'index, follow';
@@ -31,11 +32,8 @@ var Index = React.createClass({
     }
 
     // bypass Traffic Cop for IE11
-    var bypassTrafficCop = false;
     var ua = metaData.user_agent;
-    if (ua && ua.indexOf("Trident") > -1) {
-      bypassTrafficCop = true;
-    }
+    var bypassTrafficCop = (detectIE(ua) !== false);
 
     return (
       <html dir={dir} lang={this.props.locale}>
@@ -95,4 +93,4 @@ var Index = React.createClass({
   }
 });
 
-module.exports = Index;
+module.exports = IndexPage;

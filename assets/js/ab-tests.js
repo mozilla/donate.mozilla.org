@@ -17,8 +17,8 @@ if (typeof Mozilla !== "undefined" && Mozilla.TrafficCop) {
   (new Mozilla.TrafficCop({
     id: "button-ordering",
     variations: {
-      "test=lth": 50, // Low To High
-      "test=htl": 50  // High To Low
+      "test=lth": 0, // Low To High
+      "test=htl": 100  // High To Low
     }
   })).init();
 
@@ -26,8 +26,8 @@ if (typeof Mozilla !== "undefined" && Mozilla.TrafficCop) {
   (new Mozilla.TrafficCop({
     id: "side-text",
     variations: {
-      "test=ost": 100, // Original Side Text
-      "test=nst": 0  // New Side Text
+      "test=ost": 50, // Original Side Text
+      "test=nst": 50  // New Side Text
     }
   })).init();
 }

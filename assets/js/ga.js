@@ -9,10 +9,11 @@ if (!doNotTrack || doNotTrack === 'no' || doNotTrack === "unspecified") {
     ga('create', 'UA-49796218-32', 'auto');
 
     // Ensure we don't pass the email query param to Google Analytics
-    let protocol = window.location.protocol,
-      hostname = window.location.hostname,
-      pathname = window.location.pathname,
-      filteredQueryParams = window.location.search.substring(1)
+    var loc = window.location,
+      protocol = loc.protocol,
+      hostname = loc.hostname,
+      pathname = loc.pathname,
+      filteredQueryParams = loc.search.substring(1)
         .split('&')
         .filter(param => !param.startsWith('email'))
         .join('&');

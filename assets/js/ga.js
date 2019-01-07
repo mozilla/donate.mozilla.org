@@ -7,6 +7,18 @@ if (!doNotTrack || doNotTrack === 'no' || doNotTrack === "unspecified") {
 
   if (typeof ga === "function") {
     ga('create', 'UA-49796218-32', 'auto');
+
+    // Ensure we don't pass the email query param to Google Analytics
+    var loc = window.location,
+      protocol = loc.protocol,
+      hostname = loc.hostname,
+      pathname = loc.pathname,
+      filteredQueryParams = loc.search.substring(1)
+        .split('&')
+        .filter(param => !param.startsWith('email'))
+        .join('&');
+
+    ga('set', 'location', `${protocol}//${hostname}${pathname}?${filteredQueryParams}`);
     ga('send' ,'pageview');
   }
 }

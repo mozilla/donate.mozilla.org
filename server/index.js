@@ -32,6 +32,20 @@ module.exports = async function(options) {
     encoding: "none"
   });
 
+  server.ext('onPreResponse', (request, h) => {
+    const response = request.response;
+    const headerName = 'Referrer-Policy';
+    const headerValue = 'same-origin';
+
+    if (response.isBoom) {
+      response.output.headers[headerName] = headerValue;
+    } else {
+      response.header(headerName, headerValue);
+    }
+
+    return h.continue;
+  });
+
   server.route(baseRoutes);
 
   await server.register(services);

@@ -44,6 +44,7 @@ var Index = React.createClass({
           <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <meta name='robots' content={robots}/>
+          <meta name="referrer" content="same-origin"/>
 
           <meta property="og:type" content="website" />
           <meta property="og:title" content={metaData.title} />

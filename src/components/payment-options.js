@@ -32,7 +32,7 @@ var PayPalButton = React.createClass({
     }
     return (
       <div>
-        <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button'})}</div>
+        <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button_uppercase'})}</div>
         <div className="row payment-logos paypal-logo">
           <p>&nbsp;</p>
         </div>
@@ -93,7 +93,7 @@ var StripeButton = React.createClass({
     }
     return (
       <div>
-        <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button'})}</div>
+        <div className="row medium-label-size donate-button">{this.context.intl.formatMessage({id: 'donate_button_uppercase'})}</div>
         <div className={className}>
           <p>&nbsp;</p>
         </div>

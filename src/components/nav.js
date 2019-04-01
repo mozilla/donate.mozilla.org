@@ -58,7 +58,6 @@ var Nav = React.createClass({
                       <a className="nav-link-initiatives" href="https://foundation.mozilla.org/initiatives">Initiatives</a>
                       <a className="nav-link-participate" href="https://foundation.mozilla.org/participate">Participate</a>
                       <a className="nav-link-internet-health" href="https://foundation.mozilla.org/internet-health">Internet&nbsp;Health</a>
-                      <a className="nav-link-people" href="https://foundation.mozilla.org/people">People</a>
                       <a className="nav-link-about" href="https://foundation.mozilla.org/about">About&nbsp;Us</a>
                     </div>
                   </div>
@@ -80,7 +79,6 @@ var Nav = React.createClass({
                         <a className="nav-link-initiatives" href="https://foundation.mozilla.org/initiatives">Initiatives</a>
                         <a className="nav-link-participate" href="https://foundation.mozilla.org/participate">Participate</a>
                         <a className="nav-link-internet-health" href="https://foundation.mozilla.org/internet-health">Internet&nbsp;Health</a>
-                        <a className="nav-link-people" href="https://foundation.mozilla.org/people">People</a>
                         <a className="nav-link-about" href="https://foundation.mozilla.org/about">About&nbsp;Us</a>
                       </div>
                     </div>

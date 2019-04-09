@@ -146,14 +146,18 @@ var Faq = React.createClass({
               <p><FormattedHTMLMessage id='faq_item_3_paragraph_update2'/></p>
             </Panel>
 
-            <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_4" header={this.context.intl.formatHTMLMessage({id: 'faq_item_4_header_check'})}>
+            <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_4" header={
+              this.context.intl.formatHTMLMessage({id: 'faq_item_4_header_check'})
+              + ' '
+              + this.context.intl.formatHTMLMessage({id: 'faq_item_4_header_update_04_2019'})
+            }>
               <p><FormattedHTMLMessage id='faq_item_4_paragraph_a'/></p>
               <address>
                 Mozilla Foundation
                 <br/>
-                331 East Evelyn Avenue,
+                PO Box 98223
                 <br/>
-                Mountain View, CA 94041
+                Washington DC 20090-8223
                 <br/>
                 USA
               </address>{this.renderEnglishMemoLine()}

@@ -143,8 +143,8 @@ var WaysToGive = React.createClass({
           <p><FormattedHTMLMessage id='mail_check_body2' /></p>
           <address>
             Mozilla Foundation<br/>
-            331 E. Evelyn Ave<br/>
-            Mountain View, CA 94041<br/>
+            PO Box 98223<br/>
+            Washington DC 20090-8223<br/>
             USA
           </address>{this.renderEnglishMemoLine()}
           <br/>

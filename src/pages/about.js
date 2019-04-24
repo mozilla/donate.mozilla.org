@@ -31,6 +31,18 @@ module.exports = React.createClass({
         </picture>
         <div>
           { this.state.aboutCopy }
+          <ul className="seal-list">
+            <li>
+              <a href="https://www.charitynavigator.org/index.cfm?bay=search.summary&orgid=16300" target="_blank">
+                <img width="75" height="75" src="/assets/images/seal-charity-navigator-4-star.png" alt="Seal of Charity Navigator 4-Star" />
+              </a>
+            </li>
+            <li>
+              <a href="https://www.guidestar.org/profile/20-0097189" target="_blank">
+                <img width="75" height="75" src="/assets/images/seal-guidestar-gold-2019.png" alt="Seal of GuideStar Gold 2019" />
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     );

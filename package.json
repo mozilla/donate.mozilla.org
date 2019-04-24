@@ -4,7 +4,7 @@
   "description": "Mozilla's Donation Forms",
   "main": "start.js",
   "scripts": {
-    "clean": "shx rm ./public/*",
+    "clean": "shx rm -rf ./public/*",
     "start": "npm run clean && npm-run-all build:* && npm-run-all --parallel watch:js server",
     "build:l10njson": "pontoon-to-json --dest ./public",
     "build:exchangerates": "node scripts/exchangerates.js",

@@ -31,7 +31,7 @@ function routeFileContent(locales) {
       var messages = getMessages(locale);
       var favicon = "/assets/images/favicon.d0608f227db61f2852a32087e614911c.png";
       var twitterImage = "/assets/images/twitter-card-generic.png";
-      var facebookImage = "/assets/images/og.jpg";
+      var facebookImage = "/assets/images/og.png";
       var siteUrl = locale + '/';
       var localesInfo = [locale];
       var query = queryParser(request.query);

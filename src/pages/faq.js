@@ -75,9 +75,8 @@ var Faq = React.createClass({
   renderEnglishAmazonSmile: function() {
     if (/^(en-US)(\b|$)/.test(this.context.intl.locale)) {
       return (
-        <Panel activeKey={this.state.activeKey} activateKey={this.onKeyChange} itemKey="item_amazon" header="I’m in the United States. Can I support Mozilla through the Amazon Smile Program?">
-          <p>Yes! You can direct a small portion of what you spend on Amazon.com to support Mozilla by <a href="https://smile.amazon.com/ch/20-0097189">visiting this link to choose Mozilla</a> in the Amazon Smile program. Please remember to initiate all your purchases by starting at <a href="https://smile.amazon.com">smile.amazon.com</a>. (Unfortunately, this program is limited to U.S. residents only.)</p>
-        </Panel>
+        <Panel activeKey={this.state.activeKey} activateKey={this.onKeyChange} itemKey="item_amazon" header="I’m in the United States. Can I support Mozilla through eBay for Charity or the Amazon Smile Program?">
+          <p>Yes! The Mozilla Foundation is enrolled in both <a href="https://www.charity.ebay.com/charity/Mozilla-Foundation/1409428">eBay for Charity</a> and the <a href="https://smile.amazon.com/ch/20-0097189">Amazon Smile Program.</a> On eBay, you can add us as your favorite charity, shop for items where a portion of the sale benefits the Mozilla Foundation, or sell your own items and direct a percentage of the sales price to benefit the Mozilla Foundation. On Amazon.com, please remember to initiate all your purchases by starting at <a href="https://smile.amazon.com">smile.amazon.com</a>.</p>
       );
     }
     return (<div></div>);

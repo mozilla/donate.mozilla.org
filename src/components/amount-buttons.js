@@ -210,16 +210,7 @@ var AmountButtons = React.createClass({
       showMonthlyNote = true;
     }
 
-    // Test conversion based on donation amount ordering.
-    var test = this.props.test;
-
-    if (test && test.indexOf('htl') > -1) {
-      // high-to-low presentation
-      presets.sort((a,b) => parseFloat(b) - parseFloat(a));
-    } else {
-      // low-to-high presentation
-      presets.sort((a,b) => parseFloat(a) - parseFloat(b));
-    }
+    presets.sort((a,b) => parseFloat(b) - parseFloat(a));
 
     return (
       <div className="amount-buttons">

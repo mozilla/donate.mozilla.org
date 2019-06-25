@@ -92,13 +92,13 @@ var Faq = React.createClass({
     }
     return (<div></div>);
   },
-  renderEnglishMemoLine: function() {
+  renderEnglishMemoLineOrNote: function() {
     if (/^(en-US|en-CA)(\b|$)/.test(this.context.intl.locale)) {
       return (
-        <span> and include your email address on the memo line.</span>
+        <span>Please send a check <strong>including your email address on the memo line</strong>, and payable (payee) to “Mozilla Foundation”</span>
       );
     }
-    return (<div></div>);
+    return (<FormattedHTMLMessage id='faq_item_4_paragraph_a_row'/>);
   },
   renderRecaptchFaqItem: function() {
     if (process.env.RECAPTCHA_DISABLED) {
@@ -151,7 +151,7 @@ var Faq = React.createClass({
               + ' '
               + this.context.intl.formatHTMLMessage({id: 'faq_item_4_header_update_04_2019'})
             }>
-              <p><FormattedHTMLMessage id='faq_item_4_paragraph_a'/></p>
+              <p>{this.renderEnglishMemoLineOrNote()}</p>
               <address>
                 Mozilla Foundation
                 <br/>
@@ -160,7 +160,7 @@ var Faq = React.createClass({
                 Washington DC 20090-8223
                 <br/>
                 USA
-              </address>{this.renderEnglishMemoLine()}
+              </address>
               <br/><br/>
             </Panel>
 

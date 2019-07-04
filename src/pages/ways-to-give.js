@@ -8,13 +8,13 @@ var WaysToGive = React.createClass({
   contextTypes: {
     intl: React.PropTypes.object
   },
-  renderEnglishMemoLine: function() {
+  renderEnglishMemoLineOrNote: function() {
     if (/^(en-US|en-CA)(\b|$)/.test(this.context.intl.locale)) {
       return (
-        <span> and include your email address on the memo line.</span>
+        <span>Please send a check <strong>including your email address on the memo line</strong>, and payable (payee) to “Mozilla Foundation”</span>
       );
     }
-    return (<div></div>);
+    return (<FormattedHTMLMessage id='faq_item_4_paragraph_a_row'/>);
   },
   render: function() {
     var className = "row faq-page ways-to-give-page";
@@ -140,13 +140,13 @@ var WaysToGive = React.createClass({
             <FormattedHTMLMessage id='other_currency_iban' />
           </p>
           <h2 id="check"><FormattedHTMLMessage id='mail_check_heading' /></h2>
-          <p><FormattedHTMLMessage id='mail_check_body2' /></p>
+          <p>{this.renderEnglishMemoLineOrNote()}</p>
           <address>
             Mozilla Foundation<br/>
             PO Box 98223<br/>
             Washington DC 20090-8223<br/>
             USA
-          </address>{this.renderEnglishMemoLine()}
+          </address>
           <br/>
           <h2><FormattedHTMLMessage id='currencies' /></h2>
           <p><FormattedHTMLMessage id='select_donation_currency' /></p>

@@ -1,9 +1,8 @@
 module.exports = {
   'ast': 'eur',
   'az': 'azn',
+  'bn': 'bdt',
   'bs': 'bam',
-  'bn-BD': 'bdt',
-  'bn-IN': 'inr',
   'ca': 'eur',
   'cak': 'gtq',
   'cs': 'czk',

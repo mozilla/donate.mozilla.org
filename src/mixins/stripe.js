@@ -88,9 +88,10 @@ var StripeMixin = {
       return;
     }
     if (!window.grecaptcha) {
-      return setTimeout(() => {
+      setTimeout(() => {
         this.expectRecaptcha(callback);
       }, 100);
+      return;
     }
 
     window.grecaptcha.ready(callback);
@@ -115,7 +116,9 @@ var StripeMixin = {
     // This is a hack to get around the reCaptcha
     // puzzle being shown at the top of the page.
     window.scrollTo(0, 0);
-    this.expectRecaptcha(window.grecaptcha.execute);
+    this.expectRecaptcha(() => {
+      window.grecaptcha.execute();
+    });
   },
   stripeSubmit: function(reCaptchaToken) {
     var success = this.stripeSuccess;

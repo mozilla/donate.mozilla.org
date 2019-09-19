@@ -17,16 +17,15 @@ var Footer = React.createClass({
       <div className="row disclaimers">
         <p className="full">
           <FormattedHTMLMessage id={privacyPolicyMessage}/>
-          {` `}
-          <FormattedHTMLMessage id="privacy_policy_var_b_monthly_refund"/>
-          {` `}
-          <FormattedMessage
+        </p>
+        <p className="full">
+          <b><FormattedMessage
             id='other_way_to_give_wire_check'
             values={{
               wireTransferLink,
               checkLink
             }}
-          />
+          /></b>
         </p>
         <p className="full need-help">
           <FormattedHTMLMessage id="problems_donating_thunderbird2"/>

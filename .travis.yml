@@ -1,3 +1,5 @@
+dist: xenial
+services: xvfb
 language: node_js
 node_js:
 - 8
@@ -9,6 +11,3 @@ env:
   global:
   - APPLICATION_URI="http:\/\/example.com"
   - secure: qzuRUx3EcwbnFPZ2R5Boc522hJxz8jKjW9ePvX1hKRpKh5PD4uZo6NGMJanW/rxxDePnRfsEnd/v4ts+DAXCx4j9KPiFBO26PKeFc0yJEXMYMQAiIB04Q1Hk0T+LLdKKP2UqKNTLNQxFmIwgRUXFiPhHhmOkKw5yb3GepTHeNEf9hSx535RHVJBmSw2daNRng/uz2LrpENAQmJwNAJPLjIsuZjDzVzFCs4Vi26q16w3GndSPjbsWDW9+Pdt+YteG9mCHOFrEuK3EMsQOAuiW4i1hUItpzNNUcge8WPVufWQYFrx2wzkdWYyFg/VtGVM91PrzL4Dq9867VjTL5dreaUCvlkMaGjHkI1CV1VI/YjOOX5fN4kzak3pe405upZRIFWwSRRrvI4q+d4UxHgUvOraab/ufAR6ErTYkKYHvQKmzHOfv3Hm7H7FZ2EhZ//6nAlVYTQKivdK2t+W4z8UroeTSzpUbKXhcxKqvPb8LmgmzUAGDeLGcTiSZs/VND3sr3wSybnXS3X4gWxO+bOiT7uPVq6FLCUMvW7ghC/5sxUH1Ox2xmw4jfWhLQybSymwR3AirSsXmhMZCkgxZlh7tSC+Zi4v1izl7sbTfIBbxonopJbp43EkhLKNYt+XD4pe+vlyPrJX8qWiipwKAt78u1gqFzX8g69p7rm16nWYo7yU=
-before_script:
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start

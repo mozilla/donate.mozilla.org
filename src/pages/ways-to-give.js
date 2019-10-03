@@ -33,11 +33,17 @@ var WaysToGive = React.createClass({
             <b><FormattedHTMLMessage id='sepa_desc_new' /></b>
             {" "}
             <FormattedHTMLMessage id='sepa_desc' />
-            {" "}
-            <FormattedHTMLMessage id='wire_transfer_cost_info2' />
             <br/>
             <br/>
             <FormattedHTMLMessage id='us_only_deductible' />
+            <br/>
+            <br/>
+            <FormattedHTMLMessage
+              id='physical_address'
+              values={{
+                MozillaMV: `331 E. Evelyn Ave, Mountain View, CA 94041 USA`
+              }}
+            />
           </p>
           <br/>
           <h3 id="euro"><FormattedHTMLMessage id='euro_title' /></h3>
@@ -91,14 +97,6 @@ var WaysToGive = React.createClass({
             <br/>
             <b><FormattedHTMLMessage id='IBAN' /></b>
             {" GB77NWBK60000410017496"}
-          </p>
-          <p>
-            <FormattedHTMLMessage
-              id='physical_address'
-              values={{
-                MozillaMV: `331 E. Evelyn Ave, Mountain View, CA 94041 USA`
-              }}
-            />
           </p>
           <br/>
           <h3><FormattedHTMLMessage id='usd_title' /></h3>

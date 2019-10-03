@@ -107,8 +107,14 @@ var Faq = React.createClass({
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_2" header={this.context.intl.formatHTMLMessage({id: 'faq_item_2_header_thunderbird'})}>
               <p>
                 <FormattedHTMLMessage id='sepa_desc' />
-                {" "}
-                <FormattedHTMLMessage id='wire_transfer_cost_info2' />
+                <br/>
+                <br/>
+                <FormattedHTMLMessage
+                  id='physical_address'
+                  values={{
+                    MozillaMV: `331 E. Evelyn Ave, Mountain View, CA 94041 USA`
+                  }}
+                />
               </p>
               <h4><FormattedHTMLMessage id='euro_title' /></h4>
               <p>
@@ -167,14 +173,6 @@ var Faq = React.createClass({
                 <br/>
                 <b><FormattedHTMLMessage id='IBAN' /></b>
                 {" GB77NWBK60000410017496"}
-              </p>
-              <p>
-                <FormattedHTMLMessage
-                  id='physical_address'
-                  values={{
-                    MozillaMV: `331 E. Evelyn Ave, Mountain View, CA 94041 USA`
-                  }}
-                />
               </p>
               <br/>
               <h4><FormattedHTMLMessage id='usd_title' /></h4>

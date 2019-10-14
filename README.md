@@ -57,7 +57,7 @@ You can configure the following environment variables:
 |Variable|About|
 |--------|-----|
 | SUPPORTED_LOCALES | If set to '*' all locales under `intl-config.js` file for `src` will be enabled otherwise it expects an array of locales.
-| AUTO_CLOSE_DISPUTES | When set to 'true' the stripe-dispute handler will close any dispute recieved while processing a `charge.dispute.created` webhook event.
+| AUTO_CLOSE_DISPUTES | When set to 'true' the stripe-dispute handler will close any dispute received while processing a `charge.dispute.created` webhook event.
 
 ---
 

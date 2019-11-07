@@ -92,14 +92,6 @@ var Faq = React.createClass({
     }
     return (<div></div>);
   },
-  renderEnglishMemoLineOrNote: function() {
-    if (/^(en-US|en-CA)(\b|$)/.test(this.context.intl.locale)) {
-      return (
-        <span>Please send a check <strong>including your email address on the memo line</strong>, and payable (payee) to “Mozilla Foundation”</span>
-      );
-    }
-    return (<FormattedHTMLMessage id='faq_item_4_paragraph_a_row'/>);
-  },
   renderRecaptchFaqItem: function() {
     if (process.env.RECAPTCHA_DISABLED) {
       return (<div></div>);
@@ -149,15 +141,15 @@ var Faq = React.createClass({
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_4" header={
               this.context.intl.formatHTMLMessage({id: 'faq_item_4_header_check'})
               + ' '
-              + this.context.intl.formatHTMLMessage({id: 'faq_item_4_header_update_04_2019'})
+              + this.context.intl.formatHTMLMessage({id: 'faq_item_4_header_update_11_2019'})
             }>
-              <p>{this.renderEnglishMemoLineOrNote()}</p>
+              <p><FormattedHTMLMessage id='faq_item_4_paragraph_a_row_11_2019'/></p>
               <address>
-                Mozilla Foundation
+                Mozilla Foundation attn: Donor Care
                 <br/>
-                PO Box 98223
+                2 Harrison Street, #175
                 <br/>
-                Washington DC 20090-8223
+                San Francisco CA 94105
                 <br/>
                 USA
               </address>

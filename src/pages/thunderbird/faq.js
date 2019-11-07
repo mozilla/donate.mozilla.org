@@ -73,7 +73,7 @@ var Faq = React.createClass({
     return (<div></div>);
   },
   renderRowCheckInstructions: function() {
-    if (/^(en-US|en-CA)(\b|$)/.test(this.context.intl.locale)) {
+    if (/^(en-US)(\b|$)/.test(this.context.intl.locale)) {
       return (
         <p>Please send a check <strong>with description/memo line marked “Thunderbird”</strong>, and payable (payee) to “Mozilla Foundation”</p>
       );
@@ -221,16 +221,16 @@ var Faq = React.createClass({
             <Panel activeKey={activeKey} activateKey={this.onKeyChange} itemKey="item_4" header={
               this.context.intl.formatHTMLMessage({id: 'faq_item_4_header_check'})
               + ' '
-              + this.context.intl.formatHTMLMessage({id: 'faq_item_4_header_update_04_2019'})
+              + this.context.intl.formatHTMLMessage({id: 'faq_item_4_header_update_11_2019'})
             }>
 
               {this.renderRowCheckInstructions()}
               <address>
-                Thunderbird at Mozilla Foundation
+                Mozilla Foundation attn: Thunderbird Donor Care
                 <br/>
-                PO Box 98223
+                2 Harrison Street, #175
                 <br/>
-                Washington DC 20090-8223
+                San Francisco CA 94105
                 <br/>
                 USA
               </address>

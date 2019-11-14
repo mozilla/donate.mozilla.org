@@ -7,7 +7,7 @@ var Footer = React.createClass({
     intl: React.PropTypes.object
   },
   render: function() {
-    var wireTransferLink = (<Link to={'/' + this.context.intl.locale + '/ways-to-give#wire'}>{this.context.intl.formatMessage({id: 'wireTransfer'})}</Link>);
+    var wireTransferLink = (<Link to={'/' + this.context.intl.locale + '/ways-to-give#wire'}>{this.context.intl.formatMessage({id: 'sepa_bacs'})}</Link>);
     var checkLink = (<a href={'/' + this.context.intl.locale + '/ways-to-give#check'}>{this.context.intl.formatMessage({id: 'check'})}</a>);
     var privacyPolicyMessage = "privacy_policy_var_b";
     if (this.props.frequency === "monthly") {

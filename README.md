@@ -1,10 +1,8 @@
 [![Build Status](https://travis-ci.org/mozilla/donate.mozilla.org.svg?branch=master)](https://travis-ci.org/mozilla/donate.mozilla.org)
 
-# donate.mozilla.org
-Mozilla donation forms:
+This project is now archived in favor of https://github.com/mozilla/donate-wagtail
 
-* Staging: https://donate.mofostaging.net/
-* Production: https://donate.mozilla.org/
+# donate.mozilla.org
 
 ---
 

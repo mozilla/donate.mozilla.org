@@ -163,6 +163,7 @@
           },
           "DefaultRootObject": "index.html",
           "Enabled": true,
+          "IPV6Enabled": true,
           "Logging": {
             "IncludeCookies": "false",
             "Bucket": {
